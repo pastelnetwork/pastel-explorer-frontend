@@ -1,5 +1,7 @@
-import styled from 'styled-components';
+import { makeStyles } from '@material-ui/core/styles';
 
-export const Container = styled.div``;
-
-export const Text = styled.p``;
+export default makeStyles({
+  container: {
+    width: '100%',
+  },
+});
