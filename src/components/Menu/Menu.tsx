@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, SetStateAction } from 'react';
+import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Drawer from '@material-ui/core/Drawer';
@@ -17,9 +17,10 @@ import useStyles from './Menu.styles';
 
 interface MenuProps {
   isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+/* TODO Move routes urls to shared const file */
 const menuItems = [
   {
     id: 1,
@@ -53,7 +54,7 @@ const menuItems = [
   },
 ];
 
-const Menu: FC<MenuProps> = ({ isOpen, setIsOpen }) => {
+const Menu: React.FC<MenuProps> = ({ isOpen, setIsOpen }) => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -62,7 +63,7 @@ const Menu: FC<MenuProps> = ({ isOpen, setIsOpen }) => {
   };
 
   return (
-    <Drawer open={isOpen} onClose={() => setIsOpen(false)}>
+    <Drawer open={isOpen} onClose={() => setIsOpen(false)} anchor="right">
       <div
         className={classes.list}
         role="presentation"
