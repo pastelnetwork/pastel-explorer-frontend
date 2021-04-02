@@ -1,16 +1,19 @@
-import React, { FC, useState } from 'react';
+import * as React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import { ThemeProvider } from '@material-ui/core/styles';
 
-import Menu from './components/Menu/Menu';
-import Header from './components/Header/Header';
+import theme from '@theme/theme';
 
-import ExplorerPage from './pages/Explorer/Explorer';
+import Menu from '@components/Menu/Menu';
+import Header from '@components/Header/Header';
 
-const App: FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+import ExplorerPage from '@pages/Explorer/Explorer';
+
+const App: React.FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Header setIsMenuOpen={setIsMenuOpen} />
       <Menu isOpen={isMenuOpen} setIsOpen={setIsMenuOpen} />
       <Switch>
@@ -31,7 +34,7 @@ const App: FC = () => {
         </Route>
         <Redirect to="/" />
       </Switch>
-    </>
+    </ThemeProvider>
   );
 };
 

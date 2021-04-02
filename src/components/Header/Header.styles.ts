@@ -6,7 +6,7 @@ export default makeStyles((theme: Theme) =>
       flexGrow: 1,
     },
     menuButton: {
-      marginRight: theme.spacing(2),
+      marginLeft: theme.spacing(2),
     },
     title: {
       flexGrow: 1,
