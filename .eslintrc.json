@@ -1,4 +1,8 @@
 {
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
   "extends": [
     "airbnb",
     "airbnb/hooks",
@@ -6,7 +10,6 @@
     "prettier",
     "plugin:prettier/recommended"
   ],
-  "plugins": ["@typescript-eslint", "react", "prettier"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -16,6 +19,7 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
+  "plugins": ["@typescript-eslint", "react", "prettier"],
   "rules": {
     "import/no-unresolved": 0,
     "react/jsx-filename-extension": [
@@ -31,9 +35,9 @@
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["error"],
     "import/extensions": "off",
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "global-require": "off",
     "@typescript-eslint/no-var-requires": "off",
-    "react/jsx-props-no-spreading": ["warn", { "custom": "ignore"}]
+    "react/jsx-props-no-spreading": ["warn", { "custom": "ignore" }]
   }
 }
