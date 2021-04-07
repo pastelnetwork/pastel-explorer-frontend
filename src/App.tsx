@@ -9,30 +9,34 @@ import Header from '@components/Header/Header';
 
 import ExplorerPage from '@pages/Explorer/Explorer';
 
+import { WithRequestAlert } from '@utils/axios/axios';
+import * as routes from '@utils/constants/routes';
+
 const App: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   return (
     <ThemeProvider theme={theme}>
+      <WithRequestAlert />
       <Header setIsMenuOpen={setIsMenuOpen} />
       <Menu isOpen={isMenuOpen} setIsOpen={setIsMenuOpen} />
       <Switch>
-        <Route path="/" exact>
+        <Route path={routes.EXPLORER} exact>
           <ExplorerPage />
         </Route>
-        <Route path="/movement" exact>
+        <Route path={routes.MOVEMENT} exact>
           Movement Page
         </Route>
-        <Route path="/network" exact>
+        <Route path={routes.NETWORK} exact>
           Network Page
         </Route>
-        <Route path="/richlist" exact>
+        <Route path={routes.REACHLIST} exact>
           Top 100 Page
         </Route>
-        <Route path="/info" exact>
+        <Route path={routes.INFO} exact>
           API Page
         </Route>
-        <Redirect to="/" />
+        <Redirect to={routes.EXPLORER} />
       </Switch>
     </ThemeProvider>
   );
