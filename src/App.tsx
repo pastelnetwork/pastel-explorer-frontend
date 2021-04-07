@@ -30,7 +30,7 @@ const App: React.FC = () => {
         <Route path={routes.NETWORK} exact>
           Network Page
         </Route>
-        <Route path={routes.REACHLIST} exact>
+        <Route path={routes.RICHLIST} exact>
           Top 100 Page
         </Route>
         <Route path={routes.INFO} exact>
