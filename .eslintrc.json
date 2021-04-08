@@ -20,9 +20,10 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": ["@typescript-eslint", "react", "prettier"],
+  "plugins": ["@typescript-eslint", "react", "prettier", "react-hooks"],
   "rules": {
     "import/no-unresolved": 0,
+    "react-hooks/exhaustive-deps": 0,
     "react/jsx-filename-extension": [
       1,
       {

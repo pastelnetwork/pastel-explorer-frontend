@@ -10,7 +10,7 @@ export default makeStyles((theme: Theme) =>
       padding: '0 20px',
       height: 50,
       width: '100%',
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.primary.dark,
     },
     logo: {
       height: 20,

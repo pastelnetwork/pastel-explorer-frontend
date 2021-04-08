@@ -6,6 +6,7 @@ import theme from '@theme/theme';
 
 import Menu from '@components/Menu/Menu';
 import Header from '@components/Header/Header';
+import Summary from '@components/Summary/Summary';
 import Footer from '@components/Footer/Footer';
 
 import ExplorerPage from '@pages/Explorer/Explorer';
@@ -25,6 +26,7 @@ const App: React.FC = () => {
       <WithRequestAlert />
       <Header setIsMenuOpen={setIsMenuOpen} />
       <Menu isOpen={isMenuOpen} setIsOpen={setIsMenuOpen} />
+      <Summary />
       <div className={classes.container}>
         <Switch>
           <Route path={routes.EXPLORER} exact>
