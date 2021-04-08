@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 import theme from '@theme/theme';
@@ -7,6 +7,7 @@ import theme from '@theme/theme';
 import Menu from '@components/Menu/Menu';
 import Header from '@components/Header/Header';
 import Footer from '@components/Footer/Footer';
+import NotFoundPage from '@pages/404/404';
 
 import ExplorerPage from '@pages/Explorer/Explorer';
 
@@ -37,7 +38,9 @@ const App: React.FC = () => {
           <Route path="/info" exact>
             API Page
           </Route>
-          <Redirect to="/" />
+          <Route>
+            <NotFoundPage />
+          </Route>
         </Switch>
       </div>
       <Footer />
