@@ -6,6 +6,7 @@ import theme from '@theme/theme';
 
 import Menu from '@components/Menu/Menu';
 import Header from '@components/Header/Header';
+import Summary from '@components/Summary/Summary';
 
 import ExplorerPage from '@pages/Explorer/Explorer';
 
@@ -14,8 +15,9 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Header setIsMenuOpen={setIsMenuOpen} />
       <Menu isOpen={isMenuOpen} setIsOpen={setIsMenuOpen} />
+      <Header setIsMenuOpen={setIsMenuOpen} />
+      <Summary />
       <Switch>
         <Route path="/" exact>
           <ExplorerPage />
