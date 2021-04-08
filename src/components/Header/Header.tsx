@@ -22,7 +22,7 @@ const Header: React.FC<HeaderProps> = ({ setIsMenuOpen }) => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <Grid container alignItems="center" justify="space-between">
             <Grid item>
