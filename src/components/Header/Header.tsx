@@ -9,6 +9,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 import pastelLogo from '@assets/images/pastel-logo.png';
 
+import * as routes from '@utils/constants/routes';
+
 import useStyles from './Header.styles';
 
 interface HeaderProps {
@@ -20,12 +22,11 @@ const Header: React.FC<HeaderProps> = ({ setIsMenuOpen }) => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <Grid container alignItems="center" justify="space-between">
             <Grid item>
-              {/* TODO Move routes urls to shared const file */}
-              <Link to="/">
+              <Link to={routes.EXPLORER}>
                 <img src={pastelLogo} alt="Pastel Logo" className={classes.image} />
               </Link>
             </Grid>

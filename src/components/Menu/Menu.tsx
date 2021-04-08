@@ -13,6 +13,8 @@ import ShareIcon from '@material-ui/icons/Share';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import InfoIcon from '@material-ui/icons/Info';
 
+import * as routes from '@utils/constants/routes';
+
 import useStyles from './Menu.styles';
 
 interface MenuProps {
@@ -24,31 +26,31 @@ interface MenuProps {
 const menuItems = [
   {
     id: 1,
-    url: '/',
+    url: routes.EXPLORER,
     name: 'Explorer',
     icon: <SearchIcon />,
   },
   {
     id: 2,
-    url: '/movement',
+    url: routes.MOVEMENT,
     name: 'Movement',
     icon: <MoneyIcon />,
   },
   {
     id: 3,
-    url: '/network',
+    url: routes.NETWORK,
     name: 'Network',
     icon: <ShareIcon />,
   },
   {
     id: 4,
-    url: '/richlist',
+    url: routes.RICHLIST,
     name: 'Top 100',
     icon: <LocalAtmIcon />,
   },
   {
     id: 5,
-    url: '/info',
+    url: routes.INFO,
     name: 'API',
     icon: <InfoIcon />,
   },

@@ -5,8 +5,9 @@
 We are using
 - React
 - Typescript
-- Styled components
+- Material UI
 - React Router
+- Axios
 
 ## Guidelines
 
