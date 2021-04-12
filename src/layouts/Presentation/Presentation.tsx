@@ -2,9 +2,9 @@ import * as React from 'react';
 import { ThemeProvider } from 'styled-components/macro';
 import { CssBaseline, MuiThemeProvider } from '@material-ui/core';
 
-import { RouteType } from '../../types/routes';
+import { RouteType } from '@utils/types/routes';
 
-import createTheme from '../../theme';
+import createTheme from '@theme/index';
 
 import * as Styles from './Presentation.styles';
 

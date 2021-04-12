@@ -1,6 +1,6 @@
 import styled, { createGlobalStyle } from 'styled-components/macro';
 
-import { GlobalStyleProps } from '../../types/styles';
+import { GlobalStyleProps } from '@utils/types/styles';
 
 export const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
   html,

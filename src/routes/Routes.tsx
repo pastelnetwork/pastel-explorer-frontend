@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Route, Switch, RouteComponentProps } from 'react-router-dom';
 
+import { RouteType } from '@utils/types/routes';
+
 import DashboardLayout from '../layouts/Dashboard/Dashboard';
 import Page404 from '../pages/404/404';
 
-import { RouteType } from '../types/routes';
-
 import { pageRoutes } from './index';
+
+import '@utils/perfect-scrollbar.css';
 
 const childRoutes = (Layout: React.ElementType, routes: Array<RouteType>) =>
   routes.map(({ component: Component, guard, children, path }, index: number) => {

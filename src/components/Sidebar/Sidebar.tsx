@@ -7,17 +7,15 @@ import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
 import { Box, Grid, Collapse, Drawer, List, IconButton } from '@material-ui/core';
 import { Twitter as TwitterIcon } from '@material-ui/icons';
 
-import * as URLS from '../../utils/constants/urls';
-import * as ROUTES from '../../utils/constants/routes';
+import * as URLS from '@utils/constants/urls';
+import * as ROUTES from '@utils/constants/routes';
+import { RouteType, RouteChildType } from '@utils/types/routes';
 
-import { sidebarRoutes as routes } from '../../routes/index';
-import { RouteType, RouteChildType } from '../../types/routes';
+import { sidebarRoutes as routes } from '@routes/index';
 
-import PastelLogo from '../../assets/images/pastel-logo-white.png';
+import PastelLogo from '@assets/images/pastel-logo-white.png';
 
 import * as Styles from './Sidebar.styles';
-
-import '../../vendor/perfect-scrollbar.css';
 
 interface SidebarCategoryPropsType {
   name: string;
