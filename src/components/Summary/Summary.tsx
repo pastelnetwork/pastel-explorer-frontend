@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Grid, Box } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 
-import axios from '../../utils/axios/axios';
-import * as URLS from '../../utils/constants/urls';
+import axios from '@utils/axios/axios';
+import * as URLS from '@utils/constants/urls';
 
-import { AppStateType } from '../../redux/reducers';
-import { setSummary } from '../../redux/actions/summaryActions';
+import { AppStateType } from '@redux/reducers';
+import { setSummary } from '@redux/actions/summaryActions';
 
 import { SummaryValueProps } from './Summary.helpers';
 import * as Styles from './Summary.styles';

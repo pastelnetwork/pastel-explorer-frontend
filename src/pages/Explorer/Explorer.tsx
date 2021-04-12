@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Grid } from '@material-ui/core';
 
-import Summary from '../../components/Summary/Summary';
+import Summary from '@components/Summary/Summary';
 
 import * as Styles from './Explorer.styles';
 

@@ -2,7 +2,7 @@ import styled, { createGlobalStyle } from 'styled-components/macro';
 import { spacing } from '@material-ui/system';
 import { Paper as MuiPaper } from '@material-ui/core';
 
-import { GlobalStyleProps } from '../../types/styles';
+import { GlobalStyleProps } from '@utils/types/styles';
 
 export const drawerWidth = 258;
 

@@ -1,4 +1,4 @@
-import initialSummaryList, { SummaryItemProps } from '../../components/Summary/Summary.helpers';
+import initialSummaryList, { SummaryItemProps } from '@components/Summary/Summary.helpers';
 
 import * as types from '../actions/actionTypes';
 import { SetSummaryProps } from '../actions/summaryActions';

@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import { Hidden, CssBaseline, withWidth } from '@material-ui/core';
 import { isWidthUp } from '@material-ui/core/withWidth';
 
-import Sidebar from '../../components/Sidebar/Sidebar';
-import Header from '../../components/SearchBar/SearchBar';
-import Footer from '../../components/Footer/Footer';
+import Sidebar from '@components/Sidebar/Sidebar';
+import Header from '@components/SearchBar/SearchBar';
+import Footer from '@components/Footer/Footer';
 
-import { RouteType } from '../../types/routes';
+import { RouteType } from '@utils/types/routes';
 
 import * as Styles from './Dashboard.styles';
 

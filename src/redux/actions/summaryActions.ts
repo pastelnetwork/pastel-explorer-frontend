@@ -1,4 +1,4 @@
-import { SummaryItemProps } from '../../components/Summary/Summary.helpers';
+import { SummaryItemProps } from '@components/Summary/Summary.helpers';
 
 import * as types from './actionTypes';
 
