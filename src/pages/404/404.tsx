@@ -1,31 +1,30 @@
-import * as React from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import { Typography } from '@material-ui/core';
 
-import useStyles from './404.styles';
+import * as Styles from './404.styles';
 
-const NotFound: React.FC = () => {
-  const classes = useStyles();
-
+const Page404: React.FC = () => {
   return (
-    <Grid container className={classes.container} alignItems="center" justify="center">
-      <Grid item alignItems="center">
-        <Typography variant="h1" component="h1">
-          404
-        </Typography>
-        <Typography variant="h3" component="h3" gutterBottom>
-          Page not found
-        </Typography>
+    <Styles.Wrapper>
+      <Helmet title="404 Error" />
+      <Typography component="h1" variant="h1" align="center" gutterBottom>
+        404
+      </Typography>
+      <Typography component="h2" variant="h5" align="center" gutterBottom>
+        Page not found.
+      </Typography>
+      <Typography component="h2" variant="body1" align="center" gutterBottom>
+        The page you are looking for might have been removed.
+      </Typography>
 
-        {/* TODO Move routes urls to shared const file */}
-        <Button variant="contained" color="secondary" size="large" href="/">
-          GO BACK TO HOMEPAGE
-        </Button>
-      </Grid>
-    </Grid>
+      <Styles.Button component={Link} to="/" variant="contained" color="secondary" mt={2}>
+        Return to website
+      </Styles.Button>
+    </Styles.Wrapper>
   );
 };
 
-export default NotFound;
+export default Page404;

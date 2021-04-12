@@ -8,6 +8,9 @@ We are using
 - Material UI
 - React Router
 - Axios
+- Styled components
+
+Get your ideas from the [template](https://material-app.bootlab.io/dashboard/analytics).
 
 ## Guidelines
 
