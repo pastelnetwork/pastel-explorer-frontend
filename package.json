@@ -1,8 +1,8 @@
 {
   "name": "material-app",
   "version": "2.0.3",
-  "description": "Material App Pro - React Admin & Dashboard Template",
-  "author": "Paul Laros <support@bootlab.io>",
+  "description": "Pastel Explorer",
+  "author": "",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {

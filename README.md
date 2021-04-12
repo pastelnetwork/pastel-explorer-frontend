@@ -4,6 +4,7 @@
 
 We are using
 - React
+- Redux
 - Typescript
 - Material UI
 - React Router
