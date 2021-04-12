@@ -1,19 +1,19 @@
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import styled from 'styled-components/macro';
+import { spacing } from '@material-ui/system';
+import {
+  Card as MuiCard,
+  CardContent as MuiCardContent,
+  Typography as MuiTypography,
+} from '@material-ui/core';
 
-export default makeStyles((theme: Theme) =>
-  createStyles({
-    container: {
-      margin: '100px 0',
-    },
-    card: {
-      minWidth: 300,
-    },
-    header: {
-      textAlign: 'center',
-      backgroundColor: theme.palette.primary.light,
-    },
-    content: {
-      textAlign: 'center',
-    },
-  }),
-);
+export const Card = styled(MuiCard)(spacing);
+
+export const Typography = styled(MuiTypography)(spacing);
+
+export const CardContent = styled(MuiCardContent)`
+  position: relative;
+
+  &:last-child {
+    padding-bottom: ${props => props.theme.spacing(4)}px;
+  }
+`;

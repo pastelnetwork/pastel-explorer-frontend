@@ -1,20 +1,26 @@
 import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import Skeleton from '@material-ui/lab/Skeleton';
+import { Grid, Box } from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
 
-import axios from '@utils/axios/axios';
-import * as URLS from '@utils/constants/urls';
+import axios from '../../utils/axios/axios';
+import * as URLS from '../../utils/constants/urls';
 
-import initialSummaryList, { SummaryValueProps } from './Summary.helpers';
-import useStyles from './Summary.styles';
+import { AppStateType } from '../../redux/reducers';
+import { setSummary } from '../../redux/actions/summaryActions';
+
+import { SummaryValueProps } from './Summary.helpers';
+import * as Styles from './Summary.styles';
 
 const Summary: React.FC = () => {
-  const classes = useStyles();
-  const [summaryList, setSummaryList] = React.useState(initialSummaryList);
+  /**
+   * TODO
+   * Redux used here just to keep redux flow work after theme removal.
+   * Should be adjusted after clarifications.
+   */
+  const dispatch = useDispatch();
+  const summaryList = useSelector((state: AppStateType) => state.summaryReducer.summary);
 
   const updateSummaryList = (): void => {
     axios.get(URLS.SUMMARY_URL).then(({ data }) => {
@@ -39,22 +45,28 @@ const Summary: React.FC = () => {
         return summaryElement;
       });
 
-      setSummaryList(updatedSummaryList);
+      dispatch(setSummary(updatedSummaryList));
     });
   };
 
   React.useEffect(() => updateSummaryList(), []);
 
   return (
-    <Grid container justify="space-evenly" alignItems="center" className={classes.container}>
+    <Grid container spacing={6}>
       {summaryList.map(({ id, name, value }) => (
-        <Grid item key={id}>
-          <Card className={classes.card}>
-            <CardHeader title={name} className={classes.header} />
-            <CardContent className={classes.content}>
-              {value === null ? <Skeleton animation="wave" variant="text" /> : value}
-            </CardContent>
-          </Card>
+        <Grid item xs={12} sm={12} md={6} lg={3} xl key={id}>
+          <Styles.Card mb={3}>
+            <Styles.CardContent>
+              <Styles.Typography variant="h6" mb={4}>
+                {name}
+              </Styles.Typography>
+              <Styles.Typography variant="h3" mb={3}>
+                <Box fontWeight="fontWeightRegular">
+                  {value === null ? <Skeleton animation="wave" variant="text" /> : value}
+                </Box>
+              </Styles.Typography>
+            </Styles.CardContent>
+          </Styles.Card>
         </Grid>
       ))}
     </Grid>
