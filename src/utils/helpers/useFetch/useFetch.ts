@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
-import axios from '@utils/axios/axios';
 import { AxiosError } from 'axios';
 
+import axios from '@utils/axios/axios';
 import { setResponseError } from '@redux/actions/responseErrorsActions';
 
 interface IUseFetchOptions {
@@ -16,10 +16,8 @@ export const useFetch = <FetchedData>({ method, url }: IUseFetchOptions) => {
     axios[method](url)
       .then(({ data }) => data)
       .catch((error: AxiosError) => {
-        // Print error in console for more details
         console.error(error);
 
-        // Dispatch action to show alert component in UI on API call error
         dispatch(setResponseError(true));
 
         return undefined;
