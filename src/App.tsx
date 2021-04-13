@@ -17,8 +17,7 @@ import Routes from './routes/Routes';
 
 const jss = create({
   ...jssPreset(),
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  insertionPoint: document.getElementById('jss-insertion-point')!,
+  insertionPoint: document.getElementById('jss-insertion-point') as HTMLElement,
 });
 
 const App: React.FC = () => {

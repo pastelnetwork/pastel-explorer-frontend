@@ -9,7 +9,6 @@ const axios = Axios.create({
 axios.interceptors.response.use(
   response => response,
   error => {
-    // eslint-disable-next-line no-console
     console.error(error.toJSON());
   },
 );

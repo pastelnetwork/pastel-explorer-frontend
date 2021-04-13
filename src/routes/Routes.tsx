@@ -11,48 +11,49 @@ import { pageRoutes } from './index';
 import '@utils/perfect-scrollbar.css';
 
 const childRoutes = (Layout: React.ElementType, routes: Array<RouteType>) =>
-  routes.map(({ component: Component, guard, children, path }, index: number) => {
+  routes.map(({ component: Component, guard, children, path, id }) => {
     const Guard = guard || React.Fragment;
 
-    // eslint-disable-next-line no-nested-ternary
-    return children ? (
-      // eslint-disable-next-line @typescript-eslint/no-shadow
-      children.map((element, index: number) => {
-        // eslint-disable-next-line @typescript-eslint/no-shadow
-        const Guard = element.guard || React.Fragment;
+    if (children) {
+      return children.map(element => {
+        const ChildrenGuard = element.guard || React.Fragment;
         const ElementComponent = element.component || React.Fragment;
 
         return (
           <Route
-            // eslint-disable-next-line react/no-array-index-key
-            key={index}
+            key={id}
             path={element.path}
             exact
             render={(props: RouteComponentProps) => (
               <Layout>
-                <Guard>
+                <ChildrenGuard>
                   <ElementComponent {...props} />
-                </Guard>
+                </ChildrenGuard>
               </Layout>
             )}
           />
         );
-      })
-    ) : Component ? (
-      <Route
-        // eslint-disable-next-line react/no-array-index-key
-        key={index}
-        path={path}
-        exact
-        render={props => (
-          <Layout>
-            <Guard>
-              <Component {...props} />
-            </Guard>
-          </Layout>
-        )}
-      />
-    ) : null;
+      });
+    }
+
+    if (Component) {
+      return (
+        <Route
+          key={id}
+          path={path}
+          exact
+          render={props => (
+            <Layout>
+              <Guard>
+                <Component {...props} />
+              </Guard>
+            </Layout>
+          )}
+        />
+      );
+    }
+
+    return null;
   });
 
 const Routes: React.FC = () => (
