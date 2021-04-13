@@ -41,7 +41,7 @@ const networkRoutes = {
 };
 
 const richlistRoutes = {
-  id: 'Network',
+  id: 'TOP 100',
   path: ROUTES.RICHLIST,
   icon: <LocalAtmIcon />,
   component: Richlist,
@@ -49,7 +49,7 @@ const richlistRoutes = {
 };
 
 const infoRoutes = {
-  id: 'Network',
+  id: 'API',
   path: ROUTES.INFO,
   icon: <InfoIcon />,
   component: Info,

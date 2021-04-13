@@ -2,15 +2,14 @@ import * as React from 'react';
 import { withTheme } from 'styled-components/macro';
 import { Search as SearchIcon } from 'react-feather';
 
-import { Grid, Hidden, Toolbar } from '@material-ui/core';
+import { Grid, Hidden, Theme, Toolbar } from '@material-ui/core';
 
 import { Menu as MenuIcon } from '@material-ui/icons';
 
 import * as Styles from './SearchBar.styles';
 
 interface AppBarProps {
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  theme: {};
+  theme: Theme;
   onDrawerToggle: React.MouseEventHandler<HTMLElement>;
 }
 

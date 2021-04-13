@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-shadow */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable no-nested-ternary */
 import React, { useState } from 'react';
 import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
 
@@ -35,7 +32,6 @@ interface SidebarCategoryPropsType {
 const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
   name,
   icon,
-  classes,
   isOpen,
   isCollapsable,
   badge,
@@ -60,7 +56,7 @@ interface SidebarLinkPropsType {
   icon?: JSX.Element;
 }
 
-const SidebarLink: React.FC<SidebarLinkPropsType> = ({ name, to, badge, icon }) => {
+const SidebarLink: React.FC<SidebarLinkPropsType> = ({ name, to, badge }) => {
   return (
     <Styles.Link button dense component={NavLink} exact to={to} activeClassName="active">
       <Styles.LinkText>{name}</Styles.LinkText>
@@ -70,7 +66,6 @@ const SidebarLink: React.FC<SidebarLinkPropsType> = ({ name, to, badge, icon }) 
 };
 
 interface SidebarPropsType {
-  classes?: string;
   staticContext: string;
   location: {
     pathname: string;
@@ -86,22 +81,16 @@ interface SidebarPropsType {
   onClose?: () => void;
 }
 
-const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({
-  classes,
-  staticContext,
-  location,
-  ...rest
-}) => {
-  interface tplotOptions {
+const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, ...rest }) => {
+  interface InitOptionsProps {
     [key: number]: boolean;
   }
-  const initOpenRoutes = (): tplotOptions => {
-    /* Open collapse element that matches current url */
+  const initOpenRoutes = (): InitOptionsProps => {
     const pathName = location.pathname;
 
     let currentRoutes = {};
 
-    routes.forEach((route: RouteType, index) => {
+    routes.forEach((route: RouteType, index: number) => {
       const isActive = pathName.indexOf(route.path) === 0;
       const isOpen = route.open;
       const isHome = route.containsHome && pathName === '/';
@@ -115,14 +104,34 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({
   const [openRoutes, setOpenRoutes] = useState(() => initOpenRoutes());
 
   const toggle = (index: number) => {
-    // Collapse all elements
     Object.keys(openRoutes).forEach(
       item =>
         openRoutes[index] || setOpenRoutes(currentRoute => ({ ...currentRoute, [item]: false })),
     );
 
-    // Toggle selected element
     setOpenRoutes(currentRoute => ({ ...currentRoute, [index]: !currentRoute[index] }));
+  };
+
+  const generateCategoryIcon = (category: RouteType): JSX.Element | null => {
+    const { id, icon, path, badge } = category;
+
+    if (icon) {
+      return (
+        <SidebarCategory
+          isCollapsable={false}
+          name={id}
+          to={path}
+          activeClassName="active"
+          component={NavLink}
+          icon={icon}
+          exact
+          button
+          badge={badge}
+        />
+      );
+    }
+
+    return null;
   };
 
   return (
@@ -135,15 +144,14 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({
       <Styles.Scrollbar>
         <List disablePadding>
           <Styles.Items>
-            {routes.map((category: RouteType, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <React.Fragment key={index}>
+            {routes.map((category: RouteType, index: number) => (
+              <React.Fragment key={category.id}>
                 {category.header ? (
                   <Styles.SidebarSection>{category.header}</Styles.SidebarSection>
                 ) : null}
 
                 {category.children && category.icon ? (
-                  <React.Fragment key={index}>
+                  <React.Fragment key={category.id}>
                     <SidebarCategory
                       isOpen={!openRoutes[index]}
                       isCollapsable
@@ -154,9 +162,9 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({
                     />
 
                     <Collapse in={openRoutes[index]} timeout="auto" unmountOnExit>
-                      {category.children.map((route: RouteChildType, index: number) => (
+                      {category.children.map((route: RouteChildType) => (
                         <SidebarLink
-                          key={index}
+                          key={route.name}
                           name={route.name}
                           to={route.path}
                           icon={route.icon}
@@ -165,19 +173,9 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({
                       ))}
                     </Collapse>
                   </React.Fragment>
-                ) : category.icon ? (
-                  <SidebarCategory
-                    isCollapsable={false}
-                    name={category.id}
-                    to={category.path}
-                    activeClassName="active"
-                    component={NavLink}
-                    icon={category.icon}
-                    exact
-                    button
-                    badge={category.badge}
-                  />
-                ) : null}
+                ) : (
+                  generateCategoryIcon(category)
+                )}
               </React.Fragment>
             ))}
           </Styles.Items>
