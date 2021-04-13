@@ -24,6 +24,7 @@
   "rules": {
     "import/no-unresolved": 0,
     "react-hooks/exhaustive-deps": 0,
+    "react/react-in-jsx-scope": 0, // Disabled because in version 17.xx JSX was compiled into React.createElement so React needed to be in scope if you used JSX
     "import/prefer-default-export": "off",
     "react/jsx-filename-extension": [
       1,

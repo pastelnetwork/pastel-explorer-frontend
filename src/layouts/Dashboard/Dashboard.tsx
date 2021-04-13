@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 
 import { Hidden, CssBaseline, withWidth } from '@material-ui/core';
 import { isWidthUp } from '@material-ui/core/withWidth';
@@ -19,7 +19,7 @@ interface DashboardPropsType {
 }
 
 const Dashboard: React.FC<DashboardPropsType> = ({ children, routes, width }) => {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);

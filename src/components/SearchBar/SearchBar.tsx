@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { withTheme } from 'styled-components/macro';
 import { Search as SearchIcon } from 'react-feather';
 
