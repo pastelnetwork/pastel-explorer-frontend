@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
-import React from 'react';
 import { ThemeProps } from 'styled-components/macro';
 import { SpacingProps } from '@material-ui/system';
 import { Theme } from '@material-ui/core';

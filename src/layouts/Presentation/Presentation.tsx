@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { ThemeProvider } from 'styled-components/macro';
 import { CssBaseline, MuiThemeProvider } from '@material-ui/core';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import DateFnsUtils from '@date-io/date-fns';
 

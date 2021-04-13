@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { getTime } from 'date-fns';
+import getTime from 'date-fns/getTime';
 import { Grid } from '@material-ui/core';
 import { green, red, orange } from '@material-ui/core/colors';
 
@@ -8,6 +8,7 @@ import Table, { HeaderType, RowsProps } from '@components/Table/Table';
 
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
+import { currentDate, getDate } from '@utils/helpers/date/date';
 import { ILastTransactionsResponse, ITransactionsType } from '@utils/types/ITransactions';
 
 import * as Styles from './Movement.styles';
@@ -29,7 +30,7 @@ const Movement: React.FC = () => {
   const [transactionList, setTransactionList] = React.useState<Array<RowsProps> | null>(null);
   const { fetchData } = useFetch<ILastTransactionsResponse>({
     method: 'get',
-    url: `${URLS.LAST_TRANSACTIONS_URL}/${TRANSACTION_MIN_AMOUNT}?_=${getTime(new Date())}`,
+    url: `${URLS.LAST_TRANSACTIONS_URL}/${TRANSACTION_MIN_AMOUNT}?_=${getTime(currentDate)}`,
   });
 
   const getAmountColor = (amount: number) => {
@@ -57,7 +58,7 @@ const Movement: React.FC = () => {
         id: txid,
         data: [
           {
-            value: new Date(timestamp * 1000).toUTCString(),
+            value: getDate(timestamp * 1000).toUTCString(),
             id: 1,
           },
           { value: txid, id: 2 },

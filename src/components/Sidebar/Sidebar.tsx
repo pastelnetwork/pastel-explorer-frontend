@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Box, Grid, Collapse, Drawer, List, IconButton } from '@material-ui/core';
@@ -66,7 +66,7 @@ const SidebarLink: React.FC<SidebarLinkPropsType> = ({ name, to, badge }) => {
 };
 
 interface SidebarPropsType {
-  staticContext: string;
+  staticContext: string | undefined;
   location: {
     pathname: string;
   };
@@ -101,7 +101,7 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
     return currentRoutes;
   };
 
-  const [openRoutes, setOpenRoutes] = useState(() => initOpenRoutes());
+  const [openRoutes, setOpenRoutes] = React.useState(() => initOpenRoutes());
 
   const toggle = (index: number) => {
     Object.keys(openRoutes).forEach(
@@ -134,8 +134,10 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
     return null;
   };
 
+  const { PaperProps, open, onClose, variant } = rest;
+
   return (
-    <Drawer variant="permanent" {...rest}>
+    <Drawer variant={variant || 'permanent'} PaperProps={PaperProps} open={open} onClose={onClose}>
       <Styles.Brand component={NavLink} to={ROUTES.EXPLORER} button>
         <Box ml={1}>
           <Styles.BrandLogo src={PastelLogo} alt="Pastel Logo" />
