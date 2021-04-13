@@ -48,7 +48,7 @@ const Movement: React.FC = () => {
   const getAmountElement = (amount: number) => {
     const displayAmount = amount / 100000000;
     const amountColor = getAmountColor(displayAmount);
-    return <Styles.Chip label={displayAmount} backgroundColor={amountColor} />;
+    return <Styles.Chip label={displayAmount} chipcolor={amountColor} />;
   };
 
   const transformTransactionsData = (transactions: ITransactionsType) => {
