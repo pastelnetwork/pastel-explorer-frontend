@@ -5,8 +5,8 @@ import { Grid } from '@material-ui/core';
 import Summary from '@components/Summary/Summary';
 import Table, { HeaderType, RowsProps } from '@components/Table/Table';
 
-import axios from '../../utils/axios/axios';
-import * as URLS from '../../utils/constants/urls';
+import axios from '@utils/axios/axios';
+import * as URLS from '@utils/constants/urls';
 
 import * as Styles from './Explorer.styles';
 
