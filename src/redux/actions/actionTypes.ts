@@ -1,1 +1,2 @@
 export const SUMMARY_SET = 'SUMMARY_SET';
+export const RESPONSE_ERROR_SET = 'RESPONSE_ERROR_SET';

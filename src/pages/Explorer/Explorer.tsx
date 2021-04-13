@@ -5,8 +5,9 @@ import { Grid } from '@material-ui/core';
 import Summary from '@components/Summary/Summary';
 import Table, { HeaderType, RowsProps } from '@components/Table/Table';
 
-import axios from '@utils/axios/axios';
 import * as URLS from '@utils/constants/urls';
+import { useFetch } from '@utils/helpers/useFetch/useFetch';
+import { ILastTransactionsResponse } from '@utils/types/IExplorer';
 
 import * as Styles from './Explorer.styles';
 
@@ -32,6 +33,10 @@ type TransactionsType = Array<TransactionProps>;
 
 const Explorer: React.FC = () => {
   const [transactionList, setTransactionList] = React.useState<Array<RowsProps> | null>(null);
+  const { fetchData } = useFetch<ILastTransactionsResponse>({
+    method: 'get',
+    url: `${URLS.LAST_TRANSACTIONS_URL}/0.00000001?_=${new Date().getTime()}`,
+  });
 
   const generateDisplayAmount = (amount: number): string => {
     const splitAmount = amount.toString().split('');
@@ -65,9 +70,10 @@ const Explorer: React.FC = () => {
   };
 
   React.useEffect(() => {
-    axios
-      .get(`${URLS.LAST_TRANSACTIONS_URL}/0.00000001?_=${new Date().getTime()}`)
-      .then(response => transformTransactionsData(response.data.data));
+    fetchData().then(response => {
+      if (!response) return null;
+      return transformTransactionsData(response.data);
+    });
   }, []);
 
   return (

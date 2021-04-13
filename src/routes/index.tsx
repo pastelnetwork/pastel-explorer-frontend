@@ -6,18 +6,17 @@ import ShareIcon from '@material-ui/icons/Share';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import InfoIcon from '@material-ui/icons/Info';
 
-import Explorer from '../pages/Explorer/Explorer';
-import Movement from '../pages/Movement/Movement';
-import Network from '../pages/Network/Network';
-import Richlist from '../pages/Richlist/Richlist';
-import Info from '../pages/Info/Info';
+import Explorer from '@pages/Explorer/Explorer';
+import Movement from '@pages/Movement/Movement';
+import Network from '@pages/Network/Network';
+import Richlist from '@pages/Richlist/Richlist';
+import Info from '@pages/Info/Info';
 
-import * as ROUTES from '../utils/constants/routes';
+import * as ROUTES from '@utils/constants/routes';
 
 const explorerRoutes = {
   id: 'Explorer',
   path: ROUTES.EXPLORER,
-  header: 'Pastel',
   icon: <SearchIcon />,
   component: Explorer,
   containsHome: true,
