@@ -1,6 +1,7 @@
-import React from 'react';
+import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Grid } from '@material-ui/core';
+import getTime from 'date-fns/getTime';
 
 import Summary from '@components/Summary/Summary';
 import Table, { HeaderType, RowsProps } from '@components/Table/Table';
@@ -8,6 +9,7 @@ import Table, { HeaderType, RowsProps } from '@components/Table/Table';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { ILastTransactionsResponse } from '@utils/types/IExplorer';
+import { currentDate, getDate } from '@utils/helpers/date/date';
 
 import * as Styles from './Explorer.styles';
 
@@ -35,7 +37,7 @@ const Explorer: React.FC = () => {
   const [transactionList, setTransactionList] = React.useState<Array<RowsProps> | null>(null);
   const { fetchData } = useFetch<ILastTransactionsResponse>({
     method: 'get',
-    url: `${URLS.LAST_TRANSACTIONS_URL}/0.00000001?_=${new Date().getTime()}`,
+    url: `${URLS.LAST_TRANSACTIONS_URL}/0.00000001?_=${getTime(currentDate)}`,
   });
 
   const generateDisplayAmount = (amount: number): string => {
@@ -59,7 +61,7 @@ const Explorer: React.FC = () => {
           { value: recipients, id: 3 },
           { value: generateDisplayAmount(amount), id: 4 },
           {
-            value: new Date(transaction.timestamp * 1000).toUTCString(),
+            value: getDate(transaction.timestamp * 1000).toUTCString(),
             id: 5,
           },
         ],

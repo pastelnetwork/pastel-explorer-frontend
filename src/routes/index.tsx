@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import SearchIcon from '@material-ui/icons/Search';
 import MoneyIcon from '@material-ui/icons/Money';
 import ShareIcon from '@material-ui/icons/Share';

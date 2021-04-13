@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { Typography } from '@material-ui/core';
 import { Helmet } from 'react-helmet-async';
 
@@ -12,7 +12,7 @@ interface IErrorHandlerState {
   hasError: boolean;
 }
 
-class ErrorHandler extends Component<IErrorHandlerProps, IErrorHandlerState> {
+class ErrorHandler extends React.Component<IErrorHandlerProps, IErrorHandlerState> {
   state = { hasError: false };
 
   static getDerivedStateFromError() {
