@@ -19,8 +19,9 @@ class ErrorHandler extends Component<IErrorHandlerProps, IErrorHandlerState> {
     return { hasError: true };
   }
 
-  componentDidCatch() {
-    return this.setState({ hasError: true });
+  componentDidCatch(error: Error) {
+    // Integrate here any log error service if needed
+    return console.error(error);
   }
 
   render() {
