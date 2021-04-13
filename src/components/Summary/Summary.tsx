@@ -4,11 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Grid, Box } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 
-import axios from '@utils/axios/axios';
 import * as URLS from '@utils/constants/urls';
 
 import { AppStateType } from '@redux/reducers';
 import { setSummary } from '@redux/actions/summaryActions';
+import { useFetch } from '@utils/helpers/useFetch/useFetch';
+import { ISummaryResponse } from '@utils/types/ISummary';
 
 import { SummaryValueProps } from './Summary.helpers';
 import * as Styles from './Summary.styles';
@@ -19,17 +20,19 @@ const Summary: React.FC = () => {
    * Redux used here just to keep redux flow work after theme removal.
    * Should be adjusted after clarifications.
    */
+  const { fetchData } = useFetch<ISummaryResponse>({ method: 'get', url: URLS.SUMMARY_URL });
   const dispatch = useDispatch();
   const summaryList = useSelector((state: AppStateType) => state.summaryReducer.summary);
 
-  const updateSummaryList = (): void => {
-    axios.get(URLS.SUMMARY_URL).then(({ data }) => {
+  const updateSummaryList = () => {
+    fetchData().then(response => {
       /**
        * TODO
        * Backend should return just object or array with data of SummaryItemProps structure.
        * Frontend should be only responsible for displaying given data to avoid current logic.
        */
-      const summaryFetchData = Object.entries(data.data[0]);
+      if (!response) return null;
+      const summaryFetchData = Object.entries(response.data[0]);
 
       const updatedSummaryList = summaryList.map(summaryElement => {
         const currentSummaryItem = summaryFetchData.find(([key]) => key === summaryElement.key);
@@ -45,7 +48,7 @@ const Summary: React.FC = () => {
         return summaryElement;
       });
 
-      dispatch(setSummary(updatedSummaryList));
+      return dispatch(setSummary(updatedSummaryList));
     });
   };
 

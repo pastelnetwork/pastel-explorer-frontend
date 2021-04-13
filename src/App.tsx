@@ -12,6 +12,9 @@ import {
   jssPreset,
 } from '@material-ui/core/styles';
 
+import ErrorHandler from '@pages/ErrorHandler/ErrorHandler';
+import ResponseErrorAlert from '@components/ResponseErrorAlert/ResponseErrorAlert';
+
 import createTheme from './theme';
 import Routes from './routes/Routes';
 
@@ -22,20 +25,21 @@ const jss = create({
 
 const App: React.FC = () => {
   return (
-    <>
-      <HelmetProvider>
-        <Helmet titleTemplate="%s | Pastel Explorer" defaultTitle="Pastel Explorer" />
-        <StylesProvider jss={jss}>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <MuiThemeProvider theme={createTheme()}>
-              <ThemeProvider theme={createTheme()}>
+    <HelmetProvider>
+      <Helmet titleTemplate="%s | Pastel Explorer" defaultTitle="Pastel Explorer" />
+      <StylesProvider jss={jss}>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <MuiThemeProvider theme={createTheme()}>
+            <ThemeProvider theme={createTheme()}>
+              <ErrorHandler>
                 <Routes />
-              </ThemeProvider>
-            </MuiThemeProvider>
-          </MuiPickersUtilsProvider>
-        </StylesProvider>
-      </HelmetProvider>
-    </>
+                <ResponseErrorAlert />
+              </ErrorHandler>
+            </ThemeProvider>
+          </MuiThemeProvider>
+        </MuiPickersUtilsProvider>
+      </StylesProvider>
+    </HelmetProvider>
   );
 };
 

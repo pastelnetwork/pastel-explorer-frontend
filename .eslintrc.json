@@ -31,6 +31,7 @@
         "extensions": [".ts", ".tsx"]
       }
     ],
+    "no-console": [1, { "allow": ["warn", "error"] }],
     "prettier/prettier": ["warn"],
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
@@ -41,6 +42,8 @@
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "global-require": "off",
     "@typescript-eslint/no-var-requires": "off",
-    "react/jsx-props-no-spreading": ["warn", { "custom": "ignore" }]
+    "react/jsx-props-no-spreading": ["warn", { "custom": "ignore" }],
+    "@typescript-eslint/explicit-module-boundary-types": [0], // Disabled, we don't need to expose return types of functions
+    "react/state-in-constructor": [0] // Disabled because we want to allow to write components with and without constructor
   }
 }
