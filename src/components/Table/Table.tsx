@@ -8,7 +8,6 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Typography,
 } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 
@@ -21,7 +20,7 @@ export interface RowsProps {
   data: Array<RowsDataType>;
 }
 
-type RowsDataType = { value: number | string; id: number };
+type RowsDataType = { value: number | string | JSX.Element; id: number };
 
 interface TableComponentProps {
   title: string;
@@ -50,9 +49,7 @@ const TableComponent: React.FC<TableComponentProps> = ({ title, headers, rows })
                 <TableRow key={id}>
                   {data.map(dataElement => (
                     <TableCell key={dataElement.id} align="center">
-                      <Typography style={{ wordWrap: 'break-word' }}>
-                        {dataElement.value}
-                      </Typography>
+                      {dataElement.value}
                     </TableCell>
                   ))}
                 </TableRow>
