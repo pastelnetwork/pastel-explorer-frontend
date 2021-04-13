@@ -17,7 +17,6 @@ import * as ROUTES from '../utils/constants/routes';
 const explorerRoutes = {
   id: 'Explorer',
   path: ROUTES.EXPLORER,
-  header: 'Pastel',
   icon: <SearchIcon />,
   component: Explorer,
   containsHome: true,
