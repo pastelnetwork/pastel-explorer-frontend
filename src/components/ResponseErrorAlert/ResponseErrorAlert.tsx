@@ -19,10 +19,10 @@ const ResponseErrorAlert = () => {
   return (
     <AlertComponent
       isOpen={hasError}
-      autoHideDuration={10000}
       title="There was a problem with the query"
       message="Not all data will be visible. Please try refreshing the page."
       severity="error"
+      outsideClickClose={false}
       onClose={handleClose}
     />
   );

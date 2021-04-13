@@ -26,12 +26,13 @@ const Summary: React.FC = () => {
 
   const updateSummaryList = () => {
     fetchData().then(response => {
+      if (!response) return null;
+
       /**
        * TODO
        * Backend should return just object or array with data of SummaryItemProps structure.
        * Frontend should be only responsible for displaying given data to avoid current logic.
        */
-      if (!response) return null;
       const summaryFetchData = Object.entries(response.data[0]);
 
       const updatedSummaryList = summaryList.map(summaryElement => {
@@ -57,7 +58,7 @@ const Summary: React.FC = () => {
   return (
     <Grid container spacing={6}>
       {summaryList.map(({ id, name, value }) => (
-        <Grid item xs={12} sm={12} md={6} lg={3} xl key={id}>
+        <Grid item xs={12} md={6} lg={3} key={id}>
           <Styles.Card mb={3}>
             <Styles.CardContent>
               <Styles.Typography variant="h6" mb={4}>

@@ -10,6 +10,7 @@ interface AlertComponentProps {
   autoHideDuration?: number;
   message?: string;
   title?: string;
+  outsideClickClose?: boolean;
   onClose?: () => void;
 }
 
@@ -18,6 +19,7 @@ const AlertComponent: React.FC<AlertComponentProps> = ({
   onClose,
   severity = 'success',
   autoHideDuration = 4000,
+  outsideClickClose = true,
   message = '',
   title = '',
 }) => {
@@ -30,8 +32,10 @@ const AlertComponent: React.FC<AlertComponentProps> = ({
     return onClose && onClose();
   };
 
+  const handleOutsideClick = () => (outsideClickClose ? handleClose() : undefined);
+
   return (
-    <Snackbar open={isAlertOpen} autoHideDuration={autoHideDuration} onClose={handleClose}>
+    <Snackbar open={isAlertOpen} autoHideDuration={autoHideDuration} onClose={handleOutsideClick}>
       <Alert onClose={handleClose} severity={severity}>
         {title && <AlertTitle>{title}</AlertTitle>}
         {message}
