@@ -10,6 +10,12 @@ export const Card = styled(MuiCard)(spacing);
 
 export const Typography = styled(MuiTypography)(spacing);
 
+export const Values = styled.div`
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
 export const CardContent = styled(MuiCardContent)`
   position: relative;
 

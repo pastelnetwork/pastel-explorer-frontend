@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Grid, Box } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 
 import * as URLS from '@utils/constants/urls';
@@ -73,9 +73,9 @@ const Summary: React.FC = () => {
                 {name}
               </Styles.Typography>
               <Styles.Typography variant="h3" mb={3}>
-                <Box fontWeight="fontWeightRegular">
+                <Styles.Values>
                   {value === null ? <Skeleton animation="wave" variant="text" /> : value}
-                </Box>
+                </Styles.Values>
               </Styles.Typography>
             </Styles.CardContent>
           </Styles.Card>
