@@ -24,8 +24,8 @@ const Network: React.FC = () => {
     url: `${URLS.CONNECTIONS_URL}?_=${getTime(currentDate)}`,
   });
 
-  const transformTransactionsData = (transactions: Array<IConnection>) => {
-    const transformedTransactions = transactions.map(
+  const transformConnectionsData = (connectionList: Array<IConnection>) => {
+    const transformedConnections = connectionList.map(
       ({ address, country, protocol, version, _id }) => {
         return {
           id: _id,
@@ -39,13 +39,13 @@ const Network: React.FC = () => {
       },
     );
 
-    setConnections(transformedTransactions);
+    setConnections(transformedConnections);
   };
 
   React.useEffect(() => {
     fetchData().then(response => {
       if (!response) return null;
-      return transformTransactionsData(response.data);
+      return transformConnectionsData(response.data);
     });
   }, []);
 
