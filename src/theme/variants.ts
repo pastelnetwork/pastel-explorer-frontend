@@ -19,7 +19,7 @@ const themeVariant = {
     },
   },
   header: {
-    color: grey[500],
+    color: grey[800],
     background: '#FFF',
     search: {
       color: grey[900],
