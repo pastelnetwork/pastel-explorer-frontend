@@ -1,17 +1,14 @@
 import * as React from 'react';
-import { Helmet } from 'react-helmet-async';
-import { Grid } from '@material-ui/core';
 import getTime from 'date-fns/getTime';
+import { Grid } from '@material-ui/core';
 
-import Summary from '@components/Summary/Summary';
+import Header from '@components/Header/Header';
 import Table, { HeaderType, RowsProps } from '@components/Table/Table';
 
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { ILastTransactionsResponse } from '@utils/types/IExplorer';
 import { currentDate, getDate } from '@utils/helpers/date/date';
-
-import * as Styles from './Explorer.styles';
+import { ITransaction } from '@utils/types/ITransactions';
 
 const headers: Array<HeaderType> = [
   { id: 1, header: 'Block' },
@@ -21,52 +18,33 @@ const headers: Array<HeaderType> = [
   { id: 5, header: 'Timestamp' },
 ];
 
-interface TransactionProps {
-  blockhash: string;
-  blockindex: number;
-  timestamp: number;
-  total: number;
-  txid: string;
-  vin: Array<{ addresses: string; amount: number }>;
-  vout: Array<{ addresses: string; amount: number }>;
-}
-
-type TransactionsType = Array<TransactionProps>;
+const TRANSACTION_MIN_AMOUNT = '0.00000001';
 
 const Explorer: React.FC = () => {
   const [transactionList, setTransactionList] = React.useState<Array<RowsProps> | null>(null);
-  const { fetchData } = useFetch<ILastTransactionsResponse>({
+  const { fetchData } = useFetch<{ data: Array<ITransaction> }>({
     method: 'get',
-    url: `${URLS.LAST_TRANSACTIONS_URL}/0.00000001?_=${getTime(currentDate)}`,
+    url: `${URLS.LAST_TRANSACTIONS_URL}/${TRANSACTION_MIN_AMOUNT}?_=${getTime(currentDate)}`,
   });
 
-  const generateDisplayAmount = (amount: number): string => {
-    const splitAmount = amount.toString().split('');
-    const firstPart = splitAmount.splice(0, 4).join('');
-    const secondPart = splitAmount.splice(4).join('');
-
-    return `${firstPart}.${secondPart}`;
-  };
-
-  const transformTransactionsData = (transactions: TransactionsType): void => {
-    const transformedTransactions = transactions.map(transaction => {
-      const recipients = transaction.vout.length;
-      const amount = transaction.vin.reduce((acc, element) => acc + element.amount, 0);
-
-      return {
-        id: transaction.txid,
-        data: [
-          { value: transaction.blockindex, id: 1 },
-          { value: transaction.txid, id: 2 },
-          { value: recipients, id: 3 },
-          { value: generateDisplayAmount(amount), id: 4 },
-          {
-            value: getDate(transaction.timestamp * 1000).toUTCString(),
-            id: 5,
-          },
-        ],
-      };
-    });
+  const transformTransactionsData = (transactions: Array<ITransaction>) => {
+    const transformedTransactions = transactions.map(
+      ({ vout, txid, blockindex, total, timestamp }) => {
+        return {
+          id: txid,
+          data: [
+            { value: blockindex, id: 1 },
+            { value: txid, id: 2 },
+            { value: vout.length, id: 3 },
+            { value: total / 100000000, id: 4 },
+            {
+              value: getDate(timestamp * 1000).toUTCString(),
+              id: 5,
+            },
+          ],
+        };
+      },
+    );
 
     setTransactionList(transformedTransactions);
   };
@@ -80,17 +58,7 @@ const Explorer: React.FC = () => {
 
   return (
     <>
-      <Helmet title="Explorer" />
-      <Grid justify="space-between" container spacing={6}>
-        <Grid item>
-          <Styles.Typography variant="h3" gutterBottom>
-            Explorer
-          </Styles.Typography>
-        </Grid>
-        <Grid item />
-      </Grid>
-      <Styles.Divider my={6} />
-      <Summary />
+      <Header title="Explorer" />
       <Grid item>
         <Table headers={headers} rows={transactionList} title="Latest Transactions" />
       </Grid>
