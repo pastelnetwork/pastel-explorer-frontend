@@ -8,7 +8,7 @@ import Table, { HeaderType, RowsProps } from '@components/Table/Table';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { currentDate, getDate } from '@utils/helpers/date/date';
-import { ILastTransactionsResponse, ITransactionsType } from '@utils/types/ITransactions';
+import { ITransaction } from '@utils/types/ITransactions';
 
 const headers: Array<HeaderType> = [
   { id: 1, header: 'Block' },
@@ -22,12 +22,12 @@ const TRANSACTION_MIN_AMOUNT = '0.00000001';
 
 const Explorer: React.FC = () => {
   const [transactionList, setTransactionList] = React.useState<Array<RowsProps> | null>(null);
-  const { fetchData } = useFetch<ILastTransactionsResponse>({
+  const { fetchData } = useFetch<{ data: Array<ITransaction> }>({
     method: 'get',
     url: `${URLS.LAST_TRANSACTIONS_URL}/${TRANSACTION_MIN_AMOUNT}?_=${getTime(currentDate)}`,
   });
 
-  const transformTransactionsData = (transactions: ITransactionsType) => {
+  const transformTransactionsData = (transactions: Array<ITransaction>) => {
     const transformedTransactions = transactions.map(
       ({ vout, txid, blockindex, total, timestamp }) => {
         return {

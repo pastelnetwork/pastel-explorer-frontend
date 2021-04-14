@@ -9,7 +9,7 @@ import Table, { HeaderType, RowsProps } from '@components/Table/Table';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { currentDate, getDate } from '@utils/helpers/date/date';
-import { ILastTransactionsResponse, ITransactionsType } from '@utils/types/ITransactions';
+import { ITransaction } from '@utils/types/ITransactions';
 
 import * as Styles from './Movement.styles';
 
@@ -28,7 +28,7 @@ const TRANSACTION_MIN_AMOUNT = '100';
 
 const Movement: React.FC = () => {
   const [transactionList, setTransactionList] = React.useState<Array<RowsProps> | null>(null);
-  const { fetchData } = useFetch<ILastTransactionsResponse>({
+  const { fetchData } = useFetch<{ data: Array<ITransaction> }>({
     method: 'get',
     url: `${URLS.LAST_TRANSACTIONS_URL}/${TRANSACTION_MIN_AMOUNT}?_=${getTime(currentDate)}`,
   });
@@ -51,7 +51,7 @@ const Movement: React.FC = () => {
     return <Styles.Chip label={displayAmount} chipcolor={amountColor} />;
   };
 
-  const transformTransactionsData = (transactions: ITransactionsType) => {
+  const transformTransactionsData = (transactions: Array<ITransaction>) => {
     const transformedTransactions = transactions.map(({ total, txid, timestamp }) => {
       const amountElement = getAmountElement(total);
       return {
