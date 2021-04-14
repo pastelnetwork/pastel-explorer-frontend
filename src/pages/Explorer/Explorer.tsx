@@ -1,14 +1,17 @@
 import * as React from 'react';
 import getTime from 'date-fns/getTime';
-import { Grid } from '@material-ui/core';
+import { Grid, Paper } from '@material-ui/core';
 
 import Header from '@components/Header/Header';
 import Table, { HeaderType, RowsProps } from '@components/Table/Table';
+import Map from '@components/Map/Map';
 
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { currentDate, getDate } from '@utils/helpers/date/date';
 import { ITransaction } from '@utils/types/ITransactions';
+
+import { mockMapMarkers } from './Explorer.helpers';
 
 const headers: Array<HeaderType> = [
   { id: 1, header: 'Block' },
@@ -59,6 +62,14 @@ const Explorer: React.FC = () => {
   return (
     <>
       <Header title="Explorer" />
+      <Grid container spacing={6}>
+        <Grid item xs={12} lg={8}>
+          <Map markers={mockMapMarkers} title="Explorer Map" />
+        </Grid>
+        <Grid item xs={12} lg={4}>
+          <Paper style={{ height: '96%' }}>Supernode Statistics Template</Paper>
+        </Grid>
+      </Grid>
       <Grid item>
         <Table headers={headers} rows={transactionList} title="Latest Transactions" />
       </Grid>
