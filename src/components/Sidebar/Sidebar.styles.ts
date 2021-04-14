@@ -14,8 +14,6 @@ import {
 
 import { spacing } from '@material-ui/system';
 
-import { green } from '@material-ui/core/colors';
-
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 
 export const Box = styled(MuiBox)(spacing);
@@ -71,22 +69,6 @@ export const BrandLogo = styled.img`
   width: 120px;
 `;
 
-export const BrandChip = styled(Chip)`
-  background-color: ${green[700]};
-  border-radius: 5px;
-  color: ${props => props.theme.palette.common.white};
-  font-size: 55%;
-  height: 18px;
-  margin-left: 2px;
-  margin-top: -16px;
-  padding: 3px 0;
-
-  span {
-    padding-left: ${props => props.theme.spacing(1.375)}px;
-    padding-right: ${props => props.theme.spacing(1.375)}px;
-  }
-`;
-
 type CategoryType = {
   activeClassName?: string;
   button?: boolean;
@@ -105,7 +87,7 @@ export const Category = styled(ListItem)<CategoryType>`
 
   svg {
     color: ${props => props.theme.sidebar.color};
-    font-size: 20px;
+    font-size: 1.25rem;
     width: 20px;
     height: 20px;
     opacity: 0.5;
@@ -182,7 +164,7 @@ export const LinkText = styled(ListItemText)`
 `;
 
 export const LinkBadge = styled(Chip)`
-  font-size: 11px;
+  font-size: 0.75rem;
   font-weight: ${props => props.theme.typography.fontWeightBold};
   height: 20px;
   position: absolute;

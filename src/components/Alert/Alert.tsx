@@ -1,8 +1,8 @@
 import * as React from 'react';
-
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert, { AlertProps } from '@material-ui/lab/Alert';
-import AlertTitle from '@material-ui/lab/AlertTitle';
+
+import * as Styles from './Alert.styles';
 
 interface AlertComponentProps {
   isOpen: boolean;
@@ -37,7 +37,7 @@ const AlertComponent: React.FC<AlertComponentProps> = ({
   return (
     <Snackbar open={isAlertOpen} autoHideDuration={autoHideDuration} onClose={handleOutsideClick}>
       <Alert onClose={handleClose} severity={severity}>
-        {title && <AlertTitle>{title}</AlertTitle>}
+        {title && <Styles.Title>{title}</Styles.Title>}
         {message}
       </Alert>
     </Snackbar>

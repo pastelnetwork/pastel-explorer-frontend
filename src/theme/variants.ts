@@ -1,41 +1,31 @@
 import { green, grey } from '@material-ui/core/colors';
 
-const customBlue = {
-  50: '#e9f0fb',
-  100: '#c8daf4',
-  200: '#a3c1ed',
-  300: '#7ea8e5',
-  400: '#6395e0',
-  500: '#4782da',
-  600: '#407ad6',
-  700: '#376fd0',
-  800: '#2f65cb',
-  900: '#2052c2 ',
-};
-
 const themeVariant = {
   palette: {
     primary: {
-      main: customBlue[700],
+      main: '#279989',
       contrastText: '#FFF',
     },
     secondary: {
-      main: customBlue[500],
+      main: '#41B6E6',
       contrastText: '#FFF',
     },
     background: {
       default: '#F7F9FC',
       paper: '#FFF',
     },
+    text: {
+      primary: '#27251F',
+    },
   },
   header: {
-    color: grey[500],
+    color: grey[800],
     background: '#FFF',
     search: {
-      color: grey[800],
+      color: grey[900],
     },
     indicator: {
-      background: customBlue[600],
+      background: '#41B6E6',
     },
   },
   footer: {
@@ -49,7 +39,7 @@ const themeVariant = {
       color: grey[200],
       background: '#233044',
       brand: {
-        color: customBlue[500],
+        color: '#41B6E6',
       },
     },
     footer: {
@@ -61,7 +51,7 @@ const themeVariant = {
     },
     badge: {
       color: '#FFF',
-      background: customBlue[500],
+      background: '#41B6E6',
     },
   },
 };

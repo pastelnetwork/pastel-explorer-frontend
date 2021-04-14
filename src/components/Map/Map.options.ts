@@ -1,6 +1,8 @@
+import themeVariant from '@theme/variants';
+
 const regionColor = '#e3eaef';
-const markerColor = '#243045';
-const markerStrokeColor = '#fff';
+const markerColor = themeVariant.palette.primary.main;
+const markerStrokeColor = themeVariant.palette.primary.contrastText;
 
 export const defaultMapOptions = {
   map: 'world_mill',

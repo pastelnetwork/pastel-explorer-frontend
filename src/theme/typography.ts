@@ -2,6 +2,7 @@ import { TypographyOptions } from '@material-ui/core/styles/createTypography';
 
 const typography: TypographyOptions = {
   fontFamily: [
+    'Gill Sans',
     'Inter',
     '-apple-system',
     'BlinkMacSystemFont',
@@ -14,7 +15,7 @@ const typography: TypographyOptions = {
     '"Segoe UI Emoji"',
     '"Segoe UI Symbol"',
   ].join(','),
-  fontSize: 13,
+  fontSize: 16,
   fontWeightLight: 300,
   fontWeightRegular: 400,
   fontWeightMedium: 500,
@@ -50,7 +51,7 @@ const typography: TypographyOptions = {
     lineHeight: 1.25,
   },
   body1: {
-    fontSize: 13,
+    fontSize: 16,
   },
   button: {
     textTransform: 'none',
