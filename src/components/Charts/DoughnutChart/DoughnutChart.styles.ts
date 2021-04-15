@@ -20,6 +20,10 @@ export const CardContent = styled(MuiCardContent)`
 export const ChartWrapper = styled.div`
   height: 168px;
   position: relative;
+
+  .chartjs-render-monitor {
+    position: relative;
+  }
 `;
 
 export const DoughnutInner = styled.div`

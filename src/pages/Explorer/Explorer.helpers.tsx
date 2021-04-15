@@ -1,7 +1,7 @@
 import themeVariant from '@theme/variants';
 
 import { Chip } from '@material-ui/core';
-import { green, orange } from '@material-ui/core/colors';
+import { red } from '@material-ui/core/colors';
 
 export const mockChartTableData = {
   headers: [
@@ -16,7 +16,13 @@ export const mockChartTableData = {
         {
           id: 2,
           value: (
-            <Chip label={3495} style={{ backgroundColor: themeVariant.palette.secondary.main }} />
+            <Chip
+              label={3495}
+              style={{
+                backgroundColor: themeVariant.palette.secondary.main,
+                color: themeVariant.palette.secondary.contrastText,
+              }}
+            />
           ),
         },
       ],
@@ -25,14 +31,36 @@ export const mockChartTableData = {
       id: 2,
       data: [
         { id: 1, value: 'Inactives' },
-        { id: 2, value: <Chip label={234} style={{ backgroundColor: orange[500] }} /> },
+        {
+          id: 2,
+          value: (
+            <Chip
+              label={234}
+              style={{
+                backgroundColor: red[400],
+                color: themeVariant.palette.secondary.contrastText,
+              }}
+            />
+          ),
+        },
       ],
     },
     {
       id: 3,
       data: [
         { id: 1, value: 'Unique IPs' },
-        { id: 2, value: <Chip label={3289} style={{ backgroundColor: green[500] }} /> },
+        {
+          id: 2,
+          value: (
+            <Chip
+              label={3289}
+              style={{
+                backgroundColor: themeVariant.palette.primary.main,
+                color: themeVariant.palette.secondary.contrastText,
+              }}
+            />
+          ),
+        },
       ],
     },
   ],
@@ -41,7 +69,11 @@ export const mockChartTableData = {
     datasets: [
       {
         data: [3495, 234, 3289],
-        backgroundColor: [themeVariant.palette.secondary.main, orange[500], green[500]],
+        backgroundColor: [
+          themeVariant.palette.secondary.main,
+          red[400],
+          themeVariant.palette.primary.main,
+        ],
         borderWidth: 5,
         borderColor: themeVariant.palette.background.paper,
       },
