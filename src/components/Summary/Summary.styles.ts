@@ -5,6 +5,7 @@ import {
   CardContent as MuiCardContent,
   Typography as MuiTypography,
 } from '@material-ui/core';
+import { rgba } from 'polished';
 
 export const Card = styled(MuiCard)(spacing);
 
@@ -21,5 +22,18 @@ export const CardContent = styled(MuiCardContent)`
 
   &:last-child {
     padding-bottom: ${props => props.theme.spacing(4)}px;
+  }
+`;
+
+export const Percentage = styled(MuiTypography)<{
+  percentagecolor: string;
+  mb: number;
+}>`
+  span {
+    color: ${props => props.percentagecolor};
+    background: ${props => rgba(props.percentagecolor, 0.1)};
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-right: ${props => props.theme.spacing(2)}px;
   }
 `;
