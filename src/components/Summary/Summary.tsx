@@ -65,7 +65,7 @@ const Summary: React.FC = () => {
 
   return (
     <Grid container spacing={6}>
-      {summaryList.map(({ id, name, value }) => (
+      {summaryList.map(({ id, name, value, difference }) => (
         <Grid item xs={12} md={6} lg={3} key={id}>
           <Styles.Card mb={3}>
             <Styles.CardContent>
@@ -77,6 +77,18 @@ const Summary: React.FC = () => {
                   {value === null ? <Skeleton animation="wave" variant="text" /> : value}
                 </Styles.Values>
               </Styles.Typography>
+              <Styles.Percentage
+                variant="subtitle2"
+                mb={6}
+                color="textSecondary"
+                percentagecolor={`${difference > 0 ? '#008000' : '#ff0000'}`}
+              >
+                <span>
+                  {`${difference > 0 ? '+' : ''}`}
+                  {difference}%
+                </span>
+                Since yesterday
+              </Styles.Percentage>
             </Styles.CardContent>
           </Styles.Card>
         </Grid>
