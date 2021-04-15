@@ -1,7 +1,6 @@
 import * as React from 'react';
 import getTime from 'date-fns/getTime';
 import { Grid } from '@material-ui/core';
-import { green, red, orange } from '@material-ui/core/colors';
 
 import Header from '@components/Header/Header';
 import Table, { HeaderType, RowsProps } from '@components/Table/Table';
@@ -10,6 +9,8 @@ import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { currentDate, getDate } from '@utils/helpers/date/date';
 import { ITransaction } from '@utils/types/ITransactions';
+
+import themeVariant from '@theme/variants';
 
 import * as Styles from './Movement.styles';
 
@@ -35,14 +36,14 @@ const Movement: React.FC = () => {
 
   const getAmountColor = (amount: number) => {
     if (amount > FLAGS.high) {
-      return red[500];
+      return themeVariant.custom.red.main;
     }
 
     if (amount > FLAGS.low) {
-      return orange[500];
+      return themeVariant.custom.orange.main;
     }
 
-    return green[500];
+    return themeVariant.custom.green.main;
   };
 
   const getAmountElement = (amount: number) => {

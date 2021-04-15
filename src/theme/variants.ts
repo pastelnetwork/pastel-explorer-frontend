@@ -1,6 +1,23 @@
-import { green, grey } from '@material-ui/core/colors';
+import { green, grey, red, orange } from '@material-ui/core/colors';
 
 const themeVariant = {
+  custom: {
+    green: {
+      light: green[200],
+      main: green[500],
+      dark: green[800],
+    },
+    red: {
+      light: red[200],
+      main: red[500],
+      dark: red[800],
+    },
+    orange: {
+      light: orange[200],
+      main: orange[500],
+      dark: orange[800],
+    },
+  },
   palette: {
     primary: {
       main: '#279989',
@@ -12,6 +29,7 @@ const themeVariant = {
     },
     background: {
       default: '#F7F9FC',
+      map: '#e3eaef',
       paper: '#FFF',
     },
     text: {

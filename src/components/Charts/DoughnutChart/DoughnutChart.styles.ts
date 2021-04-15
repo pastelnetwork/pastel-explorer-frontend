@@ -1,6 +1,7 @@
 import styled from 'styled-components/macro';
 import { spacing } from '@material-ui/system';
-import { green, red } from '@material-ui/core/colors';
+
+import themeVariant from '@theme/variants';
 
 import {
   Card as MuiCard,
@@ -51,9 +52,9 @@ export const TableCell = styled(MuiTableCell)`
 `;
 
 export const GreenText = styled.span`
-  color: ${() => green[400]};
+  color: ${() => themeVariant.custom.green.main};
 `;
 
 export const RedText = styled.span`
-  color: ${() => red[400]};
+  color: ${() => themeVariant.custom.red.main};
 `;

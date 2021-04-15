@@ -1,7 +1,6 @@
 import themeVariant from '@theme/variants';
 
 import { Chip } from '@material-ui/core';
-import { red } from '@material-ui/core/colors';
 
 export const mockChartTableData = {
   headers: [
@@ -37,7 +36,7 @@ export const mockChartTableData = {
             <Chip
               label={234}
               style={{
-                backgroundColor: red[400],
+                backgroundColor: themeVariant.custom.red.main,
                 color: themeVariant.palette.secondary.contrastText,
               }}
             />
@@ -71,7 +70,7 @@ export const mockChartTableData = {
         data: [3495, 234, 3289],
         backgroundColor: [
           themeVariant.palette.secondary.main,
-          red[400],
+          themeVariant.custom.red.main,
           themeVariant.palette.primary.main,
         ],
         borderWidth: 5,

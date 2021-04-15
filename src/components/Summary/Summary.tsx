@@ -4,12 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Grid } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 
-import * as URLS from '@utils/constants/urls';
-
 import { AppStateType } from '@redux/reducers';
 import { setSummary } from '@redux/actions/summaryActions';
+
+import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { ISummaryResponse } from '@utils/types/ISummary';
+
+import themeVariant from '@theme/variants';
 
 import * as Styles from './Summary.styles';
 
@@ -81,7 +83,9 @@ const Summary: React.FC = () => {
                 variant="subtitle2"
                 mb={6}
                 color="textSecondary"
-                percentagecolor={`${difference > 0 ? '#008000' : '#ff0000'}`}
+                percentagecolor={`${
+                  difference > 0 ? themeVariant.custom.green.dark : themeVariant.custom.red.dark
+                }`}
               >
                 <span>
                   {`${difference > 0 ? '+' : ''}`}
