@@ -4,9 +4,11 @@ import { useParams, Redirect } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 
 import Header from '@components/Header/Header';
+import RouterLink from '@components/RouterLink/RouterLink';
 import Table, { RowsProps } from '@components/Table/Table';
 
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
+import * as ROUTES from '@utils/constants/routes';
 import * as URLS from '@utils/constants/urls';
 import { formattedDate } from '@utils/helpers/date/date';
 import { ITransaction, TransactionEvent, DirectionType } from '@utils/types/ITransactions';
@@ -32,7 +34,7 @@ const TransactionDetails = () => {
 
   React.useEffect(() => {
     fetchData().then(response => {
-      if (!response || !response.data) {
+      if (!response?.data) {
         setRedirect(true);
       } else {
         setTransaction(response.data);
@@ -56,7 +58,10 @@ const TransactionDetails = () => {
       return {
         id: index,
         data: [
-          { id: 1, value: address },
+          {
+            id: 1,
+            value: <RouterLink route={`${ROUTES.ADDRESS_DETAILS}/${address}`} value={address} />,
+          },
           { id: 2, value: amount },
         ],
       };
