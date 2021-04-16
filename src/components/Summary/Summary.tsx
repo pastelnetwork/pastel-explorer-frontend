@@ -9,6 +9,7 @@ import { setSummary } from '@redux/actions/summaryActions';
 
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
+import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { ISummaryResponse } from '@utils/types/ISummary';
 
 import themeVariant from '@theme/variants';
@@ -25,14 +26,6 @@ const Summary: React.FC = () => {
   const dispatch = useDispatch();
   const summaryList = useSelector((state: AppStateType) => state.summaryReducer.summary);
 
-  const generateSummaryValue = (value: number | string, decimals: number | null) => {
-    if (decimals) {
-      return parseFloat(value.toString()).toFixed(decimals);
-    }
-
-    return value;
-  };
-
   const updateSummaryList = () => {
     fetchData().then(response => {
       if (!response) return null;
@@ -46,13 +39,12 @@ const Summary: React.FC = () => {
 
       const updatedSummaryList = summaryList.map(summaryElement => {
         const currentSummaryItem = summaryFetchData.find(([key]) => key === summaryElement.key);
-        const valueDecimals = summaryElement.decimals;
 
         if (currentSummaryItem) {
           const [, currentSummaryItemValue] = currentSummaryItem;
           return {
             ...summaryElement,
-            value: generateSummaryValue(currentSummaryItemValue, valueDecimals),
+            value: formatNumber(currentSummaryItemValue, { decimalsLength: 2 }),
           };
         }
 

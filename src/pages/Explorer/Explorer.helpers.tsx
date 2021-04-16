@@ -1,6 +1,9 @@
 import themeVariant from '@theme/variants';
+import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 
 import { Chip } from '@material-ui/core';
+
+const MOCKED_VALUES = [3495, 234, 3289];
 
 export const mockChartTableData = {
   headers: [
@@ -16,7 +19,7 @@ export const mockChartTableData = {
           id: 2,
           value: (
             <Chip
-              label={3495}
+              label={formatNumber(MOCKED_VALUES[0])}
               style={{
                 backgroundColor: themeVariant.palette.secondary.main,
                 color: themeVariant.palette.secondary.contrastText,
@@ -34,7 +37,7 @@ export const mockChartTableData = {
           id: 2,
           value: (
             <Chip
-              label={234}
+              label={formatNumber(MOCKED_VALUES[1])}
               style={{
                 backgroundColor: themeVariant.custom.red.main,
                 color: themeVariant.palette.secondary.contrastText,
@@ -52,7 +55,7 @@ export const mockChartTableData = {
           id: 2,
           value: (
             <Chip
-              label={3289}
+              label={formatNumber(MOCKED_VALUES[2])}
               style={{
                 backgroundColor: themeVariant.palette.primary.main,
                 color: themeVariant.palette.secondary.contrastText,
@@ -67,7 +70,7 @@ export const mockChartTableData = {
     labels: ['Active', 'Inactives', 'Unique IPs'],
     datasets: [
       {
-        data: [3495, 234, 3289],
+        data: MOCKED_VALUES,
         backgroundColor: [
           themeVariant.palette.secondary.main,
           themeVariant.custom.red.main,
