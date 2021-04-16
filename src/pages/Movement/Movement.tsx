@@ -4,30 +4,23 @@ import { Grid } from '@material-ui/core';
 
 import Header from '@components/Header/Header';
 import RouterLink from '@components/RouterLink/RouterLink';
-import Table, { HeaderType, RowsProps } from '@components/Table/Table';
+import Table, { RowsProps } from '@components/Table/Table';
 
 import * as URLS from '@utils/constants/urls';
 import * as ROUTES from '@utils/constants/routes';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { currentDate, getDate } from '@utils/helpers/date/date';
+import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
+import { currentDate, formattedDate } from '@utils/helpers/date/date';
 import { ITransaction } from '@utils/types/ITransactions';
 
-import themeVariant from '@theme/variants';
-
+import { getAmountColor, TRANSACTION_MIN_AMOUNT, headers } from './Movement.helpers';
 import * as Styles from './Movement.styles';
 
-const headers: Array<HeaderType> = [
-  { id: 1, header: 'Timestamp' },
-  { id: 2, header: 'txID' },
-  { id: 3, header: 'Amount' },
-];
-
-const FLAGS = {
-  low: 1000,
-  high: 5000,
+export const getAmountElement = (amount: number) => {
+  const displayAmount = formatNumber(amount, { divideToAmmount: true, decimalsLength: 2 });
+  const amountColor = getAmountColor(amount);
+  return <Styles.Chip label={displayAmount} chipcolor={amountColor} />;
 };
-
-const TRANSACTION_MIN_AMOUNT = '100';
 
 const Movement: React.FC = () => {
   const [transactionList, setTransactionList] = React.useState<Array<RowsProps> | null>(null);
@@ -36,24 +29,6 @@ const Movement: React.FC = () => {
     url: `${URLS.LAST_TRANSACTIONS_URL}/${TRANSACTION_MIN_AMOUNT}?_=${getTime(currentDate)}`,
   });
 
-  const getAmountColor = (amount: number) => {
-    if (amount > FLAGS.high) {
-      return themeVariant.custom.red.main;
-    }
-
-    if (amount > FLAGS.low) {
-      return themeVariant.custom.orange.main;
-    }
-
-    return themeVariant.custom.green.main;
-  };
-
-  const getAmountElement = (amount: number) => {
-    const displayAmount = amount / 100000000;
-    const amountColor = getAmountColor(displayAmount);
-    return <Styles.Chip label={displayAmount} chipcolor={amountColor} />;
-  };
-
   const transformTransactionsData = (transactions: Array<ITransaction>) => {
     const transformedTransactions = transactions.map(({ total, txid, timestamp }) => {
       const amountElement = getAmountElement(total);
@@ -61,7 +36,7 @@ const Movement: React.FC = () => {
         id: txid,
         data: [
           {
-            value: getDate(timestamp * 1000).toUTCString(),
+            value: formattedDate(timestamp, { dayName: false }),
             id: 1,
           },
           {

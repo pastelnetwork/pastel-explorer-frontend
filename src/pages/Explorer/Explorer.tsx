@@ -1,5 +1,6 @@
 import * as React from 'react';
 import getTime from 'date-fns/getTime';
+
 import { Grid } from '@material-ui/core';
 
 import Header from '@components/Header/Header';
@@ -11,7 +12,8 @@ import DoughnutChart from '@components/Charts/DoughnutChart/DoughnutChart';
 import * as URLS from '@utils/constants/urls';
 import * as ROUTES from '@utils/constants/routes';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { currentDate, getDate } from '@utils/helpers/date/date';
+import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
+import { currentDate, formattedDate } from '@utils/helpers/date/date';
 import { ITransaction } from '@utils/types/ITransactions';
 
 import { mockMapMarkers, mockChartTableData } from './Explorer.helpers';
@@ -50,9 +52,12 @@ const Explorer: React.FC = () => {
               id: 2,
             },
             { value: vout.length, id: 3 },
-            { value: total / 100000000, id: 4 },
             {
-              value: getDate(timestamp * 1000).toUTCString(),
+              value: formatNumber(total, { decimalsLength: 2, divideToAmmount: true }),
+              id: 4,
+            },
+            {
+              value: formattedDate(timestamp),
               id: 5,
             },
           ],
@@ -81,7 +86,7 @@ const Explorer: React.FC = () => {
           <DoughnutChart
             title="Supernode Statistics"
             innerTitle="Total"
-            innerSubtitle="3729"
+            innerSubtitle={formatNumber(3729, { decimalsLength: 0 })}
             data={mockChartTableData.data}
             table={<Table headers={mockChartTableData.headers} rows={mockChartTableData.rows} />}
           />
