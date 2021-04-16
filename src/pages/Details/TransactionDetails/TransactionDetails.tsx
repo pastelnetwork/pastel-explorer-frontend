@@ -8,6 +8,7 @@ import RouterLink from '@components/RouterLink/RouterLink';
 import Table, { RowsProps } from '@components/Table/Table';
 
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
+import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import * as ROUTES from '@utils/constants/routes';
 import * as URLS from '@utils/constants/urls';
 import { formattedDate } from '@utils/helpers/date/date';
@@ -43,7 +44,7 @@ const TransactionDetails = () => {
   }, []);
 
   if (redirect) {
-    return <Redirect to="/404" />;
+    return <Redirect to={ROUTES.NOT_FOUND} />;
   }
 
   const generateTransactionEvents = (
@@ -62,7 +63,7 @@ const TransactionDetails = () => {
             id: 1,
             value: <RouterLink route={`${ROUTES.ADDRESS_DETAILS}/${address}`} value={address} />,
           },
-          { id: 2, value: amount },
+          { id: 2, value: formatNumber(amount, { decimalsLength: 2 }) },
         ],
       };
     });

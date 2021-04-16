@@ -7,7 +7,9 @@ import Header from '@components/Header/Header';
 import Table, { RowsProps } from '@components/Table/Table';
 
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
+import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import * as URLS from '@utils/constants/urls';
+import * as ROUTES from '@utils/constants/routes';
 import { IBlock } from '@utils/types/IBlocks';
 import { formattedDate } from '@utils/helpers/date/date';
 
@@ -50,9 +52,9 @@ const BlockDetails = () => {
         id: 1,
         data: [
           { id: 1, value: height },
-          { id: 2, value: difficulty },
-          { id: 3, value: confirmations },
-          { id: 4, value: size },
+          { id: 2, value: formatNumber(difficulty, { decimalsLength: 2 }) },
+          { id: 3, value: formatNumber(confirmations) },
+          { id: 4, value: formatNumber(size, { decimalsLength: 2 }) },
           { id: 5, value: nonce },
           { id: 6, value: formattedDate(timestamp) },
         ],
@@ -61,7 +63,7 @@ const BlockDetails = () => {
   };
 
   if (redirect) {
-    return <Redirect to="/404" />;
+    return <Redirect to={ROUTES.NOT_FOUND} />;
   }
 
   return block ? (
