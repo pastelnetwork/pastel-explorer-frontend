@@ -1,6 +1,6 @@
 import themeVariant from '@theme/variants';
 
-const regionColor = '#e3eaef';
+const regionColor = themeVariant.palette.background.map;
 const markerColor = themeVariant.palette.primary.main;
 const markerStrokeColor = themeVariant.palette.primary.contrastText;
 
