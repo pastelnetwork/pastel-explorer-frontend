@@ -7,6 +7,7 @@ import Header from '@components/Header/Header';
 import Table, { HeaderType, RowsProps } from '@components/Table/Table';
 
 import * as URLS from '@utils/constants/urls';
+import * as ROUTES from '@utils/constants/routes';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { currentDate, getDate } from '@utils/helpers/date/date';
 import { ITransaction } from '@utils/types/ITransactions';
@@ -51,6 +52,10 @@ const Movement: React.FC = () => {
     return <Styles.Chip label={displayAmount} chipcolor={amountColor} />;
   };
 
+  const generateClickableId = (route: string, id: string | number, value: string | number) => {
+    return <Styles.RouterLink to={`${route}/${id}`}>{value}</Styles.RouterLink>;
+  };
+
   const transformTransactionsData = (transactions: Array<ITransaction>) => {
     const transformedTransactions = transactions.map(({ total, txid, timestamp }) => {
       const amountElement = getAmountElement(total);
@@ -61,7 +66,7 @@ const Movement: React.FC = () => {
             value: getDate(timestamp * 1000).toUTCString(),
             id: 1,
           },
-          { value: txid, id: 2 },
+          { value: generateClickableId(ROUTES.TRANSACTION_DETAILS, txid, txid), id: 2 },
           { value: amountElement, id: 3 },
         ],
       };
