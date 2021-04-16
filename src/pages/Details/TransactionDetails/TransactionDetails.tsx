@@ -77,7 +77,10 @@ const TransactionDetails = () => {
         id: 1,
         data: [
           { id: 1, value: '1' },
-          { id: 2, value: blockHash },
+          {
+            id: 2,
+            value: <RouterLink route={`${ROUTES.BLOCK_DETAILS}/${blockHash}`} value={blockHash} />,
+          },
           { id: 3, value: formattedDate(timestamp) },
         ],
       },
