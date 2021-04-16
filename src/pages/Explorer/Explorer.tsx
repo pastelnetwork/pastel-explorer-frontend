@@ -3,6 +3,7 @@ import getTime from 'date-fns/getTime';
 import { Grid } from '@material-ui/core';
 
 import Header from '@components/Header/Header';
+import RouterLink from '@components/RouterLink/RouterLink';
 import Table, { HeaderType, RowsProps } from '@components/Table/Table';
 import Map from '@components/Map/Map';
 import DoughnutChart from '@components/Charts/DoughnutChart/DoughnutChart';
@@ -14,7 +15,6 @@ import { currentDate, getDate } from '@utils/helpers/date/date';
 import { ITransaction } from '@utils/types/ITransactions';
 
 import { mockMapMarkers, mockChartTableData } from './Explorer.helpers';
-import * as Styles from './Explorer.styles';
 
 const headers: Array<HeaderType> = [
   { id: 1, header: 'Block' },
@@ -33,18 +33,22 @@ const Explorer: React.FC = () => {
     url: `${URLS.LAST_TRANSACTIONS_URL}/${TRANSACTION_MIN_AMOUNT}?_=${getTime(currentDate)}`,
   });
 
-  const generateClickableId = (route: string, id: string | number, value: string | number) => {
-    return <Styles.RouterLink to={`${route}/${id}`}>{value}</Styles.RouterLink>;
-  };
-
   const transformTransactionsData = (transactions: Array<ITransaction>) => {
     const transformedTransactions = transactions.map(
       ({ vout, txid, blockindex, total, timestamp, blockhash }) => {
         return {
           id: txid,
           data: [
-            { value: generateClickableId(ROUTES.BLOCK_DETAILS, blockhash, blockindex), id: 1 },
-            { value: generateClickableId(ROUTES.TRANSACTION_DETAILS, txid, txid), id: 2 },
+            {
+              value: (
+                <RouterLink route={`${ROUTES.BLOCK_DETAILS}/${blockhash}`} value={blockindex} />
+              ),
+              id: 1,
+            },
+            {
+              value: <RouterLink route={`${ROUTES.TRANSACTION_DETAILS}/${txid}`} value={txid} />,
+              id: 2,
+            },
             { value: vout.length, id: 3 },
             { value: total / 100000000, id: 4 },
             {
