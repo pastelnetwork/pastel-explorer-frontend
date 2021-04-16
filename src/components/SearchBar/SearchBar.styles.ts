@@ -2,6 +2,7 @@ import styled from 'styled-components/macro';
 import { darken } from 'polished';
 
 import { InputBase, AppBar as MuiAppBar, IconButton as MuiIconButton } from '@material-ui/core';
+import MuiAutocomplete from '@material-ui/lab/Autocomplete';
 
 export const AppBar = styled(MuiAppBar)`
   background: ${props => props.theme.header.background};
@@ -12,6 +13,14 @@ export const IconButton = styled(MuiIconButton)`
   svg {
     width: 22px;
     height: 22px;
+  }
+`;
+
+export const Autocomplete = styled(MuiAutocomplete)`
+  margin: 12px 0;
+
+  fieldset {
+    border: 0;
   }
 `;
 

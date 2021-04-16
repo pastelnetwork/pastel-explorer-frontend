@@ -57,7 +57,7 @@ export const Brand = styled(ListItem)<{
   cursor: pointer;
 
   ${props => props.theme.breakpoints.up('sm')} {
-    min-height: 64px;
+    min-height: 70px;
   }
 
   &:hover {
