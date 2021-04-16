@@ -8,7 +8,8 @@
       "@theme/*": ["src/theme/*"],
       "@utils/*": ["src/utils/*"],
       "@redux/*": ["src/redux/*"],
-      "@routes/*": ["src/routes/*"]
+      "@routes/*": ["src/routes/*"],
+      "@layouts/*": ["src/layouts/*"]
     }
   }
 }

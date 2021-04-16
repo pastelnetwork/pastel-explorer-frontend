@@ -8,11 +8,13 @@ import Map from '@components/Map/Map';
 import DoughnutChart from '@components/Charts/DoughnutChart/DoughnutChart';
 
 import * as URLS from '@utils/constants/urls';
+import * as ROUTES from '@utils/constants/routes';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { currentDate, getDate } from '@utils/helpers/date/date';
 import { ITransaction } from '@utils/types/ITransactions';
 
 import { mockMapMarkers, mockChartTableData } from './Explorer.helpers';
+import * as Styles from './Explorer.styles';
 
 const headers: Array<HeaderType> = [
   { id: 1, header: 'Block' },
@@ -31,14 +33,18 @@ const Explorer: React.FC = () => {
     url: `${URLS.LAST_TRANSACTIONS_URL}/${TRANSACTION_MIN_AMOUNT}?_=${getTime(currentDate)}`,
   });
 
+  const generateClickableId = (route: string, id: string | number, value: string | number) => {
+    return <Styles.RouterLink to={`${route}/${id}`}>{value}</Styles.RouterLink>;
+  };
+
   const transformTransactionsData = (transactions: Array<ITransaction>) => {
     const transformedTransactions = transactions.map(
-      ({ vout, txid, blockindex, total, timestamp }) => {
+      ({ vout, txid, blockindex, total, timestamp, blockhash }) => {
         return {
           id: txid,
           data: [
-            { value: blockindex, id: 1 },
-            { value: txid, id: 2 },
+            { value: generateClickableId(ROUTES.BLOCK_DETAILS, blockhash, blockindex), id: 1 },
+            { value: generateClickableId(ROUTES.TRANSACTION_DETAILS, txid, txid), id: 2 },
             { value: vout.length, id: 3 },
             { value: total / 100000000, id: 4 },
             {

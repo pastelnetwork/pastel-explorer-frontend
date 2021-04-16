@@ -12,7 +12,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ title }) => {
   return (
-    <>
+    <Styles.Container>
       <Helmet title="Explorer" />
       <Grid justify="space-between" container spacing={6}>
         <Grid item>
@@ -24,7 +24,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
       </Grid>
       <Styles.Divider my={6} />
       <Summary />
-    </>
+    </Styles.Container>
   );
 };
 

@@ -10,6 +10,10 @@ import Network from '@pages/Network/Network';
 import Richlist from '@pages/Richlist/Richlist';
 import Info from '@pages/Info/Info';
 
+import TransactionDetails from '@pages/Details/TransactionDetails/TransactionDetails';
+import BlockDetails from '@pages/Details/BlockDetails/BlockDetails';
+import AddressDetails from '@pages/Details/AddressDetails/AddressDetails';
+
 import * as ROUTES from '@utils/constants/routes';
 
 const explorerRoutes = {
@@ -53,12 +57,36 @@ const infoRoutes = {
   children: null,
 };
 
+const transactionDetailsRoutes = {
+  id: 'Transaction Details',
+  path: `${ROUTES.TRANSACTION_DETAILS}/:id`,
+  component: TransactionDetails,
+  children: null,
+};
+
+const blockDetailsRoutes = {
+  id: 'Block Details',
+  path: `${ROUTES.BLOCK_DETAILS}/:id`,
+  component: BlockDetails,
+  children: null,
+};
+
+const addressDetailsRoutes = {
+  id: 'Address Details',
+  path: `${ROUTES.ADDRESS_DETAILS}/:id`,
+  component: AddressDetails,
+  children: null,
+};
+
 export const pageRoutes = [
   explorerRoutes,
   movementRoutes,
   networkRoutes,
   richlistRoutes,
   infoRoutes,
+  transactionDetailsRoutes,
+  blockDetailsRoutes,
+  addressDetailsRoutes,
 ];
 
 export const sidebarRoutes = [
