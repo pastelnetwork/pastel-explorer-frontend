@@ -3,9 +3,11 @@ import getTime from 'date-fns/getTime';
 import { Grid } from '@material-ui/core';
 
 import Header from '@components/Header/Header';
+import RouterLink from '@components/RouterLink/RouterLink';
 import Table, { HeaderType, RowsProps } from '@components/Table/Table';
 
 import * as URLS from '@utils/constants/urls';
+import * as ROUTES from '@utils/constants/routes';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { currentDate, getDate } from '@utils/helpers/date/date';
 import { ITransaction } from '@utils/types/ITransactions';
@@ -62,7 +64,10 @@ const Movement: React.FC = () => {
             value: getDate(timestamp * 1000).toUTCString(),
             id: 1,
           },
-          { value: txid, id: 2 },
+          {
+            value: <RouterLink route={`${ROUTES.TRANSACTION_DETAILS}/${txid}`} value={txid} />,
+            id: 2,
+          },
           { value: amountElement, id: 3 },
         ],
       };

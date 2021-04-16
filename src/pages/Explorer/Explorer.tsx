@@ -3,11 +3,13 @@ import getTime from 'date-fns/getTime';
 import { Grid } from '@material-ui/core';
 
 import Header from '@components/Header/Header';
+import RouterLink from '@components/RouterLink/RouterLink';
 import Table, { HeaderType, RowsProps } from '@components/Table/Table';
 import Map from '@components/Map/Map';
 import DoughnutChart from '@components/Charts/DoughnutChart/DoughnutChart';
 
 import * as URLS from '@utils/constants/urls';
+import * as ROUTES from '@utils/constants/routes';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { currentDate, getDate } from '@utils/helpers/date/date';
 import { ITransaction } from '@utils/types/ITransactions';
@@ -33,12 +35,20 @@ const Explorer: React.FC = () => {
 
   const transformTransactionsData = (transactions: Array<ITransaction>) => {
     const transformedTransactions = transactions.map(
-      ({ vout, txid, blockindex, total, timestamp }) => {
+      ({ vout, txid, blockindex, total, timestamp, blockhash }) => {
         return {
           id: txid,
           data: [
-            { value: blockindex, id: 1 },
-            { value: txid, id: 2 },
+            {
+              value: (
+                <RouterLink route={`${ROUTES.BLOCK_DETAILS}/${blockhash}`} value={blockindex} />
+              ),
+              id: 1,
+            },
+            {
+              value: <RouterLink route={`${ROUTES.TRANSACTION_DETAILS}/${txid}`} value={txid} />,
+              id: 2,
+            },
             { value: vout.length, id: 3 },
             { value: total / 100000000, id: 4 },
             {
