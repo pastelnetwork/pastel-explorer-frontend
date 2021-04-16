@@ -29,7 +29,7 @@ const BlockDetails = () => {
 
   React.useEffect(() => {
     fetchData().then(response => {
-      if (!response || !response.data) {
+      if (!response?.data) {
         setRedirect(true);
       } else {
         setBlock(response.data);
