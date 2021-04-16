@@ -3,6 +3,15 @@ interface vType {
   amount: number;
 }
 
+export type DirectionType = 'Incoming' | 'Outgoing';
+
+export interface TransactionEvent {
+  amount: number;
+  transactionHash: string;
+  direction: DirectionType;
+  address: string;
+}
+
 export interface ITransaction {
   blockhash: string;
   blockindex: number;
@@ -11,4 +20,8 @@ export interface ITransaction {
   txid: string;
   vin: Array<vType>;
   vout: Array<vType>;
+  coinbase: boolean;
+  id: string;
+  transactionEvents: Array<TransactionEvent>;
+  blockHash: string;
 }
