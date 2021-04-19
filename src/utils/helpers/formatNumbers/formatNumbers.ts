@@ -1,13 +1,13 @@
 export const formatNumber = (
   total: number | string,
-  options: { decimalsLength?: number; currency?: string; divideToAmmount?: boolean } = {
+  options: { decimalsLength?: number; currency?: string; divideToAmount?: boolean } = {
     decimalsLength: 0,
     currency: 'en-US',
-    divideToAmmount: false,
+    divideToAmount: false,
   },
 ) => {
   const totalToNumber = Number(total);
-  const value = options.divideToAmmount ? totalToNumber / 100000000 : totalToNumber;
+  const value = options.divideToAmount ? totalToNumber / 100000000 : totalToNumber;
   return value.toLocaleString(options.currency, {
     minimumFractionDigits: options.decimalsLength,
     maximumFractionDigits: options.decimalsLength,

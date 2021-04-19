@@ -13,14 +13,7 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { currentDate, formattedDate } from '@utils/helpers/date/date';
 import { ITransaction } from '@utils/types/ITransactions';
 
-import { getAmountColor, TRANSACTION_MIN_AMOUNT, headers } from './Movement.helpers';
-import * as Styles from './Movement.styles';
-
-export const getAmountElement = (amount: number) => {
-  const displayAmount = formatNumber(amount, { divideToAmmount: true, decimalsLength: 2 });
-  const amountColor = getAmountColor(amount);
-  return <Styles.Chip label={displayAmount} chipcolor={amountColor} />;
-};
+import { TRANSACTION_MIN_AMOUNT, headers } from './Movement.helpers';
 
 const Movement: React.FC = () => {
   const [transactionList, setTransactionList] = React.useState<Array<RowsProps> | null>(null);
@@ -31,7 +24,6 @@ const Movement: React.FC = () => {
 
   const transformTransactionsData = (transactions: Array<ITransaction>) => {
     const transformedTransactions = transactions.map(({ total, txid, timestamp }) => {
-      const amountElement = getAmountElement(total);
       return {
         id: txid,
         data: [
@@ -43,7 +35,7 @@ const Movement: React.FC = () => {
             value: <RouterLink route={`${ROUTES.TRANSACTION_DETAILS}/${txid}`} value={txid} />,
             id: 2,
           },
-          { value: amountElement, id: 3 },
+          { value: formatNumber(total, { divideToAmount: true, decimalsLength: 2 }), id: 3 },
         ],
       };
     });

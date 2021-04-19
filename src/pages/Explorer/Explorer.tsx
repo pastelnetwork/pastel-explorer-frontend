@@ -53,7 +53,7 @@ const Explorer: React.FC = () => {
             },
             { value: vout.length, id: 3 },
             {
-              value: formatNumber(total, { decimalsLength: 2, divideToAmmount: true }),
+              value: formatNumber(total, { decimalsLength: 2, divideToAmount: true }),
               id: 4,
             },
             {
