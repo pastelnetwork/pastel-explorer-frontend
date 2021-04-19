@@ -19,19 +19,10 @@ const axios = Axios.create({
 });
 
 export const useFetch = <FetchedData>({ method, url }: IUseFetchOptions) => {
-  const { CancelToken } = Axios;
-  let cancel;
   const dispatch = useDispatch();
 
   const fetchData = async (options: IFetchDataOptions = {}): Promise<FetchedData | undefined> =>
-    axios[method](url, {
-      cancelToken: new CancelToken(function executor(c) {
-        // An executor function receives a cancel function as a parameter
-        // eslint-disable-next-line
-        cancel = c;
-      }),
-      ...options,
-    })
+    axios[method](url, options)
       .then(({ data }) => data)
       .catch((error: AxiosError) => {
         console.error(error);
