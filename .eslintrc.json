@@ -42,6 +42,7 @@
         "extensions": [".ts", ".tsx"]
       }
     ],
+    "no-unused-expressions": [2, { "allowShortCircuit": true }],
     "no-console": [1, { "allow": ["warn", "error"] }],
     "prettier/prettier": ["warn"],
     "no-use-before-define": "off",

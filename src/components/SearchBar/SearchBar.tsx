@@ -1,44 +1,69 @@
 import * as React from 'react';
 import { withTheme } from 'styled-components/macro';
+import _debounce from 'lodash.debounce';
 
-import { Grid, Hidden, Theme, Toolbar, TextField } from '@material-ui/core';
+import { Grid, Hidden, Toolbar, Theme, TextField, CircularProgress } from '@material-ui/core';
 import { Menu as MenuIcon } from '@material-ui/icons';
 
+import * as URLS from '@utils/constants/urls';
+import { useFetch } from '@utils/helpers/useFetch/useFetch';
+import { ISearchResponse } from '@utils/types/ISearch';
+
+import RouterLink from '@components/RouterLink/RouterLink';
+
 import * as Styles from './SearchBar.styles';
+import {
+  ADDRESSES_LABEL,
+  BLOCKS_IDS_LABEL,
+  TRANSACTIONS_LABEL,
+  BLOCKS_HEIGHTS_LABEL,
+  TOptionsCategories,
+  getRoute,
+  collectData,
+} from './SearchBar.helpers';
 
 interface AppBarProps {
   theme: Theme;
   onDrawerToggle: React.MouseEventHandler<HTMLElement>;
 }
 
-interface IOptions {
-  value: string;
-  category: string;
+interface ISearchData {
+  value: string | number;
+  category: TOptionsCategories;
 }
 
-const MOCKED_DATA: IOptions[] = [
-  {
-    value: 'ff761b152c458cabfb7e4c6b98f64ad8c37841c68eedd111569d3e3a9a9db86d',
-    category: 'Transactions',
-  },
-  {
-    value: 'ff761b152c458cabfb7e4c6b98f64ad8c37841c68eedd111569d3e3a9a9db86d',
-    category: 'Transactions',
-  },
-  {
-    value: 'b5e347b4503786b0b6006db4c7a5e62be94d139093043d84276096a05841430e',
-    category: 'Transactions',
-  },
-  { value: '44600', category: 'Block Heightes' },
-  { value: '44598', category: 'Block Heightes' },
-  { value: 'PtbxkRceZLApBBYg9ftY5CRSHYLfuGPkyhR', category: 'Addresses' },
-  {
-    value: '00000012f451fe53212548d865d4eda87847ca4870614b002eb7898c8aecc3b',
-    category: 'Block Hashes',
-  },
-];
-
 const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
+  const { fetchData } = useFetch<ISearchResponse>({ method: 'get', url: URLS.SEARCH_URL });
+  const [searchData, setSearchData] = React.useState<Array<ISearchData>>([]);
+  const [loading, setLoading] = React.useState(false);
+
+  const sortSearchData = ({ data }: ISearchResponse) => {
+    if (!data) return [];
+
+    const groupedData = [
+      ...collectData(data.address, ADDRESSES_LABEL),
+      ...collectData(data.blocksHeights, BLOCKS_HEIGHTS_LABEL),
+      ...collectData(data.blocksIds, BLOCKS_IDS_LABEL),
+      ...collectData(data.transactions, TRANSACTIONS_LABEL),
+    ];
+
+    return setSearchData(groupedData.sort((a, b) => -b.category.localeCompare(a.category)));
+  };
+
+  const handleInputChange = _debounce(
+    (_: React.ChangeEvent<Record<string, unknown>>, value: string) => {
+      if (value.length < 1) return null;
+
+      !loading && setLoading(true);
+      searchData.length && setSearchData([]);
+
+      return fetchData({ params: { query: value } })
+        .then(response => response && sortSearchData(response))
+        .finally(() => setLoading(false));
+    },
+    500,
+  );
+
   return (
     <Styles.AppBar position="sticky" elevation={0}>
       <Toolbar>
@@ -52,16 +77,39 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
           </Hidden>
           <Grid item style={{ width: '100%' }}>
             <Styles.Autocomplete
-              options={MOCKED_DATA.sort((a, b) => -b.category.localeCompare(a.category))}
+              options={searchData}
+              // TODO Fix this any typings here, there is some problem with
+              // generic props passed to material-ui autocomplete component
               // eslint-disable-next-line
               groupBy={(option: any) => option.category}
               // eslint-disable-next-line
               getOptionLabel={(option: any) => option.value}
+              loading={loading}
+              onInputChange={handleInputChange}
+              // eslint-disable-next-line
+              getOptionSelected={(option: any, value: any) => option.value === value.value}
+              noOptionsText="No results containing all your search terms were found"
+              // eslint-disable-next-line
+              renderOption={(option: any) => (
+                <RouterLink
+                  route={`${getRoute(option.category)}/${option.value}`}
+                  value={option.value}
+                />
+              )}
               renderInput={params => (
                 <TextField
                   {...params}
-                  label="You may enter a block height, block hash, tx hash or address."
+                  label="You may enter a block height, block hash, tx hash or address"
                   variant="outlined"
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                      <>
+                        {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                        {params.InputProps.endAdornment}
+                      </>
+                    ),
+                  }}
                 />
               )}
             />
