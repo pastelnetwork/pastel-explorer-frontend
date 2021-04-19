@@ -1,6 +1,7 @@
 import SearchIcon from '@material-ui/icons/Search';
 import MoneyIcon from '@material-ui/icons/Money';
 import ShareIcon from '@material-ui/icons/Share';
+import WidgetsIcon from '@material-ui/icons/Widgets';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import InfoIcon from '@material-ui/icons/Info';
 
@@ -8,6 +9,7 @@ import Explorer from '@pages/Explorer/Explorer';
 import Movement from '@pages/Movement/Movement';
 import Network from '@pages/Network/Network';
 import Richlist from '@pages/Richlist/Richlist';
+import Blocks from '@pages/Blocks/Blocks';
 import Info from '@pages/Info/Info';
 
 import TransactionDetails from '@pages/Details/TransactionDetails/TransactionDetails';
@@ -38,6 +40,14 @@ const networkRoutes = {
   path: ROUTES.NETWORK,
   icon: <ShareIcon />,
   component: Network,
+  children: null,
+};
+
+const blocksRoutes = {
+  id: 'Blocks',
+  path: ROUTES.BLOCKS,
+  icon: <WidgetsIcon />,
+  component: Blocks,
   children: null,
 };
 
@@ -82,6 +92,7 @@ export const pageRoutes = [
   explorerRoutes,
   movementRoutes,
   networkRoutes,
+  blocksRoutes,
   richlistRoutes,
   infoRoutes,
   transactionDetailsRoutes,
@@ -93,6 +104,7 @@ export const sidebarRoutes = [
   explorerRoutes,
   movementRoutes,
   networkRoutes,
+  blocksRoutes,
   richlistRoutes,
   infoRoutes,
 ];

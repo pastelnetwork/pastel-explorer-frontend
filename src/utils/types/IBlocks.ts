@@ -14,4 +14,4 @@ export interface IBlock {
   timestamp: number;
   transactionCount: number;
   transactions: Array<ITransaction>;
-};
+}

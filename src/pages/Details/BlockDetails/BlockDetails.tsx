@@ -3,17 +3,19 @@ import { Redirect, useParams } from 'react-router-dom';
 
 import { Grid } from '@material-ui/core';
 
+import RouterLink from '@components/RouterLink/RouterLink';
 import Header from '@components/Header/Header';
 import Table, { RowsProps } from '@components/Table/Table';
 
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
+import { formattedDate } from '@utils/helpers/date/date';
 import * as URLS from '@utils/constants/urls';
 import * as ROUTES from '@utils/constants/routes';
+import { ITransaction } from '@utils/types/ITransactions';
 import { IBlock } from '@utils/types/IBlocks';
-import { formattedDate } from '@utils/helpers/date/date';
 
-import { blockHeaders } from './BlockDetails.helpers';
+import { blockHeaders, transactionHeaders } from './BlockDetails.helpers';
 
 interface ParamTypes {
   id: string;
@@ -62,6 +64,29 @@ const BlockDetails = () => {
     ];
   };
 
+  const generateLatestTransactions = (transactions: Array<ITransaction>): RowsProps[] => {
+    const transactionList = transactions.map(transaction => {
+      return {
+        id: transaction.id,
+        data: [
+          { id: 1, value: transaction.blockHash },
+          {
+            id: 2,
+            value: (
+              <RouterLink
+                route={`${ROUTES.TRANSACTION_DETAILS}/${transaction.id}`}
+                value={transaction.id}
+              />
+            ),
+          },
+          { id: 3, value: transaction.coinbase },
+        ],
+      };
+    });
+
+    return transactionList;
+  };
+
   if (redirect) {
     return <Redirect to={ROUTES.NOT_FOUND} />;
   }
@@ -75,6 +100,13 @@ const BlockDetails = () => {
             title={`PSL block: ${block.id}`}
             headers={blockHeaders}
             rows={generateBlockTable(block)}
+          />
+        </Grid>
+        <Grid item>
+          <Table
+            title="Latest Transactions"
+            headers={transactionHeaders}
+            rows={generateLatestTransactions(block.transactions)}
           />
         </Grid>
       </Grid>

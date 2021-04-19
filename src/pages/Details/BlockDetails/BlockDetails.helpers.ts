@@ -10,7 +10,7 @@ export const blockHeaders: Array<HeaderType> = [
 ];
 
 export const transactionHeaders: Array<HeaderType> = [
-  { id: 1, header: 'Hash' },
-  { id: 2, header: 'Recipients' },
-  { id: 3, header: 'Amount (PSL)' },
+  { id: 1, header: 'Block' },
+  { id: 2, header: 'Transaction' },
+  { id: 3, header: 'Coinbase' },
 ];
