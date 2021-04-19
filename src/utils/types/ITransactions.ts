@@ -20,7 +20,7 @@ export interface ITransaction {
   txid: string;
   vin: Array<vType>;
   vout: Array<vType>;
-  coinbase: boolean;
+  coinbase: number;
   id: string;
   transactionEvents: Array<TransactionEvent>;
   blockHash: string;
