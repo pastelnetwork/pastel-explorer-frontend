@@ -17,7 +17,7 @@ import { getAmountColor, TRANSACTION_MIN_AMOUNT, headers } from './Movement.help
 import * as Styles from './Movement.styles';
 
 export const getAmountElement = (amount: number) => {
-  const displayAmount = formatNumber(amount, { divideToAmmount: true, decimalsLength: 2 });
+  const displayAmount = formatNumber(amount, { divideToAmount: true, decimalsLength: 2 });
   const amountColor = getAmountColor(amount);
   return <Styles.Chip label={displayAmount} chipcolor={amountColor} />;
 };
