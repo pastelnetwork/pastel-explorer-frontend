@@ -9,7 +9,7 @@ import Table, { RowsProps } from '@components/Table/Table';
 
 import * as URLS from '@utils/constants/urls';
 import * as ROUTES from '@utils/constants/routes';
-import { IAddress } from '@utils/types/IAddress';
+import { IAddress, IAddressData } from '@utils/types/IAddress';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { formattedDate } from '@utils/helpers/date/date';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
@@ -22,48 +22,39 @@ interface ParamTypes {
 
 const AddressDetails = () => {
   const { id } = useParams<ParamTypes>();
-  const [addresses, setAddresses] = React.useState<Array<IAddress> | null>();
+  const [addresses, setAddresses] = React.useState<IAddress | null>(null);
   const [redirect, setRedirect] = React.useState(false);
-  const { fetchData } = useFetch<{ data: Array<IAddress> }>({
+  const { fetchData } = useFetch<IAddress>({
     method: 'get',
     url: `${URLS.ADDRESS_URL}/${id}`,
   });
 
   React.useEffect(() => {
     fetchData().then(response => {
-      if (!response?.data) {
+      if (!response) {
         setRedirect(true);
       } else {
-        setAddresses(response.data);
+        setAddresses(response);
       }
     });
   }, [id]);
 
-  const generateAddressSummary = (addressList: Array<IAddress>): RowsProps[] => {
-    let totalSent = 0;
-    let totalReceived = 0;
-
-    addressList.forEach(({ amount }) => {
-      if (amount < 0) {
-        totalSent += amount;
-      } else {
-        totalReceived += amount;
-      }
-    });
+  const generateAddressSummary = ({ incomingSum, outgoingSum }: IAddress): RowsProps[] => {
+    const outgoingAbsoluteSum = Math.abs(outgoingSum);
 
     return [
       {
         id: 1,
         data: [
-          { id: 1, value: formatNumber(totalSent, { decimalsLength: 2 }) },
-          { id: 2, value: formatNumber(totalReceived, { decimalsLength: 2 }) },
-          { id: 3, value: formatNumber(totalReceived - totalSent, { decimalsLength: 2 }) },
+          { id: 1, value: formatNumber(outgoingAbsoluteSum, { decimalsLength: 2 }) },
+          { id: 2, value: formatNumber(incomingSum, { decimalsLength: 2 }) },
+          { id: 3, value: formatNumber(incomingSum - outgoingAbsoluteSum, { decimalsLength: 2 }) },
         ],
       },
     ];
   };
 
-  const generateLatestTransactions = (addressList: Array<IAddress>): RowsProps[] => {
+  const generateLatestTransactions = (addressList: Array<IAddressData>): RowsProps[] => {
     const transactionList = addressList.map(({ amount, timestamp, transactionHash }) => {
       return {
         id: transactionHash,
@@ -105,7 +96,7 @@ const AddressDetails = () => {
           <Table
             title="Latest Transactions"
             headers={transactionHeaders}
-            rows={generateLatestTransactions(addresses)}
+            rows={generateLatestTransactions(addresses.data)}
           />
         </Grid>
       </Grid>
