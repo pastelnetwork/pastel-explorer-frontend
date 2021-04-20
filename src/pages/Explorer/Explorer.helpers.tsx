@@ -125,3 +125,58 @@ export const mockMapMarkers = [
     name: 'Madrid',
   },
 ];
+
+interface lineChartMockDataProps {
+  labels: Array<string | number>;
+  datasets: {
+    label: string;
+    pointRadius: number;
+    showLine: boolean;
+    fill: boolean;
+    backgroundColor: string;
+    borderColor: string;
+    pointBackgroundColor: string;
+    spanGaps: boolean;
+    data: Array<number | null>;
+  }[];
+}
+
+interface ChartProps {
+  labels: Array<string>;
+  transactionData: Array<number | null>;
+  blockData: Array<number | null>;
+}
+
+export const generateChartData = ({
+  labels,
+  transactionData,
+  blockData,
+}: ChartProps): lineChartMockDataProps => {
+  return {
+    labels,
+    datasets: [
+      {
+        label: 'Transaction',
+        pointRadius: 8,
+        showLine: false,
+        fill: true,
+        backgroundColor: 'transparent',
+        borderColor: themeVariant.palette.secondary.main,
+        spanGaps: false,
+        pointBackgroundColor: themeVariant.palette.secondary.main,
+        data: transactionData,
+      },
+      {
+        label: 'Block',
+        pointRadius: 8,
+        showLine: false,
+        fill: true,
+        backgroundColor: 'transparent',
+        borderColor: themeVariant.custom.orange.light,
+        pointBackgroundColor: themeVariant.custom.orange.light,
+        spanGaps: false,
+        data: blockData,
+      },
+    ],
+  };
+};

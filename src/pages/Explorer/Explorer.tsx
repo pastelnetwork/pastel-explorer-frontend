@@ -8,6 +8,7 @@ import RouterLink from '@components/RouterLink/RouterLink';
 import Table, { HeaderType, RowsProps } from '@components/Table/Table';
 import Map from '@components/Map/Map';
 import DoughnutChart from '@components/Charts/DoughnutChart/DoughnutChart';
+import LineChart from '@components/Charts/LineChart/LineChart';
 
 import * as URLS from '@utils/constants/urls';
 import * as ROUTES from '@utils/constants/routes';
@@ -16,7 +17,7 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { currentDate, formattedDate } from '@utils/helpers/date/date';
 import { ITransaction } from '@utils/types/ITransactions';
 
-import { mockMapMarkers, mockChartTableData } from './Explorer.helpers';
+import { mockMapMarkers, mockChartTableData, generateChartData } from './Explorer.helpers';
 
 const headers: Array<HeaderType> = [
   { id: 1, header: 'Block' },
@@ -26,9 +27,21 @@ const headers: Array<HeaderType> = [
   { id: 5, header: 'Timestamp' },
 ];
 
+interface ChartProps {
+  labels: Array<string>;
+  transactionData: Array<number | null>;
+  blockData: Array<number | null>;
+}
+
 const TRANSACTION_MIN_AMOUNT = '0.00000001';
+const TRANSACTION_CALL_TIMEOUT = 1000;
 
 const Explorer: React.FC = () => {
+  const [chartData, setChartData] = React.useState<ChartProps>({
+    labels: [],
+    transactionData: [],
+    blockData: [],
+  });
   const [transactionList, setTransactionList] = React.useState<Array<RowsProps> | null>(null);
   const { fetchData } = useFetch<{ data: Array<ITransaction> }>({
     method: 'get',
@@ -68,11 +81,61 @@ const Explorer: React.FC = () => {
     setTransactionList(transformedTransactions);
   };
 
-  React.useEffect(() => {
+  // eslint-disable-next-line no-unused-vars
+  const transformChartData = (transactions: Array<ITransaction>) => {
+    // const lastTransactions = transactions.slice(-10);
+    // const labels: ChartProps['labels'] = [];
+    // const transactionData: ChartProps['transactionData'] = [];
+    // const blockData: ChartProps['blockData'] = [];
+
+    // lastTransactions.forEach(transactionElement => {
+    //   labels.push(new Date(transactionElement.timestamp).toLocaleTimeString());
+    //   // transactionData.push(
+    //   //   parseFloat(
+    //   //     formatNumber(transactionElement.total, { decimalsLength: 2, divideToAmount: true }),
+    //   //   ),
+    //   // );
+    //   // blockData.push(
+    //   //   parseFloat(
+    //   //     formatNumber(transactionElement.total, { decimalsLength: 2, divideToAmount: true }),
+    //   //   ),
+    //   // );
+    //   transactionData.push(Math.floor(Math.random() * 10340));
+    //   blockData.push(Math.floor(Math.random() * 10340));
+    // });
+
+    /**
+     * PRESENTATION
+     */
+    setChartData(prev => {
+      return {
+        labels: prev.labels.concat(new Date().toLocaleTimeString()),
+        transactionData: prev.transactionData.concat(Math.floor(Math.random() * 10340)),
+        blockData: prev.blockData.concat(
+          Math.random() > 0.9 ? Math.floor(Math.random() * 10340) : null,
+        ),
+      };
+    });
+  };
+
+  const fetchTransactionData = () => {
     fetchData().then(response => {
       if (!response) return null;
-      return transformTransactionsData(response.data);
+      transformChartData(response.data);
+      transformTransactionsData(response.data);
+
+      return 0;
     });
+  };
+
+  React.useEffect(() => {
+    const transactionInterval = setInterval(() => {
+      fetchTransactionData();
+
+      return () => clearInterval(transactionInterval);
+    }, TRANSACTION_CALL_TIMEOUT);
+
+    fetchTransactionData();
   }, []);
 
   return (
@@ -91,6 +154,9 @@ const Explorer: React.FC = () => {
             table={<Table headers={mockChartTableData.headers} rows={mockChartTableData.rows} />}
           />
         </Grid>
+      </Grid>
+      <Grid item>
+        <LineChart data={generateChartData(chartData)} title="Transactions and Blocks Monitor" />
       </Grid>
       <Grid item>
         <Table headers={headers} rows={transactionList} title="Latest Transactions" />
