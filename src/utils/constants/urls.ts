@@ -6,9 +6,9 @@ export const CONNECTIONS_URL = '/ext/connections';
 
 // API endpoints
 export const SEARCH_URL = `/v1/search`;
-export const TRANSACTION_URL = 'v1/transaction';
-export const BLOCK_URL = 'v1/block';
-export const ADDRESS_URL = 'v1/address';
+export const TRANSACTION_URL = 'v1/transactions';
+export const BLOCK_URL = 'v1/blocks';
+export const ADDRESS_URL = 'v1/addresses';
 
 // External URLS
 export const TWITTER_URL = 'https://twitter.com/pastelnetwork';

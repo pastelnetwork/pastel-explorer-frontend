@@ -12,8 +12,7 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { formattedDate } from '@utils/helpers/date/date';
 import * as URLS from '@utils/constants/urls';
 import * as ROUTES from '@utils/constants/routes';
-import { ITransaction } from '@utils/types/ITransactions';
-import { IBlock } from '@utils/types/IBlocks';
+import { IBlock, IBlockTransaction } from '@utils/types/IBlocks';
 
 import { blockHeaders, transactionHeaders } from './BlockDetails.helpers';
 
@@ -64,14 +63,13 @@ const BlockDetails = () => {
     ];
   };
 
-  const generateLatestTransactions = (transactions: Array<ITransaction>): RowsProps[] => {
+  const generateLatestTransactions = (transactions: Array<IBlockTransaction>): RowsProps[] => {
     const transactionList = transactions.map(transaction => {
       return {
         id: transaction.id,
         data: [
-          { id: 1, value: transaction.blockHash },
           {
-            id: 2,
+            id: 1,
             value: (
               <RouterLink
                 route={`${ROUTES.TRANSACTION_DETAILS}/${transaction.id}`}
@@ -79,7 +77,8 @@ const BlockDetails = () => {
               />
             ),
           },
-          { id: 3, value: transaction.coinbase },
+          { id: 2, value: transaction.recipientCount },
+          { id: 3, value: formatNumber(transaction.totalAmount, { decimalsLength: 2 }) },
         ],
       };
     });

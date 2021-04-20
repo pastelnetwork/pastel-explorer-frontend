@@ -1,4 +1,8 @@
-import { ITransaction } from './ITransactions';
+export interface IBlockTransaction {
+  id: string;
+  recipientCount: number;
+  totalAmount: number;
+}
 
 export interface IBlock {
   confirmations: number;
@@ -13,5 +17,5 @@ export interface IBlock {
   solution: string;
   timestamp: number;
   transactionCount: number;
-  transactions: Array<ITransaction>;
+  transactions: Array<IBlockTransaction>;
 }
