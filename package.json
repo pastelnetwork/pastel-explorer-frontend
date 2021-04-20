@@ -40,6 +40,7 @@
     "date-fns": "2.20.2",
     "deepmerge": "4.2.2",
     "jss": "10.6.0",
+    "lodash.debounce": "^4.0.8",
     "polished": "4.1.1",
     "react": "17.0.2",
     "react-chartjs-2": "2.11.1",
@@ -59,6 +60,7 @@
   },
   "devDependencies": {
     "@types/dragula": "3.7.0",
+    "@types/lodash.debounce": "^4.0.6",
     "@types/react": "17.0.3",
     "@types/react-dom": "17.0.3",
     "@types/react-helmet": "6.1.1",

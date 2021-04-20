@@ -26,12 +26,23 @@
     "react-hooks/exhaustive-deps": 0,
     "react/react-in-jsx-scope": 0, // Disabled because in version 17.xx JSX there is new JSX transform which is not requring to import React
     "import/prefer-default-export": "off",
+    // Allow for non-used variables with prefix "_"
+    "no-unused-vars": [
+      2,
+      {
+        "vars": "all",
+        "args": "after-used",
+        "ignoreRestSiblings": false,
+        "argsIgnorePattern": "^_"
+      }
+    ],
     "react/jsx-filename-extension": [
       1,
       {
         "extensions": [".ts", ".tsx"]
       }
     ],
+    "no-unused-expressions": [2, { "allowShortCircuit": true }],
     "no-console": [1, { "allow": ["warn", "error"] }],
     "prettier/prettier": ["warn"],
     "no-use-before-define": "off",

@@ -39,7 +39,7 @@ const BlockDetails = () => {
         setBlock(response.data);
       }
     });
-  }, []);
+  }, [id]);
 
   const generateBlockTable = ({
     height,

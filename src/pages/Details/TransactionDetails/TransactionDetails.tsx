@@ -41,7 +41,7 @@ const TransactionDetails = () => {
         setTransaction(response.data);
       }
     });
-  }, []);
+  }, [id]);
 
   if (redirect) {
     return <Redirect to={ROUTES.NOT_FOUND} />;

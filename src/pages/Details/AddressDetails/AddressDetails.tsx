@@ -37,7 +37,7 @@ const AddressDetails = () => {
         setAddresses(response.data);
       }
     });
-  }, []);
+  }, [id]);
 
   const generateAddressSummary = (addressList: Array<IAddress>): RowsProps[] => {
     let totalSent = 0;
@@ -57,7 +57,7 @@ const AddressDetails = () => {
         data: [
           { id: 1, value: formatNumber(totalSent, { decimalsLength: 2 }) },
           { id: 2, value: formatNumber(totalReceived, { decimalsLength: 2 }) },
-          { id: 2, value: formatNumber(totalReceived - totalSent, { decimalsLength: 2 }) },
+          { id: 3, value: formatNumber(totalReceived - totalSent, { decimalsLength: 2 }) },
         ],
       },
     ];
