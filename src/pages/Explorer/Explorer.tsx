@@ -5,6 +5,7 @@ import { Grid } from '@material-ui/core';
 
 import Header from '@components/Header/Header';
 import RouterLink from '@components/RouterLink/RouterLink';
+import InfinityTable from '@components/InfinityTable/InfinityTable';
 import Table, { HeaderType, RowsProps } from '@components/Table/Table';
 import Map, { MarkerProps } from '@components/Map/Map';
 import DoughnutChart from '@components/Charts/DoughnutChart/DoughnutChart';
@@ -117,7 +118,7 @@ const Explorer: React.FC = () => {
         </Grid>
       </Grid>
       <Grid item>
-        <Table headers={headers} rows={transactionList} title="Latest Transactions" />
+        <InfinityTable headers={headers} rows={transactionList} title="Latest Transactions" />
       </Grid>
     </>
   );
