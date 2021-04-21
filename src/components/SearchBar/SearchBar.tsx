@@ -2,8 +2,17 @@ import * as React from 'react';
 import { withTheme } from 'styled-components/macro';
 import _debounce from 'lodash.debounce';
 
-import { Grid, Hidden, Toolbar, Theme, TextField, CircularProgress } from '@material-ui/core';
+import {
+  Grid,
+  Hidden,
+  Toolbar,
+  Theme,
+  TextField,
+  CircularProgress,
+  makeStyles,
+} from '@material-ui/core';
 import { Menu as MenuIcon } from '@material-ui/icons';
+import MuiAutocomplete from '@material-ui/lab/Autocomplete';
 
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
@@ -32,7 +41,15 @@ interface ISearchData {
   category: TOptionsCategories;
 }
 
+const useStyles = makeStyles({
+  option: {
+    padding: '0',
+  },
+});
+
 const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
+  const classes = useStyles();
+  const optionSelectedFromList = React.useRef(false);
   const { fetchData } = useFetch<ISearchResponse>({ method: 'get', url: URLS.SEARCH_URL });
   const [searchData, setSearchData] = React.useState<Array<ISearchData>>([]);
   const [loading, setLoading] = React.useState(false);
@@ -52,7 +69,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
 
   const handleInputChange = _debounce(
     (_: React.ChangeEvent<Record<string, unknown>>, value: string) => {
-      if (value.length < 1) return null;
+      if (optionSelectedFromList.current || value.length < 1) return null;
 
       !loading && setLoading(true);
       searchData.length && setSearchData([]);
@@ -63,6 +80,19 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
     },
     500,
   );
+
+  // When user will select option from list
+  // Prevent component from fetching new data and changing component states
+  const handleChange = () => {
+    optionSelectedFromList.current = true;
+
+    // Reset reference object when to allow user search again if he will click on some option from dropdown
+    setTimeout(() => {
+      optionSelectedFromList.current = false;
+    }, 600);
+
+    return () => clearTimeout();
+  };
 
   return (
     <Styles.AppBar position="sticky" elevation={0}>
@@ -76,22 +106,21 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
             </Grid>
           </Hidden>
           <Grid item style={{ width: '100%' }}>
-            <Styles.Autocomplete
+            <MuiAutocomplete
+              fullWidth
+              style={{ margin: '12px 0' }}
               options={searchData}
-              // TODO Fix this any typings here, there is some problem with
-              // generic props passed to material-ui autocomplete component
-              // eslint-disable-next-line
-              groupBy={(option: any) => option.category}
-              // eslint-disable-next-line
-              getOptionLabel={(option: any) => option.value}
+              classes={classes}
+              groupBy={option => option.category}
+              getOptionLabel={option => `${option.value}`}
               loading={loading}
               onInputChange={handleInputChange}
-              // eslint-disable-next-line
-              getOptionSelected={(option: any, value: any) => option.value === value.value}
+              onChange={handleChange}
+              getOptionSelected={(option, value) => option.value === value.value}
               noOptionsText="No results containing all your search terms were found"
-              // eslint-disable-next-line
-              renderOption={(option: any) => (
+              renderOption={option => (
                 <RouterLink
+                  styles={{ padding: '6px 24px 6px 16px' }}
                   route={`${getRoute(option.category)}/${option.value}`}
                   value={option.value}
                 />

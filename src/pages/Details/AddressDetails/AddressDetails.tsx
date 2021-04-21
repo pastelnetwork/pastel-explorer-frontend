@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 import { Grid } from '@material-ui/core';
 
@@ -57,7 +58,7 @@ const AddressDetails = () => {
   const generateLatestTransactions = (addressList: Array<IAddressData>): RowsProps[] => {
     const transactionList = addressList.map(({ amount, timestamp, transactionHash }) => {
       return {
-        id: transactionHash,
+        id: uuidv4(),
         data: [
           { id: 1, value: formattedDate(timestamp) },
           {
