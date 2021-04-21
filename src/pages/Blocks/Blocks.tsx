@@ -56,7 +56,7 @@ const Blocks = () => {
     <>
       <Header title="Blocks" />
       <Grid item>
-        <Table headers={headers} rows={blockList} title="Blocks" />
+        <Table headers={headers} rows={blockList} />
       </Grid>
     </>
   );
