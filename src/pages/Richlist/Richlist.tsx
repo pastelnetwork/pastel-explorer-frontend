@@ -6,7 +6,7 @@ import Table, { RowsProps } from '@components/Table/Table';
 
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { IRank } from '@utils/types/IRank';
+import { IRichlist } from '@utils/types/IRichlists';
 
 import {
   balanceHeaders,
@@ -18,12 +18,12 @@ import {
 const Richlist: React.FC = () => {
   const [richlist, setRichlist] = React.useState<Array<RowsProps> | null>(null);
   const [wealthDistribution, setWealthDistribution] = React.useState<Array<RowsProps> | null>(null);
-  const { fetchData } = useFetch<{ data: Array<IRank> }>({
+  const { fetchData } = useFetch<{ data: Array<IRichlist> }>({
     method: 'get',
     url: `${URLS.RICHLIST_URL}`,
   });
 
-  const transformRichlistData = (list: Array<IRank>) => {
+  const transformRichlistData = (list: Array<IRichlist>) => {
     const balanceTable = generateBalanceTable(list);
     const wealthDistributionTable = generateWealthDistributionTable(list);
 

@@ -1,4 +1,4 @@
-export interface IRank {
+export interface IRichlist {
   rank: number;
   percentage: number;
   amount: number;

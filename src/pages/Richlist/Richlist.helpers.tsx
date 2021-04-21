@@ -5,7 +5,7 @@ import LinearProgress from '@components/Progress/LinearProgress/LinearProgress';
 
 import * as ROUTES from '@utils/constants/routes';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import { IRank } from '@utils/types/IRank';
+import { IRichlist } from '@utils/types/IRichlists';
 
 const LIST_DIVIDERS = [
   [0, 25],
@@ -27,7 +27,7 @@ export const distributionHeaders: Array<HeaderType> = [
   { id: 3, header: '%' },
 ];
 
-export const generateBalanceTable = (list: Array<IRank>) => {
+export const generateBalanceTable = (list: Array<IRichlist>) => {
   return list.map(({ rank, percentage, amount, address }) => {
     return {
       id: address,
@@ -44,7 +44,7 @@ export const generateBalanceTable = (list: Array<IRank>) => {
   });
 };
 
-const generateWealthDistributionRow = (list: Array<IRank>, rowLabel: string) => {
+const generateWealthDistributionRow = (list: Array<IRichlist>, rowLabel: string) => {
   const rowId = list[0].address;
   const { amount, percentage } = list.reduce(
     (acc, listElement) => {
@@ -74,7 +74,7 @@ const generateWealthDistributionRow = (list: Array<IRank>, rowLabel: string) => 
   };
 };
 
-export const generateWealthDistributionTable = (list: Array<IRank>) => {
+export const generateWealthDistributionTable = (list: Array<IRichlist>) => {
   const dividedLists = LIST_DIVIDERS.map(([firstDivider, lastDivider]) => {
     const currentWealthDistributionList = list.slice(firstDivider, lastDivider);
     const rowLabel = `Top ${firstDivider + 1}-${lastDivider}`;
