@@ -16,7 +16,7 @@ import {
   ADDRESSES_LABEL,
   BLOCKS_IDS_LABEL,
   TRANSACTIONS_LABEL,
-  // BLOCKS_HEIGHTS_LABEL,
+  BLOCKS_HEIGHTS_LABEL,
   TOptionsCategories,
   getRoute,
   collectData,
@@ -42,12 +42,9 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
 
     const groupedData = [
       ...collectData(data.address, ADDRESSES_LABEL),
-      ...collectData(data.transactions, TRANSACTIONS_LABEL),
       ...collectData(data.blocksIds, BLOCKS_IDS_LABEL),
-      // TODO temporary disabled because there is no screen for block heights
-      // Consider to redirect it to block details screen, but this will need some changes
-      // On backend search endpoint
-      // ...collectData(data.blocksHeights, BLOCKS_HEIGHTS_LABEL),
+      ...collectData(data.blocksHeights, BLOCKS_HEIGHTS_LABEL),
+      ...collectData(data.transactions, TRANSACTIONS_LABEL),
     ];
 
     return setSearchData(groupedData.sort((a, b) => -b.category.localeCompare(a.category)));
