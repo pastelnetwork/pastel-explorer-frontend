@@ -7,14 +7,14 @@ import * as Styles from './Map.styles';
 import { defaultMapOptions } from './Map.options';
 import './map.css';
 
-interface MarkerProps {
-  latLng: Array<number>;
+export interface MarkerProps {
+  latLng: [number, number];
   name: string;
 }
 
-interface MapProps {
+export interface MapProps {
   title: string;
-  markers: Array<MarkerProps>;
+  markers: Array<MarkerProps> | null;
 }
 
 const Map: React.FC<MapProps> = ({ title, markers }) => {
@@ -23,7 +23,7 @@ const Map: React.FC<MapProps> = ({ title, markers }) => {
       <CardHeader title={title} />
       <Styles.CardContent>
         <Styles.MapContainer>
-          <VectorMap markers={markers} {...defaultMapOptions} />
+          {markers && <VectorMap markers={markers} {...defaultMapOptions} />}
         </Styles.MapContainer>
       </Styles.CardContent>
     </Styles.Card>

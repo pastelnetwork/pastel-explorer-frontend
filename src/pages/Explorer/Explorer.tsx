@@ -6,7 +6,7 @@ import { Grid } from '@material-ui/core';
 import Header from '@components/Header/Header';
 import RouterLink from '@components/RouterLink/RouterLink';
 import Table, { HeaderType, RowsProps } from '@components/Table/Table';
-import Map from '@components/Map/Map';
+import Map, { MarkerProps } from '@components/Map/Map';
 import DoughnutChart from '@components/Charts/DoughnutChart/DoughnutChart';
 
 import * as URLS from '@utils/constants/urls';
@@ -15,8 +15,9 @@ import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { currentDate, formattedDate } from '@utils/helpers/date/date';
 import { ITransaction } from '@utils/types/ITransactions';
+import { INetwork } from '@utils/types/INetwork';
 
-import { mockMapMarkers, mockChartTableData } from './Explorer.helpers';
+import { mockChartTableData } from './Explorer.helpers';
 
 const headers: Array<HeaderType> = [
   { id: 1, header: 'Block' },
@@ -30,9 +31,14 @@ const TRANSACTION_MIN_AMOUNT = '0.00000001';
 
 const Explorer: React.FC = () => {
   const [transactionList, setTransactionList] = React.useState<Array<RowsProps> | null>(null);
-  const { fetchData } = useFetch<{ data: Array<ITransaction> }>({
+  const [geoLocationList, setGeoLocationList] = React.useState<Array<MarkerProps> | null>(null);
+  const fetchTransactions = useFetch<{ data: Array<ITransaction> }>({
     method: 'get',
     url: `${URLS.LAST_TRANSACTIONS_URL}/${TRANSACTION_MIN_AMOUNT}?_=${getTime(currentDate)}`,
+  });
+  const fetchGeoData = useFetch<{ data: Array<INetwork> }>({
+    method: 'get',
+    url: `${URLS.NETWORK_URL}`,
   });
 
   const transformTransactionsData = (transactions: Array<ITransaction>) => {
@@ -68,8 +74,26 @@ const Explorer: React.FC = () => {
     setTransactionList(transformedTransactions);
   };
 
+  const transformGeoLocationData = (geoLocations: Array<INetwork>) => {
+    const transformedGeoLocations = geoLocations.map(({ latitude, longitude, country, city }) => {
+      const latLng = [latitude, longitude] as [number, number];
+      const name = city !== 'N/A' ? `${country} (${city})` : country;
+
+      return {
+        latLng,
+        name,
+      };
+    });
+
+    setGeoLocationList(transformedGeoLocations);
+  };
+
   React.useEffect(() => {
-    fetchData().then(response => {
+    fetchGeoData.fetchData().then(response => {
+      if (!response) return null;
+      return transformGeoLocationData(response.data);
+    });
+    fetchTransactions.fetchData().then(response => {
       if (!response) return null;
       return transformTransactionsData(response.data);
     });
@@ -80,7 +104,7 @@ const Explorer: React.FC = () => {
       <Header title="Explorer" />
       <Grid container spacing={6}>
         <Grid item xs={12} lg={8}>
-          <Map markers={mockMapMarkers} title="Explorer Map" />
+          <Map markers={geoLocationList} title="Explorer Map" />
         </Grid>
         <Grid item xs={12} lg={4}>
           <DoughnutChart
