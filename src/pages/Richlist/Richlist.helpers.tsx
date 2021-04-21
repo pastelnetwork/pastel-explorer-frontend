@@ -1,0 +1,86 @@
+import { HeaderType } from '@components/Table/Table';
+
+import RouterLink from '@components/RouterLink/RouterLink';
+import LinearProgress from '@components/Progress/LinearProgress/LinearProgress';
+
+import * as ROUTES from '@utils/constants/routes';
+import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
+import { IRank } from '@utils/types/IRank';
+
+const LIST_DIVIDERS = [
+  [0, 25],
+  [25, 50],
+  [50, 75],
+  [75, 100],
+];
+
+export const balanceHeaders: Array<HeaderType> = [
+  { id: 1, header: '' },
+  { id: 2, header: 'Address' },
+  { id: 3, header: 'Balance (PSL)' },
+  { id: 4, header: '%' },
+];
+
+export const distributionHeaders: Array<HeaderType> = [
+  { id: 1, header: '' },
+  { id: 2, header: 'Amount (PSL)' },
+  { id: 3, header: '%' },
+];
+
+export const generateBalanceTable = (list: Array<IRank>) => {
+  return list.map(({ rank, percentage, amount, address }) => {
+    return {
+      id: address,
+      data: [
+        { value: rank, id: 1 },
+        {
+          value: <RouterLink route={`${ROUTES.ADDRESS_DETAILS}/${address}`} value={address} />,
+          id: 2,
+        },
+        { value: formatNumber(amount, { decimalsLength: 2 }), id: 3 },
+        { value: formatNumber(percentage, { decimalsLength: 2 }), id: 4 },
+      ],
+    };
+  });
+};
+
+const generateWealthDistributionRow = (list: Array<IRank>, rowLabel: string) => {
+  const rowId = list[0].address;
+  const { amount, percentage } = list.reduce(
+    (acc, listElement) => {
+      return {
+        amount: acc.amount + listElement.amount,
+        percentage: acc.percentage + listElement.percentage,
+      };
+    },
+    { amount: 0, percentage: 0 },
+  );
+
+  return {
+    id: rowId,
+    data: [
+      { value: rowLabel, id: 1 },
+      { value: formatNumber(amount, { decimalsLength: 2 }), id: 2 },
+      {
+        value: (
+          <LinearProgress
+            value={percentage}
+            description={formatNumber(percentage, { decimalsLength: 2 })}
+          />
+        ),
+        id: 3,
+      },
+    ],
+  };
+};
+
+export const generateWealthDistributionTable = (list: Array<IRank>) => {
+  const dividedLists = LIST_DIVIDERS.map(([firstDivider, lastDivider]) => {
+    const currentWealthDistributionList = list.slice(firstDivider, lastDivider);
+    const rowLabel = `Top ${firstDivider + 1}-${lastDivider}`;
+
+    return generateWealthDistributionRow(currentWealthDistributionList, rowLabel);
+  });
+
+  return dividedLists;
+};
