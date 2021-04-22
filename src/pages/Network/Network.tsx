@@ -1,5 +1,4 @@
 import * as React from 'react';
-import getTime from 'date-fns/getTime';
 import { Grid } from '@material-ui/core';
 
 import Header from '@components/Header/Header';
@@ -7,8 +6,7 @@ import Table, { HeaderType, RowsProps } from '@components/Table/Table';
 
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { currentDate } from '@utils/helpers/date/date';
-import { IConnection } from '@utils/types/IConnections';
+import { INetwork } from '@utils/types/INetwork';
 
 const headers: Array<HeaderType> = [
   { id: 1, header: 'Address' },
@@ -19,25 +17,23 @@ const headers: Array<HeaderType> = [
 
 const Network: React.FC = () => {
   const [connections, setConnections] = React.useState<Array<RowsProps> | null>(null);
-  const { fetchData } = useFetch<{ data: Array<IConnection> }>({
+  const { fetchData } = useFetch<{ data: Array<INetwork> }>({
     method: 'get',
-    url: `${URLS.CONNECTIONS_URL}?_=${getTime(currentDate)}`,
+    url: URLS.NETWORK_URL,
   });
 
-  const transformConnectionsData = (connectionList: Array<IConnection>) => {
-    const transformedConnections = connectionList.map(
-      ({ address, country, protocol, version, _id }) => {
-        return {
-          id: _id,
-          data: [
-            { value: address, id: 1 },
-            { value: protocol, id: 2 },
-            { value: version, id: 3 },
-            { value: country, id: 4 },
-          ],
-        };
-      },
-    );
+  const transformConnectionsData = (connectionList: Array<INetwork>) => {
+    const transformedConnections = connectionList.map(({ id, ip, protocol, version, country }) => {
+      return {
+        id,
+        data: [
+          { value: ip, id: 1 },
+          { value: protocol, id: 2 },
+          { value: version, id: 3 },
+          { value: country, id: 4 },
+        ],
+      };
+    });
 
     setConnections(transformedConnections);
   };

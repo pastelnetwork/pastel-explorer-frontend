@@ -10,7 +10,7 @@ interface LinearProgressProps {
 
 const LinearProgressComponent: React.FC<LinearProgressProps> = ({ value, description }) => {
   return (
-    <Grid container alignItems="center" justify="space-between">
+    <Grid container alignItems="center" justify="center">
       <Styles.LinearProgress value={value} variant="determinate" color="primary" />
       {description && <Styles.Typography>{description}</Styles.Typography>}
     </Grid>
