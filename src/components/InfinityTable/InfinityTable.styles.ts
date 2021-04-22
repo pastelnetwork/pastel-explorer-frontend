@@ -20,11 +20,11 @@ export const Cell = styled(TableCell)`
   width: 100%;
   display: flex;
   justify-content: center;
-  textalign: center;
+  text-align: center;
 `;
 
 export const HeaderCell = styled(TableCell)`
-  height: 70;
+  height: 70px;
   display: flex;
   justify-content: center;
 `;
