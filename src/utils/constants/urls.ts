@@ -13,3 +13,5 @@ export const NETWORK_URL = 'v1/network';
 
 // External URLS
 export const TWITTER_URL = 'https://twitter.com/pastelnetwork';
+export const TELEGRAM_URL = 'https://t.me/PastelNetwork';
+export const GITHUB_URL = 'https://github.com/pastelnetwork';
