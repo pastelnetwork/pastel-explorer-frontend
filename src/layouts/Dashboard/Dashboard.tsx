@@ -6,6 +6,7 @@ import { isWidthUp } from '@material-ui/core/withWidth';
 import Sidebar from '@components/Sidebar/Sidebar';
 import Header from '@components/SearchBar/SearchBar';
 import Footer from '@components/Footer/Footer';
+import Summary from '@components/Summary/Summary';
 
 import { RouteType } from '@utils/types/routes';
 
@@ -45,6 +46,7 @@ const Dashboard: React.FC<DashboardPropsType> = ({ children, routes, width }) =>
       </Styles.Drawer>
       <Styles.AppContent>
         <Header onDrawerToggle={handleDrawerToggle} />
+        <Summary />
         <Styles.MainContent p={isWidthUp('lg', width) ? 12 : 5}>{children}</Styles.MainContent>
         <Footer />
       </Styles.AppContent>

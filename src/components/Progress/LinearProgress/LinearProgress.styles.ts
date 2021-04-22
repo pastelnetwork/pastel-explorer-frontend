@@ -6,7 +6,7 @@ import {
 
 export const LinearProgress = styled(MuiLinearProgress)`
   height: 14px;
-  width: 180px;
+  width: 120px;
   border-radius: 3px;
 `;
 

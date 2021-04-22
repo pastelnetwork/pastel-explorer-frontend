@@ -58,7 +58,7 @@ const Summary: React.FC = () => {
   React.useEffect(() => updateSummaryList(), []);
 
   return (
-    <Grid container spacing={6}>
+    <Styles.Grid container spacing={6}>
       {summaryList.map(({ id, name, value, difference }) => (
         <Grid item xs={12} md={6} lg={3} key={id}>
           <Styles.Card mb={3}>
@@ -89,7 +89,7 @@ const Summary: React.FC = () => {
           </Styles.Card>
         </Grid>
       ))}
-    </Grid>
+    </Styles.Grid>
   );
 };
 
