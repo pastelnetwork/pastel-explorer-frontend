@@ -2,9 +2,7 @@ import * as React from 'react';
 import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Box, Grid, Collapse, Drawer, List, IconButton } from '@material-ui/core';
-import { Twitter as TwitterIcon } from '@material-ui/icons';
 
-import * as URLS from '@utils/constants/urls';
 import * as ROUTES from '@utils/constants/routes';
 import { RouteType, RouteChildType } from '@utils/types/routes';
 
@@ -12,6 +10,7 @@ import { sidebarRoutes as routes } from '@routes/index';
 
 import PastelLogo from '@assets/images/pastel-logo-white.png';
 
+import { footerIcons } from './SideBar.helpers';
 import * as Styles from './Sidebar.styles';
 
 interface SidebarCategoryPropsType {
@@ -184,13 +183,15 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
         </List>
       </Styles.Scrollbar>
       <Styles.SidebarFooter>
-        <Grid container spacing={2}>
-          <Grid item>
-            <IconButton target="_blank" href={URLS.TWITTER_URL} color="primary">
-              <TwitterIcon />
-            </IconButton>
-          </Grid>
-        </Grid>
+        <Styles.SidebarContainer container spacing={2} justify="space-around" alignItems="center">
+          {footerIcons.map(({ id, url, icon }) => (
+            <Grid item key={id}>
+              <IconButton target="_blank" href={url} color="primary">
+                {icon}
+              </IconButton>
+            </Grid>
+          ))}
+        </Styles.SidebarContainer>
       </Styles.SidebarFooter>
     </Drawer>
   );

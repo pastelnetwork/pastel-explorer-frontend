@@ -3,6 +3,7 @@ import { rgba, darken } from 'polished';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { NavLink } from 'react-router-dom';
 import {
+  Grid as MuiGrid,
   Box as MuiBox,
   Chip,
   Drawer as MuiDrawer,
@@ -183,6 +184,10 @@ export const LinkBadge = styled(Chip)`
 
 export const CategoryBadge = styled(LinkBadge)`
   top: 12px;
+`;
+
+export const SidebarContainer = styled(MuiGrid)`
+  height: 60px;
 `;
 
 export const SidebarSection = styled(Typography)`

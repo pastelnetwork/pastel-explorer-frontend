@@ -1,38 +1,22 @@
 import styled from 'styled-components/macro';
 
-import {
-  ListItemText as MuiListItemText,
-  ListItem as MuiListItem,
-  ListItemProps as MuiListItemProps,
-} from '@material-ui/core';
+import { Typography as MuiTypography } from '@material-ui/core';
 
-interface ListItemProps extends MuiListItemProps {
-  component?: string;
-  href?: string;
-  button?: boolean | undefined;
-}
+import themeVariant from '@theme/variants';
 
-export const Wrapper = styled.div`
-  padding: ${props => props.theme.spacing(1) / 4}px ${props => props.theme.spacing(4)}px;
-  background: ${props => props.theme.footer.background};
-  position: relative;
+export const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  height: 74px;
+  background: ${themeVariant.footer.background};
+  box-shadow: -1px 7px 12px 0px ${themeVariant.footer.color};
 `;
 
-export const ListItem = styled(MuiListItem)<ListItemProps>`
-  display: inline-block;
-  width: auto;
-  padding-left: ${props => props.theme.spacing(2)}px;
-  padding-right: ${props => props.theme.spacing(2)}px;
-
-  &,
-  &:hover,
-  &:active {
-    color: #ff0000;
-  }
-`;
-
-export const ListItemText = styled(MuiListItemText)`
-  span {
-    color: ${props => props.theme.footer.color};
-  }
+export const Typography = styled(MuiTypography)`
+  font-size: 1.25rem;
+  color: ${themeVariant.footer.color};
 `;
