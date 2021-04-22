@@ -22,6 +22,7 @@ const Movement: React.FC = () => {
     url: `${URLS.LAST_TRANSACTIONS_URL}/${TRANSACTION_MIN_AMOUNT}?_=${getTime(currentDate)}`,
   });
 
+  // TODO When API url will change to V1, please delete not needed types from ITransaction
   const transformTransactionsData = (transactions: Array<ITransaction>) => {
     const transformedTransactions = transactions.map(({ total, txid, timestamp }) => {
       return {

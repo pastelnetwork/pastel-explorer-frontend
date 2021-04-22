@@ -19,14 +19,14 @@ export const TableWrapper = styled.div`
 export const Cell = styled(TableCell)`
   width: 100%;
   display: flex;
-  justifycontent: center;
+  justify-content: center;
   textalign: center;
 `;
 
 export const HeaderCell = styled(TableCell)`
   height: 70;
   display: flex;
-  justifycontent: center;
+  justify-content: center;
 `;
 
 export const Loader = styled.div`
