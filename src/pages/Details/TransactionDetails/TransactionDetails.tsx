@@ -12,7 +12,7 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import * as ROUTES from '@utils/constants/routes';
 import * as URLS from '@utils/constants/urls';
 import { formattedDate } from '@utils/helpers/date/date';
-import { ITransaction, TransactionEvent, DirectionType } from '@utils/types/ITransactions';
+import { TransactionEvent, DirectionType, ITransactionDetails } from '@utils/types/ITransactions';
 
 import {
   inputAddressHeaders,
@@ -26,9 +26,9 @@ interface ParamTypes {
 
 const TransactionDetails = () => {
   const { id } = useParams<ParamTypes>();
-  const [transaction, setTransaction] = React.useState<ITransaction | null>(null);
+  const [transaction, setTransaction] = React.useState<ITransactionDetails | null>(null);
   const [redirect, setRedirect] = React.useState(false);
-  const { fetchData } = useFetch<{ data: ITransaction }>({
+  const { fetchData } = useFetch<{ data: ITransactionDetails }>({
     method: 'get',
     url: `${URLS.TRANSACTION_URL}/${id}`,
   });
@@ -71,7 +71,7 @@ const TransactionDetails = () => {
     return tableTransactionEvents;
   };
 
-  const generateTransactionTable = ({ blockHash, timestamp }: ITransaction): RowsProps[] => {
+  const generateTransactionTable = ({ blockHash, timestamp }: ITransactionDetails): RowsProps[] => {
     return [
       {
         id: 1,

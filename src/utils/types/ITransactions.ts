@@ -1,8 +1,3 @@
-interface vType {
-  addresses: string;
-  amount: number;
-}
-
 export type DirectionType = 'Incoming' | 'Outgoing';
 
 export interface TransactionEvent {
@@ -13,15 +8,21 @@ export interface TransactionEvent {
 }
 
 export interface ITransaction {
-  blockhash: string;
-  blockindex: number;
-  timestamp: number;
-  total: number;
+  block: {
+    height: string;
+  };
+  // TODO delete after change movement fetch data to API V1
+  total: string;
+  // TODO delete after change movement fetch data to API V1
   txid: string;
-  vin: Array<vType>;
-  vout: Array<vType>;
+  blockHash: string;
   coinbase: number;
   id: string;
+  recipientCount: number;
+  timestamp: number;
+  totalAmount: number;
+}
+
+export interface ITransactionDetails extends ITransaction {
   transactionEvents: Array<TransactionEvent>;
-  blockHash: string;
 }

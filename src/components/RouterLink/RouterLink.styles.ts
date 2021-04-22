@@ -5,4 +5,6 @@ export const RouterLink = styled(Link)`
   width: 100%;
   text-decoration: none;
   color: inherit;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
