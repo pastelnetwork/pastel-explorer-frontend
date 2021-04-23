@@ -98,9 +98,14 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
     100,
   );
 
+  const handleSort = (info: ISortData) => {
+    !loading && setLoading(true);
+    return onHeaderClick(info);
+  };
+
   React.useEffect(() => {
     loading && setLoading(false);
-  }, [rows.length]);
+  }, [rows]);
 
   return (
     <Styles.Card mb={3}>
@@ -125,7 +130,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
                   rowCount={rows.length}
                   width={width}
                   sortBy={sortBy}
-                  sort={onHeaderClick}
+                  sort={handleSort}
                   sortDirection={sortDirection}
                   onScroll={handleReachBottom}
                 >
