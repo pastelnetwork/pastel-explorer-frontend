@@ -10,11 +10,19 @@ import {
 } from 'react-virtualized';
 
 import { CardHeader, Paper, CircularProgress } from '@material-ui/core';
+import { ArrowDropDown, ArrowDropUp } from '@material-ui/icons';
 import { Skeleton } from '@material-ui/lab';
 
 import * as Styles from './InfinityTable.styles';
 
 export type HeaderType = { id: number | string; header: string };
+
+export type SortDirectionsType = 'ASC' | 'DESC';
+
+export interface ISortData {
+  sortBy: string;
+  sortDirection: SortDirectionsType;
+}
 
 export interface RowsProps {
   [key: string]: number | string | JSX.Element;
@@ -27,20 +35,42 @@ interface IInfinityTableComponentProps {
     flexGrow: number;
     label: string;
     dataKey: string;
+    disableSort: boolean;
   }>;
   rows: Array<RowsProps>;
+  sortBy: string;
+  sortDirection: SortDirectionsType;
   rowHeight?: number;
   tableHeight?: number;
   // eslint-disable-next-line
   onBottomReach: (value: boolean) => void;
+  // eslint-disable-next-line
+  onHeaderClick: (info: ISortData) => void;
 }
 
-const noRowsRenderer = () => <div>No data</div>;
-const headerRenderer = ({ label }: TableHeaderProps & { columnIndex: number }) => (
-  <Styles.HeaderCell component="div" variant="head">
-    {label}
-  </Styles.HeaderCell>
+const noRowsRenderer = () => (
+  <Styles.Loader>
+    <CircularProgress size={40} />
+  </Styles.Loader>
 );
+const headerRenderer = ({
+  label,
+  dataKey,
+  sortBy,
+  sortDirection,
+  disableSort,
+}: TableHeaderProps & { columnIndex: number }) => {
+  const showSort = !disableSort && dataKey === sortBy;
+  const renderSortIcon = () =>
+    !disableSort && sortDirection === 'DESC' ? <ArrowDropDown /> : <ArrowDropUp />;
+
+  return (
+    <Styles.HeaderCell component="div" variant="head" $disabledSort={Boolean(disableSort)}>
+      {label}
+      {showSort && renderSortIcon()}
+    </Styles.HeaderCell>
+  );
+};
 const TableCellRenderer = ({ cellData }: TableCellProps) => (
   <Styles.Cell component="div">{cellData}</Styles.Cell>
 );
@@ -49,7 +79,10 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   title,
   rows,
   columns,
+  sortBy,
+  sortDirection,
   onBottomReach,
+  onHeaderClick,
   rowHeight = 70,
   tableHeight = 500,
 }) => {
@@ -86,10 +119,14 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
                   headerHeight={rowHeight}
                   height={tableHeight}
                   noRowsRenderer={noRowsRenderer}
+                  // onHeaderClick={handleHeaderClick}
                   rowHeight={rowHeight}
                   rowGetter={({ index }: { index: number }) => rows[index]}
                   rowCount={rows.length}
                   width={width}
+                  sortBy={sortBy}
+                  sort={onHeaderClick}
+                  sortDirection={sortDirection}
                   onScroll={handleReachBottom}
                 >
                   {columns.map(({ dataKey, ...other }, index) => (

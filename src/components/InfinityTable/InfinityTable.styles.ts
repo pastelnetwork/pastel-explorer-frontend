@@ -23,10 +23,12 @@ export const Cell = styled(TableCell)`
   text-align: center;
 `;
 
-export const HeaderCell = styled(TableCell)`
+export const HeaderCell = styled(TableCell)<{ $disabledSort: boolean }>`
   height: 70px;
   display: flex;
   justify-content: center;
+  white-space: nowrap;
+  cursor: ${({ $disabledSort }) => !$disabledSort && 'pointer'};
 `;
 
 export const Loader = styled.div`
