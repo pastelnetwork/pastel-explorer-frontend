@@ -124,7 +124,6 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
                   headerHeight={rowHeight}
                   height={tableHeight}
                   noRowsRenderer={noRowsRenderer}
-                  // onHeaderClick={handleHeaderClick}
                   rowHeight={rowHeight}
                   rowGetter={({ index }: { index: number }) => rows[index]}
                   rowCount={rows.length}
