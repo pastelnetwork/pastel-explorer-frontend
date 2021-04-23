@@ -29,7 +29,7 @@ const themeVariant = {
       contrastText: '#FFF',
     },
     background: {
-      default: '#F7F9FC',
+      default: '#EFEDEA',
       paper: '#FFF',
     },
     text: {
@@ -47,7 +47,7 @@ const themeVariant = {
     },
   },
   map: {
-    background: '#e3eaef',
+    background: '#D7D2CB',
     masternode: fade('#000', 0.5),
     peer: fade('#279989', 0.5),
   },
@@ -57,17 +57,17 @@ const themeVariant = {
   },
   sidebar: {
     color: grey[200],
-    background: '#233044',
+    background: '#27251F',
     header: {
       color: grey[200],
-      background: '#233044',
+      background: '#27251F',
       brand: {
         color: '#41B6E6',
       },
     },
     footer: {
       color: grey[200],
-      background: '#1E2A38',
+      background: '#27251F',
       online: {
         background: green[500],
       },
