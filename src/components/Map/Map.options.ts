@@ -1,6 +1,6 @@
 import themeVariant from '@theme/variants';
 
-const regionColor = themeVariant.palette.background.map;
+const regionColor = themeVariant.map.background;
 const markerColor = themeVariant.palette.primary.main;
 const markerStrokeColor = themeVariant.palette.primary.contrastText;
 
@@ -31,5 +31,6 @@ export const defaultMapOptions = {
       'stroke-width': 1.5,
     },
   },
-  zoomOnScroll: false,
+  zoomOnScroll: true,
+  zoomMax: 2048,
 };

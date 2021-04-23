@@ -1,3 +1,4 @@
+import { fade } from '@material-ui/core/styles/colorManipulator';
 import { green, grey, red, orange } from '@material-ui/core/colors';
 
 const themeVariant = {
@@ -29,7 +30,6 @@ const themeVariant = {
     },
     background: {
       default: '#F7F9FC',
-      map: '#e3eaef',
       paper: '#FFF',
     },
     text: {
@@ -45,6 +45,11 @@ const themeVariant = {
     indicator: {
       background: '#41B6E6',
     },
+  },
+  map: {
+    background: '#e3eaef',
+    masternode: fade('#000', 0.5),
+    peer: fade('#279989', 0.5),
   },
   footer: {
     color: grey[500],
