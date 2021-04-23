@@ -7,10 +7,10 @@ import { defaultChartOptions } from './DoughnutChart.options';
 import * as Styles from './DoughnutChart.styles';
 
 interface DoughnutChartProps {
-  data: ChartComponentProps['data'];
+  data: ChartComponentProps['data'] | null;
   title?: string;
   innerTitle?: string;
-  innerSubtitle?: string;
+  innerSubtitle?: string | number;
   table?: React.ReactNode;
 }
 
@@ -30,7 +30,7 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
             {innerTitle && <Typography variant="h4">{innerTitle}</Typography>}
             {innerSubtitle && <Typography variant="caption">{innerSubtitle}</Typography>}
           </Styles.DoughnutInner>
-          <Doughnut data={data} options={defaultChartOptions} />
+          {data && <Doughnut data={data} options={defaultChartOptions} />}
         </Styles.ChartWrapper>
         {table}
       </Styles.CardContent>

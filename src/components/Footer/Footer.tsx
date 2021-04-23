@@ -8,7 +8,7 @@ import * as Styles from './Footer.styles';
 const Footer: React.FC = () => (
   <Styles.Container>
     <Grid item>
-      <Styles.Typography>{`© ${getYear(currentDate)} - Pastel`}</Styles.Typography>
+      <Styles.Typography>{`© ${getYear(currentDate)} - Pastel Network`}</Styles.Typography>
     </Grid>
   </Styles.Container>
 );

@@ -11,7 +11,7 @@ export const Container = styled.div`
   position: sticky;
   bottom: 0;
   width: 100%;
-  height: 74px;
+  height: 50px;
   background: ${themeVariant.footer.background};
   box-shadow: -1px 7px 12px 0px ${themeVariant.footer.color};
 `;
