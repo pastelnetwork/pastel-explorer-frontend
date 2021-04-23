@@ -17,13 +17,13 @@ const headers: Array<HeaderType> = [
 
 const Network: React.FC = () => {
   const [connections, setConnections] = React.useState<Array<RowsProps> | null>(null);
-  const { fetchData } = useFetch<{ data: Array<INetwork> }>({
+  const { fetchData } = useFetch<INetwork>({
     method: 'get',
     url: URLS.NETWORK_URL,
   });
 
-  const transformConnectionsData = (connectionList: Array<INetwork>) => {
-    const transformedConnections = connectionList.map(({ id, ip, protocol, version, country }) => {
+  const transformConnectionsData = ({ peers }: INetwork) => {
+    const transformedConnections = peers.map(({ id, ip, protocol, version, country }) => {
       return {
         id,
         data: [
@@ -41,7 +41,7 @@ const Network: React.FC = () => {
   React.useEffect(() => {
     fetchData().then(response => {
       if (!response) return null;
-      return transformConnectionsData(response.data);
+      return transformConnectionsData(response);
     });
   }, []);
 

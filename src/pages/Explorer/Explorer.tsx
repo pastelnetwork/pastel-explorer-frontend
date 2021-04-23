@@ -10,36 +10,50 @@ import DoughnutChart from '@components/Charts/DoughnutChart/DoughnutChart';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import { INetwork } from '@utils/types/INetwork';
+import { INetwork, INetworkPeers, INetworkMasternodes } from '@utils/types/INetwork';
+
+import themeVariant from '@theme/variants';
 
 import { mockChartTableData } from './Explorer.helpers';
 import LatestTransactions from './LatestTransactions/LatestTransactions';
 
 const Explorer: React.FC = () => {
   const [geoLocationList, setGeoLocationList] = React.useState<Array<MarkerProps> | null>(null);
-  const fetchGeoData = useFetch<{ data: Array<INetwork> }>({
+  const fetchGeoData = useFetch<INetwork>({
     method: 'get',
     url: `${URLS.NETWORK_URL}`,
   });
-
-  const transformGeoLocationData = (geoLocations: Array<INetwork>) => {
-    const transformedGeoLocations = geoLocations.map(({ latitude, longitude, country, city }) => {
+  const transformGeoLocationConnections = (
+    locations: Array<INetworkPeers | INetworkMasternodes>,
+    isMasternode: boolean,
+  ) => {
+    const transformedLocations = locations.map(({ latitude, longitude, country, city }) => {
       const latLng = [latitude, longitude] as [number, number];
       const name = city !== 'N/A' ? `${country} (${city})` : country;
+      const { masternode, peer } = themeVariant.map;
+      const fill = isMasternode ? masternode : peer;
 
       return {
         latLng,
         name,
+        style: { fill },
       };
     });
 
-    setGeoLocationList(transformedGeoLocations);
+    return transformedLocations;
+  };
+
+  const transformGeoLocationData = ({ peers, masternodes }: INetwork) => {
+    const transformedPeers = transformGeoLocationConnections(peers, false);
+    const transformedMasternodes = transformGeoLocationConnections(masternodes, true);
+
+    setGeoLocationList([...transformedPeers, ...transformedMasternodes]);
   };
 
   React.useEffect(() => {
     fetchGeoData.fetchData().then(response => {
       if (!response) return null;
-      return transformGeoLocationData(response.data);
+      return transformGeoLocationData(response);
     });
   }, []);
 

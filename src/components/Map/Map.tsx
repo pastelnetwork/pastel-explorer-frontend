@@ -7,9 +7,14 @@ import * as Styles from './Map.styles';
 import { defaultMapOptions } from './Map.options';
 import './map.css';
 
+interface MarkerStyle {
+  fill: string;
+}
+
 export interface MarkerProps {
   latLng: [number, number];
   name: string;
+  style?: MarkerStyle;
 }
 
 export interface MapProps {
