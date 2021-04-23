@@ -2,6 +2,7 @@ import styled from 'styled-components/macro';
 import { rgba, darken } from 'polished';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { NavLink } from 'react-router-dom';
+
 import {
   Grid as MuiGrid,
   Box as MuiBox,
@@ -12,9 +13,7 @@ import {
   Typography,
   ListItemText,
 } from '@material-ui/core';
-
 import { spacing } from '@material-ui/system';
-
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 
 export const Box = styled(MuiBox)(spacing);

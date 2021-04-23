@@ -1,3 +1,4 @@
+import { darken } from 'polished';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { green, grey, red, orange } from '@material-ui/core/colors';
 
@@ -67,10 +68,7 @@ const themeVariant = {
     },
     footer: {
       color: grey[200],
-      background: '#27251F',
-      online: {
-        background: green[500],
-      },
+      background: darken(0.03, '#27251F'),
     },
     badge: {
       color: '#FFF',

@@ -20,15 +20,16 @@ export interface MarkerProps {
 export interface MapProps {
   title: string;
   markers: Array<MarkerProps> | null;
+  options?: typeof VectorMap;
 }
 
-const Map: React.FC<MapProps> = ({ title, markers }) => {
+const Map: React.FC<MapProps> = ({ title, markers, options }) => {
   return (
     <Styles.Card mb={4}>
       <CardHeader title={title} />
       <Styles.CardContent>
         <Styles.MapContainer>
-          {markers && <VectorMap markers={markers} {...defaultMapOptions} />}
+          {markers && <VectorMap markers={markers} {...defaultMapOptions} {...options} />}
         </Styles.MapContainer>
       </Styles.CardContent>
     </Styles.Card>

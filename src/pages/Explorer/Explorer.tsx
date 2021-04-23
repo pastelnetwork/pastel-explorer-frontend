@@ -7,12 +7,11 @@ import Map, { MarkerProps } from '@components/Map/Map';
 
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { INetwork, INetworkPeers, INetworkMasternodes } from '@utils/types/INetwork';
-
-import themeVariant from '@theme/variants';
+import { INetwork, INetworkMasternodes } from '@utils/types/INetwork';
 
 import LatestTransactions from './LatestTransactions/LatestTransactions';
 import SupernodeStatistics from './SupernodeStatistics/SupernodeStatistics';
+import { transformGeoLocationConnections, MARKER_SEPARATOR } from './Explorer.helpers';
 
 const Explorer: React.FC = () => {
   const [masternodeList, setMasternodeList] = React.useState<Array<INetworkMasternodes> | null>(
@@ -23,25 +22,6 @@ const Explorer: React.FC = () => {
     method: 'get',
     url: `${URLS.NETWORK_URL}`,
   });
-  const transformGeoLocationConnections = (
-    locations: Array<INetworkPeers | INetworkMasternodes>,
-    isMasternode: boolean,
-  ) => {
-    const transformedLocations = locations.map(({ latitude, longitude, country, city }) => {
-      const latLng = [latitude, longitude] as [number, number];
-      const name = city !== 'N/A' ? `${country} (${city})` : country;
-      const { masternode, peer } = themeVariant.map;
-      const fill = isMasternode ? masternode : peer;
-
-      return {
-        latLng,
-        name,
-        style: { fill },
-      };
-    });
-
-    return transformedLocations;
-  };
 
   const transformGeoLocationData = ({ peers, masternodes }: INetwork) => {
     const transformedPeers = transformGeoLocationConnections(peers, false);
@@ -59,12 +39,20 @@ const Explorer: React.FC = () => {
     });
   }, []);
 
+  const mapOptions = {
+    onMarkerTipShow: (event: Event, element: Array<HTMLElement>) => {
+      const labelElement = element[0];
+      const replaced = labelElement.innerText.split(MARKER_SEPARATOR);
+      labelElement.innerHTML = replaced.join(MARKER_SEPARATOR);
+    },
+  };
+
   return (
     <>
       <Header title="Explorer" />
       <Grid container spacing={6}>
         <Grid item xs={12} lg={8}>
-          <Map markers={geoLocationList} title="Explorer Map" />
+          <Map markers={geoLocationList} title="Explorer Map" options={mapOptions} />
         </Grid>
         <Grid item xs={12} lg={4}>
           <SupernodeStatistics masternodes={masternodeList} />

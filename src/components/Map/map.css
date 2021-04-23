@@ -20,6 +20,7 @@ svg {
   font-family: sans-serif, Verdana;
   font-size: smaller;
   padding: 3px;
+  z-index: 9999;
 }
 
 .jvectormap-zoomin,

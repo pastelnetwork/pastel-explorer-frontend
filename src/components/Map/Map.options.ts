@@ -1,10 +1,11 @@
+import { VectorMap } from 'react-jvectormap';
 import themeVariant from '@theme/variants';
 
 const regionColor = themeVariant.map.background;
 const markerColor = themeVariant.palette.primary.main;
 const markerStrokeColor = themeVariant.palette.primary.contrastText;
 
-export const defaultMapOptions = {
+export const defaultMapOptions: typeof VectorMap = {
   map: 'world_mill',
   regionStyle: {
     initial: {
