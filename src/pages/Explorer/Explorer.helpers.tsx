@@ -1,84 +1,30 @@
+import { INetworkMasternodes, INetworkPeers } from '@utils/types/INetwork';
 import themeVariant from '@theme/variants';
-import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 
-import { Chip } from '@material-ui/core';
+export const MARKER_SEPARATOR = '<br>';
 
-const MOCKED_VALUES = [3495, 234, 3289];
+export const transformGeoLocationConnections = (
+  locations: Array<INetworkPeers | INetworkMasternodes>,
+  isMasternode: boolean,
+) => {
+  const transformedLocations = locations.map(({ latitude, longitude, country, city, id, ip }) => {
+    const latLng = [latitude, longitude] as [number, number];
+    const name = `
+      ${isMasternode ? 'Masternode' : 'Peer'}${MARKER_SEPARATOR}
+      Country: ${country}${MARKER_SEPARATOR}
+      City: ${city}${MARKER_SEPARATOR}
+      PastelID: ${id}${MARKER_SEPARATOR}
+      IP: ${ip}
+    `;
+    const { masternode, peer } = themeVariant.map;
+    const fill = isMasternode ? masternode : peer;
 
-export const mockChartTableData = {
-  headers: [
-    { id: 1, header: 'Statistic' },
-    { id: 2, header: 'Value' },
-  ],
-  rows: [
-    {
-      id: 1,
-      data: [
-        { id: 1, value: 'Active' },
-        {
-          id: 2,
-          value: (
-            <Chip
-              label={formatNumber(MOCKED_VALUES[0])}
-              style={{
-                backgroundColor: themeVariant.palette.secondary.main,
-                color: themeVariant.palette.secondary.contrastText,
-              }}
-            />
-          ),
-        },
-      ],
-    },
-    {
-      id: 2,
-      data: [
-        { id: 1, value: 'Inactives' },
-        {
-          id: 2,
-          value: (
-            <Chip
-              label={formatNumber(MOCKED_VALUES[1])}
-              style={{
-                backgroundColor: themeVariant.custom.red.main,
-                color: themeVariant.palette.secondary.contrastText,
-              }}
-            />
-          ),
-        },
-      ],
-    },
-    {
-      id: 3,
-      data: [
-        { id: 1, value: 'Unique IPs' },
-        {
-          id: 2,
-          value: (
-            <Chip
-              label={formatNumber(MOCKED_VALUES[2])}
-              style={{
-                backgroundColor: themeVariant.palette.primary.main,
-                color: themeVariant.palette.secondary.contrastText,
-              }}
-            />
-          ),
-        },
-      ],
-    },
-  ],
-  data: {
-    labels: ['Active', 'Inactives', 'Unique IPs'],
-    datasets: [
-      {
-        data: MOCKED_VALUES,
-        backgroundColor: [
-          themeVariant.palette.secondary.main,
-          themeVariant.custom.red.main,
-          themeVariant.palette.primary.main,
-        ],
-        borderWidth: 5,
-        borderColor: themeVariant.palette.background.paper,
-      },
-    ],
-  },
+    return {
+      latLng,
+      name,
+      style: { fill },
+    };
+  });
+
+  return transformedLocations;
 };
