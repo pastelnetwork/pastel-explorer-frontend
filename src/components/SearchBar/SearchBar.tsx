@@ -94,6 +94,10 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
     return () => clearTimeout();
   };
 
+  const handleClose = () => searchData.length && setSearchData([]);
+
+  const dropdownOpen = Boolean(searchData.length) || loading;
+
   return (
     <Styles.AppBar position="sticky" elevation={0}>
       <Toolbar>
@@ -108,6 +112,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
           <Grid item style={{ width: '100%' }}>
             <MuiAutocomplete
               fullWidth
+              open={dropdownOpen}
               style={{ margin: '12px 0' }}
               options={searchData}
               classes={classes}
@@ -116,8 +121,11 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
               loading={loading}
               onInputChange={handleInputChange}
               onChange={handleChange}
+              onClose={handleClose}
+              forcePopupIcon={false}
               getOptionSelected={(option, value) => option.value === value.value}
               noOptionsText="No results containing all your search terms were found"
+              loadingText="Loading results..."
               renderOption={option => (
                 <RouterLink
                   styles={{ padding: '6px 24px 6px 16px' }}
@@ -128,7 +136,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
               renderInput={params => (
                 <TextField
                   {...params}
-                  label="You may enter a block height, block hash, tx hash or address"
+                  label="Search: You may enter a block height, block hash, tx hash or address"
                   variant="outlined"
                   InputProps={{
                     ...params.InputProps,
