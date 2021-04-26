@@ -8,6 +8,7 @@ export interface SummaryItemProps {
   key: string;
   difference: string | number | null;
   decimals: number;
+  divideToAmount?: boolean;
 }
 
 export const initialSummaryList: Array<SummaryItemProps> = [
