@@ -1,105 +1,112 @@
 import * as React from 'react';
 
-import RouterLink from '@components/RouterLink/RouterLink';
-import InfinityTable, { RowsProps } from '@components/InfinityTable/InfinityTable';
+import InfinityTable, {
+  RowsProps,
+  SortDirectionsType,
+  ISortData,
+} from '@components/InfinityTable/InfinityTable';
 
 import * as URLS from '@utils/constants/urls';
-import * as ROUTES from '@utils/constants/routes';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import { formattedDate } from '@utils/helpers/date/date';
+
 import { ITransaction } from '@utils/types/ITransactions';
 
-const columns = [
-  {
-    width: 30,
-    flexGrow: 1,
-    label: 'Block',
-    dataKey: 'block',
-  },
-  {
-    width: 360,
-    flexGrow: 1,
-    label: 'Hash',
-    dataKey: 'hash',
-  },
-  {
-    width: 20,
-    flexGrow: 1,
-    label: 'Recipents',
-    dataKey: 'recipents',
-  },
-  {
-    width: 60,
-    flexGrow: 1,
-    label: 'Amount (PSL)',
-    dataKey: 'amount',
-  },
-  {
-    width: 150,
-    flexGrow: 1,
-    label: 'Timestamp',
-    dataKey: 'timestamp',
-  },
-];
+import { BLOCK_KEY, columns, TIMESTAMP_KEY } from './LatestTransactions.columns';
+import { transformTransactionsData } from './LatestTransactions.helpers';
 
 const DATA_FETCH_LIMIT = 100;
 const DATA_OFFSET = 0;
 
+interface ITransactionDataRef {
+  limit: number;
+  offset: number;
+  sortBy: string;
+  sortDirection: SortDirectionsType;
+}
+
 const LatestTransactions: React.FC = () => {
-  const transactionsFetchData = React.useRef({ limit: DATA_FETCH_LIMIT, offset: DATA_OFFSET });
+  const fetchParams = React.useRef<ITransactionDataRef>({
+    limit: DATA_FETCH_LIMIT,
+    offset: DATA_OFFSET,
+    sortBy: TIMESTAMP_KEY,
+    sortDirection: 'DESC',
+  });
   const [transactionList, setTransactionList] = React.useState<Array<RowsProps>>([]);
   const fetchTransactions = useFetch<{ data: Array<ITransaction> }>({
     method: 'get',
     url: `${URLS.TRANSACTION_URL}`,
   });
 
-  const transformTransactionsData = (transactions: Array<ITransaction>) => {
-    const transformedTransactions = transactions.map(
-      ({ blockHash, id, block, recipientCount, timestamp, totalAmount }) => ({
-        id,
-        block: <RouterLink route={`${ROUTES.BLOCK_DETAILS}/${blockHash}`} value={block.height} />,
-        hash: <RouterLink route={`${ROUTES.TRANSACTION_DETAILS}/${id}`} value={id} />,
-        recipents: recipientCount,
-        amount: formatNumber(totalAmount, { decimalsLength: 2 }),
-        timestamp: formattedDate(timestamp),
-      }),
-    );
-
-    setTransactionList(prevState => [...prevState, ...transformedTransactions]);
-  };
-
-  const handleFetchTransactions = (limit: number, offset: number) =>
+  const handleFetchTransactions = (
+    limit: number,
+    offset: number,
+    sortBy: string,
+    sortDirection: SortDirectionsType,
+    replaceData = false,
+  ) =>
     fetchTransactions
-      .fetchData({ params: { offset, limit, sortBy: 'timestamp' } })
-      .then(response => {
-        if (!response) return null;
-        return transformTransactionsData(response.data);
-      });
+      .fetchData({ params: { offset, limit, sortBy, sortDirection } })
+      .then(response => (response ? transformTransactionsData(response.data) : []))
+      .then(data =>
+        replaceData
+          ? setTransactionList(data)
+          : setTransactionList(prevState => [...prevState, ...data]),
+      );
 
   const handleFetchMoreTransactions = (reachedTableBottom: boolean) => {
     if (!reachedTableBottom) return null;
 
-    transactionsFetchData.current.offset += transactionsFetchData.current.limit;
+    fetchParams.current.offset += fetchParams.current.limit;
+    // Allow to sort by block height
+    // In this situation if user will click on block column we need to sort by timestamp
+    const fetchSortBy =
+      fetchParams.current.sortBy === BLOCK_KEY ? TIMESTAMP_KEY : fetchParams.current.sortBy;
+
     return handleFetchTransactions(
-      transactionsFetchData.current.limit,
-      transactionsFetchData.current.offset,
+      fetchParams.current.limit,
+      fetchParams.current.offset,
+      fetchSortBy,
+      fetchParams.current.sortDirection,
+    );
+  };
+
+  const handleSort = ({ sortBy, sortDirection }: ISortData) => {
+    fetchParams.current.limit = DATA_FETCH_LIMIT;
+    fetchParams.current.offset = DATA_OFFSET;
+    fetchParams.current.sortBy = sortBy;
+    fetchParams.current.sortDirection = sortDirection;
+
+    // Allow to sort by block height
+    // In this situation if user will click on block column we need to sort by timestamp
+    const fetchSortBy = sortBy === BLOCK_KEY ? TIMESTAMP_KEY : sortBy;
+
+    return handleFetchTransactions(
+      fetchParams.current.limit,
+      fetchParams.current.offset,
+      fetchSortBy,
+      fetchParams.current.sortDirection,
+      true,
     );
   };
 
   React.useEffect(() => {
     handleFetchTransactions(
-      transactionsFetchData.current.limit,
-      transactionsFetchData.current.offset,
+      fetchParams.current.limit,
+      fetchParams.current.offset,
+      fetchParams.current.sortBy,
+      fetchParams.current.sortDirection,
     );
   }, []);
 
   return (
     <InfinityTable
+      sortBy={fetchParams.current.sortBy}
+      sortDirection={fetchParams.current.sortDirection}
       rows={transactionList}
       columns={columns}
       title="Latest Transactions"
       onBottomReach={handleFetchMoreTransactions}
+      onHeaderClick={handleSort}
     />
   );
 };

@@ -10,6 +10,10 @@ export const TableWrapper = styled.div`
   overflow-y: auto;
   max-width: calc(100vw - ${props => props.theme.spacing(12)}px);
 
+  * {
+    outline: 0;
+  }
+
   .ReactVirtualized__Table__headerRow,
   .ReactVirtualized__Table__row {
     display: flex;
@@ -23,10 +27,12 @@ export const Cell = styled(TableCell)`
   text-align: center;
 `;
 
-export const HeaderCell = styled(TableCell)`
+export const HeaderCell = styled(TableCell)<{ $disabledSort: boolean }>`
   height: 70px;
   display: flex;
   justify-content: center;
+  white-space: nowrap;
+  cursor: ${({ $disabledSort }) => !$disabledSort && 'pointer'};
 `;
 
 export const Loader = styled.div`
