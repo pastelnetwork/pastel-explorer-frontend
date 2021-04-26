@@ -1,6 +1,5 @@
 // Routes
 export const BASE_URL = process.env.REACT_APP_EXPLORER_WEB_API_URL;
-export const SUMMARY_URL = '/ext/summary';
 export const LAST_TRANSACTIONS_URL = '/ext/getlasttxs';
 
 // API endpoints
@@ -10,6 +9,7 @@ export const BLOCK_URL = 'v1/blocks';
 export const ADDRESS_URL = 'v1/addresses';
 export const RICHLIST_URL = 'v1/addresses/rank/100';
 export const NETWORK_URL = 'v1/network';
+export const SUMMARY_URL = 'v1/stats';
 
 // External URLS
 export const TWITTER_URL = 'https://twitter.com/pastelnetwork';
