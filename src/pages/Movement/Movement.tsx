@@ -1,61 +1,105 @@
 import * as React from 'react';
-import getTime from 'date-fns/getTime';
 import { Grid } from '@material-ui/core';
 
 import Header from '@components/Header/Header';
-import RouterLink from '@components/RouterLink/RouterLink';
-import Table, { RowsProps } from '@components/Table/Table';
+import InfinityTable, {
+  RowsProps,
+  SortDirectionsType,
+  ISortData,
+} from '@components/InfinityTable/InfinityTable';
 
 import * as URLS from '@utils/constants/urls';
-import * as ROUTES from '@utils/constants/routes';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import { currentDate, formattedDate } from '@utils/helpers/date/date';
 import { ITransaction } from '@utils/types/ITransactions';
 
-import { TRANSACTION_MIN_AMOUNT, headers } from './Movement.helpers';
+import { TIMESTAMP_MOVEMENT_KEY, columns } from './Movement.columns';
+import {
+  transformMovementData,
+  DATA_FETCH_LIMIT,
+  DATA_OFFSET,
+  DATA_DEFAULT_SORT,
+} from './Movement.helpers';
+
+interface IMovementDataRef {
+  offset: number;
+  sortBy: string;
+  sortDirection: SortDirectionsType;
+}
 
 const Movement: React.FC = () => {
-  const [transactionList, setTransactionList] = React.useState<Array<RowsProps> | null>(null);
-  const { fetchData } = useFetch<{ data: Array<ITransaction> }>({
+  const fetchParams = React.useRef<IMovementDataRef>({
+    offset: DATA_OFFSET,
+    sortBy: TIMESTAMP_MOVEMENT_KEY,
+    sortDirection: DATA_DEFAULT_SORT,
+  });
+  const [movementList, setMovementList] = React.useState<Array<RowsProps>>([]);
+  const fetchMovementsData = useFetch<{ data: Array<ITransaction> }>({
     method: 'get',
-    url: `${URLS.LAST_TRANSACTIONS_URL}/${TRANSACTION_MIN_AMOUNT}?_=${getTime(currentDate)}`,
+    url: URLS.TRANSACTION_URL,
   });
 
-  // TODO When API url will change to V1, please delete not needed types from ITransaction
-  const transformTransactionsData = (transactions: Array<ITransaction>) => {
-    const transformedTransactions = transactions.map(({ total, txid, timestamp }) => {
-      return {
-        id: txid,
-        data: [
-          {
-            value: formattedDate(timestamp, { dayName: false }),
-            id: 1,
-          },
-          {
-            value: <RouterLink route={`${ROUTES.TRANSACTION_DETAILS}/${txid}`} value={txid} />,
-            id: 2,
-          },
-          { value: formatNumber(total, { divideToAmount: true, decimalsLength: 2 }), id: 3 },
-        ],
-      };
-    });
+  const handleFetchMovements = (
+    offset: number,
+    sortBy: string,
+    sortDirection: SortDirectionsType,
+    replaceData = false,
+  ) => {
+    fetchParams.current.sortBy = sortBy;
+    const limit = DATA_FETCH_LIMIT;
 
-    setTransactionList(transformedTransactions);
+    return fetchMovementsData
+      .fetchData({ params: { offset, limit, sortBy, sortDirection } })
+      .then(response => (response ? transformMovementData(response.data) : []))
+      .then(data =>
+        replaceData ? setMovementList(data) : setMovementList(prevState => [...prevState, ...data]),
+      );
+  };
+
+  const handleFetchMoreMovements = (reachedTableBottom: boolean) => {
+    if (!reachedTableBottom) return null;
+
+    fetchParams.current.offset += DATA_FETCH_LIMIT;
+
+    return handleFetchMovements(
+      fetchParams.current.offset,
+      fetchParams.current.sortBy,
+      fetchParams.current.sortDirection,
+    );
+  };
+
+  const handleSort = ({ sortBy, sortDirection }: ISortData) => {
+    fetchParams.current.offset = DATA_OFFSET;
+    fetchParams.current.sortDirection = sortDirection;
+
+    return handleFetchMovements(
+      fetchParams.current.offset,
+      sortBy,
+      fetchParams.current.sortDirection,
+      true,
+    );
   };
 
   React.useEffect(() => {
-    fetchData().then(response => {
-      if (!response) return null;
-      return transformTransactionsData(response.data);
-    });
+    handleFetchMovements(
+      fetchParams.current.offset,
+      fetchParams.current.sortBy,
+      fetchParams.current.sortDirection,
+    );
   }, []);
 
   return (
     <>
       <Header title="Movement" />
       <Grid item>
-        <Table headers={headers} rows={transactionList} title="Movement Transactions" />
+        <InfinityTable
+          sortBy={fetchParams.current.sortBy}
+          sortDirection={fetchParams.current.sortDirection}
+          rows={movementList}
+          columns={columns}
+          title="Movement Transactions"
+          onBottomReach={handleFetchMoreMovements}
+          onHeaderClick={handleSort}
+        />
       </Grid>
     </>
   );
