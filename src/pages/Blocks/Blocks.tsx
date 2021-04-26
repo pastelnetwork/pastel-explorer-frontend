@@ -1,62 +1,99 @@
 import * as React from 'react';
 import { Grid } from '@material-ui/core';
 
-import RouterLink from '@components/RouterLink/RouterLink';
 import Header from '@components/Header/Header';
-import Table, { HeaderType, RowsProps } from '@components/Table/Table';
+import InfinityTable, {
+  RowsProps,
+  SortDirectionsType,
+  ISortData,
+} from '@components/InfinityTable/InfinityTable';
 
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import * as URLS from '@utils/constants/urls';
-import * as ROUTES from '@utils/constants/routes';
 import { IBlock } from '@utils/types/IBlocks';
-import { formattedDate } from '@utils/helpers/date/date';
 
-const headers: Array<HeaderType> = [
-  { id: 1, header: 'Block' },
-  { id: 2, header: 'Transactions Quantity' },
-  { id: 5, header: 'Timestamp' },
-];
+import { TIMESTAMP_BLOCKS_KEY, columns, BLOCK_ID_KEY } from './Blocks.columns';
+import {
+  transformBlocksData,
+  DATA_FETCH_LIMIT,
+  DATA_OFFSET,
+  DATA_DEFAULT_SORT,
+} from './Blocks.helpers';
+
+interface IBlocksDataRef {
+  offset: number;
+  sortBy: string;
+  sortDirection: SortDirectionsType;
+}
 
 const Blocks = () => {
-  const [blockList, setBLockList] = React.useState<Array<RowsProps> | null>(null);
-  const { fetchData } = useFetch<{ data: Array<IBlock> }>({
+  const fetchParams = React.useRef<IBlocksDataRef>({
+    offset: DATA_OFFSET,
+    sortBy: TIMESTAMP_BLOCKS_KEY,
+    sortDirection: DATA_DEFAULT_SORT,
+  });
+  const [blockList, setBlocksList] = React.useState<Array<RowsProps>>([]);
+  const fetchBlocksData = useFetch<{ data: Array<IBlock> }>({
     method: 'get',
-    url: `${URLS.BLOCK_URL}?limit=100&offset=0`,
+    url: URLS.BLOCK_URL,
   });
 
-  const generateBlockList = (blocks: Array<IBlock>) => {
-    const transformedBlocks = blocks.map(({ id, timestamp, transactionCount }) => {
-      return {
-        id,
-        data: [
-          {
-            value: <RouterLink route={`${ROUTES.BLOCK_DETAILS}/${id}`} value={id} />,
-            id: 1,
-          },
-          {
-            value: transactionCount,
-            id: 2,
-          },
-          { value: formattedDate(timestamp, { dayName: false }), id: 3 },
-        ],
-      };
-    });
+  const handleFetchBlocks = (
+    offset: number,
+    sortBy: string,
+    sortDirection: SortDirectionsType,
+    replaceData = false,
+  ) => {
+    fetchParams.current.sortBy = sortBy;
+    const limit = DATA_FETCH_LIMIT;
 
-    setBLockList(transformedBlocks);
+    // Allow to sort by block height
+    // In this situation if user will click on block column we need to sort by timestamp
+    const fetchSortBy =
+      fetchParams.current.sortBy === BLOCK_ID_KEY ? 'id' : fetchParams.current.sortBy;
+
+    return fetchBlocksData
+      .fetchData({ params: { offset, limit, sortBy: fetchSortBy, sortDirection } })
+      .then(response => (response ? transformBlocksData(response.data) : []))
+      .then(data =>
+        replaceData ? setBlocksList(data) : setBlocksList(prevState => [...prevState, ...data]),
+      );
+  };
+
+  const handleFetchMoreBlocks = (reachedTableBottom: boolean) => {
+    if (!reachedTableBottom) return null;
+
+    fetchParams.current.offset += DATA_FETCH_LIMIT;
+
+    return handleFetchBlocks(
+      fetchParams.current.offset,
+      fetchParams.current.sortBy,
+      fetchParams.current.sortDirection,
+    );
+  };
+
+  const handleSort = ({ sortBy, sortDirection }: ISortData) => {
+    fetchParams.current.sortDirection = sortDirection;
+
+    return handleFetchBlocks(DATA_OFFSET, sortBy, fetchParams.current.sortDirection, true);
   };
 
   React.useEffect(() => {
-    fetchData().then(response => {
-      if (!response) return null;
-      return generateBlockList(response.data);
-    });
+    handleFetchBlocks(DATA_OFFSET, fetchParams.current.sortBy, fetchParams.current.sortDirection);
   }, []);
 
   return (
     <>
       <Header title="Blocks" />
       <Grid item>
-        <Table headers={headers} rows={blockList} />
+        <InfinityTable
+          sortBy={fetchParams.current.sortBy}
+          sortDirection={fetchParams.current.sortDirection}
+          rows={blockList}
+          columns={columns}
+          onBottomReach={handleFetchMoreBlocks}
+          onHeaderClick={handleSort}
+        />
       </Grid>
     </>
   );

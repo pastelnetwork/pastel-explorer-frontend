@@ -11,10 +11,6 @@ export interface ITransaction {
   block: {
     height: string;
   };
-  // TODO delete after change movement fetch data to API V1
-  total: string;
-  // TODO delete after change movement fetch data to API V1
-  txid: string;
   blockHash: string;
   coinbase: number;
   id: string;
