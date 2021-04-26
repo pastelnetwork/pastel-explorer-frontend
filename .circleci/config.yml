@@ -1,0 +1,98 @@
+# JavaScript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2.1
+
+executors:
+  node-browser:
+    docker:
+      - image: circleci/node:12.2.0-browsers
+    working_directory: /tmp/workspace
+
+jobs:
+  build:
+    resource_class: large
+    executor: node-browser
+    working_directory: /tmp/workspace
+    steps:
+      - checkout
+      - run: git submodule update --init --recursive
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: yarn
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run:
+          command: echo 'GENERATE_SOURCEMAP=false' >> .env
+      - run:
+          command: yarn build
+
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - build
+
+  deploy:
+    executor: node-browser
+    working_directory: /tmp
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - add_ssh_keys:
+          fingerprints:
+            - '6b:9d:f0:24:b7:f4:df:69:46:a3:36:c3:6a:1f:ef:c4'
+      - run:
+          name: Deploy over SSH
+          command: scp -o "StrictHostKeyChecking no" -r /tmp/workspace/build/* ubuntu@$SERVER_IP:~/nginx-data/data
+
+workflows:
+  version: 2
+  main:
+    jobs:
+      - build:
+          name: build-pr
+          filters:
+            branches:
+              ignore:
+                - master
+                - production
+      - build:
+          name: build-stage
+          context: pastel-frontend-stage
+          filters:
+            branches:
+              only:
+                - master
+      - build:
+          name: build-production
+          context: pastel-frontend-production
+          filters:
+            branches:
+              only:
+                - production
+
+      - deploy:
+          name: deploy-stage
+          requires:
+            - build-stage
+          context: pastel-frontend-stage
+          filters:
+            branches:
+              only:
+                - master
+      - deploy:
+          name: deploy-production
+          requires:
+            - build-production
+          context: pastel-frontend-production
+          filters:
+            branches:
+              only:
+                - production
