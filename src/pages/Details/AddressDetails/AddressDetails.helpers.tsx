@@ -20,7 +20,7 @@ export const DEFAULT_ADDRESS_DATA: IAddress = {
   data: [],
 };
 
-export const DATA_FETCH_LIMIT = 30;
+export const DATA_FETCH_LIMIT = 20;
 export const DATA_OFFSET = 0;
 export const DATA_DEFAULT_SORT = 'DESC';
 

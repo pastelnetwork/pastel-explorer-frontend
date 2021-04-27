@@ -15,7 +15,7 @@ import {
   SUPERNODE_LAST_PAID_KEY,
 } from './Supernodes.columns';
 
-export const DATA_FETCH_LIMIT = 70;
+export const DATA_FETCH_LIMIT = 20;
 export const DATA_OFFSET = 0;
 export const DATA_DEFAULT_SORT = 'DESC';
 

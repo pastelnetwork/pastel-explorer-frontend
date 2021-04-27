@@ -6,7 +6,7 @@ import { IBlock } from '@utils/types/IBlocks';
 
 import { BLOCK_ID_KEY, TRANSACTIONS_QTY_KEY, TIMESTAMP_BLOCKS_KEY } from './Blocks.columns';
 
-export const DATA_FETCH_LIMIT = 100;
+export const DATA_FETCH_LIMIT = 20;
 export const DATA_OFFSET = 0;
 export const DATA_DEFAULT_SORT = 'DESC';
 
