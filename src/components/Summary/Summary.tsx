@@ -25,7 +25,10 @@ const Summary: React.FC = () => {
 
       return {
         ...summaryElement,
-        value: formatNumber(currentStats[key], { decimalsLength: summaryElement.decimals }),
+        value: formatNumber(currentStats[key], {
+          decimalsLength: summaryElement.decimals,
+          divideToAmount: summaryElement.divideToAmount,
+        }),
         previousValue: formatNumber(lastDayStats[key], { decimalsLength: summaryElement.decimals }),
         difference: calculateDifference(currentStats[key], lastDayStats[key]),
       };
