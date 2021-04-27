@@ -38,14 +38,14 @@ interface IInfinityTableComponentProps {
     disableSort: boolean;
   }>;
   rows: Array<RowsProps>;
-  sortBy: string;
-  sortDirection: SortDirectionsType;
+  sortBy?: string;
+  sortDirection?: SortDirectionsType;
   rowHeight?: number;
   tableHeight?: number;
   // eslint-disable-next-line
-  onBottomReach: (value: boolean) => void;
+  onBottomReach?: (value: boolean) => void;
   // eslint-disable-next-line
-  onHeaderClick: (info: ISortData) => void;
+  onHeaderClick?: (info: ISortData) => void;
 }
 
 const noRowsRenderer = () => (
@@ -90,6 +90,8 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
 
   const handleReachBottom = _debounce(
     ({ clientHeight, scrollHeight, scrollTop }: ScrollEventData) => {
+      if (!onBottomReach) return null;
+
       const bottomReached = clientHeight + scrollTop >= scrollHeight;
       !loading && bottomReached && setLoading(true);
 
@@ -100,7 +102,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
 
   const handleSort = (info: ISortData) => {
     !loading && setLoading(true);
-    return onHeaderClick(info);
+    return onHeaderClick && onHeaderClick(info);
   };
 
   React.useEffect(() => {

@@ -25,6 +25,8 @@ export const Cell = styled(TableCell)`
   display: flex;
   justify-content: center;
   text-align: center;
+  height: 100%;
+  align-items: center;
 `;
 
 export const HeaderCell = styled(TableCell)<{ $disabledSort: boolean }>`
