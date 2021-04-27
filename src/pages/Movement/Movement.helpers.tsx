@@ -7,7 +7,7 @@ import { ITransaction } from '@utils/types/ITransactions';
 
 import { TIMESTAMP_MOVEMENT_KEY, TXID_KEY, AMOUNT_MOVEMENT_KEY } from './Movement.columns';
 
-export const DATA_FETCH_LIMIT = 100;
+export const DATA_FETCH_LIMIT = 20;
 export const DATA_OFFSET = 0;
 export const DATA_DEFAULT_SORT = 'DESC';
 

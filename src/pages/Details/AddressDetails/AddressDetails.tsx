@@ -92,6 +92,7 @@ const AddressDetails = () => {
 
   const handleSort = ({ sortBy, sortDirection }: ISortData) => {
     fetchParams.current.sortDirection = sortDirection;
+    fetchParams.current.offset = DATA_OFFSET;
 
     return handleFetchAddress(DATA_OFFSET, sortBy, fetchParams.current.sortDirection, true);
   };

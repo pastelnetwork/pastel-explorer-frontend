@@ -13,7 +13,7 @@ import {
   TIMESTAMP_KEY,
 } from './LatestTransactions.columns';
 
-export const DATA_FETCH_LIMIT = 100;
+export const DATA_FETCH_LIMIT = 20;
 export const DATA_OFFSET = 0;
 export const DATA_DEFAULT_SORT = 'DESC';
 
