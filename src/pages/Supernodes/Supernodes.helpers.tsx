@@ -1,6 +1,9 @@
+import Chip from '@material-ui/core/Chip';
+
 import RouterLink from '@components/RouterLink/RouterLink';
 
 import * as ROUTES from '@utils/constants/routes';
+import { formattedTimeElapsed } from '@utils/helpers/date/date';
 import { INetworkMasternodes } from '@utils/types/INetwork';
 
 import {
@@ -12,9 +15,17 @@ import {
   SUPERNODE_LAST_PAID_KEY,
 } from './Supernodes.columns';
 
-export const DATA_FETCH_LIMIT = 50;
+export const DATA_FETCH_LIMIT = 70;
 export const DATA_OFFSET = 0;
 export const DATA_DEFAULT_SORT = 'DESC';
+
+const statusColor = (status: string) => (
+  <Chip
+    label={status}
+    color={status.toLowerCase() !== 'enabled' ? 'default' : 'primary'}
+    size="small"
+  />
+);
 
 export const transformSupernodesData = (masternodes: Array<INetworkMasternodes>) =>
   masternodes.map(({ ip, port, address, status, country, lastPaidTime }) => ({
@@ -23,7 +34,7 @@ export const transformSupernodesData = (masternodes: Array<INetworkMasternodes>)
     [SUPERNODE_ADDRESS_KEY]: (
       <RouterLink route={`${ROUTES.ADDRESS_DETAILS}/${address}`} value={address} />
     ),
-    [SUPERNODE_STATUS_KEY]: status,
+    [SUPERNODE_STATUS_KEY]: statusColor(status),
     [SUPERNODE_COUNTRY_KEY]: country,
-    [SUPERNODE_LAST_PAID_KEY]: lastPaidTime,
+    [SUPERNODE_LAST_PAID_KEY]: formattedTimeElapsed(lastPaidTime),
   }));

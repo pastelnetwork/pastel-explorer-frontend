@@ -14,21 +14,21 @@ export const columns = [
     disableSort: true,
   },
   {
-    width: 60,
+    width: 40,
     flexGrow: 1,
     label: 'Port',
     dataKey: SUPERNODE_PORT_KEY,
     disableSort: true,
   },
   {
-    width: 300,
+    width: 280,
     flexGrow: 1,
     label: 'Address',
     dataKey: SUPERNODE_ADDRESS_KEY,
     disableSort: true,
   },
   {
-    width: 60,
+    width: 160,
     flexGrow: 1,
     label: 'Status',
     dataKey: SUPERNODE_STATUS_KEY,
@@ -42,7 +42,7 @@ export const columns = [
     disableSort: true,
   },
   {
-    width: 140,
+    width: 120,
     flexGrow: 1,
     label: 'Last paid',
     dataKey: SUPERNODE_LAST_PAID_KEY,
