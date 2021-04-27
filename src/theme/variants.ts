@@ -49,8 +49,8 @@ const themeVariant = {
   },
   map: {
     background: '#D7D2CB',
-    masternode: fade('#000', 0.5),
-    peer: fade('#279989', 0.5),
+    masternode: fade('#000', 0.8),
+    peer: fade('#279989', 0.8),
   },
   footer: {
     color: grey[500],

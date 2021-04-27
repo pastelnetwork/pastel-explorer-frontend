@@ -19,7 +19,7 @@ export const CardContent = styled(MuiCardContent)`
 `;
 
 export const ChartWrapper = styled.div`
-  height: 168px;
+  height: 120px;
   position: relative;
 
   .chartjs-render-monitor {

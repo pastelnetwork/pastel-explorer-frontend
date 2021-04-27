@@ -11,10 +11,19 @@ interface MarkerStyle {
   fill: string;
 }
 
+export interface MarkerData {
+  type: string;
+  country: string;
+  city: string;
+  id: string;
+  ip: string;
+}
+
 export interface MarkerProps {
   latLng: [number, number];
   name: string;
   style?: MarkerStyle;
+  data: Array<MarkerData>;
 }
 
 export interface MapProps {

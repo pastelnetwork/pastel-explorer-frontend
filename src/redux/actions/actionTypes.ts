@@ -1,1 +1,2 @@
 export const RESPONSE_ERROR_SET = 'RESPONSE_ERROR_SET';
+export const INFO_DRAWER_SET = 'INFO_DRAWER_SET';
