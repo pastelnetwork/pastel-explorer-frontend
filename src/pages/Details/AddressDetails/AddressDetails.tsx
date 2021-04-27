@@ -121,6 +121,7 @@ const AddressDetails = () => {
             sortBy={fetchParams.current.sortBy}
             sortDirection={fetchParams.current.sortDirection}
             rows={generateLatestTransactions(addresses.data)}
+            loadMoreFrom={DATA_FETCH_LIMIT}
             columns={columns}
             onBottomReach={handleFetchMoreTransactions}
             onHeaderClick={handleSort}
