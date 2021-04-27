@@ -13,6 +13,7 @@ import {
 
 import ErrorHandler from '@pages/ErrorHandler/ErrorHandler';
 import ResponseErrorAlert from '@components/ResponseErrorAlert/ResponseErrorAlert';
+import InfoDrawer from '@components/InfoDrawer/InfoDrawer';
 
 import createTheme from './theme';
 import Routes from './routes/Routes';
@@ -34,6 +35,7 @@ const App: React.FC = () => {
                 <Routes />
                 <ResponseErrorAlert />
               </ErrorHandler>
+              <InfoDrawer />
             </ThemeProvider>
           </MuiThemeProvider>
         </MuiPickersUtilsProvider>

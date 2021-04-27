@@ -1,5 +1,4 @@
 import { darken } from 'polished';
-import { fade } from '@material-ui/core/styles/colorManipulator';
 import { green, grey, red, orange } from '@material-ui/core/colors';
 
 const themeVariant = {
@@ -49,8 +48,8 @@ const themeVariant = {
   },
   map: {
     background: '#D7D2CB',
-    masternode: fade('#000', 0.5),
-    peer: fade('#279989', 0.5),
+    masternode: '#000',
+    peer: '#279989',
   },
   footer: {
     color: grey[500],

@@ -4,7 +4,7 @@ import { Card as MuiCard, CardContent as MuiCardContent } from '@material-ui/cor
 import { spacing } from '@material-ui/system';
 
 export const MapContainer = styled.div`
-  height: 442px;
+  height: 340px;
 `;
 
 export const Card = styled(MuiCard)(spacing);

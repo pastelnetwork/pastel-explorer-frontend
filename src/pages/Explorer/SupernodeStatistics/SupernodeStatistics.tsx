@@ -18,6 +18,11 @@ interface SupernodeStatisticsProps {
 
 const DISPLAY_COUNTRY_QUANTITY = 5;
 
+const tableStyles = {
+  height: '200px',
+  overflow: 'auto',
+};
+
 const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ masternodes }) => {
   const [countries, setCountries] = React.useState<Array<RowsProps> | null>(null);
   const [countryQuantity, setCountryQuantity] = React.useState(0);
@@ -61,9 +66,7 @@ const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ masternodes }
       data={
         countryChartData && generateChartData(countryChartData.headers, countryChartData.quantities)
       }
-      table={
-        <Table headers={headers} rows={countries} styles={{ height: '254px', overflow: 'auto' }} />
-      }
+      table={<Table headers={headers} rows={countries} styles={tableStyles} />}
     />
   );
 };

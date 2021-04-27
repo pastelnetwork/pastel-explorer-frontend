@@ -9,12 +9,22 @@ import './map.css';
 
 interface MarkerStyle {
   fill: string;
+  stroke: string;
+}
+
+export interface MarkerData {
+  type: string;
+  country: string;
+  city: string;
+  id: string;
+  ip: string;
 }
 
 export interface MarkerProps {
   latLng: [number, number];
   name: string;
-  style?: MarkerStyle;
+  style: MarkerStyle;
+  data: Array<MarkerData>;
 }
 
 export interface MapProps {
