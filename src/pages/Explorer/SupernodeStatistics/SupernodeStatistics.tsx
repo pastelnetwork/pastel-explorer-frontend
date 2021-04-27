@@ -3,17 +3,17 @@ import * as React from 'react';
 import Table, { RowsProps } from '@components/Table/Table';
 import DoughnutChart from '@components/Charts/DoughnutChart/DoughnutChart';
 
-import { INetworkMasternodes } from '@utils/types/INetwork';
+import { INetworkSupernodes } from '@utils/types/INetwork';
 
 import {
   headers,
-  generateMasternodeCountriesList,
+  generateSupernodeCountriesList,
   generateChartData,
   CountryList,
 } from './SupernodeStatistics.helpers';
 
 interface SupernodeStatisticsProps {
-  masternodes: Array<INetworkMasternodes> | null;
+  supernodes: Array<INetworkSupernodes> | null;
 }
 
 const DISPLAY_COUNTRY_QUANTITY = 5;
@@ -23,15 +23,15 @@ const tableStyles = {
   overflow: 'auto',
 };
 
-const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ masternodes }) => {
+const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ supernodes }) => {
   const [countries, setCountries] = React.useState<Array<RowsProps> | null>(null);
   const [countryQuantity, setCountryQuantity] = React.useState(0);
   const [countryChartData, setCountryChartData] = React.useState<CountryList['chartData'] | null>(
     null,
   );
 
-  const generateMasternodeCountries = (nodes: Array<INetworkMasternodes>) => {
-    const { tableData, chartData, totalQuantity } = generateMasternodeCountriesList(
+  const generateSupernodeCountries = (nodes: Array<INetworkSupernodes>) => {
+    const { tableData, chartData, totalQuantity } = generateSupernodeCountriesList(
       nodes,
       DISPLAY_COUNTRY_QUANTITY,
     );
@@ -53,10 +53,10 @@ const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ masternodes }
   };
 
   React.useEffect(() => {
-    if (masternodes) {
-      generateMasternodeCountries(masternodes);
+    if (supernodes) {
+      generateSupernodeCountries(supernodes);
     }
-  }, [masternodes]);
+  }, [supernodes]);
 
   return (
     <DoughnutChart

@@ -1,8 +1,9 @@
 import styled from 'styled-components/macro';
 
-import { Card as MuiCard, TableCell } from '@material-ui/core';
-
+import { Card as MuiCard, darken, TableCell } from '@material-ui/core';
 import { spacing } from '@material-ui/system';
+
+import themeVariant from '@theme/variants';
 
 export const Card = styled(MuiCard)(spacing);
 
@@ -17,6 +18,11 @@ export const TableWrapper = styled.div`
   .ReactVirtualized__Table__headerRow,
   .ReactVirtualized__Table__row {
     display: flex;
+    transition: all 0.2s ease-in !important;
+
+    &:hover {
+      background-color: ${darken(themeVariant.palette.background.paper, 0.1)} !important;
+    }
   }
 `;
 

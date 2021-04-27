@@ -10,7 +10,7 @@ export interface INetworkPeers {
   version: number;
 }
 
-export interface INetworkMasternodes {
+export interface INetworkSupernodes {
   address: string;
   city: string;
   country: string;
@@ -26,5 +26,5 @@ export interface INetworkMasternodes {
 
 export interface INetwork {
   peers: Array<INetworkPeers>;
-  masternodes: Array<INetworkMasternodes>;
+  masternodes: Array<INetworkSupernodes>;
 }

@@ -52,10 +52,10 @@ const Summary: React.FC = () => {
         <Grid item xs={12} md={6} lg={3} key={id}>
           <Styles.Card mb={3}>
             <Styles.CardContent>
-              <Styles.Typography variant="h6" mb={4}>
+              <Styles.Typography variant="h6" mb={2}>
                 {name}
               </Styles.Typography>
-              <Styles.Typography variant="h3" mb={3}>
+              <Styles.Typography variant="h3" mb={2}>
                 <Styles.Values>
                   {value === null ? <Skeleton animation="wave" variant="text" /> : value}
                 </Styles.Values>
@@ -65,7 +65,7 @@ const Summary: React.FC = () => {
               ) : (
                 <Styles.Percentage
                   variant="subtitle2"
-                  mb={6}
+                  mb={4}
                   color="textSecondary"
                   percentagecolor={`${
                     difference > 0 ? themeVariant.custom.green.dark : themeVariant.custom.red.dark

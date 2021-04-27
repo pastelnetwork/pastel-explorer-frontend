@@ -10,7 +10,7 @@ export const generateMapOptions = (geoLocationList: Array<MarkerProps> | null) =
         geoLocationList && geoLocationList[code].data[0].type === NODE_NAMES.supernode;
       label[0].setAttribute(
         'style',
-        `background-color: ${isSupernode ? themeVariant.map.masternode : themeVariant.map.peer}`,
+        `background-color: ${isSupernode ? themeVariant.map.supernode : themeVariant.map.peer}`,
       );
     },
     onRegionTipShow: () => false,

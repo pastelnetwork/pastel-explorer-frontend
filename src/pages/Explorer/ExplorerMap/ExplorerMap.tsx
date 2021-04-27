@@ -43,7 +43,7 @@ const ExplorerMap: React.FC<ExplorerMapProps> = ({ geoLocationList, nodesLength 
       />
       <Styles.LegendContainer>
         <Grid container alignItems="center">
-          <Styles.LegendElement backgroundcolor={themeVariant.map.masternode} />
+          <Styles.LegendElement backgroundcolor={themeVariant.map.supernode} />
           <Typography variant="caption">Supernodes ({nodesLength.supernodes})</Typography>
         </Grid>
         <Grid container alignItems="center">

@@ -48,7 +48,7 @@ const themeVariant = {
   },
   map: {
     background: '#D7D2CB',
-    masternode: '#000',
+    supernode: '#000',
     peer: '#279989',
   },
   footer: {
