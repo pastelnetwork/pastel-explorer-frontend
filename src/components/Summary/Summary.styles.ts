@@ -25,9 +25,10 @@ export const Values = styled.div`
 
 export const CardContent = styled(MuiCardContent)`
   position: relative;
+  padding: 8px;
 
   &:last-child {
-    padding-bottom: ${props => props.theme.spacing(4)}px;
+    padding-bottom: ${props => props.theme.spacing(2)}px;
   }
 `;
 

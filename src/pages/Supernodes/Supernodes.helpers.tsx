@@ -4,7 +4,7 @@ import RouterLink from '@components/RouterLink/RouterLink';
 
 import * as ROUTES from '@utils/constants/routes';
 import { formattedTimeElapsed } from '@utils/helpers/date/date';
-import { INetworkMasternodes } from '@utils/types/INetwork';
+import { INetworkSupernodes } from '@utils/types/INetwork';
 
 import {
   SUPERNODE_IP_KEY,
@@ -27,7 +27,7 @@ const statusColor = (status: string) => (
   />
 );
 
-export const transformSupernodesData = (masternodes: Array<INetworkMasternodes>) =>
+export const transformSupernodesData = (masternodes: Array<INetworkSupernodes>) =>
   masternodes.map(({ ip, port, address, status, country, lastPaidTime }) => ({
     [SUPERNODE_IP_KEY]: ip,
     [SUPERNODE_PORT_KEY]: port,

@@ -113,7 +113,6 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
             <MuiAutocomplete
               fullWidth
               open={dropdownOpen}
-              style={{ margin: '12px 0' }}
               options={searchData}
               classes={classes}
               groupBy={option => option.category}
@@ -126,6 +125,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
               getOptionSelected={(option, value) => option.value === value.value}
               noOptionsText="No results containing all your search terms were found"
               loadingText="Loading results..."
+              size="small"
               renderOption={option => (
                 <RouterLink
                   styles={{ padding: '6px 24px 6px 16px' }}

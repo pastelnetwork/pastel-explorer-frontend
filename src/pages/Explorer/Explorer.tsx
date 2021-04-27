@@ -7,7 +7,7 @@ import { MarkerProps } from '@components/Map/Map';
 
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { INetwork, INetworkMasternodes } from '@utils/types/INetwork';
+import { INetwork, INetworkSupernodes } from '@utils/types/INetwork';
 
 import ExplorerMap from './ExplorerMap/ExplorerMap';
 import LatestTransactions from './LatestTransactions/LatestTransactions';
@@ -15,9 +15,7 @@ import SupernodeStatistics from './SupernodeStatistics/SupernodeStatistics';
 import { transformGeoLocationConnections, groupGeoLocationConnections } from './Explorer.helpers';
 
 const Explorer: React.FC = () => {
-  const [masternodeList, setMasternodeList] = React.useState<Array<INetworkMasternodes> | null>(
-    null,
-  );
+  const [supernodeList, setSupernodeList] = React.useState<Array<INetworkSupernodes> | null>(null);
   const [geoLocationList, setGeoLocationList] = React.useState<Array<MarkerProps> | null>(null);
   const [nodesLength, setNodesLength] = React.useState({ peers: 0, supernodes: 0 });
   const fetchGeoData = useFetch<INetwork>({
@@ -27,10 +25,10 @@ const Explorer: React.FC = () => {
 
   const transformGeoLocationData = ({ peers, masternodes }: INetwork) => {
     const transformedPeers = transformGeoLocationConnections(peers, false);
-    const transformedMasternodes = transformGeoLocationConnections(masternodes, true);
+    const transformedSupernodes = transformGeoLocationConnections(masternodes, true);
     const groupedNodes = groupGeoLocationConnections([
       ...transformedPeers,
-      ...transformedMasternodes,
+      ...transformedSupernodes,
     ]);
 
     setNodesLength({ peers: peers.length, supernodes: masternodes.length });
@@ -40,7 +38,7 @@ const Explorer: React.FC = () => {
   React.useEffect(() => {
     fetchGeoData.fetchData().then(response => {
       if (response) {
-        setMasternodeList(response.masternodes);
+        setSupernodeList(response.masternodes);
         transformGeoLocationData(response);
       }
     });
@@ -54,7 +52,7 @@ const Explorer: React.FC = () => {
           <ExplorerMap geoLocationList={geoLocationList} nodesLength={nodesLength} />
         </Grid>
         <Grid item xs={12} lg={4}>
-          <SupernodeStatistics masternodes={masternodeList} />
+          <SupernodeStatistics supernodes={supernodeList} />
         </Grid>
       </Grid>
       <Grid item>

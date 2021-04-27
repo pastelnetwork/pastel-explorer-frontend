@@ -7,11 +7,14 @@ import {
   TableCellProps,
   TableHeaderProps,
   ScrollEventData,
+  Index,
 } from 'react-virtualized';
-
-import { CardHeader, Paper, CircularProgress } from '@material-ui/core';
+import { CSSProperties } from '@material-ui/styles';
+import { CardHeader, Paper, CircularProgress, darken } from '@material-ui/core';
 import { ArrowDropDown, ArrowDropUp } from '@material-ui/icons';
 import { Skeleton } from '@material-ui/lab';
+
+import themeVariant from '@theme/variants';
 
 import * as Styles from './InfinityTable.styles';
 
@@ -105,6 +108,19 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
     return onHeaderClick && onHeaderClick(info);
   };
 
+  const handleRowStyle = ({ index }: Index): CSSProperties => {
+    const color = themeVariant.palette.background.paper;
+    if (index % 2 === 0) {
+      return {
+        backgroundColor: darken(color, 0.05),
+      };
+    }
+
+    return {
+      backgroundColor: color,
+    };
+  };
+
   React.useEffect(() => {
     loading && setLoading(false);
   }, [rows]);
@@ -129,6 +145,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
                   rowHeight={rowHeight}
                   rowGetter={({ index }: { index: number }) => rows[index]}
                   rowCount={rows.length}
+                  rowStyle={(info: Index) => handleRowStyle(info)}
                   width={width}
                   sortBy={sortBy}
                   sort={handleSort}

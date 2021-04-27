@@ -1,7 +1,7 @@
 import { HeaderType } from '@components/Table/Table';
 
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import { INetworkMasternodes } from '@utils/types/INetwork';
+import { INetworkSupernodes } from '@utils/types/INetwork';
 
 import themeVariant from '@theme/variants';
 
@@ -112,8 +112,8 @@ const generateSortedNarrowedList = (list: CountryObject, narrowDepth: number) =>
   };
 };
 
-export const generateMasternodeCountriesList = (
-  nodes: Array<INetworkMasternodes>,
+export const generateSupernodeCountriesList = (
+  nodes: Array<INetworkSupernodes>,
   countryQuantity: number,
 ): CountryList => {
   const objectList = nodes.reduce((acc: CountryObject, { country }) => {

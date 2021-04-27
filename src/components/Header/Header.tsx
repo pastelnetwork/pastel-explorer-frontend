@@ -12,15 +12,14 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
   return (
     <Styles.Container>
       <Helmet title="Explorer" />
-      <Grid justify="space-between" container spacing={6}>
+      <Grid justify="space-between" container>
         <Grid item>
           <Styles.Typography variant="h3" gutterBottom>
             {title}
           </Styles.Typography>
         </Grid>
-        <Grid item />
       </Grid>
-      <Styles.Divider my={6} />
+      <Styles.Divider my={1} />
     </Styles.Container>
   );
 };

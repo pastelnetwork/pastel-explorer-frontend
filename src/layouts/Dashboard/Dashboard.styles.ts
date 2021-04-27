@@ -46,6 +46,7 @@ export const AppContent = styled.div`
 export const Paper = styled(MuiPaper)(spacing);
 
 export const MainContent = styled(Paper)`
+  padding: 12px 48px;
   flex: 1;
   background: ${props => props.theme.palette.background.default};
 

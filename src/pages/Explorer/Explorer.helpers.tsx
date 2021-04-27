@@ -1,9 +1,9 @@
 import { MarkerProps } from '@components/Map/Map';
 
-import { INetworkMasternodes, INetworkPeers } from '@utils/types/INetwork';
+import { INetworkSupernodes, INetworkPeers } from '@utils/types/INetwork';
 import themeVariant from '@theme/variants';
 
-const { masternode, peer } = themeVariant.map;
+const { supernode, peer } = themeVariant.map;
 
 export const NODE_NAMES = {
   supernode: 'Supernode',
@@ -11,16 +11,16 @@ export const NODE_NAMES = {
 };
 
 export const transformGeoLocationConnections = (
-  locations: Array<INetworkPeers | INetworkMasternodes>,
-  isMasternode: boolean,
+  locations: Array<INetworkPeers | INetworkSupernodes>,
+  isSupernode: boolean,
 ): Array<MarkerProps> => {
   const transformedLocations = locations.map(
     ({ latitude = 0, longitude = 0, country = '', city = '', id = '', ip = '' }) => {
       const latLng = [latitude, longitude] as [number, number];
       const defaultName = `${country} ${city !== 'N/A' ? `- ${city}` : ''}`;
-      const fill = isMasternode ? masternode : peer;
+      const fill = isSupernode ? supernode : peer;
       const data = {
-        type: isMasternode ? NODE_NAMES.supernode : NODE_NAMES.peer,
+        type: isSupernode ? NODE_NAMES.supernode : NODE_NAMES.peer,
         country,
         city,
         id,
@@ -73,7 +73,7 @@ export const groupGeoLocationConnections = (locations: Array<MarkerProps>): Arra
         name,
         style: hasBothNodes
           ? {
-              fill: themeVariant.map.masternode,
+              fill: themeVariant.map.supernode,
               stroke: themeVariant.map.peer,
             }
           : firstElement.style,
