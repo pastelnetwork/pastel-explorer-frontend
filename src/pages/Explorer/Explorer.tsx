@@ -19,6 +19,7 @@ const Explorer: React.FC = () => {
     null,
   );
   const [geoLocationList, setGeoLocationList] = React.useState<Array<MarkerProps> | null>(null);
+  const [nodesLength, setNodesLength] = React.useState({ peers: 0, supernodes: 0 });
   const fetchGeoData = useFetch<INetwork>({
     method: 'get',
     url: `${URLS.NETWORK_URL}`,
@@ -32,6 +33,7 @@ const Explorer: React.FC = () => {
       ...transformedMasternodes,
     ]);
 
+    setNodesLength({ peers: peers.length, supernodes: masternodes.length });
     setGeoLocationList(groupedNodes);
   };
 
@@ -49,7 +51,7 @@ const Explorer: React.FC = () => {
       <Header title="Explorer" />
       <Grid container spacing={6}>
         <Grid item xs={12} lg={8}>
-          <ExplorerMap geoLocationList={geoLocationList} />
+          <ExplorerMap geoLocationList={geoLocationList} nodesLength={nodesLength} />
         </Grid>
         <Grid item xs={12} lg={4}>
           <SupernodeStatistics masternodes={masternodeList} />

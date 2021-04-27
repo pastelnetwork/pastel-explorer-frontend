@@ -13,9 +13,13 @@ import { generateMapOptions } from './ExplorerMap.options';
 
 interface ExplorerMapProps {
   geoLocationList: Array<MarkerProps> | null;
+  nodesLength: {
+    peers: number;
+    supernodes: number;
+  };
 }
 
-const ExplorerMap: React.FC<ExplorerMapProps> = ({ geoLocationList }) => {
+const ExplorerMap: React.FC<ExplorerMapProps> = ({ geoLocationList, nodesLength }) => {
   const dispatch = useDispatch();
   const mapOptions = generateMapOptions(geoLocationList);
 
@@ -40,11 +44,11 @@ const ExplorerMap: React.FC<ExplorerMapProps> = ({ geoLocationList }) => {
       <Styles.LegendContainer>
         <Grid container alignItems="center">
           <Styles.LegendElement backgroundcolor={themeVariant.map.masternode} />
-          <Typography variant="caption">Supernodes</Typography>
+          <Typography variant="caption">Supernodes ({nodesLength.supernodes})</Typography>
         </Grid>
         <Grid container alignItems="center">
           <Styles.LegendElement backgroundcolor={themeVariant.map.peer} />
-          <Typography variant="caption">Peers</Typography>
+          <Typography variant="caption">Peers ({nodesLength.peers})</Typography>
         </Grid>
       </Styles.LegendContainer>
     </Styles.Container>

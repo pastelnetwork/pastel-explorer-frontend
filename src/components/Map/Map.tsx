@@ -9,6 +9,7 @@ import './map.css';
 
 interface MarkerStyle {
   fill: string;
+  stroke: string;
 }
 
 export interface MarkerData {
@@ -22,7 +23,7 @@ export interface MarkerData {
 export interface MarkerProps {
   latLng: [number, number];
   name: string;
-  style?: MarkerStyle;
+  style: MarkerStyle;
   data: Array<MarkerData>;
 }
 

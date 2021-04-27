@@ -5,6 +5,11 @@ import themeVariant from '@theme/variants';
 
 const { masternode, peer } = themeVariant.map;
 
+export const NODE_NAMES = {
+  supernode: 'Supernode',
+  peer: 'Peer',
+};
+
 export const transformGeoLocationConnections = (
   locations: Array<INetworkPeers | INetworkMasternodes>,
   isMasternode: boolean,
@@ -14,7 +19,7 @@ export const transformGeoLocationConnections = (
     const defaultName = `${country} ${city !== 'N/A' ? `- ${city}` : ''}`;
     const fill = isMasternode ? masternode : peer;
     const data = {
-      type: isMasternode ? 'Supernode' : 'Peer',
+      type: isMasternode ? NODE_NAMES.supernode : NODE_NAMES.peer,
       country,
       city,
       id,
@@ -24,7 +29,7 @@ export const transformGeoLocationConnections = (
     return {
       latLng,
       name: defaultName,
-      style: { fill },
+      style: { fill, stroke: fill },
       data: [data],
     };
   });
@@ -34,11 +39,15 @@ export const transformGeoLocationConnections = (
 
 export const groupGeoLocationConnections = (locations: Array<MarkerProps>): Array<MarkerProps> => {
   const groupedLocations = locations.reduce((acc: Array<Array<MarkerProps>>, value) => {
-    const hasSameLat = acc.length && acc[acc.length - 1][0].latLng[0] === value.latLng[0];
-    const hasSameLng = acc.length && acc[acc.length - 1][0].latLng[1] === value.latLng[1];
+    const sameLocationIndex = acc.findIndex(element => {
+      const hasSameLat = element[0].latLng[0] === value.latLng[0];
+      const hasSameLng = element[0].latLng[1] === value.latLng[1];
 
-    if (hasSameLat && hasSameLng) {
-      acc[acc.length - 1].push(value);
+      return hasSameLat && hasSameLng;
+    });
+
+    if (sameLocationIndex > -1) {
+      acc[sameLocationIndex].push(value);
     } else {
       acc.push([value]);
     }
@@ -51,10 +60,21 @@ export const groupGeoLocationConnections = (locations: Array<MarkerProps>): Arra
     const name = `${firstElement.name} (${locationElements.length})`;
 
     if (locationElements.length > 1) {
+      const hasPeer = locationElements.find(element => element.data[0].type === NODE_NAMES.peer);
+      const hasSupernode = locationElements.find(
+        element => element.data[0].type === NODE_NAMES.supernode,
+      );
+      const hasBothNodes = hasPeer && hasSupernode;
+
       return {
         latLng: firstElement.latLng,
         name,
-        style: firstElement.style,
+        style: hasBothNodes
+          ? {
+              fill: themeVariant.map.masternode,
+              stroke: themeVariant.map.peer,
+            }
+          : firstElement.style,
         data: locationElements.map(locationElement => locationElement.data[0]),
       };
     }

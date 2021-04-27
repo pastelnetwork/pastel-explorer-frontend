@@ -19,17 +19,15 @@ export const defaultMapOptions: typeof VectorMap = {
   },
   markerStyle: {
     initial: {
-      r: 9,
+      r: 4,
       fill: markerColor,
-      'fill-opacity': 1,
+      'fill-opacity': 0.9,
       stroke: markerStrokeColor,
-      'stroke-width': 7,
+      'stroke-width': 8,
       'stroke-opacity': 0.4,
     },
     hover: {
-      stroke: markerStrokeColor,
-      'fill-opacity': 1,
-      'stroke-width': 1.5,
+      'stroke-opacity': 0.4,
     },
   },
   zoomOnScroll: true,
