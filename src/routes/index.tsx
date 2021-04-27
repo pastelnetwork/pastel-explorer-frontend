@@ -1,8 +1,9 @@
 import SearchIcon from '@material-ui/icons/Search';
-import MoneyIcon from '@material-ui/icons/Money';
+import CallSplitIcon from '@material-ui/icons/CallSplit';
 import ShareIcon from '@material-ui/icons/Share';
 import WidgetsIcon from '@material-ui/icons/Widgets';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
+import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 import InfoIcon from '@material-ui/icons/Info';
 
 import Explorer from '@pages/Explorer/Explorer';
@@ -11,6 +12,7 @@ import Network from '@pages/Network/Network';
 import Richlist from '@pages/Richlist/Richlist';
 import Blocks from '@pages/Blocks/Blocks';
 import Info from '@pages/Info/Info';
+import Supernodes from '@pages/Supernodes/Supernodes';
 
 import TransactionDetails from '@pages/Details/TransactionDetails/TransactionDetails';
 import BlockDetails from '@pages/Details/BlockDetails/BlockDetails';
@@ -30,7 +32,7 @@ const explorerRoutes = {
 const movementRoutes = {
   id: 'Movement',
   path: ROUTES.MOVEMENT,
-  icon: <MoneyIcon />,
+  icon: <CallSplitIcon />,
   component: Movement,
   children: null,
 };
@@ -56,6 +58,14 @@ const richlistRoutes = {
   path: ROUTES.RICHLIST,
   icon: <LocalAtmIcon />,
   component: Richlist,
+  children: null,
+};
+
+const supernodesRoutes = {
+  id: 'Supernodes',
+  path: ROUTES.SUPERNODES,
+  icon: <LocalLibraryIcon />,
+  component: Supernodes,
   children: null,
 };
 
@@ -94,6 +104,7 @@ export const pageRoutes = [
   networkRoutes,
   blocksRoutes,
   richlistRoutes,
+  supernodesRoutes,
   infoRoutes,
   transactionDetailsRoutes,
   blockDetailsRoutes,
@@ -106,5 +117,6 @@ export const sidebarRoutes = [
   networkRoutes,
   blocksRoutes,
   richlistRoutes,
+  supernodesRoutes,
   infoRoutes,
 ];
