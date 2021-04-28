@@ -19,7 +19,7 @@ interface SupernodeStatisticsProps {
 const DISPLAY_COUNTRY_QUANTITY = 5;
 
 const tableStyles = {
-  height: '200px',
+  height: '168px',
   overflow: 'auto',
 };
 

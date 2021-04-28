@@ -73,6 +73,7 @@ const Blocks = () => {
   };
 
   const handleSort = ({ sortBy, sortDirection }: ISortData) => {
+    fetchParams.current.offset = DATA_OFFSET;
     fetchParams.current.sortDirection = sortDirection;
 
     return handleFetchBlocks(DATA_OFFSET, sortBy, fetchParams.current.sortDirection, true);
