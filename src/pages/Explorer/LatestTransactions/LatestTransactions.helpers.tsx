@@ -1,3 +1,5 @@
+import { Typography, Tooltip } from '@material-ui/core';
+
 import RouterLink from '@components/RouterLink/RouterLink';
 
 import * as ROUTES from '@utils/constants/routes';
@@ -23,6 +25,10 @@ export const transformTransactionsData = (transactions: Array<ITransaction>) =>
     [BLOCK_KEY]: <RouterLink route={`${ROUTES.BLOCK_DETAILS}/${blockHash}`} value={block.height} />,
     [BLOCK_HASH_KEY]: <RouterLink route={`${ROUTES.TRANSACTION_DETAILS}/${id}`} value={id} />,
     [RECIPIENT_COUNT_KEY]: recipientCount,
-    [AMOUNT_KEY]: formatNumber(totalAmount, { decimalsLength: 2 }),
+    [AMOUNT_KEY]: (
+      <Tooltip title={totalAmount} arrow>
+        <Typography>{formatNumber(totalAmount, { decimalsLength: 2 })}</Typography>
+      </Tooltip>
+    ),
     [TIMESTAMP_KEY]: formattedDate(timestamp),
   }));
