@@ -14,6 +14,7 @@ export const Container = styled.div`
   height: 50px;
   background: ${themeVariant.footer.background};
   box-shadow: -1px 7px 12px 0px ${themeVariant.footer.color};
+  z-index: 99;
 `;
 
 export const Typography = styled(MuiTypography)`

@@ -13,11 +13,13 @@ import * as ROUTES from '@utils/constants/routes';
 import * as URLS from '@utils/constants/urls';
 import { formattedDate } from '@utils/helpers/date/date';
 import { TransactionEvent, DirectionType, ITransactionDetails } from '@utils/types/ITransactions';
+import { IBlock } from '@utils/types/IBlocks';
 
 import {
   inputAddressHeaders,
   recipientsHeaders,
   transactionHeaders,
+  generateTableTitle,
 } from './TransactionDetails.helpers';
 
 interface ParamTypes {
@@ -27,14 +29,31 @@ interface ParamTypes {
 const TransactionDetails = () => {
   const { id } = useParams<ParamTypes>();
   const [transaction, setTransaction] = React.useState<ITransactionDetails | null>(null);
+  const [block, setBlock] = React.useState<IBlock | null>(null);
   const [redirect, setRedirect] = React.useState(false);
-  const { fetchData } = useFetch<{ data: ITransactionDetails }>({
+  const transactionFetchData = useFetch<{ data: ITransactionDetails }>({
     method: 'get',
     url: `${URLS.TRANSACTION_URL}/${id}`,
   });
+  const blockFetchData = useFetch<{ data: IBlock }>({
+    method: 'get',
+    url: `${URLS.BLOCK_URL}/${transaction?.blockHash}`,
+  });
 
   React.useEffect(() => {
-    fetchData().then(response => {
+    if (transaction) {
+      blockFetchData.fetchData().then(response => {
+        if (!response?.data) {
+          setRedirect(true);
+        } else {
+          setBlock(response.data);
+        }
+      });
+    }
+  }, [transaction]);
+
+  React.useEffect(() => {
+    transactionFetchData.fetchData().then(response => {
       if (!response?.data) {
         setRedirect(true);
       } else {
@@ -90,13 +109,10 @@ const TransactionDetails = () => {
   return transaction ? (
     <>
       <Header title="Transaction Details" />
-      <Grid container direction="column">
+      <Grid container direction="column" spacing={2}>
+        <Grid item>{generateTableTitle(transaction, block)}</Grid>
         <Grid item>
-          <Table
-            title={`PSL txID: ${transaction.id}`}
-            headers={transactionHeaders}
-            rows={generateTransactionTable(transaction)}
-          />
+          <Table headers={transactionHeaders} rows={generateTransactionTable(transaction)} />
         </Grid>
         <Grid container spacing={6}>
           <Grid item xs={12} lg={6}>
