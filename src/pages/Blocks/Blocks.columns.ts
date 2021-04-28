@@ -11,7 +11,7 @@ export const columns = [
     disableSort: false,
   },
   {
-    width: 150,
+    width: 40,
     flexGrow: 1,
     label: 'Transaction Quantity',
     dataKey: TRANSACTIONS_QTY_KEY,

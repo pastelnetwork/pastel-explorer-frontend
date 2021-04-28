@@ -34,7 +34,12 @@ const Supernodes: React.FC = () => {
     <>
       <Header title="Supernodes" />
       <Grid item>
-        <InfinityTable title="Supernodes list" rows={supernodes} columns={columns} />
+        <InfinityTable
+          title="Supernodes List"
+          rows={supernodes}
+          columns={columns}
+          tableHeight={950}
+        />
       </Grid>
     </>
   );

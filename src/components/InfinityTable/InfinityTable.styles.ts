@@ -16,6 +16,20 @@ export const TableWrapper = styled.div`
   }
 
   .ReactVirtualized__Table__headerRow,
+  .ReactVirtualized__Grid {
+    min-width: 1000px;
+    width: 100% !important;
+  }
+
+  .ReactVirtualized__Grid__innerScrollContainer {
+    max-width: 100% !important;
+  }
+
+  .ReactVirtualized__Table__row {
+    width: 100% !important;
+  }
+
+  .ReactVirtualized__Table__headerRow,
   .ReactVirtualized__Table__row {
     display: flex;
     transition: all 0.2s ease-in !important;
@@ -46,10 +60,14 @@ export const HeaderCell = styled(TableCell)<{ $disabledSort: boolean }>`
 export const Loader = styled.div`
   position: absolute;
   display: flex;
-  width: 100%;
+  width: 1000px;
   height: 100%;
   background-color: rgba(255, 255, 255, 0.9);
   z-index: 1;
   justify-content: center;
   align-items: center;
+
+  @media (min-width: 1000px) {
+    width: 100%;
+  }
 `;

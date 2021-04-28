@@ -98,6 +98,7 @@ const LatestTransactions: React.FC = () => {
       sortDirection={fetchParams.current.sortDirection}
       rows={transactionList}
       columns={columns}
+      tableHeight={650}
       title="Latest Transactions"
       onBottomReach={handleFetchMoreTransactions}
       onHeaderClick={handleSort}

@@ -7,6 +7,7 @@ export const TIMESTAMP_KEY = 'timestamp';
 export const columns = [
   {
     width: 30,
+    minWidth: 30,
     flexGrow: 1,
     label: 'Block',
     dataKey: BLOCK_KEY,
@@ -14,6 +15,7 @@ export const columns = [
   },
   {
     width: 360,
+    minWidth: 360,
     flexGrow: 1,
     label: 'Hash',
     dataKey: BLOCK_HASH_KEY,
@@ -21,6 +23,7 @@ export const columns = [
   },
   {
     width: 20,
+    minWidth: 20,
     flexGrow: 1,
     label: 'Recipents',
     dataKey: RECIPIENT_COUNT_KEY,
@@ -28,6 +31,7 @@ export const columns = [
   },
   {
     width: 60,
+    minWidth: 60,
     flexGrow: 1,
     label: 'Amount (PSL)',
     dataKey: AMOUNT_KEY,
@@ -35,6 +39,7 @@ export const columns = [
   },
   {
     width: 150,
+    minWidth: 150,
     flexGrow: 1,
     label: 'Timestamp',
     dataKey: TIMESTAMP_KEY,

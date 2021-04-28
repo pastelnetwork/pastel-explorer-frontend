@@ -96,6 +96,7 @@ const Movement: React.FC = () => {
           sortDirection={fetchParams.current.sortDirection}
           rows={movementList}
           columns={columns}
+          tableHeight={950}
           title="Movement Transactions"
           onBottomReach={handleFetchMoreMovements}
           onHeaderClick={handleSort}
