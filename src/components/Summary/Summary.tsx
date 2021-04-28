@@ -47,15 +47,15 @@ const Summary: React.FC = () => {
   React.useEffect(() => updateSummaryList(), []);
 
   return (
-    <Styles.Grid container spacing={6}>
+    <Styles.Grid container spacing={4}>
       {summaryList.map(({ id, name, value, difference }) => (
-        <Grid item xs={12} md={6} lg={3} key={id}>
-          <Styles.Card mb={3}>
+        <Grid item xs={12} md={4} lg={2} key={id}>
+          <Styles.Card my={1}>
             <Styles.CardContent>
-              <Styles.Typography variant="h6" mb={2}>
+              <Styles.Typography variant="h6" my={2}>
                 {name}
               </Styles.Typography>
-              <Styles.Typography variant="h3" mb={2}>
+              <Styles.Typography variant="h4" my={2}>
                 <Styles.Values>
                   {value === null ? <Skeleton animation="wave" variant="text" /> : value}
                 </Styles.Values>
@@ -67,6 +67,7 @@ const Summary: React.FC = () => {
                   variant="subtitle2"
                   mb={4}
                   color="textSecondary"
+                  noWrap
                   percentagecolor={`${
                     difference > 0 ? themeVariant.custom.green.dark : themeVariant.custom.red.dark
                   }`}

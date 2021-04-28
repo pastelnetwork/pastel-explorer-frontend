@@ -8,6 +8,8 @@ export interface ISummaryStats {
   marketCapInUSD: number;
   transactions: number;
   timestamp: number;
+  avgTransactionsPerSecond: number;
+  nonZeroAddressesCount: number;
 }
 
 export interface ISummary {
