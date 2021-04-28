@@ -13,28 +13,37 @@ import {
 export const Card = styled(MuiCard)(spacing);
 
 export const CardContent = styled(MuiCardContent)`
+  max-height: 356px;
+
   &:last-child {
     padding-bottom: ${props => props.theme.spacing(2)}px;
   }
 `;
 
 export const ChartWrapper = styled.div`
-  height: 120px;
+  height: 160px;
   position: relative;
 
   .chartjs-render-monitor {
     position: relative;
   }
+
+  canvas {
+    position: relative;
+    z-index: 1;
+    }
+  }
 `;
 
 export const DoughnutInner = styled.div`
-  width: 100%;
   position: absolute;
   top: 50%;
-  left: 0;
+  left: 50%;
   margin-top: -22px;
   text-align: center;
   z-index: 0;
+  width: auto;
+  transform: translateX(-50%);
 `;
 
 export const TableRow = styled(MuiTableRow)`
