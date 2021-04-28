@@ -1,4 +1,4 @@
-import { Typography, Tooltip } from '@material-ui/core';
+import { Tooltip } from '@material-ui/core';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 
@@ -6,6 +6,8 @@ import * as ROUTES from '@utils/constants/routes';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { formattedDate } from '@utils/helpers/date/date';
 import { ITransaction } from '@utils/types/ITransactions';
+
+import * as Styles from './LatestTransactions.styles';
 
 import {
   AMOUNT_KEY,
@@ -27,7 +29,7 @@ export const transformTransactionsData = (transactions: Array<ITransaction>) =>
     [RECIPIENT_COUNT_KEY]: recipientCount,
     [AMOUNT_KEY]: (
       <Tooltip title={totalAmount} arrow>
-        <Typography>{formatNumber(totalAmount, { decimalsLength: 2 })}</Typography>
+        <Styles.Typography>{formatNumber(totalAmount, { decimalsLength: 2 })}</Styles.Typography>
       </Tooltip>
     ),
     [TIMESTAMP_KEY]: formattedDate(timestamp),
