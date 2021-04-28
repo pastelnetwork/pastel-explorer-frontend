@@ -22,7 +22,7 @@ export interface RowsProps {
 type RowsDataType = { value: number | string | JSX.Element; id: number };
 
 interface TableComponentProps {
-  title?: string;
+  title?: JSX.Element | string;
   headers: Array<HeaderType>;
   rows: Array<RowsProps> | null;
   styles?: Partial<CSSProperties>;
