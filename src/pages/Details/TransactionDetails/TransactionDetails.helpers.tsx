@@ -1,3 +1,4 @@
+import { Grid } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
 
 import { HeaderType } from '@components/Table/Table';
@@ -6,6 +7,8 @@ import { IBlock } from '@utils/types/IBlocks';
 import { ITransactionDetails } from '@utils/types/ITransactions';
 import { formattedDate } from '@utils/helpers/date/date';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
+
+import * as Styles from './TransactionDetails.styles';
 
 export const transactionHeaders: Array<HeaderType> = [
   { id: 1, header: 'Confirmations' },
@@ -37,3 +40,11 @@ export const generateTableTitle = (transactionData: ITransactionDetails, block: 
     </Alert>
   );
 };
+
+export const generateNonStandardTransactionInfo = () => (
+  <Grid item xs={12}>
+    <Styles.Alert severity="info">
+      <AlertTitle>NONSTANDARD TX</AlertTitle>
+    </Styles.Alert>
+  </Grid>
+);
