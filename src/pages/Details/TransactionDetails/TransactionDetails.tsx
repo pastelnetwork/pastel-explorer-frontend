@@ -20,6 +20,7 @@ import {
   recipientsHeaders,
   transactionHeaders,
   generateTableTitle,
+  generateNonStandardTransactionInfo,
 } from './TransactionDetails.helpers';
 
 interface ParamTypes {
@@ -115,20 +116,26 @@ const TransactionDetails = () => {
           <Table headers={transactionHeaders} rows={generateTransactionTable(transaction)} />
         </Grid>
         <Grid container spacing={6}>
-          <Grid item xs={12} lg={6}>
-            <Table
-              title="Input Addresses"
-              headers={inputAddressHeaders}
-              rows={generateTransactionEvents(transaction.transactionEvents, 'Outgoing')}
-            />
-          </Grid>
-          <Grid item xs={12} lg={6}>
-            <Table
-              title="Recipients"
-              headers={recipientsHeaders}
-              rows={generateTransactionEvents(transaction.transactionEvents, 'Incoming')}
-            />
-          </Grid>
+          {transaction.isNonStandard ? (
+            generateNonStandardTransactionInfo()
+          ) : (
+            <>
+              <Grid item xs={12} lg={6}>
+                <Table
+                  title="Input Addresses"
+                  headers={inputAddressHeaders}
+                  rows={generateTransactionEvents(transaction.transactionEvents, 'Outgoing')}
+                />
+              </Grid>
+              <Grid item xs={12} lg={6}>
+                <Table
+                  title="Recipients"
+                  headers={recipientsHeaders}
+                  rows={generateTransactionEvents(transaction.transactionEvents, 'Incoming')}
+                />
+              </Grid>
+            </>
+          )}
         </Grid>
       </Grid>
     </>

@@ -17,6 +17,7 @@ export interface ITransaction {
   recipientCount: number;
   timestamp: number;
   totalAmount: number;
+  isNonStandard: number | null;
 }
 
 export interface ITransactionDetails extends ITransaction {
