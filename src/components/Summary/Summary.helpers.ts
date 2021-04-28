@@ -48,6 +48,24 @@ export const initialSummaryList: Array<SummaryItemProps> = [
     difference: 0,
     decimals: 10,
   },
+  {
+    id: 5,
+    name: 'Accounts',
+    value: null,
+    previousValue: null,
+    key: 'nonZeroAddressesCount',
+    difference: 0,
+    decimals: 0,
+  },
+  {
+    id: 6,
+    name: 'Transactions (avg/s)',
+    value: null,
+    previousValue: null,
+    key: 'avgTransactionsPerSecond',
+    difference: 0,
+    decimals: 5,
+  },
 ];
 
 export const calculateDifference = (first: string | number, second: string | number) => {

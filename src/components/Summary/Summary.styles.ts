@@ -36,11 +36,13 @@ export const Percentage = styled(MuiTypography)<{
   percentagecolor: string;
   mb: number;
 }>`
+  font-size: 0.8rem;
+
   span {
     color: ${props => props.percentagecolor};
     background: ${props => rgba(props.percentagecolor, 0.1)};
     padding: 2px 6px;
     border-radius: 3px;
-    margin-right: ${props => props.theme.spacing(2)}px;
+    margin-right: ${props => props.theme.spacing(1)}px;
   }
 `;
