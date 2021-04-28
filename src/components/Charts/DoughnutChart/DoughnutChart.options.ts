@@ -1,7 +1,14 @@
+import themeVariant from '@theme/variants';
+
 export const defaultChartOptions = {
   maintainAspectRatio: false,
-  legend: {
-    display: false,
+  plugins: {
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      backgroundColor: themeVariant.palette.text.primary,
+    },
   },
-  cutoutPercentage: 80,
+  cutout: '70%',
 };
