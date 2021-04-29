@@ -1,8 +1,10 @@
 import styled from 'styled-components/macro';
 
 import { spacing } from '@material-ui/system';
-import { Card as MuiCard } from '@material-ui/core';
+import { Grid as MuiGrid } from '@material-ui/core';
 
-export const Card = styled(MuiCard)(spacing);
+export const Grid = styled(MuiGrid)`
+  position: relative;
+`;
 
 export const Spacer = styled.div(spacing);
