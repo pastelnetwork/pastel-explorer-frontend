@@ -5,6 +5,8 @@ import getUnixTime from 'date-fns/getUnixTime';
 import fromUnixTime from 'date-fns/fromUnixTime';
 import format from 'date-fns/format';
 
+import { Skeleton } from '@material-ui/lab';
+
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import * as URLS from '@utils/constants/urls';
 import { IHashRateResponse } from '@utils/types/IStatistics';
@@ -49,10 +51,12 @@ const HashrateChart: React.FC = () => {
     ],
   };
 
-  return (
-    <Styles.Card p={5}>
+  return chartData ? (
+    <Styles.Grid item>
       <LineChart data={chartDataSet} title="Network Hashrate GH/s (last 3 hours)" />
-    </Styles.Card>
+    </Styles.Grid>
+  ) : (
+    <Skeleton animation="wave" variant="rect" />
   );
 };
 
