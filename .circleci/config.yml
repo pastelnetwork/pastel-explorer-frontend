@@ -4,6 +4,10 @@
 #
 version: 2.1
 
+orbs:
+  aws-cli: circleci/aws-cli@0.1.20
+  aws-s3: circleci/aws-s3@1.0.11
+
 executors:
   node-browser:
     docker:
@@ -45,12 +49,24 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/workspace
-      - add_ssh_keys:
-          fingerprints:
-            - '6b:9d:f0:24:b7:f4:df:69:46:a3:36:c3:6a:1f:ef:c4'
-      - run:
-          name: Deploy over SSH
-          command: scp -o "StrictHostKeyChecking no" -r /tmp/workspace/build/* ubuntu@$SERVER_IP:~/nginx-data/data
+      # - add_ssh_keys:
+      #     fingerprints:
+      #       - '6b:9d:f0:24:b7:f4:df:69:46:a3:36:c3:6a:1f:ef:c4'
+      # - run:
+      #     name: Deploy over SSH
+      #     command: scp -o "StrictHostKeyChecking no" -r /tmp/workspace/build/* ubuntu@$SERVER_IP:~/nginx-data/data
+      - aws-cli/setup:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+
+      - aws-s3/sync:
+          from: /tmp/workspace/build/
+          to: s3://$BUCKET_NAME
+          arguments: |
+            --acl public-read \
+            --cache-control "max-age=86400"
+          overwrite: true
+      - run: aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths /\*
 
 workflows:
   version: 2
@@ -61,6 +77,7 @@ workflows:
           filters:
             branches:
               ignore:
+                - config/circleci-cloudfront
                 - master
                 - production
       - build:
@@ -70,6 +87,7 @@ workflows:
             branches:
               only:
                 - master
+                - config/circleci-cloudfront
       - build:
           name: build-production
           context: pastel-frontend-production
@@ -87,6 +105,7 @@ workflows:
             branches:
               only:
                 - master
+                - config/circleci-cloudfront
       - deploy:
           name: deploy-production
           requires:
