@@ -4,6 +4,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import WidgetsIcon from '@material-ui/icons/Widgets';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
+import BarChartIcon from '@material-ui/icons/BarChart';
 import InfoIcon from '@material-ui/icons/Info';
 
 import Explorer from '@pages/Explorer/Explorer';
@@ -13,6 +14,7 @@ import Richlist from '@pages/Richlist/Richlist';
 import Blocks from '@pages/Blocks/Blocks';
 import Info from '@pages/Info/Info';
 import Supernodes from '@pages/Supernodes/Supernodes';
+import Statistics from '@pages/Statistics/Statistics';
 
 import TransactionDetails from '@pages/Details/TransactionDetails/TransactionDetails';
 import BlockDetails from '@pages/Details/BlockDetails/BlockDetails';
@@ -69,6 +71,14 @@ const supernodesRoutes = {
   children: null,
 };
 
+const statisticsRoutes = {
+  id: 'Statistics',
+  path: ROUTES.STATISTICS,
+  icon: <BarChartIcon />,
+  component: Statistics,
+  children: null,
+};
+
 const infoRoutes = {
   id: 'API',
   path: ROUTES.INFO,
@@ -109,6 +119,7 @@ export const pageRoutes = [
   transactionDetailsRoutes,
   blockDetailsRoutes,
   addressDetailsRoutes,
+  statisticsRoutes,
 ];
 
 export const sidebarRoutes = [
@@ -118,5 +129,6 @@ export const sidebarRoutes = [
   blocksRoutes,
   richlistRoutes,
   supernodesRoutes,
+  statisticsRoutes,
   infoRoutes,
 ];
