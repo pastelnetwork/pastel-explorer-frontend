@@ -140,35 +140,37 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
             )}
             <AutoSizer disableHeight>
               {({ width }) => (
-                <Table
-                  headerHeight={rowHeight}
-                  height={tableHeight}
-                  noRowsRenderer={noRowsRenderer}
-                  rowHeight={rowHeight}
-                  rowGetter={({ index }: { index: number }) => rows[index]}
-                  rowCount={rows.length}
-                  rowStyle={(info: Index) => handleRowStyle(info)}
-                  width={width}
-                  sortBy={sortBy}
-                  sort={handleSort}
-                  sortDirection={sortDirection}
-                  onScroll={handleReachBottom}
-                >
-                  {columns.map(({ dataKey, ...other }, index) => (
-                    <Column
-                      key={dataKey}
-                      headerRenderer={headerProps =>
-                        headerRenderer({
-                          ...headerProps,
-                          columnIndex: index,
-                        })
-                      }
-                      cellRenderer={TableCellRenderer}
-                      dataKey={dataKey}
-                      {...other}
-                    />
-                  ))}
-                </Table>
+                <div style={{ width }}>
+                  <Table
+                    headerHeight={rowHeight}
+                    height={tableHeight}
+                    noRowsRenderer={noRowsRenderer}
+                    rowHeight={rowHeight}
+                    rowGetter={({ index }: { index: number }) => rows[index]}
+                    rowCount={rows.length}
+                    rowStyle={(info: Index) => handleRowStyle(info)}
+                    width={1920}
+                    sortBy={sortBy}
+                    sort={handleSort}
+                    sortDirection={sortDirection}
+                    onScroll={handleReachBottom}
+                  >
+                    {columns.map(({ dataKey, ...other }, index) => (
+                      <Column
+                        key={dataKey}
+                        headerRenderer={headerProps =>
+                          headerRenderer({
+                            ...headerProps,
+                            columnIndex: index,
+                          })
+                        }
+                        cellRenderer={TableCellRenderer}
+                        dataKey={dataKey}
+                        {...other}
+                      />
+                    ))}
+                  </Table>
+                </div>
               )}
             </AutoSizer>
           </Styles.TableWrapper>

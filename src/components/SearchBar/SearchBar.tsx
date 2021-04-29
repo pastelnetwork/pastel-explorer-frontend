@@ -101,7 +101,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
   return (
     <Styles.AppBar position="sticky" elevation={0}>
       <Toolbar>
-        <Grid container alignItems="center">
+        <Grid container alignItems="center" wrap="nowrap">
           <Hidden mdUp>
             <Grid item>
               <Styles.IconButton color="inherit" aria-label="Open drawer" onClick={onDrawerToggle}>
@@ -109,7 +109,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
               </Styles.IconButton>
             </Grid>
           </Hidden>
-          <Grid item style={{ width: '100%' }}>
+          <Styles.AutocompleteWrapper item>
             <MuiAutocomplete
               fullWidth
               open={dropdownOpen}
@@ -150,7 +150,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
                 />
               )}
             />
-          </Grid>
+          </Styles.AutocompleteWrapper>
         </Grid>
       </Toolbar>
     </Styles.AppBar>

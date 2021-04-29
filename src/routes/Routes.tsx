@@ -5,6 +5,7 @@ import DashboardLayout from '@layouts/Dashboard/Dashboard';
 import Page404 from '@pages/404/404';
 
 import { RouteType } from '@utils/types/routes';
+import ScrollToTop from '@utils/helpers/scrollToTop/scrollToTop';
 
 import { pageRoutes } from './index';
 
@@ -58,6 +59,7 @@ const childRoutes = (Layout: React.ElementType, routes: Array<RouteType>) =>
 
 const Routes: React.FC = () => (
   <Router>
+    <ScrollToTop />
     <Switch>
       {childRoutes(DashboardLayout, pageRoutes)}
       <Route render={() => <Page404 />} />

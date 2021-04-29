@@ -26,20 +26,18 @@ export const recipientsHeaders: Array<HeaderType> = [
   { id: 2, header: 'Amount (PSL)' },
 ];
 
-export const generateTableTitle = (transactionData: ITransactionDetails, block: IBlock | null) => {
-  return (
-    <Alert severity="info">
-      <AlertTitle>PSL ID: {transactionData.id}</AlertTitle>
-      {`This transaction was first broadcast to the PSL network on 
+export const generateTableTitle = (transactionData: ITransactionDetails, block: IBlock | null) => (
+  <Alert severity="info">
+    <AlertTitle style={{ wordBreak: 'break-word' }}>PSL ID: {transactionData.id}</AlertTitle>
+    {`This transaction was first broadcast to the PSL network on 
       ${formattedDate(transactionData.timestamp)}. 
       The transaction is currently 
       ${block && block.transactionCount > 6 ? 'confirmed' : 'unconfirmed'} by the network.
       At the time of this transaction 
       ${formatNumber(transactionData.totalAmount, { decimalsLength: 2 })} 
       PSL was sent.`}
-    </Alert>
-  );
-};
+  </Alert>
+);
 
 export const generateNonStandardTransactionInfo = () => (
   <Grid item xs={12}>

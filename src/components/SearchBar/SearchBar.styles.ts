@@ -1,7 +1,12 @@
 import styled from 'styled-components/macro';
 import { darken } from 'polished';
 
-import { InputBase, AppBar as MuiAppBar, IconButton as MuiIconButton } from '@material-ui/core';
+import {
+  InputBase,
+  AppBar as MuiAppBar,
+  IconButton as MuiIconButton,
+  Grid,
+} from '@material-ui/core';
 
 export const AppBar = styled(MuiAppBar)`
   background: ${props => props.theme.header.background};
@@ -32,6 +37,17 @@ export const Search = styled.div`
 
   ${props => props.theme.breakpoints.up('md')} {
     display: block;
+  }
+`;
+
+export const AutocompleteWrapper = styled(Grid)`
+  width: 100%;
+
+  .MuiFormLabel-root {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 80%;
+    white-space: nowrap;
   }
 `;
 

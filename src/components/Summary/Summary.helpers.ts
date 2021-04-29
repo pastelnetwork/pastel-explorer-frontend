@@ -41,7 +41,7 @@ export const initialSummaryList: Array<SummaryItemProps> = [
   },
   {
     id: 4,
-    name: 'BTC Price',
+    name: 'PSL Price (in USD)',
     value: null,
     previousValue: null,
     key: 'btcPrice',

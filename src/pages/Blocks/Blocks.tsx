@@ -91,7 +91,9 @@ const Blocks = () => {
           sortBy={fetchParams.current.sortBy}
           sortDirection={fetchParams.current.sortDirection}
           rows={blockList}
+          title="Blocks List"
           columns={columns}
+          tableHeight={950}
           onBottomReach={handleFetchMoreBlocks}
           onHeaderClick={handleSort}
         />
