@@ -8,21 +8,34 @@ import {
   CardContent as MuiCardContent,
   TableCell as MuiTableCell,
   TableRow as MuiTableRow,
+  Grid,
 } from '@material-ui/core';
 
 export const Card = styled(MuiCard)(spacing);
 
 export const CardContent = styled(MuiCardContent)`
-  max-height: 356px;
+  @media (min-width: 960px) {
+    max-height: 356px;
+  }
 
   &:last-child {
+    padding-top: 0;
     padding-bottom: ${props => props.theme.spacing(2)}px;
   }
 `;
 
-export const ChartWrapper = styled.div`
+export const ChartWrapper = styled(Grid)`
   height: 160px;
   position: relative;
+
+  @media (min-width: 960px) {
+    padding: 10px 40px;
+    height: 332px;
+  }
+
+  @media (min-width: 1280px) {
+    padding: 40px 20px;
+  }
 
   .chartjs-render-monitor {
     position: relative;

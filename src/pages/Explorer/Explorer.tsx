@@ -48,10 +48,10 @@ const Explorer: React.FC = () => {
     <>
       <Header title="Explorer" />
       <Grid container spacing={6}>
-        <Grid item xs={12} lg={8}>
+        <Grid item xs={12} lg={7}>
           <ExplorerMap geoLocationList={geoLocationList} nodesLength={nodesLength} />
         </Grid>
-        <Grid item xs={12} lg={4}>
+        <Grid item xs={12} lg={5}>
           <SupernodeStatistics supernodes={supernodeList} />
         </Grid>
       </Grid>

@@ -54,7 +54,7 @@ const TableComponent: React.FC<TableComponentProps> = ({ title, headers, rows, s
           </Table>
         </Styles.TableWrapper>
       ) : (
-        <Skeleton animation="wave" variant="rect" height={200} />
+        <Skeleton animation="wave" variant="rect" height={styles?.height || 200} />
       )}
     </Paper>
   </Styles.Card>
