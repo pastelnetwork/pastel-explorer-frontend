@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-import { Card as MuiCard, darken, TableCell } from '@material-ui/core';
+import { Card as MuiCard, darken, TableCell, Paper } from '@material-ui/core';
 import { spacing } from '@material-ui/system';
 
 import themeVariant from '@theme/variants';
@@ -40,6 +40,10 @@ export const TableWrapper = styled.div`
   }
 `;
 
+export const TableContainer = styled(Paper)`
+  position: relative;
+`;
+
 export const Cell = styled(TableCell)`
   width: 100%;
   display: flex;
@@ -57,14 +61,10 @@ export const HeaderCell = styled(TableCell)<{ $disabledSort: boolean }>`
 export const Loader = styled.div`
   position: absolute;
   display: flex;
-  width: 1000px;
+  width: 100%;
   height: 100%;
   background-color: rgba(255, 255, 255, 0.9);
   z-index: 1;
   justify-content: center;
   align-items: center;
-
-  @media (min-width: 1000px) {
-    width: 100%;
-  }
 `;
