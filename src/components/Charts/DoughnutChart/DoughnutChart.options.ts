@@ -10,5 +10,5 @@ export const defaultChartOptions = {
       backgroundColor: themeVariant.palette.text.primary,
     },
   },
-  cutout: '70%',
+  cutout: '80%',
 };
