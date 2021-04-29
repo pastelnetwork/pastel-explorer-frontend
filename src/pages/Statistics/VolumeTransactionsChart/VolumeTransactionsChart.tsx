@@ -75,7 +75,7 @@ const VolumeTransactionsChart: React.FC = () => {
   return volumeTransactions ? (
     <Styles.Grid item>
       <LineChart
-        title="Volume of transactions"
+        title="Volume of transactions (last 30 days)"
         data={generateVolumeOfTransactionsData(volumeTransactions.labels, volumeTransactions.data)}
       />
       {/**
