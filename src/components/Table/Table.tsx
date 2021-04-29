@@ -1,12 +1,4 @@
-import {
-  CardHeader,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from '@material-ui/core';
+import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { CSSProperties } from '@material-ui/styles';
 import { Skeleton } from '@material-ui/lab';
 
@@ -30,7 +22,7 @@ interface TableComponentProps {
 
 const TableComponent: React.FC<TableComponentProps> = ({ title, headers, rows, styles }) => (
   <Styles.Card mb={3} style={styles}>
-    {title && <CardHeader title={title} />}
+    {title && <Styles.TableCardHeader title={title} />}
     <Paper>
       {rows ? (
         <Styles.TableWrapper>
