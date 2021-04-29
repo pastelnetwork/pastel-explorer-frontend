@@ -12,6 +12,7 @@ export type RouteType = {
   open?: boolean;
   header?: string;
   guard?: any;
+  seoTitle?: string;
 };
 
 export type RouteChildType = {

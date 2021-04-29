@@ -43,8 +43,6 @@ export const TableWrapper = styled.div`
 export const Cell = styled(TableCell)`
   width: 100%;
   display: flex;
-  justify-content: center;
-  text-align: center;
   height: 100%;
   align-items: center;
 `;
@@ -52,7 +50,6 @@ export const Cell = styled(TableCell)`
 export const HeaderCell = styled(TableCell)<{ $disabledSort: boolean }>`
   height: 70px;
   display: flex;
-  justify-content: center;
   white-space: nowrap;
   cursor: ${({ $disabledSort }) => !$disabledSort && 'pointer'};
 `;

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Route, Switch, RouteComponentProps } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 import DashboardLayout from '@layouts/Dashboard/Dashboard';
 import Page404 from '@pages/404/404';
@@ -12,7 +13,7 @@ import { pageRoutes } from './index';
 import '@utils/perfect-scrollbar.css';
 
 const childRoutes = (Layout: React.ElementType, routes: Array<RouteType>) =>
-  routes.map(({ component: Component, guard, children, path, id }) => {
+  routes.map(({ component: Component, guard, children, path, id, seoTitle = '' }) => {
     const Guard = guard || React.Fragment;
 
     if (children) {
@@ -28,6 +29,7 @@ const childRoutes = (Layout: React.ElementType, routes: Array<RouteType>) =>
             render={(props: RouteComponentProps) => (
               <Layout>
                 <ChildrenGuard>
+                  <Helmet title={seoTitle} />
                   <ElementComponent {...props} />
                 </ChildrenGuard>
               </Layout>
@@ -46,6 +48,7 @@ const childRoutes = (Layout: React.ElementType, routes: Array<RouteType>) =>
           render={props => (
             <Layout>
               <Guard>
+                <Helmet title={seoTitle} />
                 <Component {...props} />
               </Guard>
             </Layout>

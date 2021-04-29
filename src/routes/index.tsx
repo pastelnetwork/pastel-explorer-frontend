@@ -5,14 +5,16 @@ import WidgetsIcon from '@material-ui/icons/Widgets';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 import BarChartIcon from '@material-ui/icons/BarChart';
-import InfoIcon from '@material-ui/icons/Info';
+// Uncomment this when API page will be ready
+// import InfoIcon from '@material-ui/icons/Info';
 
 import Explorer from '@pages/Explorer/Explorer';
 import Movement from '@pages/Movement/Movement';
 import Network from '@pages/Network/Network';
 import Richlist from '@pages/Richlist/Richlist';
 import Blocks from '@pages/Blocks/Blocks';
-import Info from '@pages/Info/Info';
+// Uncomment this when API page will be ready
+// import Info from '@pages/Info/Info';
 import Supernodes from '@pages/Supernodes/Supernodes';
 import Statistics from '@pages/Statistics/Statistics';
 
@@ -28,6 +30,7 @@ const explorerRoutes = {
   icon: <SearchIcon />,
   component: Explorer,
   containsHome: true,
+  seoTitle: 'Explorer',
   children: null,
 };
 
@@ -36,6 +39,7 @@ const movementRoutes = {
   path: ROUTES.MOVEMENT,
   icon: <CallSplitIcon />,
   component: Movement,
+  seoTitle: 'Movement Transactions',
   children: null,
 };
 
@@ -44,6 +48,7 @@ const networkRoutes = {
   path: ROUTES.NETWORK,
   icon: <ShareIcon />,
   component: Network,
+  seoTitle: 'Network, Connections',
   children: null,
 };
 
@@ -52,14 +57,16 @@ const blocksRoutes = {
   path: ROUTES.BLOCKS,
   icon: <WidgetsIcon />,
   component: Blocks,
+  seoTitle: 'Blocks List',
   children: null,
 };
 
 const richlistRoutes = {
-  id: 'TOP 100',
+  id: 'Richlist (Top 100)',
   path: ROUTES.RICHLIST,
   icon: <LocalAtmIcon />,
   component: Richlist,
+  seoTitle: 'Richlist (Top 100)',
   children: null,
 };
 
@@ -68,6 +75,7 @@ const supernodesRoutes = {
   path: ROUTES.SUPERNODES,
   icon: <LocalLibraryIcon />,
   component: Supernodes,
+  seoTitle: 'Supernodes List',
   children: null,
 };
 
@@ -76,21 +84,25 @@ const statisticsRoutes = {
   path: ROUTES.STATISTICS,
   icon: <BarChartIcon />,
   component: Statistics,
+  seoTitle: 'Statistics',
   children: null,
 };
 
-const infoRoutes = {
-  id: 'API',
-  path: ROUTES.INFO,
-  icon: <InfoIcon />,
-  component: Info,
-  children: null,
-};
+// Uncomment this when API page will be ready
+// const infoRoutes = {
+//   id: 'API',
+//   path: ROUTES.INFO,
+//   icon: <InfoIcon />,
+//   component: Info,
+//   seoTitle: 'API Documentation',
+//   children: null,
+// };
 
 const transactionDetailsRoutes = {
   id: 'Transaction Details',
   path: `${ROUTES.TRANSACTION_DETAILS}/:id`,
   component: TransactionDetails,
+  seoTitle: 'Transaction Details',
   children: null,
 };
 
@@ -98,6 +110,7 @@ const blockDetailsRoutes = {
   id: 'Block Details',
   path: `${ROUTES.BLOCK_DETAILS}/:id`,
   component: BlockDetails,
+  seoTitle: 'Block Details',
   children: null,
 };
 
@@ -105,6 +118,7 @@ const addressDetailsRoutes = {
   id: 'Address Details',
   path: `${ROUTES.ADDRESS_DETAILS}/:id`,
   component: AddressDetails,
+  seoTitle: 'Address Details',
   children: null,
 };
 
@@ -115,7 +129,8 @@ export const pageRoutes = [
   blocksRoutes,
   richlistRoutes,
   supernodesRoutes,
-  infoRoutes,
+  // Uncomment this when API page will be ready
+  // infoRoutes,
   transactionDetailsRoutes,
   blockDetailsRoutes,
   addressDetailsRoutes,
@@ -130,5 +145,5 @@ export const sidebarRoutes = [
   richlistRoutes,
   supernodesRoutes,
   statisticsRoutes,
-  infoRoutes,
+  // infoRoutes,
 ];
