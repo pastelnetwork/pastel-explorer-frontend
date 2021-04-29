@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Typography, Dialog, AppBar, IconButton, Slide } from '@material-ui/core';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { TransitionProps } from '@material-ui/core/transitions';
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -13,18 +12,6 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    appBar: {
-      position: 'relative',
-    },
-    title: {
-      marginLeft: theme.spacing(2),
-      flex: 1,
-    },
-  }),
-);
-
 interface ITransactionRawDataProps {
   rawData: string;
   open: boolean;
@@ -32,7 +19,7 @@ interface ITransactionRawDataProps {
 }
 
 const TransactionRawData: React.FC<ITransactionRawDataProps> = ({ rawData, open, toogleOpen }) => {
-  const classes = useStyles();
+  const classes = Styles.useStyles();
 
   return (
     <Dialog fullScreen open={open} onClose={toogleOpen} TransitionComponent={Transition}>
