@@ -10,7 +10,7 @@ import {
   Index,
 } from 'react-virtualized';
 import { CSSProperties } from '@material-ui/styles';
-import { CardHeader, Paper, CircularProgress, darken } from '@material-ui/core';
+import { CardHeader, CircularProgress, darken } from '@material-ui/core';
 import { ArrowDropDown, ArrowDropUp } from '@material-ui/icons';
 import { Skeleton } from '@material-ui/lab';
 
@@ -130,14 +130,14 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   return (
     <Styles.Card mb={3}>
       {title && <CardHeader title={title} />}
-      <Paper>
+      <Styles.TableContainer>
+        {loading && (
+          <Styles.Loader>
+            <CircularProgress size={40} />
+          </Styles.Loader>
+        )}
         {rows.length ? (
           <Styles.TableWrapper>
-            {loading && (
-              <Styles.Loader>
-                <CircularProgress size={40} />
-              </Styles.Loader>
-            )}
             <AutoSizer disableHeight>
               {({ width }) => (
                 <div style={{ width }}>
@@ -177,7 +177,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
         ) : (
           <Skeleton animation="wave" variant="rect" height={tableHeight} />
         )}
-      </Paper>
+      </Styles.TableContainer>
     </Styles.Card>
   );
 };
