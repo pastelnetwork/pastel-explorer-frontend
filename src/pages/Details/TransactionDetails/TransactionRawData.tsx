@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Typography, Dialog, AppBar, Toolbar, IconButton, Slide } from '@material-ui/core';
+import { Typography, Dialog, AppBar, IconButton, Slide } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { TransitionProps } from '@material-ui/core/transitions';
 import CloseIcon from '@material-ui/icons/Close';
@@ -37,14 +37,14 @@ const TransactionRawData: React.FC<ITransactionRawDataProps> = ({ rawData, open,
   return (
     <Dialog fullScreen open={open} onClose={toogleOpen} TransitionComponent={Transition}>
       <AppBar className={classes.appBar}>
-        <Toolbar>
+        <Styles.TransactionRawDataToolbar>
           <IconButton edge="start" color="inherit" onClick={toogleOpen} aria-label="close">
             <CloseIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             Transaction Raw Data
           </Typography>
-        </Toolbar>
+        </Styles.TransactionRawDataToolbar>
       </AppBar>
       {rawData ? (
         <Styles.TransactionRawData>
