@@ -49,8 +49,8 @@ const Summary: React.FC = () => {
   return (
     <Styles.Grid container spacing={4}>
       {summaryList.map(({ id, name, value, difference }) => (
-        <Grid item xs={12} md={4} lg={2} key={id}>
-          <Styles.Card my={1}>
+        <Grid item xs={6} md={4} lg={2} key={id}>
+          <Styles.Card my={0}>
             <Styles.CardContent>
               <Styles.Typography variant="h6" my={2}>
                 {name}
