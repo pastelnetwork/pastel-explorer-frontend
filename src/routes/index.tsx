@@ -5,6 +5,7 @@ import WidgetsIcon from '@material-ui/icons/Widgets';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 import BarChartIcon from '@material-ui/icons/BarChart';
+// Uncomment this when API page will be ready
 // import InfoIcon from '@material-ui/icons/Info';
 
 import Explorer from '@pages/Explorer/Explorer';
@@ -12,6 +13,7 @@ import Movement from '@pages/Movement/Movement';
 import Network from '@pages/Network/Network';
 import Richlist from '@pages/Richlist/Richlist';
 import Blocks from '@pages/Blocks/Blocks';
+// Uncomment this when API page will be ready
 // import Info from '@pages/Info/Info';
 import Supernodes from '@pages/Supernodes/Supernodes';
 import Statistics from '@pages/Statistics/Statistics';
@@ -86,6 +88,7 @@ const statisticsRoutes = {
   children: null,
 };
 
+// Uncomment this when API page will be ready
 // const infoRoutes = {
 //   id: 'API',
 //   path: ROUTES.INFO,
@@ -126,6 +129,7 @@ export const pageRoutes = [
   blocksRoutes,
   richlistRoutes,
   supernodesRoutes,
+  // Uncomment this when API page will be ready
   // infoRoutes,
   transactionDetailsRoutes,
   blockDetailsRoutes,
