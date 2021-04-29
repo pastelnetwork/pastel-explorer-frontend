@@ -12,7 +12,7 @@ import { formattedDate, getCurrentUnixTimestamp } from '@utils/helpers/date/date
 import {
   generateVolumeOfTransactionsData,
   zoomOptions,
-  TimestampDifference,
+  timestampMsDifference,
 } from './VolumeTransactionsChart.helpers';
 import * as Styles from './VolumeTransactionsChart.styles';
 
@@ -22,8 +22,7 @@ interface VolumeTransactionsProps {
 }
 
 const VolumeTransactionsChart: React.FC = () => {
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [zoomTimeDifference, setZoomTimeDifference] = React.useState(TimestampDifference['1m']);
+  const [zoomTimeDifference, setZoomTimeDifference] = React.useState(timestampMsDifference.m1);
   const [
     volumeTransactions,
     setVolumeTransactions,
@@ -66,11 +65,9 @@ const VolumeTransactionsChart: React.FC = () => {
   };
 
   React.useEffect(() => {
-    setIsLoading(true);
     fetchData().then(response => {
       if (response?.data) {
         generateVolumeTransactionsData(response.data);
-        setIsLoading(false);
       }
     });
   }, [zoomTimeDifference]);
@@ -78,13 +75,7 @@ const VolumeTransactionsChart: React.FC = () => {
   return volumeTransactions ? (
     <Styles.Grid item>
       <LineChart
-        title={
-          isLoading ? (
-            <Skeleton animation="wave" variant="rect" />
-          ) : (
-            `Volume of transactions (${TimestampDifference[zoomTimeDifference]})`
-          )
-        }
+        title="Volume of transactions"
         data={generateVolumeOfTransactionsData(volumeTransactions.labels, volumeTransactions.data)}
       />
       {/**

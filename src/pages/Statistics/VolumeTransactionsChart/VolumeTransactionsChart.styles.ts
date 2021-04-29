@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 import { darken, Grid as MuiGrid } from '@material-ui/core';
 
