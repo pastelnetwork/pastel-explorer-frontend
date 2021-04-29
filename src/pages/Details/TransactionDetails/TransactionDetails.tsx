@@ -14,6 +14,7 @@ import * as URLS from '@utils/constants/urls';
 import { formattedDate } from '@utils/helpers/date/date';
 import { TransactionEvent, DirectionType, ITransactionDetails } from '@utils/types/ITransactions';
 
+import * as Styles from './TransactionDetails.styles';
 import {
   inputAddressHeaders,
   recipientsHeaders,
@@ -21,6 +22,7 @@ import {
   generateTableTitle,
   generateNonStandardTransactionInfo,
 } from './TransactionDetails.helpers';
+import TransactionRawData from './TransactionRawData';
 
 interface ParamTypes {
   id: string;
@@ -30,10 +32,13 @@ const TransactionDetails = () => {
   const { id } = useParams<ParamTypes>();
   const [transaction, setTransaction] = React.useState<ITransactionDetails | null>(null);
   const [redirect, setRedirect] = React.useState(false);
+  const [openRawDataModal, setOpenRawDataModal] = React.useState(false);
   const { fetchData } = useFetch<{ data: ITransactionDetails }>({
     method: 'get',
     url: `${URLS.TRANSACTION_URL}/${id}`,
   });
+
+  const toogleOpenRawData = () => setOpenRawDataModal(prevState => !prevState);
 
   React.useEffect(() => {
     fetchData().then(response => {
@@ -97,7 +102,14 @@ const TransactionDetails = () => {
     <>
       <Header title="Transaction Details" />
       <Grid container direction="column" spacing={2}>
-        <Grid item>{generateTableTitle(transaction)}</Grid>
+        <Styles.TransactionDesc item onClick={toogleOpenRawData}>
+          {generateTableTitle(transaction)}
+        </Styles.TransactionDesc>
+        <TransactionRawData
+          open={openRawDataModal}
+          toogleOpen={toogleOpenRawData}
+          rawData={transaction.rawData}
+        />
         <Grid item>
           <Table headers={transactionHeaders} rows={generateTransactionTable(transaction)} />
         </Grid>
