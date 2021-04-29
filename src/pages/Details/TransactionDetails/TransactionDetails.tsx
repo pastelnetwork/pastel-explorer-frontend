@@ -13,7 +13,6 @@ import * as ROUTES from '@utils/constants/routes';
 import * as URLS from '@utils/constants/urls';
 import { formattedDate } from '@utils/helpers/date/date';
 import { TransactionEvent, DirectionType, ITransactionDetails } from '@utils/types/ITransactions';
-import { IBlock } from '@utils/types/IBlocks';
 
 import {
   inputAddressHeaders,
@@ -30,31 +29,14 @@ interface ParamTypes {
 const TransactionDetails = () => {
   const { id } = useParams<ParamTypes>();
   const [transaction, setTransaction] = React.useState<ITransactionDetails | null>(null);
-  const [block, setBlock] = React.useState<IBlock | null>(null);
   const [redirect, setRedirect] = React.useState(false);
-  const transactionFetchData = useFetch<{ data: ITransactionDetails }>({
+  const { fetchData } = useFetch<{ data: ITransactionDetails }>({
     method: 'get',
     url: `${URLS.TRANSACTION_URL}/${id}`,
   });
-  const blockFetchData = useFetch<{ data: IBlock }>({
-    method: 'get',
-    url: `${URLS.BLOCK_URL}/${transaction?.blockHash}`,
-  });
 
   React.useEffect(() => {
-    if (transaction) {
-      blockFetchData.fetchData().then(response => {
-        if (!response?.data) {
-          setRedirect(true);
-        } else {
-          setBlock(response.data);
-        }
-      });
-    }
-  }, [transaction]);
-
-  React.useEffect(() => {
-    transactionFetchData.fetchData().then(response => {
+    fetchData().then(response => {
       if (!response?.data) {
         setRedirect(true);
       } else {
@@ -91,12 +73,16 @@ const TransactionDetails = () => {
     return tableTransactionEvents;
   };
 
-  const generateTransactionTable = ({ blockHash, timestamp }: ITransactionDetails): RowsProps[] => {
+  const generateTransactionTable = ({
+    blockHash,
+    timestamp,
+    block,
+  }: ITransactionDetails): RowsProps[] => {
     return [
       {
         id: 1,
         data: [
-          { id: 1, value: '1' },
+          { id: 1, value: block.confirmations },
           {
             id: 2,
             value: <RouterLink route={`${ROUTES.BLOCK_DETAILS}/${blockHash}`} value={blockHash} />,
@@ -111,7 +97,7 @@ const TransactionDetails = () => {
     <>
       <Header title="Transaction Details" />
       <Grid container direction="column" spacing={2}>
-        <Grid item>{generateTableTitle(transaction, block)}</Grid>
+        <Grid item>{generateTableTitle(transaction)}</Grid>
         <Grid item>
           <Table headers={transactionHeaders} rows={generateTransactionTable(transaction)} />
         </Grid>
