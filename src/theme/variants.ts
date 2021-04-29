@@ -3,6 +3,8 @@ import { green, grey, red, orange } from '@material-ui/core/colors';
 
 const themeVariant = {
   custom: {
+    black: '#000',
+    white: '#fff',
     green: {
       light: green[200],
       main: green[500],
