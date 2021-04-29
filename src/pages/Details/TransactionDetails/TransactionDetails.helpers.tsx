@@ -3,12 +3,13 @@ import { Alert, AlertTitle } from '@material-ui/lab';
 
 import { HeaderType } from '@components/Table/Table';
 
-import { IBlock } from '@utils/types/IBlocks';
 import { ITransactionDetails } from '@utils/types/ITransactions';
 import { formattedDate } from '@utils/helpers/date/date';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 
 import * as Styles from './TransactionDetails.styles';
+
+const BLOCK_CONFIRMED_NUMBER = 6;
 
 export const transactionHeaders: Array<HeaderType> = [
   { id: 1, header: 'Confirmations' },
@@ -26,13 +27,15 @@ export const recipientsHeaders: Array<HeaderType> = [
   { id: 2, header: 'Amount (PSL)' },
 ];
 
-export const generateTableTitle = (transactionData: ITransactionDetails, block: IBlock | null) => (
+export const generateTableTitle = (transactionData: ITransactionDetails) => (
   <Alert severity="info">
     <AlertTitle style={{ wordBreak: 'break-word' }}>PSL ID: {transactionData.id}</AlertTitle>
     {`This transaction was first broadcast to the PSL network on 
       ${formattedDate(transactionData.timestamp)}. 
       The transaction is currently 
-      ${block && block.transactionCount > 6 ? 'confirmed' : 'unconfirmed'} by the network.
+      ${
+        transactionData.block.confirmations > BLOCK_CONFIRMED_NUMBER ? 'confirmed' : 'unconfirmed'
+      } by the network.
       At the time of this transaction 
       ${formatNumber(transactionData.totalAmount, { decimalsLength: 2 })} 
       PSL was sent.`}

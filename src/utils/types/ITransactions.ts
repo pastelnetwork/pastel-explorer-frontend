@@ -10,6 +10,7 @@ export interface TransactionEvent {
 export interface ITransaction {
   block: {
     height: string;
+    confirmations: number;
   };
   blockHash: string;
   coinbase: number;
