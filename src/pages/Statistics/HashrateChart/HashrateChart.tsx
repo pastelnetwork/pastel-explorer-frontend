@@ -1,19 +1,18 @@
 import * as React from 'react';
 import { ChartData } from 'chart.js';
-import { Line } from 'react-chartjs-2';
 import subHours from 'date-fns/subHours';
 import getUnixTime from 'date-fns/getUnixTime';
 import fromUnixTime from 'date-fns/fromUnixTime';
 import format from 'date-fns/format';
-import { CardHeader } from '@material-ui/core';
 
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import * as URLS from '@utils/constants/urls';
 import { IHashRateResponse } from '@utils/types/IStatistics';
 import { currentDate } from '@utils/helpers/date/date';
+import LineChart from '@components/Charts/LineChart/LineChart';
 
 import * as Styles from './HashrateChart.styles';
-import { chartVisualData, chartOptions } from './HashrateChart.options';
+import { chartVisualData } from './HashrateChart.options';
 
 interface IChartData {
   labels: Array<string>;
@@ -46,15 +45,13 @@ const HashrateChart: React.FC = () => {
       {
         ...chartVisualData.datasets[0],
         data: chartData?.values || [],
-        stepped: true,
       },
     ],
   };
 
   return (
     <Styles.Card p={5}>
-      <CardHeader title="Network Hashrate GH/s (last 3 hours)" />
-      <Line data={chartDataSet} options={chartOptions} type="line" />
+      <LineChart data={chartDataSet} title="Network Hashrate GH/s (last 3 hours)" />
     </Styles.Card>
   );
 };

@@ -1,18 +1,14 @@
-import { ChartOptions } from 'chart.js';
-
 import themeVariant from '@theme/variants';
 
 export const chartVisualData = {
   datasets: [
     {
       label: 'GH/s',
-      borderColor: themeVariant.palette.primary.main,
+      fill: false,
+      borderColor: themeVariant.map.peer,
       tension: 0.1,
+      pointRadius: 0.1,
+      borderWidth: 1,
     },
   ],
-};
-
-export const chartOptions: ChartOptions = {
-  plugins: { legend: { display: false } },
-  scales: { x: { ticks: { maxTicksLimit: 10 } } },
 };
