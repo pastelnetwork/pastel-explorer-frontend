@@ -49,12 +49,12 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/workspace
-      # - add_ssh_keys:
-      #     fingerprints:
-      #       - '6b:9d:f0:24:b7:f4:df:69:46:a3:36:c3:6a:1f:ef:c4'
-      # - run:
-      #     name: Deploy over SSH
-      #     command: scp -o "StrictHostKeyChecking no" -r /tmp/workspace/build/* ubuntu@$SERVER_IP:~/nginx-data/data
+      - add_ssh_keys:
+          fingerprints:
+            - '6b:9d:f0:24:b7:f4:df:69:46:a3:36:c3:6a:1f:ef:c4'
+      - run:
+          name: Deploy over SSH
+          command: scp -o "StrictHostKeyChecking no" -r /tmp/workspace/build/* ubuntu@$SERVER_IP:~/nginx-data/data
       - aws-cli/setup:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
@@ -90,7 +90,6 @@ workflows:
           filters:
             branches:
               ignore:
-                - config/circleci-cloudfront
                 - master
                 - production
       - build:
@@ -100,7 +99,6 @@ workflows:
             branches:
               only:
                 - master
-                - config/circleci-cloudfront
       - build:
           name: build-production
           context: pastel-frontend-production
@@ -118,7 +116,6 @@ workflows:
             branches:
               only:
                 - master
-                - config/circleci-cloudfront
       - deploy:
           name: deploy-production
           requires:
