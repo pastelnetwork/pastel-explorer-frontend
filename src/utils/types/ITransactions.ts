@@ -19,6 +19,7 @@ export interface ITransaction {
   timestamp: number;
   totalAmount: number;
   isNonStandard: number | null;
+  rawData: string;
 }
 
 export interface ITransactionDetails extends ITransaction {
