@@ -16,6 +16,8 @@ interface LineChartProps {
 }
 
 const LineChart: React.FC<LineChartProps> = ({ data, title, isLoading, height }) => {
+  const chartHeight = height || Styles.CHART_HEIGHT;
+
   return (
     <Styles.Card mb={1}>
       <CardContent>
@@ -24,9 +26,9 @@ const LineChart: React.FC<LineChartProps> = ({ data, title, isLoading, height })
         <Styles.Spacer mb={6} />
 
         {isLoading ? (
-          <Skeleton animation="wave" variant="rect" height={height || Styles.CHART_HEIGHT} />
+          <Skeleton animation="wave" variant="rect" height={chartHeight} />
         ) : (
-          <Styles.ChartWrapper height={height}>
+          <Styles.ChartWrapper height={chartHeight}>
             <Line type="line" data={data} options={options} />
           </Styles.ChartWrapper>
         )}
