@@ -38,7 +38,7 @@ const TransactionDetails = () => {
     url: `${URLS.TRANSACTION_URL}/${id}`,
   });
 
-  const toogleOpenRawData = () => setOpenRawDataModal(prevState => !prevState);
+  const toggleOpenRawData = () => setOpenRawDataModal(prevState => !prevState);
 
   React.useEffect(() => {
     fetchData().then(response => {
@@ -102,12 +102,12 @@ const TransactionDetails = () => {
     <>
       <Header title="Transaction Details" />
       <Grid container direction="column" spacing={2}>
-        <Styles.TransactionDesc item onClick={toogleOpenRawData}>
+        <Styles.TransactionDesc item onClick={toggleOpenRawData}>
           {generateTableTitle(transaction)}
         </Styles.TransactionDesc>
         <TransactionRawData
           open={openRawDataModal}
-          toogleOpen={toogleOpenRawData}
+          toggleOpen={toggleOpenRawData}
           rawData={transaction.rawData}
         />
         <Grid item>

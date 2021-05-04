@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { ChartData } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+
 import { CardContent } from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
 
 import * as Styles from './LineChart.styles';
 import { options } from './LineChart.options';
@@ -9,9 +11,11 @@ import { options } from './LineChart.options';
 interface LineChartProps {
   data: ChartData;
   title?: React.ReactNode;
+  isLoading?: boolean;
+  height?: number;
 }
 
-const LineChart: React.FC<LineChartProps> = ({ data, title }) => {
+const LineChart: React.FC<LineChartProps> = ({ data, title, isLoading, height }) => {
   return (
     <Styles.Card mb={1}>
       <CardContent>
@@ -19,9 +23,13 @@ const LineChart: React.FC<LineChartProps> = ({ data, title }) => {
 
         <Styles.Spacer mb={6} />
 
-        <Styles.ChartWrapper>
-          <Line type="line" data={data} options={options} />
-        </Styles.ChartWrapper>
+        {isLoading ? (
+          <Skeleton animation="wave" variant="rect" height={height || Styles.CHART_HEIGHT} />
+        ) : (
+          <Styles.ChartWrapper height={height}>
+            <Line type="line" data={data} options={options} />
+          </Styles.ChartWrapper>
+        )}
       </CardContent>
     </Styles.Card>
   );

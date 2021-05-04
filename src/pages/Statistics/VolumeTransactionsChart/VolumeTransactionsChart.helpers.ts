@@ -1,6 +1,6 @@
 import themeVariant from '@theme/variants';
 
-export const timestampMsDifference = {
+const timestampMsDifference = {
   m1: 2592000,
   m3: 7776000,
   m6: 15552000,

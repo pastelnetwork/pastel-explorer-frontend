@@ -15,17 +15,17 @@ const Transition = React.forwardRef(function Transition(
 interface ITransactionRawDataProps {
   rawData: string;
   open: boolean;
-  toogleOpen: () => void;
+  toggleOpen: () => void;
 }
 
-const TransactionRawData: React.FC<ITransactionRawDataProps> = ({ rawData, open, toogleOpen }) => {
+const TransactionRawData: React.FC<ITransactionRawDataProps> = ({ rawData, open, toggleOpen }) => {
   const classes = Styles.useStyles();
 
   return (
-    <Dialog fullScreen open={open} onClose={toogleOpen} TransitionComponent={Transition}>
+    <Dialog fullScreen open={open} onClose={toggleOpen} TransitionComponent={Transition}>
       <AppBar className={classes.appBar}>
         <Styles.TransactionRawDataToolbar>
-          <IconButton edge="start" color="inherit" onClick={toogleOpen} aria-label="close">
+          <IconButton edge="start" color="inherit" onClick={toggleOpen} aria-label="close">
             <CloseIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
