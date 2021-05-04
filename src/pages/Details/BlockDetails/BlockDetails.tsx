@@ -1,11 +1,14 @@
 import * as React from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { Redirect, useParams, useHistory } from 'react-router-dom';
 
-import { Grid } from '@material-ui/core';
+import { Grid, IconButton, Tooltip } from '@material-ui/core';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import Header from '@components/Header/Header';
 import Table, { RowsProps } from '@components/Table/Table';
+
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
@@ -15,12 +18,14 @@ import * as ROUTES from '@utils/constants/routes';
 import { IBlock, IBlockTransaction } from '@utils/types/IBlocks';
 
 import { blockHeaders, transactionHeaders } from './BlockDetails.helpers';
+import * as Styles from './BlockDetails.styles';
 
 interface ParamTypes {
   id: string;
 }
 
 const BlockDetails = () => {
+  const history = useHistory();
   const { id } = useParams<ParamTypes>();
 
   const [block, setBlock] = React.useState<IBlock | null>();
@@ -86,6 +91,36 @@ const BlockDetails = () => {
     return transactionList;
   };
 
+  const handleBlockChange = (currentBlock: string) =>
+    history.push(`${ROUTES.BLOCK_DETAILS}/${currentBlock}`);
+
+  const generateHeaderNavigationElement = (hash: string, type: 'previous' | 'next') => {
+    if (hash) {
+      const icon = type === 'previous' ? <NavigateBeforeIcon /> : <NavigateNextIcon />;
+      const tooltip = type === 'previous' ? 'Previous Block' : 'Next Block';
+
+      return (
+        <Tooltip title={tooltip} arrow>
+          <IconButton onClick={() => handleBlockChange(hash)}>{icon}</IconButton>
+        </Tooltip>
+      );
+    }
+
+    return null;
+  };
+
+  const generateTableHeaderWithNavigation = (currentBlock: IBlock) => {
+    const { previousBlockHash, nextBlockHash } = currentBlock;
+
+    return (
+      <Grid container justify="space-evenly" alignItems="center">
+        {generateHeaderNavigationElement(previousBlockHash, 'previous')}
+        <Styles.Typography>{`PSL block: ${currentBlock.id}`}</Styles.Typography>
+        {generateHeaderNavigationElement(nextBlockHash, 'next')}
+      </Grid>
+    );
+  };
+
   if (redirect) {
     return <Redirect to={ROUTES.NOT_FOUND} />;
   }
@@ -96,7 +131,7 @@ const BlockDetails = () => {
       <Grid container direction="column">
         <Grid item>
           <Table
-            title={`PSL block: ${block.id}`}
+            title={generateTableHeaderWithNavigation(block)}
             headers={blockHeaders}
             rows={generateBlockTable(block)}
           />
