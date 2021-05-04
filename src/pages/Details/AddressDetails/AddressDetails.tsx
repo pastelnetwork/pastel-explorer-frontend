@@ -98,7 +98,12 @@ const AddressDetails = () => {
   };
 
   React.useEffect(() => {
-    handleFetchAddress(DATA_OFFSET, fetchParams.current.sortBy, fetchParams.current.sortDirection);
+    handleFetchAddress(
+      DATA_OFFSET,
+      fetchParams.current.sortBy,
+      fetchParams.current.sortDirection,
+      true,
+    );
   }, [id]);
 
   if (redirect.current) {
