@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import { Skeleton } from '@material-ui/lab';
-import { Tooltip, Typography } from '@material-ui/core';
 
 import LineChart from '@components/Charts/LineChart/LineChart';
 
@@ -9,11 +8,8 @@ import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { formattedDate, getCurrentUnixTimestamp } from '@utils/helpers/date/date';
 
-import {
-  generateVolumeOfTransactionsData,
-  zoomOptions,
-  timestampMsDifference,
-} from './VolumeTransactionsChart.helpers';
+import { generateZoomOptions } from '../Statistics.helpers';
+import { generateVolumeOfTransactionsData, zoomOptions } from './VolumeTransactionsChart.helpers';
 import * as Styles from './VolumeTransactionsChart.styles';
 
 interface VolumeTransactionsProps {
@@ -21,8 +17,11 @@ interface VolumeTransactionsProps {
   data: Array<number>;
 }
 
+const CHART_HEIGHT = 386;
+
 const VolumeTransactionsChart: React.FC = () => {
-  const [zoomTimeDifference, setZoomTimeDifference] = React.useState(timestampMsDifference.m1);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [zoomOption, setZoomOption] = React.useState(zoomOptions[0]);
   const [
     volumeTransactions,
     setVolumeTransactions,
@@ -30,7 +29,7 @@ const VolumeTransactionsChart: React.FC = () => {
   const { fetchData } = useFetch<{ data: Array<[number, number]> }>({
     method: 'get',
     url: `${URLS.VOLUME_TRANSACTION_URL}?to=${getCurrentUnixTimestamp}&from=${
-      getCurrentUnixTimestamp - zoomTimeDifference
+      getCurrentUnixTimestamp - zoomOption.timestampDifference
     }`,
   });
 
@@ -65,35 +64,27 @@ const VolumeTransactionsChart: React.FC = () => {
   };
 
   React.useEffect(() => {
-    fetchData().then(response => {
-      if (response?.data) {
-        generateVolumeTransactionsData(response.data);
-      }
-    });
-  }, [zoomTimeDifference]);
+    setIsLoading(true);
+    fetchData()
+      .then(response => {
+        if (response?.data) {
+          generateVolumeTransactionsData(response.data);
+        }
+      })
+      .finally(() => setIsLoading(false));
+  }, [zoomOption]);
 
   return volumeTransactions ? (
     <Styles.Grid item>
       <LineChart
-        title="Volume of transactions (last 30 days)"
+        title={`Volume of transactions (last ${zoomOption.tooltip})`}
         data={generateVolumeOfTransactionsData(volumeTransactions.labels, volumeTransactions.data)}
+        isLoading={isLoading}
       />
-      {/**
-       * Revert ZoomContainer display none to see zoom options and customize it to get required space after legend removal
-       */}
-      <Styles.ZoomContainer>
-        <Typography variant="caption">Zoom</Typography>
-        {zoomOptions.map(({ name, tooltip, timestampDifference }) => (
-          <Tooltip key={name} title={tooltip} arrow>
-            <Styles.ZoomElement onClick={() => setZoomTimeDifference(timestampDifference)}>
-              {name}
-            </Styles.ZoomElement>
-          </Tooltip>
-        ))}
-      </Styles.ZoomContainer>
+      {generateZoomOptions(zoomOptions, setZoomOption)}
     </Styles.Grid>
   ) : (
-    <Skeleton animation="wave" variant="rect" />
+    <Skeleton animation="wave" variant="rect" height={CHART_HEIGHT} />
   );
 };
 

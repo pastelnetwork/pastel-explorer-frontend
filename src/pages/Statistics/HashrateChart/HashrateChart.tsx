@@ -1,25 +1,28 @@
 import * as React from 'react';
 import { ChartData } from 'chart.js';
-import subHours from 'date-fns/subHours';
-import getUnixTime from 'date-fns/getUnixTime';
 import fromUnixTime from 'date-fns/fromUnixTime';
 import format from 'date-fns/format';
 
 import { Skeleton } from '@material-ui/lab';
 
+import LineChart from '@components/Charts/LineChart/LineChart';
+
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import * as URLS from '@utils/constants/urls';
 import { IHashRateResponse } from '@utils/types/IStatistics';
-import { currentDate } from '@utils/helpers/date/date';
-import LineChart from '@components/Charts/LineChart/LineChart';
+import { getCurrentUnixTimestamp } from '@utils/helpers/date/date';
 
 import * as Styles from './HashrateChart.styles';
 import { chartVisualData } from './HashrateChart.options';
+import { zoomOptions } from './HashrateChart.helpers';
+import { generateZoomOptions } from '../Statistics.helpers';
 
 interface IChartData {
   labels: Array<string>;
   values: Array<number>;
 }
+
+const CHART_HEIGHT = 386;
 
 const transformChartData = ({ data }: IHashRateResponse) => ({
   labels: data.map(time => format(fromUnixTime(time[0]), 'HH:mm')),
@@ -27,19 +30,30 @@ const transformChartData = ({ data }: IHashRateResponse) => ({
 });
 
 const HashrateChart: React.FC = () => {
-  const { fetchData } = useFetch<IHashRateResponse>({ method: 'get', url: URLS.HASHRATE_URL });
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [zoomOption, setZoomOption] = React.useState(zoomOptions[0]);
+  const { fetchData } = useFetch<IHashRateResponse>({
+    method: 'get',
+    url: `${URLS.HASHRATE_URL}?to=${getCurrentUnixTimestamp}&from=${
+      getCurrentUnixTimestamp - zoomOption.timestampDifference
+    }`,
+  });
   const [chartData, setChartData] = React.useState<IChartData | null>(null);
 
-  const fetchHashrateData = (from: number, to: number) =>
-    fetchData({ params: { from, to } }).then(response => {
-      if (!response) return null;
+  const fetchHashrateData = () => {
+    setIsLoading(true);
+    fetchData()
+      .then(response => {
+        if (!response) return null;
 
-      return setChartData(transformChartData(response));
-    });
+        return setChartData(transformChartData(response));
+      })
+      .finally(() => setIsLoading(false));
+  };
 
   React.useEffect(() => {
-    fetchHashrateData(getUnixTime(subHours(currentDate, 3)), getUnixTime(currentDate));
-  }, []);
+    fetchHashrateData();
+  }, [zoomOption]);
 
   const chartDataSet: ChartData = {
     labels: chartData?.labels,
@@ -53,10 +67,15 @@ const HashrateChart: React.FC = () => {
 
   return chartData ? (
     <Styles.Grid item>
-      <LineChart data={chartDataSet} title="Network Hashrate GH/s (last 3 hours)" />
+      <LineChart
+        data={chartDataSet}
+        title={`Network Hashrate GH/s (last ${zoomOption.tooltip})`}
+        isLoading={isLoading}
+      />
+      {generateZoomOptions(zoomOptions, setZoomOption)}
     </Styles.Grid>
   ) : (
-    <Skeleton animation="wave" variant="rect" />
+    <Skeleton animation="wave" variant="rect" height={CHART_HEIGHT} />
   );
 };
 
