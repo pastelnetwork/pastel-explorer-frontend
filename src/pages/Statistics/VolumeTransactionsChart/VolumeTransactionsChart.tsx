@@ -8,7 +8,7 @@ import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { formattedDate, getCurrentUnixTimestamp } from '@utils/helpers/date/date';
 
-import { generateZoomOptions } from '../Statistics.helpers';
+import { generateTitleWithZoomOptions } from '../Statistics.helpers';
 import { generateVolumeOfTransactionsData, zoomOptions } from './VolumeTransactionsChart.helpers';
 import * as Styles from './VolumeTransactionsChart.styles';
 
@@ -77,11 +77,14 @@ const VolumeTransactionsChart: React.FC = () => {
   return volumeTransactions ? (
     <Styles.Grid item>
       <LineChart
-        title={`Volume of transactions (last ${zoomOption.tooltip})`}
+        title={generateTitleWithZoomOptions(
+          zoomOptions,
+          setZoomOption,
+          `Volume of transactions (last ${zoomOption.tooltip})`,
+        )}
         data={generateVolumeOfTransactionsData(volumeTransactions.labels, volumeTransactions.data)}
         isLoading={isLoading}
       />
-      {generateZoomOptions(zoomOptions, setZoomOption)}
     </Styles.Grid>
   ) : (
     <Skeleton animation="wave" variant="rect" height={CHART_HEIGHT} />

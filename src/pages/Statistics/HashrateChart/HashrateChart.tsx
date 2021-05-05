@@ -15,7 +15,7 @@ import { getCurrentUnixTimestamp } from '@utils/helpers/date/date';
 import * as Styles from './HashrateChart.styles';
 import { chartVisualData } from './HashrateChart.options';
 import { zoomOptions } from './HashrateChart.helpers';
-import { generateZoomOptions } from '../Statistics.helpers';
+import { generateTitleWithZoomOptions } from '../Statistics.helpers';
 
 interface IChartData {
   labels: Array<string>;
@@ -69,10 +69,13 @@ const HashrateChart: React.FC = () => {
     <Styles.Grid item>
       <LineChart
         data={chartDataSet}
-        title={`Network Hashrate GH/s (last ${zoomOption.tooltip})`}
+        title={generateTitleWithZoomOptions(
+          zoomOptions,
+          setZoomOption,
+          `Network Hashrate GH/s (last ${zoomOption.tooltip})`,
+        )}
         isLoading={isLoading}
       />
-      {generateZoomOptions(zoomOptions, setZoomOption)}
     </Styles.Grid>
   ) : (
     <Skeleton animation="wave" variant="rect" height={CHART_HEIGHT} />
