@@ -1,5 +1,3 @@
-import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-
 export interface SummaryItemProps {
   id: number;
   name: string;
@@ -74,5 +72,5 @@ export const calculateDifference = (first: string | number, second: string | num
 
   const difference = ((firstValue - secondValue) / ((firstValue + secondValue) / 2)) * 100;
 
-  return formatNumber(difference, { decimalsLength: 2 });
+  return difference.toFixed(2);
 };
