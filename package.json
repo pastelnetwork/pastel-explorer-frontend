@@ -1,8 +1,8 @@
 {
-  "name": "material-app",
-  "version": "2.0.3",
+  "name": "pastel-explorer",
+  "version": "1.0.0",
   "description": "Pastel Explorer",
-  "author": "",
+  "author": "Pastel Network",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
