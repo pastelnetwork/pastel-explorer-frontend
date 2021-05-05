@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Tooltip, Typography } from '@material-ui/core';
+import { Grid, Tooltip, Typography } from '@material-ui/core';
 
 import * as Styles from './Statistics.styles';
 
@@ -9,7 +9,7 @@ type ZoomOption = {
   timestampDifference: number;
 };
 
-export const generateZoomOptions = (
+const generateZoomOptions = (
   zoomOptions: Array<ZoomOption>,
   setZoomOption: React.Dispatch<React.SetStateAction<ZoomOption>>,
 ) => (
@@ -24,3 +24,18 @@ export const generateZoomOptions = (
     ))}
   </Styles.ZoomContainer>
 );
+
+export const generateTitleWithZoomOptions = (
+  zoomOptions: Array<ZoomOption>,
+  setZoomOption: React.Dispatch<React.SetStateAction<ZoomOption>>,
+  title: string,
+) => {
+  return (
+    <Grid container justify="space-between" spacing={2}>
+      <Grid item>
+        <Typography>{title}</Typography>
+      </Grid>
+      <Grid item>{generateZoomOptions(zoomOptions, setZoomOption)}</Grid>
+    </Grid>
+  );
+};

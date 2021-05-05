@@ -5,11 +5,8 @@ import { darken } from '@material-ui/core';
 import themeVariant from '@theme/variants';
 
 export const ZoomContainer = styled.div`
-  position: absolute;
   display: flex;
   align-items: baseline;
-  top: 16px;
-  right: 16px;
 `;
 
 export const ZoomElement = styled.div`
