@@ -6,6 +6,7 @@ import Header from '@components/Header/Header';
 
 import HashrateChart from './HashrateChart/HashrateChart';
 import VolumeTransactionsChart from './VolumeTransactionsChart/VolumeTransactionsChart';
+import MempoolInfoChart from './MempoolInfoChart/MempoolInfoChart';
 
 const Statistics: React.FC = () => (
   <>
@@ -16,6 +17,9 @@ const Statistics: React.FC = () => (
       </Grid>
       <Grid item xs={12} lg={6}>
         <HashrateChart />
+      </Grid>
+      <Grid item xs={12} lg={6}>
+        <MempoolInfoChart />
       </Grid>
     </Grid>
   </>
