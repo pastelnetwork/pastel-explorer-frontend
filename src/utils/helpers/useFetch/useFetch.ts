@@ -8,6 +8,7 @@ import * as URLS from '@utils/constants/urls';
 interface IUseFetchOptions {
   method: 'get' | 'post' | 'put' | 'delete' | 'patch' | 'options';
   url: string;
+  isSilentError?: boolean;
 }
 
 interface IFetchDataOptions {
@@ -18,7 +19,7 @@ const axios = Axios.create({
   baseURL: URLS.BASE_URL,
 });
 
-export const useFetch = <FetchedData>({ method, url }: IUseFetchOptions) => {
+export const useFetch = <FetchedData>({ method, url, isSilentError }: IUseFetchOptions) => {
   const dispatch = useDispatch();
 
   const fetchData = async (options: IFetchDataOptions = {}): Promise<FetchedData | undefined> =>
@@ -27,7 +28,9 @@ export const useFetch = <FetchedData>({ method, url }: IUseFetchOptions) => {
       .catch((error: AxiosError) => {
         console.error(error);
 
-        dispatch(setResponseError(true));
+        if (!isSilentError) {
+          dispatch(setResponseError(true));
+        }
 
         return undefined;
       });

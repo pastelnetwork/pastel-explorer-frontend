@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Redirect, useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 import { Grid, IconButton, Tooltip } from '@material-ui/core';
 
@@ -29,17 +29,15 @@ const BlockDetails = () => {
   const { id } = useParams<ParamTypes>();
 
   const [block, setBlock] = React.useState<IBlock | null>();
-  const [redirect, setRedirect] = React.useState(false);
   const { fetchData } = useFetch<{ data: IBlock }>({
     method: 'get',
     url: `${URLS.BLOCK_URL}/${id}`,
+    isSilentError: true,
   });
 
   React.useEffect(() => {
     fetchData().then(response => {
-      if (!response?.data) {
-        setRedirect(true);
-      } else {
+      if (response && response.data) {
         setBlock(response.data);
       }
     });
@@ -120,10 +118,6 @@ const BlockDetails = () => {
       </Grid>
     );
   };
-
-  if (redirect) {
-    return <Redirect to={ROUTES.NOT_FOUND} />;
-  }
 
   return block ? (
     <>

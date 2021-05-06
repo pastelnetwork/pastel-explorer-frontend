@@ -15,3 +15,7 @@ export const Wrapper = styled.div`
     padding: ${props => props.theme.spacing(10)}px;
   }
 `;
+
+export const Logo = styled.img`
+  width: 120px;
+`;

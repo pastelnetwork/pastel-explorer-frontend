@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useParams, Redirect } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { Grid } from '@material-ui/core';
 
@@ -31,28 +31,22 @@ interface ParamTypes {
 const TransactionDetails = () => {
   const { id } = useParams<ParamTypes>();
   const [transaction, setTransaction] = React.useState<ITransactionDetails | null>(null);
-  const [redirect, setRedirect] = React.useState(false);
   const [openRawDataModal, setOpenRawDataModal] = React.useState(false);
   const { fetchData } = useFetch<{ data: ITransactionDetails }>({
     method: 'get',
     url: `${URLS.TRANSACTION_URL}/${id}`,
+    isSilentError: true,
   });
 
   const toggleOpenRawData = () => setOpenRawDataModal(prevState => !prevState);
 
   React.useEffect(() => {
     fetchData().then(response => {
-      if (!response?.data) {
-        setRedirect(true);
-      } else {
+      if (response && response.data) {
         setTransaction(response.data);
       }
     });
   }, [id]);
-
-  if (redirect) {
-    return <Redirect to={ROUTES.NOT_FOUND} />;
-  }
 
   const generateTransactionEvents = (
     events: TransactionEvent[],
