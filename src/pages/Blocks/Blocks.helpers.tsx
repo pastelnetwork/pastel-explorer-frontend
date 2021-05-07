@@ -12,20 +12,13 @@ export const DATA_FETCH_LIMIT = 20;
 export const DATA_OFFSET = 0;
 export const DATA_DEFAULT_SORT = 'DESC';
 
-export const transformTableData = (transactions: Array<IBlock>) => {
-  return transactions.map(({ id, timestamp, transactionCount, height, size }) => {
-    const minutesAgo = Math.floor((getCurrentUnixTimestamp - timestamp) / 60);
-    return {
-      id,
-      [BLOCK_ID_KEY]: <RouterLink route={`${ROUTES.BLOCK_DETAILS}/${id}`} value={id} />,
-      [TRANSACTIONS_QTY_KEY]: transactionCount,
-      [TIMESTAMP_BLOCKS_KEY]: formattedDate(timestamp, { dayName: false }),
-      height,
-      size: `${(size / 1024).toFixed(2)} MB`,
-      minutesAgo: `${minutesAgo} minute${minutesAgo === 1 ? '' : 's'} ago`,
-    };
-  });
-};
+export const transformTableData = (transactions: Array<IBlock>) =>
+  transactions.map(({ id, timestamp, transactionCount }) => ({
+    id,
+    [BLOCK_ID_KEY]: <RouterLink route={`${ROUTES.BLOCK_DETAILS}/${id}`} value={id} />,
+    [TRANSACTIONS_QTY_KEY]: transactionCount,
+    [TIMESTAMP_BLOCKS_KEY]: formattedDate(timestamp, { dayName: false }),
+  }));
 
 export interface TransformBlocksData {
   id: string;
