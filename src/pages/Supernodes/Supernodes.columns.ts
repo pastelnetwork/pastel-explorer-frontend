@@ -39,13 +39,13 @@ export const columns = [
     flexGrow: 1,
     label: 'Country',
     dataKey: SUPERNODE_COUNTRY_KEY,
-    disableSort: true,
+    disableSort: false,
   },
   {
     width: 120,
     flexGrow: 1,
     label: 'Last paid',
     dataKey: SUPERNODE_LAST_PAID_KEY,
-    disableSort: true,
+    disableSort: false,
   },
 ];

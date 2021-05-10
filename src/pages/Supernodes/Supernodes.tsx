@@ -2,16 +2,29 @@ import * as React from 'react';
 import { Grid } from '@material-ui/core';
 
 import Header from '@components/Header/Header';
-import InfinityTable, { RowsProps } from '@components/InfinityTable/InfinityTable';
+import InfinityTable, {
+  RowsProps,
+  SortDirectionsType,
+  ISortData,
+} from '@components/InfinityTable/InfinityTable';
 
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { INetwork } from '@utils/types/INetwork';
 
-import { columns } from './Supernodes.columns';
+import { columns, SUPERNODE_LAST_PAID_KEY } from './Supernodes.columns';
 import { transformSupernodesData, DATA_FETCH_LIMIT, DATA_OFFSET } from './Supernodes.helpers';
 
+interface ISupernodeData {
+  sortBy: string;
+  sortDirection: SortDirectionsType;
+}
+
 const Supernodes: React.FC = () => {
+  const [sortData, setSortData] = React.useState<ISupernodeData>({
+    sortBy: SUPERNODE_LAST_PAID_KEY,
+    sortDirection: 'DESC',
+  });
   const [supernodes, setSupernodes] = React.useState<Array<RowsProps>>([]);
   const { fetchData } = useFetch<INetwork>({
     method: 'get',
@@ -26,6 +39,20 @@ const Supernodes: React.FC = () => {
       .then(data => setSupernodes(prevState => [...prevState, ...data]));
   };
 
+  const handleSort = ({ sortBy, sortDirection }: ISortData) => {
+    const sortedSupernodes = supernodes.sort((a, b) => {
+      if (a[sortBy] < b[sortBy]) return sortDirection === 'DESC' ? 1 : -1;
+      if (a[sortBy] > b[sortBy]) return sortDirection === 'DESC' ? -1 : 1;
+      return 0;
+    });
+
+    setSupernodes(sortedSupernodes);
+    setSortData({
+      sortBy,
+      sortDirection,
+    });
+  };
+
   React.useEffect(() => {
     handleFetchSupernodes(DATA_OFFSET);
   }, []);
@@ -34,7 +61,15 @@ const Supernodes: React.FC = () => {
     <>
       <Header title="Supernode List" />
       <Grid item>
-        <InfinityTable rows={supernodes} columns={columns} tableHeight={950} />
+        <InfinityTable
+          sortBy={sortData.sortBy}
+          sortDirection={sortData.sortDirection}
+          onHeaderClick={handleSort}
+          rows={supernodes}
+          columns={columns}
+          tableHeight={950}
+          disableLoading
+        />
       </Grid>
     </>
   );
