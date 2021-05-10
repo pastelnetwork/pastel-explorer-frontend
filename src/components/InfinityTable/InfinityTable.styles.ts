@@ -52,6 +52,7 @@ export const Cell = styled(TableCell)`
 `;
 
 export const HeaderCell = styled(TableCell)<{ $disabledSort: boolean }>`
+  font-weight: 700;
   height: 70px;
   display: flex;
   white-space: nowrap;

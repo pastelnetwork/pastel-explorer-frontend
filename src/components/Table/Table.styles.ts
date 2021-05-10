@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-import { Card as MuiCard, CardHeader } from '@material-ui/core';
+import { Card as MuiCard, TableCell as MuiTableCell, CardHeader } from '@material-ui/core';
 
 import { spacing } from '@material-ui/system';
 
@@ -13,4 +13,8 @@ export const TableWrapper = styled.div`
 
 export const TableCardHeader = styled(CardHeader)`
   word-break: break-word;
+`;
+
+export const TableCell = styled(MuiTableCell)`
+  font-weight: 700;
 `;
