@@ -64,7 +64,7 @@ const Blocks = () => {
       .fetchData({ params: { offset, limit, sortBy: fetchSortBy, sortDirection } })
       .then(response => {
         if (response) {
-          blockElements.length === 0 && setBlockElements(transformBlocksData(response.data));
+          offset === 0 && setBlockElements(transformBlocksData(response.data));
           return transformTableData(response.data);
         }
         return [];
