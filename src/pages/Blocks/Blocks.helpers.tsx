@@ -2,6 +2,7 @@ import RouterLink from '@components/RouterLink/RouterLink';
 
 import * as ROUTES from '@utils/constants/routes';
 import { formattedDate, getCurrentUnixTimestamp } from '@utils/helpers/date/date';
+import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { IBlock } from '@utils/types/IBlocks';
 
 import { BLOCK_ID_KEY, TRANSACTIONS_QTY_KEY, TIMESTAMP_BLOCKS_KEY } from './Blocks.columns';
@@ -23,7 +24,7 @@ export const transformTableData = (transactions: Array<IBlock>) =>
 export interface TransformBlocksData {
   id: string;
   transactionCount: string;
-  height: number;
+  height: string;
   size: string;
   minutesAgo: string;
 }
@@ -36,7 +37,7 @@ export const transformBlocksData = (transactions: Array<IBlock>): Array<Transfor
       return {
         id,
         transactionCount: `${transactionCount} transaction${transactionCount === 1 ? '' : 's'}`,
-        height,
+        height: formatNumber(height),
         size: `${(size / 1024).toFixed(2)} MB`,
         minutesAgo: `${minutesAgo} minute${minutesAgo === 1 ? '' : 's'} ago`,
       };

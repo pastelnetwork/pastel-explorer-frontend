@@ -21,9 +21,8 @@ const BlockVisualization: React.FC<BlockVisualizationProps> = ({
 }) => {
   return (
     <Styles.BlockContainer onClick={clickHandler}>
-      <Typography variant="h3" gutterBottom>
-        {height}
-      </Typography>
+      <Typography variant="caption">Block #:</Typography>
+      <Typography variant="h3">{height}</Typography>
       <Typography variant="h4">{size}</Typography>
       <Typography variant="caption">{transactionCount}</Typography>
       <Typography variant="caption">{minutesAgo}</Typography>

@@ -1,7 +1,15 @@
 import * as React from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
-import { Grid, IconButton, Tooltip } from '@material-ui/core';
+import {
+  Grid,
+  IconButton,
+  Tooltip,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
+} from '@material-ui/core';
+import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import Header from '@components/Header/Header';
@@ -17,7 +25,7 @@ import * as URLS from '@utils/constants/urls';
 import * as ROUTES from '@utils/constants/routes';
 import { IBlock, IBlockTransaction } from '@utils/types/IBlocks';
 
-import { blockHeaders, transactionHeaders } from './BlockDetails.helpers';
+import { blockHeaders, transactionHeaders, generateDetailsElement } from './BlockDetails.helpers';
 import * as Styles from './BlockDetails.styles';
 
 interface ParamTypes {
@@ -28,6 +36,7 @@ const BlockDetails = () => {
   const history = useHistory();
   const { id } = useParams<ParamTypes>();
 
+  const [isExpanded, setIsExpanded] = React.useState(false);
   const [block, setBlock] = React.useState<IBlock | null>();
   const { fetchData } = useFetch<{ data: IBlock }>({
     method: 'get',
@@ -43,23 +52,14 @@ const BlockDetails = () => {
     });
   }, [id]);
 
-  const generateBlockTable = ({
-    height,
-    difficulty,
-    confirmations,
-    size,
-    nonce,
-    timestamp,
-  }: IBlock): RowsProps[] => {
+  const generateBlockTable = ({ height, confirmations, size, timestamp }: IBlock): RowsProps[] => {
     return [
       {
         id: 1,
         data: [
           { id: 1, value: height },
-          { id: 2, value: formatNumber(difficulty, { decimalsLength: 2 }) },
           { id: 3, value: formatNumber(confirmations) },
           { id: 4, value: formatNumber(size, { decimalsLength: 2 }) },
-          { id: 5, value: nonce },
           { id: 6, value: formattedDate(timestamp) },
         ],
       },
@@ -122,13 +122,32 @@ const BlockDetails = () => {
   return block ? (
     <>
       <Header title="Block Details" />
-      <Grid container direction="column">
+      <Grid container direction="column" spacing={2}>
         <Grid item>
           <Table
             title={generateTableHeaderWithNavigation(block)}
             headers={blockHeaders}
             rows={generateBlockTable(block)}
           />
+        </Grid>
+        <Grid item>
+          <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography>{isExpanded ? 'Hide Details' : 'Show Details'}</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Grid container direction="column">
+                {generateDetailsElement(
+                  'Difficulty',
+                  formatNumber(block.difficulty, { decimalsLength: 2 }),
+                )}
+                {generateDetailsElement('Nonce', block.nonce)}
+                {generateDetailsElement('Markle Root', block.merkleRoot)}
+                {generateDetailsElement('Previous Block', block.previousBlockHash)}
+                {generateDetailsElement('Next Block', block.nextBlockHash)}
+              </Grid>
+            </AccordionDetails>
+          </Styles.Accordion>
         </Grid>
         <Grid item>
           <Table
