@@ -38,7 +38,7 @@ export const transformBlocksData = (transactions: Array<IBlock>): Array<Transfor
         id,
         transactionCount: `${transactionCount} transaction${transactionCount === 1 ? '' : 's'}`,
         height: formatNumber(height),
-        size: `${(size / 1024).toFixed(2)} MB`,
+        size: `${(size / 1024).toFixed(2)} KB`,
         minutesAgo: `${minutesAgo} minute${minutesAgo === 1 ? '' : 's'} ago`,
       };
     });
