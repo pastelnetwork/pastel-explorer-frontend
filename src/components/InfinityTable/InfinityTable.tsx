@@ -108,11 +108,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   );
 
   const handleSort = (info: ISortData) => {
-    !loading && setLoading(true);
-
-    if (disableLoading) {
-      setLoading(false);
-    }
+    !loading && !disableLoading && setLoading(true);
 
     return onHeaderClick && onHeaderClick(info);
   };
