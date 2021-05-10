@@ -46,6 +46,7 @@ interface IInfinityTableComponentProps {
   rowHeight?: number;
   tableHeight?: number;
   loadMoreFrom?: number;
+  disableLoading?: boolean;
   // eslint-disable-next-line
   onBottomReach?: (value: boolean) => void;
   // eslint-disable-next-line
@@ -90,6 +91,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   onHeaderClick,
   rowHeight = 70,
   tableHeight = 500,
+  disableLoading,
 }) => {
   const [loading, setLoading] = React.useState(false);
 
@@ -107,6 +109,11 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
 
   const handleSort = (info: ISortData) => {
     !loading && setLoading(true);
+
+    if (disableLoading) {
+      setLoading(false);
+    }
+
     return onHeaderClick && onHeaderClick(info);
   };
 
