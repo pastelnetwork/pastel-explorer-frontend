@@ -89,7 +89,7 @@ const Movement: React.FC = () => {
 
   return (
     <>
-      <Header title="Movement" />
+      <Header title="Movement Transactions" />
       <Grid item>
         <InfinityTable
           sortBy={fetchParams.current.sortBy}
@@ -97,7 +97,6 @@ const Movement: React.FC = () => {
           rows={movementList}
           columns={columns}
           tableHeight={950}
-          title="Movement Transactions"
           onBottomReach={handleFetchMoreMovements}
           onHeaderClick={handleSort}
         />

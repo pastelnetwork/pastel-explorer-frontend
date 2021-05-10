@@ -30,7 +30,7 @@ const TableComponent: React.FC<TableComponentProps> = ({ title, headers, rows, s
             <TableHead>
               <TableRow>
                 {headers.map(({ id, header }) => (
-                  <TableCell key={id}>{header}</TableCell>
+                  <Styles.TableCell key={id}>{header}</Styles.TableCell>
                 ))}
               </TableRow>
             </TableHead>
