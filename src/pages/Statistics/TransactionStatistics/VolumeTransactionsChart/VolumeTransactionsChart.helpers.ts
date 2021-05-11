@@ -1,5 +1,3 @@
-import themeVariant from '@theme/variants';
-
 const timestampMsDifference = {
   m1: 2592000,
   m3: 7776000,
@@ -13,18 +11,3 @@ export const zoomOptions = [
   { name: '6m', tooltip: '6 months', timestampDifference: timestampMsDifference.m6 },
   { name: '1y', tooltip: '1 year', timestampDifference: timestampMsDifference.y1 },
 ];
-
-export const generateVolumeOfTransactionsData = (labels: Array<string>, data: Array<number>) => ({
-  labels,
-  datasets: [
-    {
-      label: 'Transactions',
-      data,
-      fill: false,
-      borderColor: themeVariant.map.peer,
-      tension: 0.1,
-      pointRadius: 2,
-      borderWidth: 1,
-    },
-  ],
-});

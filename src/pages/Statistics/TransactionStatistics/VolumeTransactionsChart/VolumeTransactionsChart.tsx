@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { Skeleton } from '@material-ui/lab';
+import { Grid } from '@material-ui/core';
 
 import LineChart from '@components/Charts/LineChart/LineChart';
 
@@ -8,16 +9,18 @@ import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { formattedDate, getCurrentUnixTimestamp } from '@utils/helpers/date/date';
 
-import { generateTitleWithZoomOptions } from '../Statistics.helpers';
-import { generateVolumeOfTransactionsData, zoomOptions } from './VolumeTransactionsChart.helpers';
-import * as Styles from './VolumeTransactionsChart.styles';
+import { generateTitleWithZoomOptions } from '../../Statistics.helpers';
+import { zoomOptions } from './VolumeTransactionsChart.helpers';
+import {
+  generateTransactionsData,
+  sortTransactions,
+  CHART_HEIGHT,
+} from '../TransactionStatistics.helpers';
 
 interface VolumeTransactionsProps {
   labels: Array<string>;
   data: Array<number>;
 }
-
-const CHART_HEIGHT = 386;
 
 const VolumeTransactionsChart: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -32,14 +35,6 @@ const VolumeTransactionsChart: React.FC = () => {
       getCurrentUnixTimestamp - zoomOption.timestampDifference
     }`,
   });
-
-  const sortTransactions = (transactions: Array<[number, number]>) => {
-    return transactions.sort(([valueA], [valueB]) => {
-      if (valueA < valueB) return -1;
-      if (valueA > valueB) return 1;
-      return 0;
-    });
-  };
 
   const generateVolumeTransactionsData = (transactions: Array<[number, number]>) => {
     const sortedTransactions = sortTransactions(transactions);
@@ -75,17 +70,17 @@ const VolumeTransactionsChart: React.FC = () => {
   }, [zoomOption]);
 
   return volumeTransactions ? (
-    <Styles.Grid item>
+    <Grid item>
       <LineChart
         title={generateTitleWithZoomOptions(
           zoomOptions,
           setZoomOption,
           `Volume of transactions (last ${zoomOption.tooltip})`,
         )}
-        data={generateVolumeOfTransactionsData(volumeTransactions.labels, volumeTransactions.data)}
+        data={generateTransactionsData(volumeTransactions.labels, volumeTransactions.data)}
         isLoading={isLoading}
       />
-    </Styles.Grid>
+    </Grid>
   ) : (
     <Skeleton animation="wave" variant="rect" height={CHART_HEIGHT} />
   );
