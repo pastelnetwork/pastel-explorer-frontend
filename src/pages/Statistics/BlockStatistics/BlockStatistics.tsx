@@ -55,7 +55,6 @@ const StatisticsBlocks: React.FC = () => {
   React.useEffect(() => {
     fetchBlocksData.fetchData({ params: { limit: BLOCK_ELEMENTS_COUNT } }).then(response => {
       if (response) {
-        console.log(response);
         setChartData(generateChartData(response.data));
         setBlockElements(transformBlocksData(response.data));
       }
