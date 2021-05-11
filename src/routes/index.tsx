@@ -16,7 +16,9 @@ import Blocks from '@pages/Blocks/Blocks';
 // Uncomment this when API page will be ready
 // import Info from '@pages/Info/Info';
 import Supernodes from '@pages/Supernodes/Supernodes';
-import Statistics from '@pages/Statistics/Statistics';
+import BlockStatistics from '@pages/Statistics/BlockStatistics/BlockStatistics';
+import NetworkStatistics from '@pages/Statistics/NetworkStatistics/NetworkStatistics';
+import TransactionStatistics from '@pages/Statistics/TransactionStatistics/TransactionStatistics';
 
 import TransactionDetails from '@pages/Details/TransactionDetails/TransactionDetails';
 import BlockDetails from '@pages/Details/BlockDetails/BlockDetails';
@@ -83,9 +85,25 @@ const statisticsRoutes = {
   id: 'Statistics',
   path: ROUTES.STATISTICS,
   icon: <BarChartIcon />,
-  component: Statistics,
+  component: null,
   seoTitle: 'Statistics',
-  children: null,
+  children: [
+    {
+      path: ROUTES.STATISTICS_BLOCKS,
+      name: 'Blocks',
+      component: BlockStatistics,
+    },
+    {
+      path: ROUTES.STATISTICS_NETWORK,
+      name: 'Network',
+      component: NetworkStatistics,
+    },
+    {
+      path: ROUTES.STATISTICS_TRANSACTIONS,
+      name: 'Transactions',
+      component: TransactionStatistics,
+    },
+  ],
 };
 
 // Uncomment this when API page will be ready

@@ -47,9 +47,9 @@ const Network: React.FC = () => {
 
   return (
     <>
-      <Header title="Network" />
+      <Header title="Network Connections" />
       <Grid item>
-        <Table headers={headers} rows={connections} title="Connections" />
+        <Table headers={headers} rows={connections} />
       </Grid>
     </>
   );

@@ -15,7 +15,7 @@ import { getCurrentUnixTimestamp } from '@utils/helpers/date/date';
 import * as Styles from './HashrateChart.styles';
 import { chartVisualData } from './HashrateChart.options';
 import { zoomOptions } from './HashrateChart.helpers';
-import { generateTitleWithZoomOptions } from '../Statistics.helpers';
+import { generateTitleWithZoomOptions } from '../../Statistics.helpers';
 
 interface IChartData {
   labels: Array<string>;

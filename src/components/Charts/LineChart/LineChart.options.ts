@@ -17,6 +17,11 @@ export const options = {
       display: false,
     },
   },
+  interaction: {
+    mode: 'nearest',
+    axis: 'x',
+    intersect: false,
+  },
   scales: {
     xAxes: [
       {

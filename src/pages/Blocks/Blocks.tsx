@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { useHistory } from 'react-router-dom';
-import { Grid } from '@material-ui/core';
 
 import Header from '@components/Header/Header';
 import InfinityTable, {
@@ -11,19 +9,15 @@ import InfinityTable, {
 
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import * as URLS from '@utils/constants/urls';
-import * as ROUTES from '@utils/constants/routes';
 import { IBlock } from '@utils/types/IBlocks';
 
 import { TIMESTAMP_BLOCKS_KEY, columns, BLOCK_ID_KEY } from './Blocks.columns';
 import {
-  transformBlocksData,
   transformTableData,
-  TransformBlocksData,
   DATA_FETCH_LIMIT,
   DATA_OFFSET,
   DATA_DEFAULT_SORT,
 } from './Blocks.helpers';
-import BlockVisualization from './BlockVisualization/BlockVisualization';
 import * as Styles from './Blocks.styles';
 
 interface IBlocksDataRef {
@@ -33,14 +27,13 @@ interface IBlocksDataRef {
 }
 
 const Blocks = () => {
-  const history = useHistory();
   const fetchParams = React.useRef<IBlocksDataRef>({
     offset: DATA_OFFSET,
     sortBy: TIMESTAMP_BLOCKS_KEY,
     sortDirection: DATA_DEFAULT_SORT,
   });
   const [blockList, setBlocksList] = React.useState<Array<RowsProps>>([]);
-  const [blockElements, setBlockElements] = React.useState<Array<TransformBlocksData>>([]);
+
   const fetchBlocksData = useFetch<{ data: Array<IBlock> }>({
     method: 'get',
     url: URLS.BLOCK_URL,
@@ -64,7 +57,6 @@ const Blocks = () => {
       .fetchData({ params: { offset, limit, sortBy: fetchSortBy, sortDirection } })
       .then(response => {
         if (response) {
-          offset === 0 && setBlockElements(transformBlocksData(response.data));
           return transformTableData(response.data);
         }
         return [];
@@ -99,26 +91,12 @@ const Blocks = () => {
 
   return (
     <>
-      <Header title="Blocks" />
-      <Styles.BlocksContainer container justify="space-around" alignItems="center" spacing={8}>
-        {blockElements.map(({ id, height, size, transactionCount, minutesAgo }) => (
-          <Grid item key={id}>
-            <BlockVisualization
-              clickHandler={() => history.push(`${ROUTES.BLOCK_DETAILS}/${id}`)}
-              height={height}
-              size={size}
-              transactionCount={transactionCount}
-              minutesAgo={minutesAgo}
-            />
-          </Grid>
-        ))}
-      </Styles.BlocksContainer>
+      <Header title="Block List" />
       <Styles.TableContainer item>
         <InfinityTable
           sortBy={fetchParams.current.sortBy}
           sortDirection={fetchParams.current.sortDirection}
           rows={blockList}
-          title="Blocks List"
           columns={columns}
           tableHeight={950}
           onBottomReach={handleFetchMoreBlocks}

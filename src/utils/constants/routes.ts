@@ -11,3 +11,7 @@ export const NOT_FOUND = '/not-found';
 export const TRANSACTION_DETAILS = '/tx';
 export const BLOCK_DETAILS = '/block';
 export const ADDRESS_DETAILS = '/address';
+
+export const STATISTICS_BLOCKS = `${STATISTICS}/blocks`;
+export const STATISTICS_NETWORK = `${STATISTICS}/network`;
+export const STATISTICS_TRANSACTIONS = `${STATISTICS}/transactions`;
