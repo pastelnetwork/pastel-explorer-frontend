@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { Redirect, useParams, useHistory } from 'react-router-dom';
 
 import {
   Grid,
@@ -38,15 +38,17 @@ const BlockDetails = () => {
 
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [block, setBlock] = React.useState<IBlock | null>();
+  const [redirect, setRedirect] = React.useState(false);
   const { fetchData } = useFetch<{ data: IBlock }>({
     method: 'get',
     url: `${URLS.BLOCK_URL}/${id}`,
-    isSilentError: true,
   });
 
   React.useEffect(() => {
     fetchData().then(response => {
-      if (response && response.data) {
+      if (!response?.data) {
+        setRedirect(true);
+      } else {
         setBlock(response.data);
       }
     });
@@ -118,6 +120,10 @@ const BlockDetails = () => {
       </Grid>
     );
   };
+
+  if (redirect) {
+    return <Redirect to={ROUTES.NOT_FOUND} />;
+  }
 
   return block ? (
     <>

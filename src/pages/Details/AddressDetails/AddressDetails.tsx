@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 
 import { Grid } from '@material-ui/core';
 
@@ -11,6 +11,7 @@ import InfinityTable, {
 } from '@components/InfinityTable/InfinityTable';
 
 import * as URLS from '@utils/constants/urls';
+import * as ROUTES from '@utils/constants/routes';
 import { IAddress } from '@utils/types/IAddress';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 
@@ -47,7 +48,6 @@ const AddressDetails = () => {
   const { fetchData } = useFetch<IAddress>({
     method: 'get',
     url: `${URLS.ADDRESS_URL}/${id}`,
-    isSilentError: true,
   });
 
   const handleFetchAddress = (
@@ -105,6 +105,10 @@ const AddressDetails = () => {
       true,
     );
   }, [id]);
+
+  if (redirect.current) {
+    return <Redirect to={ROUTES.NOT_FOUND} />;
+  }
 
   return addresses ? (
     <>

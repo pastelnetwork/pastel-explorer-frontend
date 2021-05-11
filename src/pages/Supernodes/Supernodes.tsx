@@ -13,7 +13,12 @@ import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { INetwork } from '@utils/types/INetwork';
 
 import { columns, SUPERNODE_LAST_PAID_KEY } from './Supernodes.columns';
-import { transformSupernodesData, DATA_FETCH_LIMIT, DATA_OFFSET } from './Supernodes.helpers';
+import {
+  transformSupernodesData,
+  DATA_FETCH_LIMIT,
+  DATA_OFFSET,
+  DATA_DEFAULT_SORT,
+} from './Supernodes.helpers';
 
 interface ISupernodeData {
   sortBy: string;
@@ -23,7 +28,7 @@ interface ISupernodeData {
 const Supernodes: React.FC = () => {
   const [sortData, setSortData] = React.useState<ISupernodeData>({
     sortBy: SUPERNODE_LAST_PAID_KEY,
-    sortDirection: 'DESC',
+    sortDirection: DATA_DEFAULT_SORT,
   });
   const [supernodes, setSupernodes] = React.useState<Array<RowsProps>>([]);
   const { fetchData } = useFetch<INetwork>({
@@ -41,8 +46,8 @@ const Supernodes: React.FC = () => {
 
   const handleSort = ({ sortBy, sortDirection }: ISortData) => {
     const sortedSupernodes = supernodes.sort((a, b) => {
-      if (a[sortBy] < b[sortBy]) return sortDirection === 'DESC' ? 1 : -1;
-      if (a[sortBy] > b[sortBy]) return sortDirection === 'DESC' ? -1 : 1;
+      if (a[sortBy] < b[sortBy]) return sortDirection === DATA_DEFAULT_SORT ? 1 : -1;
+      if (a[sortBy] > b[sortBy]) return sortDirection === DATA_DEFAULT_SORT ? -1 : 1;
       return 0;
     });
 
