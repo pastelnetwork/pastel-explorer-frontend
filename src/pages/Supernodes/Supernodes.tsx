@@ -74,6 +74,7 @@ const Supernodes: React.FC = () => {
           columns={columns}
           tableHeight={950}
           disableLoading
+          renderAllRows
         />
       </Grid>
     </>
