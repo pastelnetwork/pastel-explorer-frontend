@@ -8,6 +8,7 @@ import {
   TableHeaderProps,
   ScrollEventData,
   Index,
+  OverscanIndicesGetterParams,
 } from 'react-virtualized';
 import { CSSProperties } from '@material-ui/styles';
 import { CardHeader, CircularProgress, darken } from '@material-ui/core';
@@ -47,6 +48,7 @@ interface IInfinityTableComponentProps {
   tableHeight?: number;
   loadMoreFrom?: number;
   disableLoading?: boolean;
+  renderAllRows?: boolean;
   // eslint-disable-next-line
   onBottomReach?: (value: boolean) => void;
   // eslint-disable-next-line
@@ -80,6 +82,11 @@ const TableCellRenderer = ({ cellData }: TableCellProps) => (
   <Styles.Cell component="div">{cellData}</Styles.Cell>
 );
 
+const getOverscanIndices = ({ cellCount }: OverscanIndicesGetterParams) => ({
+  overscanStartIndex: 0,
+  overscanStopIndex: cellCount - 1,
+});
+
 const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   title,
   rows,
@@ -92,6 +99,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   rowHeight = 70,
   tableHeight = 500,
   disableLoading,
+  renderAllRows,
 }) => {
   const [loading, setLoading] = React.useState(false);
 
@@ -157,6 +165,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
                     sort={handleSort}
                     sortDirection={sortDirection}
                     onScroll={handleReachBottom}
+                    overscanIndicesGetter={renderAllRows ? getOverscanIndices : undefined}
                   >
                     {columns.map(({ dataKey, ...other }, index) => (
                       <Column
