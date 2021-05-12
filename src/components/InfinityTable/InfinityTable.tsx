@@ -82,7 +82,7 @@ const TableCellRenderer = ({ cellData }: TableCellProps) => (
   <Styles.Cell component="div">{cellData}</Styles.Cell>
 );
 
-const overscanIndicesGetter = ({ cellCount }: OverscanIndicesGetterParams) => ({
+const getOverscanIndices = ({ cellCount }: OverscanIndicesGetterParams) => ({
   overscanStartIndex: 0,
   overscanStopIndex: cellCount - 1,
 });
@@ -165,7 +165,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
                     sort={handleSort}
                     sortDirection={sortDirection}
                     onScroll={handleReachBottom}
-                    overscanIndicesGetter={renderAllRows ? overscanIndicesGetter : undefined}
+                    overscanIndicesGetter={renderAllRows ? getOverscanIndices : undefined}
                   >
                     {columns.map(({ dataKey, ...other }, index) => (
                       <Column
