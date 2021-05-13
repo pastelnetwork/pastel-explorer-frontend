@@ -1,6 +1,7 @@
-import Chip from '@material-ui/core/Chip';
+import { Chip, Grid } from '@material-ui/core';
 
 import RouterLink from '@components/RouterLink/RouterLink';
+import CopyButton from '@components/CopyButton/CopyButton';
 
 import * as ROUTES from '@utils/constants/routes';
 import { formattedTimeElapsed } from '@utils/helpers/date/date';
@@ -32,7 +33,14 @@ export const transformSupernodesData = (masternodes: Array<INetworkSupernodes>) 
     [SUPERNODE_IP_KEY]: ip,
     [SUPERNODE_PORT_KEY]: port,
     [SUPERNODE_ADDRESS_KEY]: (
-      <RouterLink route={`${ROUTES.ADDRESS_DETAILS}/${address}`} value={address} />
+      <Grid container alignItems="center" wrap="nowrap">
+        <CopyButton copyText={address} />
+        <RouterLink
+          route={`${ROUTES.ADDRESS_DETAILS}/${address}`}
+          value={address}
+          textSize="large"
+        />
+      </Grid>
     ),
     [SUPERNODE_STATUS_KEY]: statusColor(status),
     [SUPERNODE_COUNTRY_KEY]: country,

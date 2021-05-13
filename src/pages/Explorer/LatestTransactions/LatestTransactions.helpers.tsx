@@ -1,6 +1,7 @@
-import { Tooltip } from '@material-ui/core';
+import { Tooltip, Grid } from '@material-ui/core';
 
 import RouterLink from '@components/RouterLink/RouterLink';
+import CopyButton from '@components/CopyButton/CopyButton';
 
 import * as ROUTES from '@utils/constants/routes';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
@@ -39,7 +40,12 @@ export const transformTransactionsData = (transactions: Array<ITransaction>) =>
   transactions.map(({ blockHash, id, block, recipientCount, timestamp, totalAmount }) => ({
     id,
     [BLOCK_KEY]: generateBlockKeyValue(blockHash, block.height),
-    [BLOCK_HASH_KEY]: <RouterLink route={`${ROUTES.TRANSACTION_DETAILS}/${id}`} value={id} />,
+    [BLOCK_HASH_KEY]: (
+      <Grid container alignItems="center" wrap="nowrap">
+        <CopyButton copyText={id} />
+        <RouterLink route={`${ROUTES.TRANSACTION_DETAILS}/${id}`} value={id} textSize="large" />
+      </Grid>
+    ),
     [RECIPIENT_COUNT_KEY]: recipientCount,
     [AMOUNT_KEY]: (
       <Tooltip title={totalAmount} arrow>

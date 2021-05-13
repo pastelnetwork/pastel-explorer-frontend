@@ -1,4 +1,7 @@
+import { Grid } from '@material-ui/core';
+
 import RouterLink from '@components/RouterLink/RouterLink';
+import CopyButton from '@components/CopyButton/CopyButton';
 
 import * as ROUTES from '@utils/constants/routes';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
@@ -14,7 +17,12 @@ export const DATA_DEFAULT_SORT = 'DESC';
 export const transformMovementData = (transactions: Array<ITransaction>) =>
   transactions.map(({ id, timestamp, totalAmount }) => ({
     id,
-    [TXID_KEY]: <RouterLink route={`${ROUTES.TRANSACTION_DETAILS}/${id}`} value={id} />,
+    [TXID_KEY]: (
+      <Grid container alignItems="center" wrap="nowrap">
+        <CopyButton copyText={id} />
+        <RouterLink route={`${ROUTES.TRANSACTION_DETAILS}/${id}`} value={id} textSize="large" />
+      </Grid>
+    ),
     [AMOUNT_MOVEMENT_KEY]: formatNumber(totalAmount, { decimalsLength: 2 }),
     [TIMESTAMP_MOVEMENT_KEY]: formattedDate(timestamp, { dayName: false }),
   }));
