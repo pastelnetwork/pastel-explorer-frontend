@@ -1,4 +1,7 @@
+import { Grid } from '@material-ui/core';
+
 import RouterLink from '@components/RouterLink/RouterLink';
+import CopyButton from '@components/CopyButton/CopyButton';
 import { RowsProps } from '@components/InfinityTable/InfinityTable';
 import { RowsProps as TableRowsProps, HeaderType } from '@components/Table/Table';
 
@@ -28,10 +31,14 @@ export const generateLatestTransactions = (transactionsList: Array<IAddressData>
   transactionsList.map(({ amount, timestamp, transactionHash }) => ({
     [ADDRESS_TRANSACTION_TIMESTAMP_KEY]: formattedDate(timestamp),
     [ADDRESS_TRANSACTION_HASH_KEY]: (
-      <RouterLink
-        route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
-        value={transactionHash}
-      />
+      <Grid container alignItems="center" wrap="nowrap">
+        <CopyButton copyText={transactionHash} />
+        <RouterLink
+          route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
+          value={transactionHash}
+          textSize="large"
+        />
+      </Grid>
     ),
     [ADDRESS_TRANSACTION_AMOUNT_KEY]: formatNumber(amount, { decimalsLength: 2 }),
   }));

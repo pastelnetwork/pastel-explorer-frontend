@@ -14,6 +14,7 @@ import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 import RouterLink from '@components/RouterLink/RouterLink';
 import Header from '@components/Header/Header';
 import Table, { RowsProps } from '@components/Table/Table';
+import CopyButton from '@components/CopyButton/CopyButton';
 
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -76,10 +77,14 @@ const BlockDetails = () => {
           {
             id: 1,
             value: (
-              <RouterLink
-                route={`${ROUTES.TRANSACTION_DETAILS}/${transaction.id}`}
-                value={transaction.id}
-              />
+              <Grid container alignItems="center" wrap="nowrap">
+                <CopyButton copyText={transaction.id} />
+                <RouterLink
+                  route={`${ROUTES.TRANSACTION_DETAILS}/${transaction.id}`}
+                  value={transaction.id}
+                  textSize="large"
+                />
+              </Grid>
             ),
           },
           { id: 2, value: transaction.recipientCount },

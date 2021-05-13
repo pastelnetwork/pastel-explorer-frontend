@@ -6,6 +6,7 @@ import { Grid } from '@material-ui/core';
 import Header from '@components/Header/Header';
 import RouterLink from '@components/RouterLink/RouterLink';
 import Table, { RowsProps } from '@components/Table/Table';
+import CopyButton from '@components/CopyButton/CopyButton';
 
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
@@ -13,11 +14,11 @@ import * as ROUTES from '@utils/constants/routes';
 import * as URLS from '@utils/constants/urls';
 import { formattedDate } from '@utils/helpers/date/date';
 import { TransactionEvent, DirectionType, ITransactionDetails } from '@utils/types/ITransactions';
+import { ISummary } from '@utils/types/ISummary';
 
 import * as Styles from './TransactionDetails.styles';
 import {
-  inputAddressHeaders,
-  recipientsHeaders,
+  addressHeaders,
   transactionHeaders,
   generateTableTitle,
   generateNonStandardTransactionInfo,
@@ -31,23 +32,37 @@ interface ParamTypes {
 const TransactionDetails = () => {
   const { id } = useParams<ParamTypes>();
   const [transaction, setTransaction] = React.useState<ITransactionDetails | null>(null);
+  const [exchangeRate, setExchangeRate] = React.useState(0);
   const [redirect, setRedirect] = React.useState(false);
   const [openRawDataModal, setOpenRawDataModal] = React.useState(false);
-  const { fetchData } = useFetch<{ data: ITransactionDetails }>({
+  const fetchTransactions = useFetch<{ data: ITransactionDetails }>({
     method: 'get',
     url: `${URLS.TRANSACTION_URL}/${id}`,
   });
+  const fetchSummary = useFetch<ISummary>({ method: 'get', url: URLS.SUMMARY_URL });
 
   const toggleOpenRawData = () => setOpenRawDataModal(prevState => !prevState);
 
-  React.useEffect(() => {
-    fetchData().then(response => {
+  const handleTransactionFetch = () => {
+    fetchTransactions.fetchData().then(response => {
       if (!response?.data) {
         setRedirect(true);
       } else {
         setTransaction(response.data);
       }
     });
+  };
+
+  const handleExchangeRateFetch = () => {
+    fetchSummary.fetchData().then(response => {
+      if (!response) return null;
+      return setExchangeRate(response?.currentStats?.usdPrice || 0);
+    });
+  };
+
+  React.useEffect(() => {
+    handleTransactionFetch();
+    handleExchangeRateFetch();
   }, [id]);
 
   const generateTransactionEvents = (
@@ -64,9 +79,19 @@ const TransactionDetails = () => {
         data: [
           {
             id: 1,
-            value: <RouterLink route={`${ROUTES.ADDRESS_DETAILS}/${address}`} value={address} />,
+            value: (
+              <Grid container alignItems="center" wrap="nowrap">
+                <CopyButton copyText={address} />
+                <RouterLink
+                  route={`${ROUTES.ADDRESS_DETAILS}/${address}`}
+                  value={address}
+                  textSize="large"
+                />
+              </Grid>
+            ),
           },
           { id: 2, value: formatNumber(amount, { decimalsLength: 2 }) },
+          { id: 3, value: formatNumber(amount * exchangeRate, { decimalsLength: 4 }) },
         ],
       };
     });
@@ -86,7 +111,12 @@ const TransactionDetails = () => {
           { id: 1, value: block.confirmations },
           {
             id: 2,
-            value: <RouterLink route={`${ROUTES.BLOCK_DETAILS}/${blockHash}`} value={blockHash} />,
+            value:
+              blockHash !== 'N/A' ? (
+                <RouterLink route={`${ROUTES.BLOCK_DETAILS}/${blockHash}`} value={blockHash} />
+              ) : (
+                '-'
+              ),
           },
           { id: 3, value: formattedDate(timestamp) },
         ],
@@ -121,14 +151,14 @@ const TransactionDetails = () => {
               <Grid item xs={12} lg={6}>
                 <Table
                   title="Input Addresses"
-                  headers={inputAddressHeaders}
+                  headers={addressHeaders}
                   rows={generateTransactionEvents(transaction.transactionEvents, 'Outgoing')}
                 />
               </Grid>
               <Grid item xs={12} lg={6}>
                 <Table
                   title="Recipients"
-                  headers={recipientsHeaders}
+                  headers={addressHeaders}
                   rows={generateTransactionEvents(transaction.transactionEvents, 'Incoming')}
                 />
               </Grid>

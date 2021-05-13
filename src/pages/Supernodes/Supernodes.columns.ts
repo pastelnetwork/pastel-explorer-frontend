@@ -7,21 +7,21 @@ export const SUPERNODE_LAST_PAID_KEY = 'lastPaidTime';
 
 export const columns = [
   {
-    width: 100,
+    width: 80,
     flexGrow: 1,
     label: 'Supernode IP',
     dataKey: SUPERNODE_IP_KEY,
     disableSort: true,
   },
   {
-    width: 40,
+    width: 20,
     flexGrow: 1,
     label: 'Port',
     dataKey: SUPERNODE_PORT_KEY,
     disableSort: true,
   },
   {
-    width: 280,
+    width: 320,
     flexGrow: 1,
     label: 'Address',
     dataKey: SUPERNODE_ADDRESS_KEY,

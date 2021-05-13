@@ -1,4 +1,7 @@
+import { Grid } from '@material-ui/core';
+
 import { HeaderType } from '@components/Table/Table';
+import CopyButton from '@components/CopyButton/CopyButton';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import LinearProgress from '@components/Progress/LinearProgress/LinearProgress';
@@ -34,7 +37,16 @@ export const generateBalanceTable = (list: Array<IRichlist>) => {
       data: [
         { value: rank, id: 1 },
         {
-          value: <RouterLink route={`${ROUTES.ADDRESS_DETAILS}/${address}`} value={address} />,
+          value: (
+            <Grid container alignItems="center" wrap="nowrap">
+              <CopyButton copyText={address} />
+              <RouterLink
+                route={`${ROUTES.ADDRESS_DETAILS}/${address}`}
+                value={address}
+                textSize="large"
+              />
+            </Grid>
+          ),
           id: 2,
         },
         { value: formatNumber(amount, { decimalsLength: 2 }), id: 3 },
