@@ -1,6 +1,5 @@
 import SearchIcon from '@material-ui/icons/Search';
 import CallSplitIcon from '@material-ui/icons/CallSplit';
-import ShareIcon from '@material-ui/icons/Share';
 import WidgetsIcon from '@material-ui/icons/Widgets';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
@@ -10,7 +9,6 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 
 import Explorer from '@pages/Explorer/Explorer';
 import Movement from '@pages/Movement/Movement';
-import Network from '@pages/Network/Network';
 import Richlist from '@pages/Richlist/Richlist';
 import Blocks from '@pages/Blocks/Blocks';
 // Uncomment this when API page will be ready
@@ -42,15 +40,6 @@ const movementRoutes = {
   icon: <CallSplitIcon />,
   component: Movement,
   seoTitle: 'Movement Transactions',
-  children: null,
-};
-
-const networkRoutes = {
-  id: 'Network',
-  path: ROUTES.NETWORK,
-  icon: <ShareIcon />,
-  component: Network,
-  seoTitle: 'Network, Connections',
   children: null,
 };
 
@@ -143,7 +132,6 @@ const addressDetailsRoutes = {
 export const pageRoutes = [
   explorerRoutes,
   movementRoutes,
-  networkRoutes,
   blocksRoutes,
   richlistRoutes,
   supernodesRoutes,
@@ -158,7 +146,6 @@ export const pageRoutes = [
 export const sidebarRoutes = [
   explorerRoutes,
   movementRoutes,
-  networkRoutes,
   blocksRoutes,
   richlistRoutes,
   supernodesRoutes,
