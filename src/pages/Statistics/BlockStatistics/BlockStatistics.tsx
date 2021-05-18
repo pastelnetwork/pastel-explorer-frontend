@@ -42,7 +42,7 @@ const StatisticsBlocks: React.FC = () => {
         const time = format(fromUnixTime(timestamp), 'HH:mm');
 
         acc.labels.push(time);
-        acc.data.push(size / 1000);
+        acc.data.push(size / 1024);
 
         return acc;
       },
