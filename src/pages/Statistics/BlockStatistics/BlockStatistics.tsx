@@ -83,7 +83,7 @@ const StatisticsBlocks: React.FC = () => {
         <Grid item xs={12} lg={6}>
           {chartData && (
             <LineChart
-              title="Block sizes (kb)"
+              title="Block sizes (kB)"
               data={generateBlocksChartData(chartData.labels, chartData.data)}
             />
           )}
