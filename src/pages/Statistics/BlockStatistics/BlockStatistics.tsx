@@ -42,7 +42,7 @@ const StatisticsBlocks: React.FC = () => {
         const time = format(fromUnixTime(timestamp), 'HH:mm');
 
         acc.labels.push(time);
-        acc.data.push(size);
+        acc.data.push(size / 1000);
 
         return acc;
       },
@@ -83,7 +83,7 @@ const StatisticsBlocks: React.FC = () => {
         <Grid item xs={12} lg={6}>
           {chartData && (
             <LineChart
-              title="Block sizes"
+              title="Block sizes (kb)"
               data={generateBlocksChartData(chartData.labels, chartData.data)}
             />
           )}

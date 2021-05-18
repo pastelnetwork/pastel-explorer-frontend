@@ -13,4 +13,5 @@ export const LinearProgress = styled(MuiLinearProgress)`
 export const Typography = styled(MuiTypography)`
   margin-left: 3px;
   font-size: 0.9rem;
+  width: 20px;
 `;

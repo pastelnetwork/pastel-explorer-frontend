@@ -2,13 +2,12 @@ import { Tooltip, Grid } from '@material-ui/core';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import CopyButton from '@components/CopyButton/CopyButton';
+import Hourglass from '@components/Hourglass/Hourglass';
 
 import * as ROUTES from '@utils/constants/routes';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { formattedDate } from '@utils/helpers/date/date';
 import { ITransaction } from '@utils/types/ITransactions';
-
-import hourglassIcon from '@assets/icons/hourglass.svg';
 
 import * as Styles from './LatestTransactions.styles';
 
@@ -29,11 +28,7 @@ const generateBlockKeyValue = (blockHash: string, blockHeight: string) => {
     return <RouterLink route={`${ROUTES.BLOCK_DETAILS}/${blockHash}`} value={blockHeight} />;
   }
 
-  return (
-    <Tooltip title="Transaction is not yet included in any block">
-      <img src={hourglassIcon} alt="hourglass icon" />
-    </Tooltip>
-  );
+  return <Hourglass />;
 };
 
 export const transformTransactionsData = (transactions: Array<ITransaction>) =>

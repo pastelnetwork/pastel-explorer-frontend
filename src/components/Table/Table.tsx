@@ -1,4 +1,4 @@
-import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { Paper, Table, TableBody, TableHead, TableRow } from '@material-ui/core';
 import { CSSProperties } from '@material-ui/styles';
 import { Skeleton } from '@material-ui/lab';
 
@@ -38,7 +38,7 @@ const TableComponent: React.FC<TableComponentProps> = ({ title, headers, rows, s
               {rows.map(({ id, data }) => (
                 <TableRow key={id}>
                   {data.map(dataElement => (
-                    <TableCell key={dataElement.id}>{dataElement.value}</TableCell>
+                    <Styles.RowCell key={dataElement.id}>{dataElement.value}</Styles.RowCell>
                   ))}
                 </TableRow>
               ))}
