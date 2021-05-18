@@ -96,7 +96,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   loadMoreFrom = 0,
   onBottomReach,
   onHeaderClick,
-  rowHeight = 70,
+  rowHeight = 45,
   tableHeight = 500,
   disableLoading,
   renderAllRows,
