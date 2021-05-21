@@ -40,7 +40,7 @@ export const generateTableTitle = (transactionData: ITransactionDetails) => (
 
 export const generateCoinbaseInfo = (info: number) => (
   <Alert severity="info">
-    <AlertTitle>New coins {formatNumber(info, { decimalsLength: 2 })} </AlertTitle>
+    <AlertTitle>New coins ({formatNumber(info, { decimalsLength: 2 })})</AlertTitle>
   </Alert>
 );
 
