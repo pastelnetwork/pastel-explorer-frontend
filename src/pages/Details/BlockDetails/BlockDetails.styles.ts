@@ -8,7 +8,7 @@ export const Typography = styled(MuiTypography)`
 `;
 
 export const Accordion = styled(MuiAccordion)`
-  margin-top: -40px !important;
+  margin-top: -25px !important;
   padding-top: 20px;
 `;
 
