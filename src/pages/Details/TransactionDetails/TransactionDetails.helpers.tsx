@@ -38,6 +38,12 @@ export const generateTableTitle = (transactionData: ITransactionDetails) => (
   </Alert>
 );
 
+export const generateCoinbaseInfo = (info: number) => (
+  <Alert severity="info">
+    <AlertTitle>New coins ({formatNumber(info, { decimalsLength: 2 })})</AlertTitle>
+  </Alert>
+);
+
 export const generateNonStandardTransactionInfo = () => (
   <Grid item xs={12}>
     <Styles.Alert severity="info">

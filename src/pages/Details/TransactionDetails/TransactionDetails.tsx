@@ -22,6 +22,7 @@ import {
   transactionHeaders,
   generateTableTitle,
   generateNonStandardTransactionInfo,
+  generateCoinbaseInfo,
 } from './TransactionDetails.helpers';
 import TransactionRawData from './TransactionRawData';
 
@@ -149,11 +150,15 @@ const TransactionDetails = () => {
           ) : (
             <>
               <Grid item xs={12} lg={6}>
-                <Table
-                  title="Input Addresses"
-                  headers={addressHeaders}
-                  rows={generateTransactionEvents(transaction.transactionEvents, 'Outgoing')}
-                />
+                {transaction.coinbase === 1 ? (
+                  generateCoinbaseInfo(transaction.totalAmount)
+                ) : (
+                  <Table
+                    title="Input Addresses"
+                    headers={addressHeaders}
+                    rows={generateTransactionEvents(transaction.transactionEvents, 'Outgoing')}
+                  />
+                )}
               </Grid>
               <Grid item xs={12} lg={6}>
                 <Table

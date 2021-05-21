@@ -1,3 +1,4 @@
+export const BLOCK_KEY = 'block';
 export const TIMESTAMP_MOVEMENT_KEY = 'timestamp';
 export const TXID_KEY = 'blockHash';
 export const AMOUNT_MOVEMENT_KEY = 'totalAmount';
@@ -9,6 +10,14 @@ export const columns = [
     label: 'Timestamp',
     dataKey: TIMESTAMP_MOVEMENT_KEY,
     disableSort: false,
+  },
+  {
+    width: 30,
+    minWidth: 30,
+    flexGrow: 1,
+    label: 'Block',
+    dataKey: BLOCK_KEY,
+    disableSort: true,
   },
   {
     width: 360,
