@@ -9,7 +9,7 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 
 import * as Styles from './TransactionDetails.styles';
 
-const BLOCK_CONFIRMED_NUMBER = 0;
+const BLOCK_CONFIRMED_NUMBER = 6;
 
 export const transactionHeaders: Array<HeaderType> = [
   { id: 1, header: 'Confirmations' },
@@ -25,7 +25,7 @@ export const addressHeaders: Array<HeaderType> = [
 
 export const generateTableTitle = (transactionData: ITransactionDetails) => (
   <Alert severity="info">
-    <AlertTitle style={{ wordBreak: 'break-word' }}>PSL TXID: {transactionData.id}</AlertTitle>
+    <AlertTitle style={{ wordBreak: 'break-word' }}>PSL ID: {transactionData.id}</AlertTitle>
     {`This transaction was first broadcast to the PSL network on 
       ${formattedDate(transactionData.timestamp)}. 
       The transaction is currently 

@@ -92,7 +92,7 @@ const TransactionDetails = () => {
             ),
           },
           { id: 2, value: formatNumber(amount, { decimalsLength: 2 }) },
-          { id: 3, value: formatNumber(amount * exchangeRate, { decimalsLength: 2 }, '$') },
+          { id: 3, value: formatNumber(amount * exchangeRate, { decimalsLength: 4 }) },
         ],
       };
     });

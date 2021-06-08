@@ -162,7 +162,7 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
                       onClick={() => toggle(index)}
                     />
 
-                    <Collapse in={openRoutes[index] || true} timeout="auto" unmountOnExit>
+                    <Collapse in={openRoutes[index]} timeout="auto" unmountOnExit>
                       {category.children.map((route: RouteChildType) => (
                         <SidebarLink
                           key={route.name}
