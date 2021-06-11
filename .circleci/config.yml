@@ -1,7 +1,3 @@
-# JavaScript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
 version: 2.1
 
 orbs:
@@ -69,6 +65,17 @@ jobs:
           overwrite: true
       - run: aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths /\*
 
+  deploy-staging:
+    executor: node-browser
+    working_directory: /tmp/workspace
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - '71:46:6e:71:40:bd:0e:0c:7e:00:4b:14:ec:60:6e:68'
+      - run:
+          name: Deploy Staging over SSH
+          command: ssh -o "StrictHostKeyChecking no" ubuntu@$STAGING_SERVER_IP "sh /home/ubuntu/pastel-explorer-frontend/restart-app.sh"
+
 workflows:
   version: 2
   main:
@@ -81,35 +88,29 @@ workflows:
                 - master
                 - production
       - build:
-          name: build-stage
-          context: pastel-frontend-stage
-          filters:
-            branches:
-              only:
-                - master
-      - build:
           name: build-production
-          context: pastel-frontend-production
-          filters:
-            branches:
-              only:
-                - production
-
-      - deploy:
-          name: deploy-stage
-          requires:
-            - build-stage
           context: pastel-frontend-stage
           filters:
             branches:
               only:
                 - master
+                - production
       - deploy:
           name: deploy-production
           requires:
             - build-production
-          context: pastel-frontend-production
+          context: pastel-frontend-stage
           filters:
             branches:
               only:
+                - master
                 - production
+      - deploy-staging:
+          name: deploy-staging
+          requires:
+            - build-pr
+          context: pastel-frontend-stage
+          filters:
+            branches:
+              only:
+                - staging
