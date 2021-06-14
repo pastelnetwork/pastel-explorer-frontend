@@ -1,0 +1,46 @@
+import { LabelKeyObject } from 'react-csv/components/CommonPropTypes';
+import { PeriodTypes, TGranularity } from '@utils/helpers/statisticsLib';
+
+export type TThemeColor = {
+  name: string;
+  backgroundColor: string;
+  lineColor?: string;
+  splitLineColor: string;
+  color: string;
+  stack?: string;
+  smooth?: boolean;
+};
+
+export type TThemeInitOption = {
+  theme?: TThemeColor | null;
+  data?: number[][];
+  dataX?: string[];
+  dataY?: number[];
+  dataY1?: number[];
+  dataY2?: number[];
+  chartName: string;
+  minY: number;
+  maxY: number;
+};
+
+export type TLineChartProps = {
+  chartName: string;
+  dataX?: string[];
+  dataY?: number[];
+  dataY1?: number[];
+  dataY2?: number[];
+  title?: string;
+  info: {
+    [key: string]: string | number;
+  };
+  granularities?: TGranularity[];
+  offset: number;
+  periods: PeriodTypes[];
+  handleGranularityFilterChange?: (_granularity: TGranularity) => void;
+  handleBgColorChange: (_color: string) => void;
+  handlePeriodFilterChange?: (_period: PeriodTypes) => void;
+};
+
+export type TCsvHeaderType = {
+  [key: string]: LabelKeyObject[];
+};

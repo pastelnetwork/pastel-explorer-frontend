@@ -22,6 +22,13 @@ import TransactionDetails from '@pages/Details/TransactionDetails/TransactionDet
 import BlockDetails from '@pages/Details/BlockDetails/BlockDetails';
 import AddressDetails from '@pages/Details/AddressDetails/AddressDetails';
 
+// Statistics overview components
+import StatisticsOvertime from '@pages/HistoricalStatistics';
+import DifficultyStatistics from '@pages/HistoricalStatistics/Difficulty';
+import PricesStatistics from '@pages/HistoricalStatistics/Prices';
+import HashRateStatistics from '@pages/HistoricalStatistics/HashRate';
+import TransactionFeeStatistics from '@pages/HistoricalStatistics/TransactionFee';
+
 import * as ROUTES from '@utils/constants/routes';
 
 const explorerRoutes = {
@@ -94,6 +101,51 @@ const statisticsRoutes = {
     },
   ],
 };
+// Statistics overtime routes
+const statisticsOvertimeRoutes = {
+  id: 'Historical Statistics',
+  path: ROUTES.STATISTICS_OVERTIME,
+  component: StatisticsOvertime,
+  icon: <BarChartIcon />,
+  seoTitle: 'Statistics Overtime',
+  children: null,
+};
+
+const difficultyStatisticsRoutes = {
+  id: 'Difficulty Overtime',
+  path: ROUTES.STATISTICS_DIFFICULTY,
+  component: DifficultyStatistics,
+  icon: <BarChartIcon />,
+  seoTitle: 'Difficulty Overtime',
+  children: null,
+};
+
+const pricesStatisticsRoutes = {
+  id: 'PSL Prices Overtime',
+  path: ROUTES.STATISTICS_PSLPRICE,
+  component: PricesStatistics,
+  icon: <BarChartIcon />,
+  seoTitle: 'PSL Prices Overtime',
+  children: null,
+};
+
+const hashRateStatisticsRoutes = {
+  id: 'HashRate Overtime',
+  path: ROUTES.STATISTICS_HASHRATE,
+  component: HashRateStatistics,
+  icon: <BarChartIcon />,
+  seoTitle: 'HashRate Overtime',
+  children: null,
+};
+
+const transactionFeeStatisticsRoutes = {
+  id: 'Transaction Fee Overtime',
+  path: ROUTES.STATISTICS_TRANSACTION_FEE,
+  component: TransactionFeeStatistics,
+  icon: <BarChartIcon />,
+  seoTitle: 'Transaction Fee Overtime',
+  children: null,
+};
 
 // Uncomment this when API page will be ready
 // const infoRoutes = {
@@ -141,6 +193,11 @@ export const pageRoutes = [
   blockDetailsRoutes,
   addressDetailsRoutes,
   statisticsRoutes,
+  statisticsOvertimeRoutes,
+  difficultyStatisticsRoutes,
+  pricesStatisticsRoutes,
+  hashRateStatisticsRoutes,
+  transactionFeeStatisticsRoutes,
 ];
 
 export const sidebarRoutes = [
@@ -150,5 +207,6 @@ export const sidebarRoutes = [
   richlistRoutes,
   supernodesRoutes,
   statisticsRoutes,
+  statisticsOvertimeRoutes,
   // infoRoutes,
 ];

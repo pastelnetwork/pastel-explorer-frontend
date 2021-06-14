@@ -15,3 +15,9 @@ export const ADDRESS_DETAILS = '/address';
 export const STATISTICS_BLOCKS = `${STATISTICS}/blocks`;
 export const STATISTICS_NETWORK = `${STATISTICS}/network`;
 export const STATISTICS_TRANSACTIONS = `${STATISTICS}/transactions`;
+
+export const STATISTICS_OVERTIME = `/historical-statistics`;
+export const STATISTICS_DIFFICULTY = `${STATISTICS_OVERTIME}/difficulty`;
+export const STATISTICS_PSLPRICE = `${STATISTICS_OVERTIME}/price`;
+export const STATISTICS_HASHRATE = `${STATISTICS_OVERTIME}/hashrate`;
+export const STATISTICS_TRANSACTION_FEE = `${STATISTICS_OVERTIME}/transaction-fee`;

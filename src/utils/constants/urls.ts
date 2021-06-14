@@ -12,6 +12,10 @@ export const RICHLIST_URL = 'v1/addresses/rank/100';
 export const NETWORK_URL = 'v1/network';
 export const SUMMARY_URL = 'v1/stats';
 export const HASHRATE_URL = 'v1/block/chart/hashrate';
+export const GET_STATISTICS = 'v1/stats/list';
+export const GET_STATISTICS_PRICE = 'v1/stats/prices-list';
+export const GET_STATISTICS_HASHRATE = 'v1/stats/mining-list';
+export const GET_STATISTICS_RAW_MEM_POOL = 'v1/stats/raw-mem-pool-list';
 
 // External URLS
 export const TWITTER_URL = 'https://twitter.com/pastelnetwork';
