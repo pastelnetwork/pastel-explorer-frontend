@@ -7,21 +7,10 @@ import {
   CHART_DEFAULT_PERIOD,
   periods,
   CHART_THEME_BACKGROUND_DEFAULT_COLOR,
+  info,
 } from '@utils/constants/statistics';
 import { TMiningInfo, TLineChartData } from '@utils/types/IStatistics';
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
-
-const info: any = {
-  connections: 8,
-  currencyName: 'PSL',
-  disconnected: false,
-  latestBlock: 71976,
-  pslPrice: undefined,
-  solps: 2652525,
-  testnet: false,
-  verificationProgress: 0.9999843360337557,
-  version: 1000029,
-};
 
 const redrawCycle = 6000;
 const Difficulty: FC = () => {

@@ -159,12 +159,12 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     if (eChartRef?.ele) {
       htmlToImage
         .toBlob(eChartRef.ele)
-        .then(function (blob: Blob | null) {
+        .then(function getBlob(blob: Blob | null) {
           if (blob) {
             saveAs(blob, `${makeDownloadFileName(info.currencyName, chartName)}.png`);
           }
         })
-        .catch(function (error) {
+        .catch(function getError(error) {
           throw new Error(`PNG download error: ${error}`);
         });
     }

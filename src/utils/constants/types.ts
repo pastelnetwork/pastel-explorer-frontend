@@ -1,5 +1,6 @@
 import { LabelKeyObject } from 'react-csv/components/CommonPropTypes';
 import { PeriodTypes, TGranularity } from '@utils/helpers/statisticsLib';
+import { TStatisticsInfo } from '@utils/types/IStatistics';
 
 export type TThemeColor = {
   name: string;
@@ -30,9 +31,7 @@ export type TLineChartProps = {
   dataY1?: number[];
   dataY2?: number[];
   title?: string;
-  info: {
-    [key: string]: string | number;
-  };
+  info: TStatisticsInfo;
   granularities?: TGranularity[];
   offset: number;
   periods: PeriodTypes[];

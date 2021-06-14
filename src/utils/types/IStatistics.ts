@@ -74,3 +74,15 @@ export type TRawMempool = {
   depends: string;
   timestamp: number;
 };
+
+export type TStatisticsInfo = {
+  connections: number;
+  currencyName: string;
+  disconnected: boolean;
+  latestBlock: number;
+  pslPrice: number | undefined;
+  solps: number;
+  testnet: boolean;
+  verificationProgress: number;
+  version: number;
+};

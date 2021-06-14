@@ -4,6 +4,7 @@ import hashrateImage from '@assets/images/statistics/hashrate.jpg';
 import transactionFeeImage from '@assets/images/statistics/transactionfee.jpg';
 import * as routes from '@utils/constants/routes';
 import { PeriodTypes } from '@utils/helpers/statisticsLib';
+import { TStatisticsInfo } from '@utils/types/IStatistics';
 import { TCsvHeaderType } from './types';
 
 export const statistics = [
@@ -99,3 +100,15 @@ export const periods: PeriodTypes[][] = [
 export const CHART_THEME_BACKGROUND_DEFAULT_COLOR = '#0d0d0d';
 
 export const CHART_DEFAULT_PERIOD = 'all';
+
+export const info: TStatisticsInfo = {
+  connections: 8,
+  currencyName: 'PSL',
+  disconnected: false,
+  latestBlock: 71976,
+  pslPrice: undefined,
+  solps: 2652525,
+  testnet: false,
+  verificationProgress: 0.9999843360337557,
+  version: 1000029,
+};
