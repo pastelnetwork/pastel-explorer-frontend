@@ -65,7 +65,7 @@ jobs:
             - '71:46:6e:71:40:bd:0e:0c:7e:00:4b:14:ec:60:6e:68'
       - run:
           name: Deploy Staging over SSH
-          command: ssh -o "StrictHostKeyChecking no" -r /tmp/workspace/build/* ubuntu@$STAGING_SERVER_IP:~/pastel-explorer-frontend/build
+          command: scp -o "StrictHostKeyChecking no" -r /tmp/workspace/build/* ubuntu@$STAGING_SERVER_IP:~/pastel-explorer-frontend/build
 
 workflows:
   version: 2
