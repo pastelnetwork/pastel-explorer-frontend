@@ -36,7 +36,7 @@ jobs:
           paths:
             - build
 
-  deploy:
+  deploy-production:
     executor: node-browser
     working_directory: /tmp
     steps:
@@ -86,7 +86,7 @@ workflows:
               only:
                 - master
                 - production
-      - deploy:
+      - deploy-production:
           name: deploy-production
           requires:
             - build-production
@@ -100,7 +100,7 @@ workflows:
           name: deploy-staging
           requires:
             - build-pr
-          context: pastel-frontend-stage
+          context: pastel-frontend-staging
           filters:
             branches:
               only:
