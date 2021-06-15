@@ -100,7 +100,7 @@ workflows:
           name: deploy-staging
           requires:
             - build-pr
-          context: pastel-frontend-staging
+          context: explorer-frontend-staging
           filters:
             branches:
               only:
