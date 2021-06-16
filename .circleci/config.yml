@@ -99,6 +99,7 @@ workflows:
                 - production
       - deploy-staging:
           name: deploy-staging
+          context: explorer-frontend-staging
           requires:
             - build-pr
           filters:
