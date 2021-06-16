@@ -73,6 +73,7 @@ workflows:
     jobs:
       - build:
           name: build-pr
+          context: explorer-frontend-staging
           filters:
             branches:
               ignore:
@@ -100,7 +101,6 @@ workflows:
           name: deploy-staging
           requires:
             - build-pr
-          context: explorer-frontend-staging
           filters:
             branches:
               only:
