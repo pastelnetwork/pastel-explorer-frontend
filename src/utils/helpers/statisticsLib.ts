@@ -1,10 +1,9 @@
 import {
   TMultiLineChartData,
-  IPslPrice,
   TMiningInfo,
   TLineChartData,
   TRawMempool,
-  IDifficulty,
+  IStatistic
 } from '@utils/types/IStatistics';
 
 export type PeriodTypes = '2h' | '2d' | '4d' | '30d' | '60d' | '180d' | '1y' | 'all';
@@ -61,43 +60,43 @@ export function getStartPoint(period: PeriodTypes): number {
 }
 
 export function transformDifficultyInfo(
-  difficulties: IDifficulty[],
-  period: PeriodTypes,
+  difficulties: IStatistic[],
+  // period: PeriodTypes,
 ): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
 
-  const startDate = getStartPoint(period);
+  // const startDate = getStartPoint(period);
 
   for (let i = 0; i < difficulties.length; i += 1) {
     if (difficulties[i].timestamp !== null) {
       const createTime = Number(difficulties[i].timestamp);
-      if (createTime > startDate) {
+      // if (createTime > startDate) {
         dataY.push(Number(difficulties[i].difficulty));
         dataX.push(new Date(createTime).toLocaleString());
-      }
+        // }
     }
   }
 
   return { dataX, dataY };
 }
 
-export function transformPriceInfo(prices: IPslPrice[], period: PeriodTypes): TMultiLineChartData {
+export function transformPriceInfo(prices: IStatistic[]): TMultiLineChartData {
   const dataX: string[] = [];
   const dataY1: number[] = [];
   const dataY2: number[] = [];
 
-  const startDate = getStartPoint(period);
+  // const startDate = getStartPoint(period);
 
   for (let i = 0; i < prices.length; i += 1) {
     const createTime = Number(prices[i].timestamp);
-    if (createTime > startDate) {
-      const usd = Number(prices[i].price_usd);
-      const btc = (usd * 167.98) / 8336807;
+     // if (createTime > startDate) {
+      const usd = Number(prices[i].usdPrice);
+      const btc = Number(prices[i].btcPrice);
       dataY1.push(usd);
       dataY2.push(btc);
       dataX.push(new Date(createTime).toLocaleString());
-    }
+      // }
   }
   return { dataX, dataY1, dataY2 };
 }

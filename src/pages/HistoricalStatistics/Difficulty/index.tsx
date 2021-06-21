@@ -9,7 +9,7 @@ import {
   CHART_THEME_BACKGROUND_DEFAULT_COLOR,
   info,
 } from '@utils/constants/statistics';
-import { IDifficulty, TLineChartData } from '@utils/types/IStatistics';
+import { IStatistic, TLineChartData } from '@utils/types/IStatistics';
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
 const redrawCycle = 6000;
@@ -19,17 +19,17 @@ const Difficulty: FC = () => {
   const [currentBgColor, setCurrentBgColor] = useState(CHART_THEME_BACKGROUND_DEFAULT_COLOR);
   const [ticker, setTicker] = useState<NodeJS.Timeout>();
   const [period, setPeriod] = useState<PeriodTypes>(CHART_DEFAULT_PERIOD);
-  const fetchStats = useFetch<{ data: Array<IDifficulty> }>({
+  const fetchStats = useFetch<{ data: Array<IStatistic> }>({
     method: 'get',
     url: URLS.GET_STATISTICS,
   });
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { limit: 50, offset: 0, sortDirection: 'DESC' },
+        params: { sortDirection: 'DESC', period },
       });
       if (data) {
-        const parseData = transformDifficultyInfo(data.data, period);
+        const parseData = transformDifficultyInfo(data.data);
         setChartData(parseData);
       }
     };

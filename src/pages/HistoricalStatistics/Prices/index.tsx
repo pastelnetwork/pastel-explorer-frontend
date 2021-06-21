@@ -9,7 +9,7 @@ import {
   CHART_THEME_BACKGROUND_DEFAULT_COLOR,
   info,
 } from '@utils/constants/statistics';
-import { IPlsPrice, TMultiLineChartData } from '@utils/types/IStatistics';
+import { IStatistic, TMultiLineChartData } from '@utils/types/IStatistics';
 import { EChartsMultiLineChart } from '../Chart/EChartsMultiLineChart';
 
 const redrawCycle = 6000;
@@ -18,9 +18,9 @@ const PriceOvertime = (): JSX.Element => {
   const [currentBgColor, setCurrentBgColor] = useState(CHART_THEME_BACKGROUND_DEFAULT_COLOR);
   const [period, setPeriod] = useState<PeriodTypes>(CHART_DEFAULT_PERIOD);
   const [ticker, setTicker] = useState<NodeJS.Timeout>();
-  const fetchStats = useFetch<{ data: Array<IPlsPrice> }>({
+  const fetchStats = useFetch<{ data: Array<IStatistic> }>({
     method: 'get',
-    url: URLS.GET_STATISTICS_PRICE,
+    url: URLS.GET_STATISTICS,
   });
 
   const [transformLineChartData, setTransformLineChartData] = useState<TMultiLineChartData>();
@@ -28,10 +28,10 @@ const PriceOvertime = (): JSX.Element => {
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { limit: 50, offset: 0, sortDirection: 'DESC' },
+        params: { sortDirection: 'DESC', period },
       });
       if (data) {
-        const parseData = transformPriceInfo(data.data, period);
+        const parseData = transformPriceInfo(data.data);
         setTransformLineChartData(parseData);
       }
     };

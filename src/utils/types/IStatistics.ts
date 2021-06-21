@@ -2,6 +2,20 @@ export interface IHashRateResponse {
   data: [[number, number]];
 }
 
+export interface IStatistic {
+  id: string;
+  difficulty: number;
+  gigaHashPerSec: string;
+  nonZeroAddressesCount: number;
+  avgTransactionsPerSecond: number;
+  coinSupply: number;
+  btcPrice: number;
+  usdPrice: number;
+  marketCapInUSD: number;
+  transactions: number;
+  timestamp: number;
+}
+
 export interface IDifficulty {
   id: string;
   difficulty: number;
