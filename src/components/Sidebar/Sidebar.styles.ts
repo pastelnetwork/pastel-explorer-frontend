@@ -90,6 +90,7 @@ export const Category = styled(ListItem)<CategoryType>`
     width: 20px;
     height: 20px;
     opacity: 0.5;
+    fill: ${props => props.theme.sidebar.text.primary};
   }
 
   &:hover {
@@ -143,13 +144,13 @@ export const Link = styled(ListItem)<{
     background-color: ${props => darken(0.03, props.theme.sidebar.background.default)};
 
     span {
-      color: ${props => props.theme.sidebar.color};
+      color: ${props => props.theme.sidebar.text.primary};
     }
   }
 `;
 
 export const LinkText = styled(ListItemText)`
-  color: ${props => props.theme.sidebar.color};
+  color: ${props => props.theme.sidebar.text.primary};
   span {
     font-size: ${props => props.theme.typography.body1.fontSize}px;
   }
