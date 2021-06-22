@@ -3,7 +3,7 @@ import {
   TMiningInfo,
   TLineChartData,
   TRawMempool,
-  IStatistic
+  IStatistic,
 } from '@utils/types/IStatistics';
 
 export type PeriodTypes = '2h' | '2d' | '4d' | '30d' | '60d' | '180d' | '1y' | 'all';
@@ -72,9 +72,9 @@ export function transformDifficultyInfo(
     if (difficulties[i].timestamp !== null) {
       const createTime = Number(difficulties[i].timestamp);
       // if (createTime > startDate) {
-        dataY.push(Number(difficulties[i].difficulty));
-        dataX.push(new Date(createTime).toLocaleString());
-        // }
+      dataY.push(Number(difficulties[i].difficulty));
+      dataX.push(new Date(createTime).toLocaleString());
+      // }
     }
   }
 
@@ -90,13 +90,13 @@ export function transformPriceInfo(prices: IStatistic[]): TMultiLineChartData {
 
   for (let i = 0; i < prices.length; i += 1) {
     const createTime = Number(prices[i].timestamp);
-     // if (createTime > startDate) {
-      const usd = Number(prices[i].usdPrice);
-      const btc = Number(prices[i].btcPrice);
-      dataY1.push(usd);
-      dataY2.push(btc);
-      dataX.push(new Date(createTime).toLocaleString());
-      // }
+    // if (createTime > startDate) {
+    const usd = Number(prices[i].usdPrice);
+    const btc = Number(prices[i].btcPrice);
+    dataY1.push(usd);
+    dataY2.push(btc);
+    dataX.push(new Date(createTime).toLocaleString());
+    // }
   }
   return { dataX, dataY1, dataY2 };
 }
