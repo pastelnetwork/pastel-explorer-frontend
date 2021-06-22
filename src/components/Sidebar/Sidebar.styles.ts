@@ -7,7 +7,6 @@ import {
   Grid as MuiGrid,
   Box as MuiBox,
   Chip,
-  Collapse,
   Drawer as MuiDrawer,
   List as MuiList,
   ListItem,
@@ -198,6 +197,6 @@ export const SidebarFooter = styled.div`
   border-right: 1px solid rgba(0, 0, 0, 0.12);
 `;
 
-export const CollapseSection = styled(Collapse)`
-  margin-left: 36px
+export const CollapseSection = styled.div`
+  margin-left: 36px;
 `;
