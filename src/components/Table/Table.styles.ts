@@ -8,6 +8,7 @@ export const Card = styled(MuiCard)(spacing);
 
 export const TableWrapper = styled.div`
   overflow-y: auto;
+  background: ${props => props.theme.palette.background.default};
   max-width: calc(100vw - ${props => props.theme.spacing(12)}px);
 `;
 

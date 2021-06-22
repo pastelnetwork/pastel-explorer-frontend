@@ -19,7 +19,7 @@ export const TableWrapper = styled.div`
   .ReactVirtualized__Grid {
     min-width: 1000px;
     width: 100% !important;
-    background-color: ${props => props.theme.palette.background.paper} !important;
+    background-color: ${props => props.theme.palette.background.default} !important;
     &::-webkit-scrollbar-track {
       background: black;
     }
@@ -34,7 +34,7 @@ export const TableWrapper = styled.div`
 
   .ReactVirtualized__Table__row {
     width: 100% !important;
-    background-color: ${props => props.theme.palette.background.paper} !important;
+    background-color: ${props => props.theme.palette.background.default} !important;
     svg {
       color: ${props => props.theme.palette.text.default};
     }
@@ -46,14 +46,14 @@ export const TableWrapper = styled.div`
     transition: all 0.2s ease-in !important;
 
     &:hover {
-      background-color: ${darken(themeVariant.palette.background.paper, 0.5)} !important;
+      background-color: ${darken(themeVariant.palette.background.default, 0.5)} !important;
     }
   }
 `;
 
 export const TableContainer = styled(Paper)`
   position: relative;
-  background: ${props => props.theme.palette.background.paper};
+  background: ${props => props.theme.palette.background.default};
 `;
 
 export const Cell = styled(TableCell)`
