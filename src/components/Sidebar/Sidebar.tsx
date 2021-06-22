@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Box, Grid, Collapse, Drawer, List, IconButton } from '@material-ui/core';
+import { Box, Grid, Drawer, List, IconButton } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import * as ROUTES from '@utils/constants/routes';
@@ -163,7 +163,7 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
                       onClick={() => toggle(index)}
                     />
 
-                    <Collapse in={openRoutes[index] || true} timeout="auto" unmountOnExit>
+                    <Styles.CollapseSection in={openRoutes[index] || true} timeout="auto" unmountOnExit>
                       {category.children.map((route: RouteChildType) => (
                         <SidebarLink
                           key={route.name}
@@ -173,7 +173,7 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
                           badge={route.badge}
                         />
                       ))}
-                    </Collapse>
+                    </Styles.CollapseSection>
                   </React.Fragment>
                 ) : (
                   generateCategoryIcon(category)
