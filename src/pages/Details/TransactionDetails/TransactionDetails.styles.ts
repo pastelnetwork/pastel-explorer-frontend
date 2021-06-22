@@ -30,5 +30,5 @@ export const TransactionRawData = styled.pre`
 `;
 
 export const TransactionRawDataToolbar = styled(Toolbar)`
-  background-color: ${props => props.theme.sidebar.background};
+  background-color: ${props => props.theme.sidebar.background.default};
 `;

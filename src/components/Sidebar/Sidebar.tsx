@@ -2,14 +2,15 @@ import * as React from 'react';
 import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Box, Grid, Collapse, Drawer, List, IconButton } from '@material-ui/core';
-
+import { useSelector } from 'react-redux';
+import { getThemeState } from '@redux/reducers/appThemeReducer';
 import * as ROUTES from '@utils/constants/routes';
 import { RouteType, RouteChildType } from '@utils/types/routes';
 
 import { sidebarRoutes as routes } from '@routes/index';
 
-import PastelLogo from '@assets/images/pastel-logo-white.png';
-
+import PastelLogoWhite from '@assets/images/pastel-logo-white.png';
+import PastelLogo from '@assets/images/pastel-logo.png';
 import { footerIcons } from './SideBar.helpers';
 import * as Styles from './Sidebar.styles';
 
@@ -134,12 +135,12 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
   };
 
   const { PaperProps, open, onClose, variant } = rest;
-
+  const isDarkMode = useSelector(getThemeState).darkMode;
   return (
     <Drawer variant={variant || 'permanent'} PaperProps={PaperProps} open={open} onClose={onClose}>
       <Styles.Brand component={NavLink} to={ROUTES.EXPLORER} button>
         <Box ml={1}>
-          <Styles.BrandLogo src={PastelLogo} alt="Pastel Logo" />
+          <Styles.BrandLogo src={isDarkMode ? PastelLogoWhite : PastelLogo} alt="Pastel Logo" />
         </Box>
       </Styles.Brand>
       <Styles.Scrollbar>
@@ -162,7 +163,7 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
                       onClick={() => toggle(index)}
                     />
 
-                    <Collapse in={openRoutes[index] || true} timeout="auto" unmountOnExit>
+                    <Collapse in={openRoutes[index]} timeout="auto" unmountOnExit>
                       {category.children.map((route: RouteChildType) => (
                         <SidebarLink
                           key={route.name}

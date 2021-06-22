@@ -15,7 +15,6 @@ export interface IStatistic {
   transactions: number;
   timestamp: number;
 }
-
 export interface IDifficulty {
   id: string;
   difficulty: number;

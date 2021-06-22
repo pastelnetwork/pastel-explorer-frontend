@@ -19,6 +19,13 @@ export const TableWrapper = styled.div`
   .ReactVirtualized__Grid {
     min-width: 1000px;
     width: 100% !important;
+    background-color: ${props => props.theme.palette.background.paper} !important;
+    &::-webkit-scrollbar-track {
+      background: black;
+    }
+    &::-webkit-scrollbar-track {
+      background: grey;
+    }
   }
 
   .ReactVirtualized__Grid__innerScrollContainer {
@@ -27,6 +34,10 @@ export const TableWrapper = styled.div`
 
   .ReactVirtualized__Table__row {
     width: 100% !important;
+    background-color: ${props => props.theme.palette.background.paper} !important;
+    svg {
+      color: ${props => props.theme.palette.text.default};
+    }
   }
 
   .ReactVirtualized__Table__headerRow,
@@ -35,13 +46,14 @@ export const TableWrapper = styled.div`
     transition: all 0.2s ease-in !important;
 
     &:hover {
-      background-color: ${darken(themeVariant.palette.background.paper, 0.1)} !important;
+      background-color: ${darken(themeVariant.palette.background.paper, 0.5)} !important;
     }
   }
 `;
 
 export const TableContainer = styled(Paper)`
   position: relative;
+  background: ${props => props.theme.palette.background.paper};
 `;
 
 export const Cell = styled(TableCell)`

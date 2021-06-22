@@ -17,9 +17,10 @@ import MuiAutocomplete from '@material-ui/lab/Autocomplete';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { ISearchResponse } from '@utils/types/ISearch';
-
+import ChooseCluster from '@components/ChooseCluster/ChooseCluster';
 import RouterLink from '@components/RouterLink/RouterLink';
 
+import SwitchMode from './SwitchMode';
 import * as Styles from './SearchBar.styles';
 import {
   ADDRESSES_LABEL,
@@ -152,6 +153,8 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
             />
           </Styles.AutocompleteWrapper>
         </Grid>
+        <SwitchMode />
+        <ChooseCluster />
       </Toolbar>
     </Styles.AppBar>
   );

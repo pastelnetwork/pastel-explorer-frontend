@@ -5,13 +5,11 @@ export const formatNumber = (
     currency: 'en-US',
     divideToAmount: false,
   },
-  prefix = '',
 ) => {
   const totalToNumber = Number(total);
   const value = options.divideToAmount ? totalToNumber / 100000000 : totalToNumber;
-  const valueString = value.toLocaleString(options.currency, {
+  return value.toLocaleString(options.currency, {
     minimumFractionDigits: options.decimalsLength,
     maximumFractionDigits: options.decimalsLength,
   });
-  return `${prefix}${valueString}`;
 };
