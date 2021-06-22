@@ -26,7 +26,7 @@ const Difficulty: FC = () => {
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { limit: 50, offset: 0, sortDirection: 'DESC' },
+        params: { period, sortDirection: 'DESC' },
       });
       if (data) {
         const parseData = transformHashrateInfo(data.data, period);
