@@ -4,6 +4,7 @@ import {
   TLineChartData,
   TRawMempool,
   IStatistic,
+  TMempoolInfo,
 } from '@utils/types/IStatistics';
 
 export type PeriodTypes = '2h' | '2d' | '4d' | '30d' | '60d' | '180d' | '1y' | 'all';
@@ -139,6 +140,20 @@ export function transformTransactionFee(
         dataY.push(Number(transactionFees[i].fee));
         dataX.push(new Date(createTime).toLocaleString());
       }
+    }
+  }
+  return { dataX, dataY };
+}
+
+export function transformMempoolInfo(mempoolInfo: TMempoolInfo[]): TLineChartData {
+  const dataX: string[] = [];
+  const dataY: number[] = [];
+  for (let i = 0; i < mempoolInfo.length; i += 1) {
+    if (mempoolInfo[i].usage !== null && mempoolInfo[i].timestamp !== 0) {
+      const createTime = Number(mempoolInfo[i].timestamp);
+      const bytes = Number(mempoolInfo[i].usage) / 1000;
+      dataY.push(bytes);
+      dataX.push(new Date(createTime).toLocaleString());
     }
   }
   return { dataX, dataY };

@@ -29,6 +29,7 @@ import DifficultyStatistics from '@pages/HistoricalStatistics/Difficulty';
 import PricesStatistics from '@pages/HistoricalStatistics/Prices';
 import HashRateStatistics from '@pages/HistoricalStatistics/HashRate';
 import TransactionFeeStatistics from '@pages/HistoricalStatistics/TransactionFee';
+import MempoolSize from '@pages/HistoricalStatistics/MempoolSize';
 
 import * as ROUTES from '@utils/constants/routes';
 
@@ -158,6 +159,15 @@ const transactionFeeStatisticsRoutes = {
   children: null,
 };
 
+const mempoolSizeStatisticsRoutes = {
+  id: 'Mempool Size',
+  path: ROUTES.STATISTICS_MEMPOOL_SIZE,
+  component: MempoolSize,
+  icon: <BarChartIcon />,
+  seoTitle: 'Mempool Size',
+  children: null,
+};
+
 // Uncomment this when API page will be ready
 // const infoRoutes = {
 //   id: 'API',
@@ -209,6 +219,7 @@ export const pageRoutes = [
   pricesStatisticsRoutes,
   hashRateStatisticsRoutes,
   transactionFeeStatisticsRoutes,
+  mempoolSizeStatisticsRoutes,
 ];
 
 export const sidebarRoutes = [

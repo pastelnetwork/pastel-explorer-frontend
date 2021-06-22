@@ -16,7 +16,7 @@ export const GET_STATISTICS = 'v1/stats/list';
 export const GET_STATISTICS_PRICE = 'v1/stats/prices-list';
 export const GET_STATISTICS_HASHRATE = 'v1/stats/mining-list';
 export const GET_STATISTICS_RAW_MEM_POOL = 'v1/stats/raw-mempool-list';
-
+export const GET_STATISTICS_MEMPOOL_INFO = 'v1/stats/mempool-info-list';
 // External URLS
 export const TWITTER_URL = 'https://twitter.com/pastelnetwork';
 export const TELEGRAM_URL = 'https://t.me/PastelNetwork';

@@ -2,6 +2,7 @@ import difficultyImage from '@assets/images/statistics/difficulty.jpg';
 import priceImage from '@assets/images/statistics/pslprice.jpg';
 import hashrateImage from '@assets/images/statistics/hashrate.jpg';
 import transactionFeeImage from '@assets/images/statistics/transactionfee.jpg';
+import mempoolSizeImage from '@assets/images/statistics/mempoolsize.jpg';
 import * as routes from '@utils/constants/routes';
 import { PeriodTypes } from '@utils/helpers/statisticsLib';
 import { TStatisticsInfo } from '@utils/types/IStatistics';
@@ -31,6 +32,12 @@ export const statistics = [
     title: 'Transaction Fee',
     url: routes.STATISTICS_TRANSACTION_FEE,
     image: transactionFeeImage,
+  },
+  {
+    id: 'mempoolsize',
+    title: 'Mempool Size',
+    url: routes.STATISTICS_MEMPOOL_SIZE,
+    image: mempoolSizeImage,
   },
 ];
 

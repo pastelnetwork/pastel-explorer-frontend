@@ -99,3 +99,11 @@ export type TStatisticsInfo = {
   verificationProgress: number;
   version: number;
 };
+
+export type TMempoolInfo = {
+  id: string;
+  size: number;
+  bytes: number;
+  usage: number;
+  timestamp: number;
+};

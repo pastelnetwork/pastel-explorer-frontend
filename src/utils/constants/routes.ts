@@ -21,3 +21,4 @@ export const STATISTICS_DIFFICULTY = `${STATISTICS_OVERTIME}/difficulty`;
 export const STATISTICS_PSLPRICE = `${STATISTICS_OVERTIME}/price`;
 export const STATISTICS_HASHRATE = `${STATISTICS_OVERTIME}/hashrate`;
 export const STATISTICS_TRANSACTION_FEE = `${STATISTICS_OVERTIME}/transaction-fee`;
+export const STATISTICS_MEMPOOL_SIZE = `${STATISTICS_OVERTIME}/mempool-size`;
