@@ -15,6 +15,9 @@ import { CardHeader, CircularProgress } from '@material-ui/core';
 import { ArrowDropDown, ArrowDropUp } from '@material-ui/icons';
 import { Skeleton } from '@material-ui/lab';
 
+import { TFilter } from '@utils/types/IFilter';
+import Filters from './Filters';
+
 // import themeVariant from '@theme/variants';
 
 import * as Styles from './InfinityTable.styles';
@@ -26,6 +29,8 @@ export type SortDirectionsType = 'ASC' | 'DESC';
 export interface ISortData {
   sortBy: string;
   sortDirection: SortDirectionsType;
+  filterBy?: string;
+  filterValue?: string;
 }
 
 export interface RowsProps {
@@ -41,6 +46,7 @@ interface IInfinityTableComponentProps {
     dataKey: string;
     disableSort: boolean;
   }>;
+  filters?: TFilter[];
   rows: Array<RowsProps>;
   sortBy?: string;
   sortDirection?: SortDirectionsType;
@@ -92,6 +98,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   rows,
   columns,
   sortBy,
+  filters,
   sortDirection,
   loadMoreFrom = 0,
   onBottomReach,
@@ -102,7 +109,6 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   renderAllRows,
 }) => {
   const [loading, setLoading] = React.useState(false);
-
   const handleReachBottom = _debounce(
     ({ clientHeight, scrollHeight, scrollTop }: ScrollEventData) => {
       if (!onBottomReach || rows.length < loadMoreFrom) return null;
@@ -140,7 +146,9 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
 
   return (
     <Styles.Card mb={3}>
-      {title && <CardHeader title={title} />}
+      {title && (
+        <CardHeader title={!filters ? title : <Filters filters={filters} title={title} />} />
+      )}
       <Styles.TableContainer>
         {loading && (
           <Styles.Loader>

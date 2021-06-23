@@ -110,3 +110,5 @@ export const themeDark = createMuiTheme(
 );
 
 export default createTheme;
+
+export type TAppTheme = typeof themeDark;

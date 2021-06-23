@@ -5,3 +5,6 @@ export const SET_API_HOSTING = 'SET_API_HOSTING';
 
 // App Theme Types
 export const SET_APP_THEME = 'SET_APP_THEME';
+
+// Filter types
+export const SET_FILTER_VALUE = 'SET_FILTER_VALUE';

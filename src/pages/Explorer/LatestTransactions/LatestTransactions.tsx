@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 
 import InfinityTable, {
   RowsProps,
@@ -8,7 +9,8 @@ import InfinityTable, {
 
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-
+import { defaultFilters } from '@utils/constants/filter';
+import { getFilterState } from '@redux/reducers/filterReducer';
 import { ITransaction } from '@utils/types/ITransactions';
 
 import { BLOCK_KEY, columns, TIMESTAMP_KEY } from './LatestTransactions.columns';
@@ -31,6 +33,7 @@ const LatestTransactions: React.FC = () => {
     sortBy: TIMESTAMP_KEY,
     sortDirection: DATA_DEFAULT_SORT,
   });
+  const filter = useSelector(getFilterState);
   const [transactionList, setTransactionList] = React.useState<Array<RowsProps>>([]);
   const fetchTransactions = useFetch<{ data: Array<ITransaction> }>({
     method: 'get',
@@ -42,6 +45,8 @@ const LatestTransactions: React.FC = () => {
     sortBy: string,
     sortDirection: SortDirectionsType,
     replaceData = false,
+    filterBy = 'dateRange',
+    filterValue = filter.dateRange || '',
   ) => {
     fetchParams.current.sortBy = sortBy;
     const limit = DATA_FETCH_LIMIT;
@@ -49,9 +54,17 @@ const LatestTransactions: React.FC = () => {
     // In this situation if user will click on block column we need to sort by timestamp
     const fetchSortBy =
       fetchParams.current.sortBy === BLOCK_KEY ? TIMESTAMP_KEY : fetchParams.current.sortBy;
-
+    const params: Record<string, string | number> = {
+      offset,
+      limit,
+      sortBy: fetchSortBy,
+      sortDirection,
+    };
+    if (filterBy && filterValue && filterValue !== 'ALL') {
+      params[filterBy] = filterValue;
+    }
     return fetchTransactions
-      .fetchData({ params: { offset, limit, sortBy: fetchSortBy, sortDirection } })
+      .fetchData({ params })
       .then(response => (response ? transformTransactionsData(response.data) : []))
       .then(data =>
         replaceData
@@ -72,25 +85,38 @@ const LatestTransactions: React.FC = () => {
     );
   };
 
-  const handleSort = ({ sortBy, sortDirection }: ISortData) => {
+  const handleSort = ({ sortBy, sortDirection, filterBy, filterValue }: ISortData) => {
     fetchParams.current.offset = DATA_OFFSET;
     fetchParams.current.sortDirection = sortDirection;
-
+    const sortByValue = sortBy || fetchParams.current.sortBy;
     return handleFetchTransactions(
       fetchParams.current.offset,
-      sortBy,
+      sortByValue,
       fetchParams.current.sortDirection,
       true,
+      filterBy,
+      filterValue,
     );
   };
 
   React.useEffect(() => {
-    handleFetchTransactions(
-      fetchParams.current.offset,
-      fetchParams.current.sortBy,
-      fetchParams.current.sortDirection,
-    );
-  }, []);
+    if (filter.dateRange) {
+      handleFetchTransactions(
+        fetchParams.current.offset,
+        fetchParams.current.sortBy,
+        fetchParams.current.sortDirection,
+        true,
+        'dateRange',
+        filter.dateRange,
+      );
+    } else {
+      handleFetchTransactions(
+        fetchParams.current.offset,
+        fetchParams.current.sortBy,
+        fetchParams.current.sortDirection,
+      );
+    }
+  }, [filter.dateRange]);
 
   return (
     <InfinityTable
@@ -99,6 +125,7 @@ const LatestTransactions: React.FC = () => {
       rows={transactionList}
       columns={columns}
       tableHeight={650}
+      filters={defaultFilters}
       title="Latest Transactions"
       onBottomReach={handleFetchMoreTransactions}
       onHeaderClick={handleSort}

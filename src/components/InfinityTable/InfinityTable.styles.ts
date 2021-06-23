@@ -5,26 +5,52 @@ import { spacing } from '@material-ui/system';
 
 import themeVariant from '@theme/variants';
 
-export const Card = styled(MuiCard)(spacing);
+const StyledCard = styled(MuiCard)`
+  background-color: ${props => props.theme.palette.background.paper} !important;
+  padding: 0 ${props => props.theme.spacing(9)}px;
+  padding-bottom: 32px !important;
+  @media (max-width: 960px) {
+    padding: 0 ${props => props.theme.spacing(2)}px;
+    padding-bottom: 8px !important;
+  }
+`;
+
+export const Card = styled(StyledCard)(spacing);
 
 export const TableWrapper = styled.div`
   overflow-y: auto;
   max-width: calc(100vw - ${props => props.theme.spacing(12)}px);
+  background-color: ${props => props.theme.palette.background.default} !important;
+  border-radius: 16px;
 
   * {
     outline: 0;
   }
-
   .ReactVirtualized__Table__headerRow,
   .ReactVirtualized__Grid {
     min-width: 1000px;
     width: 100% !important;
     background-color: ${props => props.theme.palette.background.default} !important;
-    &::-webkit-scrollbar-track {
-      background: black;
+    /* width */
+    ::-webkit-scrollbar {
+      width: 5px;
     }
-    &::-webkit-scrollbar-track {
-      background: grey;
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 5px grey;
+      border-radius: 10px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: red;
+      border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #b30000;
     }
   }
 
@@ -36,7 +62,7 @@ export const TableWrapper = styled.div`
     width: 100% !important;
     background-color: ${props => props.theme.palette.background.default} !important;
     svg {
-      color: ${props => props.theme.palette.text.default};
+      fill: ${props => props.theme.palette.text.default};
     }
   }
 
