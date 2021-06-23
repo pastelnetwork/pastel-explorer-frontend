@@ -31,26 +31,11 @@ export const TableWrapper = styled.div`
     min-width: 1000px;
     width: 100% !important;
     background-color: ${props => props.theme.palette.background.default} !important;
-    /* width */
-    ::-webkit-scrollbar {
-      width: 5px;
+    &::-webkit-scrollbar-track {
+      background: black;
     }
-
-    /* Track */
-    ::-webkit-scrollbar-track {
-      box-shadow: inset 0 0 5px grey;
-      border-radius: 10px;
-    }
-
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-      background: red;
-      border-radius: 10px;
-    }
-
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-      background: #b30000;
+    &::-webkit-scrollbar-track {
+      background: grey;
     }
   }
 
