@@ -197,7 +197,3 @@ export const SidebarFooter = styled.div`
   padding: 4px ${props => props.theme.spacing(4)}px;
   border-right: 1px solid rgba(0, 0, 0, 0.12);
 `;
-
-export const CollapseSection = styled.div`
-  margin-left: 36px;
-`;

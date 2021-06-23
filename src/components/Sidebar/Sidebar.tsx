@@ -162,19 +162,17 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
                       button
                       onClick={() => toggle(index)}
                     />
-                    <Styles.CollapseSection>
-                      <Collapse in={openRoutes[index] || true} timeout="auto" unmountOnExit>
-                        {category.children.map((route: RouteChildType) => (
-                          <SidebarLink
-                            key={route.name}
-                            name={route.name}
-                            to={route.path}
-                            icon={route.icon}
-                            badge={route.badge}
-                          />
-                        ))}
-                      </Collapse>
-                    </Styles.CollapseSection>
+                    <Collapse in={openRoutes[index] || true} timeout="auto" unmountOnExit>
+                      {category.children.map((route: RouteChildType) => (
+                        <SidebarLink
+                          key={route.name}
+                          name={route.name}
+                          to={route.path}
+                          icon={route.icon}
+                          badge={route.badge}
+                        />
+                      ))}
+                    </Collapse>
                   </React.Fragment>
                 ) : (
                   generateCategoryIcon(category)
