@@ -89,6 +89,7 @@ export const Category = styled(ListItem)<CategoryType>`
     font-size: 1.25rem;
     width: 20px;
     height: 20px;
+    opacity: 0.5;
     fill: ${props => props.theme.sidebar.text.primary};
   }
 
@@ -128,7 +129,7 @@ export const Link = styled(ListItem)<{
   exact: boolean;
   to: string;
 }>`
-  padding-left: ${props => props.theme.spacing(4)}px;
+  padding-left: ${props => props.theme.spacing(13)}px;
   padding-top: ${props => props.theme.spacing(2)}px;
   padding-bottom: ${props => props.theme.spacing(2)}px;
   &:hover span {
@@ -195,8 +196,4 @@ export const SidebarFooter = styled.div`
   background-color: ${props => props.theme.sidebar.footer.background} !important;
   padding: 4px ${props => props.theme.spacing(4)}px;
   border-right: 1px solid rgba(0, 0, 0, 0.12);
-`;
-
-export const CollapseSection = styled.div`
-  margin-left: 36px;
 `;

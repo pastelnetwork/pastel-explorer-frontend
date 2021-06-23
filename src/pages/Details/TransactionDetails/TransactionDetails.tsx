@@ -15,6 +15,7 @@ import * as URLS from '@utils/constants/urls';
 import { formattedDate } from '@utils/helpers/date/date';
 import { TransactionEvent, DirectionType, ITransactionDetails } from '@utils/types/ITransactions';
 import { ISummary } from '@utils/types/ISummary';
+import { useSortData } from '@utils/hooks';
 
 import * as Styles from './TransactionDetails.styles';
 import {
@@ -40,10 +41,13 @@ const TransactionDetails = () => {
     method: 'get',
     url: `${URLS.TRANSACTION_URL}/${id}`,
   });
+
   const fetchSummary = useFetch<ISummary>({ method: 'get', url: URLS.SUMMARY_URL });
 
   const toggleOpenRawData = () => setOpenRawDataModal(prevState => !prevState);
-
+  const [transactionEvents, handleClickSort] = useSortData<TransactionEvent>({
+    inititalData: transaction?.transactionEvents || null,
+  });
   const handleTransactionFetch = () => {
     fetchTransactions.fetchData().then(response => {
       if (!response?.data) {
@@ -53,7 +57,6 @@ const TransactionDetails = () => {
       }
     });
   };
-
   const handleExchangeRateFetch = () => {
     fetchSummary.fetchData().then(response => {
       if (!response) return null;
@@ -67,9 +70,12 @@ const TransactionDetails = () => {
   }, [id]);
 
   const generateTransactionEvents = (
-    events: TransactionEvent[],
+    events: TransactionEvent[] | null,
     type: DirectionType,
   ): RowsProps[] => {
+    if (!events) {
+      return [];
+    }
     const typeTransactionEvents = events.filter(
       transactionEvent => transactionEvent.direction === type,
     );
@@ -156,7 +162,8 @@ const TransactionDetails = () => {
                   <Table
                     title="Input Addresses"
                     headers={addressHeaders}
-                    rows={generateTransactionEvents(transaction.transactionEvents, 'Outgoing')}
+                    handleClickSort={handleClickSort}
+                    rows={generateTransactionEvents(transactionEvents, 'Outgoing')}
                   />
                 )}
               </Grid>
@@ -164,7 +171,8 @@ const TransactionDetails = () => {
                 <Table
                   title="Recipients"
                   headers={addressHeaders}
-                  rows={generateTransactionEvents(transaction.transactionEvents, 'Incoming')}
+                  rows={generateTransactionEvents(transactionEvents, 'Incoming')}
+                  handleClickSort={handleClickSort}
                 />
               </Grid>
             </>

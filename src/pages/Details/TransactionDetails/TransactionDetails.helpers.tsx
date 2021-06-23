@@ -18,9 +18,9 @@ export const transactionHeaders: Array<HeaderType> = [
 ];
 
 export const addressHeaders: Array<HeaderType> = [
-  { id: 1, header: 'Address' },
-  { id: 2, header: 'Amount (PSL)' },
-  { id: 3, header: 'Amount (USD)' },
+  { id: 1, header: 'Address', key: 'address' },
+  { id: 2, header: 'Amount (PSL)', key: 'amount' },
+  { id: 3, header: 'Amount (USD)', key: 'amount' },
 ];
 
 export const generateTableTitle = (transactionData: ITransactionDetails) => (

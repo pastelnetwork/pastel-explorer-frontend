@@ -12,9 +12,9 @@ export const blockHeaders: Array<HeaderType> = [
 ];
 
 export const transactionHeaders: Array<HeaderType> = [
-  { id: 1, header: 'Hash' },
-  { id: 2, header: 'Recipients' },
-  { id: 3, header: 'Amount (PSL)' },
+  { id: 1, header: 'Hash', key: 'id' },
+  { id: 2, header: 'Recipients', key: 'recipientCount' },
+  { id: 3, header: 'Amount (PSL)', key: 'totalAmount' },
 ];
 
 export const generateDetailsElement = (name: string, value: string) => (

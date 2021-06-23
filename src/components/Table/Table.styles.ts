@@ -18,6 +18,7 @@ export const TableCardHeader = styled(CardHeader)`
 
 export const TableCell = styled(MuiTableCell)`
   font-weight: 700;
+  cursor: pointer;
 `;
 
 export const RowCell = styled(MuiTableCell)`
