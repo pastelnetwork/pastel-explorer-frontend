@@ -60,11 +60,12 @@ const Filters: FC<IProps> = ({ title, filters }) => {
     setAnchorEl((prev: MenuProps['anchorEl'] | null) => (prev ? null : event.currentTarget));
   }, []);
   const { dateRange } = useSelector(getFilterState);
-  const time: string = dateRange || '1d';
+  const time: string = dateRange || 'all';
 
   const handleSelectTime = useCallback((event: MouseEvent<HTMLButtonElement>) => {
     const { value } = event.currentTarget;
     dispatch(setFilterValueAction({ dateRange: value }));
+    setAnchorEl(null);
   }, []);
   useEffect(() => {
     return () => {
