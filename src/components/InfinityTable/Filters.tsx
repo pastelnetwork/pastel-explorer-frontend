@@ -1,4 +1,4 @@
-import { memo, FC, useState, useCallback, MouseEvent } from 'react';
+import { memo, FC, useState, useCallback, MouseEvent, useEffect } from 'react';
 import makeStyles from '@material-ui/styles/makeStyles';
 import Button from '@material-ui/core/Button';
 import Menu, { MenuProps } from '@material-ui/core/Menu';
@@ -60,12 +60,17 @@ const Filters: FC<IProps> = ({ title, filters }) => {
     setAnchorEl((prev: MenuProps['anchorEl'] | null) => (prev ? null : event.currentTarget));
   }, []);
   const { dateRange } = useSelector(getFilterState);
-  const time: string = dateRange || 'ALL';
+  const time: string = dateRange || '1d';
 
   const handleSelectTime = useCallback((event: MouseEvent<HTMLButtonElement>) => {
     const { value } = event.currentTarget;
     dispatch(setFilterValueAction({ dateRange: value }));
   }, []);
+  useEffect(() => {
+    return () => {
+      dispatch(setFilterValueAction({ dateRange: 'all' }));
+    };
+  }, [dispatch]);
   return (
     <div className={classes.root}>
       <span>{title}</span>

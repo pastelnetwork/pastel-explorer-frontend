@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Grid } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
 import Header from '@components/Header/Header';
 import InfinityTable, {
@@ -7,6 +8,8 @@ import InfinityTable, {
   SortDirectionsType,
   ISortData,
 } from '@components/InfinityTable/InfinityTable';
+import { defaultFilters } from '@utils/constants/filter';
+import { getFilterState } from '@redux/reducers/filterReducer';
 
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
@@ -32,6 +35,8 @@ const Movement: React.FC = () => {
     sortBy: TIMESTAMP_MOVEMENT_KEY,
     sortDirection: DATA_DEFAULT_SORT,
   });
+  const filter = useSelector(getFilterState);
+
   const [movementList, setMovementList] = React.useState<Array<RowsProps>>([]);
   const fetchMovementsData = useFetch<{ data: Array<ITransaction> }>({
     method: 'get',
@@ -43,12 +48,23 @@ const Movement: React.FC = () => {
     sortBy: string,
     sortDirection: SortDirectionsType,
     replaceData = false,
+    filterBy = 'period',
+    filterValue = filter.dateRange || '',
   ) => {
     fetchParams.current.sortBy = sortBy;
     const limit = DATA_FETCH_LIMIT;
-
+    const params: Record<string, string | number> = {
+      offset,
+      limit,
+      sortBy,
+      sortDirection,
+      period: '1d',
+    };
+    if (filterValue && filterValue !== '1d') {
+      params[filterBy] = filterValue;
+    }
     return fetchMovementsData
-      .fetchData({ params: { offset, limit, sortBy, sortDirection } })
+      .fetchData({ params })
       .then(response => (response ? transformMovementData(response.data) : []))
       .then(data =>
         replaceData ? setMovementList(data) : setMovementList(prevState => [...prevState, ...data]),
@@ -80,11 +96,22 @@ const Movement: React.FC = () => {
   };
 
   React.useEffect(() => {
-    handleFetchMovements(
-      fetchParams.current.offset,
-      fetchParams.current.sortBy,
-      fetchParams.current.sortDirection,
-    );
+    if (filter.dateRange) {
+      handleFetchMovements(
+        fetchParams.current.offset,
+        fetchParams.current.sortBy,
+        fetchParams.current.sortDirection,
+        true,
+        'period',
+        filter.dateRange,
+      );
+    } else {
+      handleFetchMovements(
+        fetchParams.current.offset,
+        fetchParams.current.sortBy,
+        fetchParams.current.sortDirection,
+      );
+    }
   }, []);
 
   return (
@@ -97,6 +124,8 @@ const Movement: React.FC = () => {
           rows={movementList}
           columns={columns}
           tableHeight={950}
+          title="   "
+          filters={defaultFilters}
           onBottomReach={handleFetchMoreMovements}
           onHeaderClick={handleSort}
         />

@@ -45,7 +45,7 @@ const LatestTransactions: React.FC = () => {
     sortBy: string,
     sortDirection: SortDirectionsType,
     replaceData = false,
-    filterBy = 'dateRange',
+    filterBy = 'period',
     filterValue = filter.dateRange || '',
   ) => {
     fetchParams.current.sortBy = sortBy;
@@ -59,8 +59,9 @@ const LatestTransactions: React.FC = () => {
       limit,
       sortBy: fetchSortBy,
       sortDirection,
+      period: '1d',
     };
-    if (filterBy && filterValue && filterValue !== 'ALL') {
+    if (filterValue && filterValue !== '1d') {
       params[filterBy] = filterValue;
     }
     return fetchTransactions
@@ -106,7 +107,7 @@ const LatestTransactions: React.FC = () => {
         fetchParams.current.sortBy,
         fetchParams.current.sortDirection,
         true,
-        'dateRange',
+        'period',
         filter.dateRange,
       );
     } else {

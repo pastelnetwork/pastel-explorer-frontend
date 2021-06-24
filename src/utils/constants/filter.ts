@@ -1,22 +1,45 @@
 export const defaultFilters = [
   {
     name: '24H',
-    value: '24h',
+    value: '1d',
   },
   {
     name: '1W',
-    value: '1_WEEK',
+    value: '7d',
   },
   {
     name: '1M',
-    value: '1_MONTH',
+    value: '30d',
+  },
+  // {
+  //   name: '2M',
+  //   value: '60d',
+  // },
+  // {
+  //   name: '6M',
+  //   value: '18d',
+  // },
+];
+
+export const blocksFilters = [
+  {
+    name: '24H',
+    value: '1d',
   },
   {
-    name: '3M',
-    value: '3_MONTH',
+    name: '1W',
+    value: '7d',
   },
   {
-    name: 'ALL',
-    value: 'ALL',
+    name: '1M',
+    value: '30d',
+  },
+  {
+    name: '2M',
+    value: '60d',
+  },
+  {
+    name: 'All',
+    value: 'all',
   },
 ];
