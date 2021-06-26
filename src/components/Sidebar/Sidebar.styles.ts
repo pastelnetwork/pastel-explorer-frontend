@@ -103,6 +103,10 @@ export const Category = styled(ListItem)<CategoryType>`
     span {
       color: ${props => props.theme.sidebar.text.active};
     }
+    svg {
+      color: ${props => props.theme.sidebar.text.active};
+      fill: ${props => props.theme.sidebar.text.active};
+    }
   }
 `;
 

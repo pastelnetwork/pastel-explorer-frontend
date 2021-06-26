@@ -8,13 +8,14 @@ import { makeStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
 import { AppStateType } from '@redux/reducers';
 import { setApiHostingAction } from '@redux/actions/clusterAction';
+import { TAppTheme } from '@theme/index';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: TAppTheme) => ({
   root: {
     padding: 20,
   },
   list: {
-    width: 400,
+    width: 325,
     padding: '0 20px 20px 20px',
   },
   close: {
@@ -41,8 +42,14 @@ const useStyles = makeStyles({
   },
   rootButtonLabel: {
     whiteSpace: 'nowrap',
+    [theme.breakpoints.down('md')]: {
+      whiteSpace: 'normal',
+      fontSize: 14,
+      lineHeight: '14px',
+      padding: 5,
+    },
   },
-});
+}));
 
 const data = [
   {

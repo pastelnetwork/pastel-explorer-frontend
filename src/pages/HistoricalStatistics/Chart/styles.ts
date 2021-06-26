@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { TAppTheme } from '@theme/index';
 
-export const eChartLineStyles = makeStyles(() => ({
+export const eChartLineStyles = makeStyles((theme: TAppTheme) => ({
   container: {
     margin: '0 auto',
     display: 'flex',
@@ -12,6 +13,10 @@ export const eChartLineStyles = makeStyles(() => ({
     textAlign: 'center',
     boxSizing: 'border-box',
     position: 'relative',
+    color: 'rgb(171, 170, 193)',
+    [theme.breakpoints.down('sm')]: {
+      padding: 0,
+    },
   },
   lineChartWrap: {
     width: '100%',
@@ -28,6 +33,9 @@ export const eChartLineStyles = makeStyles(() => ({
     width: '100%',
     textAlign: 'left',
     fontSize: '30px',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 15,
+    },
   },
   lineChartHeader: {
     display: 'flex',
@@ -35,6 +43,11 @@ export const eChartLineStyles = makeStyles(() => ({
     justifyContent: 'space-between',
     paddingTop: '30px',
     paddingBottom: '10px',
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: 10,
+      justifyContent: 'flex-start',
+      flexDirection: 'column',
+    },
   },
   uploadButton: {
     display: 'flex',
@@ -73,12 +86,19 @@ export const eChartLineStyles = makeStyles(() => ({
     justifyContent: 'space-around',
     alignItems: 'center',
     marginTop: '15px',
+    [theme.breakpoints.down('sm')]: {
+      marginTop: 5,
+    },
   },
   lineChartDownloadButtonBar: {
     display: 'flex',
     width: '100%',
     justifyContent: 'flex-end',
     height: '30px',
+    [theme.breakpoints.down('sm')]: {
+      marginTop: 10,
+      justifyContent: 'flex-start',
+    },
   },
   lineChartFooter: {
     display: 'flex',
@@ -86,6 +106,11 @@ export const eChartLineStyles = makeStyles(() => ({
     justifyContent: 'space-around',
     alignItems: 'center',
     paddingBottom: 30,
+    [theme.breakpoints.down('sm')]: {
+      flexWrap: 'wrap',
+      justifyContent: 'flex-start',
+      paddingBottom: 10,
+    },
   },
   lineChartThemeSelect: {
     display: 'flex',

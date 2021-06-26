@@ -34,6 +34,7 @@ export const TableWrapper = styled.div`
     &::-webkit-scrollbar-track {
       background: black;
     }
+
     &::-webkit-scrollbar-track {
       background: grey;
     }

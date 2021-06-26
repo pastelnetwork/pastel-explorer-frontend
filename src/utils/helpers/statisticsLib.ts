@@ -5,7 +5,10 @@ import {
   TRawMempool,
   IStatistic,
   TMempoolInfo,
+  TNettotalsInfo,
+  TScatterChartData,
 } from '@utils/types/IStatistics';
+import { IBlock } from '@utils/types/IBlocks';
 
 export type PeriodTypes = '2h' | '2d' | '4d' | '30d' | '60d' | '180d' | '1y' | 'all';
 export type TGranularity = '1d' | '30d' | '1y' | 'all';
@@ -157,4 +160,34 @@ export function transformMempoolInfo(mempoolInfo: TMempoolInfo[]): TLineChartDat
     }
   }
   return { dataX, dataY };
+}
+
+export function transformNetTotals(nettotals: TNettotalsInfo[]): TMultiLineChartData {
+  const dataX: string[] = [];
+  const dataY1: number[] = [];
+  const dataY2: number[] = [];
+  for (let i = 0; i < nettotals.length; i += 1) {
+    if (nettotals[i].timemillis !== null) {
+      const createTime = Number(nettotals[i].timemillis);
+      const recv = Number(nettotals[i].totalbytesrecv);
+      const sent = Number(nettotals[i].totalbytessent);
+      dataY1.push(recv);
+      dataY2.push(sent);
+      dataX.push(new Date(createTime).toLocaleString());
+    }
+  }
+  return { dataX, dataY1, dataY2 };
+}
+
+export function transformBlocks(blocks: IBlock[]): TScatterChartData {
+  const data: number[][] = [];
+  const dataX: string[] = [];
+  for (let i = 0; i < blocks.length; i += 1) {
+    const createTime = Number(blocks[i].timestamp * 1000);
+    const xAxisValue = Number(blocks[i].height);
+    const yAxisValue = blocks[i].transactionCount;
+    data.push([xAxisValue, yAxisValue]);
+    dataX.push(new Date(createTime).toLocaleString());
+  }
+  return { data, dataX };
 }

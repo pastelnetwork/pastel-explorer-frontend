@@ -44,6 +44,11 @@ export type TMultiLineChartData = {
   dataY2: number[];
 };
 
+export type TScatterChartData = {
+  data: number[][];
+  dataX: string[];
+};
+
 export type TMiningInfo = {
   id: string;
   blocks: number;
@@ -105,5 +110,13 @@ export type TMempoolInfo = {
   size: number;
   bytes: number;
   usage: number;
+  timestamp: number;
+};
+
+export type TNettotalsInfo = {
+  id: string;
+  totalbytesrecv: number;
+  totalbytessent: number;
+  timemillis: number;
   timestamp: number;
 };

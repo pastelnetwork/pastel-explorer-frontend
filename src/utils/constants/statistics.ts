@@ -3,6 +3,8 @@ import priceImage from '@assets/images/statistics/pslprice.jpg';
 import hashrateImage from '@assets/images/statistics/hashrate.jpg';
 import transactionFeeImage from '@assets/images/statistics/transactionfee.jpg';
 import mempoolSizeImage from '@assets/images/statistics/mempoolsize.jpg';
+import nettotalsImage from '@assets/images/statistics/nettotals.jpg';
+import transactionInBlockImage from '@assets/images/statistics/transactionsinblock.jpg';
 import * as routes from '@utils/constants/routes';
 import { PeriodTypes } from '@utils/helpers/statisticsLib';
 import { TStatisticsInfo } from '@utils/types/IStatistics';
@@ -38,6 +40,18 @@ export const statistics = [
     title: 'Mempool Size',
     url: routes.STATISTICS_MEMPOOL_SIZE,
     image: mempoolSizeImage,
+  },
+  {
+    id: 'nettotals',
+    title: 'Network Total',
+    url: routes.STATISTICS_NETTOTALS,
+    image: nettotalsImage,
+  },
+  {
+    id: 'transactionInBlock',
+    title: 'Transaction In Block',
+    url: routes.STATISTICS_TRANSACTION_IN_BLOCK,
+    image: transactionInBlockImage,
   },
 ];
 

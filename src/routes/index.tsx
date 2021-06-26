@@ -30,6 +30,8 @@ import PricesStatistics from '@pages/HistoricalStatistics/Prices';
 import HashRateStatistics from '@pages/HistoricalStatistics/HashRate';
 import TransactionFeeStatistics from '@pages/HistoricalStatistics/TransactionFee';
 import MempoolSize from '@pages/HistoricalStatistics/MempoolSize';
+import Nettotals from '@pages/HistoricalStatistics/Nettotals';
+import TransactionInBlock from '@pages/HistoricalStatistics/TransactionInBlock';
 
 import * as ROUTES from '@utils/constants/routes';
 
@@ -168,6 +170,23 @@ const mempoolSizeStatisticsRoutes = {
   children: null,
 };
 
+const nettotalsStatisticsRoutes = {
+  id: 'Nettotals',
+  path: ROUTES.STATISTICS_NETTOTALS,
+  component: Nettotals,
+  icon: <BarChartIcon />,
+  seoTitle: 'Nettotals',
+  children: null,
+};
+
+const transactionInBlockStatisticsRoutes = {
+  id: 'transactionInBlock',
+  path: ROUTES.STATISTICS_TRANSACTION_IN_BLOCK,
+  component: TransactionInBlock,
+  icon: <BarChartIcon />,
+  seoTitle: 'transactionInBlock',
+  children: null,
+};
 // Uncomment this when API page will be ready
 // const infoRoutes = {
 //   id: 'API',
@@ -220,6 +239,8 @@ export const pageRoutes = [
   hashRateStatisticsRoutes,
   transactionFeeStatisticsRoutes,
   mempoolSizeStatisticsRoutes,
+  nettotalsStatisticsRoutes,
+  transactionInBlockStatisticsRoutes,
 ];
 
 export const sidebarRoutes = [

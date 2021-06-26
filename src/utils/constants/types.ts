@@ -43,3 +43,16 @@ export type TLineChartProps = {
 export type TCsvHeaderType = {
   [key: string]: LabelKeyObject[];
 };
+
+export type TScatterChartProps = {
+  chartName: string;
+  data: number[][];
+  dataX: string[];
+  title?: string;
+  info: TStatisticsInfo;
+  offset: number;
+  periods: PeriodTypes[];
+  handleBgColorChange: (_color: string) => void;
+  handlePeriodFilterChange?: (_period: PeriodTypes) => void;
+  handleGranularityFilterChange?: (_granularity: TGranularity) => void;
+};
