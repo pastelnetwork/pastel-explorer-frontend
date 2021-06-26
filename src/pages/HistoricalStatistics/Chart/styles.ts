@@ -52,14 +52,13 @@ export const eChartLineStyles = makeStyles((theme: TAppTheme) => ({
   uploadButton: {
     display: 'flex',
     alignItems: 'center',
-    backgroundColor: '#c3921f',
+    backgroundColor: '#6151d0',
     color: '#000',
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: '14px',
     padding: '8px 16px',
     borderRadius: '4px',
-    borderColor: '#c3921f',
     marginLeft: '8px',
     marginRight: '8px',
     '&:hover': {
