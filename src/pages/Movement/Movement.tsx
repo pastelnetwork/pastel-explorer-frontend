@@ -98,7 +98,7 @@ const Movement: React.FC = () => {
   React.useEffect(() => {
     if (filter.dateRange) {
       handleFetchMovements(
-        fetchParams.current.offset,
+        0,
         fetchParams.current.sortBy,
         fetchParams.current.sortDirection,
         true,
@@ -112,7 +112,7 @@ const Movement: React.FC = () => {
         fetchParams.current.sortDirection,
       );
     }
-  }, []);
+  }, [filter.dateRange]);
 
   return (
     <>
