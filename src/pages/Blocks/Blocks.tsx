@@ -108,6 +108,7 @@ const Blocks = () => {
 
   React.useEffect(() => {
     if (filter.dateRange) {
+      fetchParams.current.offset = DATA_OFFSET;
       handleFetchBlocks(
         DATA_OFFSET,
         fetchParams.current.sortBy,

@@ -1,9 +1,16 @@
 import * as React from 'react';
+import { useSelector } from 'react-redux';
+import { getThemeState } from '@redux/reducers/appThemeReducer';
+import {
+  CHART_THEME_BACKGROUND_DEFAULT_COLOR,
+  CHART_THEME_BACKGROUND_DEFAULT_COLOR_LIGHT,
+} from '@utils/constants/statistics';
 
 interface IUseSortDataProps<T> {
   fetchData?: () => Promise<{ data: T[] } | undefined>;
   inititalData?: T[] | null;
 }
+
 export function useSortData<T>({
   fetchData,
   inititalData = null,
@@ -74,4 +81,20 @@ export function useSortData<T>({
     [],
   );
   return [data, handleClickSort];
+}
+
+export function useBackgroundChart(): [string, (_color: string) => void] {
+  const [bgColor, setBgColor] = React.useState<string>('');
+  const { darkMode } = useSelector(getThemeState);
+  React.useEffect(() => {
+    if (darkMode) {
+      setBgColor(CHART_THEME_BACKGROUND_DEFAULT_COLOR);
+    } else {
+      setBgColor(CHART_THEME_BACKGROUND_DEFAULT_COLOR_LIGHT);
+    }
+  }, [darkMode]);
+  const handleBgColorChange = React.useCallback((color: string) => {
+    setBgColor(color);
+  }, []);
+  return [bgColor, handleBgColorChange];
 }

@@ -1,10 +1,3 @@
-import difficultyImage from '@assets/images/statistics/difficulty.jpg';
-import priceImage from '@assets/images/statistics/pslprice.jpg';
-import hashrateImage from '@assets/images/statistics/hashrate.jpg';
-import transactionFeeImage from '@assets/images/statistics/transactionfee.jpg';
-import mempoolSizeImage from '@assets/images/statistics/mempoolsize.jpg';
-import nettotalsImage from '@assets/images/statistics/nettotals.jpg';
-import transactionInBlockImage from '@assets/images/statistics/transactionsinblock.jpg';
 import * as routes from '@utils/constants/routes';
 import { PeriodTypes } from '@utils/helpers/statisticsLib';
 import { TStatisticsInfo } from '@utils/types/IStatistics';
@@ -15,43 +8,43 @@ export const statistics = [
     id: 'difficulty',
     title: 'Difficulty',
     url: routes.STATISTICS_DIFFICULTY,
-    image: difficultyImage,
+    image: '/images/statistics/difficulty.jpg',
   },
   {
     id: 'pslPrice',
     title: 'Price',
     url: routes.STATISTICS_PSLPRICE,
-    image: priceImage,
+    image: '/images/statistics/pslprice.jpg',
   },
   {
     id: 'hashrate',
     title: 'Hashrate',
     url: routes.STATISTICS_HASHRATE,
-    image: hashrateImage,
+    image: '/images/statistics/hashrate.jpg',
   },
   {
     id: 'transactionfee',
     title: 'Transaction Fee',
     url: routes.STATISTICS_TRANSACTION_FEE,
-    image: transactionFeeImage,
+    image: '/images/statistics/transactionfee.jpg',
   },
   {
     id: 'mempoolsize',
     title: 'Mempool Size',
     url: routes.STATISTICS_MEMPOOL_SIZE,
-    image: mempoolSizeImage,
+    image: '/images/statistics/mempoolsize.jpg',
   },
   {
     id: 'nettotals',
     title: 'Network Total',
     url: routes.STATISTICS_NETTOTALS,
-    image: nettotalsImage,
+    image: '/images/statistics/nettotals.jpg',
   },
   {
     id: 'transactionInBlock',
     title: 'Transaction In Block',
     url: routes.STATISTICS_TRANSACTION_IN_BLOCK,
-    image: transactionInBlockImage,
+    image: '/images/statistics/transactionsinblock.jpg',
   },
 ];
 
@@ -119,6 +112,7 @@ export const periods: PeriodTypes[][] = [
 ];
 
 export const CHART_THEME_BACKGROUND_DEFAULT_COLOR = '#0d0d0d';
+export const CHART_THEME_BACKGROUND_DEFAULT_COLOR_LIGHT = '#fff';
 
 export const CHART_DEFAULT_PERIOD = 'all';
 

@@ -11,6 +11,10 @@ export const defaultFilters = [
     name: '1M',
     value: '30d',
   },
+  {
+    name: 'All',
+    value: 'all',
+  },
   // {
   //   name: '2M',
   //   value: '60d',

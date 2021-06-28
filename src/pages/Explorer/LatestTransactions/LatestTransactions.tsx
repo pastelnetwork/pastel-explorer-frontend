@@ -59,11 +59,12 @@ const LatestTransactions: React.FC = () => {
       limit,
       sortBy: fetchSortBy,
       sortDirection,
-      period: '1d',
+      period: 'all',
     };
-    if (filterValue && filterValue !== '1d') {
+    if (filterValue && filterValue !== 'all') {
       params[filterBy] = filterValue;
     }
+
     return fetchTransactions
       .fetchData({ params })
       .then(response => (response ? transformTransactionsData(response.data) : []))
@@ -102,8 +103,9 @@ const LatestTransactions: React.FC = () => {
 
   React.useEffect(() => {
     if (filter.dateRange) {
+      fetchParams.current.offset = 0;
       handleFetchTransactions(
-        fetchParams.current.offset,
+        0,
         fetchParams.current.sortBy,
         fetchParams.current.sortDirection,
         true,
@@ -123,6 +125,7 @@ const LatestTransactions: React.FC = () => {
     <InfinityTable
       sortBy={fetchParams.current.sortBy}
       sortDirection={fetchParams.current.sortDirection}
+      // loadMoreFrom={fetchParams.current.offset + 20}
       rows={transactionList}
       columns={columns}
       tableHeight={650}
