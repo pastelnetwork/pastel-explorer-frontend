@@ -47,7 +47,7 @@ export const generateCoinbaseInfo = (info: number) => (
 export const generateNonStandardTransactionInfo = () => (
   <Grid item xs={12}>
     <Styles.Alert severity="info">
-      <AlertTitle>NONSTANDARD TX</AlertTitle>
+      <AlertTitle>Shielded Transaction</AlertTitle>
     </Styles.Alert>
   </Grid>
 );
