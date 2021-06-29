@@ -19,6 +19,8 @@ export const Card = styled(MuiCard)(spacing);
 export const Typography = styled(MuiTypography)(spacing);
 
 export const Values = styled.div`
+  margin-left: ${props => props.theme.spacing(2)}px;
+  margin-right: ${props => props.theme.spacing(2)}px;
   font-weight: 400;
   overflow: hidden;
   text-overflow: ellipsis;
