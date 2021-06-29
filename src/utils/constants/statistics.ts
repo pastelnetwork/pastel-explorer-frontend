@@ -1,9 +1,15 @@
 import * as routes from '@utils/constants/routes';
-import { PeriodTypes } from '@utils/helpers/statisticsLib';
+import { PeriodTypes, TGranularity } from '@utils/helpers/statisticsLib';
 import { TStatisticsInfo } from '@utils/types/IStatistics';
 import { TCsvHeaderType } from './types';
 
 export const statistics = [
+  {
+    id: 'averageBlockSize',
+    title: 'Average Block Size',
+    url: routes.STATISTICS_AVERAGE_BLOCK_SIZE,
+    image: '/images/statistics/averageblocksize.jpg',
+  },
   {
     id: 'difficulty',
     title: 'Difficulty',
@@ -113,6 +119,7 @@ export const periods: PeriodTypes[][] = [
 
 export const CHART_THEME_BACKGROUND_DEFAULT_COLOR = '#0d0d0d';
 export const CHART_THEME_BACKGROUND_DEFAULT_COLOR_LIGHT = '#fff';
+export const BLOCK_CHART_DEFAULT_GRANULARITY = '1d';
 
 export const CHART_DEFAULT_PERIOD = 'all';
 
@@ -127,3 +134,5 @@ export const info: TStatisticsInfo = {
   verificationProgress: 0.9999843360337557,
   version: 1000029,
 };
+
+export const granularities: TGranularity[][] = [['1d', '30d', '1y']];

@@ -151,45 +151,47 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
         <div className={styles.lineChartTitle} style={{ color: currentTheme?.color }}>
           {title}
         </div>
-        {granularities && (
-          <div className={styles.granularitySelect}>
-            <span style={{ color: currentTheme?.color }}>Granularity: </span>
-            {granularities?.map((granularity, index) => {
-              return (
-                <button
-                  className={`${getActiveGranularityButtonStyle(index)} ${styles.filterButton}`}
-                  onClick={() => {
-                    setSelectedGranularityButton(index);
-                    if (handleGranularityFilterChange) {
-                      handleGranularityFilterChange(granularity);
-                    }
-                  }}
-                  type="button"
-                  key={`button-filter-${granularity}`}
-                >
-                  {granularity}
-                </button>
-              );
-            })}
+        <div>
+          {granularities && (
+            <div className={styles.periodSelect}>
+              <span style={{ color: currentTheme?.color }}>Granularity: </span>
+              {granularities?.map((granularity, index) => {
+                return (
+                  <button
+                    className={`${getActiveGranularityButtonStyle(index)} ${styles.filterButton}`}
+                    onClick={() => {
+                      setSelectedGranularityButton(index);
+                      if (handleGranularityFilterChange) {
+                        handleGranularityFilterChange(granularity);
+                      }
+                    }}
+                    type="button"
+                    key={`button-filter-${granularity}`}
+                  >
+                    {granularity}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+          <div className={styles.periodSelect}>
+            <span style={{ color: currentTheme?.color }}>Period: </span>
+            {periods.map((period, index) => (
+              <button
+                className={`${getActivePriodButtonStyle(index)} ${styles.filterButton}`}
+                onClick={() => {
+                  setSelectedPeriodButton(index);
+                  if (handlePeriodFilterChange) {
+                    handlePeriodFilterChange(period);
+                  }
+                }}
+                type="button"
+                key={`button-filter-${period}`}
+              >
+                {period}
+              </button>
+            ))}
           </div>
-        )}
-        <div className={styles.periodSelect}>
-          <span style={{ color: currentTheme?.color }}>Period: </span>
-          {periods.map((period, index) => (
-            <button
-              className={`${getActivePriodButtonStyle(index)} ${styles.filterButton}`}
-              onClick={() => {
-                setSelectedPeriodButton(index);
-                if (handlePeriodFilterChange) {
-                  handlePeriodFilterChange(period);
-                }
-              }}
-              type="button"
-              key={`button-filter-${period}`}
-            >
-              {period}
-            </button>
-          ))}
         </div>
       </div>
       <div className={styles.lineChartWrap}>

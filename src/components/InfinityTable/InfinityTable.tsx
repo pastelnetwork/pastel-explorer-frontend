@@ -7,18 +7,17 @@ import {
   TableCellProps,
   TableHeaderProps,
   ScrollEventData,
-  // Index,
+  Index,
   OverscanIndicesGetterParams,
 } from 'react-virtualized';
-// import { CSSProperties } from '@material-ui/styles';
-import { CardHeader, CircularProgress } from '@material-ui/core';
+import { CSSProperties } from '@material-ui/styles';
+import { CardHeader, CircularProgress, darken } from '@material-ui/core';
 import { ArrowDropDown, ArrowDropUp } from '@material-ui/icons';
 import { Skeleton } from '@material-ui/lab';
 
+import themeVariant from '@theme/variants';
 import { TFilter } from '@utils/types/IFilter';
 import Filters from './Filters';
-
-// import themeVariant from '@theme/variants';
 
 import * as Styles from './InfinityTable.styles';
 
@@ -127,18 +126,18 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
     return onHeaderClick && onHeaderClick(info);
   };
 
-  // const handleRowStyle = ({ index }: Index): CSSProperties => {
-  //   const color = themeVariant.palette.background.paper;
-  //   if (index % 2 === 0) {
-  //     return {
-  //       backgroundColor: darken(color, 0.05),
-  //     };
-  //   }
+  const handleRowStyle = ({ index }: Index): CSSProperties => {
+    const color = themeVariant.palette.background.paper;
+    if (index % 2 === 0) {
+      return {
+        backgroundColor: darken(color, 0.05),
+      };
+    }
 
-  //   return {
-  //     backgroundColor: color,
-  //   };
-  // };
+    return {
+      backgroundColor: color,
+    };
+  };
 
   React.useEffect(() => {
     loading && setLoading(false);
@@ -167,7 +166,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
                     rowHeight={rowHeight}
                     rowGetter={({ index }: { index: number }) => rows[index]}
                     rowCount={rows.length}
-                    // rowStyle={(info: Index) => handleRowStyle(info)}
+                    rowStyle={(info: Index) => handleRowStyle(info)}
                     width={1920}
                     sortBy={sortBy}
                     sort={handleSort}

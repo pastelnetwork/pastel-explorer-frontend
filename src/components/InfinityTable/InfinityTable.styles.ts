@@ -30,7 +30,7 @@ export const TableWrapper = styled.div`
   .ReactVirtualized__Grid {
     min-width: 1000px;
     width: 100% !important;
-    background-color: ${props => props.theme.palette.background.default} !important;
+    // background-color: ${props => props.theme.palette.background.default} !important;
     &::-webkit-scrollbar-track {
       background: black;
     }
@@ -46,7 +46,10 @@ export const TableWrapper = styled.div`
 
   .ReactVirtualized__Table__row {
     width: 100% !important;
-    background-color: ${props => props.theme.palette.background.default} !important;
+    background-color: ${props => props.theme.palette.background.default};
+    &:nth-of-type(odd): {
+      background-color: ${props => darken(props.theme.palette.background.default, 0.5)} !important;
+    }
     svg {
       fill: ${props => props.theme.palette.text.default};
     }
@@ -56,9 +59,9 @@ export const TableWrapper = styled.div`
   .ReactVirtualized__Table__row {
     display: flex;
     transition: all 0.2s ease-in !important;
-
+    color: #27251f;
     &:hover {
-      background-color: ${darken(themeVariant.palette.background.default, 0.5)} !important;
+      background-color: ${darken(themeVariant.palette.background.paper, 0.05)} !important;
     }
   }
 `;
@@ -80,6 +83,7 @@ export const HeaderCell = styled(TableCell)<{ $disabledSort: boolean }>`
   height: 70px;
   display: flex;
   white-space: nowrap;
+  color: #27251f;
   cursor: ${({ $disabledSort }) => !$disabledSort && 'pointer'};
 `;
 

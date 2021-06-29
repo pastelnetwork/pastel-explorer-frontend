@@ -7,6 +7,7 @@ import {
   TMempoolInfo,
   TNettotalsInfo,
   TScatterChartData,
+  TAverageBlockSize,
 } from '@utils/types/IStatistics';
 import { IBlock } from '@utils/types/IBlocks';
 
@@ -190,4 +191,15 @@ export function transformBlocks(blocks: IBlock[]): TScatterChartData {
     dataX.push(new Date(createTime).toLocaleString());
   }
   return { data, dataX };
+}
+
+export function transformAverageBlockSize(blockSizes: TAverageBlockSize[]): TLineChartData {
+  const dataX: string[] = [];
+  const dataY: number[] = [];
+  for (let i = 0; i < blockSizes.length; i += 1) {
+    const size = Number(blockSizes[i].size) / 1000;
+    dataY.push(size);
+    dataX.push(blockSizes[i].time);
+  }
+  return { dataX, dataY };
 }

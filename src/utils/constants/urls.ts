@@ -19,6 +19,7 @@ export const GET_STATISTICS_RAW_MEM_POOL = 'v1/stats/raw-mempool-list';
 export const GET_STATISTICS_MEMPOOL_INFO = 'v1/stats/mempool-info-list';
 export const GET_STATISTICS_NETTOTALS = 'v1/stats/nettotals-list';
 export const GET_STATISTICS_TRANSACTIONS_IN_BLOCK = 'v1/stats/blocks-list';
+export const GET_STATISTICS_AVERAGE_BLOCK_SIZE = 'v1/stats/average-block-size';
 // External URLS
 export const TWITTER_URL = 'https://twitter.com/pastelnetwork';
 export const TELEGRAM_URL = 'https://t.me/PastelNetwork';

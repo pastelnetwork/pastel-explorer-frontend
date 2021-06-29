@@ -24,3 +24,4 @@ export const STATISTICS_TRANSACTION_FEE = `${STATISTICS_OVERTIME}/transaction-fe
 export const STATISTICS_MEMPOOL_SIZE = `${STATISTICS_OVERTIME}/mempool-size`;
 export const STATISTICS_NETTOTALS = `${STATISTICS_OVERTIME}/nettotals`;
 export const STATISTICS_TRANSACTION_IN_BLOCK = `${STATISTICS_OVERTIME}/transaction-in-block`;
+export const STATISTICS_AVERAGE_BLOCK_SIZE = `${STATISTICS_OVERTIME}/average-block-size`;

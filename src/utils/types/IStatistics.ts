@@ -120,3 +120,8 @@ export type TNettotalsInfo = {
   timemillis: number;
   timestamp: number;
 };
+
+export type TAverageBlockSize = {
+  time: string;
+  size: number;
+};

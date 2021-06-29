@@ -4,15 +4,15 @@ import {
   Card as MuiCard,
   CardContent as MuiCardContent,
   Typography as MuiTypography,
-  Grid as MuiGrid,
+  // Grid as MuiGrid,
 } from '@material-ui/core';
 import { rgba } from 'polished';
 
-export const Grid = styled(MuiGrid)`
-  margin: 0;
-  width: 100%;
-  background-color: ${props => props.theme.palette.background.paper};
-`;
+// export const Grid = styled(MuiGrid)`
+//   margin: 0;
+//   width: 100%;
+//   background-color: ${props => props.theme.palette.background.paper};
+// `;
 
 export const Card = styled(MuiCard)(spacing);
 

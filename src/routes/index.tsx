@@ -33,6 +33,7 @@ import MempoolSize from '@pages/HistoricalStatistics/MempoolSize';
 import Nettotals from '@pages/HistoricalStatistics/Nettotals';
 import TransactionInBlock from '@pages/HistoricalStatistics/TransactionInBlock';
 import Statistics from '@pages/Statistics';
+import AverageBlockSize from '@pages/HistoricalStatistics/AverageBlockSize';
 
 import * as ROUTES from '@utils/constants/routes';
 
@@ -196,7 +197,16 @@ const transactionInBlockStatisticsRoutes = {
   path: ROUTES.STATISTICS_TRANSACTION_IN_BLOCK,
   component: TransactionInBlock,
   icon: <BarChartIcon />,
-  seoTitle: 'transactionInBlock',
+  seoTitle: 'Transaction In Block',
+  children: null,
+};
+
+const averageBlockSizeStatisticsRoutes = {
+  id: 'averageBlockSize',
+  path: ROUTES.STATISTICS_AVERAGE_BLOCK_SIZE,
+  component: AverageBlockSize,
+  icon: <BarChartIcon />,
+  seoTitle: 'Average Block Size',
   children: null,
 };
 // Uncomment this when API page will be ready
@@ -253,6 +263,7 @@ export const pageRoutes = [
   mempoolSizeStatisticsRoutes,
   nettotalsStatisticsRoutes,
   transactionInBlockStatisticsRoutes,
+  averageBlockSizeStatisticsRoutes,
 ];
 
 export const sidebarRoutes = [
