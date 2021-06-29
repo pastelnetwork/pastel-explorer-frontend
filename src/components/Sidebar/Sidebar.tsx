@@ -187,7 +187,7 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
         <Styles.SidebarContainer container spacing={2} justify="space-around" alignItems="center">
           {footerIcons.map(({ id, url, icon }) => (
             <Grid item key={id}>
-              <IconButton target="_blank" href={url} style={{ color: 'white', padding: '4px' }}>
+              <IconButton target="_blank" href={url} style={{ color: '#6151d0', padding: '4px' }}>
                 {icon}
               </IconButton>
             </Grid>

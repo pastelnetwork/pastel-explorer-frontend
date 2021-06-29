@@ -197,7 +197,7 @@ export const SidebarSection = styled(Typography)`
 `;
 
 export const SidebarFooter = styled.div`
-  background-color: ${props => props.theme.sidebar.footer.background} !important;
+  background-color: ${props => props.theme.sidebar.footer.theme} !important;
   padding: 4px ${props => props.theme.spacing(4)}px;
   border-right: 1px solid rgba(0, 0, 0, 0.12);
 `;
