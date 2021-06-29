@@ -25,6 +25,7 @@ export const Values = styled.div`
 `;
 
 export const CardContent = styled(MuiCardContent)`
+  text-align: center;
   position: relative;
   padding: 8px;
   background-color: ${props => props.theme.palette.background.default};
@@ -39,6 +40,7 @@ export const Percentage = styled(MuiTypography)<{
   mb: number;
 }>`
   font-size: 0.8rem;
+  margin-bottom: ${props => props.theme.spacing(2)}px;
 
   span {
     color: ${props => props.theme.palette.text.secondary};
