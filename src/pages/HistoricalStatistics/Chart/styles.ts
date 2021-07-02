@@ -53,7 +53,7 @@ export const eChartLineStyles = makeStyles((theme: TAppTheme) => ({
     display: 'flex',
     alignItems: 'center',
     backgroundColor: '#6151d0',
-    color: '#000',
+    color: 'white',
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: '14px',

@@ -125,3 +125,5 @@ export type TAverageBlockSize = {
   time: string;
   size: number;
 };
+
+export type TTransactionPerSecond = TAverageBlockSize;

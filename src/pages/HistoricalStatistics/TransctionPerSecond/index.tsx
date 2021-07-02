@@ -1,39 +1,30 @@
-import { useEffect, useState } from 'react';
-
+import { FC, useEffect, useState } from 'react';
 import { Container } from '@pages/HistoricalStatistics/StatisticsOvertime.styles';
-import { TLineChartData, TAverageBlockSize } from '@utils/types/IStatistics';
-import { TGranularity, PeriodTypes, transformAverageBlockSize } from '@utils/helpers/statisticsLib';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import {
-  CHART_DEFAULT_PERIOD,
-  BLOCK_CHART_DEFAULT_GRANULARITY,
-  granularities,
-  periods,
-  info,
-} from '@utils/constants/statistics';
+import { PeriodTypes, transformTransactionPerSecond } from '@utils/helpers/statisticsLib';
+import { CHART_DEFAULT_PERIOD, periods, info } from '@utils/constants/statistics';
+import { TTransactionPerSecond, TLineChartData } from '@utils/types/IStatistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
 const redrawCycle = 6000;
-
-const AverageBlockSize = (): JSX.Element => {
-  const [currentBgColor, handleBgColorChange] = useBackgroundChart();
-  const [period, setPeriod] = useState<PeriodTypes>(CHART_DEFAULT_PERIOD);
-  const [granularity, setGranularity] = useState<TGranularity>(BLOCK_CHART_DEFAULT_GRANULARITY);
-  const [ticker, setTicker] = useState<NodeJS.Timeout>();
+const Difficulty: FC = () => {
   const [chartData, setChartData] = useState<TLineChartData | null>(null);
-  const fetchStats = useFetch<{ data: Array<TAverageBlockSize> }>({
+  const [currentBgColor, handleBgColorChange] = useBackgroundChart();
+  const [ticker, setTicker] = useState<NodeJS.Timeout>();
+  const [period, setPeriod] = useState<PeriodTypes>(CHART_DEFAULT_PERIOD);
+  const fetchStats = useFetch<{ data: Array<TTransactionPerSecond> }>({
     method: 'get',
-    url: URLS.GET_STATISTICS_AVERAGE_BLOCK_SIZE,
+    url: URLS.GET_STATISTICS_TRANSACTION_PER_SECOND,
   });
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { sortDirection: 'DESC', period, granularity },
+        params: { sortDirection: 'DESC', period },
       });
       if (data) {
-        const parseData = transformAverageBlockSize(data.data);
+        const parseData = transformTransactionPerSecond(data.data);
         setChartData(parseData);
       }
     };
@@ -47,15 +38,10 @@ const AverageBlockSize = (): JSX.Element => {
         clearInterval(newTicker);
       }
     };
-  }, [granularity, period]);
+  }, [period]);
 
   const handlePeriodFilterChange = (value: PeriodTypes) => {
     setPeriod(value);
-    clearInterval(ticker as NodeJS.Timeout);
-  };
-
-  const handleGranularityFilterChange = (value: TGranularity) => {
-    setGranularity(value);
     clearInterval(ticker as NodeJS.Timeout);
   };
 
@@ -64,17 +50,15 @@ const AverageBlockSize = (): JSX.Element => {
       <div style={{ flex: 1, backgroundColor: currentBgColor }}>
         {chartData && (
           <EChartsLineChart
-            chartName="averageblocksize"
+            chartName="transactionspersecond"
             dataX={chartData?.dataX}
             dataY={chartData?.dataY}
-            title="Average Block Size(KB)"
+            title="Transactions Per Second"
             info={info}
-            offset={1}
-            granularities={granularities[0]}
+            offset={0.01}
             periods={periods[1]}
             handleBgColorChange={handleBgColorChange}
             handlePeriodFilterChange={handlePeriodFilterChange}
-            handleGranularityFilterChange={handleGranularityFilterChange}
           />
         )}
       </div>
@@ -82,4 +66,4 @@ const AverageBlockSize = (): JSX.Element => {
   );
 };
 
-export default AverageBlockSize;
+export default Difficulty;

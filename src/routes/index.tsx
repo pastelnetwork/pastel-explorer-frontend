@@ -34,6 +34,7 @@ import Nettotals from '@pages/HistoricalStatistics/Nettotals';
 import TransactionInBlock from '@pages/HistoricalStatistics/TransactionInBlock';
 import Statistics from '@pages/Statistics';
 import AverageBlockSize from '@pages/HistoricalStatistics/AverageBlockSize';
+import TransactionPerSecond from '@pages/HistoricalStatistics/TransctionPerSecond';
 
 import * as ROUTES from '@utils/constants/routes';
 
@@ -209,6 +210,15 @@ const averageBlockSizeStatisticsRoutes = {
   seoTitle: 'Average Block Size',
   children: null,
 };
+
+const transactionPerSecondStatisticsRoutes = {
+  id: 'transactionPerSecond',
+  path: ROUTES.STATISTICS_TRANSACTION_PER_SECOND,
+  component: TransactionPerSecond,
+  icon: <BarChartIcon />,
+  seoTitle: 'Transaction Per Second',
+  children: null,
+};
 // Uncomment this when API page will be ready
 // const infoRoutes = {
 //   id: 'API',
@@ -264,6 +274,7 @@ export const pageRoutes = [
   nettotalsStatisticsRoutes,
   transactionInBlockStatisticsRoutes,
   averageBlockSizeStatisticsRoutes,
+  transactionPerSecondStatisticsRoutes,
 ];
 
 export const sidebarRoutes = [

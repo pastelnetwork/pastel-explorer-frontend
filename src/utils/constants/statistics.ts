@@ -47,6 +47,12 @@ export const statistics = [
     image: '/images/statistics/nettotals.jpg',
   },
   {
+    id: 'transactionPerSecond',
+    title: 'Transaction Per Second',
+    url: routes.STATISTICS_TRANSACTION_PER_SECOND,
+    image: '/images/statistics/transactionspersecond.jpg',
+  },
+  {
     id: 'transactionInBlock',
     title: 'Transaction In Block',
     url: routes.STATISTICS_TRANSACTION_IN_BLOCK,

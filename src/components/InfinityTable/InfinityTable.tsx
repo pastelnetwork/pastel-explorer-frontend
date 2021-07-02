@@ -14,8 +14,8 @@ import { CSSProperties } from '@material-ui/styles';
 import { CardHeader, CircularProgress, darken } from '@material-ui/core';
 import { ArrowDropDown, ArrowDropUp } from '@material-ui/icons';
 import { Skeleton } from '@material-ui/lab';
+import { useGetThemeMode } from '@redux/reducers/appThemeReducer';
 
-import themeVariant from '@theme/variants';
 import { TFilter } from '@utils/types/IFilter';
 import Filters from './Filters';
 
@@ -108,6 +108,11 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   renderAllRows,
 }) => {
   const [loading, setLoading] = React.useState(false);
+  const isDarkMode = useGetThemeMode();
+  const [color, bgOpacity] = React.useMemo(
+    () => (isDarkMode ? ['#232630', 0.5] : ['#FFFFFF', 0.05]),
+    [isDarkMode],
+  );
   const handleReachBottom = _debounce(
     ({ clientHeight, scrollHeight, scrollTop }: ScrollEventData) => {
       if (!onBottomReach || rows.length < loadMoreFrom) return null;
@@ -127,10 +132,9 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   };
 
   const handleRowStyle = ({ index }: Index): CSSProperties => {
-    const color = themeVariant.palette.background.paper;
     if (index % 2 === 0) {
       return {
-        backgroundColor: darken(color, 0.05),
+        backgroundColor: darken(color, bgOpacity),
       };
     }
 

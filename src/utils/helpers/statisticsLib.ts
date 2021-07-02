@@ -8,6 +8,7 @@ import {
   TNettotalsInfo,
   TScatterChartData,
   TAverageBlockSize,
+  TTransactionPerSecond,
 } from '@utils/types/IStatistics';
 import { IBlock } from '@utils/types/IBlocks';
 
@@ -202,4 +203,18 @@ export function transformAverageBlockSize(blockSizes: TAverageBlockSize[]): TLin
     dataX.push(blockSizes[i].time);
   }
   return { dataX, dataY };
+}
+
+export function transformTransactionPerSecond(trans: TTransactionPerSecond[]): TLineChartData {
+  const dataX: string[] = [];
+  const dataY: number[] = [];
+  for (let i = 0; i < trans.length; i += 1) {
+    const size = Number(trans[i].size) / (24 * 3600);
+    dataY.push(size);
+    dataX.push(trans[i].time);
+  }
+  return {
+    dataX,
+    dataY,
+  };
 }

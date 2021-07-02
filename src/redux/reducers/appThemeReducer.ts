@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import * as types from '../actions/actionTypes';
 import { SetThemeProps } from '../actions/appThemeAction';
 import { AppStateType } from './index';
@@ -25,4 +26,7 @@ const reducer = (state = initialState, actions: ActionTypes): InitialAppThemePro
   }
 };
 export const getThemeState = (state: AppStateType) => state[stateKey];
+
+export const useGetThemeMode = () => useSelector(getThemeState).darkMode;
+
 export default { [stateKey]: reducer };

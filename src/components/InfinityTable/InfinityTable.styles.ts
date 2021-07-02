@@ -3,8 +3,6 @@ import styled from 'styled-components/macro';
 import { Card as MuiCard, darken, TableCell, Paper } from '@material-ui/core';
 import { spacing } from '@material-ui/system';
 
-import themeVariant from '@theme/variants';
-
 const StyledCard = styled(MuiCard)`
   background-color: ${props => props.theme.palette.background.paper} !important;
   padding: 0 ${props => props.theme.spacing(9)}px;
@@ -30,7 +28,7 @@ export const TableWrapper = styled.div`
   .ReactVirtualized__Grid {
     min-width: 1000px;
     width: 100% !important;
-    // background-color: ${props => props.theme.palette.background.default} !important;
+    background-color: ${props => props.theme.palette.background.default} !important;
     &::-webkit-scrollbar-track {
       background: black;
     }
@@ -51,17 +49,15 @@ export const TableWrapper = styled.div`
       background-color: ${props => darken(props.theme.palette.background.default, 0.5)} !important;
     }
     svg {
-      fill: ${props => props.theme.palette.text.default};
+      color: ${props => props.theme.palette.text.primary};
     }
   }
-
   .ReactVirtualized__Table__headerRow,
   .ReactVirtualized__Table__row {
     display: flex;
     transition: all 0.2s ease-in !important;
-    color: #27251f;
     &:hover {
-      background-color: ${darken(themeVariant.palette.background.paper, 0.05)} !important;
+      background-color: ${props => darken(props.theme.palette.background.default, 0.07)} !important;
     }
   }
 `;
@@ -83,7 +79,7 @@ export const HeaderCell = styled(TableCell)<{ $disabledSort: boolean }>`
   height: 70px;
   display: flex;
   white-space: nowrap;
-  color: #27251f;
+  color: ${props => props.theme.palette.text.primary};
   cursor: ${({ $disabledSort }) => !$disabledSort && 'pointer'};
 `;
 
