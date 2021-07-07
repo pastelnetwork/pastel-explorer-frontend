@@ -4,7 +4,9 @@ import { getThemeState } from '@redux/reducers/appThemeReducer';
 import {
   CHART_THEME_BACKGROUND_DEFAULT_COLOR,
   CHART_THEME_BACKGROUND_DEFAULT_COLOR_LIGHT,
+  themes,
 } from '@utils/constants/statistics';
+import { TThemeColor } from '@utils/constants/types';
 
 interface IUseSortDataProps<T> {
   fetchData?: () => Promise<{ data: T[] } | undefined>;
@@ -97,4 +99,17 @@ export function useBackgroundChart(): [string, (_color: string) => void] {
     setBgColor(color);
   }, []);
   return [bgColor, handleBgColorChange];
+}
+
+export function useUpdatChartTheme(): [TThemeColor | null, React.Dispatch<TThemeColor>] {
+  const [currentTheme, setCurrentTheme] = React.useState<TThemeColor | null>(null);
+  const { darkMode } = useSelector(getThemeState);
+  React.useEffect(() => {
+    if (darkMode) {
+      setCurrentTheme(themes[0]);
+    } else {
+      setCurrentTheme(themes[2]);
+    }
+  }, [darkMode]);
+  return [currentTheme, setCurrentTheme];
 }

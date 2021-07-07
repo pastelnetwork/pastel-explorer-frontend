@@ -9,6 +9,7 @@ import { makeDownloadFileName } from '@utils/helpers/statisticsLib';
 import { csvHeaders, themes } from '@utils/constants/statistics';
 import { TLineChartProps, TThemeColor, TThemeInitOption } from '@utils/constants/types';
 import { getThemeInitOption, getThemeUpdateOption } from '@utils/helpers/chartOptions';
+import { useUpdatChartTheme } from '@utils/hooks';
 import { eChartLineStyles } from './styles';
 
 export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
@@ -30,10 +31,12 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
   const styles = eChartLineStyles();
   const downloadRef = useRef(null);
   const [csvData, setCsvData] = useState<string | Data>('');
-  const [selectedPeriodButton, setSelectedPeriodButton] = useState(periods.length - 1);
+  const [selectedPeriodButton, setSelectedPeriodButton] = useState(
+    periods ? periods.length - 1 : '',
+  );
   const [selectedThemeButton, setSelectedThemeButton] = useState(0);
   const [selectedGranularityButton, setSelectedGranularityButton] = useState(0);
-  const [currentTheme, setCurrentTheme] = useState<TThemeColor | null>();
+  const [currentTheme, setCurrentTheme] = useUpdatChartTheme();
   const [eChartRef, setEChartRef] = useState<ReactECharts | null>();
   const [eChartInstance, setEChartInstance] = useState<echarts.ECharts>();
   const [minY, setMinY] = useState(0);
@@ -174,24 +177,26 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
               })}
             </div>
           )}
-          <div className={styles.periodSelect}>
-            <span style={{ color: currentTheme?.color }}>Period: </span>
-            {periods.map((period, index) => (
-              <button
-                className={`${getActivePriodButtonStyle(index)} ${styles.filterButton}`}
-                onClick={() => {
-                  setSelectedPeriodButton(index);
-                  if (handlePeriodFilterChange) {
-                    handlePeriodFilterChange(period);
-                  }
-                }}
-                type="button"
-                key={`button-filter-${period}`}
-              >
-                {period}
-              </button>
-            ))}
-          </div>
+          {periods && periods.length ? (
+            <div className={styles.periodSelect}>
+              <span style={{ color: currentTheme?.color }}>Period: </span>
+              {periods.map((period, index) => (
+                <button
+                  className={`${getActivePriodButtonStyle(index)} ${styles.filterButton}`}
+                  onClick={() => {
+                    setSelectedPeriodButton(index);
+                    if (handlePeriodFilterChange) {
+                      handlePeriodFilterChange(period);
+                    }
+                  }}
+                  type="button"
+                  key={`button-filter-${period}`}
+                >
+                  {period}
+                </button>
+              ))}
+            </div>
+          ) : null}
         </div>
       </div>
       <div className={styles.lineChartWrap}>

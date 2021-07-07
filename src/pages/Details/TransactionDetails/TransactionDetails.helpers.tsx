@@ -9,7 +9,7 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 
 import * as Styles from './TransactionDetails.styles';
 
-const BLOCK_CONFIRMED_NUMBER = 0;
+const BLOCK_CONFIRMED_NUMBER = 6;
 
 export const transactionHeaders: Array<HeaderType> = [
   { id: 1, header: 'Confirmations' },

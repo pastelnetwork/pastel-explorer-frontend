@@ -16,11 +16,17 @@ export const BlockContainer = styled.div`
   height: 125px;
   cursor: pointer;
   background: repeating-linear-gradient(
-    ${themeVariant.palette.primary.main},
-    ${themeVariant.palette.primary.main} 0.018575%,
-    ${themeVariant.palette.secondary.main} 0.018575%,
-    ${themeVariant.palette.primary.main} 100%
+    rgb(45, 51, 72),
+    rgb(45, 51, 72) 0.175375%,
+    rgb(147, 57, 244) 0.175375%,
+    rgb(16, 95, 176) 100%
   );
+  // background: repeating-linear-gradient(
+  //   ${themeVariant.palette.primary.main},
+  //   ${themeVariant.palette.primary.main} 0.018575%,
+  //   ${themeVariant.palette.secondary.main} 0.018575%,
+  //   ${themeVariant.palette.primary.main} 100%
+  // );
   transition: transform 0.2s ease-in;
 
   &::before {

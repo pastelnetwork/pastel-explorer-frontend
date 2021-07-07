@@ -10,6 +10,7 @@ import { csvHeaders, themes } from '@utils/constants/statistics';
 import { TScatterChartProps, TThemeColor, TThemeInitOption } from '@utils/constants/types';
 import { makeDownloadFileName } from '@utils/helpers/statisticsLib';
 import { getThemeInitOption, getThemeUpdateOption } from '@utils/helpers/chartOptions';
+import { useUpdatChartTheme } from '@utils/hooks';
 import { eChartLineStyles } from './styles';
 
 export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
@@ -29,7 +30,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
   const [csvData, setCsvData] = useState<string | Data>('');
   const [selectedPeriodButton, setSelectedPeriodButton] = useState(periods.length - 1);
   const [selectedThemeButton, setSelectedThemeButton] = useState(0);
-  const [currentTheme, setCurrentTheme] = useState<TThemeColor | null>();
+  const [currentTheme, setCurrentTheme] = useUpdatChartTheme();
   const [eChartRef, setEChartRef] = useState<ReactECharts | null>();
   const [eChartInstance, setEChartInstance] = useState<echarts.ECharts>();
   const [minY, setMinY] = useState(0);

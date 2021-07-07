@@ -34,7 +34,7 @@ export type TLineChartProps = {
   info: TStatisticsInfo;
   granularities?: TGranularity[];
   offset: number;
-  periods: PeriodTypes[];
+  periods?: PeriodTypes[];
   handleGranularityFilterChange?: (_granularity: TGranularity) => void;
   handleBgColorChange: (_color: string) => void;
   handlePeriodFilterChange?: (_period: PeriodTypes) => void;
