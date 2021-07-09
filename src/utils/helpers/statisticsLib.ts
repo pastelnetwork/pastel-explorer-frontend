@@ -1,3 +1,5 @@
+import format from 'date-fns/format';
+import fromUnixTime from 'date-fns/fromUnixTime';
 import {
   TMultiLineChartData,
   TMiningInfo,
@@ -9,10 +11,24 @@ import {
   TScatterChartData,
   TAverageBlockSize,
   TTransactionPerSecond,
+  IHashRateResponse,
 } from '@utils/types/IStatistics';
 import { IBlock } from '@utils/types/IBlocks';
+import { formattedDate } from '@utils/helpers/date/date';
 
-export type PeriodTypes = '2h' | '2d' | '4d' | '30d' | '60d' | '180d' | '1y' | 'all';
+export type PeriodTypes =
+  | '1h'
+  | '2h'
+  | '3h'
+  | '6h'
+  | '12h'
+  | '2d'
+  | '4d'
+  | '30d'
+  | '60d'
+  | '180d'
+  | '1y'
+  | 'all';
 export type TGranularity = '1d' | '30d' | '1y' | 'all';
 
 export const makeDownloadFileName = (currencyName: string | number, title: string): string => {
@@ -218,3 +234,23 @@ export function transformTransactionPerSecond(trans: TTransactionPerSecond[]): T
     dataY,
   };
 }
+
+export const transformChartData = (
+  { data }: IHashRateResponse,
+  isHourMinute = true,
+): TLineChartData => {
+  const dataX: string[] = [];
+  const dataY: number[] = [];
+  data.forEach(([time, value]: [number | string, number]) => {
+    if (typeof time === 'string') {
+      dataX.push(time);
+    } else {
+      const date = isHourMinute
+        ? format(fromUnixTime(time), 'HH:mm')
+        : formattedDate(time, { onlyDayMonthYear: true });
+      dataX.push(date);
+    }
+    dataY.push(Math.round((value + Number.EPSILON) * 1000) / 1000);
+  });
+  return { dataX, dataY };
+};

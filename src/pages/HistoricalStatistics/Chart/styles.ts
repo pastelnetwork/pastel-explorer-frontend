@@ -9,7 +9,7 @@ export const eChartLineStyles = makeStyles((theme: TAppTheme) => ({
     alignItems: 'center',
     height: '100%',
     width: '100%',
-    padding: '0 50px',
+    padding: '0 20px',
     textAlign: 'center',
     boxSizing: 'border-box',
     position: 'relative',

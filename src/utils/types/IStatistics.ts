@@ -1,5 +1,5 @@
 export interface IHashRateResponse {
-  data: [[number, number]];
+  data: [[number | string, number]];
 }
 
 export interface IStatistic {

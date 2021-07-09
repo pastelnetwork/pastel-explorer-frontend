@@ -121,6 +121,7 @@ export const pricesCSVHeaders = [
 export const periods: PeriodTypes[][] = [
   ['2h', '2d', '4d', 'all'],
   ['30d', '60d', '180d', '1y', 'all'],
+  ['1h', '3h', '6h', '12h'],
 ];
 
 export const CHART_THEME_BACKGROUND_DEFAULT_COLOR = '#0d0d0d';
