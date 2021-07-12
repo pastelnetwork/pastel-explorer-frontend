@@ -7,6 +7,13 @@ export interface TransactionEvent {
   address: string;
 }
 
+export interface BlockUnconfirmed {
+  fee: number;
+  size: number;
+  height: string | number;
+  txsCount: number;
+}
+
 export interface ITransaction {
   block: {
     height: string;
@@ -20,6 +27,9 @@ export interface ITransaction {
   totalAmount: number;
   isNonStandard: number | null;
   rawData: string;
+  size: number;
+  fee: number;
+  height: number;
 }
 
 export interface ITransactionDetails extends ITransaction {

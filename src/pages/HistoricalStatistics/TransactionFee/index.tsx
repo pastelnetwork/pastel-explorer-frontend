@@ -8,11 +8,11 @@ import { useBackgroundChart } from '@utils/hooks';
 import { TRawMempool, TLineChartData } from '@utils/types/IStatistics';
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
-const redrawCycle = 6000;
+// const redrawCycle = 6000;
 const TransactionFee: FC = () => {
   const [chartData, setChartData] = useState<TLineChartData | null>(null);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
-  const [ticker, setTicker] = useState<NodeJS.Timeout>();
+  // const [ticker, setTicker] = useState<NodeJS.Timeout>();
   const [period, setPeriod] = useState<PeriodTypes>(CHART_DEFAULT_PERIOD);
   const fetchStats = useFetch<{ data: Array<TRawMempool> }>({
     method: 'get',
@@ -24,25 +24,25 @@ const TransactionFee: FC = () => {
         params: { period, sortDirection: 'DESC' },
       });
       if (data) {
-        const parseData = transformTransactionFee(data.data, period);
+        const parseData = transformTransactionFee(data.data);
         setChartData(parseData);
       }
     };
     loadLineChartData();
-    const newTicker = setInterval(() => {
-      loadLineChartData();
-    }, redrawCycle);
-    setTicker(newTicker);
-    return () => {
-      if (newTicker) {
-        clearInterval(newTicker);
-      }
-    };
+    // const newTicker = setInterval(() => {
+    //   loadLineChartData();
+    // }, redrawCycle);
+    // setTicker(newTicker);
+    // return () => {
+    //   if (newTicker) {
+    //     clearInterval(newTicker);
+    //   }
+    // };
   }, [period]);
 
   const handlePeriodFilterChange = (value: PeriodTypes) => {
     setPeriod(value);
-    clearInterval(ticker as NodeJS.Timeout);
+    // clearInterval(ticker as NodeJS.Timeout);
   };
 
   return (
@@ -53,10 +53,10 @@ const TransactionFee: FC = () => {
             chartName="transactionfee"
             dataX={chartData?.dataX}
             dataY={chartData?.dataY}
-            title="Transaction Fee(usd)"
+            title="Average Transaction Fee (USD)"
             info={info}
             offset={0.01}
-            periods={periods[0]}
+            periods={periods[1]}
             handleBgColorChange={handleBgColorChange}
             handlePeriodFilterChange={handlePeriodFilterChange}
           />

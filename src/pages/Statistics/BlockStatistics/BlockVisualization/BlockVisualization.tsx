@@ -9,7 +9,8 @@ interface BlockVisualizationProps {
   size: BlockElementType;
   transactionCount: BlockElementType;
   minutesAgo: BlockElementType;
-  clickHandler: () => void;
+  clickHandler?: () => void;
+  className?: string;
 }
 
 const BlockVisualization: React.FC<BlockVisualizationProps> = ({
@@ -17,10 +18,11 @@ const BlockVisualization: React.FC<BlockVisualizationProps> = ({
   size,
   transactionCount,
   minutesAgo,
+  className = '',
   clickHandler,
 }) => {
   return (
-    <Styles.BlockContainer onClick={clickHandler}>
+    <Styles.BlockContainer className={className} onClick={clickHandler}>
       <Typography variant="caption">Block #:</Typography>
       <Typography variant="h3">{height}</Typography>
       <Typography variant="h4">{size}</Typography>

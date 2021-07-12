@@ -81,16 +81,9 @@ export type TRawMempoolInfo = {
 };
 
 export type TRawMempool = {
-  id: string;
-  transactionid: string;
   size: number;
   fee: number;
-  time: number;
-  height: number;
-  startingpriority: number;
-  currentpriority: number;
-  depends: string;
-  timestamp: number;
+  time: string;
 };
 
 export type TStatisticsInfo = {

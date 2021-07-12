@@ -145,22 +145,14 @@ export function transformHashrateInfo(
   return { dataX, dataY };
 }
 
-export function transformTransactionFee(
-  transactionFees: TRawMempool[],
-  period: PeriodTypes,
-): TLineChartData {
+export function transformTransactionFee(transactionFees: TRawMempool[]): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
 
-  const startDate = getStartPoint(period);
-
   for (let i = 0; i < transactionFees.length; i += 1) {
-    if (transactionFees[i].timestamp !== null && transactionFees[i].fee !== 0) {
-      const createTime = Number(transactionFees[i].timestamp);
-      if (createTime > startDate) {
-        dataY.push(Number(transactionFees[i].fee));
-        dataX.push(new Date(createTime).toLocaleString());
-      }
+    if (transactionFees[i].fee >= 0) {
+      dataY.push(Number(transactionFees[i].fee));
+      dataX.push(transactionFees[i].time);
     }
   }
   return { dataX, dataY };

@@ -54,7 +54,7 @@ const MempoolSize: FC = () => {
             chartName="mempoolsize"
             dataX={chartData?.dataX}
             dataY={chartData?.dataY}
-            title="Mempool Size(KByte)"
+            title="Mempool Size(kB)"
             info={info}
             offset={1}
             periods={periods[0]}

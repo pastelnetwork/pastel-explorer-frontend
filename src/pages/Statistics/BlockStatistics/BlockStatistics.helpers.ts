@@ -12,14 +12,17 @@ export interface ITransformBlocksData {
   minutesAgo: string;
 }
 
-export const transformBlocksData = (transactions: Array<IBlock>): Array<ITransformBlocksData> => {
+export const transformBlocksData = (
+  transactions: Array<IBlock>,
+  currentTime: number,
+): Array<ITransformBlocksData> => {
   return transactions.map(({ id, timestamp, transactionCount, height, size }) => {
-    const minutesAgo = Math.floor((getCurrentUnixTimestamp - timestamp) / 60);
+    const minutesAgo = Math.floor(((currentTime || getCurrentUnixTimestamp) - timestamp) / 60);
     return {
       id,
       transactionCount: `${transactionCount} transaction${transactionCount === 1 ? '' : 's'}`,
       height: formatNumber(height),
-      size: `${(size / 1024).toFixed(2)} KB`,
+      size: `${(size / 1024).toFixed(2)} kB`,
       minutesAgo: `${minutesAgo} minute${minutesAgo === 1 ? '' : 's'} ago`,
     };
   });
