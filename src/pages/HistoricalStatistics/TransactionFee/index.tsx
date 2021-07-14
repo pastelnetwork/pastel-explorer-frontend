@@ -2,10 +2,10 @@ import { FC, useEffect, useState } from 'react';
 import { Container } from '@pages/HistoricalStatistics/StatisticsOvertime.styles';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { PeriodTypes, transformTransactionFee } from '@utils/helpers/statisticsLib';
+import { PeriodTypes, transformTransactionsChartData } from '@utils/helpers/statisticsLib';
 import { CHART_DEFAULT_PERIOD, periods, info } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
-import { TRawMempool, TLineChartData } from '@utils/types/IStatistics';
+import { TLineChartData, TTransactionsChart } from '@utils/types/IStatistics';
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
 // const redrawCycle = 6000;
@@ -14,17 +14,17 @@ const TransactionFee: FC = () => {
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   // const [ticker, setTicker] = useState<NodeJS.Timeout>();
   const [period, setPeriod] = useState<PeriodTypes>(CHART_DEFAULT_PERIOD);
-  const fetchStats = useFetch<{ data: Array<TRawMempool> }>({
+  const fetchStats = useFetch<{ data: Array<TTransactionsChart> }>({
     method: 'get',
-    url: URLS.GET_STATISTICS_RAW_MEM_POOL,
+    url: URLS.GET_TRANSACTIONS_CHARTS,
   });
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { period, sortDirection: 'DESC' },
+        params: { period, sortDirection: 'DESC', sqlQuery: 'AVG(fee)' },
       });
       if (data) {
-        const parseData = transformTransactionFee(data.data);
+        const parseData = transformTransactionsChartData(data.data);
         setChartData(parseData);
       }
     };

@@ -4,7 +4,6 @@ import {
   TMultiLineChartData,
   TMiningInfo,
   TLineChartData,
-  TRawMempool,
   IStatistic,
   TMempoolInfo,
   TNettotalsInfo,
@@ -12,6 +11,7 @@ import {
   TAverageBlockSize,
   TTransactionPerSecond,
   IHashRateResponse,
+  TTransactionsChart,
 } from '@utils/types/IStatistics';
 import { IBlock } from '@utils/types/IBlocks';
 import { formattedDate } from '@utils/helpers/date/date';
@@ -145,19 +145,6 @@ export function transformHashrateInfo(
   return { dataX, dataY };
 }
 
-export function transformTransactionFee(transactionFees: TRawMempool[]): TLineChartData {
-  const dataX: string[] = [];
-  const dataY: number[] = [];
-
-  for (let i = 0; i < transactionFees.length; i += 1) {
-    if (transactionFees[i].fee >= 0) {
-      dataY.push(Number(transactionFees[i].fee));
-      dataX.push(transactionFees[i].time);
-    }
-  }
-  return { dataX, dataY };
-}
-
 export function transformMempoolInfo(mempoolInfo: TMempoolInfo[]): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
@@ -246,3 +233,13 @@ export const transformChartData = (
   });
   return { dataX, dataY };
 };
+
+export function transformTransactionsChartData(data: TTransactionsChart[]): TLineChartData {
+  const dataX: string[] = [];
+  const dataY: number[] = [];
+  data.forEach(({ value, label }) => {
+    dataX.push(label);
+    dataY.push(value);
+  });
+  return { dataX, dataY };
+}

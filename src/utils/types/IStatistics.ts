@@ -120,3 +120,8 @@ export type TAverageBlockSize = {
 };
 
 export type TTransactionPerSecond = TAverageBlockSize;
+
+export type TTransactionsChart = {
+  label: string;
+  value: number;
+};

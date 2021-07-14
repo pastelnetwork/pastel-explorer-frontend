@@ -26,3 +26,5 @@ export const STATISTICS_NETTOTALS = `${STATISTICS_OVERTIME}/nettotals`;
 export const STATISTICS_TRANSACTION_IN_BLOCK = `${STATISTICS_OVERTIME}/transaction-in-block`;
 export const STATISTICS_AVERAGE_BLOCK_SIZE = `${STATISTICS_OVERTIME}/average-block-size`;
 export const STATISTICS_TRANSACTION_PER_SECOND = `${STATISTICS_OVERTIME}/transaction-per-second`;
+export const STATISTICS_TRANSACTION_COUNT = `${STATISTICS_OVERTIME}/transaction-count`;
+export const STATISTICS_AVERAGE_TRANSACTIONS_PER_BLOCK = `${STATISTICS_OVERTIME}/average-transaction-per-block`;

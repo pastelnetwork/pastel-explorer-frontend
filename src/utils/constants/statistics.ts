@@ -8,7 +8,7 @@ export const statistics = [
     id: 'averageBlockSize',
     title: 'Average Block Size',
     url: routes.STATISTICS_AVERAGE_BLOCK_SIZE,
-    image: '/images/statistics/averageblocksize.jpg',
+    image: '/images/statistics/averageblocksize.png',
   },
   {
     id: 'difficulty',
@@ -29,12 +29,6 @@ export const statistics = [
     image: '/images/statistics/hashrate.jpg',
   },
   {
-    id: 'transactionfee',
-    title: 'Transaction Fee',
-    url: routes.STATISTICS_TRANSACTION_FEE,
-    image: '/images/statistics/transactionfee.jpg',
-  },
-  {
     id: 'mempoolsize',
     title: 'Mempool Size',
     url: routes.STATISTICS_MEMPOOL_SIZE,
@@ -47,6 +41,12 @@ export const statistics = [
     image: '/images/statistics/nettotals.jpg',
   },
   {
+    id: 'transactionfee',
+    title: 'Average Transaction Fee',
+    url: routes.STATISTICS_TRANSACTION_FEE,
+    image: '/images/statistics/transactionfee.jpg',
+  },
+  {
     id: 'transactionPerSecond',
     title: 'Transaction Per Second',
     url: routes.STATISTICS_TRANSACTION_PER_SECOND,
@@ -57,6 +57,18 @@ export const statistics = [
     title: 'Transaction In Block',
     url: routes.STATISTICS_TRANSACTION_IN_BLOCK,
     image: '/images/statistics/transactionsinblock.jpg',
+  },
+  {
+    id: 'transactionsCount',
+    title: 'Transaction Count',
+    url: routes.STATISTICS_TRANSACTION_COUNT,
+    image: '/images/statistics/transactionscount.png',
+  },
+  {
+    id: 'averageTransactionsPerBlock',
+    title: 'Average Transactions Per Block',
+    url: routes.STATISTICS_AVERAGE_TRANSACTIONS_PER_BLOCK,
+    image: '/images/statistics/averagetransactionsperblock.png',
   },
 ];
 
