@@ -19,6 +19,13 @@ export const Wrapper = styled.section`
   .card-item {
     cursor: pointer;
   }
+  @media (max-width: 760px) {
+    padding: 0;
+    .card-item {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
 `;
 
 export const Container = styled.div`

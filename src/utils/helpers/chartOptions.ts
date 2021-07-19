@@ -17,8 +17,8 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       grid: {
         top: 8,
         right: 8,
-        bottom: 40,
-        left: 70,
+        bottom: 20,
+        left: 40,
         show: false,
       },
       visualMap: {
@@ -49,7 +49,13 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            return Number.parseFloat(value).toFixed(2);
+            if (maxY > 1000000) {
+              return `${Math.round(Number(value) / 1000000)} M`;
+            }
+            if (maxY > 1000) {
+              return `${Math.round(Number(value) / 1000)} K`;
+            }
+            return Number(value);
           },
         },
       },
@@ -73,8 +79,8 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       grid: {
         top: 8,
         right: 8,
-        bottom: 40,
-        left: 70,
+        bottom: 20,
+        left: 40,
         show: false,
       },
       tooltip: {
@@ -98,7 +104,13 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            return Number.parseFloat(value).toFixed(2);
+            if (maxY > 1000000) {
+              return `${Math.round(Number(value) / 1000000)} M`;
+            }
+            if (maxY > 1000) {
+              return `${Math.round(Number(value) / 1000)} K`;
+            }
+            return Number(value);
           },
         },
       },
@@ -136,8 +148,8 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       grid: {
         top: 8,
         right: 8,
-        bottom: 40,
-        left: 70,
+        bottom: 20,
+        left: 40,
         show: false,
       },
       tooltip: {
@@ -242,8 +254,8 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       grid: {
         top: 8,
         right: 8,
-        bottom: 40,
-        left: 70,
+        bottom: 20,
+        left: 40,
         show: false,
       },
       tooltip: {
@@ -267,7 +279,13 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            return `${Number(value).toFixed(2)} k`;
+            if (maxY > 1000000) {
+              return `${Math.round(Number(value) / 1000000)} M`;
+            }
+            if (maxY > 1000) {
+              return `${Math.round(Number(value) / 1000)} K`;
+            }
+            return `${Number(value)} k`;
           },
         },
       },
@@ -303,8 +321,8 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       grid: {
         top: 8,
         right: 8,
-        bottom: 40,
-        left: 70,
+        bottom: 20,
+        left: 40,
         show: false,
       },
       tooltip: {
@@ -328,6 +346,12 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
+            if (maxY > 1000000) {
+              return `${Math.round(Number(value) / 1000000)} M`;
+            }
+            if (maxY > 1000) {
+              return `${Math.round(Number(value) / 1000)} K`;
+            }
             return Number.parseFloat(value);
           },
         },
@@ -348,8 +372,8 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       grid: {
         top: 8,
         right: 8,
-        bottom: 40,
-        left: 70,
+        bottom: 20,
+        left: 40,
         show: false,
       },
       tooltip: {
@@ -373,6 +397,12 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
+            if (maxY > 1000000) {
+              return `${Math.round(Number(value) / 1000000)} M`;
+            }
+            if (maxY > 1000) {
+              return `${Math.round(Number(value) / 1000)} K`;
+            }
             return Number.parseFloat(value);
           },
         },
@@ -405,8 +435,8 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       grid: {
         top: 8,
         right: 8,
-        bottom: 40,
-        left: 70,
+        bottom: 20,
+        left: 40,
         show: false,
       },
       tooltip: {
@@ -430,6 +460,12 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
+            if (maxY > 1000000) {
+              return `${Math.round(Number(value) / 1000000)} M`;
+            }
+            if (maxY > 1000) {
+              return `${Math.round(Number(value) / 1000)} K`;
+            }
             return Number.parseFloat(value);
           },
         },

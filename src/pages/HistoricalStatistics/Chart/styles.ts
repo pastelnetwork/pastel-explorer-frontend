@@ -82,7 +82,7 @@ export const eChartLineStyles = makeStyles((theme: TAppTheme) => ({
   periodSelect: {
     display: 'flex',
     minWidth: '200px',
-    justifyContent: 'space-around',
+    // justifyContent: 'space-around',
     alignItems: 'center',
     marginTop: '15px',
     [theme.breakpoints.down('sm')]: {
