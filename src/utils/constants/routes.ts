@@ -28,3 +28,5 @@ export const STATISTICS_AVERAGE_BLOCK_SIZE = `${STATISTICS_OVERTIME}/average-blo
 export const STATISTICS_TRANSACTION_PER_SECOND = `${STATISTICS_OVERTIME}/transaction-per-second`;
 export const STATISTICS_TRANSACTION_COUNT = `${STATISTICS_OVERTIME}/transaction-count`;
 export const STATISTICS_AVERAGE_TRANSACTIONS_PER_BLOCK = `${STATISTICS_OVERTIME}/average-transaction-per-block`;
+export const STATISTICS_BLOCKCHAIN_SIZE = `${STATISTICS_OVERTIME}/blockchain-size`;
+export const STATISTICS_TOTAL_TRANSACTION_COUNT = `${STATISTICS_OVERTIME}/total-transaction-count`;

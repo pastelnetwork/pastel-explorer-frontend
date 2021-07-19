@@ -12,6 +12,7 @@ import {
   TTransactionPerSecond,
   IHashRateResponse,
   TTransactionsChart,
+  TChartResponseItem,
 } from '@utils/types/IStatistics';
 import { IBlock } from '@utils/types/IBlocks';
 import { formattedDate } from '@utils/helpers/date/date';
@@ -123,22 +124,15 @@ export function transformPriceInfo(prices: IStatistic[]): TMultiLineChartData {
   return { dataX, dataY1, dataY2 };
 }
 
-export function transformHashrateInfo(
-  hashrateInfo: TMiningInfo[],
-  period: PeriodTypes,
-): TLineChartData {
+export function transformHashrateInfo(hashrateInfo: TMiningInfo[]): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
-
-  const startDate = getStartPoint(period);
 
   for (let i = 0; i < hashrateInfo.length; i += 1) {
     if (hashrateInfo[i].timestamp !== null) {
       const createTime = Number(hashrateInfo[i].timestamp);
-      if (createTime > startDate) {
-        dataY.push(Number(hashrateInfo[i].networksolps) / 1000000);
-        dataX.push(new Date(createTime).toLocaleString());
-      }
+      dataY.push(+(Number(hashrateInfo[i].networksolps) / 10e3).toFixed(2));
+      dataX.push(new Date(createTime).toLocaleString());
     }
   }
 
@@ -234,12 +228,47 @@ export const transformChartData = (
   return { dataX, dataY };
 };
 
-export function transformTransactionsChartData(data: TTransactionsChart[]): TLineChartData {
+export function transformCharts(data: TChartResponseItem[], range = 1): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
   data.forEach(({ value, label }) => {
     dataX.push(label);
-    dataY.push(value);
+    dataY.push(+(value / range).toFixed(2));
   });
   return { dataX, dataY };
+}
+
+export function transformBlockchainSize(data: TTransactionsChart[]): TLineChartData {
+  const dataX: string[] = [];
+  const dataY: number[] = [];
+  dataX.push(data[0].label);
+  dataY.push(+(data[0].value / 10e6).toFixed(2));
+  if (data.length > 1) {
+    for (let i = 1; i < data.length; i += 1) {
+      const { value, label } = data[i];
+      dataX.push(label);
+      dataY.push(+(dataY[i - 1] + +(value / 10e6).toFixed(2)).toFixed(2));
+    }
+  }
+
+  return { dataX, dataY };
+}
+
+export function transformTotalTransactionCount(data: TChartResponseItem[]) {
+  const dataX: string[] = [];
+  const dataY: number[] = [];
+  dataX.push(data[0].label);
+  dataY.push(data[0].value);
+  if (data.length > 1) {
+    for (let i = 1; i < data.length; i += 1) {
+      const { value, label } = data[i];
+      const newValue = dataY[i - 1] + value;
+      dataY.push(newValue);
+      dataX.push(label);
+    }
+  }
+  return {
+    dataX,
+    dataY,
+  };
 }

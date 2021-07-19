@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { Container } from '@pages/HistoricalStatistics/StatisticsOvertime.styles';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { PeriodTypes, transformTransactionsChartData } from '@utils/helpers/statisticsLib';
+import { PeriodTypes, transformCharts } from '@utils/helpers/statisticsLib';
 import { CHART_DEFAULT_PERIOD, periods, info } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { TLineChartData, TTransactionsChart } from '@utils/types/IStatistics';
@@ -24,7 +24,7 @@ const TransactionFee: FC = () => {
         params: { period, sortDirection: 'DESC', sqlQuery: 'AVG(transactionCount)' },
       });
       if (data) {
-        const parseData = transformTransactionsChartData(data.data);
+        const parseData = transformCharts(data.data);
         setChartData(parseData);
       }
     };

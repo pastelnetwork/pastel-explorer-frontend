@@ -5,6 +5,12 @@ import { TCsvHeaderType } from './types';
 
 export const statistics = [
   {
+    id: 'blockchainsize',
+    title: 'Blockchain Size',
+    url: routes.STATISTICS_BLOCKCHAIN_SIZE,
+    image: '/images/statistics/blockchainsize.png',
+  },
+  {
     id: 'averageBlockSize',
     title: 'Average Block Size',
     url: routes.STATISTICS_AVERAGE_BLOCK_SIZE,
@@ -14,13 +20,13 @@ export const statistics = [
     id: 'difficulty',
     title: 'Difficulty',
     url: routes.STATISTICS_DIFFICULTY,
-    image: '/images/statistics/difficulty.jpg',
+    image: '/images/statistics/difficulty.png',
   },
   {
     id: 'pslPrice',
     title: 'Price',
     url: routes.STATISTICS_PSLPRICE,
-    image: '/images/statistics/pslprice.jpg',
+    image: '/images/statistics/pslprice.png',
   },
   {
     id: 'hashrate',
@@ -41,6 +47,18 @@ export const statistics = [
     image: '/images/statistics/nettotals.jpg',
   },
   {
+    id: 'transactionsCount',
+    title: 'Transaction Count',
+    url: routes.STATISTICS_TRANSACTION_COUNT,
+    image: '/images/statistics/transactionscount.png',
+  },
+  {
+    id: 'totaltransactioncount',
+    title: 'Total Transaction Count',
+    url: routes.STATISTICS_TOTAL_TRANSACTION_COUNT,
+    image: '/images/statistics/totaltransactioncount.png',
+  },
+  {
     id: 'transactionfee',
     title: 'Average Transaction Fee',
     url: routes.STATISTICS_TRANSACTION_FEE,
@@ -57,12 +75,6 @@ export const statistics = [
     title: 'Transaction In Block',
     url: routes.STATISTICS_TRANSACTION_IN_BLOCK,
     image: '/images/statistics/transactionsinblock.jpg',
-  },
-  {
-    id: 'transactionsCount',
-    title: 'Transaction Count',
-    url: routes.STATISTICS_TRANSACTION_COUNT,
-    image: '/images/statistics/transactionscount.png',
   },
   {
     id: 'averageTransactionsPerBlock',

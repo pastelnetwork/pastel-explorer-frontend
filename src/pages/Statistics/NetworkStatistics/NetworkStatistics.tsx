@@ -3,9 +3,9 @@ import { Grid } from '@material-ui/core';
 import Header from '@components/Header/Header';
 import { Skeleton } from '@material-ui/lab';
 
-import { IHashRateResponse, TLineChartData } from '@utils/types/IStatistics';
+import { TMiningInfo, TLineChartData } from '@utils/types/IStatistics';
 
-import { PeriodTypes, transformChartData } from '@utils/helpers/statisticsLib';
+import { PeriodTypes, transformHashrateInfo } from '@utils/helpers/statisticsLib';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { periods, info } from '@utils/constants/statistics';
@@ -18,9 +18,9 @@ const NetworkStatistics: React.FC = () => {
   const [period, setPeriod] = useState(periods[2][periods[2].length - 1]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
-  const { fetchData } = useFetch<IHashRateResponse>({
+  const { fetchData } = useFetch<{ data: TMiningInfo[] }>({
     method: 'get',
-    url: `${URLS.HASHRATE_URL}?period=${period}`,
+    url: `${URLS.GET_STATISTICS_HASHRATE}?period=${period}`,
   });
   const [chartData, setChartData] = useState<TLineChartData | null>(null);
   const fetchHashrateData = () => {
@@ -28,7 +28,7 @@ const NetworkStatistics: React.FC = () => {
     fetchData()
       .then(response => {
         if (!response) return null;
-        const parseData = transformChartData(response);
+        const parseData = transformHashrateInfo(response.data);
         return setChartData(parseData);
       })
       .finally(() => setIsLoading(false));
@@ -50,9 +50,9 @@ const NetworkStatistics: React.FC = () => {
                 chartName="averageblocksize"
                 dataX={chartData?.dataX}
                 dataY={chartData?.dataY}
-                title="Hashrate GH/s"
+                title="Hashrate MH/s"
                 info={info}
-                offset={1}
+                offset={0}
                 periods={periods[2]}
                 handleBgColorChange={handleBgColorChange}
                 handlePeriodFilterChange={handlePeriodFilterChange}

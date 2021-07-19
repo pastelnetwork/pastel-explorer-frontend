@@ -1,48 +1,36 @@
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container } from '@pages/HistoricalStatistics/StatisticsOvertime.styles';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { PeriodTypes, transformCharts } from '@utils/helpers/statisticsLib';
+import { PeriodTypes, transformBlockchainSize } from '@utils/helpers/statisticsLib';
 import { CHART_DEFAULT_PERIOD, periods, info } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
-import { TChartResponseItem, TLineChartData } from '@utils/types/IStatistics';
+import { TLineChartData, TTransactionsChart } from '@utils/types/IStatistics';
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
-// const redrawCycle = 6000;
-const Difficulty: FC = () => {
+function BlockchainSize() {
   const [chartData, setChartData] = useState<TLineChartData | null>(null);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
-  // const [ticker, setTicker] = useState<NodeJS.Timeout>();
   const [period, setPeriod] = useState<PeriodTypes>(CHART_DEFAULT_PERIOD);
-  const fetchStats = useFetch<{ data: Array<TChartResponseItem> }>({
+  const fetchStats = useFetch<{ data: Array<TTransactionsChart> }>({
     method: 'get',
-    url: URLS.GET_STATISTICS_MINING_CHARTS,
+    url: URLS.GET_BLOCKS_CHARTS,
   });
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { period, sortDirection: 'DESC', sqlQuery: 'AVG(networkhashps)' },
+        params: { period, sortDirection: 'DESC', sqlQuery: 'SUM(size)' },
       });
       if (data) {
-        const parseData = transformCharts(data.data, 10e3);
+        const parseData = transformBlockchainSize(data.data);
         setChartData(parseData);
       }
     };
     loadLineChartData();
-    // const newTicker = setInterval(() => {
-    //   loadLineChartData();
-    // }, redrawCycle);
-    // setTicker(newTicker);
-    // return () => {
-    //   if (newTicker) {
-    //     clearInterval(newTicker);
-    //   }
-    // };
   }, [period]);
 
   const handlePeriodFilterChange = (value: PeriodTypes) => {
     setPeriod(value);
-    // clearInterval(ticker as NodeJS.Timeout);
   };
 
   return (
@@ -50,10 +38,10 @@ const Difficulty: FC = () => {
       <div style={{ flex: 1, backgroundColor: currentBgColor }}>
         {chartData && (
           <EChartsLineChart
-            chartName="hashrate"
+            chartName="transactionfee"
             dataX={chartData?.dataX}
             dataY={chartData?.dataY}
-            title="Hashrate(MH/s)"
+            title="Blockchain Size (Mb)"
             info={info}
             offset={0}
             periods={periods[1]}
@@ -64,6 +52,6 @@ const Difficulty: FC = () => {
       </div>
     </Container>
   );
-};
+}
 
-export default Difficulty;
+export default BlockchainSize;

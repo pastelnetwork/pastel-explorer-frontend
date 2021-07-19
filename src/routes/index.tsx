@@ -37,6 +37,8 @@ import AverageBlockSize from '@pages/HistoricalStatistics/AverageBlockSize';
 import TransactionPerSecond from '@pages/HistoricalStatistics/TransctionPerSecond';
 import TransactionCount from '@pages/HistoricalStatistics/TransactionCount';
 import AverageTransactionsPerBlock from '@pages/HistoricalStatistics/AverageTransactionsPerBlock';
+import BlockchainSize from '@pages/HistoricalStatistics/BlockchainSize';
+import TotalTransactionCount from '@pages/HistoricalStatistics/TotalTransactionsCount';
 
 import * as ROUTES from '@utils/constants/routes';
 
@@ -145,7 +147,6 @@ const difficultyStatisticsRoutes = {
   id: 'Difficulty Overtime',
   path: ROUTES.STATISTICS_DIFFICULTY,
   component: DifficultyStatistics,
-  icon: <BarChartIcon />,
   seoTitle: 'Difficulty Overtime',
   children: null,
 };
@@ -154,7 +155,6 @@ const pricesStatisticsRoutes = {
   id: 'PSL Prices Overtime',
   path: ROUTES.STATISTICS_PSLPRICE,
   component: PricesStatistics,
-  icon: <BarChartIcon />,
   seoTitle: 'PSL Prices Overtime',
   children: null,
 };
@@ -163,7 +163,6 @@ const hashRateStatisticsRoutes = {
   id: 'HashRate Overtime',
   path: ROUTES.STATISTICS_HASHRATE,
   component: HashRateStatistics,
-  icon: <BarChartIcon />,
   seoTitle: 'HashRate Overtime',
   children: null,
 };
@@ -172,7 +171,6 @@ const transactionFeeStatisticsRoutes = {
   id: 'Transaction Fee Overtime',
   path: ROUTES.STATISTICS_TRANSACTION_FEE,
   component: TransactionFeeStatistics,
-  icon: <BarChartIcon />,
   seoTitle: 'Transaction Fee Overtime',
   children: null,
 };
@@ -181,7 +179,6 @@ const mempoolSizeStatisticsRoutes = {
   id: 'Mempool Size',
   path: ROUTES.STATISTICS_MEMPOOL_SIZE,
   component: MempoolSize,
-  icon: <BarChartIcon />,
   seoTitle: 'Mempool Size',
   children: null,
 };
@@ -190,7 +187,6 @@ const nettotalsStatisticsRoutes = {
   id: 'Nettotals',
   path: ROUTES.STATISTICS_NETTOTALS,
   component: Nettotals,
-  icon: <BarChartIcon />,
   seoTitle: 'Nettotals',
   children: null,
 };
@@ -199,7 +195,6 @@ const transactionInBlockStatisticsRoutes = {
   id: 'transactionInBlock',
   path: ROUTES.STATISTICS_TRANSACTION_IN_BLOCK,
   component: TransactionInBlock,
-  icon: <BarChartIcon />,
   seoTitle: 'Transaction In Block',
   children: null,
 };
@@ -208,7 +203,6 @@ const averageBlockSizeStatisticsRoutes = {
   id: 'averageBlockSize',
   path: ROUTES.STATISTICS_AVERAGE_BLOCK_SIZE,
   component: AverageBlockSize,
-  icon: <BarChartIcon />,
   seoTitle: 'Average Block Size',
   children: null,
 };
@@ -217,7 +211,6 @@ const transactionPerSecondStatisticsRoutes = {
   id: 'transactionPerSecond',
   path: ROUTES.STATISTICS_TRANSACTION_PER_SECOND,
   component: TransactionPerSecond,
-  icon: <BarChartIcon />,
   seoTitle: 'Transaction Per Second',
   children: null,
 };
@@ -226,7 +219,6 @@ const transactionCountStatisticsRoutes = {
   id: 'transactionCount',
   path: ROUTES.STATISTICS_TRANSACTION_COUNT,
   component: TransactionCount,
-  icon: <BarChartIcon />,
   seoTitle: 'Transaction Count',
   children: null,
 };
@@ -235,11 +227,25 @@ const averageTransactionsPerBlockStatisticsRoutes = {
   id: 'transactionCount',
   path: ROUTES.STATISTICS_AVERAGE_TRANSACTIONS_PER_BLOCK,
   component: AverageTransactionsPerBlock,
-  icon: <BarChartIcon />,
   seoTitle: 'Transaction Count',
   children: null,
 };
 
+const blockchainSizeStatisticsRoutes = {
+  id: 'blockchainsize',
+  path: ROUTES.STATISTICS_BLOCKCHAIN_SIZE,
+  component: BlockchainSize,
+  seoTitle: 'Blockchain Size',
+  children: null,
+};
+
+const totalTransactionCountStatisticsRoutes = {
+  id: 'totaltransactioncount',
+  path: ROUTES.STATISTICS_TOTAL_TRANSACTION_COUNT,
+  component: TotalTransactionCount,
+  seoTitle: 'Total Transaction Count',
+  children: null,
+};
 // Uncomment this when API page will be ready
 // const infoRoutes = {
 //   id: 'API',
@@ -298,6 +304,8 @@ export const pageRoutes = [
   transactionPerSecondStatisticsRoutes,
   transactionCountStatisticsRoutes,
   averageTransactionsPerBlockStatisticsRoutes,
+  blockchainSizeStatisticsRoutes,
+  totalTransactionCountStatisticsRoutes,
 ];
 
 export const sidebarRoutes = [
