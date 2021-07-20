@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Box, Grid, Collapse, Drawer, List, IconButton } from '@material-ui/core';
+import { Box, Grid, Collapse, Drawer, List, IconButton, Hidden, ListItem } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import * as ROUTES from '@utils/constants/routes';
 import { RouteType, RouteChildType } from '@utils/types/routes';
 
 import { sidebarRoutes as routes } from '@routes/index';
-
+import SwitchMode from '@components/SearchBar/SwitchMode';
 import PastelLogoWhite from '@assets/images/pastel-logo-white.png';
 import PastelLogo from '@assets/images/pastel-logo.png';
 import { footerIcons } from './SideBar.helpers';
@@ -180,6 +180,11 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
                 )}
               </React.Fragment>
             ))}
+            <Hidden mdUp>
+              <ListItem style={{ justifyContent: 'flex-end' }}>
+                <SwitchMode />
+              </ListItem>
+            </Hidden>
           </Styles.Items>
         </List>
       </Styles.Scrollbar>

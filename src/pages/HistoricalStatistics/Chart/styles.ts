@@ -45,6 +45,7 @@ export const eChartLineStyles = makeStyles((theme: TAppTheme) => ({
     paddingBottom: '10px',
     [theme.breakpoints.down('sm')]: {
       paddingTop: 10,
+      paddingLeft: 10,
       justifyContent: 'flex-start',
       flexDirection: 'column',
     },

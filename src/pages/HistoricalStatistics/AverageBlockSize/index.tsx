@@ -1,5 +1,8 @@
+// react
 import { useEffect, useState } from 'react';
-
+// third party
+import { Skeleton } from '@material-ui/lab';
+// application
 import { Container } from '@pages/HistoricalStatistics/StatisticsOvertime.styles';
 import { TLineChartData, TAverageBlockSize } from '@utils/types/IStatistics';
 import { TGranularity, PeriodTypes, transformAverageBlockSize } from '@utils/helpers/statisticsLib';
@@ -15,13 +18,10 @@ import {
 import { useBackgroundChart } from '@utils/hooks';
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
-// const redrawCycle = 6000;
-
 const AverageBlockSize = (): JSX.Element => {
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const [period, setPeriod] = useState<PeriodTypes>(CHART_DEFAULT_PERIOD);
   const [granularity, setGranularity] = useState<TGranularity>(BLOCK_CHART_DEFAULT_GRANULARITY);
-  // const [ticker, setTicker] = useState<NodeJS.Timeout>();
   const [chartData, setChartData] = useState<TLineChartData | null>(null);
   const fetchStats = useFetch<{ data: Array<TAverageBlockSize> }>({
     method: 'get',
@@ -38,31 +38,20 @@ const AverageBlockSize = (): JSX.Element => {
       }
     };
     loadLineChartData();
-    // const newTicker = setInterval(() => {
-    //   loadLineChartData();
-    // }, redrawCycle);
-    // setTicker(newTicker);
-    // return () => {
-    //   if (newTicker) {
-    //     clearInterval(newTicker);
-    //   }
-    // };
   }, [granularity, period]);
 
   const handlePeriodFilterChange = (value: PeriodTypes) => {
     setPeriod(value);
-    // clearInterval(ticker as NodeJS.Timeout);
   };
 
   const handleGranularityFilterChange = (value: TGranularity) => {
     setGranularity(value);
-    // clearInterval(ticker as NodeJS.Timeout);
   };
 
   return (
     <Container>
       <div style={{ flex: 1, backgroundColor: currentBgColor }}>
-        {chartData && (
+        {chartData ? (
           <EChartsLineChart
             chartName="averageblocksize"
             dataX={chartData?.dataX}
@@ -76,6 +65,8 @@ const AverageBlockSize = (): JSX.Element => {
             handlePeriodFilterChange={handlePeriodFilterChange}
             handleGranularityFilterChange={handleGranularityFilterChange}
           />
+        ) : (
+          <Skeleton animation="wave" variant="rect" height={386} />
         )}
       </div>
     </Container>

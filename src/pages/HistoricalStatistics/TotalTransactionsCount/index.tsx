@@ -1,4 +1,8 @@
+// react
 import { useEffect, useState } from 'react';
+// third party
+import { Skeleton } from '@material-ui/lab';
+// application
 import { Container } from '@pages/HistoricalStatistics/StatisticsOvertime.styles';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
@@ -8,7 +12,7 @@ import { TTransactionsChart, TLineChartData } from '@utils/types/IStatistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
-function StatisticsTransactionsCount() {
+function TotalTransactionCount() {
   const [chartData, setChartData] = useState<TLineChartData | null>(null);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const fetchStats = useFetch<{ data: Array<TTransactionsChart> }>({
@@ -31,7 +35,7 @@ function StatisticsTransactionsCount() {
   return (
     <Container>
       <div style={{ flex: 1, backgroundColor: currentBgColor }}>
-        {chartData && (
+        {chartData ? (
           <EChartsLineChart
             chartName="transactionfee"
             dataX={chartData?.dataX}
@@ -41,10 +45,12 @@ function StatisticsTransactionsCount() {
             offset={1}
             handleBgColorChange={handleBgColorChange}
           />
+        ) : (
+          <Skeleton animation="wave" variant="rect" height={386} />
         )}
       </div>
     </Container>
   );
 }
 
-export default StatisticsTransactionsCount;
+export default TotalTransactionCount;

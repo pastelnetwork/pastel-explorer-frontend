@@ -322,7 +322,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         top: 8,
         right: 8,
         bottom: 20,
-        left: 40,
+        left: 60,
         show: false,
       },
       tooltip: {
@@ -481,6 +481,13 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
     },
     transactionsinblock: {
+      grid: {
+        top: 8,
+        right: 8,
+        bottom: 20,
+        left: 40,
+        show: false,
+      },
       tooltip: {
         trigger: 'axis',
         showDelay: 0,

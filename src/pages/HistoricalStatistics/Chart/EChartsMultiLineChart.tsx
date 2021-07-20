@@ -72,7 +72,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
       top: 50,
       right: 100,
       bottom: 40,
-      left: 70,
+      left: 50,
       show: false,
     },
     visualMap: {

@@ -1,4 +1,8 @@
-import { FC, useEffect, useState } from 'react';
+// react
+import { useEffect, useState } from 'react';
+// third party
+import { Skeleton } from '@material-ui/lab';
+// application
 import { Container } from '@pages/HistoricalStatistics/StatisticsOvertime.styles';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
@@ -8,11 +12,9 @@ import { useBackgroundChart } from '@utils/hooks';
 import { TNettotalsInfo, TMultiLineChartData } from '@utils/types/IStatistics';
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
-const redrawCycle = 6000;
-const MempoolSize: FC = () => {
+function Nettotals() {
   const [chartData, setChartData] = useState<TMultiLineChartData | null>(null);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
-  const [ticker, setTicker] = useState<NodeJS.Timeout>();
   const [period, setPeriod] = useState<PeriodTypes>(CHART_DEFAULT_PERIOD);
   const fetchStats = useFetch<{ data: Array<TNettotalsInfo> }>({
     method: 'get',
@@ -29,26 +31,16 @@ const MempoolSize: FC = () => {
       }
     };
     loadLineChartData();
-    const newTicker = setInterval(() => {
-      loadLineChartData();
-    }, redrawCycle);
-    setTicker(newTicker);
-    return () => {
-      if (newTicker) {
-        clearInterval(newTicker);
-      }
-    };
   }, [period]);
 
   const handlePeriodFilterChange = (value: PeriodTypes) => {
     setPeriod(value);
-    clearInterval(ticker as NodeJS.Timeout);
   };
 
   return (
     <Container>
       <div style={{ flex: 1, backgroundColor: currentBgColor }}>
-        {chartData && (
+        {chartData ? (
           <EChartsLineChart
             chartName="networktotals"
             dataX={chartData?.dataX}
@@ -61,10 +53,12 @@ const MempoolSize: FC = () => {
             handleBgColorChange={handleBgColorChange}
             handlePeriodFilterChange={handlePeriodFilterChange}
           />
+        ) : (
+          <Skeleton animation="wave" variant="rect" height={386} />
         )}
       </div>
     </Container>
   );
-};
+}
 
-export default MempoolSize;
+export default Nettotals;

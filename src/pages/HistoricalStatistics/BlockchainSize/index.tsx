@@ -1,4 +1,8 @@
+// react
 import { useEffect, useState } from 'react';
+// third party
+import { Skeleton } from '@material-ui/lab';
+// application
 import { Container } from '@pages/HistoricalStatistics/StatisticsOvertime.styles';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
@@ -36,7 +40,7 @@ function BlockchainSize() {
   return (
     <Container>
       <div style={{ flex: 1, backgroundColor: currentBgColor }}>
-        {chartData && (
+        {chartData ? (
           <EChartsLineChart
             chartName="transactionfee"
             dataX={chartData?.dataX}
@@ -48,6 +52,8 @@ function BlockchainSize() {
             handleBgColorChange={handleBgColorChange}
             handlePeriodFilterChange={handlePeriodFilterChange}
           />
+        ) : (
+          <Skeleton animation="wave" variant="rect" height={386} />
         )}
       </div>
     </Container>

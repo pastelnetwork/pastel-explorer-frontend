@@ -153,8 +153,10 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
             />
           </Styles.AutocompleteWrapper>
         </Grid>
-        <SwitchMode />
-        <ChooseCluster />
+        <Hidden mdDown>
+          <SwitchMode />
+          <ChooseCluster />
+        </Hidden>
       </Toolbar>
     </Styles.AppBar>
   );

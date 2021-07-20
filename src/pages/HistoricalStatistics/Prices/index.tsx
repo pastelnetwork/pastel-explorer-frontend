@@ -1,4 +1,8 @@
+// react
 import { useEffect, useState } from 'react';
+// third party
+import { Skeleton } from '@material-ui/lab';
+// application
 import { Container } from '@pages/HistoricalStatistics/StatisticsOvertime.styles';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
@@ -8,12 +12,9 @@ import { useBackgroundChart } from '@utils/hooks';
 import { IStatistic, TMultiLineChartData } from '@utils/types/IStatistics';
 import { EChartsMultiLineChart } from '../Chart/EChartsMultiLineChart';
 
-const redrawCycle = 6000;
-
-const PriceOvertime = (): JSX.Element => {
+function PriceOvertime() {
   const [period, setPeriod] = useState<PeriodTypes>(CHART_DEFAULT_PERIOD);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
-  const [ticker, setTicker] = useState<NodeJS.Timeout>();
   const fetchStats = useFetch<{ data: Array<IStatistic> }>({
     method: 'get',
     url: URLS.GET_STATISTICS,
@@ -32,27 +33,16 @@ const PriceOvertime = (): JSX.Element => {
       }
     };
     loadLineChartData();
-    const newTicker = setInterval(() => {
-      loadLineChartData();
-    }, redrawCycle);
-    setTicker(newTicker);
-
-    return () => {
-      if (newTicker) {
-        clearInterval(newTicker);
-      }
-    };
   }, [period]);
 
   const handlePeriodFilterChange = (per: PeriodTypes) => {
     setPeriod(per);
-    clearInterval(ticker as NodeJS.Timeout);
   };
 
   return (
     <Container>
       <div style={{ backgroundColor: currentBgColor }}>
-        {transformLineChartData && (
+        {transformLineChartData ? (
           <EChartsMultiLineChart
             chartName="prices"
             dataX={transformLineChartData?.dataX}
@@ -65,10 +55,12 @@ const PriceOvertime = (): JSX.Element => {
             handleBgColorChange={handleBgColorChange}
             handlePeriodFilterChange={handlePeriodFilterChange}
           />
+        ) : (
+          <Skeleton animation="wave" variant="rect" height={386} />
         )}
       </div>
     </Container>
   );
-};
+}
 
 export default PriceOvertime;
