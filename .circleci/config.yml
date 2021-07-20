@@ -7,12 +7,11 @@ orbs:
 executors:
   node-browser:
     docker:
-      - image: circleci/node:12.2.0-browsers
+      - image: circleci/node:14.17-buster-browsers
     working_directory: /tmp/workspace
 
 jobs:
   build:
-    resource_class: large
     executor: node-browser
     working_directory: /tmp/workspace
     steps:
