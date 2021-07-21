@@ -23,7 +23,7 @@ function BlockchainSize() {
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { period, sortDirection: 'DESC', sqlQuery: 'SUM(size)' },
+        params: { period, sortDirection: 'DESC', func: 'SUM', col: 'size' },
       });
       if (data) {
         const parseData = transformBlockchainSize(data.data);

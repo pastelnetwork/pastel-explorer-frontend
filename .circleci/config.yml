@@ -7,17 +7,17 @@ orbs:
 executors:
   node-browser:
     docker:
-      - image: circleci/node:12.2.0-browsers
+      - image: circleci/node:14.17-buster-browsers
     working_directory: /tmp/workspace
 
 jobs:
   build:
-    resource_class: large
     executor: node-browser
     working_directory: /tmp/workspace
     steps:
       - checkout
       - run: git submodule update --init --recursive
+
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
@@ -27,24 +27,28 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+
       - run:
           command: echo 'GENERATE_SOURCEMAP=false' >> .env
       - run:
           command: yarn build
+
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
             - build
 
-  deploy-production:
+  deploy:
     executor: node-browser
     working_directory: /tmp
     steps:
       - attach_workspace:
           at: /tmp/workspace
+
       - aws-cli/setup:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+
       - aws-s3/sync:
           from: /tmp/workspace/build/
           to: s3://$BUCKET_NAME
@@ -56,16 +60,14 @@ jobs:
 
   deploy-staging:
     executor: node-browser
-    working_directory: /tmp
+    working_directory: /tmp/workspace
     steps:
-      - attach_workspace:
-          at: /tmp/workspace
       - add_ssh_keys:
           fingerprints:
             - '71:46:6e:71:40:bd:0e:0c:7e:00:4b:14:ec:60:6e:68'
       - run:
           name: Deploy Staging over SSH
-          command: scp -o "StrictHostKeyChecking no" -r /tmp/workspace/build/* ubuntu@$STAGING_SERVER_IP:~/pastel-explorer-frontend/build
+          command: ssh -o "StrictHostKeyChecking no" ubuntu@$STAGING_SERVER_IP "sh /home/ubuntu/pastel-explorer-frontend/restart-app.sh"
 
 workflows:
   version: 2
@@ -73,7 +75,6 @@ workflows:
     jobs:
       - build:
           name: build-pr
-          context: explorer-frontend-staging
           filters:
             branches:
               ignore:
@@ -87,7 +88,7 @@ workflows:
               only:
                 - master
                 - production
-      - deploy-production:
+      - deploy:
           name: deploy-production
           requires:
             - build-production
@@ -99,9 +100,9 @@ workflows:
                 - production
       - deploy-staging:
           name: deploy-staging
-          context: explorer-frontend-staging
           requires:
             - build-pr
+          context: pastel-frontend-stage
           filters:
             branches:
               only:

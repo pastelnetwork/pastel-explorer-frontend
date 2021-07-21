@@ -4,7 +4,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAppThemeAction } from '@redux/actions/appThemeAction';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
+import themeVariant from '@theme/variants';
 
+const {
+  custom: {
+    blue: { solitude, licorice },
+  },
+} = themeVariant;
 const SwitchMode = () => {
   const dispatch = useDispatch();
   const isDarkMode = useSelector(getThemeState).darkMode;
@@ -19,7 +25,7 @@ const SwitchMode = () => {
       <FormControlLabel
         control={<Switch checked={isDarkMode} onChange={handleChangeMode} />}
         label={isDarkMode ? 'Light' : 'Dark'}
-        style={{ color: isDarkMode ? '#F8F8FA' : '#2D3748' }}
+        style={{ color: isDarkMode ? solitude : licorice }}
       />
     </div>
   );

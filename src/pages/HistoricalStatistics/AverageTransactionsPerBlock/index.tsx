@@ -23,7 +23,7 @@ function AverageTransactionsPerBlock() {
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { period, sortDirection: 'DESC', sqlQuery: 'AVG(transactionCount)' },
+        params: { period, sortDirection: 'DESC', func: 'AVG', col: 'transactionCount' },
       });
       if (data) {
         const parseData = transformCharts(data.data);

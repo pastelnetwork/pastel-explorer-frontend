@@ -23,7 +23,7 @@ function StatisticsTransactionsCount() {
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { sortDirection: 'DESC', period, sqlQuery: 'COUNT(id)' },
+        params: { sortDirection: 'DESC', period, func: 'COUNT', col: 'id' },
       });
       if (data) {
         const parseData = transformCharts(data.data);

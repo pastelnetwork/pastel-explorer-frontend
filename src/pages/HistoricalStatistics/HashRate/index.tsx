@@ -23,7 +23,7 @@ function HashRate() {
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { period, sortDirection: 'DESC', sqlQuery: 'AVG(networkhashps)' },
+        params: { period, sortDirection: 'DESC', func: 'AVG', col: 'networkhashps' },
       });
       if (data) {
         const parseData = transformCharts(data.data, 10e3);

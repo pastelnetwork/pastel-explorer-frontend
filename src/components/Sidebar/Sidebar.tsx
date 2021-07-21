@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Box, Grid, Collapse, Drawer, List, IconButton, Hidden, ListItem } from '@material-ui/core';
+import { Box, Grid, Collapse, Drawer, List, Hidden, ListItem, IconButton } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import * as ROUTES from '@utils/constants/routes';
@@ -192,7 +192,7 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
         <Styles.SidebarContainer container spacing={2} justify="space-around" alignItems="center">
           {footerIcons.map(({ id, url, icon }) => (
             <Grid item key={id}>
-              <IconButton target="_blank" href={url} style={{ color: '#6151d0', padding: '4px' }}>
+              <IconButton target="_blank" href={url} className="social-icon">
                 {icon}
               </IconButton>
             </Grid>

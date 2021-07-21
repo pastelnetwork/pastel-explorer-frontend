@@ -1,6 +1,7 @@
-import { memo, FC, useState, useCallback, MouseEvent, useMemo } from 'react';
+import { memo, FC, useCallback, MouseEvent, useMemo } from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
+
 // import FilledInput from '@material-ui/core/FilledInput';
 // import { CloseOutlined } from '@material-ui/icons';
 import { useLocation, useHistory } from 'react-router-dom';
@@ -9,6 +10,7 @@ import { connect } from 'react-redux';
 import { AppStateType } from '@redux/reducers';
 import { setApiHostingAction } from '@redux/actions/clusterAction';
 import { TAppTheme } from '@theme/index';
+import useBooleanState from '@hooks/useBooleanState';
 
 const useStyles = makeStyles((theme: TAppTheme) => ({
   root: {
@@ -77,34 +79,32 @@ interface IProps {
   setApiHosting: (_url: string) => void;
 }
 
-const ChooseCluster: FC<IProps> = ({ setApiHosting }) => {
-  const [open, setOpen] = useState<boolean>(false);
+const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
+  const [open, { toggle }] = useBooleanState();
   const classes = useStyles();
   const { replace } = useHistory();
-  const { pathname, search } = useLocation();
-  const handleOpen = useCallback(() => {
-    setOpen(prev => !prev);
-  }, []);
+  const { search } = useLocation();
 
   const currentCluster = useMemo(() => {
-    if (search.split('=').length === 2) {
-      const itemCluster = data.find(item => item.value === search.split('=')[1]);
+    if (apiURL) {
+      const itemCluster = data.find(item => item.api === apiURL);
       if (itemCluster) {
         return itemCluster;
       }
     }
     return data[0];
-  }, [search]);
+  }, [apiURL]);
 
   const onChangeCluster = useCallback(
     (event: MouseEvent<HTMLButtonElement>) => {
       const { value, id } = event.currentTarget;
+      const queryParams = new URLSearchParams(search);
+      queryParams.set('cluster', value);
+      if (value === 'mainnet') queryParams.delete('cluster');
+      replace({
+        search: queryParams.toString(),
+      });
       setApiHosting(id);
-      if (value === 'mainnet') {
-        replace(`${pathname}`, {});
-      } else {
-        replace(`${pathname}?cluster=${value}`, {});
-      }
     },
     [replace],
   );
@@ -114,15 +114,15 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting }) => {
       <Button
         classes={{ label: classes.rootButtonLabel }}
         type="button"
-        onClick={handleOpen}
+        onClick={toggle}
         variant="outlined"
         color="primary"
       >
         {currentCluster.name}
       </Button>
-      <Drawer anchor="right" open={open} onClose={handleOpen} className={classes.root}>
+      <Drawer anchor="right" open={open} onClose={toggle} className={classes.root}>
         <div className={classes.list}>
-          <Button type="button" className={classes.close} onClick={handleOpen}>
+          <Button type="button" className={classes.close} onClick={toggle}>
             ×
           </Button>
           <h1 className={classes.title}>Choose a Cluster</h1>

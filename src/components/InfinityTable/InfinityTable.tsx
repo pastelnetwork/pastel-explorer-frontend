@@ -15,7 +15,7 @@ import { CardHeader, CircularProgress, darken } from '@material-ui/core';
 import { ArrowDropDown, ArrowDropUp } from '@material-ui/icons';
 import { Skeleton } from '@material-ui/lab';
 import { useGetThemeMode } from '@redux/reducers/appThemeReducer';
-
+import themeVariant from '@theme/variants';
 import { TFilter } from '@utils/types/IFilter';
 import Filters from './Filters';
 
@@ -110,7 +110,8 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   const [loading, setLoading] = React.useState(false);
   const isDarkMode = useGetThemeMode();
   const [color, bgOpacity] = React.useMemo(
-    () => (isDarkMode ? ['#232630', 0.5] : ['#FFFFFF', 0.05]),
+    () =>
+      isDarkMode ? [themeVariant.custom.blue.blackRock, 0.5] : [themeVariant.custom.white, 0.05],
     [isDarkMode],
   );
   const handleReachBottom = _debounce(
