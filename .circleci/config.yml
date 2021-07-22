@@ -87,7 +87,6 @@ workflows:
               only:
                 - master
                 - production
-                - chore/update-circle-orb
       - deploy:
           name: deploy-production
           requires:
@@ -98,7 +97,6 @@ workflows:
               only:
                 - master
                 - production
-                - chore/update-circle-orb
       - deploy-staging:
           name: deploy-staging
           requires:
