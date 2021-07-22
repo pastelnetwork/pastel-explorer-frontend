@@ -1,18 +1,18 @@
 version: 2.1
 
 orbs:
-  aws-cli: circleci/aws-cli@0.1.20
-  aws-s3: circleci/aws-s3@1.0.11
+  aws-cli: circleci/aws-cli@2.0.3
+  aws-s3: circleci/aws-s3@3.0.0
 
 executors:
-  node-browser:
+  node:
     docker:
-      - image: circleci/node:14.17-buster-browsers
+      - image: cimg/python:3.9.6-node
     working_directory: /tmp/workspace
 
 jobs:
   build:
-    executor: node-browser
+    executor: node
     working_directory: /tmp/workspace
     steps:
       - checkout
@@ -39,7 +39,7 @@ jobs:
             - build
 
   deploy:
-    executor: node-browser
+    executor: node
     working_directory: /tmp
     steps:
       - attach_workspace:
@@ -55,11 +55,10 @@ jobs:
           arguments: |
             --acl public-read \
             --cache-control "max-age=86400"
-          overwrite: true
       - run: aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths /\*
 
   deploy-staging:
-    executor: node-browser
+    executor: node
     working_directory: /tmp/workspace
     steps:
       - add_ssh_keys:
