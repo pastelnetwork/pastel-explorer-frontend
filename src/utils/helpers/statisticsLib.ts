@@ -16,6 +16,8 @@ import {
 } from '@utils/types/IStatistics';
 import { IBlock } from '@utils/types/IBlocks';
 import { formattedDate } from '@utils/helpers/date/date';
+import { IRawTransactions, ITransactionState } from '@utils/types/ITransactions';
+import { ISocketData } from '@utils/types/ISocketData';
 
 export type PeriodTypes =
   | '1h'
@@ -284,4 +286,50 @@ export function convertYAxisLabel(value: number, maxY: number): number | string 
     return `${(value / 1000).toFixed(1)} K`;
   }
   return value;
+}
+
+export function setTransactionsLive(
+  prev: Map<string, ITransactionState>,
+  { rawTransactions = [], unconfirmedTransactions = [], blocks }: ISocketData,
+) {
+  const newTxs: Map<string, ITransactionState> = new Map();
+
+  if (rawTransactions.length > 0) {
+    let height: number;
+    if (blocks && blocks.length) {
+      height = blocks[0].height;
+    }
+    rawTransactions.forEach((item: IRawTransactions) => {
+      let pslPrice = 0;
+      item.vout.forEach(({ value }) => {
+        pslPrice += value;
+      });
+      newTxs.set(item.txid, {
+        ...item,
+        pslPrice: +pslPrice.toFixed(2),
+        recepients: item.vout.length,
+        height,
+      });
+    });
+    return newTxs;
+  }
+  if (unconfirmedTransactions.length) {
+    unconfirmedTransactions.forEach((item: IRawTransactions) => {
+      let pslPrice = 0;
+      item.vout.forEach(({ value }) => {
+        pslPrice += value;
+      });
+      newTxs.set(item.txid, {
+        ...item,
+        pslPrice: +pslPrice.toFixed(2),
+        recepients: item.vout.length,
+      });
+    });
+  }
+  if (prev.size > 0) {
+    prev.forEach((value, key) => {
+      newTxs.set(key, value);
+    });
+  }
+  return newTxs;
 }

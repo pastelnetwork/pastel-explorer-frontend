@@ -80,6 +80,9 @@ const Summary: React.FC = () => {
     socket.on('getUpdateBlock', () => {
       updateSummaryList();
     });
+    return () => {
+      socket.off('getUpdateBlock');
+    };
   }, []);
   React.useEffect(() => updateSummaryList(), []);
 

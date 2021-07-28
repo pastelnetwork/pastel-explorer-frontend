@@ -82,6 +82,9 @@ const StatisticsBlocks: React.FC = () => {
     socket.on('getUpdateBlock', () => {
       handleBlocksData();
     });
+    return () => {
+      socket.off('getUpdateBlock');
+    };
   }, []);
   React.useEffect(() => {
     handleBlocksData();
