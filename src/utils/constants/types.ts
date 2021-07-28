@@ -26,11 +26,13 @@ export type TThemeInitOption = {
 
 export type TLineChartProps = {
   chartName: string;
+  period?: PeriodTypes;
   dataX?: string[];
   dataY?: number[];
   dataY1?: number[];
   dataY2?: number[];
   title?: string;
+  granularity?: TGranularity;
   info: TStatisticsInfo;
   granularities?: TGranularity[];
   offset: number;
@@ -49,6 +51,7 @@ export type TScatterChartProps = {
   data: number[][];
   dataX: string[];
   title?: string;
+  period?: PeriodTypes;
   info: TStatisticsInfo;
   offset: number;
   periods: PeriodTypes[];

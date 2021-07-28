@@ -160,7 +160,7 @@ const BlockDetails = () => {
                   formatNumber(block.difficulty, { decimalsLength: 2 }),
                 )}
                 {generateDetailsElement('Nonce', block.nonce)}
-                {generateDetailsElement('Markle Root', block.merkleRoot)}
+                {generateDetailsElement('Merkle Root', block.merkleRoot)}
                 {generateDetailsElement('Previous Block', block.previousBlockHash)}
                 {generateDetailsElement('Next Block', block.nextBlockHash)}
               </Grid>

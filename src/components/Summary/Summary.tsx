@@ -8,6 +8,7 @@ import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { ISummary, ISummaryStats } from '@utils/types/ISummary';
+import { SocketContext } from '@context/socket';
 
 import themeVariant from '@theme/variants';
 
@@ -42,34 +43,44 @@ const useStyles = makeStyles((_theme: TAppTheme) => ({
 const Summary: React.FC = () => {
   const [summaryList, setSummaryList] = React.useState(initialSummaryList);
   const { fetchData } = useFetch<ISummary>({ method: 'get', url: URLS.SUMMARY_URL });
+  const socket = React.useContext(SocketContext);
   const classes = useStyles();
-  const generateSummaryData = (summary: ISummary) => {
+
+  const generateSummaryData = React.useCallback((summary: ISummary) => {
     const { currentStats, lastDayStats } = summary;
 
-    const updatedSummaryList = summaryList.map(summaryElement => {
-      const key = summaryElement.key as keyof ISummaryStats;
+    setSummaryList(prev => {
+      const items = prev.map(summaryElement => {
+        const key = summaryElement.key as keyof ISummaryStats;
 
-      return {
-        ...summaryElement,
-        value: formatNumber(currentStats[key], {
-          decimalsLength: summaryElement.decimals,
-          divideToAmount: summaryElement.divideToAmount,
-        }),
-        previousValue: formatNumber(lastDayStats[key], { decimalsLength: summaryElement.decimals }),
-        difference: calculateDifference(currentStats[key], lastDayStats[key]),
-      };
+        return {
+          ...summaryElement,
+          value: formatNumber(currentStats[key], {
+            decimalsLength: summaryElement.decimals,
+            divideToAmount: summaryElement.divideToAmount,
+          }),
+          previousValue: formatNumber(lastDayStats[key], {
+            decimalsLength: summaryElement.decimals,
+          }),
+          difference: calculateDifference(currentStats[key], lastDayStats[key]),
+        };
+      });
+      return items;
     });
+  }, []);
 
-    setSummaryList(updatedSummaryList);
-  };
-
-  const updateSummaryList = () => {
+  const updateSummaryList = React.useCallback(() => {
     fetchData().then(response => {
       if (!response) return null;
       return generateSummaryData(response);
     });
-  };
+  }, [fetchData]);
 
+  React.useEffect(() => {
+    socket.on('getUpdateBlock', () => {
+      updateSummaryList();
+    });
+  }, []);
   React.useEffect(() => updateSummaryList(), []);
 
   return (

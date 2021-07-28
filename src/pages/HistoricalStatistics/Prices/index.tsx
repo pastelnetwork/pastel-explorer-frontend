@@ -3,17 +3,17 @@ import { useEffect, useState } from 'react';
 // third party
 import { Skeleton } from '@material-ui/lab';
 // application
-import { Container } from '@pages/HistoricalStatistics/StatisticsOvertime.styles';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { PeriodTypes, transformPriceInfo } from '@utils/helpers/statisticsLib';
-import { CHART_DEFAULT_PERIOD, periods, info } from '@utils/constants/statistics';
+import { periods, info } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { IStatistic, TMultiLineChartData } from '@utils/types/IStatistics';
+import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
 import { EChartsMultiLineChart } from '../Chart/EChartsMultiLineChart';
 
 function PriceOvertime() {
-  const [period, setPeriod] = useState<PeriodTypes>(CHART_DEFAULT_PERIOD);
+  const [period, setPeriod] = useState<PeriodTypes>(periods[1][0]);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const fetchStats = useFetch<{ data: Array<IStatistic> }>({
     method: 'get',
@@ -40,26 +40,25 @@ function PriceOvertime() {
   };
 
   return (
-    <Container>
-      <div style={{ backgroundColor: currentBgColor }}>
-        {transformLineChartData ? (
-          <EChartsMultiLineChart
-            chartName="prices"
-            dataX={transformLineChartData?.dataX}
-            dataY1={transformLineChartData?.dataY1}
-            dataY2={transformLineChartData?.dataY2}
-            title={`${info.currencyName} Prices`}
-            info={info}
-            offset={0.0001}
-            periods={periods[0]}
-            handleBgColorChange={handleBgColorChange}
-            handlePeriodFilterChange={handlePeriodFilterChange}
-          />
-        ) : (
-          <Skeleton animation="wave" variant="rect" height={386} />
-        )}
-      </div>
-    </Container>
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
+      {transformLineChartData ? (
+        <EChartsMultiLineChart
+          chartName="prices"
+          dataX={transformLineChartData?.dataX}
+          dataY1={transformLineChartData?.dataY1}
+          dataY2={transformLineChartData?.dataY2}
+          title={`${info.currencyName} Prices`}
+          info={info}
+          offset={0.0001}
+          period={period}
+          periods={periods[1]}
+          handleBgColorChange={handleBgColorChange}
+          handlePeriodFilterChange={handlePeriodFilterChange}
+        />
+      ) : (
+        <Skeleton animation="wave" variant="rect" height={386} />
+      )}
+    </HistoricalStatisticsLayout>
   );
 }
 

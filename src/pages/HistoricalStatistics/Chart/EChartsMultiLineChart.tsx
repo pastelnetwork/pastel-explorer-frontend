@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, MouseEvent, useCallback } from 'react';
 import ReactECharts from 'echarts-for-react';
 import * as htmlToImage from 'html-to-image';
 import * as echarts from 'echarts';
 import { CSVLink } from 'react-csv';
 import { Data } from 'react-csv/components/CommonPropTypes';
 import { saveAs } from 'file-saver';
-import { makeDownloadFileName } from '@utils/helpers/statisticsLib';
+import { makeDownloadFileName, PeriodTypes } from '@utils/helpers/statisticsLib';
 import { pricesCSVHeaders, themes } from '@utils/constants/statistics';
 import { TLineChartProps, TThemeColor } from '@utils/constants/types';
 import { useUpdatChartTheme } from '@utils/hooks';
@@ -20,6 +20,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     dataY2,
     info,
     offset,
+    period: selectedPeriodButton,
     periods = [],
     title,
     handlePeriodFilterChange,
@@ -30,7 +31,6 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
   const [currentTheme, setCurrentTheme] = useUpdatChartTheme();
   const [eChartRef, setEChartRef] = useState<ReactECharts | null>();
   const [eChartInstance, setEChartInstance] = useState<echarts.ECharts>();
-  const [selectedPeriodButton, setSelectedPeriodButton] = useState(periods.length - 1);
   const [selectedThemeButton, setSelectedThemeButton] = useState(0);
   const [minY1, setMinY1] = useState(0);
   const [minY2, setMinY2] = useState(0);
@@ -231,7 +231,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     eChartInstance?.setOption(option);
   };
 
-  const getActivePriodButtonStyle = (index: number): string => {
+  const getActivePriodButtonStyle = (index: string): string => {
     if (selectedPeriodButton === index) {
       return styles.activeButton;
     }
@@ -244,7 +244,15 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     }
     return '';
   };
-
+  const onClickPeriod = useCallback(
+    (event: MouseEvent<HTMLButtonElement>) => {
+      const { value } = (event.currentTarget as unknown) as { value: PeriodTypes };
+      if (handlePeriodFilterChange) {
+        handlePeriodFilterChange(value);
+      }
+    },
+    [handlePeriodFilterChange],
+  );
   return (
     <div className={styles.container}>
       <div className={styles.lineChartHeader}>
@@ -254,16 +262,11 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
         <div className={styles.periodSelect}>
           <span style={{ color: currentTheme?.color }}>period: </span>
           {periods.length &&
-            periods.map((period, index) => (
+            periods.map(period => (
               <button
-                className={`${getActivePriodButtonStyle(index)} 
+                className={`${getActivePriodButtonStyle(period)} 
                   ${styles.filterButton}`}
-                onClick={() => {
-                  setSelectedPeriodButton(index);
-                  if (handlePeriodFilterChange) {
-                    handlePeriodFilterChange(period);
-                  }
-                }}
+                onClick={onClickPeriod}
                 type="button"
                 key={`button-filter-${period}`}
               >

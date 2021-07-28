@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { withTheme } from 'styled-components/macro';
 import _debounce from 'lodash.debounce';
+import { darken } from 'polished';
 
 import {
   Grid,
@@ -19,6 +20,7 @@ import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { ISearchResponse } from '@utils/types/ISearch';
 import ChooseCluster from '@components/ChooseCluster/ChooseCluster';
 import RouterLink from '@components/RouterLink/RouterLink';
+import { TAppTheme } from '@theme/index';
 
 import SwitchMode from './SwitchMode';
 import * as Styles from './SearchBar.styles';
@@ -42,11 +44,29 @@ interface ISearchData {
   category: TOptionsCategories;
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: TAppTheme) => ({
   option: {
-    padding: '0',
+    padding: 0,
   },
-});
+  labelInputRoot: {
+    background: theme.palette.background.default,
+    width: '80%',
+  },
+  inputRoot: {
+    border: '1px solid',
+    borderColor: darken(0.1, theme.palette.background.paper),
+    marginRight: 16,
+    [theme.breakpoints.down('md')]: {
+      marginRight: 0,
+    },
+  },
+  listboxOptions: {
+    background: theme.palette.background.default,
+    border: '1px solid',
+    borderColor: darken(0.05, theme.palette.background.paper),
+    borderRadius: 5,
+  },
+}));
 
 const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
   const classes = useStyles();
@@ -98,7 +118,6 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
   const handleClose = () => searchData.length && setSearchData([]);
 
   const dropdownOpen = Boolean(searchData.length) || loading;
-
   return (
     <Styles.AppBar position="sticky" elevation={0}>
       <Toolbar>
@@ -115,7 +134,10 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
               fullWidth
               open={dropdownOpen}
               options={searchData}
-              classes={classes}
+              classes={{
+                option: classes.option,
+                paper: classes.listboxOptions,
+              }}
               groupBy={option => option.category}
               getOptionLabel={option => `${option.value}`}
               loading={loading}
@@ -138,9 +160,17 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
                 <TextField
                   {...params}
                   label="Search: You may enter a block height, block hash, tx hash or address"
-                  variant="outlined"
+                  InputLabelProps={{
+                    ...params.InputLabelProps,
+                    classes: {
+                      root: classes.labelInputRoot,
+                    },
+                  }}
                   InputProps={{
                     ...params.InputProps,
+                    classes: {
+                      root: classes.inputRoot,
+                    },
                     endAdornment: (
                       <>
                         {loading ? <CircularProgress color="inherit" size={20} /> : null}
@@ -148,6 +178,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
                       </>
                     ),
                   }}
+                  variant="outlined"
                 />
               )}
             />

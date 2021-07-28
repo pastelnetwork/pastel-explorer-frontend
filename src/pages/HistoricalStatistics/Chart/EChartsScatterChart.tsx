@@ -21,6 +21,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
     title,
     info,
     offset,
+    period: selectedPeriodButton,
     periods,
     handlePeriodFilterChange,
     handleBgColorChange,
@@ -28,7 +29,6 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
   const styles = eChartLineStyles();
   const downloadRef = useRef(null);
   const [csvData, setCsvData] = useState<string | Data>('');
-  const [selectedPeriodButton, setSelectedPeriodButton] = useState(periods.length - 1);
   const [selectedThemeButton, setSelectedThemeButton] = useState(0);
   const [currentTheme, setCurrentTheme] = useUpdatChartTheme();
   const [eChartRef, setEChartRef] = useState<ReactECharts | null>();
@@ -103,7 +103,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
     eChartInstance?.setOption(option);
   };
 
-  const getActivePriodButtonStyle = (index: number): string => {
+  const getActivePriodButtonStyle = (index: string): string => {
     if (selectedPeriodButton === index) {
       return styles.activeButton;
     }
@@ -126,11 +126,10 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
         </div>
         <div className={styles.periodSelect}>
           <span style={{ color: currentTheme?.color }}>period: </span>
-          {periods.map((period, index) => (
+          {periods.map(period => (
             <button
-              className={`${getActivePriodButtonStyle(index)} ${styles.filterButton}`}
+              className={`${getActivePriodButtonStyle(period)} ${styles.filterButton}`}
               onClick={() => {
-                setSelectedPeriodButton(index);
                 if (handlePeriodFilterChange) {
                   handlePeriodFilterChange(period);
                 }

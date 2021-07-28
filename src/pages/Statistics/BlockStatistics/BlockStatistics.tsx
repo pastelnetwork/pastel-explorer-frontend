@@ -16,7 +16,10 @@ import { IBlock } from '@utils/types/IBlocks';
 import { useBackgroundChart } from '@utils/hooks';
 
 import { info } from '@utils/constants/statistics';
+import { SocketContext } from '@context/socket';
+
 import * as Styles from './BlockStatistics.styles';
+
 import BlockVisualization from './BlockVisualization/BlockVisualization';
 import {
   transformBlocksData,
@@ -41,6 +44,7 @@ const StatisticsBlocks: React.FC = () => {
     method: 'get',
     url: URLS.GET_UNCONFIRMED_TRANSACTIONS,
   });
+  const socket = React.useContext(SocketContext);
 
   const fetchBlocksData = useFetch<{ data: Array<IBlock>; timestamp: number }>({
     method: 'get',
@@ -75,13 +79,12 @@ const StatisticsBlocks: React.FC = () => {
     });
   };
   React.useEffect(() => {
-    handleBlocksData();
-    const interval = setInterval(() => {
+    socket.on('getUpdateBlock', () => {
       handleBlocksData();
-    }, 6000);
-    return () => {
-      clearInterval(interval);
-    };
+    });
+  }, []);
+  React.useEffect(() => {
+    handleBlocksData();
   }, []);
 
   return (
@@ -143,9 +146,7 @@ const StatisticsBlocks: React.FC = () => {
                 title="Block sizes (kB)"
                 info={info}
                 offset={1}
-                // periods={periods[0]}
                 handleBgColorChange={handleBgColorChange}
-                // handlePeriodFilterChange={handlePeriodFilterChange}
               />
             </div>
           )}

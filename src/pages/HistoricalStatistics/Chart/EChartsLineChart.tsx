@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import * as echarts from 'echarts';
 import ReactECharts from 'echarts-for-react';
 import { saveAs } from 'file-saver';
@@ -22,6 +22,8 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     title,
     info,
     offset,
+    granularity: selectedGranularityButton,
+    period: selectedPeriodButton,
     periods,
     granularities,
     handlePeriodFilterChange,
@@ -31,11 +33,8 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
   const styles = eChartLineStyles();
   const downloadRef = useRef(null);
   const [csvData, setCsvData] = useState<string | Data>('');
-  const [selectedPeriodButton, setSelectedPeriodButton] = useState(
-    periods ? periods.length - 1 : '',
-  );
   const [selectedThemeButton, setSelectedThemeButton] = useState(0);
-  const [selectedGranularityButton, setSelectedGranularityButton] = useState(0);
+  // const [selectedGranularityButton, setSelectedGranularityButton] = useState(0);
   const [currentTheme, setCurrentTheme] = useUpdatChartTheme();
   const [eChartRef, setEChartRef] = useState<ReactECharts | null>();
   const [eChartInstance, setEChartInstance] = useState<echarts.ECharts>();
@@ -127,19 +126,22 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     eChartInstance?.setOption(option);
   };
 
-  const getActivePriodButtonStyle = (index: number): string => {
+  const getActivePriodButtonStyle = (index: string): string => {
     if (selectedPeriodButton === index) {
       return styles.activeButton;
     }
     return '';
   };
 
-  const getActiveGranularityButtonStyle = (index: number): string => {
-    if (selectedGranularityButton === index) {
-      return styles.activeButton;
-    }
-    return '';
-  };
+  const getActiveGranularityButtonStyle = useMemo(
+    () => (granularity: string): string => {
+      if (selectedGranularityButton === granularity) {
+        return styles.activeButton;
+      }
+      return '';
+    },
+    [selectedGranularityButton],
+  );
 
   const getActiveThemeButtonStyle = (index: number): string => {
     if (selectedThemeButton === index) {
@@ -158,12 +160,13 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
           {granularities && (
             <div className={styles.periodSelect}>
               <span style={{ color: currentTheme?.color }}>Granularity: </span>
-              {granularities?.map((granularity, index) => {
+              {granularities?.map(granularity => {
                 return (
                   <button
-                    className={`${getActiveGranularityButtonStyle(index)} ${styles.filterButton}`}
+                    className={`${getActiveGranularityButtonStyle(granularity)} ${
+                      styles.filterButton
+                    }`}
                     onClick={() => {
-                      setSelectedGranularityButton(index);
                       if (handleGranularityFilterChange) {
                         handleGranularityFilterChange(granularity);
                       }
@@ -180,11 +183,10 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
           {periods && periods.length ? (
             <div className={styles.periodSelect}>
               <span style={{ color: currentTheme?.color }}>Period: </span>
-              {periods.map((period, index) => (
+              {periods.map(period => (
                 <button
-                  className={`${getActivePriodButtonStyle(index)} ${styles.filterButton}`}
+                  className={`${getActivePriodButtonStyle(period)} ${styles.filterButton}`}
                   onClick={() => {
-                    setSelectedPeriodButton(index);
                     if (handlePeriodFilterChange) {
                       handlePeriodFilterChange(period);
                     }

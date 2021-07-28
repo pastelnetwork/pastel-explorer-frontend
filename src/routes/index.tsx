@@ -34,7 +34,7 @@ import Nettotals from '@pages/HistoricalStatistics/Nettotals';
 import TransactionInBlock from '@pages/HistoricalStatistics/TransactionInBlock';
 import Statistics from '@pages/Statistics';
 import AverageBlockSize from '@pages/HistoricalStatistics/AverageBlockSize';
-import TransactionPerSecond from '@pages/HistoricalStatistics/TransctionPerSecond';
+import TransactionPerSecond from '@pages/HistoricalStatistics/TransactionPerSecond';
 import TransactionCount from '@pages/HistoricalStatistics/TransactionCount';
 import AverageTransactionsPerBlock from '@pages/HistoricalStatistics/AverageTransactionsPerBlock';
 import BlockchainSize from '@pages/HistoricalStatistics/BlockchainSize';
@@ -141,6 +141,7 @@ const statisticsOvertimeRoutes = {
   icon: <BarChartIcon />,
   seoTitle: 'Statistics Overtime',
   children: null,
+  exact: false,
 };
 
 const difficultyStatisticsRoutes = {
@@ -149,6 +150,7 @@ const difficultyStatisticsRoutes = {
   component: DifficultyStatistics,
   seoTitle: 'Difficulty Overtime',
   children: null,
+  exact: false,
 };
 
 const pricesStatisticsRoutes = {
@@ -157,6 +159,7 @@ const pricesStatisticsRoutes = {
   component: PricesStatistics,
   seoTitle: 'PSL Prices Overtime',
   children: null,
+  exact: false,
 };
 
 const hashRateStatisticsRoutes = {
@@ -165,6 +168,7 @@ const hashRateStatisticsRoutes = {
   component: HashRateStatistics,
   seoTitle: 'HashRate Overtime',
   children: null,
+  exact: false,
 };
 
 const transactionFeeStatisticsRoutes = {
@@ -173,6 +177,7 @@ const transactionFeeStatisticsRoutes = {
   component: TransactionFeeStatistics,
   seoTitle: 'Transaction Fee Overtime',
   children: null,
+  exact: false,
 };
 
 const mempoolSizeStatisticsRoutes = {
@@ -181,6 +186,7 @@ const mempoolSizeStatisticsRoutes = {
   component: MempoolSize,
   seoTitle: 'Mempool Size',
   children: null,
+  exact: false,
 };
 
 const nettotalsStatisticsRoutes = {
@@ -189,6 +195,7 @@ const nettotalsStatisticsRoutes = {
   component: Nettotals,
   seoTitle: 'Nettotals',
   children: null,
+  exact: false,
 };
 
 const transactionInBlockStatisticsRoutes = {
@@ -197,6 +204,7 @@ const transactionInBlockStatisticsRoutes = {
   component: TransactionInBlock,
   seoTitle: 'Transaction In Block',
   children: null,
+  exact: false,
 };
 
 const averageBlockSizeStatisticsRoutes = {
@@ -205,6 +213,7 @@ const averageBlockSizeStatisticsRoutes = {
   component: AverageBlockSize,
   seoTitle: 'Average Block Size',
   children: null,
+  exact: false,
 };
 
 const transactionPerSecondStatisticsRoutes = {
@@ -213,6 +222,7 @@ const transactionPerSecondStatisticsRoutes = {
   component: TransactionPerSecond,
   seoTitle: 'Transaction Per Second',
   children: null,
+  exact: false,
 };
 
 const transactionCountStatisticsRoutes = {
@@ -221,6 +231,7 @@ const transactionCountStatisticsRoutes = {
   component: TransactionCount,
   seoTitle: 'Transaction Count',
   children: null,
+  exact: false,
 };
 
 const averageTransactionsPerBlockStatisticsRoutes = {
@@ -229,6 +240,7 @@ const averageTransactionsPerBlockStatisticsRoutes = {
   component: AverageTransactionsPerBlock,
   seoTitle: 'Transaction Count',
   children: null,
+  exact: false,
 };
 
 const blockchainSizeStatisticsRoutes = {
@@ -237,6 +249,7 @@ const blockchainSizeStatisticsRoutes = {
   component: BlockchainSize,
   seoTitle: 'Blockchain Size',
   children: null,
+  exact: false,
 };
 
 const totalTransactionCountStatisticsRoutes = {
@@ -245,6 +258,7 @@ const totalTransactionCountStatisticsRoutes = {
   component: TotalTransactionCount,
   seoTitle: 'Total Transaction Count',
   children: null,
+  exact: false,
 };
 // Uncomment this when API page will be ready
 // const infoRoutes = {

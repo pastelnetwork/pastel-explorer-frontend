@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 // third party
 import { Skeleton } from '@material-ui/lab';
 // application
-import { Container } from '@pages/HistoricalStatistics/StatisticsOvertime.styles';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { PeriodTypes, transformBlocks } from '@utils/helpers/statisticsLib';
@@ -11,6 +10,7 @@ import { periods, info } from '@utils/constants/statistics';
 import { IBlock } from '@utils/types/IBlocks';
 import { useBackgroundChart } from '@utils/hooks';
 import { TScatterChartData } from '@utils/types/IStatistics';
+import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
 import { EChartsScatterChart } from '../Chart/EChartsScatterChart';
 
 function TransactionInBlock() {
@@ -39,25 +39,24 @@ function TransactionInBlock() {
   };
 
   return (
-    <Container>
-      <div style={{ flex: 1, backgroundColor: currentBgColor }}>
-        {chartData ? (
-          <EChartsScatterChart
-            chartName="transactionsinblock"
-            data={chartData?.data}
-            dataX={chartData?.dataX}
-            title="Transactions In Block"
-            info={info}
-            offset={1}
-            periods={periods[2]}
-            handleBgColorChange={handleBgColorChange}
-            handlePeriodFilterChange={handlePeriodFilterChange}
-          />
-        ) : (
-          <Skeleton animation="wave" variant="rect" height={386} />
-        )}
-      </div>
-    </Container>
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
+      {chartData ? (
+        <EChartsScatterChart
+          chartName="transactionsinblock"
+          data={chartData?.data}
+          dataX={chartData?.dataX}
+          title="Transactions In Block"
+          info={info}
+          offset={1}
+          period={period}
+          periods={periods[2]}
+          handleBgColorChange={handleBgColorChange}
+          handlePeriodFilterChange={handlePeriodFilterChange}
+        />
+      ) : (
+        <Skeleton animation="wave" variant="rect" height={386} />
+      )}
+    </HistoricalStatisticsLayout>
   );
 }
 

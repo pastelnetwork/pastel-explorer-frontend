@@ -18,6 +18,7 @@ import InfoDrawer from '@components/InfoDrawer/InfoDrawer';
 import { useSelector, useDispatch } from 'react-redux';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { setAppThemeAction } from '@redux/actions/appThemeAction';
+import { socket, SocketContext } from '@context/socket';
 
 import { themeLight, themeDark } from './theme';
 import Routes from './routes/Routes';
@@ -42,19 +43,21 @@ const App: React.FC = () => {
   return (
     <HelmetProvider>
       <Helmet titleTemplate="%s | Pastel Explorer" defaultTitle="Pastel Explorer" />
-      <StylesProvider jss={jss}>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <MuiThemeProvider theme={isDarkMode ? themeDark : themeLight}>
-            <ThemeProvider theme={isDarkMode ? themeDark : themeLight}>
-              <ErrorHandler>
-                <Routes />
-                <ResponseErrorAlert />
-              </ErrorHandler>
-              <InfoDrawer />
-            </ThemeProvider>
-          </MuiThemeProvider>
-        </MuiPickersUtilsProvider>
-      </StylesProvider>
+      <SocketContext.Provider value={socket}>
+        <StylesProvider jss={jss}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <MuiThemeProvider theme={isDarkMode ? themeDark : themeLight}>
+              <ThemeProvider theme={isDarkMode ? themeDark : themeLight}>
+                <ErrorHandler>
+                  <Routes />
+                  <ResponseErrorAlert />
+                </ErrorHandler>
+                <InfoDrawer />
+              </ThemeProvider>
+            </MuiThemeProvider>
+          </MuiPickersUtilsProvider>
+        </StylesProvider>
+      </SocketContext.Provider>
     </HelmetProvider>
   );
 };

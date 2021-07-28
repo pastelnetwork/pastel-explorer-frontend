@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
+import { NavLink, withRouter, RouteComponentProps, match } from 'react-router-dom';
 
+import { useCallback } from 'react';
 import { Box, Grid, Collapse, Drawer, List, Hidden, ListItem, IconButton } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
@@ -25,8 +26,9 @@ interface SidebarCategoryPropsType {
   button: true;
   onClick?: () => void;
   to?: string;
-  component?: typeof NavLink;
   exact?: boolean;
+  component?: typeof NavLink;
+  isActive?: (_match: match, _location: Location) => boolean;
 }
 
 const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
@@ -112,8 +114,23 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
     setOpenRoutes(currentRoute => ({ ...currentRoute, [index]: !currentRoute[index] }));
   };
 
+  const handleIsActiveLink = useCallback(
+    (path: string) => (matchLink: match, locationLink: Location) => {
+      if (matchLink) {
+        return true;
+      }
+      if (path.startsWith('/blocks')) {
+        return !!['/block', '/tx'].some(el => locationLink.pathname.startsWith(el));
+      }
+      if (path.startsWith('/supernodes')) {
+        return !!['/address'].some(el => locationLink.pathname.startsWith(el));
+      }
+      return false;
+    },
+    [],
+  );
   const generateCategoryIcon = (category: RouteType): JSX.Element | null => {
-    const { id, icon, path, badge } = category;
+    const { id, icon, path, badge, exact = true } = category;
 
     if (icon) {
       return (
@@ -123,8 +140,9 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
           to={path}
           activeClassName="active"
           component={NavLink}
+          isActive={handleIsActiveLink(path)}
           icon={icon}
-          exact
+          exact={exact}
           button
           badge={badge}
         />

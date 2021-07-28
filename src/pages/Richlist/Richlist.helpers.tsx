@@ -57,7 +57,7 @@ export const generateBalanceTable = (list: Array<IRichlist>) => {
 };
 
 const generateWealthDistributionRow = (list: Array<IRichlist>, rowLabel: string) => {
-  const rowId = list[0].address;
+  const rowId = list[0]?.address || '';
   const { amount, percentage } = list.reduce(
     (acc, listElement) => {
       return {
@@ -86,11 +86,10 @@ const generateWealthDistributionRow = (list: Array<IRichlist>, rowLabel: string)
   };
 };
 
-export const generateWealthDistributionTable = (list: Array<IRichlist>) => {
+export const generateWealthDistributionTable = (list: IRichlist[]) => {
   const dividedLists = LIST_DIVIDERS.map(([firstDivider, lastDivider]) => {
     const currentWealthDistributionList = list.slice(firstDivider, lastDivider);
     const rowLabel = `Top ${firstDivider + 1}-${lastDivider}`;
-
     return generateWealthDistributionRow(currentWealthDistributionList, rowLabel);
   });
 

@@ -7,7 +7,7 @@ import appThemeReducer from './appThemeReducer';
 import filterReducer from './filterReducer';
 
 export const rootReducer = combineReducers({
-  responseErrorsReducer,
+  ...responseErrorsReducer,
   infoDrawerReducer,
   cluster: clusterReducer,
   ...appThemeReducer,

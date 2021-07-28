@@ -42,11 +42,14 @@ export const Search = styled.div`
 
 export const AutocompleteWrapper = styled(Grid)`
   width: 100%;
-
+  margin-right: 5px;
+  ${props => props.theme.breakpoints.down('md')} {
+    margin-right: 0;
+  }
   .MuiFormLabel-root {
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 80%;
+    // width: 80%;
     white-space: nowrap;
   }
 `;

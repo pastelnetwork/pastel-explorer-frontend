@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 import { rgba, darken } from 'polished';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { NavLink } from 'react-router-dom';
+import { NavLink, match } from 'react-router-dom';
 import themeVariant from '@theme/variants';
 
 import {
@@ -74,6 +74,7 @@ type CategoryType = {
   to?: string;
   component?: typeof NavLink;
   exact?: boolean;
+  isActive?: (_match: match, _location: Location) => boolean;
 };
 
 export const Category = styled(ListItem)<CategoryType>`
