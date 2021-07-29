@@ -8,3 +8,11 @@ export const SET_APP_THEME = 'SET_APP_THEME';
 
 // Filter types
 export const SET_FILTER_VALUE = 'SET_FILTER_VALUE';
+
+// Blocks types
+export const SET_LOADING_BLOCK = 'SET_LOADING_BLOCK';
+
+export const SET_LASTEST_BLOCKS = 'SET_LASTEST_BLOCKS';
+
+// Update block realtime
+export const UPDATE_BLOCKS_NEWEST = 'UPDATE_BLOCKS_NEWEST';

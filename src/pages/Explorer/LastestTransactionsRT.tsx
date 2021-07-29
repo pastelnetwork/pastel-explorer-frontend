@@ -9,6 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import { useDispatch } from 'react-redux';
 import { TAppTheme } from '@theme/index';
 import { SocketContext } from '@context/socket';
 import { IRawTransactions } from '@utils/types/ITransactions';
@@ -16,6 +17,8 @@ import { ISocketData } from '@utils/types/ISocketData';
 import { generateBlockKeyValue } from '@pages/Explorer/LatestTransactions/LatestTransactions.helpers';
 import { setTransactionsLive } from '@utils/helpers/statisticsLib';
 import Skeleton from '@material-ui/lab/Skeleton';
+import { BlockThunks } from '@redux/thunk';
+import { AppThunkDispatch } from '@redux/types';
 
 const StyledTableCell = withStyles((theme: TAppTheme) => ({
   head: {
@@ -45,6 +48,7 @@ const useStyles = makeStyles({
 type ITransactionState = IRawTransactions & { pslPrice: number; recepients: number };
 
 function LastestTransactions() {
+  const dispatch = useDispatch<AppThunkDispatch>();
   const socket = useContext(SocketContext);
   const [txs, setTxs] = useState<Map<string, ITransactionState>>(new Map());
   useEffect(() => {
@@ -55,6 +59,9 @@ function LastestTransactions() {
           (unconfirmedTransactions && unconfirmedTransactions.length) ||
           (rawTransactions && rawTransactions.length)
         ) {
+          if (blocks.length) {
+            dispatch(BlockThunks.updateBlocksNewest(blocks[0]));
+          }
           setTxs(prev =>
             setTransactionsLive(prev, { unconfirmedTransactions, rawTransactions, blocks }),
           );

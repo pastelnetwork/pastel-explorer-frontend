@@ -1,8 +1,8 @@
 import { IRawTransactions } from './ITransactions';
-import { IBlock } from './IBlocks';
+import { IRawBlock } from './IBlocks';
 
 export interface ISocketData {
   unconfirmedTransactions?: IRawTransactions[];
   rawTransactions?: IRawTransactions[];
-  blocks: IBlock[];
+  blocks: IRawBlock[];
 }
