@@ -1,13 +1,13 @@
 import {
-  SET_LASTEST_BLOCKS,
+  SET_LATEST_BLOCKS,
   UPDATE_BLOCKS_NEWEST,
   SET_LOADING_BLOCK,
 } from '@redux/actions/actionTypes';
 import { IBlock, IRawBlock } from '@utils/types/IBlocks';
 
-export interface SetLastestBlocks {
-  type: typeof SET_LASTEST_BLOCKS;
-  payload: { lastestBlocks: Map<string, IBlock>; timestamp?: number };
+export interface SetLatestBlocks {
+  type: typeof SET_LATEST_BLOCKS;
+  payload: { latestBlocks: Map<string, IBlock>; timestamp?: number };
 }
 
 export interface UpdateBlocksNewest {
@@ -20,12 +20,12 @@ export interface SetLoadingBlock {
   payload?: boolean;
 }
 
-export function setLastestBlocks(payload: {
-  lastestBlocks: Map<string, IBlock>;
+export function setLatestBlocks(payload: {
+  latestBlocks: Map<string, IBlock>;
   timestamp?: number;
-}): SetLastestBlocks {
+}): SetLatestBlocks {
   return {
-    type: SET_LASTEST_BLOCKS,
+    type: SET_LATEST_BLOCKS,
     payload,
   };
 }
@@ -44,4 +44,4 @@ export function setLoadingBlock(payload = false): SetLoadingBlock {
   };
 }
 
-export type BlocksActionsTypes = SetLastestBlocks | UpdateBlocksNewest | SetLoadingBlock;
+export type BlocksActionsTypes = SetLatestBlocks | UpdateBlocksNewest | SetLoadingBlock;

@@ -3,15 +3,19 @@ import * as React from 'react';
 // import { Grid } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/styles';
+import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+// application
 import { TAppTheme } from '@theme/index';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { ISummary, ISummaryStats } from '@utils/types/ISummary';
 import { SocketContext } from '@context/socket';
-
 import themeVariant from '@theme/variants';
-
+import { AppThunkDispatch } from '@redux/types';
+import { BlockThunks, TransactionThunks } from '@redux/thunk';
+import { ISocketData } from '@utils/types/ISocketData';
 import * as Styles from './Summary.styles';
 import { initialSummaryList, calculateDifference } from './Summary.helpers';
 
@@ -45,7 +49,8 @@ const Summary: React.FC = () => {
   const { fetchData } = useFetch<ISummary>({ method: 'get', url: URLS.SUMMARY_URL });
   const socket = React.useContext(SocketContext);
   const classes = useStyles();
-
+  const { pathname } = useLocation();
+  const dispatch = useDispatch<AppThunkDispatch>();
   const generateSummaryData = React.useCallback((summary: ISummary) => {
     const { currentStats, lastDayStats } = summary;
 
@@ -77,9 +82,26 @@ const Summary: React.FC = () => {
   }, [fetchData]);
 
   React.useEffect(() => {
-    socket.on('getUpdateBlock', () => {
-      updateSummaryList();
-    });
+    socket.on(
+      'getUpdateBlock',
+      ({ blocks, unconfirmedTransactions = [], rawTransactions = [] }: ISocketData) => {
+        updateSummaryList();
+        if (pathname === '/') {
+          if (blocks && blocks.length) {
+            dispatch(BlockThunks.updateBlocksNewest(blocks[0]));
+          }
+          if (blocks.length || unconfirmedTransactions.length || rawTransactions.length) {
+            dispatch(
+              TransactionThunks.updateTransactionsNewest({
+                blocks,
+                unconfirmedTransactions,
+                rawTransactions,
+              }),
+            );
+          }
+        }
+      },
+    );
     return () => {
       socket.off('getUpdateBlock');
     };

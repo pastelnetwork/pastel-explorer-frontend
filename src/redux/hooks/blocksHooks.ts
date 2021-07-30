@@ -9,7 +9,7 @@ export function useBlockSelector<T extends (_state: IBlockState) => any>(
 }
 
 export function useBlockLatestBlocks() {
-  return useBlockSelector(state => state.lastestBlocks);
+  return useBlockSelector(state => state.latestBlocks);
 }
 
 export function useBlockIsLoading() {
@@ -17,5 +17,5 @@ export function useBlockIsLoading() {
 }
 
 export function useBlockTimestamp() {
-  return useBlockSelector(state => state.isLoading);
+  return useBlockSelector(state => state.timestamp);
 }

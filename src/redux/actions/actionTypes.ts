@@ -12,7 +12,12 @@ export const SET_FILTER_VALUE = 'SET_FILTER_VALUE';
 // Blocks types
 export const SET_LOADING_BLOCK = 'SET_LOADING_BLOCK';
 
-export const SET_LASTEST_BLOCKS = 'SET_LASTEST_BLOCKS';
+export const SET_LATEST_BLOCKS = 'SET_LATEST_BLOCKS';
 
 // Update block realtime
 export const UPDATE_BLOCKS_NEWEST = 'UPDATE_BLOCKS_NEWEST';
+
+// Blocks types
+export const SET_LOADING_TRANSACTION = 'SET_LOADING_TRANSACTION';
+
+export const SET_LATEST_TRASACTIONS = 'SET_LATEST_TRASACTIONS';

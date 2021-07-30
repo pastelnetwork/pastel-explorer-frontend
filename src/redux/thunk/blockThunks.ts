@@ -1,20 +1,20 @@
 import { AppThunk } from '@redux/types';
-import { setLoadingBlock, setLastestBlocks } from '@redux/actions/blocksAction';
+import { setLoadingBlock, setLatestBlocks } from '@redux/actions/blocksAction';
 import blockApis from '@apis/blocks';
 import { setResponseError } from '@redux/actions/responseErrorsActions';
 import { IBlock, IRawBlock } from '@utils/types/IBlocks';
 import { BLOCK_NAMESPACE } from '@redux/reducers/blockReducer';
 
-export const getLastestBlocks: () => AppThunk<Promise<void>> = (limit = 6) => async (
+export const getLatestBlocks: () => AppThunk<Promise<void>> = (limit = 6) => async (
   dispatch,
   // _getState,
 ): Promise<void> => {
   try {
     dispatch(setLoadingBlock());
 
-    const { data, timestamp } = await blockApis.getLastestBlock(limit);
+    const { data, timestamp } = await blockApis.getLatestBlock(limit);
 
-    dispatch(setLastestBlocks({ lastestBlocks: data, timestamp }));
+    dispatch(setLatestBlocks({ latestBlocks: data, timestamp }));
   } catch (error) {
     dispatch(setResponseError(true, error.message));
   }
@@ -24,7 +24,7 @@ export const updateBlocksNewest: (_block: IRawBlock) => AppThunk<Promise<void>> 
   dispatch,
   getState,
 ): Promise<void> => {
-  const prevBlocks = getState()[BLOCK_NAMESPACE].lastestBlocks;
+  const prevBlocks = getState()[BLOCK_NAMESPACE].latestBlocks;
   const newBlocks = new Map<string, IBlock>();
   newBlocks.set(block.hash, {
     id: block.hash,
@@ -48,11 +48,11 @@ export const updateBlocksNewest: (_block: IRawBlock) => AppThunk<Promise<void>> 
     }
     i += 1;
   });
-  dispatch(setLastestBlocks({ lastestBlocks: newBlocks }));
+  dispatch(setLatestBlocks({ latestBlocks: newBlocks }));
   Promise.resolve();
 };
 
 export default {
-  getLastestBlocks,
+  getLatestBlocks,
   updateBlocksNewest,
 };

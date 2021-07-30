@@ -2,7 +2,7 @@ import { axiosInstance } from '@utils/helpers/useFetch/useFetch';
 import { BLOCK_URL } from '@utils/constants/urls';
 import { IBlock } from '@utils/types/IBlocks';
 
-const getLastestBlock = async (limit = 8) => {
+const getLatestBlock = async (limit = 8) => {
   const {
     data: { data, timestamp },
   }: { data: { data: IBlock[]; timestamp: number } } = await axiosInstance.get(BLOCK_URL, {
@@ -14,4 +14,4 @@ const getLastestBlock = async (limit = 8) => {
   return { data: mapDate, timestamp };
 };
 
-export default { getLastestBlock };
+export default { getLatestBlock };

@@ -95,7 +95,7 @@ const StatisticsBlocks: React.FC = () => {
       <Header title="Blocks Statistics" />
       <Grid container spacing={6}>
         {blockElements && blockElements.length ? (
-          <Grid item xs={12}>
+          <Grid item xs={12} style={{ position: 'relative', height: 222 }}>
             <Styles.BlocksContainer container justify="flex-start" alignItems="center" spacing={8}>
               {blocksUnconfirmed && blocksUnconfirmed.length
                 ? blocksUnconfirmed.map(({ height, size, txsCount }, idx) => (
