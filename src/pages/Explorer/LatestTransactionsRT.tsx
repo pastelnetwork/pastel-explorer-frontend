@@ -1,5 +1,8 @@
+// React
 import { memo, useEffect } from 'react';
+// third party
 import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -8,14 +11,16 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import Skeleton from '@material-ui/lab/Skeleton';
 import { useDispatch } from 'react-redux';
+// application
 import { TAppTheme } from '@theme/index';
 import { generateBlockKeyValue } from '@pages/Explorer/LatestTransactions/LatestTransactions.helpers';
-import Skeleton from '@material-ui/lab/Skeleton';
 import { TransactionThunks } from '@redux/thunk';
 import { AppThunkDispatch } from '@redux/types';
 import { useTransactionLatestTransactions } from '@redux/hooks/transactionsHooks';
 import { ITransaction } from '@utils/types/ITransactions';
+import { TRANSACTION_DETAILS } from '@utils/constants/routes';
 
 const StyledTableCell = withStyles((theme: TAppTheme) => ({
   head: {
@@ -23,6 +28,7 @@ const StyledTableCell = withStyles((theme: TAppTheme) => ({
     color: theme.palette.text.primary,
     fontWeight: 600,
   },
+
   body: {
     fontSize: 14,
   },
@@ -36,11 +42,15 @@ const StyledTableRow = withStyles((theme: TAppTheme) => ({
   },
 }))(TableRow);
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   table: {
     minWidth: 700,
   },
-});
+  link: {
+    color: theme.palette.text.primary,
+    textDecoration: 'none',
+  },
+}));
 
 function LatestTransactions() {
   const dispatch = useDispatch<AppThunkDispatch>();
@@ -71,8 +81,10 @@ function LatestTransactions() {
                   <StyledTableCell component="th" scope="row">
                     {generateBlockKeyValue(tx.blockHash || '', tx.block.height || '')}
                   </StyledTableCell>
-                  <StyledTableCell component="th" scope="row" style={{ maxWidth: 250 }}>
-                    <Typography noWrap>{tx.id}</Typography>
+                  <StyledTableCell component="th" scope="row" style={{ maxWidth: 360 }}>
+                    <Link to={`${TRANSACTION_DETAILS}/${tx.id}`} className={classes.link}>
+                      <Typography noWrap>{tx.id}</Typography>
+                    </Link>
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     {(+tx.totalAmount.toFixed(2)).toLocaleString('en')}

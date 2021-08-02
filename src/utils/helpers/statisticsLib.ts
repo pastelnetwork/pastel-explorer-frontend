@@ -321,7 +321,7 @@ export function setTransactionsLive(
         size: item.size || 0,
       });
     });
-    return newTxs;
+    // return newTxs;
   }
   if (unconfirmedTransactions.length) {
     unconfirmedTransactions.forEach((item: IRawTransactions) => {
@@ -353,9 +353,11 @@ export function setTransactionsLive(
     let i = newTxs.size;
     prev.forEach((value, key) => {
       if (i < 6) {
-        newTxs.set(key, value);
+        if (!newTxs.get(key)) {
+          newTxs.set(key, value);
+          i += 1;
+        }
       }
-      i += 1;
     });
   }
   return newTxs;
