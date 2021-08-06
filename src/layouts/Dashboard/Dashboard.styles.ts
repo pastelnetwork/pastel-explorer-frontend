@@ -48,7 +48,7 @@ export const Paper = styled(MuiPaper)(spacing);
 export const MainContent = styled(Paper)`
   padding: 20px;
   flex: 1;
-  background: ${props => props.theme.palette.background.default};
+  background: ${props => props.theme.palette.background.paper};
 
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     flex: none;

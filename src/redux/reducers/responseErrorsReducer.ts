@@ -1,14 +1,18 @@
 import * as types from '../actions/actionTypes';
 import { SetResponseErrorProps } from '../actions/responseErrorsActions';
 
+export const stateKey = 'responseErrorsReducer';
+
 export interface InitialResponseErrorsProps {
   error: boolean;
+  message: string | null;
 }
 
 type ActionTypes = SetResponseErrorProps;
 
-const initialState = {
+const initialState: InitialResponseErrorsProps = {
   error: false,
+  message: null,
 };
 
 const reducer = (state = initialState, actions: ActionTypes): InitialResponseErrorsProps => {
@@ -16,7 +20,7 @@ const reducer = (state = initialState, actions: ActionTypes): InitialResponseErr
     case types.RESPONSE_ERROR_SET:
       return {
         ...state,
-        error: actions.payload,
+        ...actions.payload,
       };
 
     default:
@@ -24,4 +28,4 @@ const reducer = (state = initialState, actions: ActionTypes): InitialResponseErr
   }
 };
 
-export default reducer;
+export default { [stateKey]: reducer };

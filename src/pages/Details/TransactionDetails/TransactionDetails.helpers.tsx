@@ -18,14 +18,14 @@ export const transactionHeaders: Array<HeaderType> = [
 ];
 
 export const addressHeaders: Array<HeaderType> = [
-  { id: 1, header: 'Address' },
-  { id: 2, header: 'Amount (PSL)' },
-  { id: 3, header: 'Amount (USD)' },
+  { id: 1, header: 'Address', key: 'address' },
+  { id: 2, header: 'Amount (PSL)', key: 'amount' },
+  { id: 3, header: 'Amount (USD)', key: 'amount' },
 ];
 
 export const generateTableTitle = (transactionData: ITransactionDetails) => (
   <Alert severity="info">
-    <AlertTitle style={{ wordBreak: 'break-word' }}>PSL ID: {transactionData.id}</AlertTitle>
+    <AlertTitle style={{ wordBreak: 'break-word' }}>PSL TXID: {transactionData.id}</AlertTitle>
     {`This transaction was first broadcast to the PSL network on 
       ${formattedDate(transactionData.timestamp)}. 
       The transaction is currently 
@@ -47,7 +47,7 @@ export const generateCoinbaseInfo = (info: number) => (
 export const generateNonStandardTransactionInfo = () => (
   <Grid item xs={12}>
     <Styles.Alert severity="info">
-      <AlertTitle>NONSTANDARD TX</AlertTitle>
+      <AlertTitle>Shielded Transaction</AlertTitle>
     </Styles.Alert>
   </Grid>
 );

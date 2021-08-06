@@ -17,7 +17,6 @@ interface LineChartProps {
 
 const LineChart: React.FC<LineChartProps> = ({ data, title, isLoading, height }) => {
   const chartHeight = height || Styles.CHART_HEIGHT;
-
   return (
     <Styles.Card mb={1}>
       <CardContent>

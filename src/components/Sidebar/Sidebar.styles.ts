@@ -1,7 +1,8 @@
 import styled from 'styled-components/macro';
 import { rgba, darken } from 'polished';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { NavLink } from 'react-router-dom';
+import { NavLink, match } from 'react-router-dom';
+import themeVariant from '@theme/variants';
 
 import {
   Grid as MuiGrid,
@@ -27,12 +28,13 @@ export const Drawer = styled(MuiDrawer)`
 `;
 
 export const Scrollbar = styled(PerfectScrollbar)`
-  background-color: ${props => props.theme.sidebar.background};
+  background-color: ${props => props.theme.palette.background.default};
   border-right: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 0px ${props => props.theme.spacing(4)}px;
 `;
 
 export const List = styled(MuiList)`
-  background-color: ${props => props.theme.sidebar.background};
+  background-color: ${props => props.theme.sidebar.background.default};
 `;
 
 export const Items = styled.div`
@@ -47,21 +49,17 @@ export const Brand = styled(ListItem)<{
 }>`
   font-size: ${props => props.theme.typography.h5.fontSize};
   font-weight: ${props => props.theme.typography.fontWeightMedium};
-  color: ${props => props.theme.sidebar.header.color};
-  background-color: ${props => props.theme.sidebar.header.background};
+  color: ${props => props.theme.sidebar.text.primary};
+  background-color: ${props => props.theme.sidebar.background.default};
   font-family: ${props => props.theme.typography.fontFamily};
   min-height: 56px;
   padding-left: ${props => props.theme.spacing(6)}px;
   padding-right: ${props => props.theme.spacing(6)}px;
   justify-content: center;
   cursor: pointer;
-
+  transition: all 0.3s ease-in-out;
   ${props => props.theme.breakpoints.up('sm')} {
     min-height: 70px;
-  }
-
-  &:hover {
-    background-color: ${props => props.theme.sidebar.header.background};
   }
 `;
 
@@ -76,32 +74,40 @@ type CategoryType = {
   to?: string;
   component?: typeof NavLink;
   exact?: boolean;
+  isActive?: (_match: match, _location: Location) => boolean;
 };
 
 export const Category = styled(ListItem)<CategoryType>`
   padding-top: ${props => props.theme.spacing(3)}px;
   padding-bottom: ${props => props.theme.spacing(3)}px;
-  padding-left: ${props => props.theme.spacing(8)}px;
-  padding-right: ${props => props.theme.spacing(7)}px;
+  padding-left: ${props => props.theme.spacing(4)}px;
+  padding-right: ${props => props.theme.spacing(4)}px;
   font-weight: ${props => props.theme.typography.fontWeightRegular};
-
+  span {
+    color: ${props => props.theme.sidebar.text.primary};
+  }
   svg {
-    color: ${props => props.theme.sidebar.color};
+    color: ${props => props.theme.sidebar.text.primary};
     font-size: 1.25rem;
     width: 20px;
     height: 20px;
     opacity: 0.5;
+    fill: ${props => props.theme.sidebar.text.primary};
   }
 
   &:hover {
     background: rgba(0, 0, 0, 0.08);
   }
-
+  transition: all 0.3s ease-in-out;
   &.${props => props.activeClassName} {
-    background-color: ${props => darken(0.03, props.theme.sidebar.background)};
-
+    background-color: ${props => darken(0.03, props.theme.sidebar.background.active)};
+    border-radius: ${props => props.theme.sidebar.radius.active};
     span {
-      color: ${props => props.theme.sidebar.color};
+      color: ${props => props.theme.sidebar.text.active};
+    }
+    svg {
+      color: ${props => props.theme.sidebar.text.active};
+      fill: ${props => props.theme.sidebar.text.active};
     }
   }
 `;
@@ -109,7 +115,7 @@ export const Category = styled(ListItem)<CategoryType>`
 export const CategoryText = styled(ListItemText)`
   margin: 0;
   span {
-    color: ${props => props.theme.sidebar.color};
+    color: ${props => props.theme.sidebar.text.primary};
     font-size: ${props => props.theme.typography.body1.fontSize}px;
     padding: 0 ${props => props.theme.spacing(4)}px;
   }
@@ -129,33 +135,28 @@ export const Link = styled(ListItem)<{
   exact: boolean;
   to: string;
 }>`
-  padding-left: ${props => props.theme.spacing(17.5)}px;
+  padding-left: ${props => props.theme.spacing(13)}px;
   padding-top: ${props => props.theme.spacing(2)}px;
   padding-bottom: ${props => props.theme.spacing(2)}px;
-
-  span {
-    color: ${props => rgba(props.theme.sidebar.color, 0.7)};
-  }
-
   &:hover span {
-    color: ${props => rgba(props.theme.sidebar.color, 0.9)};
+    color: ${props => rgba(props.theme.sidebar.text.primary, 0.9)};
   }
 
   &:hover {
-    background-color: ${props => darken(0.015, props.theme.sidebar.background)};
+    background-color: ${props => darken(0.015, props.theme.sidebar.background.default)};
   }
 
   &.${props => props.activeClassName} {
-    background-color: ${props => darken(0.03, props.theme.sidebar.background)};
+    background-color: ${props => darken(0.03, props.theme.sidebar.background.default)};
 
     span {
-      color: ${props => props.theme.sidebar.color};
+      color: ${props => props.theme.sidebar.text.primary};
     }
   }
 `;
 
 export const LinkText = styled(ListItemText)`
-  color: ${props => props.theme.sidebar.color};
+  color: ${props => props.theme.sidebar.text.primary};
   span {
     font-size: ${props => props.theme.typography.body1.fontSize}px;
   }
@@ -198,7 +199,11 @@ export const SidebarSection = styled(Typography)`
 `;
 
 export const SidebarFooter = styled.div`
-  background-color: ${props => props.theme.sidebar.footer.background} !important;
+  background-color: ${props => props.theme.palette.background.paper};
   padding: 4px ${props => props.theme.spacing(4)}px;
   border-right: 1px solid rgba(0, 0, 0, 0.12);
+  .social-icon {
+    color: ${themeVariant.custom.blue.slateBlue};
+    padding: 4px;
+  }
 `;

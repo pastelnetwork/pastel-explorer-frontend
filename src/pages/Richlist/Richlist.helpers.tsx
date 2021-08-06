@@ -18,10 +18,10 @@ const LIST_DIVIDERS = [
 ];
 
 export const balanceHeaders: Array<HeaderType> = [
-  { id: 1, header: '' },
-  { id: 2, header: 'Address' },
-  { id: 3, header: 'Balance (PSL)' },
-  { id: 4, header: '%' },
+  { id: 1, header: '', key: 'rank' },
+  { id: 2, header: 'Address', key: 'address' },
+  { id: 3, header: 'Balance (PSL)', key: 'amount' },
+  { id: 4, header: '%', key: 'percentage' },
 ];
 
 export const distributionHeaders: Array<HeaderType> = [
@@ -57,7 +57,7 @@ export const generateBalanceTable = (list: Array<IRichlist>) => {
 };
 
 const generateWealthDistributionRow = (list: Array<IRichlist>, rowLabel: string) => {
-  const rowId = list[0].address;
+  const rowId = list[0]?.address || '';
   const { amount, percentage } = list.reduce(
     (acc, listElement) => {
       return {
@@ -86,11 +86,10 @@ const generateWealthDistributionRow = (list: Array<IRichlist>, rowLabel: string)
   };
 };
 
-export const generateWealthDistributionTable = (list: Array<IRichlist>) => {
+export const generateWealthDistributionTable = (list: IRichlist[]) => {
   const dividedLists = LIST_DIVIDERS.map(([firstDivider, lastDivider]) => {
     const currentWealthDistributionList = list.slice(firstDivider, lastDivider);
     const rowLabel = `Top ${firstDivider + 1}-${lastDivider}`;
-
     return generateWealthDistributionRow(currentWealthDistributionList, rowLabel);
   });
 

@@ -23,7 +23,7 @@ export const DATA_FETCH_LIMIT = 20;
 export const DATA_OFFSET = 0;
 export const DATA_DEFAULT_SORT = 'DESC';
 
-const generateBlockKeyValue = (blockHash: string, blockHeight: string) => {
+export const generateBlockKeyValue = (blockHash: string | number, blockHeight: string | number) => {
   if (blockHash) {
     return <RouterLink route={`${ROUTES.BLOCK_DETAILS}/${blockHash}`} value={blockHeight} />;
   }

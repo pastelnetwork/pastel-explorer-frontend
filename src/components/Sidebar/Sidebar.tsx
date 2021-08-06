@@ -1,15 +1,17 @@
 import * as React from 'react';
-import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
+import { NavLink, withRouter, RouteComponentProps, match } from 'react-router-dom';
 
-import { Box, Grid, Collapse, Drawer, List, IconButton } from '@material-ui/core';
-
+import { useCallback } from 'react';
+import { Box, Grid, Collapse, Drawer, List, Hidden, ListItem, IconButton } from '@material-ui/core';
+import { useSelector } from 'react-redux';
+import { getThemeState } from '@redux/reducers/appThemeReducer';
 import * as ROUTES from '@utils/constants/routes';
 import { RouteType, RouteChildType } from '@utils/types/routes';
 
 import { sidebarRoutes as routes } from '@routes/index';
-
-import PastelLogo from '@assets/images/pastel-logo-white.png';
-
+import SwitchMode from '@components/SearchBar/SwitchMode';
+import PastelLogoWhite from '@assets/images/pastel-logo-white.png';
+import PastelLogo from '@assets/images/pastel-logo.png';
 import { footerIcons } from './SideBar.helpers';
 import * as Styles from './Sidebar.styles';
 
@@ -24,8 +26,9 @@ interface SidebarCategoryPropsType {
   button: true;
   onClick?: () => void;
   to?: string;
-  component?: typeof NavLink;
   exact?: boolean;
+  component?: typeof NavLink;
+  isActive?: (_match: match, _location: Location) => boolean;
 }
 
 const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
@@ -111,8 +114,23 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
     setOpenRoutes(currentRoute => ({ ...currentRoute, [index]: !currentRoute[index] }));
   };
 
+  const handleIsActiveLink = useCallback(
+    (path: string) => (matchLink: match, locationLink: Location) => {
+      if (matchLink) {
+        return true;
+      }
+      if (path.startsWith('/blocks')) {
+        return !!['/block', '/tx'].some(el => locationLink.pathname.startsWith(el));
+      }
+      if (path.startsWith('/supernodes')) {
+        return !!['/address'].some(el => locationLink.pathname.startsWith(el));
+      }
+      return false;
+    },
+    [],
+  );
   const generateCategoryIcon = (category: RouteType): JSX.Element | null => {
-    const { id, icon, path, badge } = category;
+    const { id, icon, path, badge, exact = true } = category;
 
     if (icon) {
       return (
@@ -122,8 +140,9 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
           to={path}
           activeClassName="active"
           component={NavLink}
+          isActive={handleIsActiveLink(path)}
           icon={icon}
-          exact
+          exact={exact}
           button
           badge={badge}
         />
@@ -134,12 +153,12 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
   };
 
   const { PaperProps, open, onClose, variant } = rest;
-
+  const isDarkMode = useSelector(getThemeState).darkMode;
   return (
     <Drawer variant={variant || 'permanent'} PaperProps={PaperProps} open={open} onClose={onClose}>
       <Styles.Brand component={NavLink} to={ROUTES.EXPLORER} button>
         <Box ml={1}>
-          <Styles.BrandLogo src={PastelLogo} alt="Pastel Logo" />
+          <Styles.BrandLogo src={isDarkMode ? PastelLogoWhite : PastelLogo} alt="Pastel Logo" />
         </Box>
       </Styles.Brand>
       <Styles.Scrollbar>
@@ -162,7 +181,7 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
                       onClick={() => toggle(index)}
                     />
 
-                    <Collapse in={openRoutes[index]} timeout="auto" unmountOnExit>
+                    <Collapse in={openRoutes[index] || true} timeout="auto" unmountOnExit>
                       {category.children.map((route: RouteChildType) => (
                         <SidebarLink
                           key={route.name}
@@ -179,6 +198,11 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
                 )}
               </React.Fragment>
             ))}
+            <Hidden mdUp>
+              <ListItem style={{ justifyContent: 'flex-end' }}>
+                <SwitchMode />
+              </ListItem>
+            </Hidden>
           </Styles.Items>
         </List>
       </Styles.Scrollbar>
@@ -186,7 +210,7 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
         <Styles.SidebarContainer container spacing={2} justify="space-around" alignItems="center">
           {footerIcons.map(({ id, url, icon }) => (
             <Grid item key={id}>
-              <IconButton target="_blank" href={url} color="primary" style={{ padding: '4px' }}>
+              <IconButton target="_blank" href={url} className="social-icon">
                 {icon}
               </IconButton>
             </Grid>

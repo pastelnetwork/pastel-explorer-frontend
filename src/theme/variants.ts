@@ -5,6 +5,12 @@ const themeVariant = {
   custom: {
     black: '#000',
     white: '#fff',
+    blue: {
+      blackRock: '#232630',
+      solitude: '#F8F8FA',
+      licorice: '#2D3748',
+      slateBlue: '#6151d0',
+    },
     green: {
       light: green[200],
       main: green[500],

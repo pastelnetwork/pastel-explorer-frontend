@@ -12,7 +12,7 @@ export const Container = styled.div`
   bottom: 0;
   width: 100%;
   height: 50px;
-  background: ${themeVariant.footer.background};
+  background: ${props => props.theme.palette.background.default};
   box-shadow: -1px 7px 12px 0px ${themeVariant.footer.color};
   z-index: 99;
 `;

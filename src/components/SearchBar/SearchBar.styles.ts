@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 
 export const AppBar = styled(MuiAppBar)`
-  background: ${props => props.theme.header.background};
+  background: ${props => props.theme.palette.background.default};
   color: ${props => props.theme.header.color};
 
   fieldset {
@@ -26,13 +26,13 @@ export const IconButton = styled(MuiIconButton)`
 
 export const Search = styled.div`
   border-radius: 2px;
-  background-color: ${props => props.theme.header.background};
+  background-color: ${props => props.theme.palette.background.default};
   display: none;
   position: relative;
   width: 100%;
 
   &:hover {
-    background-color: ${props => darken(0.05, props.theme.header.background)};
+    background-color: ${props => darken(0.05, props.theme.palette.background.default)};
   }
 
   ${props => props.theme.breakpoints.up('md')} {
@@ -42,11 +42,14 @@ export const Search = styled.div`
 
 export const AutocompleteWrapper = styled(Grid)`
   width: 100%;
-
+  margin-right: 5px;
+  ${props => props.theme.breakpoints.down('md')} {
+    margin-right: 0;
+  }
   .MuiFormLabel-root {
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 80%;
+    // width: 80%;
     white-space: nowrap;
   }
 `;

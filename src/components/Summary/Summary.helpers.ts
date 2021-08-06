@@ -12,7 +12,7 @@ export interface SummaryItemProps {
 export const initialSummaryList: Array<SummaryItemProps> = [
   {
     id: 1,
-    name: 'Network (GH/s)',
+    name: 'Network (MH/s)',
     value: null,
     previousValue: null,
     key: 'gigaHashPerSec',

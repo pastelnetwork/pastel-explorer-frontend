@@ -25,4 +25,90 @@ const createTheme = (): Theme => {
   );
 };
 
+export const themeLight = createMuiTheme(
+  {
+    palette: {
+      ...themeVariant.palette,
+      background: {
+        default: '#FFFFFF',
+        paper: '#FAFBFC',
+      },
+      text: {
+        primary: '#2D3748',
+        secondary: '#4E5D78',
+      },
+    },
+    spacing: 4,
+    breakpoints,
+    overrides,
+    props,
+    typography,
+    shadows,
+  },
+  {
+    header: themeVariant.header,
+    footer: themeVariant.footer,
+    sidebar: {
+      ...themeVariant.sidebar,
+      background: {
+        default: '#FFFFFF',
+        active: '#6C5DD3',
+      },
+      text: {
+        default: '#FFFFFF',
+        active: '#F8F8FA',
+        primary: '#4A5568',
+      },
+      radius: {
+        default: 0,
+        active: '15px',
+      },
+    },
+  },
+);
+
+export const themeDark = createMuiTheme(
+  {
+    palette: {
+      ...themeVariant.palette,
+      background: {
+        default: '#232630',
+        paper: '#14161D',
+      },
+      text: {
+        primary: '#F8F8FA',
+        secondary: '#F8F8FA',
+      },
+    },
+    spacing: 4,
+    breakpoints,
+    overrides,
+    props,
+    typography,
+    shadows,
+  },
+  {
+    header: themeVariant.header,
+    footer: themeVariant.footer,
+    sidebar: {
+      ...themeVariant.sidebar,
+      background: {
+        default: '#232630',
+        active: '#6C5DD3',
+      },
+      text: {
+        default: '#4A5568',
+        active: '#F8F8FA',
+        primary: '#4A5568',
+      },
+      radius: {
+        default: 0,
+        active: '15px',
+      },
+    },
+  },
+);
+
 export default createTheme;
+
+export type TAppTheme = typeof themeDark;

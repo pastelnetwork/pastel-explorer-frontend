@@ -8,6 +8,7 @@ export const Card = styled(MuiCard)(spacing);
 
 export const TableWrapper = styled.div`
   overflow-y: auto;
+  background: ${props => props.theme.palette.background.default};
   max-width: calc(100vw - ${props => props.theme.spacing(12)}px);
 `;
 
@@ -17,6 +18,7 @@ export const TableCardHeader = styled(CardHeader)`
 
 export const TableCell = styled(MuiTableCell)`
   font-weight: 700;
+  cursor: pointer;
 `;
 
 export const RowCell = styled(MuiTableCell)`

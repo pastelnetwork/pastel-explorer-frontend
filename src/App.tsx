@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import DateFnsUtils from '@date-io/date-fns';
 
@@ -14,8 +15,12 @@ import {
 import ErrorHandler from '@pages/ErrorHandler/ErrorHandler';
 import ResponseErrorAlert from '@components/ResponseErrorAlert/ResponseErrorAlert';
 import InfoDrawer from '@components/InfoDrawer/InfoDrawer';
+import { useSelector, useDispatch } from 'react-redux';
+import { getThemeState } from '@redux/reducers/appThemeReducer';
+import { setAppThemeAction } from '@redux/actions/appThemeAction';
+import { socket, SocketContext } from '@context/socket';
 
-import createTheme from './theme';
+import { themeLight, themeDark } from './theme';
 import Routes from './routes/Routes';
 
 const jss = create({
@@ -24,22 +29,35 @@ const jss = create({
 });
 
 const App: React.FC = () => {
+  const dispatch = useDispatch();
+  const [succeed, setSucceed] = useState<boolean>(false);
+  useEffect(() => {
+    const isDarkModeInit = localStorage.getItem('darkMode') === 'true';
+    dispatch(setAppThemeAction(isDarkModeInit));
+    setSucceed(true);
+  }, [dispatch]);
+  const isDarkMode = useSelector(getThemeState).darkMode;
+  if (!succeed) {
+    return <div>Loading...</div>;
+  }
   return (
     <HelmetProvider>
       <Helmet titleTemplate="%s | Pastel Explorer" defaultTitle="Pastel Explorer" />
-      <StylesProvider jss={jss}>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <MuiThemeProvider theme={createTheme()}>
-            <ThemeProvider theme={createTheme()}>
-              <ErrorHandler>
-                <Routes />
-                <ResponseErrorAlert />
-              </ErrorHandler>
-              <InfoDrawer />
-            </ThemeProvider>
-          </MuiThemeProvider>
-        </MuiPickersUtilsProvider>
-      </StylesProvider>
+      <SocketContext.Provider value={socket}>
+        <StylesProvider jss={jss}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <MuiThemeProvider theme={isDarkMode ? themeDark : themeLight}>
+              <ThemeProvider theme={isDarkMode ? themeDark : themeLight}>
+                <ErrorHandler>
+                  <Routes />
+                  <ResponseErrorAlert />
+                </ErrorHandler>
+                <InfoDrawer />
+              </ThemeProvider>
+            </MuiThemeProvider>
+          </MuiPickersUtilsProvider>
+        </StylesProvider>
+      </SocketContext.Provider>
     </HelmetProvider>
   );
 };

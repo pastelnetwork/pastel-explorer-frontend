@@ -25,6 +25,7 @@ import { formattedDate } from '@utils/helpers/date/date';
 import * as URLS from '@utils/constants/urls';
 import * as ROUTES from '@utils/constants/routes';
 import { IBlock, IBlockTransaction } from '@utils/types/IBlocks';
+import { useSortData } from '@utils/hooks';
 
 import { blockHeaders, transactionHeaders, generateDetailsElement } from './BlockDetails.helpers';
 import * as Styles from './BlockDetails.styles';
@@ -36,13 +37,15 @@ interface ParamTypes {
 const BlockDetails = () => {
   const history = useHistory();
   const { id } = useParams<ParamTypes>();
-
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [block, setBlock] = React.useState<IBlock | null>();
   const [redirect, setRedirect] = React.useState(false);
   const { fetchData } = useFetch<{ data: IBlock }>({
     method: 'get',
     url: `${URLS.BLOCK_URL}/${id}`,
+  });
+  const [transactions, handleClickSortTransaction] = useSortData<IBlockTransaction>({
+    inititalData: block?.transactions || null,
   });
 
   React.useEffect(() => {
@@ -62,15 +65,18 @@ const BlockDetails = () => {
         data: [
           { id: 1, value: height },
           { id: 3, value: formatNumber(confirmations) },
-          { id: 4, value: formatNumber(size, { decimalsLength: 2 }) },
+          { id: 4, value: formatNumber(size / 1000, { decimalsLength: 2 }) },
           { id: 6, value: formattedDate(timestamp) },
         ],
       },
     ];
   };
 
-  const generateLatestTransactions = (transactions: Array<IBlockTransaction>): RowsProps[] => {
-    const transactionList = transactions.map(transaction => {
+  const generateLatestTransactions = (data: Array<IBlockTransaction> | null): RowsProps[] => {
+    if (!data) {
+      return [];
+    }
+    const transactionList = data.map(transaction => {
       return {
         id: transaction.id,
         data: [
@@ -139,6 +145,7 @@ const BlockDetails = () => {
             title={generateTableHeaderWithNavigation(block)}
             headers={blockHeaders}
             rows={generateBlockTable(block)}
+            // handleClickSort={handleClickSort}
           />
         </Grid>
         <Grid item>
@@ -153,7 +160,7 @@ const BlockDetails = () => {
                   formatNumber(block.difficulty, { decimalsLength: 2 }),
                 )}
                 {generateDetailsElement('Nonce', block.nonce)}
-                {generateDetailsElement('Markle Root', block.merkleRoot)}
+                {generateDetailsElement('Merkle Root', block.merkleRoot)}
                 {generateDetailsElement('Previous Block', block.previousBlockHash)}
                 {generateDetailsElement('Next Block', block.nextBlockHash)}
               </Grid>
@@ -164,7 +171,8 @@ const BlockDetails = () => {
           <Table
             title="Latest Transactions"
             headers={transactionHeaders}
-            rows={generateLatestTransactions(block.transactions)}
+            rows={generateLatestTransactions(transactions)}
+            handleClickSort={handleClickSortTransaction}
           />
         </Grid>
       </Grid>

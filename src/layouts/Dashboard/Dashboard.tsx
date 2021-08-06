@@ -7,7 +7,6 @@ import Sidebar from '@components/Sidebar/Sidebar';
 import Header from '@components/SearchBar/SearchBar';
 import Footer from '@components/Footer/Footer';
 import Summary from '@components/Summary/Summary';
-
 import { RouteType } from '@utils/types/routes';
 
 import * as Styles from './Dashboard.styles';
