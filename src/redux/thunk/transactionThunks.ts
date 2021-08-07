@@ -26,7 +26,6 @@ export const updateTransactionsNewest: (
 ) => AppThunk<Promise<void>> = data => async (dispatch, getState): Promise<void> => {
   const prevBlocks = getState()[TRANSACTION_NAMESPACE].latestTransaction;
   const newBlocks = setTransactionsLive(prevBlocks, data);
-  console.log(newBlocks);
   dispatch(setLatestTransactions(newBlocks));
   Promise.resolve();
 };
