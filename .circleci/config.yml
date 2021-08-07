@@ -1,23 +1,21 @@
 version: 2.1
 
 orbs:
-  aws-cli: circleci/aws-cli@0.1.20
-  aws-s3: circleci/aws-s3@1.0.11
+  aws-cli: circleci/aws-cli@2.0.3
+  aws-s3: circleci/aws-s3@3.0.0
 
 executors:
-  node-browser:
+  node:
     docker:
-      - image: circleci/node:14.17-buster-browsers
+      - image: cimg/python:3.9.6-node
     working_directory: /tmp/workspace
 
 jobs:
   build:
-    executor: node-browser
-    working_directory: /tmp/workspace
+    executor: node
     steps:
       - checkout
       - run: git submodule update --init --recursive
-
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
@@ -27,47 +25,42 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
       - run:
           command: echo 'GENERATE_SOURCEMAP=false' >> .env
       - run:
           command: yarn build
-
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
             - build
 
-  deploy:
-    executor: node-browser
-    working_directory: /tmp
+  deploy-production:
+    executor: node
     steps:
       - attach_workspace:
           at: /tmp/workspace
-
       - aws-cli/setup:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-
       - aws-s3/sync:
           from: /tmp/workspace/build/
           to: s3://$BUCKET_NAME
           arguments: |
             --acl public-read \
             --cache-control "max-age=86400"
-          overwrite: true
       - run: aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths /\*
 
   deploy-staging:
-    executor: node-browser
-    working_directory: /tmp/workspace
+    executor: node
     steps:
+      - attach_workspace:
+          at: /tmp/workspace
       - add_ssh_keys:
           fingerprints:
             - '71:46:6e:71:40:bd:0e:0c:7e:00:4b:14:ec:60:6e:68'
       - run:
           name: Deploy Staging over SSH
-          command: ssh -o "StrictHostKeyChecking no" ubuntu@$STAGING_SERVER_IP "sh /home/ubuntu/pastel-explorer-frontend/restart-app.sh"
+          command: scp -o "StrictHostKeyChecking no" -r /tmp/workspace/build/* ubuntu@$STAGING_SERVER_IP:~/pastel-explorer-frontend/build
 
 workflows:
   version: 2
@@ -75,6 +68,7 @@ workflows:
     jobs:
       - build:
           name: build-pr
+          context: explorer-frontend-staging
           filters:
             branches:
               ignore:
@@ -88,7 +82,7 @@ workflows:
               only:
                 - master
                 - production
-      - deploy:
+      - deploy-production:
           name: deploy-production
           requires:
             - build-production
@@ -100,9 +94,9 @@ workflows:
                 - production
       - deploy-staging:
           name: deploy-staging
+          context: explorer-frontend-staging
           requires:
             - build-pr
-          context: pastel-frontend-stage
           filters:
             branches:
               only:
