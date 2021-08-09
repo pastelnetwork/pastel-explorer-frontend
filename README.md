@@ -1,35 +1,25 @@
-# Pastel Explorer Frontend
+# Pastel Explorer Website (Frontend)
 
-## Libraries
+## Development
 
-We are using
-- React
-- Redux
-- Typescript
-- Material UI
-- React Router
-- Axios
-- Styled components
+Make dot env file from the example one.
 
-Get your ideas from the [template](https://material-app.bootlab.io/dashboard/analytics).
+```bash
+cp .env.example .env
+```
 
-## Guidelines
+Run the app in the development mode.  
 
-Please use this [guideline](/docs/GUIDELINE.md) to keep the code strict.
+```bash
+yarn start
+```
 
-## Available Scripts
+Run tests.
 
-In the project directory, you can run:
+```bash
+yarn test
+```
 
-#### `yarn start`
+## Production Deployment
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-#### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Make sure you use the proper env variables when building the app in the CI/CD pipeline.
