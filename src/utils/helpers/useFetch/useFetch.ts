@@ -16,7 +16,7 @@ interface IFetchDataOptions {
   params?: { [key: string]: string | number };
 }
 
-const axiosInstance = Axios.create({
+export const axiosInstance = Axios.create({
   baseURL: URLS.BASE_URL,
 });
 

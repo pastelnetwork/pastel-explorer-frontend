@@ -18,13 +18,13 @@ const useStyles = makeStyles((theme: TAppTheme) => ({
 const Statistics = () => {
   const classes = useStyles();
   return (
-    <>
+    <div>
       <BlockStatistics />
       <div className={classes.blockSpace} />
       <NetworkStatistics />
       <div className={classes.blockSpace} />
       <TransactionStatistics />
-    </>
+    </div>
   );
 };
 

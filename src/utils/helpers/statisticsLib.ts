@@ -16,7 +16,7 @@ import {
 } from '@utils/types/IStatistics';
 import { IBlock } from '@utils/types/IBlocks';
 import { formattedDate } from '@utils/helpers/date/date';
-import { IRawTransactions, ITransactionState } from '@utils/types/ITransactions';
+import { IRawTransactions, ITransaction } from '@utils/types/ITransactions';
 import { ISocketData } from '@utils/types/ISocketData';
 
 export type PeriodTypes =
@@ -289,29 +289,39 @@ export function convertYAxisLabel(value: number, maxY: number): number | string 
 }
 
 export function setTransactionsLive(
-  prev: Map<string, ITransactionState>,
+  prev: Map<string, ITransaction>,
   { rawTransactions = [], unconfirmedTransactions = [], blocks }: ISocketData,
 ) {
-  const newTxs: Map<string, ITransactionState> = new Map();
+  const newTxs: Map<string, ITransaction> = new Map();
 
   if (rawTransactions.length > 0) {
-    let height: number;
-    if (blocks && blocks.length) {
-      height = blocks[0].height;
-    }
+    const block = blocks[0];
     rawTransactions.forEach((item: IRawTransactions) => {
       let pslPrice = 0;
       item.vout.forEach(({ value }) => {
         pslPrice += value;
       });
+      const fee = prev.get(item.txid)?.fee || item.fee || 0;
       newTxs.set(item.txid, {
-        ...item,
-        pslPrice: +pslPrice.toFixed(2),
-        recepients: item.vout.length,
-        height,
+        // ...item,
+        block: {
+          height: `${block.height || ''}`,
+          confirmations: block.confirmations,
+        },
+        blockHash: block.hash,
+        coinbase: 0,
+        id: item.txid,
+        isNonStandard: 1,
+        rawData: '',
+        fee,
+        height: block.height,
+        totalAmount: +pslPrice.toFixed(2),
+        recipientCount: item.vout.length,
+        timestamp: item.time,
+        size: item.size || 0,
       });
     });
-    return newTxs;
+    // return newTxs;
   }
   if (unconfirmedTransactions.length) {
     unconfirmedTransactions.forEach((item: IRawTransactions) => {
@@ -319,16 +329,35 @@ export function setTransactionsLive(
       item.vout.forEach(({ value }) => {
         pslPrice += value;
       });
+      const fee = prev.get(item.txid)?.fee || item.fee || 0;
       newTxs.set(item.txid, {
-        ...item,
-        pslPrice: +pslPrice.toFixed(2),
-        recepients: item.vout.length,
+        block: {
+          height: '',
+          confirmations: 0,
+        },
+        blockHash: item.blockhash || '',
+        coinbase: 0,
+        id: item.txid,
+        isNonStandard: 1,
+        rawData: '',
+        fee,
+        height: 0,
+        totalAmount: +pslPrice.toFixed(2),
+        recipientCount: item.vout.length,
+        timestamp: item.time,
+        size: item.size || 0,
       });
     });
   }
   if (prev.size > 0) {
+    let i = newTxs.size;
     prev.forEach((value, key) => {
-      newTxs.set(key, value);
+      if (i < 6) {
+        if (!newTxs.get(key)) {
+          newTxs.set(key, value);
+          i += 1;
+        }
+      }
     });
   }
   return newTxs;

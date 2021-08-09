@@ -2,6 +2,7 @@
 import { memo, useEffect } from 'react';
 // third party
 import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -11,16 +12,14 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Skeleton from '@material-ui/lab/Skeleton';
-import { useDispatch } from 'react-redux';
 // application
+import { formattedDate } from '@utils/helpers/date/date';
 import { TAppTheme } from '@theme/index';
-import { generateBlockKeyValue } from '@pages/Explorer/LatestTransactions/LatestTransactions.helpers';
-import { TransactionThunks } from '@redux/thunk';
+import { BlockThunks } from '@redux/thunk';
 import { AppThunkDispatch } from '@redux/types';
-import { useTransactionLatestTransactions } from '@redux/hooks/transactionsHooks';
-import { ITransaction } from '@utils/types/ITransactions';
-import { TRANSACTION_DETAILS } from '@utils/constants/routes';
+import { useBlockLatestBlocks } from '@redux/hooks/blocksHooks';
+import Skeleton from '@material-ui/lab/Skeleton';
+import { generateBlockKeyValue } from '@pages/Explorer/LatestTransactions/LatestTransactions.helpers';
 
 const StyledTableCell = withStyles((theme: TAppTheme) => ({
   head: {
@@ -28,7 +27,6 @@ const StyledTableCell = withStyles((theme: TAppTheme) => ({
     color: theme.palette.text.primary,
     fontWeight: 600,
   },
-
   body: {
     fontSize: 14,
   },
@@ -42,55 +40,53 @@ const StyledTableRow = withStyles((theme: TAppTheme) => ({
   },
 }))(TableRow);
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   table: {
     minWidth: 700,
   },
-  link: {
-    color: theme.palette.text.primary,
-    textDecoration: 'none',
+  hashCell: {
+    maxWidth: 250,
   },
-}));
+  viewAll: {
+    padding: 16,
+  },
+});
 
-function LatestTransactions() {
+function LatestBlocks() {
+  const classes = useStyles();
   const dispatch = useDispatch<AppThunkDispatch>();
-  const transactions = useTransactionLatestTransactions();
+  const latestBlocks = useBlockLatestBlocks();
   useEffect(() => {
-    dispatch(TransactionThunks.getLatestBlocks());
+    dispatch(BlockThunks.getLatestBlocks());
   }, []);
 
-  const classes = useStyles();
   return (
     <div>
-      <h4>Latest Transactions (Live)</h4>
+      <h4>Latest Blocks (Live)</h4>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell>Block</StyledTableCell>
-              <StyledTableCell>TXID</StyledTableCell>
-              <StyledTableCell align="right">Amount(PSL)</StyledTableCell>
-              <StyledTableCell align="right">Recipents</StyledTableCell>
-              <StyledTableCell align="right">Fee</StyledTableCell>
+              <StyledTableCell>Hash</StyledTableCell>
+              <StyledTableCell align="right">TXs</StyledTableCell>
+              <StyledTableCell align="right">Size</StyledTableCell>
+              <StyledTableCell align="right">Timestamp</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {transactions.size > 0 ? (
-              Array.from(transactions.values()).map((tx: ITransaction) => (
-                <StyledTableRow key={tx.id}>
+            {latestBlocks && latestBlocks.size ? (
+              Array.from(latestBlocks.values()).map(block => (
+                <StyledTableRow key={block.id}>
                   <StyledTableCell component="th" scope="row">
-                    {generateBlockKeyValue(tx.blockHash || '', tx.block.height || '')}
+                    {generateBlockKeyValue(block.id || '', block.height || '')}
                   </StyledTableCell>
-                  <StyledTableCell component="th" scope="row" style={{ maxWidth: 360 }}>
-                    <Link to={`${TRANSACTION_DETAILS}/${tx.id}`} className={classes.link}>
-                      <Typography noWrap>{tx.id}</Typography>
-                    </Link>
+                  <StyledTableCell component="th" scope="row" style={{ maxWidth: 250 }}>
+                    <Typography noWrap>{block.id}</Typography>
                   </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {(+tx.totalAmount.toFixed(2)).toLocaleString('en')}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">{tx.recipientCount}</StyledTableCell>
-                  <StyledTableCell align="right">{tx.fee || '--'}</StyledTableCell>
+                  <StyledTableCell align="right">{block.transactionCount}</StyledTableCell>
+                  <StyledTableCell align="right">{block.size.toLocaleString('en')}</StyledTableCell>
+                  <StyledTableCell align="right">{formattedDate(block.timestamp)}</StyledTableCell>
                 </StyledTableRow>
               ))
             ) : (
@@ -103,8 +99,13 @@ function LatestTransactions() {
           </TableBody>
         </Table>
       </TableContainer>
+      <div>
+        <Link to="/blocks">
+          <Typography align="center" className={classes.viewAll}>{`View all >>`}</Typography>
+        </Link>
+      </div>
     </div>
   );
 }
 
-export default memo(LatestTransactions);
+export default memo(LatestBlocks);
