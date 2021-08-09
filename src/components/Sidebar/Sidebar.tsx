@@ -199,8 +199,8 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
               </React.Fragment>
             ))}
             <Hidden mdUp>
-              <ListItem style={{ justifyContent: 'flex-end' }}>
-                <SwitchMode />
+              <ListItem style={{ justifyContent: 'flex-start', padding: '8px 0' }}>
+                <SwitchMode isMobile />
               </ListItem>
             </Hidden>
           </Styles.Items>

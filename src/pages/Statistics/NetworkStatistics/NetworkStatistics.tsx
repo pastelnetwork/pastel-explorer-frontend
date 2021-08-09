@@ -32,7 +32,7 @@ const NetworkStatistics: React.FC = () => {
   return (
     <>
       <Header title="Network Statistics" />
-      <Grid container spacing={6}>
+      <Grid container>
         <Grid item xs={12}>
           {chartData || !isLoading ? (
             <div style={{ flex: 1, backgroundColor: currentBgColor }}>
