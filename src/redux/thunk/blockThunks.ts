@@ -49,7 +49,6 @@ export const updateBlocksNewest: (_block: IRawBlock) => AppThunk<Promise<void>> 
     i += 1;
   });
   dispatch(setLatestBlocks({ latestBlocks: newBlocks }));
-  Promise.resolve();
 };
 
 export default {

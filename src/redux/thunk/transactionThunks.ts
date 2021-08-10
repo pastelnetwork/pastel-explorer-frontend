@@ -27,7 +27,6 @@ export const updateTransactionsNewest: (
   const prevBlocks = getState()[TRANSACTION_NAMESPACE].latestTransaction;
   const newBlocks = setTransactionsLive(prevBlocks, data);
   dispatch(setLatestTransactions(newBlocks));
-  Promise.resolve();
 };
 
 export default {
