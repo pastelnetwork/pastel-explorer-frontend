@@ -1,34 +1,47 @@
-import { useCallback, ChangeEvent } from 'react';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { useCallback, MouseEvent } from 'react';
+import Brightness4Icon from '@material-ui/icons/Brightness4';
+import Brightness7Icon from '@material-ui/icons/Brightness7';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAppThemeAction } from '@redux/actions/appThemeAction';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
-import themeVariant from '@theme/variants';
+import { IconButton } from '@material-ui/core';
 
-const {
-  custom: {
-    blue: { solitude, licorice },
-  },
-} = themeVariant;
-const SwitchMode = () => {
+interface IProps {
+  isMobile?: boolean;
+}
+function SwitchMode({ isMobile }: IProps) {
   const dispatch = useDispatch();
   const isDarkMode = useSelector(getThemeState).darkMode;
-  const handleChangeMode = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    const { checked: value } = event.target;
-    dispatch(setAppThemeAction(value));
-    localStorage.setItem('darkMode', value ? 'true' : 'false');
-  }, []);
+  const handleChangeMode = useCallback(
+    (event: MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      dispatch(setAppThemeAction(!isDarkMode));
+      localStorage.setItem('darkMode', !isDarkMode ? 'true' : 'false');
+    },
+    [isDarkMode],
+  );
 
   return (
-    <div>
-      <FormControlLabel
-        control={<Switch checked={isDarkMode} onChange={handleChangeMode} />}
-        label={isDarkMode ? 'Light' : 'Dark'}
-        style={{ color: isDarkMode ? solitude : licorice }}
-      />
-    </div>
+    <IconButton
+      title="Toggle light/dark theme"
+      onClick={handleChangeMode}
+      style={{
+        fontSize: 'inherit',
+        color: 'inherit',
+        borderRadius: 15,
+        width: isMobile ? '100%' : 'auto',
+      }}
+    >
+      {isDarkMode ? (
+        <Brightness4Icon fill="white" style={{ fill: 'white' }} />
+      ) : (
+        <Brightness7Icon />
+      )}
+      {isMobile && <span style={{ paddingLeft: 8 }}>Toggle light/dark theme</span>}
+    </IconButton>
   );
+}
+SwitchMode.defaultProps = {
+  isMobile: false,
 };
-
 export default SwitchMode;

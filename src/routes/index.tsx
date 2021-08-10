@@ -202,7 +202,7 @@ const transactionInBlockStatisticsRoutes = {
   id: 'transactionInBlock',
   path: ROUTES.STATISTICS_TRANSACTION_IN_BLOCK,
   component: TransactionInBlock,
-  seoTitle: 'Transaction In Block',
+  seoTitle: 'Transactions In Block',
   children: null,
   exact: false,
 };

@@ -17,7 +17,7 @@ export const columns = [
     width: 360,
     minWidth: 360,
     flexGrow: 1,
-    label: 'Hash',
+    label: 'TXID',
     dataKey: BLOCK_HASH_KEY,
     disableSort: false,
   },

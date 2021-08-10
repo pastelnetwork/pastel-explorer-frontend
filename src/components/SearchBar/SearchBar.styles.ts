@@ -19,6 +19,7 @@ export const AppBar = styled(MuiAppBar)`
 
 export const IconButton = styled(MuiIconButton)`
   svg {
+    color: ${props => props.theme.palette.text.primary};
     width: 22px;
     height: 22px;
   }

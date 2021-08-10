@@ -5,6 +5,8 @@ import infoDrawerReducer from './infoDrawerReducer';
 import clusterReducer from './clusterReducer';
 import appThemeReducer from './appThemeReducer';
 import filterReducer from './filterReducer';
+import blockReducer from './blockReducer';
+import transactionReducer from './transactionReducer';
 
 export const rootReducer = combineReducers({
   ...responseErrorsReducer,
@@ -12,6 +14,8 @@ export const rootReducer = combineReducers({
   cluster: clusterReducer,
   ...appThemeReducer,
   ...filterReducer,
+  ...blockReducer,
+  ...transactionReducer,
 });
 
 type RootReducerType = typeof rootReducer;

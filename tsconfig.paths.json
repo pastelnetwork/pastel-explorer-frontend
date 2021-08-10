@@ -11,7 +11,9 @@
       "@routes/*": ["src/routes/*"],
       "@layouts/*": ["src/layouts/*"],
       "@hooks/*": ["src/hooks/*"],
-      "@context/*": ["src/context/*"]
+      "@context/*": ["src/context/*"],
+      "@apis/*": ["src/apis/*"],
+      "@services/*": ["src/services/*"]
     }
   }
 }

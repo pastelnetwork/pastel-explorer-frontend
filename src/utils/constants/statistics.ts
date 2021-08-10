@@ -72,7 +72,7 @@ export const statistics = [
   },
   {
     id: 'transactionInBlock',
-    title: 'Transaction In Block',
+    title: 'Transactions In Block',
     url: routes.STATISTICS_TRANSACTION_IN_BLOCK,
     image: '/images/statistics/transactionsinblock.jpg',
   },

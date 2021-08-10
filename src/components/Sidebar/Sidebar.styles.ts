@@ -97,6 +97,7 @@ export const Category = styled(ListItem)<CategoryType>`
 
   &:hover {
     background: rgba(0, 0, 0, 0.08);
+    border-radius: ${props => props.theme.sidebar.radius.active};
   }
   transition: all 0.3s ease-in-out;
   &.${props => props.activeClassName} {

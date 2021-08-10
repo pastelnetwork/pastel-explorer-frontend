@@ -1,11 +1,14 @@
 import * as React from 'react';
+// third party
 import { useHistory } from 'react-router-dom';
 import { format, fromUnixTime } from 'date-fns';
 
-import { Grid } from '@material-ui/core';
+import { Grid, darken } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
+import { makeStyles } from '@material-ui/styles';
+import { TAppTheme } from '@theme/index';
+// application
 import Header from '@components/Header/Header';
-// import LineChart from '@components/Charts/LineChart/LineChart';
 import { EChartsLineChart } from '@pages/HistoricalStatistics/Chart/EChartsLineChart';
 import { BlockUnconfirmed } from '@utils/types/ITransactions';
 
@@ -18,16 +21,32 @@ import { useBackgroundChart } from '@utils/hooks';
 import { info } from '@utils/constants/statistics';
 import { SocketContext } from '@context/socket';
 
-import * as Styles from './BlockStatistics.styles';
-
 import BlockVisualization from './BlockVisualization/BlockVisualization';
-import {
-  transformBlocksData,
-  ITransformBlocksData,
-  // generateBlocksChartData,
-} from './BlockStatistics.helpers';
+import { transformBlocksData, ITransformBlocksData } from './BlockStatistics.helpers';
 
 const BLOCK_ELEMENTS_COUNT = 8;
+
+const useStyles = makeStyles((_theme: TAppTheme) => ({
+  wrapper: {
+    margin: 0,
+    [_theme.breakpoints.up('md')]: {
+      width: 'calc(100vw - 314px)',
+    },
+  },
+  root: {
+    padding: '25px 20px',
+    overflowX: 'auto',
+    width: '100%',
+    margin: 0,
+    marginBottom: 16,
+    '&::-webkit-scrollbar': {
+      background: _theme.palette.background.default,
+    },
+    '&::-webkit-scrollbar-thumb': {
+      background: darken(_theme.palette.background.paper, 0.5),
+    },
+  },
+}));
 
 interface ChartProps {
   labels: Array<string>;
@@ -36,6 +55,7 @@ interface ChartProps {
 
 const StatisticsBlocks: React.FC = () => {
   const history = useHistory();
+  const classes = useStyles();
   const [blockElements, setBlockElements] = React.useState<Array<ITransformBlocksData>>([]);
   const [chartData, setChartData] = React.useState<ChartProps | null>(null);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
@@ -93,48 +113,52 @@ const StatisticsBlocks: React.FC = () => {
   return (
     <>
       <Header title="Blocks Statistics" />
-      <Grid container spacing={6}>
+      <Grid classes={{ root: classes.wrapper }} container>
         {blockElements && blockElements.length ? (
-          <Grid item xs={12}>
-            <Styles.BlocksContainer container justify="flex-start" alignItems="center" spacing={8}>
-              {blocksUnconfirmed && blocksUnconfirmed.length
-                ? blocksUnconfirmed.map(({ height, size, txsCount }, idx) => (
-                    <Grid item key={height}>
-                      <BlockVisualization
-                        height="--"
-                        className="block-unconfirmed"
-                        size={`${(size / 1024).toFixed(2)} kB`}
-                        transactionCount={`${txsCount} transactions`}
-                        minutesAgo={`In ~${(blocksUnconfirmed.length - idx) * 10} minutes`}
-                      />
-                    </Grid>
-                  ))
-                : null}
-              <Grid item>
-                <div
-                  style={{
-                    width: 3,
-                    height: 145,
-                    borderLeft: '3px dashed',
-                    marginLeft: -10,
-                    marginTop: -30,
-                  }}
-                />
-              </Grid>
-              {blockElements
-                .slice(1, 8)
-                .map(({ id, height, size, transactionCount, minutesAgo }) => (
-                  <Grid item key={id}>
+          <Grid
+            classes={{ container: classes.root }}
+            className={classes.root}
+            wrap="nowrap"
+            container
+            justify="flex-start"
+            alignItems="center"
+            spacing={8}
+          >
+            {blocksUnconfirmed && blocksUnconfirmed.length
+              ? blocksUnconfirmed.map(({ height, size, txsCount }, idx) => (
+                  <Grid item key={height}>
                     <BlockVisualization
-                      clickHandler={() => history.push(`${ROUTES.BLOCK_DETAILS}/${id}`)}
-                      height={height}
-                      size={size}
-                      transactionCount={transactionCount}
-                      minutesAgo={minutesAgo}
+                      height="--"
+                      className="block-unconfirmed"
+                      size={`${(size / 1024).toFixed(2)} kB`}
+                      transactionCount={`${txsCount} transactions`}
+                      minutesAgo={`In ~${(blocksUnconfirmed.length - idx) * 10} minutes`}
                     />
                   </Grid>
-                ))}
-            </Styles.BlocksContainer>
+                ))
+              : null}
+            <Grid item>
+              <div
+                style={{
+                  width: 3,
+                  height: 145,
+                  borderLeft: '3px dashed',
+                  marginLeft: -10,
+                  marginTop: -30,
+                }}
+              />
+            </Grid>
+            {blockElements.slice(1, 8).map(({ id, height, size, transactionCount, minutesAgo }) => (
+              <Grid item key={id}>
+                <BlockVisualization
+                  clickHandler={() => history.push(`${ROUTES.BLOCK_DETAILS}/${id}`)}
+                  height={height}
+                  size={size}
+                  transactionCount={transactionCount}
+                  minutesAgo={minutesAgo}
+                />
+              </Grid>
+            ))}
           </Grid>
         ) : (
           <Skeleton animation="wave" variant="rect" height={300} />

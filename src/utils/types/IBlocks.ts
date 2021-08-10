@@ -19,3 +19,22 @@ export interface IBlock {
   transactionCount: number;
   transactions: Array<IBlockTransaction>;
 }
+
+export interface IRawBlock {
+  anchor: string;
+  bits: string;
+  chainwork: string;
+  confirmations: number;
+  difficulty: string;
+  finalsaplingroot: string;
+  hash: string;
+  height: number;
+  merkleroot: string;
+  nonce: string;
+  previousblockhash: string;
+  size: number;
+  solution: string;
+  time: number;
+  transactions: Array<IBlockTransaction>;
+  tx: string[];
+}
