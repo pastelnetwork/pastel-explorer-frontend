@@ -128,6 +128,7 @@ const StatisticsBlocks: React.FC = () => {
               ? blocksUnconfirmed.map(({ height, size, txsCount }, idx) => (
                   <Grid item key={height}>
                     <BlockVisualization
+                      title="Mempool:"
                       height="--"
                       className="block-unconfirmed"
                       size={`${(size / 1024).toFixed(2)} kB`}
