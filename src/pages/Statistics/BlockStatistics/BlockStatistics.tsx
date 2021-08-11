@@ -129,7 +129,7 @@ const StatisticsBlocks: React.FC = () => {
                   <Grid item key={height}>
                     <BlockVisualization
                       title="Mempool:"
-                      height="--"
+                      height={<span style={{ fontSize: 14 }}>Pending Block</span>}
                       className="block-unconfirmed"
                       size={`${(size / 1024).toFixed(2)} kB`}
                       transactionCount={`${txsCount} transactions`}
