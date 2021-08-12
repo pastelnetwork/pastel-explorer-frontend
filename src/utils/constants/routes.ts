@@ -30,3 +30,4 @@ export const STATISTICS_TRANSACTION_COUNT = `${STATISTICS_OVERTIME}/transaction-
 export const STATISTICS_AVERAGE_TRANSACTIONS_PER_BLOCK = `${STATISTICS_OVERTIME}/average-transaction-per-block`;
 export const STATISTICS_BLOCKCHAIN_SIZE = `${STATISTICS_OVERTIME}/blockchain-size`;
 export const STATISTICS_TOTAL_TRANSACTION_COUNT = `${STATISTICS_OVERTIME}/total-transaction-count`;
+export const STATISTICS_TOTAL_TRANSACTION_FEES = `${STATISTICS_OVERTIME}/total-transaction-fees`;

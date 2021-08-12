@@ -41,6 +41,7 @@ import BlockchainSize from '@pages/HistoricalStatistics/BlockchainSize';
 import TotalTransactionCount from '@pages/HistoricalStatistics/TotalTransactionsCount';
 
 import * as ROUTES from '@utils/constants/routes';
+import TotalTransactionFees from '@pages/HistoricalStatistics/TotalTransactionFees';
 
 const explorerRoutes = {
   id: 'Explorer',
@@ -260,6 +261,16 @@ const totalTransactionCountStatisticsRoutes = {
   children: null,
   exact: false,
 };
+
+const totalTransactionFeesStatisticsRoutes = {
+  id: 'totalTransactionFees',
+  path: ROUTES.STATISTICS_TOTAL_TRANSACTION_FEES,
+  component: TotalTransactionFees,
+  icon: <BarChartIcon />,
+  seoTitle: 'Total Transaction Fees',
+  children: null,
+};
+
 // Uncomment this when API page will be ready
 // const infoRoutes = {
 //   id: 'API',
@@ -320,6 +331,7 @@ export const pageRoutes = [
   averageTransactionsPerBlockStatisticsRoutes,
   blockchainSizeStatisticsRoutes,
   totalTransactionCountStatisticsRoutes,
+  totalTransactionFeesStatisticsRoutes,
 ];
 
 export const sidebarRoutes = [

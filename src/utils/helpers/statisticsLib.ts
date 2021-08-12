@@ -240,16 +240,16 @@ export function transformCharts(data: TChartResponseItem[], range = 1): TLineCha
   return { dataX, dataY };
 }
 
-export function transformBlockchainSize(data: TTransactionsChart[]): TLineChartData {
+export function transformTotalData(data: TTransactionsChart[], range = 10e6): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
   dataX.push(data[0].label);
-  dataY.push(+(data[0].value / 10e6).toFixed(2));
+  dataY.push(+(data[0].value / range).toFixed(2));
   if (data.length > 1) {
     for (let i = 1; i < data.length; i += 1) {
       const { value, label } = data[i];
       dataX.push(label);
-      dataY.push(+(dataY[i - 1] + +(value / 10e6).toFixed(2)).toFixed(2));
+      dataY.push(+(dataY[i - 1] + +(value / range).toFixed(2)).toFixed(2));
     }
   }
 

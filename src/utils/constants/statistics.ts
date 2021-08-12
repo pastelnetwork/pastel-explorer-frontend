@@ -82,6 +82,12 @@ export const statistics = [
     url: routes.STATISTICS_AVERAGE_TRANSACTIONS_PER_BLOCK,
     image: '/images/statistics/averagetransactionsperblock.png',
   },
+  {
+    id: 'totalTransactionFees',
+    title: 'Total transaction fees',
+    url: routes.STATISTICS_TOTAL_TRANSACTION_FEES,
+    image: '/images/statistics/totaltransactionfees.png',
+  },
 ];
 
 export const themes = [

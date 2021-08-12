@@ -24,9 +24,9 @@ const useStyles = makeStyles((_theme: TAppTheme) => ({
     [_theme.breakpoints.up('md')]: {
       width: 'calc(100vw - 273px)',
     },
-    [_theme.breakpoints.up('xl')]: {
-      width: '100%',
-    },
+    // [_theme.breakpoints.up('xl')]: {
+    //   width: '100%',
+    // },
   },
   root: {
     display: 'flex',

@@ -1,33 +1,30 @@
-// react
 import { useEffect, useState } from 'react';
-// third party
-import { Skeleton } from '@material-ui/lab';
-// application
+
+import { TLineChartData, TTransactionsChart } from '@utils/types/IStatistics';
+import { PeriodTypes, transformTotalData } from '@utils/helpers/statisticsLib';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { PeriodTypes, transformTotalData } from '@utils/helpers/statisticsLib';
 import { periods, info } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
-import { TLineChartData, TTransactionsChart } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
 
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
-function BlockchainSize() {
-  const [chartData, setChartData] = useState<TLineChartData | null>(null);
+function TotalTransactionFees() {
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const [period, setPeriod] = useState<PeriodTypes>(periods[1][0]);
+  const [chartData, setChartData] = useState<TLineChartData | null>(null);
   const fetchStats = useFetch<{ data: Array<TTransactionsChart> }>({
     method: 'get',
-    url: URLS.GET_BLOCKS_CHARTS,
+    url: URLS.GET_TRANSACTIONS_CHARTS,
   });
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { period, sortDirection: 'DESC', func: 'SUM', col: 'size' },
+        params: { sortDirection: 'DESC', period, func: 'SUM', col: 'fee' },
       });
       if (data) {
-        const parseData = transformTotalData(data.data);
+        const parseData = transformTotalData(data.data, 1);
         setChartData(parseData);
       }
     };
@@ -40,12 +37,12 @@ function BlockchainSize() {
 
   return (
     <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
-      {chartData ? (
+      {chartData && (
         <EChartsLineChart
-          chartName="transactionfee"
+          chartName="averageblocksize"
           dataX={chartData?.dataX}
           dataY={chartData?.dataY}
-          title="Blockchain Size (Mb)"
+          title="Total transaction fees"
           info={info}
           period={period}
           offset={1}
@@ -53,11 +50,9 @@ function BlockchainSize() {
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
         />
-      ) : (
-        <Skeleton animation="wave" variant="rect" height={386} />
       )}
     </HistoricalStatisticsLayout>
   );
 }
 
-export default BlockchainSize;
+export default TotalTransactionFees;
