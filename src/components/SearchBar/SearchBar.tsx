@@ -89,13 +89,12 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
   };
 
   const handleInputChange = _debounce(
-    (_: React.ChangeEvent<Record<string, unknown>>, value: string) => {
-      if (optionSelectedFromList.current || value.length < 1) return null;
-
+    (_: React.ChangeEvent<Record<string, unknown>>, _value: string) => {
+      const value = _value.replace(/\s/g, '');
+      if (optionSelectedFromList.current || !value.trim().length) return null;
       !loading && setLoading(true);
       searchData.length && setSearchData([]);
-
-      return fetchData({ params: { query: value } })
+      return fetchData({ params: { query: value.trim() } })
         .then(response => response && sortSearchData(response))
         .finally(() => setLoading(false));
     },
