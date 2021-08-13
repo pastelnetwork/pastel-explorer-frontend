@@ -84,9 +84,15 @@ export const statistics = [
   },
   {
     id: 'totalTransactionFees',
-    title: 'Total transaction fees',
+    title: 'Total Transaction Fees',
     url: routes.STATISTICS_TOTAL_TRANSACTION_FEES,
     image: '/images/statistics/totaltransactionfees.png',
+  },
+  {
+    id: 'totalTransactionsPerDay',
+    title: 'Total Transactions Per Day',
+    url: routes.STATISTICS_TOTAL_TRANSACTIONS_PER_DAY,
+    image: '/images/statistics/totaltransactionsperday.png',
   },
 ];
 

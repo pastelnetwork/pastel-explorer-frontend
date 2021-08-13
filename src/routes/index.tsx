@@ -39,6 +39,7 @@ import TransactionCount from '@pages/HistoricalStatistics/TransactionCount';
 import AverageTransactionsPerBlock from '@pages/HistoricalStatistics/AverageTransactionsPerBlock';
 import BlockchainSize from '@pages/HistoricalStatistics/BlockchainSize';
 import TotalTransactionCount from '@pages/HistoricalStatistics/TotalTransactionsCount';
+import TotalTransactionPerDay from '@pages/HistoricalStatistics/TotalTransactionsPerDay';
 
 import * as ROUTES from '@utils/constants/routes';
 import TotalTransactionFees from '@pages/HistoricalStatistics/TotalTransactionFees';
@@ -266,8 +267,17 @@ const totalTransactionFeesStatisticsRoutes = {
   id: 'totalTransactionFees',
   path: ROUTES.STATISTICS_TOTAL_TRANSACTION_FEES,
   component: TotalTransactionFees,
-  icon: <BarChartIcon />,
+  icon: null,
   seoTitle: 'Total Transaction Fees',
+  children: null,
+};
+
+const totalTransactionsPerDayStatisticsRoutes = {
+  id: 'totalTransactionsPerDay',
+  path: ROUTES.STATISTICS_TOTAL_TRANSACTIONS_PER_DAY,
+  component: TotalTransactionPerDay,
+  icon: null,
+  seoTitle: 'Total Transactions Per Day',
   children: null,
 };
 
@@ -332,6 +342,7 @@ export const pageRoutes = [
   blockchainSizeStatisticsRoutes,
   totalTransactionCountStatisticsRoutes,
   totalTransactionFeesStatisticsRoutes,
+  totalTransactionsPerDayStatisticsRoutes,
 ];
 
 export const sidebarRoutes = [
