@@ -37,6 +37,12 @@ export type TLineChartProps = {
   granularities?: TGranularity[];
   offset: number;
   periods?: PeriodTypes[];
+  yaxisName?: string;
+  yaxisName1?: string;
+  seriesName?: string;
+  seriesName1?: string;
+  fixedNum?: number;
+  fixedNum1?: number;
   handleGranularityFilterChange?: (_granularity: TGranularity) => void;
   handleBgColorChange: (_color: string) => void;
   handlePeriodFilterChange?: (_period: PeriodTypes) => void;

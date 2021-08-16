@@ -32,3 +32,4 @@ export const STATISTICS_BLOCKCHAIN_SIZE = `${STATISTICS_OVERTIME}/blockchain-siz
 export const STATISTICS_TOTAL_TRANSACTION_COUNT = `${STATISTICS_OVERTIME}/total-transaction-count`;
 export const STATISTICS_TOTAL_TRANSACTION_FEES = `${STATISTICS_OVERTIME}/total-transaction-fees`;
 export const STATISTICS_TOTAL_TRANSACTIONS_PER_DAY = `${STATISTICS_OVERTIME}/total-transactions-per-day`;
+export const STATISTICS_MARKET_CAP = `${STATISTICS_OVERTIME}/market-cap-usd`;

@@ -21,12 +21,15 @@ import { ISocketData } from '@utils/types/ISocketData';
 
 export type PeriodTypes =
   | '1h'
+  | '24h'
   | '2h'
   | '3h'
   | '6h'
   | '12h'
   | '2d'
   | '4d'
+  | '7d'
+  | '14d'
   | '30d'
   | '60d'
   | '180d'

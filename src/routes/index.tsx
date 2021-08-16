@@ -40,6 +40,7 @@ import AverageTransactionsPerBlock from '@pages/HistoricalStatistics/AverageTran
 import BlockchainSize from '@pages/HistoricalStatistics/BlockchainSize';
 import TotalTransactionCount from '@pages/HistoricalStatistics/TotalTransactionsCount';
 import TotalTransactionPerDay from '@pages/HistoricalStatistics/TotalTransactionsPerDay';
+import MarketCapUSD from '@pages/HistoricalStatistics/MarketCapUSD';
 
 import * as ROUTES from '@utils/constants/routes';
 import TotalTransactionFees from '@pages/HistoricalStatistics/TotalTransactionFees';
@@ -281,6 +282,15 @@ const totalTransactionsPerDayStatisticsRoutes = {
   children: null,
 };
 
+const marketCapUSDStatisticsRoutes = {
+  id: 'marketCapUSD',
+  path: ROUTES.STATISTICS_MARKET_CAP,
+  component: MarketCapUSD,
+  icon: null,
+  seoTitle: 'Total Transactions Per Day',
+  children: null,
+};
+
 // Uncomment this when API page will be ready
 // const infoRoutes = {
 //   id: 'API',
@@ -343,6 +353,7 @@ export const pageRoutes = [
   totalTransactionCountStatisticsRoutes,
   totalTransactionFeesStatisticsRoutes,
   totalTransactionsPerDayStatisticsRoutes,
+  marketCapUSDStatisticsRoutes,
 ];
 
 export const sidebarRoutes = [

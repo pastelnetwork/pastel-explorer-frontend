@@ -94,6 +94,12 @@ export const statistics = [
     url: routes.STATISTICS_TOTAL_TRANSACTIONS_PER_DAY,
     image: '/images/statistics/totaltransactionsperday.png',
   },
+  {
+    id: 'marketPriceVolume',
+    title: 'Market Price and Volume',
+    url: routes.STATISTICS_MARKET_CAP,
+    image: '/images/statistics/pslpricevolume.png',
+  },
 ];
 
 export const themes = [
@@ -158,6 +164,7 @@ export const periods: PeriodTypes[][] = [
   ['2h', '2d', '4d', 'all'],
   ['30d', '60d', '180d', '1y', 'all'],
   ['1h', '3h', '6h', '12h'],
+  ['24h', '7d', '14d', '30d', '60d', '180d', '1y', 'all'],
 ];
 
 export const CHART_THEME_BACKGROUND_DEFAULT_COLOR = '#0d0d0d';
