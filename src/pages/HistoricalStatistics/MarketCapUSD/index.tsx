@@ -56,12 +56,12 @@ function PriceOvertime() {
         <EChartsMultiLineChart
           chartName="prices"
           dataX={transformLineChartData?.dataX}
-          yaxisName="USD Price"
           dataY1={transformLineChartData?.dataY1}
           dataY2={transformLineChartData?.dataY2}
-          yaxisName1="Total Volumes"
-          seriesName1="Price"
-          seriesName="Vol"
+          yaxisName="USD Price"
+          yaxisName1="Volume"
+          seriesName="Price"
+          seriesName1="Vol"
           fixedNum={5}
           fixedNum1={0}
           title="Price/ Volume"

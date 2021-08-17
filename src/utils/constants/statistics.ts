@@ -86,7 +86,7 @@ export const statistics = [
     id: 'totalTransactionFees',
     title: 'Total Transaction Fees',
     url: routes.STATISTICS_TOTAL_TRANSACTION_FEES,
-    image: '/images/statistics/totaltransactionfees.png',
+    image: '/images/statistics/totaltransactionsfee.png',
   },
   {
     id: 'totalTransactionsPerDay',

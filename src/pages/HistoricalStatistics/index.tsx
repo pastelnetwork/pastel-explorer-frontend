@@ -10,7 +10,7 @@ const Statistics = () => {
       <Grid container spacing={6} alignItems="center">
         {statistics.map(({ id, image, title, url }) => (
           <Grid item key={id} className="card-item" xs={12} sm={6} lg={4} xl={3}>
-            <Link to={url}>
+            <Link to={url} style={{ minHeight: 200 }}>
               <img alt="" width="100%" height="100%" style={{ objectFit: 'contain' }} src={image} />
               <h2>{title}</h2>
             </Link>
