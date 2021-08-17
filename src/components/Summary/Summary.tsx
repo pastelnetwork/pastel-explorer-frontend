@@ -75,14 +75,14 @@ const Summary: React.FC = () => {
 
         return {
           ...summaryElement,
-          value: formatNumber(currentStats[key], {
+          value: formatNumber(currentStats[key] || 0, {
             decimalsLength: summaryElement.decimals,
             divideToAmount: summaryElement.divideToAmount,
           }),
-          previousValue: formatNumber(lastDayStats[key], {
+          previousValue: formatNumber(lastDayStats[key] || 0, {
             decimalsLength: summaryElement.decimals,
           }),
-          difference: calculateDifference(currentStats[key], lastDayStats[key]),
+          difference: calculateDifference(currentStats[key] || 0, lastDayStats[key] || 0),
         };
       });
       return items;
