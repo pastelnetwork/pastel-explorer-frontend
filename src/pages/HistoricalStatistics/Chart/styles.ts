@@ -30,7 +30,7 @@ export const eChartLineStyles = makeStyles((theme: TAppTheme) => ({
     backgroundColor: '#212121',
   },
   lineChartTitle: {
-    width: '100%',
+    // width: '100%',
     textAlign: 'left',
     fontSize: '30px',
     [theme.breakpoints.down('sm')]: {

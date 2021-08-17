@@ -127,3 +127,11 @@ export type TChartResponseItem = {
 };
 
 export type TTransactionsChart = TChartResponseItem;
+
+type MarketChartItem = [number, number];
+
+export type MarketCoinRespone = {
+  prices: MarketChartItem[];
+  market_caps: MarketChartItem[];
+  total_volumes: MarketChartItem[];
+};

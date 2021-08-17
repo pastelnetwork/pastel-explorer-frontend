@@ -5,29 +5,28 @@ import { Skeleton } from '@material-ui/lab';
 // application
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { PeriodTypes, transformTotalData } from '@utils/helpers/statisticsLib';
+import { PeriodTypes, transformCharts } from '@utils/helpers/statisticsLib';
 import { periods, info } from '@utils/constants/statistics';
-import { useBackgroundChart } from '@utils/hooks';
-import { TLineChartData, TTransactionsChart } from '@utils/types/IStatistics';
+import { TChartResponseItem, TLineChartData } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
-
+import { useBackgroundChart } from '@utils/hooks';
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
-function BlockchainSize() {
+function TransactionPerSecond() {
   const [chartData, setChartData] = useState<TLineChartData | null>(null);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const [period, setPeriod] = useState<PeriodTypes>(periods[1][0]);
-  const fetchStats = useFetch<{ data: Array<TTransactionsChart> }>({
+  const fetchStats = useFetch<{ data: Array<TChartResponseItem> }>({
     method: 'get',
-    url: URLS.GET_BLOCKS_CHARTS,
+    url: URLS.GET_TRANSACTIONS_CHARTS,
   });
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { period, sortDirection: 'DESC', func: 'SUM', col: 'size' },
+        params: { sortDirection: 'DESC', period, func: 'COUNT', col: 'id' },
       });
       if (data) {
-        const parseData = transformTotalData(data.data);
+        const parseData = transformCharts(data.data);
         setChartData(parseData);
       }
     };
@@ -42,13 +41,13 @@ function BlockchainSize() {
     <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
       {chartData ? (
         <EChartsLineChart
-          chartName="transactionfee"
+          chartName="transactionspersecond"
           dataX={chartData?.dataX}
           dataY={chartData?.dataY}
-          title="Blockchain Size (Mb)"
-          info={info}
+          title="Total Transactions Per Day"
           period={period}
-          offset={1}
+          info={info}
+          offset={0}
           periods={periods[1]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
@@ -60,4 +59,4 @@ function BlockchainSize() {
   );
 }
 
-export default BlockchainSize;
+export default TransactionPerSecond;

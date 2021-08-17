@@ -56,6 +56,7 @@
     "@typescript-eslint/no-var-requires": "off",
     "react/jsx-props-no-spreading": ["warn", { "custom": "ignore" }],
     "@typescript-eslint/explicit-module-boundary-types": [0], // Disabled, we don't need to expose return types of functions
-    "react/state-in-constructor": [0] // Disabled because we want to allow to write components with and without constructor
+    "react/state-in-constructor": [0], // Disabled because we want to allow to write components with and without constructor
+    "camelcase": "off"
   }
 }

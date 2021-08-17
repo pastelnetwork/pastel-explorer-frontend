@@ -2,6 +2,8 @@ import { memo, ReactNode, useMemo } from 'react';
 // import { BackIcon } from '@components/Icons';
 import { makeStyles } from '@material-ui/styles';
 import { useHistory } from 'react-router-dom';
+import { Skeleton } from '@material-ui/lab';
+// application
 import { TAppTheme } from '@theme/index';
 
 interface IProps {
@@ -67,7 +69,7 @@ const HistoricalStatisticsLayout = ({ children, currentBgColor }: IProps) => {
             </svg>
           </button>
         </div>
-        {children}
+        {children || <Skeleton animation="wave" variant="rect" height={386} />}
       </div>
     </div>
   );

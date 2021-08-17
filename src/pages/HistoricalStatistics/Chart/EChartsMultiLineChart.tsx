@@ -19,10 +19,16 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     dataY1,
     dataY2,
     info,
+    fixedNum = 5,
+    fixedNum1 = 10,
     offset,
     period: selectedPeriodButton,
     periods = [],
     title,
+    seriesName = 'USD Price: ',
+    seriesName1 = 'BTC Price: ',
+    yaxisName = 'USD Price',
+    yaxisName1 = 'BTC Price',
     handlePeriodFilterChange,
     handleBgColorChange,
   } = props;
@@ -95,7 +101,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     yAxis: [
       {
         type: 'value',
-        name: 'USD Price',
+        name: yaxisName,
         position: 'left',
         min: minY1,
         max: maxY1,
@@ -109,13 +115,14 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
         },
         axisLabel: {
           formatter(value: string) {
-            return `$${Number.parseFloat(value).toFixed(5)}`;
+            const val = Number.parseFloat(value);
+            return !fixedNum ? Math.round(val) : `$${val.toFixed(fixedNum)}`;
           },
         },
       },
       {
         type: 'value',
-        name: 'BTC Price',
+        name: yaxisName1,
         position: 'right',
         min: minY2,
         max: maxY2,
@@ -127,20 +134,21 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
         },
         axisLabel: {
           formatter(value: string) {
-            return Number.parseFloat(value).toFixed(10);
+            const val = Number.parseFloat(value);
+            return !fixedNum1 ? Math.round(val) : `$${val.toFixed(fixedNum1)}`;
           },
         },
       },
     ],
     series: [
       {
-        name: 'USD Price: ',
+        name: seriesName,
         type: 'line',
         showSymbol: false,
         data: dataY1,
       },
       {
-        name: 'BTC Price: ',
+        name: seriesName1,
         type: 'bar',
         yAxisIndex: 1,
         showSymbol: false,
@@ -260,7 +268,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
           {title}
         </div>
         <div className={styles.periodSelect}>
-          <span style={{ color: currentTheme?.color }}>period: </span>
+          <span style={{ color: currentTheme?.color }}>Period: </span>
           {periods.length &&
             periods.map(period => (
               <button
