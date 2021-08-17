@@ -28,7 +28,6 @@ function Nettotals() {
       if (data) {
         const parseData = transformNetTotals(data.data);
         setChartData(parseData);
-        console.log({ parseData });
       }
     };
     loadLineChartData();
