@@ -277,7 +277,6 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
                 value={period}
                 onClick={onClickPeriod}
                 type="button"
-                value={period}
                 key={`button-filter-${period}`}
               >
                 {period}
