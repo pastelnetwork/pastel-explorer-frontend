@@ -28,11 +28,11 @@ function Nettotals() {
       if (data) {
         const parseData = transformNetTotals(data.data);
         setChartData(parseData);
+        console.log({ parseData });
       }
     };
     loadLineChartData();
   }, [period]);
-
   const handlePeriodFilterChange = (value: PeriodTypes) => {
     setPeriod(value);
   };
@@ -41,7 +41,7 @@ function Nettotals() {
     <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
       {chartData ? (
         <EChartsLineChart
-          chartName="networktotals"
+          chartName="difficulty"
           dataX={chartData?.dataX}
           dataY={chartData?.dataY1}
           dataY2={chartData?.dataY2}
