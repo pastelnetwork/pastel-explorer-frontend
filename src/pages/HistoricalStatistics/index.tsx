@@ -9,9 +9,10 @@ import { Title, Wrapper } from './StatisticsOvertime.styles';
 
 const useStyles = makeStyles((theme: TAppTheme) => ({
   root: {
-    border: `3px solid ${darken(theme.palette.background.paper, 0.5)}`,
-    borderRadius: `${theme.spacing(4)}px`,
+    border: `1px solid ${darken(theme.palette.background.paper, 0.5)}`,
+    borderRadius: `${theme.spacing(2)}px`,
     padding: `${theme.spacing(2)}px`,
+    background: darken(theme.palette.background.default, 0.05),
   },
 }));
 
