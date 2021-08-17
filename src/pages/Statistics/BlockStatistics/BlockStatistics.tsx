@@ -128,7 +128,8 @@ const StatisticsBlocks: React.FC = () => {
               ? blocksUnconfirmed.map(({ height, size, txsCount }, idx) => (
                   <Grid item key={height}>
                     <BlockVisualization
-                      height="--"
+                      title="Mempool:"
+                      height={<span style={{ fontSize: 14 }}>Pending Block</span>}
                       className="block-unconfirmed"
                       size={`${(size / 1024).toFixed(2)} kB`}
                       transactionCount={`${txsCount} transactions`}

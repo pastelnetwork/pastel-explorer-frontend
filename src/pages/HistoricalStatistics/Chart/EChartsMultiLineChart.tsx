@@ -274,6 +274,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
               <button
                 className={`${getActivePriodButtonStyle(period)} 
                   ${styles.filterButton}`}
+                value={period}
                 onClick={onClickPeriod}
                 type="button"
                 value={period}
