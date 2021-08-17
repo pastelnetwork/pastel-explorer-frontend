@@ -40,9 +40,9 @@ function Nettotals() {
     <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
       {chartData ? (
         <EChartsLineChart
-          chartName="difficulty"
+          chartName="networktotals"
           dataX={chartData?.dataX}
-          dataY={chartData?.dataY1}
+          dataY1={chartData?.dataY1}
           dataY2={chartData?.dataY2}
           title="Network Total"
           info={info}
