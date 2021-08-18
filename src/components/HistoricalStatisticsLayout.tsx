@@ -1,7 +1,9 @@
-import { memo, ReactNode } from 'react';
+import { memo, ReactNode, useMemo } from 'react';
 // import { BackIcon } from '@components/Icons';
 import { makeStyles } from '@material-ui/styles';
 import { useHistory } from 'react-router-dom';
+import { Skeleton } from '@material-ui/lab';
+// application
 import { TAppTheme } from '@theme/index';
 
 interface IProps {
@@ -27,7 +29,7 @@ const useStyles = makeStyles((theme: TAppTheme) => ({
     },
   },
   icon: {
-    fill: theme.palette.text.primary,
+    // fill: theme.palette.text.primary,
     stroke: theme.palette.text.primary,
     width: 24,
     height: 22,
@@ -41,6 +43,10 @@ const useStyles = makeStyles((theme: TAppTheme) => ({
 const HistoricalStatisticsLayout = ({ children, currentBgColor }: IProps) => {
   const classes = useStyles();
   const history = useHistory();
+  const fillColor = useMemo(
+    () => (currentBgColor.toLocaleLowerCase() === '#0d0d0d' ? 'white' : 'black'),
+    [currentBgColor],
+  );
   return (
     <div className={classes.root}>
       <div style={{ flex: 1, backgroundColor: currentBgColor }}>
@@ -51,7 +57,7 @@ const HistoricalStatisticsLayout = ({ children, currentBgColor }: IProps) => {
               height="17"
               className={classes.icon}
               viewBox="0 0 19 17"
-              fill="black"
+              fill={fillColor}
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
@@ -63,7 +69,7 @@ const HistoricalStatisticsLayout = ({ children, currentBgColor }: IProps) => {
             </svg>
           </button>
         </div>
-        {children}
+        {children || <Skeleton animation="wave" variant="rect" height={386} />}
       </div>
     </div>
   );

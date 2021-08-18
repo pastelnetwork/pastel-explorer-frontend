@@ -64,6 +64,42 @@ export const initialSummaryList: Array<SummaryItemProps> = [
     difference: 0,
     decimals: 5,
   },
+  {
+    id: 7,
+    name: 'Block Size (avg)',
+    value: null,
+    previousValue: null,
+    key: 'avgBlockSizeLast24Hour',
+    difference: 0,
+    decimals: 2,
+  },
+  {
+    id: 8,
+    name: 'Transactions (avg/block)',
+    value: null,
+    previousValue: null,
+    key: 'avgTransactionPerBlockLast24Hour',
+    difference: 0,
+    decimals: 2,
+  },
+  {
+    id: 9,
+    name: 'Transaction Fee (in USD)',
+    value: null,
+    previousValue: null,
+    key: 'avgTransactionFeeLast24Hour',
+    difference: 0,
+    decimals: 5,
+  },
+  {
+    id: 10,
+    name: 'Mempool Size (kB)',
+    value: null,
+    previousValue: null,
+    key: 'memPoolSize',
+    difference: 0,
+    decimals: 2,
+  },
 ];
 
 export const calculateDifference = (first: string | number, second: string | number) => {
@@ -71,6 +107,8 @@ export const calculateDifference = (first: string | number, second: string | num
   const secondValue = parseFloat(second.toString());
 
   const difference = ((firstValue - secondValue) / ((firstValue + secondValue) / 2)) * 100;
+
+  if (Number.isNaN(difference)) return '0.00';
 
   return difference.toFixed(2);
 };

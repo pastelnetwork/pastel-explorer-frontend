@@ -32,19 +32,19 @@ export const statistics = [
     id: 'hashrate',
     title: 'Hashrate',
     url: routes.STATISTICS_HASHRATE,
-    image: '/images/statistics/hashrate.jpg',
+    image: '/images/statistics/hashrate.png',
   },
   {
     id: 'mempoolsize',
     title: 'Mempool Size',
     url: routes.STATISTICS_MEMPOOL_SIZE,
-    image: '/images/statistics/mempoolsize.jpg',
+    image: '/images/statistics/mempoolsize.png',
   },
   {
     id: 'nettotals',
     title: 'Network Total',
     url: routes.STATISTICS_NETTOTALS,
-    image: '/images/statistics/nettotals.jpg',
+    image: '/images/statistics/nettotals.png',
   },
   {
     id: 'transactionsCount',
@@ -62,25 +62,49 @@ export const statistics = [
     id: 'transactionfee',
     title: 'Average Transaction Fee',
     url: routes.STATISTICS_TRANSACTION_FEE,
-    image: '/images/statistics/transactionfee.jpg',
+    image: '/images/statistics/transactionfee.png',
   },
   {
     id: 'transactionPerSecond',
     title: 'Transaction Per Second',
     url: routes.STATISTICS_TRANSACTION_PER_SECOND,
-    image: '/images/statistics/transactionspersecond.jpg',
+    image: '/images/statistics/transactionspersecond.png',
   },
   {
     id: 'transactionInBlock',
     title: 'Transactions In Block',
     url: routes.STATISTICS_TRANSACTION_IN_BLOCK,
-    image: '/images/statistics/transactionsinblock.jpg',
+    image: '/images/statistics/transactionsinblock.png',
   },
   {
     id: 'averageTransactionsPerBlock',
     title: 'Average Transactions Per Block',
     url: routes.STATISTICS_AVERAGE_TRANSACTIONS_PER_BLOCK,
     image: '/images/statistics/averagetransactionsperblock.png',
+  },
+  {
+    id: 'totalTransactionFees',
+    title: 'Total Transaction Fees',
+    url: routes.STATISTICS_TOTAL_TRANSACTION_FEES,
+    image: '/images/statistics/totaltransactionsfee.png',
+  },
+  {
+    id: 'totalTransactionsPerDay',
+    title: 'Total Transactions Per Day',
+    url: routes.STATISTICS_TOTAL_TRANSACTIONS_PER_DAY,
+    image: '/images/statistics/totaltransactionsperday.png',
+  },
+  {
+    id: 'marketPriceVolume',
+    title: 'Market Price and Volume',
+    url: routes.STATISTICS_MARKET_VOLUME_PRICE,
+    image: '/images/statistics/pslpricevolume.png',
+  },
+  {
+    id: 'marketCapVolume',
+    title: 'Market Price and Cap',
+    url: routes.STATISTICS_MARKET_CAP_PRICE,
+    image: '/images/statistics/marketcapprice.png',
   },
 ];
 
@@ -146,6 +170,7 @@ export const periods: PeriodTypes[][] = [
   ['2h', '2d', '4d', 'all'],
   ['30d', '60d', '180d', '1y', 'all'],
   ['1h', '3h', '6h', '12h'],
+  ['24h', '7d', '14d', '30d', '60d', '180d', '1y', 'all'],
 ];
 
 export const CHART_THEME_BACKGROUND_DEFAULT_COLOR = '#0d0d0d';

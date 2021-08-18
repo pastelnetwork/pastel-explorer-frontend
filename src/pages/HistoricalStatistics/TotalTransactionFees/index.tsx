@@ -1,62 +1,58 @@
-// react
 import { useEffect, useState } from 'react';
-// third party
-import { Skeleton } from '@material-ui/lab';
-// application
+
+import { TLineChartData, TTransactionsChart } from '@utils/types/IStatistics';
+import { PeriodTypes, transformTotalData } from '@utils/helpers/statisticsLib';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { PeriodTypes, transformNetTotals } from '@utils/helpers/statisticsLib';
 import { periods, info } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
-import { TNettotalsInfo, TMultiLineChartData } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
-function Nettotals() {
-  const [chartData, setChartData] = useState<TMultiLineChartData | null>(null);
+function TotalTransactionFees() {
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const [period, setPeriod] = useState<PeriodTypes>(periods[1][0]);
-  const fetchStats = useFetch<{ data: Array<TNettotalsInfo> }>({
+  const [chartData, setChartData] = useState<TLineChartData | null>(null);
+  const fetchStats = useFetch<{ data: Array<TTransactionsChart> }>({
     method: 'get',
-    url: URLS.GET_STATISTICS_NETTOTALS,
+    url: URLS.GET_TRANSACTIONS_CHARTS,
   });
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { period, sortDirection: 'DESC' },
+        params: { sortDirection: 'DESC', period, func: 'SUM', col: 'fee' },
       });
       if (data) {
-        const parseData = transformNetTotals(data.data);
+        const parseData = transformTotalData(data.data, 1);
         setChartData(parseData);
       }
     };
     loadLineChartData();
   }, [period]);
+
   const handlePeriodFilterChange = (value: PeriodTypes) => {
     setPeriod(value);
   };
 
   return (
     <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
-      {chartData ? (
+      {chartData && (
         <EChartsLineChart
-          chartName="networktotals"
+          chartName="averageblocksize"
           dataX={chartData?.dataX}
-          dataY1={chartData?.dataY1}
-          dataY2={chartData?.dataY2}
-          title="Network Total"
+          dataY={chartData?.dataY}
+          title="Total transaction fees"
           info={info}
           period={period}
-          offset={0}
+          offset={1}
           periods={periods[1]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
         />
-      ) : (
-        <Skeleton animation="wave" variant="rect" height={386} />
       )}
     </HistoricalStatisticsLayout>
   );
 }
 
-export default Nettotals;
+export default TotalTransactionFees;

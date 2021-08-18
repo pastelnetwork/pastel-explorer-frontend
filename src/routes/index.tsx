@@ -39,8 +39,12 @@ import TransactionCount from '@pages/HistoricalStatistics/TransactionCount';
 import AverageTransactionsPerBlock from '@pages/HistoricalStatistics/AverageTransactionsPerBlock';
 import BlockchainSize from '@pages/HistoricalStatistics/BlockchainSize';
 import TotalTransactionCount from '@pages/HistoricalStatistics/TotalTransactionsCount';
+import TotalTransactionPerDay from '@pages/HistoricalStatistics/TotalTransactionsPerDay';
+import MarketVolumePrice from '@pages/HistoricalStatistics/MarketVolumePrice';
+import MarketCapPrice from '@pages/HistoricalStatistics/MarketCapPrice';
 
 import * as ROUTES from '@utils/constants/routes';
+import TotalTransactionFees from '@pages/HistoricalStatistics/TotalTransactionFees';
 
 const explorerRoutes = {
   id: 'Explorer',
@@ -260,6 +264,43 @@ const totalTransactionCountStatisticsRoutes = {
   children: null,
   exact: false,
 };
+
+const totalTransactionFeesStatisticsRoutes = {
+  id: 'totalTransactionFees',
+  path: ROUTES.STATISTICS_TOTAL_TRANSACTION_FEES,
+  component: TotalTransactionFees,
+  icon: null,
+  seoTitle: 'Total Transaction Fees',
+  children: null,
+};
+
+const totalTransactionsPerDayStatisticsRoutes = {
+  id: 'totalTransactionsPerDay',
+  path: ROUTES.STATISTICS_TOTAL_TRANSACTIONS_PER_DAY,
+  component: TotalTransactionPerDay,
+  icon: null,
+  seoTitle: 'Total Transactions Per Day',
+  children: null,
+};
+
+const marketVolumePriceStatisticsRoutes = {
+  id: 'marketcapprice',
+  path: ROUTES.STATISTICS_MARKET_VOLUME_PRICE,
+  component: MarketVolumePrice,
+  icon: null,
+  seoTitle: 'Market Volume and Price',
+  children: null,
+};
+
+const marketCapPriceStatisticsRoutes = {
+  id: 'marketCapUSD',
+  path: ROUTES.STATISTICS_MARKET_CAP_PRICE,
+  component: MarketCapPrice,
+  icon: null,
+  seoTitle: 'Market Cap and Price',
+  children: null,
+};
+
 // Uncomment this when API page will be ready
 // const infoRoutes = {
 //   id: 'API',
@@ -320,6 +361,10 @@ export const pageRoutes = [
   averageTransactionsPerBlockStatisticsRoutes,
   blockchainSizeStatisticsRoutes,
   totalTransactionCountStatisticsRoutes,
+  totalTransactionFeesStatisticsRoutes,
+  totalTransactionsPerDayStatisticsRoutes,
+  marketVolumePriceStatisticsRoutes,
+  marketCapPriceStatisticsRoutes,
 ];
 
 export const sidebarRoutes = [

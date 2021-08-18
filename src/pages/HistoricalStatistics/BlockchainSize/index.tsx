@@ -5,7 +5,7 @@ import { Skeleton } from '@material-ui/lab';
 // application
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { PeriodTypes, transformBlockchainSize } from '@utils/helpers/statisticsLib';
+import { PeriodTypes, transformTotalData } from '@utils/helpers/statisticsLib';
 import { periods, info } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { TLineChartData, TTransactionsChart } from '@utils/types/IStatistics';
@@ -27,7 +27,7 @@ function BlockchainSize() {
         params: { period, sortDirection: 'DESC', func: 'SUM', col: 'size' },
       });
       if (data) {
-        const parseData = transformBlockchainSize(data.data);
+        const parseData = transformTotalData(data.data);
         setChartData(parseData);
       }
     };

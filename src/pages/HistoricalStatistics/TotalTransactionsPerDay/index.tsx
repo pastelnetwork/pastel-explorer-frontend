@@ -5,33 +5,34 @@ import { Skeleton } from '@material-ui/lab';
 // application
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { PeriodTypes, transformNetTotals } from '@utils/helpers/statisticsLib';
+import { PeriodTypes, transformCharts } from '@utils/helpers/statisticsLib';
 import { periods, info } from '@utils/constants/statistics';
-import { useBackgroundChart } from '@utils/hooks';
-import { TNettotalsInfo, TMultiLineChartData } from '@utils/types/IStatistics';
+import { TChartResponseItem, TLineChartData } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import { useBackgroundChart } from '@utils/hooks';
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
-function Nettotals() {
-  const [chartData, setChartData] = useState<TMultiLineChartData | null>(null);
+function TransactionPerSecond() {
+  const [chartData, setChartData] = useState<TLineChartData | null>(null);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const [period, setPeriod] = useState<PeriodTypes>(periods[1][0]);
-  const fetchStats = useFetch<{ data: Array<TNettotalsInfo> }>({
+  const fetchStats = useFetch<{ data: Array<TChartResponseItem> }>({
     method: 'get',
-    url: URLS.GET_STATISTICS_NETTOTALS,
+    url: URLS.GET_TRANSACTIONS_CHARTS,
   });
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { period, sortDirection: 'DESC' },
+        params: { sortDirection: 'DESC', period, func: 'COUNT', col: 'id' },
       });
       if (data) {
-        const parseData = transformNetTotals(data.data);
+        const parseData = transformCharts(data.data);
         setChartData(parseData);
       }
     };
     loadLineChartData();
   }, [period]);
+
   const handlePeriodFilterChange = (value: PeriodTypes) => {
     setPeriod(value);
   };
@@ -40,13 +41,12 @@ function Nettotals() {
     <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
       {chartData ? (
         <EChartsLineChart
-          chartName="networktotals"
+          chartName="transactionspersecond"
           dataX={chartData?.dataX}
-          dataY1={chartData?.dataY1}
-          dataY2={chartData?.dataY2}
-          title="Network Total"
-          info={info}
+          dataY={chartData?.dataY}
+          title="Total Transactions Per Day"
           period={period}
+          info={info}
           offset={0}
           periods={periods[1]}
           handleBgColorChange={handleBgColorChange}
@@ -59,4 +59,4 @@ function Nettotals() {
   );
 }
 
-export default Nettotals;
+export default TransactionPerSecond;

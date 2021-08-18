@@ -21,7 +21,11 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
+  "typeRoots": [
+    "src/types"
+  ],
   "include": [
-    "src"
+    "src",
+    "src/types/coingecko-api/coingecko-api.d.ts"
   ]
 }

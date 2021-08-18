@@ -24,9 +24,9 @@ const useStyles = makeStyles((_theme: TAppTheme) => ({
     [_theme.breakpoints.up('md')]: {
       width: 'calc(100vw - 273px)',
     },
-    [_theme.breakpoints.up('xl')]: {
-      width: '100%',
-    },
+    // [_theme.breakpoints.up('xl')]: {
+    //   width: '100%',
+    // },
   },
   root: {
     display: 'flex',
@@ -75,14 +75,14 @@ const Summary: React.FC = () => {
 
         return {
           ...summaryElement,
-          value: formatNumber(currentStats[key], {
+          value: formatNumber(currentStats[key] || 0, {
             decimalsLength: summaryElement.decimals,
             divideToAmount: summaryElement.divideToAmount,
           }),
-          previousValue: formatNumber(lastDayStats[key], {
+          previousValue: formatNumber(lastDayStats[key] || 0, {
             decimalsLength: summaryElement.decimals,
           }),
-          difference: calculateDifference(currentStats[key], lastDayStats[key]),
+          difference: calculateDifference(currentStats[key] || 0, lastDayStats[key] || 0),
         };
       });
       return items;
