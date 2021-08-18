@@ -97,8 +97,14 @@ export const statistics = [
   {
     id: 'marketPriceVolume',
     title: 'Market Price and Volume',
-    url: routes.STATISTICS_MARKET_CAP,
+    url: routes.STATISTICS_MARKET_VOLUME_PRICE,
     image: '/images/statistics/pslpricevolume.png',
+  },
+  {
+    id: 'marketCapVolume',
+    title: 'Market Price and Cap',
+    url: routes.STATISTICS_MARKET_CAP_PRICE,
+    image: '/images/statistics/marketcapprice.png',
   },
 ];
 

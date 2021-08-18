@@ -40,7 +40,8 @@ import AverageTransactionsPerBlock from '@pages/HistoricalStatistics/AverageTran
 import BlockchainSize from '@pages/HistoricalStatistics/BlockchainSize';
 import TotalTransactionCount from '@pages/HistoricalStatistics/TotalTransactionsCount';
 import TotalTransactionPerDay from '@pages/HistoricalStatistics/TotalTransactionsPerDay';
-import MarketCapUSD from '@pages/HistoricalStatistics/MarketCapUSD';
+import MarketVolumePrice from '@pages/HistoricalStatistics/MarketVolumePrice';
+import MarketCapPrice from '@pages/HistoricalStatistics/MarketCapPrice';
 
 import * as ROUTES from '@utils/constants/routes';
 import TotalTransactionFees from '@pages/HistoricalStatistics/TotalTransactionFees';
@@ -282,12 +283,21 @@ const totalTransactionsPerDayStatisticsRoutes = {
   children: null,
 };
 
-const marketCapUSDStatisticsRoutes = {
-  id: 'marketCapUSD',
-  path: ROUTES.STATISTICS_MARKET_CAP,
-  component: MarketCapUSD,
+const marketVolumePriceStatisticsRoutes = {
+  id: 'marketcapprice',
+  path: ROUTES.STATISTICS_MARKET_VOLUME_PRICE,
+  component: MarketVolumePrice,
   icon: null,
-  seoTitle: 'Total Transactions Per Day',
+  seoTitle: 'Market Volume and Price',
+  children: null,
+};
+
+const marketCapPriceStatisticsRoutes = {
+  id: 'marketCapUSD',
+  path: ROUTES.STATISTICS_MARKET_CAP_PRICE,
+  component: MarketCapPrice,
+  icon: null,
+  seoTitle: 'Market Cap and Price',
   children: null,
 };
 
@@ -353,7 +363,8 @@ export const pageRoutes = [
   totalTransactionCountStatisticsRoutes,
   totalTransactionFeesStatisticsRoutes,
   totalTransactionsPerDayStatisticsRoutes,
-  marketCapUSDStatisticsRoutes,
+  marketVolumePriceStatisticsRoutes,
+  marketCapPriceStatisticsRoutes,
 ];
 
 export const sidebarRoutes = [

@@ -28,14 +28,14 @@ function PriceOvertime() {
         params: { period },
       });
       if (data) {
-        const { prices, total_volumes } = data.data;
+        const { prices, market_caps } = data.data;
 
         const dataX = [];
         const dataY1 = [];
         const dataY2 = [];
         for (let i = 0; i < prices.length; i += 1) {
           const [x, y1] = prices[i];
-          const [, y2] = total_volumes[i];
+          const [, y2] = market_caps[i];
           dataX.push(new Date(x).toLocaleString());
           dataY1.push(+y1.toFixed(8));
           dataY2.push(Math.round(y2));
@@ -59,12 +59,12 @@ function PriceOvertime() {
           dataY1={transformLineChartData?.dataY1}
           dataY2={transformLineChartData?.dataY2}
           yaxisName="USD Price"
-          yaxisName1="Volume"
+          yaxisName1="Market Cap"
           seriesName="Price"
-          seriesName1="Vol"
+          seriesName1="Market Cap"
           fixedNum={5}
           fixedNum1={0}
-          title="Price/ Volume"
+          title="Price - Cap"
           info={info}
           offset={0.0001}
           period={period}
