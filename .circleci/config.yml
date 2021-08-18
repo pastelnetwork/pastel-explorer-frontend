@@ -72,7 +72,6 @@ workflows:
           filters:
             branches:
               ignore:
-                - master
                 - production
       - build:
           name: build-production
@@ -80,17 +79,6 @@ workflows:
           filters:
             branches:
               only:
-                - master
-                - production
-      - deploy-production:
-          name: deploy-production
-          requires:
-            - build-production
-          context: pastel-frontend-stage
-          filters:
-            branches:
-              only:
-                - master
                 - production
       - deploy-staging:
           name: deploy-staging
@@ -100,4 +88,13 @@ workflows:
           filters:
             branches:
               only:
-                - staging
+                - master
+      - deploy-production:
+          name: deploy-production
+          requires:
+            - build-production
+          context: pastel-frontend-stage
+          filters:
+            branches:
+              only:
+                - production
