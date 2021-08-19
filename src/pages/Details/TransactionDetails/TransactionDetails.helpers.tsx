@@ -31,10 +31,14 @@ export const generateTableTitle = (transactionData: ITransactionDetails) => (
       The transaction is currently 
       ${
         transactionData.block.confirmations > BLOCK_CONFIRMED_NUMBER ? 'confirmed' : 'unconfirmed'
-      } by the network.
+      } by the network. 
       At the time of this transaction 
-      ${formatNumber(transactionData.totalAmount, { decimalsLength: 2 })} 
-      PSL was sent.`}
+      ${
+        transactionData.totalAmount
+          ? `${formatNumber(transactionData.totalAmount, { decimalsLength: 2 })} PSL was sent.`
+          : 'an unknown amount of PSL was sent (since it’s a shielded transaction).'
+      } 
+     `}
   </Alert>
 );
 
