@@ -3,108 +3,134 @@ import { PeriodTypes, TGranularity } from '@utils/helpers/statisticsLib';
 import { TStatisticsInfo } from '@utils/types/IStatistics';
 import { TCsvHeaderType } from './types';
 
+const BASE_API_URL = process.env.REACT_APP_EXPLORER_WEB_API_URL as string;
+
 export const statistics = [
   {
     id: 'blockchainsize',
     title: 'Blockchain Size',
     url: routes.STATISTICS_BLOCKCHAIN_SIZE,
-    image: '/images/statistics/blockchainsize.png',
+    image: `${BASE_API_URL}/static/charts/${routes.STATISTICS_BLOCKCHAIN_SIZE.split(
+      '/',
+    ).pop()}.png`,
   },
   {
     id: 'averageBlockSize',
     title: 'Average Block Size',
     url: routes.STATISTICS_AVERAGE_BLOCK_SIZE,
-    image: '/images/statistics/averageblocksize.png',
+    image: `${BASE_API_URL}/static/charts/${routes.STATISTICS_AVERAGE_BLOCK_SIZE.split(
+      '/',
+    ).pop()}.png`,
   },
   {
     id: 'difficulty',
     title: 'Difficulty',
     url: routes.STATISTICS_DIFFICULTY,
-    image: '/images/statistics/difficulty.png',
+    image: `${BASE_API_URL}/static/charts/${routes.STATISTICS_DIFFICULTY.split('/').pop()}.png`,
   },
   {
     id: 'pslPrice',
     title: 'Price',
     url: routes.STATISTICS_PSLPRICE,
-    image: '/images/statistics/pslprice.png',
+    image: `${BASE_API_URL}/static/charts/${routes.STATISTICS_PSLPRICE.split('/').pop()}.png`,
   },
   {
     id: 'hashrate',
     title: 'Hashrate',
     url: routes.STATISTICS_HASHRATE,
-    image: '/images/statistics/hashrate.png',
+    image: `${BASE_API_URL}/static/charts/${routes.STATISTICS_HASHRATE.split('/').pop()}.png`,
   },
   {
     id: 'mempoolsize',
     title: 'Mempool Size',
     url: routes.STATISTICS_MEMPOOL_SIZE,
-    image: '/images/statistics/mempoolsize.png',
+    image: `${BASE_API_URL}/static/charts/${routes.STATISTICS_MEMPOOL_SIZE.split('/').pop()}.png`,
   },
   {
     id: 'nettotals',
     title: 'Network Total',
     url: routes.STATISTICS_NETTOTALS,
-    image: '/images/statistics/nettotals.png',
+    image: `${BASE_API_URL}/static/charts/${routes.STATISTICS_NETTOTALS.split('/').pop()}.png`,
   },
   {
     id: 'transactionsCount',
     title: 'Transaction Count',
     url: routes.STATISTICS_TRANSACTION_COUNT,
-    image: '/images/statistics/transactionscount.png',
+    image: `${BASE_API_URL}/static/charts/${routes.STATISTICS_TRANSACTION_COUNT.split(
+      '/',
+    ).pop()}.png`,
   },
   {
     id: 'totaltransactioncount',
     title: 'Total Transaction Count',
     url: routes.STATISTICS_TOTAL_TRANSACTION_COUNT,
-    image: '/images/statistics/totaltransactioncount.png',
+    image: `${BASE_API_URL}/static/charts/${routes.STATISTICS_TOTAL_TRANSACTION_COUNT.split(
+      '/',
+    ).pop()}.png`,
   },
   {
     id: 'transactionfee',
     title: 'Average Transaction Fee',
     url: routes.STATISTICS_TRANSACTION_FEE,
-    image: '/images/statistics/transactionfee.png',
+    image: `${BASE_API_URL}/static/charts/${routes.STATISTICS_TRANSACTION_FEE.split(
+      '/',
+    ).pop()}.png`,
   },
   {
     id: 'transactionPerSecond',
     title: 'Transaction Per Second',
     url: routes.STATISTICS_TRANSACTION_PER_SECOND,
-    image: '/images/statistics/transactionspersecond.png',
+    image: `${BASE_API_URL}/static/charts/${routes.STATISTICS_TRANSACTION_PER_SECOND.split(
+      '/',
+    ).pop()}.png`,
   },
   {
     id: 'transactionInBlock',
     title: 'Transactions In Block',
     url: routes.STATISTICS_TRANSACTION_IN_BLOCK,
-    image: '/images/statistics/transactionsinblock.png',
+    image: `${BASE_API_URL}/static/charts/${routes.STATISTICS_TRANSACTION_IN_BLOCK.split(
+      '/',
+    ).pop()}.png`,
   },
   {
     id: 'averageTransactionsPerBlock',
     title: 'Average Transactions Per Block',
     url: routes.STATISTICS_AVERAGE_TRANSACTIONS_PER_BLOCK,
-    image: '/images/statistics/averagetransactionsperblock.png',
+    image: `${BASE_API_URL}/static/charts/${routes.STATISTICS_BLOCKCHAIN_SIZE.split(
+      '/',
+    ).pop()}.png`,
   },
   {
     id: 'totalTransactionFees',
     title: 'Total Transaction Fees',
     url: routes.STATISTICS_TOTAL_TRANSACTION_FEES,
-    image: '/images/statistics/totaltransactionsfee.png',
+    image: `${BASE_API_URL}/static/charts/${routes.STATISTICS_TOTAL_TRANSACTION_FEES.split(
+      '/',
+    ).pop()}.png`,
   },
   {
     id: 'totalTransactionsPerDay',
     title: 'Total Transactions Per Day',
     url: routes.STATISTICS_TOTAL_TRANSACTIONS_PER_DAY,
-    image: '/images/statistics/totaltransactionsperday.png',
+    image: `${BASE_API_URL}/static/charts/${routes.STATISTICS_TOTAL_TRANSACTIONS_PER_DAY.split(
+      '/',
+    ).pop()}.png`,
   },
   {
     id: 'marketPriceVolume',
     title: 'Market Price and Volume',
     url: routes.STATISTICS_MARKET_VOLUME_PRICE,
-    image: '/images/statistics/pslpricevolume.png',
+    image: `${BASE_API_URL}/static/charts/${routes.STATISTICS_MARKET_VOLUME_PRICE.split(
+      '/',
+    ).pop()}.png`,
   },
   {
     id: 'marketCapVolume',
     title: 'Market Price and Cap',
     url: routes.STATISTICS_MARKET_CAP_PRICE,
-    image: '/images/statistics/marketcapprice.png',
+    image: `${BASE_API_URL}/static/charts/${routes.STATISTICS_MARKET_CAP_PRICE.split(
+      '/',
+    ).pop()}.png`,
   },
 ];
 
