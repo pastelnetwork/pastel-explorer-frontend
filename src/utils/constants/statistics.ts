@@ -3,108 +3,115 @@ import { PeriodTypes, TGranularity } from '@utils/helpers/statisticsLib';
 import { TStatisticsInfo } from '@utils/types/IStatistics';
 import { TCsvHeaderType } from './types';
 
+const BASE_API_URL = process.env.REACT_APP_EXPLORER_WEB_API_URL as string;
+
+function generatePreviewUrl(path: string): string {
+  const lastPath = path.split('/').pop();
+  return `${BASE_API_URL}/static/charts/${lastPath}/${lastPath}.png`;
+}
+
 export const statistics = [
   {
     id: 'blockchainsize',
     title: 'Blockchain Size',
     url: routes.STATISTICS_BLOCKCHAIN_SIZE,
-    image: '/images/statistics/blockchainsize.png',
+    image: generatePreviewUrl(routes.STATISTICS_BLOCKCHAIN_SIZE),
   },
   {
     id: 'averageBlockSize',
     title: 'Average Block Size',
     url: routes.STATISTICS_AVERAGE_BLOCK_SIZE,
-    image: '/images/statistics/averageblocksize.png',
+    image: generatePreviewUrl(routes.STATISTICS_AVERAGE_BLOCK_SIZE),
   },
   {
     id: 'difficulty',
     title: 'Difficulty',
     url: routes.STATISTICS_DIFFICULTY,
-    image: '/images/statistics/difficulty.png',
+    image: generatePreviewUrl(routes.STATISTICS_DIFFICULTY),
   },
   {
     id: 'pslPrice',
     title: 'Price',
     url: routes.STATISTICS_PSLPRICE,
-    image: '/images/statistics/pslprice.png',
+    image: generatePreviewUrl(routes.STATISTICS_PSLPRICE),
   },
   {
     id: 'hashrate',
     title: 'Hashrate',
     url: routes.STATISTICS_HASHRATE,
-    image: '/images/statistics/hashrate.png',
+    image: generatePreviewUrl(routes.STATISTICS_HASHRATE),
   },
   {
     id: 'mempoolsize',
     title: 'Mempool Size',
     url: routes.STATISTICS_MEMPOOL_SIZE,
-    image: '/images/statistics/mempoolsize.png',
+    image: generatePreviewUrl(routes.STATISTICS_MEMPOOL_SIZE),
   },
   {
     id: 'nettotals',
     title: 'Network Total',
     url: routes.STATISTICS_NETTOTALS,
-    image: '/images/statistics/nettotals.png',
+    image: generatePreviewUrl(routes.STATISTICS_NETTOTALS),
   },
   {
     id: 'transactionsCount',
     title: 'Transaction Count',
     url: routes.STATISTICS_TRANSACTION_COUNT,
-    image: '/images/statistics/transactionscount.png',
+    image: generatePreviewUrl(routes.STATISTICS_TRANSACTION_COUNT),
   },
   {
     id: 'totaltransactioncount',
     title: 'Total Transaction Count',
     url: routes.STATISTICS_TOTAL_TRANSACTION_COUNT,
-    image: '/images/statistics/totaltransactioncount.png',
+    image: generatePreviewUrl(routes.STATISTICS_TOTAL_TRANSACTION_COUNT),
   },
   {
     id: 'transactionfee',
     title: 'Average Transaction Fee',
     url: routes.STATISTICS_TRANSACTION_FEE,
-    image: '/images/statistics/transactionfee.png',
+    image: generatePreviewUrl(routes.STATISTICS_TRANSACTION_FEE),
   },
   {
     id: 'transactionPerSecond',
     title: 'Transaction Per Second',
     url: routes.STATISTICS_TRANSACTION_PER_SECOND,
-    image: '/images/statistics/transactionspersecond.png',
+    image: generatePreviewUrl(routes.STATISTICS_TRANSACTION_PER_SECOND),
   },
   {
     id: 'transactionInBlock',
     title: 'Transactions In Block',
     url: routes.STATISTICS_TRANSACTION_IN_BLOCK,
-    image: '/images/statistics/transactionsinblock.png',
+    image: generatePreviewUrl(routes.STATISTICS_TRANSACTION_IN_BLOCK),
   },
   {
     id: 'averageTransactionsPerBlock',
     title: 'Average Transactions Per Block',
     url: routes.STATISTICS_AVERAGE_TRANSACTIONS_PER_BLOCK,
-    image: '/images/statistics/averagetransactionsperblock.png',
+    image: generatePreviewUrl(routes.STATISTICS_AVERAGE_TRANSACTIONS_PER_BLOCK),
   },
   {
     id: 'totalTransactionFees',
     title: 'Total Transaction Fees',
     url: routes.STATISTICS_TOTAL_TRANSACTION_FEES,
-    image: '/images/statistics/totaltransactionsfee.png',
+    image: generatePreviewUrl(routes.STATISTICS_TOTAL_TRANSACTION_FEES),
   },
   {
     id: 'totalTransactionsPerDay',
     title: 'Total Transactions Per Day',
     url: routes.STATISTICS_TOTAL_TRANSACTIONS_PER_DAY,
-    image: '/images/statistics/totaltransactionsperday.png',
+    image: generatePreviewUrl(routes.STATISTICS_TOTAL_TRANSACTIONS_PER_DAY),
   },
   {
     id: 'marketPriceVolume',
     title: 'Market Price and Volume',
     url: routes.STATISTICS_MARKET_VOLUME_PRICE,
-    image: '/images/statistics/pslpricevolume.png',
+    image: generatePreviewUrl(routes.STATISTICS_MARKET_VOLUME_PRICE),
   },
   {
     id: 'marketCapVolume',
     title: 'Market Price and Cap',
     url: routes.STATISTICS_MARKET_CAP_PRICE,
-    image: '/images/statistics/marketcapprice.png',
+    image: generatePreviewUrl(routes.STATISTICS_MARKET_CAP_PRICE),
   },
 ];
 
