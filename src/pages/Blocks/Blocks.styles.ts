@@ -11,4 +11,9 @@ export const TableContainer = styled(Grid)`
   .pl-12px {
     padding-left: 12px;
   }
+
+  .block-list-table {
+    padding-left: 0;
+    padding-right: 0;
+  }
 `;

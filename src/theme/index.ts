@@ -66,6 +66,11 @@ export const themeLight = createMuiTheme(
       closeIcon: '#000',
     },
     scrollbar: '#7d7d7e',
+    link: {
+      main: '#3F9AF7',
+      hover: '#0E80F5',
+      pressed: '#0971DC',
+    },
   },
 );
 
@@ -110,6 +115,11 @@ export const themeDark = createMuiTheme(
       closeIcon: '#fff',
     },
     scrollbar: '#0a0b0e',
+    link: {
+      main: '#3F9AF7',
+      hover: '#0E80F5',
+      pressed: '#0971DC',
+    },
   },
 );
 

@@ -128,6 +128,7 @@ const Movement: React.FC = () => {
           filters={defaultFilters}
           onBottomReach={handleFetchMoreMovements}
           onHeaderClick={handleSort}
+          className="movement-table"
         />
       </Styles.GridWrapper>
     </>

@@ -73,7 +73,7 @@ const Filters: FC<IProps> = ({ filters, title }) => {
   }, [dispatch]);
   return (
     <div className={classes.root}>
-      <span>{title}</span>
+      <h4>{title}</h4>
       <div className={classes.listFilter}>
         {filters.map(({ name, value }) => (
           <MenuItem

@@ -11,6 +11,10 @@ const StyledCard = styled(MuiCard)`
     padding: 0 ${props => props.theme.spacing(2)}px;
     padding-bottom: 8px !important;
   }
+
+  .pl-0 {
+    padding-left: 0;
+  }
 `;
 
 export const Card = styled(StyledCard)(spacing);

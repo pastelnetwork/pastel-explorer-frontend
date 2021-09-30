@@ -23,4 +23,9 @@ export const GridWrapper = styled(Grid)`
       padding-left: 0;
     }
   }
+
+  .supernode-table {
+    padding-left: 0;
+    padding-right: 0;
+  }
 `;

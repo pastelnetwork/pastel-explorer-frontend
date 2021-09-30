@@ -9,4 +9,9 @@ export const GridWrapper = styled(Grid)`
   .col-txid > .MuiTableCell-root {
     padding-left: 8px;
   }
+
+  .movement-table {
+    padding-left: 0;
+    padding-right: 0;
+  }
 `;

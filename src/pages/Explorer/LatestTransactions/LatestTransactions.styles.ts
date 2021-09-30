@@ -22,4 +22,10 @@ export const LatestTransactionsWrapper = styled.div`
   .col-txid > .MuiTableCell-root {
     padding-left: 4px;
   }
+
+  .latest-transactions-table {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0 !important;
+  }
 `;
