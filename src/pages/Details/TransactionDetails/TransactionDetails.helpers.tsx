@@ -9,7 +9,7 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 
 import * as Styles from './TransactionDetails.styles';
 
-const BLOCK_CONFIRMED_NUMBER = 6;
+const BLOCK_CONFIRMED_NUMBER = 1;
 
 export const transactionHeaders: Array<HeaderType> = [
   { id: 1, header: 'Confirmations' },
@@ -30,7 +30,7 @@ export const generateTableTitle = (transactionData: ITransactionDetails) => (
       ${formattedDate(transactionData.timestamp)}. 
       The transaction is currently 
       ${
-        transactionData.block.confirmations > BLOCK_CONFIRMED_NUMBER ? 'confirmed' : 'unconfirmed'
+        transactionData.block.confirmations >= BLOCK_CONFIRMED_NUMBER ? 'confirmed' : 'unconfirmed'
       } by the network. 
       At the time of this transaction 
       ${
@@ -38,7 +38,7 @@ export const generateTableTitle = (transactionData: ITransactionDetails) => (
           ? `${formatNumber(transactionData.totalAmount, { decimalsLength: 2 })} PSL was sent.`
           : 'an unknown amount of PSL was sent (since it’s a shielded transaction).'
       } 
-     `}
+    `}
   </Alert>
 );
 

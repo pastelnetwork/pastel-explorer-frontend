@@ -26,6 +26,7 @@ export const columns = [
     label: 'Address',
     dataKey: SUPERNODE_ADDRESS_KEY,
     disableSort: true,
+    className: 'col-address',
   },
   {
     width: 160,
@@ -33,6 +34,7 @@ export const columns = [
     label: 'Status',
     dataKey: SUPERNODE_STATUS_KEY,
     disableSort: true,
+    className: 'pl-8px',
   },
   {
     width: 100,
@@ -40,6 +42,7 @@ export const columns = [
     label: 'Country',
     dataKey: SUPERNODE_COUNTRY_KEY,
     disableSort: false,
+    className: 'pl-14px',
   },
   {
     width: 120,
@@ -47,5 +50,6 @@ export const columns = [
     label: 'Last paid',
     dataKey: SUPERNODE_LAST_PAID_KEY,
     disableSort: false,
+    className: 'pl-12px',
   },
 ];

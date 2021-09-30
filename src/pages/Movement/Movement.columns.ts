@@ -25,6 +25,7 @@ export const columns = [
     label: 'txID',
     dataKey: TXID_KEY,
     disableSort: false,
+    className: 'col-txid',
   },
   {
     width: 60,
@@ -32,5 +33,6 @@ export const columns = [
     label: 'Amount',
     dataKey: AMOUNT_MOVEMENT_KEY,
     disableSort: false,
+    className: 'pl-8px',
   },
 ];

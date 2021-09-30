@@ -48,9 +48,11 @@ export const AutocompleteWrapper = styled(Grid)`
     margin-right: 0;
   }
   .MuiFormLabel-root {
+    display: inline-block;
+    width: auto;
+    padding: 0 10px;
     overflow: hidden;
     text-overflow: ellipsis;
-    // width: 80%;
     white-space: nowrap;
   }
 `;

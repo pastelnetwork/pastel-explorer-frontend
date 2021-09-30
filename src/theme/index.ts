@@ -63,7 +63,9 @@ export const themeLight = createMuiTheme(
         default: 0,
         active: '15px',
       },
+      closeIcon: '#000',
     },
+    scrollbar: '#7d7d7e',
   },
 );
 
@@ -105,7 +107,9 @@ export const themeDark = createMuiTheme(
         default: 0,
         active: '15px',
       },
+      closeIcon: '#fff',
     },
+    scrollbar: '#0a0b0e',
   },
 );
 

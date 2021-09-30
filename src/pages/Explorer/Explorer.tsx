@@ -15,6 +15,7 @@ import SupernodeStatistics from './SupernodeStatistics/SupernodeStatistics';
 import { transformGeoLocationConnections, groupGeoLocationConnections } from './Explorer.helpers';
 import LatestTransactionsRT from './LatestTransactionsRT';
 import LatestBlocks from './LatestBlocks';
+import * as Styles from './Explorer.styles';
 
 const Explorer: React.FC = () => {
   const [supernodeList, setSupernodeList] = React.useState<Array<INetworkSupernodes> | null>(null);
@@ -47,7 +48,7 @@ const Explorer: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <Styles.ExplorerWrapper>
       <Header title="Explorer" />
       <Grid container spacing={6}>
         <Grid item xs={12} lg={7}>
@@ -68,7 +69,7 @@ const Explorer: React.FC = () => {
       <Grid item>
         <LatestTransactions />
       </Grid>
-    </>
+    </Styles.ExplorerWrapper>
   );
 };
 

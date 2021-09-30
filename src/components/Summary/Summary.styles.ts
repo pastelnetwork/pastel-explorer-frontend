@@ -32,6 +32,7 @@ export const CardContent = styled(MuiCardContent)`
   padding: 8px;
   background-color: ${props => props.theme.palette.background.default};
   border: 2px solid #efedea;
+  border-radius: 5px;
   &:last-child {
     padding-bottom: ${props => props.theme.spacing(2)}px;
   }

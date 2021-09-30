@@ -29,12 +29,12 @@ export const TableWrapper = styled.div`
     min-width: 1000px;
     width: 100% !important;
     background-color: ${props => props.theme.palette.background.default} !important;
-    &::-webkit-scrollbar-track {
-      background: black;
-    }
 
-    &::-webkit-scrollbar-track {
-      background: grey;
+    &::-webkit-scrollbar {
+      width: 18px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: ${props => props.theme.scrollbar};
     }
   }
 
