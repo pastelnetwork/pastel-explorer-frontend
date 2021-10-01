@@ -1,5 +1,5 @@
 import { MouseEvent, useCallback } from 'react';
-import { Paper, Table, TableBody, TableHead, TableRow } from '@material-ui/core';
+import { Table, TableBody, TableHead, TableRow } from '@material-ui/core';
 import { CSSProperties } from '@material-ui/styles';
 import { Skeleton } from '@material-ui/lab';
 
@@ -37,7 +37,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
   return (
     <Styles.Card mb={3} style={styles}>
       {title && <Styles.TableCardHeader title={title} />}
-      <Paper>
+      <Styles.PaperWrapper>
         {rows ? (
           <Styles.TableWrapper>
             <Table>
@@ -64,7 +64,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
         ) : (
           <Skeleton animation="wave" variant="rect" height={styles?.height || 200} />
         )}
-      </Paper>
+      </Styles.PaperWrapper>
     </Styles.Card>
   );
 };
