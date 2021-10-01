@@ -34,7 +34,12 @@ export const transformMovementData = (transactions: Array<ITransaction>) =>
     [TXID_KEY]: (
       <Grid container alignItems="center" wrap="nowrap">
         <CopyButton copyText={id} />
-        <RouterLink route={`${ROUTES.TRANSACTION_DETAILS}/${id}`} value={id} textSize="large" />
+        <RouterLink
+          route={`${ROUTES.TRANSACTION_DETAILS}/${id}`}
+          title={id}
+          value={id}
+          textSize="large"
+        />
       </Grid>
     ),
     [BLOCK_KEY]: generateBlockKeyValue(blockHash, block.height),

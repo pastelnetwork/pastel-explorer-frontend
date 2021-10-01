@@ -154,7 +154,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
     <Styles.Card mb={3} className={className}>
       {title && (
         <CardHeader
-          className="pl-0"
+          className="pl-0 pr-0"
           title={!filters ? title : <Filters filters={filters} title={title} />}
         />
       )}
