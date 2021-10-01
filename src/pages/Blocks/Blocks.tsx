@@ -136,6 +136,7 @@ const Blocks = () => {
           tableHeight={650}
           onBottomReach={handleFetchMoreBlocks}
           onHeaderClick={handleSort}
+          className="block-list-table"
         />
       </Styles.TableContainer>
     </>

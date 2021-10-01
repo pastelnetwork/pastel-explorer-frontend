@@ -20,6 +20,7 @@ export const columns = [
     label: 'TXID',
     dataKey: BLOCK_HASH_KEY,
     disableSort: false,
+    className: 'col-txid',
   },
   {
     width: 20,
@@ -28,6 +29,7 @@ export const columns = [
     label: 'Recipents',
     dataKey: RECIPIENT_COUNT_KEY,
     disableSort: false,
+    className: 'pl-4px',
   },
   {
     width: 60,
@@ -36,6 +38,7 @@ export const columns = [
     label: 'Amount (PSL)',
     dataKey: AMOUNT_KEY,
     disableSort: false,
+    className: 'pl-8px',
   },
   {
     width: 150,
@@ -44,5 +47,6 @@ export const columns = [
     label: 'Timestamp',
     dataKey: TIMESTAMP_KEY,
     disableSort: false,
+    className: 'pl-12px',
   },
 ];

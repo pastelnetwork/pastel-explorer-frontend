@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Grid } from '@material-ui/core';
 
 import Header from '@components/Header/Header';
 import InfinityTable, {
@@ -19,6 +18,7 @@ import {
   DATA_OFFSET,
   DATA_DEFAULT_SORT,
 } from './Supernodes.helpers';
+import { GridWrapper } from './Supernodes.styles';
 
 interface ISupernodeData {
   sortBy: string;
@@ -65,7 +65,7 @@ const Supernodes: React.FC = () => {
   return (
     <>
       <Header title="Supernode List" />
-      <Grid item>
+      <GridWrapper item>
         <InfinityTable
           sortBy={sortData.sortBy}
           sortDirection={sortData.sortDirection}
@@ -75,8 +75,9 @@ const Supernodes: React.FC = () => {
           tableHeight={950}
           disableLoading
           renderAllRows
+          className="supernode-table"
         />
-      </Grid>
+      </GridWrapper>
     </>
   );
 };

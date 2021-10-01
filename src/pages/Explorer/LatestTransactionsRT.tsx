@@ -1,8 +1,7 @@
 // React
 import { memo, useEffect } from 'react';
 // third party
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -21,6 +20,7 @@ import { AppThunkDispatch } from '@redux/types';
 import { useTransactionLatestTransactions } from '@redux/hooks/transactionsHooks';
 import { ITransaction } from '@utils/types/ITransactions';
 import { TRANSACTION_DETAILS } from '@utils/constants/routes';
+import { Link } from '@components/Link/Link.styles';
 
 const StyledTableCell = withStyles((theme: TAppTheme) => ({
   head: {
@@ -42,16 +42,6 @@ const StyledTableRow = withStyles((theme: TAppTheme) => ({
   },
 }))(TableRow);
 
-const useStyles = makeStyles(theme => ({
-  table: {
-    minWidth: 700,
-  },
-  link: {
-    color: theme.palette.text.primary,
-    textDecoration: 'none',
-  },
-}));
-
 function LatestTransactions() {
   const dispatch = useDispatch<AppThunkDispatch>();
   const transactions = useTransactionLatestTransactions();
@@ -59,12 +49,11 @@ function LatestTransactions() {
     dispatch(TransactionThunks.getLatestBlocks());
   }, []);
 
-  const classes = useStyles();
   return (
     <div>
       <h4>Latest Transactions (Live)</h4>
       <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="customized table">
+        <Table aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell>Block</StyledTableCell>
@@ -81,9 +70,11 @@ function LatestTransactions() {
                   <StyledTableCell component="th" scope="row">
                     {generateBlockKeyValue(tx.blockHash || '', tx.block.height || '')}
                   </StyledTableCell>
-                  <StyledTableCell component="th" scope="row" style={{ maxWidth: 360 }}>
-                    <Link to={`${TRANSACTION_DETAILS}/${tx.id}`} className={classes.link}>
-                      <Typography noWrap>{tx.id}</Typography>
+                  <StyledTableCell component="th" scope="row" style={{ maxWidth: 230 }}>
+                    <Link to={`${TRANSACTION_DETAILS}/${tx.id}`}>
+                      <Typography noWrap title={tx.id}>
+                        {tx.id}
+                      </Typography>
                     </Link>
                   </StyledTableCell>
                   <StyledTableCell align="right">

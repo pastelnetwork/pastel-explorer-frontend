@@ -14,6 +14,7 @@ import {
   generateBalanceTable,
   generateWealthDistributionTable,
 } from './Richlist.helpers';
+import * as Styles from './Richlist.styles';
 
 const Richlist: React.FC = () => {
   const { fetchData } = useFetch<{ data: Array<IRichlist> }>({
@@ -34,14 +35,14 @@ const Richlist: React.FC = () => {
     <>
       <Header title="TOP 100" />
       <Grid container spacing={6}>
-        <Grid item xs={12} lg={8}>
+        <Styles.GridWrapper item xs={12} lg={8}>
           <Table
             headers={balanceHeaders}
             rows={richlist}
             title="Current Balance"
             handleClickSort={handleClickSort}
           />
-        </Grid>
+        </Styles.GridWrapper>
         <Grid item xs={12} lg={4}>
           <Table
             headers={distributionHeaders}

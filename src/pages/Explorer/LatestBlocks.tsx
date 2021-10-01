@@ -3,7 +3,6 @@ import { memo, useEffect } from 'react';
 // third party
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -20,6 +19,7 @@ import { AppThunkDispatch } from '@redux/types';
 import { useBlockLatestBlocks } from '@redux/hooks/blocksHooks';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { generateBlockKeyValue } from '@pages/Explorer/LatestTransactions/LatestTransactions.helpers';
+import { Link } from '@components/Link/Link.styles';
 
 const StyledTableCell = withStyles((theme: TAppTheme) => ({
   head: {
@@ -41,9 +41,6 @@ const StyledTableRow = withStyles((theme: TAppTheme) => ({
 }))(TableRow);
 
 const useStyles = makeStyles({
-  table: {
-    minWidth: 700,
-  },
   hashCell: {
     maxWidth: 250,
   },
@@ -64,10 +61,10 @@ function LatestBlocks() {
     <div>
       <h4>Latest Blocks (Live)</h4>
       <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="customized table">
+        <Table aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>Block</StyledTableCell>
+              <StyledTableCell style={{ width: 44 }}>Block</StyledTableCell>
               <StyledTableCell>Hash</StyledTableCell>
               <StyledTableCell align="right">TXs</StyledTableCell>
               <StyledTableCell align="right">Size</StyledTableCell>
@@ -81,12 +78,18 @@ function LatestBlocks() {
                   <StyledTableCell component="th" scope="row">
                     {generateBlockKeyValue(block.id || '', block.height || '')}
                   </StyledTableCell>
-                  <StyledTableCell component="th" scope="row" style={{ maxWidth: 250 }}>
-                    <Typography noWrap>{block.id}</Typography>
+                  <StyledTableCell component="th" scope="row" style={{ maxWidth: 150 }}>
+                    <Typography noWrap title={block.id}>
+                      {block.id}
+                    </Typography>
                   </StyledTableCell>
                   <StyledTableCell align="right">{block.transactionCount}</StyledTableCell>
-                  <StyledTableCell align="right">{block.size.toLocaleString('en')}</StyledTableCell>
-                  <StyledTableCell align="right">{formattedDate(block.timestamp)}</StyledTableCell>
+                  <StyledTableCell align="right" style={{ width: 44 }}>
+                    {block.size.toLocaleString('en')}
+                  </StyledTableCell>
+                  <StyledTableCell align="right" style={{ maxWidth: 200 }}>
+                    {formattedDate(block.timestamp)}
+                  </StyledTableCell>
                 </StyledTableRow>
               ))
             ) : (

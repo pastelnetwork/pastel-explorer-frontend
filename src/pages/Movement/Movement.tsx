@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Grid } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 
 import Header from '@components/Header/Header';
@@ -14,6 +13,7 @@ import { getFilterState } from '@redux/reducers/filterReducer';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { ITransaction } from '@utils/types/ITransactions';
+import * as Styles from './Movement.styles';
 
 import { TIMESTAMP_MOVEMENT_KEY, columns } from './Movement.columns';
 import {
@@ -117,7 +117,7 @@ const Movement: React.FC = () => {
   return (
     <>
       <Header title="Movement Transactions" />
-      <Grid item>
+      <Styles.GridWrapper item>
         <InfinityTable
           sortBy={fetchParams.current.sortBy}
           sortDirection={fetchParams.current.sortDirection}
@@ -128,8 +128,9 @@ const Movement: React.FC = () => {
           filters={defaultFilters}
           onBottomReach={handleFetchMoreMovements}
           onHeaderClick={handleSort}
+          className="movement-table"
         />
-      </Grid>
+      </Styles.GridWrapper>
     </>
   );
 };

@@ -13,6 +13,8 @@ import { defaultFilters } from '@utils/constants/filter';
 import { getFilterState } from '@redux/reducers/filterReducer';
 import { ITransaction } from '@utils/types/ITransactions';
 
+import * as Styles from './LatestTransactions.styles';
+
 import { BLOCK_KEY, columns, TIMESTAMP_KEY } from './LatestTransactions.columns';
 import {
   transformTransactionsData,
@@ -122,18 +124,21 @@ const LatestTransactions: React.FC = () => {
   }, [filter.dateRange]);
 
   return (
-    <InfinityTable
-      sortBy={fetchParams.current.sortBy}
-      sortDirection={fetchParams.current.sortDirection}
-      // loadMoreFrom={fetchParams.current.offset + 20}
-      rows={transactionList}
-      columns={columns}
-      tableHeight={650}
-      filters={defaultFilters}
-      title="Latest Transactions"
-      onBottomReach={handleFetchMoreTransactions}
-      onHeaderClick={handleSort}
-    />
+    <Styles.LatestTransactionsWrapper>
+      <InfinityTable
+        sortBy={fetchParams.current.sortBy}
+        sortDirection={fetchParams.current.sortDirection}
+        // loadMoreFrom={fetchParams.current.offset + 20}
+        rows={transactionList}
+        columns={columns}
+        tableHeight={650}
+        filters={defaultFilters}
+        title="Latest Transactions"
+        onBottomReach={handleFetchMoreTransactions}
+        onHeaderClick={handleSort}
+        className="latest-transactions-table"
+      />
+    </Styles.LatestTransactionsWrapper>
   );
 };
 
