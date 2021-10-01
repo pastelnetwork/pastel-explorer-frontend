@@ -15,7 +15,7 @@ interface IFetchDataOptions {
   params?: { [key: string]: string | number };
 }
 
-const getBaseURL = () => {
+export const getBaseURL = () => {
   try {
     const persist = localStorage.getItem('persist:root');
     if (persist) {
