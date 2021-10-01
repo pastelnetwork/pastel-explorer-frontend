@@ -1,5 +1,7 @@
 // Routes
 export const BASE_URL = process.env.REACT_APP_EXPLORER_WEB_API_URL;
+export const BASE_URL_TESTNET = process.env.REACT_APP_EXPLORER_WEB_API_URL_TESTNET;
+export const BASE_URL_DEVNET = process.env.REACT_APP_EXPLORER_WEB_API_URL_DEVNET;
 
 // API endpoints
 export const SEARCH_URL = `/v1/search`;

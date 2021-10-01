@@ -11,6 +11,7 @@ import { AppStateType } from '@redux/reducers';
 import { setApiHostingAction } from '@redux/actions/clusterAction';
 import { TAppTheme } from '@theme/index';
 import useBooleanState from '@hooks/useBooleanState';
+import { BASE_URL, BASE_URL_TESTNET, BASE_URL_DEVNET } from '@utils/constants/urls';
 
 const useStyles = makeStyles((theme: TAppTheme) => ({
   root: {
@@ -58,19 +59,19 @@ const data = [
     id: 'cluster-1',
     name: 'Mainnet Beta',
     value: 'mainnet',
-    api: 'https://api.pastel.network.com',
+    api: BASE_URL,
   },
   {
     id: 'cluster-2',
     name: 'Testnet',
     value: 'testnet',
-    api: 'https://api-test.pastel.network.com',
+    api: BASE_URL_TESTNET,
   },
   {
     id: 'cluster-3',
     name: 'Devnet',
     value: 'devnet',
-    api: 'https://api-dev.pastel.network.com',
+    api: BASE_URL_DEVNET,
   },
 ];
 
@@ -109,6 +110,11 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
     [replace],
   );
 
+  const handleClusterClose = () => {
+    toggle();
+    window.location.reload();
+  };
+
   return (
     <>
       <Button
@@ -122,7 +128,7 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
       </Button>
       <Drawer anchor="right" open={open} onClose={toggle} className={classes.root}>
         <div className={classes.list}>
-          <Button type="button" className={classes.close} onClick={toggle}>
+          <Button type="button" className={classes.close} onClick={handleClusterClose}>
             ×
           </Button>
           <h1 className={classes.title}>Choose a Cluster</h1>
