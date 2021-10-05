@@ -9,6 +9,7 @@ import LinearProgress from '@components/Progress/LinearProgress/LinearProgress';
 import * as ROUTES from '@utils/constants/routes';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { IRichlist } from '@utils/types/IRichlists';
+import { getCurrencyName } from '@utils/appInfo';
 
 const LIST_DIVIDERS = [
   [0, 25],
@@ -20,13 +21,13 @@ const LIST_DIVIDERS = [
 export const balanceHeaders: Array<HeaderType> = [
   { id: 1, header: '', key: 'rank' },
   { id: 2, header: 'Address', key: 'address' },
-  { id: 3, header: 'Balance (PSL)', key: 'amount' },
+  { id: 3, header: `Balance (${getCurrencyName()})`, key: 'amount' },
   { id: 4, header: '%', key: 'percentage' },
 ];
 
 export const distributionHeaders: Array<HeaderType> = [
   { id: 1, header: '' },
-  { id: 2, header: 'Amount (PSL)' },
+  { id: 2, header: `Amount (${getCurrencyName()})` },
   { id: 3, header: '%' },
 ];
 

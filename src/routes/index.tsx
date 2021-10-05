@@ -44,6 +44,7 @@ import MarketVolumePrice from '@pages/HistoricalStatistics/MarketVolumePrice';
 import MarketCapPrice from '@pages/HistoricalStatistics/MarketCapPrice';
 
 import * as ROUTES from '@utils/constants/routes';
+import { getCurrencyName } from '@utils/appInfo';
 import TotalTransactionFees from '@pages/HistoricalStatistics/TotalTransactionFees';
 
 const explorerRoutes = {
@@ -158,10 +159,10 @@ const difficultyStatisticsRoutes = {
 };
 
 const pricesStatisticsRoutes = {
-  id: 'PSL Prices Overtime',
+  id: `${getCurrencyName()} Prices Overtime`,
   path: ROUTES.STATISTICS_PSLPRICE,
   component: PricesStatistics,
-  seoTitle: 'PSL Prices Overtime',
+  seoTitle: `${getCurrencyName()} Prices Overtime`,
   children: null,
   exact: false,
 };

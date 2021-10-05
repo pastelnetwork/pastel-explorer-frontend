@@ -12,6 +12,7 @@ import { setApiHostingAction } from '@redux/actions/clusterAction';
 import { TAppTheme } from '@theme/index';
 import useBooleanState from '@hooks/useBooleanState';
 import { BASE_URL, BASE_URL_TESTNET, BASE_URL_DEVNET } from '@utils/constants/urls';
+import { DEFAULT_CURRENCY, TEST_CURRENCY_NAME } from '@utils/appInfo';
 
 const useStyles = makeStyles((theme: TAppTheme) => ({
   root: {
@@ -77,7 +78,7 @@ const data = [
 
 interface IProps {
   url: string;
-  setApiHosting: (_url: string) => void;
+  setApiHosting: (_url: string, _currencyName: string) => void;
 }
 
 const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
@@ -105,7 +106,7 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
       replace({
         search: queryParams.toString(),
       });
-      setApiHosting(id);
+      setApiHosting(id, value === 'mainnet' ? DEFAULT_CURRENCY : TEST_CURRENCY_NAME);
     },
     [replace],
   );
@@ -156,7 +157,8 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
 const Cluster = connect(
   ({ cluster }: AppStateType) => ({ url: cluster.url }),
   dispatch => ({
-    setApiHosting: (url: string) => dispatch(setApiHostingAction(url)),
+    setApiHosting: (url: string, currencyName: string) =>
+      dispatch(setApiHostingAction(url, currencyName)),
   }),
 )(ChooseCluster);
 

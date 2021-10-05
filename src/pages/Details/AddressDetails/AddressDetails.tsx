@@ -14,6 +14,7 @@ import * as URLS from '@utils/constants/urls';
 import * as ROUTES from '@utils/constants/routes';
 import { IAddress } from '@utils/types/IAddress';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
+import { getCurrencyName } from '@utils/appInfo';
 
 import {
   addressHeaders,
@@ -117,7 +118,7 @@ const AddressDetails = () => {
       <Grid container direction="column">
         <Grid item>
           <Table
-            title={`PSL address: ${id}`}
+            title={`${getCurrencyName()} address: ${id}`}
             headers={addressHeaders}
             rows={generateAddressSummary(addresses)}
           />

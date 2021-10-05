@@ -1,3 +1,5 @@
+import { getCurrencyName } from '@utils/appInfo';
+
 export const BLOCK_KEY = 'block';
 export const BLOCK_HASH_KEY = 'blockHash';
 export const RECIPIENT_COUNT_KEY = 'recipientCount';
@@ -35,7 +37,7 @@ export const columns = [
     width: 60,
     minWidth: 60,
     flexGrow: 1,
-    label: 'Amount (PSL)',
+    label: `Amount (${getCurrencyName()})`,
     dataKey: AMOUNT_KEY,
     disableSort: false,
     className: 'pl-8px',

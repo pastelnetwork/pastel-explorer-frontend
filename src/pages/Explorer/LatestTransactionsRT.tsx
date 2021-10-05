@@ -22,6 +22,7 @@ import { useTransactionLatestTransactions } from '@redux/hooks/transactionsHooks
 import { ITransaction } from '@utils/types/ITransactions';
 import { TRANSACTION_DETAILS } from '@utils/constants/routes';
 import { Link } from '@components/Link/Link.styles';
+import { getCurrencyName } from '@utils/appInfo';
 
 const StyledTableCell = withStyles((theme: TAppTheme) => ({
   head: {
@@ -59,7 +60,7 @@ function LatestTransactions() {
             <TableRow>
               <StyledTableCell>Block</StyledTableCell>
               <StyledTableCell>TXID</StyledTableCell>
-              <StyledTableCell align="right">Amount(PSL)</StyledTableCell>
+              <StyledTableCell align="right">Amount({getCurrencyName()})</StyledTableCell>
               <StyledTableCell align="right">Recipents</StyledTableCell>
               <StyledTableCell align="right">Fee</StyledTableCell>
             </TableRow>

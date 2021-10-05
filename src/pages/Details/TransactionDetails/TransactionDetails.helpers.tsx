@@ -6,6 +6,7 @@ import { HeaderType } from '@components/Table/Table';
 import { ITransactionDetails } from '@utils/types/ITransactions';
 import { formattedDate } from '@utils/helpers/date/date';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
+import { getCurrencyName } from '@utils/appInfo';
 
 import * as Styles from './TransactionDetails.styles';
 
@@ -19,14 +20,16 @@ export const transactionHeaders: Array<HeaderType> = [
 
 export const addressHeaders: Array<HeaderType> = [
   { id: 1, header: 'Address', key: 'address' },
-  { id: 2, header: 'Amount (PSL)', key: 'amount' },
+  { id: 2, header: `Amount (${getCurrencyName()})`, key: 'amount' },
   { id: 3, header: 'Amount (USD)', key: 'amount' },
 ];
 
 export const generateTableTitle = (transactionData: ITransactionDetails) => (
   <Alert severity="info">
-    <AlertTitle style={{ wordBreak: 'break-word' }}>PSL TXID: {transactionData.id}</AlertTitle>
-    {`This transaction was first broadcast to the PSL network on 
+    <AlertTitle style={{ wordBreak: 'break-word' }}>
+      {getCurrencyName()} TXID: {transactionData.id}
+    </AlertTitle>
+    {`This transaction was first broadcast to the ${getCurrencyName()} network on 
       ${formattedDate(transactionData.timestamp)}. 
       The transaction is currently 
       ${
@@ -37,8 +40,10 @@ export const generateTableTitle = (transactionData: ITransactionDetails) => (
       : `At the time of this transaction 
       ${
         transactionData.totalAmount
-          ? `${formatNumber(transactionData.totalAmount, { decimalsLength: 2 })} PSL was sent.`
-          : 'an unknown amount of PSL was sent (since it’s a shielded transaction).'
+          ? `${formatNumber(transactionData.totalAmount, {
+              decimalsLength: 2,
+            })} ${getCurrencyName()} was sent.`
+          : `an unknown amount of ${getCurrencyName()} was sent (since it’s a shielded transaction).`
       } `}
   </Alert>
 );
