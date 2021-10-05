@@ -88,12 +88,15 @@ const TransactionDetails = () => {
             id: 1,
             value: (
               <Grid container alignItems="center" wrap="nowrap">
-                <CopyButton copyText={address} />
-                <RouterLink
-                  route={`${ROUTES.ADDRESS_DETAILS}/${address}`}
-                  value={address}
-                  textSize="large"
-                />
+                <Styles.RowWrapper>
+                  <CopyButton copyText={address} />
+                  <RouterLink
+                    route={`${ROUTES.ADDRESS_DETAILS}/${address}`}
+                    value={address}
+                    textSize="large"
+                    title={address}
+                  />
+                </Styles.RowWrapper>
               </Grid>
             ),
           },

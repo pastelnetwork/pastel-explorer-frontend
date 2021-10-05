@@ -40,3 +40,9 @@ export const TransactionRawDataToolbar = styled(Toolbar)`
     color: ${props => props.theme.sidebar.closeIcon};
   }
 `;
+
+export const RowWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  max-width: 90%;
+`;
