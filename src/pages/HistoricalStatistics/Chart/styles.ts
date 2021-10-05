@@ -32,7 +32,8 @@ export const eChartLineStyles = makeStyles((theme: TAppTheme) => ({
   lineChartTitle: {
     // width: '100%',
     textAlign: 'left',
-    fontSize: '30px',
+    fontSize: '16px',
+    fontWeight: 700,
     [theme.breakpoints.down('sm')]: {
       fontSize: 15,
     },
@@ -53,18 +54,27 @@ export const eChartLineStyles = makeStyles((theme: TAppTheme) => ({
   uploadButton: {
     display: 'flex',
     alignItems: 'center',
-    backgroundColor: '#6151d0',
-    color: 'white',
+    backgroundColor: '#3F9AF7',
+    color: '#fff',
     textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: '14px',
-    padding: '8px 16px',
-    borderRadius: '4px',
+    fontSize: '16px',
+    lineHeight: '24px',
+    fontFamily: 'Gill Sans',
+    padding: '8px 24px',
+    borderRadius: '16px',
     marginLeft: '8px',
     marginRight: '8px',
+    border: '1px solid #3F9AF7',
+    cursor: 'pointer',
+    textDecoration: 'none',
     '&:hover': {
-      cursor: 'pointer',
-      opacity: 0.8,
+      backgroundColor: '#0E80F5',
+      borderColor: '#0E80F5',
+    },
+    '&:active': {
+      backgroundColor: '#0971DC',
+      borderColor: '#0971DC',
     },
   },
   reactECharts: {
@@ -101,7 +111,6 @@ export const eChartLineStyles = makeStyles((theme: TAppTheme) => ({
     display: 'flex',
     width: '100%',
     justifyContent: 'flex-end',
-    height: '30px',
     [theme.breakpoints.down('sm')]: {
       marginTop: 10,
       justifyContent: 'flex-start',

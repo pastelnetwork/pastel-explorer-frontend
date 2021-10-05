@@ -36,7 +36,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
   }, []);
   return (
     <Styles.Card mb={3} style={styles}>
-      {title && <Styles.TableCardHeader title={title} />}
+      {title && <h4>{title}</h4>}
       <Styles.PaperWrapper>
         {rows ? (
           <Styles.TableWrapper>

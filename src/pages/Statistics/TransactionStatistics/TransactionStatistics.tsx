@@ -1,14 +1,12 @@
 import { Grid } from '@material-ui/core';
 
-import Header from '@components/Header/Header';
-
 import IncomingTransactions from './IncomingTransactions';
 import VolumeTransactions from './VolumeTransactions';
 
 const TransactionStatistics: React.FC = () => {
   return (
-    <>
-      <Header title="Transactions Statistics" />
+    <div className="transaction-statistics-block">
+      <h4>Transactions Statistics</h4>
       <Grid container>
         <Grid item xs={12} style={{ marginBottom: 24 }}>
           <VolumeTransactions />
@@ -17,7 +15,7 @@ const TransactionStatistics: React.FC = () => {
           <IncomingTransactions />
         </Grid>
       </Grid>
-    </>
+    </div>
   );
 };
 

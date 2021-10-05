@@ -1,8 +1,6 @@
 import React from 'react';
 import { VectorMap } from 'react-jvectormap';
 
-import { CardHeader } from '@material-ui/core';
-
 import * as Styles from './Map.styles';
 import { defaultMapOptions } from './Map.options';
 import './map.css';
@@ -36,7 +34,7 @@ export interface MapProps {
 const Map: React.FC<MapProps> = ({ title, markers, options }) => {
   return (
     <Styles.Card mb={4}>
-      <CardHeader title={title} />
+      <h4>{title}</h4>
       <Styles.CardContent>
         <Styles.MapContainer>
           {markers && <VectorMap markers={markers} {...defaultMapOptions} {...options} />}

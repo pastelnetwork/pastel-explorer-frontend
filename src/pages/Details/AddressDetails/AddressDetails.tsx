@@ -25,6 +25,7 @@ import {
   DEFAULT_ADDRESS_DATA,
 } from './AddressDetails.helpers';
 import { ADDRESS_TRANSACTION_TIMESTAMP_KEY, columns } from './AddressDetails.columns';
+import * as Styles from './AddressDetails.styles';
 
 interface ParamTypes {
   id: string;
@@ -121,7 +122,7 @@ const AddressDetails = () => {
             rows={generateAddressSummary(addresses)}
           />
         </Grid>
-        <Grid item>
+        <Styles.TableWrapper item>
           <InfinityTable
             title="Latest Transactions"
             sortBy={fetchParams.current.sortBy}
@@ -131,8 +132,9 @@ const AddressDetails = () => {
             columns={columns}
             onBottomReach={handleFetchMoreTransactions}
             onHeaderClick={handleSort}
+            className="latest-transaction-table"
           />
-        </Grid>
+        </Styles.TableWrapper>
       </Grid>
     </>
   ) : null;

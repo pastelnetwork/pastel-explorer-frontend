@@ -5,6 +5,7 @@ import { TAppTheme } from '@theme/index';
 import TransactionStatistics from './TransactionStatistics/TransactionStatistics';
 import NetworkStatistics from './NetworkStatistics/NetworkStatistics';
 import BlockStatistics from './BlockStatistics/BlockStatistics';
+import * as Styles from './Statistics.styles';
 
 const useStyles = makeStyles((theme: TAppTheme) => ({
   blockSpace: {
@@ -18,13 +19,13 @@ const useStyles = makeStyles((theme: TAppTheme) => ({
 const Statistics = () => {
   const classes = useStyles();
   return (
-    <div>
+    <Styles.StatisticsContainer>
       <BlockStatistics />
       <div className={classes.blockSpace} />
       <NetworkStatistics />
       <div className={classes.blockSpace} />
       <TransactionStatistics />
-    </div>
+    </Styles.StatisticsContainer>
   );
 };
 

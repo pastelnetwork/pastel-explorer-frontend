@@ -4,6 +4,13 @@ import { darken } from '@material-ui/core';
 
 import themeVariant from '@theme/variants';
 
+export const StatisticsContainer = styled.div`
+  .network-block,
+  .transaction-statistics-block {
+    padding-top: 16px;
+  }
+`;
+
 export const ZoomContainer = styled.div`
   display: flex;
   align-items: baseline;

@@ -11,7 +11,7 @@ import {
   OverscanIndicesGetterParams,
 } from 'react-virtualized';
 import { CSSProperties } from '@material-ui/styles';
-import { CardHeader, CircularProgress, darken } from '@material-ui/core';
+import { CircularProgress, darken } from '@material-ui/core';
 import { ArrowDropDown, ArrowDropUp } from '@material-ui/icons';
 import { Skeleton } from '@material-ui/lab';
 import { useGetThemeMode } from '@redux/reducers/appThemeReducer';
@@ -153,10 +153,9 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   return (
     <Styles.Card mb={3} className={className}>
       {title && (
-        <CardHeader
-          className="pl-0 pr-0"
-          title={!filters ? title : <Filters filters={filters} title={title} />}
-        />
+        <div className="pl-0 pr-0">
+          {!filters ? <h4>{title}</h4> : <Filters filters={filters} title={title} />}
+        </div>
       )}
       <Styles.TableContainer>
         {loading && (
