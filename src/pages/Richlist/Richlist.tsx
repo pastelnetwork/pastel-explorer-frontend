@@ -35,7 +35,7 @@ const Richlist: React.FC = () => {
     <>
       <Header title="TOP 100" />
       <Grid container spacing={6}>
-        <Styles.GridWrapper item xs={12} lg={8}>
+        <Styles.GridWrapper item xs={12} lg={7}>
           <Table
             headers={balanceHeaders}
             rows={richlist}
@@ -43,7 +43,7 @@ const Richlist: React.FC = () => {
             handleClickSort={handleClickSort}
           />
         </Styles.GridWrapper>
-        <Grid item xs={12} lg={4}>
+        <Grid item xs={12} lg={5}>
           <Table
             headers={distributionHeaders}
             rows={wealthDistribution}

@@ -39,7 +39,12 @@ export const transformTransactionsData = (transactions: Array<ITransaction>) =>
       [BLOCK_HASH_KEY]: (
         <Grid container alignItems="center" wrap="nowrap">
           <CopyButton copyText={id} />
-          <RouterLink route={`${ROUTES.TRANSACTION_DETAILS}/${id}`} value={id} textSize="large" />
+          <RouterLink
+            title={id}
+            route={`${ROUTES.TRANSACTION_DETAILS}/${id}`}
+            value={id}
+            textSize="large"
+          />
         </Grid>
       ),
       [RECIPIENT_COUNT_KEY]: recipientCount,
