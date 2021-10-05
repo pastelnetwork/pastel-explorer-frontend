@@ -1,6 +1,7 @@
 // React
 import { memo, useEffect } from 'react';
 // third party
+import { Tooltip } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -78,7 +79,13 @@ function LatestTransactions() {
                     </Link>
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {(+tx.totalAmount.toFixed(2)).toLocaleString('en')}
+                    {tx.isNonStandard ? (
+                      <Tooltip title="Because the transaction is shielded, the amount sent is unknown.">
+                        <span>Unknown</span>
+                      </Tooltip>
+                    ) : (
+                      <>{(+tx.totalAmount.toFixed(2)).toLocaleString('en')}</>
+                    )}
                   </StyledTableCell>
                   <StyledTableCell align="right">{tx.recipientCount}</StyledTableCell>
                   <StyledTableCell align="right">{tx.fee || '--'}</StyledTableCell>

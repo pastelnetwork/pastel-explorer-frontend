@@ -32,20 +32,31 @@ export const generateBlockKeyValue = (blockHash: string | number, blockHeight: s
 };
 
 export const transformTransactionsData = (transactions: Array<ITransaction>) =>
-  transactions.map(({ blockHash, id, block, recipientCount, timestamp, totalAmount }) => ({
-    id,
-    [BLOCK_KEY]: generateBlockKeyValue(blockHash, block.height),
-    [BLOCK_HASH_KEY]: (
-      <Grid container alignItems="center" wrap="nowrap">
-        <CopyButton copyText={id} />
-        <RouterLink route={`${ROUTES.TRANSACTION_DETAILS}/${id}`} value={id} textSize="large" />
-      </Grid>
-    ),
-    [RECIPIENT_COUNT_KEY]: recipientCount,
-    [AMOUNT_KEY]: (
-      <Tooltip title={totalAmount} arrow>
-        <Styles.Typography>{formatNumber(totalAmount, { decimalsLength: 2 })}</Styles.Typography>
-      </Tooltip>
-    ),
-    [TIMESTAMP_KEY]: formattedDate(timestamp),
-  }));
+  transactions.map(
+    ({ blockHash, id, block, recipientCount, timestamp, totalAmount, isNonStandard }) => ({
+      id,
+      [BLOCK_KEY]: generateBlockKeyValue(blockHash, block.height),
+      [BLOCK_HASH_KEY]: (
+        <Grid container alignItems="center" wrap="nowrap">
+          <CopyButton copyText={id} />
+          <RouterLink route={`${ROUTES.TRANSACTION_DETAILS}/${id}`} value={id} textSize="large" />
+        </Grid>
+      ),
+      [RECIPIENT_COUNT_KEY]: recipientCount,
+      [AMOUNT_KEY]: (
+        <Tooltip
+          title={
+            isNonStandard
+              ? 'Because the transaction is shielded, the amount sent is unknown.'
+              : totalAmount
+          }
+          arrow
+        >
+          <Styles.Typography>
+            {isNonStandard ? 'Unknown' : formatNumber(totalAmount, { decimalsLength: 2 })}
+          </Styles.Typography>
+        </Tooltip>
+      ),
+      [TIMESTAMP_KEY]: formattedDate(timestamp),
+    }),
+  );

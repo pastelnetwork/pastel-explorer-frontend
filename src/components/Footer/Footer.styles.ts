@@ -18,6 +18,6 @@ export const Container = styled.div`
 `;
 
 export const Typography = styled(MuiTypography)`
-  font-size: 1.25rem;
+  font-size: 1rem;
   color: ${themeVariant.footer.color};
 `;

@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import { Tooltip, Grid } from '@material-ui/core';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import CopyButton from '@components/CopyButton/CopyButton';
@@ -29,7 +29,7 @@ const generateBlockKeyValue = (blockHash: string, blockHeight: string) => {
 };
 
 export const transformMovementData = (transactions: Array<ITransaction>) =>
-  transactions.map(({ id, timestamp, totalAmount, block, blockHash }) => ({
+  transactions.map(({ id, timestamp, totalAmount, block, blockHash, isNonStandard }) => ({
     id,
     [TXID_KEY]: (
       <Grid container alignItems="center" wrap="nowrap">
@@ -43,6 +43,16 @@ export const transformMovementData = (transactions: Array<ITransaction>) =>
       </Grid>
     ),
     [BLOCK_KEY]: generateBlockKeyValue(blockHash, block.height),
-    [AMOUNT_MOVEMENT_KEY]: formatNumber(totalAmount, { decimalsLength: 2 }),
+    [AMOUNT_MOVEMENT_KEY]: (
+      <>
+        {isNonStandard ? (
+          <Tooltip title="Because the transaction is shielded, the amount sent is unknown.">
+            <span>Unknown</span>
+          </Tooltip>
+        ) : (
+          formatNumber(totalAmount, { decimalsLength: 2 })
+        )}
+      </>
+    ),
     [TIMESTAMP_MOVEMENT_KEY]: formattedDate(timestamp, { dayName: false }),
   }));

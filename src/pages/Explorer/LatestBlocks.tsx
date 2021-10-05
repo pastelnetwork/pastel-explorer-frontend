@@ -18,7 +18,7 @@ import { BlockThunks } from '@redux/thunk';
 import { AppThunkDispatch } from '@redux/types';
 import { useBlockLatestBlocks } from '@redux/hooks/blocksHooks';
 import Skeleton from '@material-ui/lab/Skeleton';
-import { generateBlockKeyValue } from '@pages/Explorer/LatestTransactions/LatestTransactions.helpers';
+import * as ROUTES from '@utils/constants/routes';
 import { Link } from '@components/Link/Link.styles';
 
 const StyledTableCell = withStyles((theme: TAppTheme) => ({
@@ -76,12 +76,14 @@ function LatestBlocks() {
               Array.from(latestBlocks.values()).map(block => (
                 <StyledTableRow key={block.id}>
                   <StyledTableCell component="th" scope="row">
-                    {generateBlockKeyValue(block.id || '', block.height || '')}
+                    {block.height || ''}
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row" style={{ maxWidth: 150 }}>
-                    <Typography noWrap title={block.id}>
-                      {block.id}
-                    </Typography>
+                    <Link to={`${ROUTES.BLOCK_DETAILS}/${block.id}`}>
+                      <Typography noWrap title={block.id}>
+                        {block.id}
+                      </Typography>
+                    </Link>
                   </StyledTableCell>
                   <StyledTableCell align="right">{block.transactionCount}</StyledTableCell>
                   <StyledTableCell align="right" style={{ width: 44 }}>

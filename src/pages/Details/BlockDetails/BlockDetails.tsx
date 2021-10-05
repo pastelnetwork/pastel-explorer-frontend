@@ -94,7 +94,20 @@ const BlockDetails = () => {
             ),
           },
           { id: 2, value: transaction.recipientCount },
-          { id: 3, value: formatNumber(transaction.totalAmount, { decimalsLength: 2 }) },
+          {
+            id: 3,
+            value: (
+              <>
+                {transaction.totalAmount === 0 ? (
+                  <Tooltip title="Because the transaction is shielded, the amount sent is unknown.">
+                    <span>Unknown</span>
+                  </Tooltip>
+                ) : (
+                  formatNumber(transaction.totalAmount, { decimalsLength: 2 })
+                )}
+              </>
+            ),
+          },
         ],
       };
     });
