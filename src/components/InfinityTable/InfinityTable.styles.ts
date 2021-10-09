@@ -7,6 +7,7 @@ const StyledCard = styled(MuiCard)`
   background-color: ${props => props.theme.palette.background.paper} !important;
   padding: 0 ${props => props.theme.spacing(9)}px;
   padding-bottom: 32px !important;
+  box-shadow: none;
   @media (max-width: 960px) {
     padding: 0 ${props => props.theme.spacing(2)}px;
     padding-bottom: 8px !important;
@@ -14,6 +15,24 @@ const StyledCard = styled(MuiCard)`
 
   .pl-0 {
     padding-left: 0;
+  }
+
+  .pr-0 {
+    padding-right: 0;
+  }
+
+  .list-filter {
+    border: 1px solid ${props => props.theme.filter.border};
+  }
+
+  .filter-item {
+    &:hover {
+      background-color: ${props => props.theme.filter.background};
+    }
+  }
+
+  .filter-item-active {
+    background-color: ${props => props.theme.filter.background};
   }
 `;
 
@@ -23,7 +42,7 @@ export const TableWrapper = styled.div`
   overflow-y: auto;
   max-width: calc(100vw - ${props => props.theme.spacing(12)}px);
   background-color: ${props => props.theme.palette.background.default} !important;
-  border-radius: 16px;
+  border-radius: 6px;
 
   * {
     outline: 0;
@@ -69,6 +88,7 @@ export const TableWrapper = styled.div`
 export const TableContainer = styled(Paper)`
   position: relative;
   background: ${props => props.theme.palette.background.default};
+  box-shadow: rgb(50 50 93 / 3%) 0px 2px 5px -1px, rgb(0 0 0 / 5%) 0px 1px 3px -1px !important;
 `;
 
 export const Cell = styled(TableCell)`
@@ -80,9 +100,10 @@ export const Cell = styled(TableCell)`
 
 export const HeaderCell = styled(TableCell)<{ $disabledSort: boolean }>`
   font-weight: 700;
-  height: 70px;
+  height: 45px;
   display: flex;
   white-space: nowrap;
+  padding-top: 8px;
   color: ${props => props.theme.palette.text.primary};
   cursor: ${({ $disabledSort }) => !$disabledSort && 'pointer'};
 `;

@@ -2,7 +2,7 @@ import React from 'react';
 import { ChartData } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 
-import { CardHeader, Typography, Grid } from '@material-ui/core';
+import { Typography, Grid } from '@material-ui/core';
 
 import { defaultChartOptions } from './DoughnutChart.options';
 import * as Styles from './DoughnutChart.styles';
@@ -24,7 +24,7 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
 }) => {
   return (
     <Styles.Card mb={3}>
-      {title && <CardHeader title={title} />}
+      {title && <h4>{title}</h4>}
       <Styles.CardContent>
         <Grid container justify="center" alignItems="flex-start">
           <Styles.ChartWrapper item sm={12} md={5}>

@@ -9,6 +9,7 @@ import * as ROUTES from '@utils/constants/routes';
 import { formattedDate } from '@utils/helpers/date/date';
 import { IAddressData, IAddress } from '@utils/types/IAddress';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
+import { getCurrencyName } from '@utils/appInfo';
 
 import {
   ADDRESS_TRANSACTION_TIMESTAMP_KEY,
@@ -37,6 +38,7 @@ export const generateLatestTransactions = (transactionsList: Array<IAddressData>
           route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
           value={transactionHash}
           textSize="large"
+          title={transactionHash}
         />
       </Grid>
     ),
@@ -62,7 +64,7 @@ export const generateAddressSummary = ({
 };
 
 export const addressHeaders: Array<HeaderType> = [
-  { id: 1, header: 'Total Sent (PSL)' },
-  { id: 2, header: 'Total Received (PSL)' },
-  { id: 3, header: 'Balance (PSL)' },
+  { id: 1, header: `Total Sent (${getCurrencyName()})` },
+  { id: 2, header: `Total Received (${getCurrencyName()})` },
+  { id: 3, header: `Balance (${getCurrencyName()})` },
 ];

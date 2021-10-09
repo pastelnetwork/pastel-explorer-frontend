@@ -2,10 +2,9 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import Axios, { AxiosError } from 'axios';
 import { useDispatch } from 'react-redux';
+import { BASE_URL } from '@utils/constants/urls';
 
 import { setResponseError } from '@redux/actions/responseErrorsActions';
-
-import * as URLS from '@utils/constants/urls';
 
 interface IUseFetchOptions {
   method: 'get' | 'post' | 'put' | 'delete' | 'patch' | 'options';
@@ -16,8 +15,22 @@ interface IFetchDataOptions {
   params?: { [key: string]: string | number };
 }
 
+export const getBaseURL = () => {
+  try {
+    const persist = localStorage.getItem('persist:root');
+    if (persist) {
+      const store = JSON.parse(persist);
+      const tmp = JSON.parse(store.cluster);
+      return tmp.url;
+    }
+    return BASE_URL;
+  } catch {
+    return BASE_URL;
+  }
+};
+
 export const axiosInstance = Axios.create({
-  baseURL: URLS.BASE_URL,
+  baseURL: getBaseURL(),
 });
 
 // Add a response interceptor

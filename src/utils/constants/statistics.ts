@@ -2,6 +2,7 @@ import * as routes from '@utils/constants/routes';
 import { PeriodTypes, TGranularity } from '@utils/helpers/statisticsLib';
 import { TStatisticsInfo } from '@utils/types/IStatistics';
 import { TCsvHeaderType } from './types';
+import { getCurrencyName } from '../appInfo';
 
 const BASE_API_URL = process.env.REACT_APP_EXPLORER_WEB_API_URL as string;
 
@@ -188,7 +189,7 @@ export const CHART_DEFAULT_PERIOD = 'all';
 
 export const info: TStatisticsInfo = {
   connections: 8,
-  currencyName: 'PSL',
+  currencyName: getCurrencyName(),
   disconnected: false,
   latestBlock: 71976,
   pslPrice: undefined,

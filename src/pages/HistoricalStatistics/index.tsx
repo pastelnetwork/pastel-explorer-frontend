@@ -5,7 +5,8 @@ import { darken } from '@material-ui/core';
 // application
 import { TAppTheme } from '@theme/index';
 import { statistics } from '@utils/constants/statistics';
-import { Title, Wrapper } from './StatisticsOvertime.styles';
+import Header from '@components/Header/Header';
+import { Wrapper } from './StatisticsOvertime.styles';
 
 const useStyles = makeStyles((theme: TAppTheme) => ({
   root: {
@@ -20,7 +21,7 @@ const Statistics = () => {
   const classes = useStyles();
   return (
     <Wrapper>
-      <Title>Pastel Statistics</Title>
+      <Header title="Pastel Statistics" />
       <Grid container spacing={6} alignItems="center">
         {statistics.map(({ id, image, title, url }) => (
           <Grid item key={id} className="card-item" xs={12} sm={6} lg={4} xl={3}>
@@ -33,7 +34,7 @@ const Statistics = () => {
                   style={{ objectFit: 'contain' }}
                   src={image}
                 />
-                <h2>{title}</h2>
+                <h4>{title}</h4>
               </Link>
             </div>
           </Grid>

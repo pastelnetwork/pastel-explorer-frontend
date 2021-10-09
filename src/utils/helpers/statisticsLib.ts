@@ -18,6 +18,7 @@ import { IBlock } from '@utils/types/IBlocks';
 import { formattedDate } from '@utils/helpers/date/date';
 import { IRawTransactions, ITransaction } from '@utils/types/ITransactions';
 import { ISocketData } from '@utils/types/ISocketData';
+import { getCurrencyName } from '../appInfo';
 
 export type PeriodTypes =
   | '1h'
@@ -43,7 +44,7 @@ export const makeDownloadFileName = (currencyName: string | number, title: strin
 
   if (title === 'Network Difficulty') {
     imageTitle = 'Network_Difficulty';
-  } else if (title === 'PSL Prices') {
+  } else if (title === `${getCurrencyName()} Prices`) {
     imageTitle = 'Prices';
   }
 

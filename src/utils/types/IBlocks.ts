@@ -2,6 +2,7 @@ export interface IBlockTransaction {
   id: string;
   recipientCount: number;
   totalAmount: number;
+  isNonStandard?: boolean;
 }
 
 export interface IBlock {

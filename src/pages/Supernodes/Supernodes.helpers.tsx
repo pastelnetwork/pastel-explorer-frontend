@@ -39,6 +39,7 @@ export const transformSupernodesData = (masternodes: Array<INetworkSupernodes>) 
           route={`${ROUTES.ADDRESS_DETAILS}/${address}`}
           value={address}
           textSize="large"
+          title={address}
         />
       </Grid>
     ),

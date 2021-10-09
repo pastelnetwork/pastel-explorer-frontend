@@ -13,5 +13,7 @@ export const GridWrapper = styled(Grid)`
   .movement-table {
     padding-left: 0;
     padding-right: 0;
+    padding-bottom: 0 !important;
+    overflow: unset;
   }
 `;

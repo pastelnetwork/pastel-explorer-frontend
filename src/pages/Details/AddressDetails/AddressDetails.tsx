@@ -14,6 +14,7 @@ import * as URLS from '@utils/constants/urls';
 import * as ROUTES from '@utils/constants/routes';
 import { IAddress } from '@utils/types/IAddress';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
+import { getCurrencyName } from '@utils/appInfo';
 
 import {
   addressHeaders,
@@ -25,6 +26,7 @@ import {
   DEFAULT_ADDRESS_DATA,
 } from './AddressDetails.helpers';
 import { ADDRESS_TRANSACTION_TIMESTAMP_KEY, columns } from './AddressDetails.columns';
+import * as Styles from './AddressDetails.styles';
 
 interface ParamTypes {
   id: string;
@@ -116,12 +118,12 @@ const AddressDetails = () => {
       <Grid container direction="column">
         <Grid item>
           <Table
-            title={`PSL address: ${id}`}
+            title={`${getCurrencyName()} address: ${id}`}
             headers={addressHeaders}
             rows={generateAddressSummary(addresses)}
           />
         </Grid>
-        <Grid item>
+        <Styles.TableWrapper item>
           <InfinityTable
             title="Latest Transactions"
             sortBy={fetchParams.current.sortBy}
@@ -131,8 +133,9 @@ const AddressDetails = () => {
             columns={columns}
             onBottomReach={handleFetchMoreTransactions}
             onHeaderClick={handleSort}
+            className="latest-transaction-table"
           />
-        </Grid>
+        </Styles.TableWrapper>
       </Grid>
     </>
   ) : null;

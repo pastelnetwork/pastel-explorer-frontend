@@ -9,6 +9,7 @@ import { useDeferredData } from '@utils/helpers/useFetch/useFetch';
 import { periods, info } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { EChartsLineChart } from '@pages/HistoricalStatistics/Chart/EChartsLineChart';
+import { getCurrencyName } from '@utils/appInfo';
 
 const CHART_HEIGHT = 386;
 
@@ -36,7 +37,7 @@ const NetworkStatistics: React.FC = () => {
         chartName="averageblocksize"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title="Volume of transactions (PSL)"
+        title={`Volume of transactions (${getCurrencyName()})`}
         info={info}
         offset={1000}
         period={period}

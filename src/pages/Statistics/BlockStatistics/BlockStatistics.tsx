@@ -112,7 +112,8 @@ const StatisticsBlocks: React.FC = () => {
 
   return (
     <>
-      <Header title="Blocks Statistics" />
+      <Header title="Current Statistics" />
+      <h4>Blocks Statistics</h4>
       <Grid classes={{ root: classes.wrapper }} container>
         {blockElements && blockElements.length ? (
           <Grid
@@ -132,7 +133,9 @@ const StatisticsBlocks: React.FC = () => {
                       height={<span style={{ fontSize: 14 }}>Pending Block</span>}
                       className="block-unconfirmed"
                       size={`${(size / 1024).toFixed(2)} kB`}
-                      transactionCount={`${txsCount} transactions`}
+                      transactionCount={`${txsCount} ${
+                        txsCount > 1 ? 'transactions' : 'transaction'
+                      }`}
                       minutesAgo={`In ~${(blocksUnconfirmed.length - idx) * 10} minutes`}
                     />
                   </Grid>

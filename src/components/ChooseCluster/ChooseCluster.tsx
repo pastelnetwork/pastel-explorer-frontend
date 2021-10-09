@@ -11,6 +11,8 @@ import { AppStateType } from '@redux/reducers';
 import { setApiHostingAction } from '@redux/actions/clusterAction';
 import { TAppTheme } from '@theme/index';
 import useBooleanState from '@hooks/useBooleanState';
+import { BASE_URL, BASE_URL_TESTNET, BASE_URL_DEVNET } from '@utils/constants/urls';
+import { DEFAULT_CURRENCY, TEST_CURRENCY_NAME } from '@utils/appInfo';
 
 const useStyles = makeStyles((theme: TAppTheme) => ({
   root: {
@@ -58,25 +60,25 @@ const data = [
     id: 'cluster-1',
     name: 'Mainnet Beta',
     value: 'mainnet',
-    api: 'https://api.pastel.network.com',
+    api: BASE_URL,
   },
   {
     id: 'cluster-2',
     name: 'Testnet',
     value: 'testnet',
-    api: 'https://api-test.pastel.network.com',
+    api: BASE_URL_TESTNET,
   },
   {
     id: 'cluster-3',
     name: 'Devnet',
     value: 'devnet',
-    api: 'https://api-dev.pastel.network.com',
+    api: BASE_URL_DEVNET,
   },
 ];
 
 interface IProps {
   url: string;
-  setApiHosting: (_url: string) => void;
+  setApiHosting: (_url: string, _currencyName: string) => void;
 }
 
 const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
@@ -104,10 +106,15 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
       replace({
         search: queryParams.toString(),
       });
-      setApiHosting(id);
+      setApiHosting(id, value === 'mainnet' ? DEFAULT_CURRENCY : TEST_CURRENCY_NAME);
     },
     [replace],
   );
+
+  const handleClusterClose = () => {
+    toggle();
+    window.location.reload();
+  };
 
   return (
     <>
@@ -122,7 +129,7 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
       </Button>
       <Drawer anchor="right" open={open} onClose={toggle} className={classes.root}>
         <div className={classes.list}>
-          <Button type="button" className={classes.close} onClick={toggle}>
+          <Button type="button" className={classes.close} onClick={handleClusterClose}>
             ×
           </Button>
           <h1 className={classes.title}>Choose a Cluster</h1>
@@ -150,7 +157,8 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
 const Cluster = connect(
   ({ cluster }: AppStateType) => ({ url: cluster.url }),
   dispatch => ({
-    setApiHosting: (url: string) => dispatch(setApiHostingAction(url)),
+    setApiHosting: (url: string, currencyName: string) =>
+      dispatch(setApiHostingAction(url, currencyName)),
   }),
 )(ChooseCluster);
 

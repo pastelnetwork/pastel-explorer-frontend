@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Grid } from '@material-ui/core';
-import Header from '@components/Header/Header';
 import { Skeleton } from '@material-ui/lab';
 
 import { TMiningInfo, TLineChartData } from '@utils/types/IStatistics';
@@ -30,8 +29,8 @@ const NetworkStatistics: React.FC = () => {
     setPeriod(value);
   };
   return (
-    <>
-      <Header title="Network Statistics" />
+    <div className="network-block">
+      <h4>Network Statistics</h4>
       <Grid container>
         <Grid item xs={12}>
           {chartData || !isLoading ? (
@@ -54,7 +53,7 @@ const NetworkStatistics: React.FC = () => {
           )}
         </Grid>
       </Grid>
-    </>
+    </div>
   );
 };
 

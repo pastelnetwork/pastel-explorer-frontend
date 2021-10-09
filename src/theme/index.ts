@@ -71,6 +71,10 @@ export const themeLight = createMuiTheme(
       hover: '#0E80F5',
       pressed: '#0971DC',
     },
+    filter: {
+      border: 'rgba(0, 0, 0, 0.12)',
+      background: 'rgba(45, 55, 72, 0.04)',
+    },
   },
 );
 
@@ -119,6 +123,10 @@ export const themeDark = createMuiTheme(
       main: '#3F9AF7',
       hover: '#0E80F5',
       pressed: '#0971DC',
+    },
+    filter: {
+      border: 'rgb(35, 38, 48)',
+      background: 'rgb(35, 38, 48)',
     },
   },
 );

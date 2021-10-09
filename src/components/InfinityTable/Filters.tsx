@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme: TAppTheme) => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'flex-end',
-      border: `1px solid ${theme.palette.background.default}`,
       borderRadius: `${theme.spacing(1)}px`,
     },
     button: {
@@ -43,9 +42,6 @@ const useStyles = makeStyles((theme: TAppTheme) => {
       textAlign: 'left',
       backgroundColor: 'inherit !important',
       padding: `${theme.spacing(1.5)}px ${theme.spacing(4)}px`,
-    },
-    rootMenuItemActive: {
-      backgroundColor: 'rgba(45, 55, 72, 0.04) !important',
     },
   };
 });
@@ -74,12 +70,14 @@ const Filters: FC<IProps> = ({ filters, title }) => {
   return (
     <div className={classes.root}>
       <h4>{title}</h4>
-      <div className={classes.listFilter}>
+      <div className={`${classes.listFilter} list-filter`}>
         {filters.map(({ name, value }) => (
           <MenuItem
             key={value}
             classes={{
-              root: `${classes.rootMenuItem} ${time === value ? classes.rootMenuItemActive : ''}`,
+              root: `filter-item ${classes.rootMenuItem} ${
+                time === value ? 'filter-item-active' : ''
+              }`,
             }}
           >
             <Button

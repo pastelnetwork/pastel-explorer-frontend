@@ -5,14 +5,14 @@ export const AMOUNT_MOVEMENT_KEY = 'totalAmount';
 
 export const columns = [
   {
-    width: 150,
+    width: 80,
     flexGrow: 1,
     label: 'Timestamp',
     dataKey: TIMESTAMP_MOVEMENT_KEY,
     disableSort: false,
   },
   {
-    width: 30,
+    width: 20,
     minWidth: 30,
     flexGrow: 1,
     label: 'Block',
@@ -20,19 +20,19 @@ export const columns = [
     disableSort: true,
   },
   {
-    width: 360,
-    flexGrow: 1,
-    label: 'txID',
-    dataKey: TXID_KEY,
-    disableSort: false,
-    className: 'col-txid',
-  },
-  {
-    width: 60,
+    width: 40,
     flexGrow: 1,
     label: 'Amount',
     dataKey: AMOUNT_MOVEMENT_KEY,
     disableSort: false,
     className: 'pl-8px',
+  },
+  {
+    width: 480,
+    flexGrow: 1,
+    label: 'txID',
+    dataKey: TXID_KEY,
+    disableSort: false,
+    className: 'col-txid',
   },
 ];

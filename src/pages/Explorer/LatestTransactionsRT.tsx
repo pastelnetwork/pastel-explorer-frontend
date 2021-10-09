@@ -1,6 +1,7 @@
 // React
 import { memo, useEffect } from 'react';
 // third party
+import { Tooltip } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -21,6 +22,7 @@ import { useTransactionLatestTransactions } from '@redux/hooks/transactionsHooks
 import { ITransaction } from '@utils/types/ITransactions';
 import { TRANSACTION_DETAILS } from '@utils/constants/routes';
 import { Link } from '@components/Link/Link.styles';
+import { getCurrencyName } from '@utils/appInfo';
 
 const StyledTableCell = withStyles((theme: TAppTheme) => ({
   head: {
@@ -58,7 +60,7 @@ function LatestTransactions() {
             <TableRow>
               <StyledTableCell>Block</StyledTableCell>
               <StyledTableCell>TXID</StyledTableCell>
-              <StyledTableCell align="right">Amount(PSL)</StyledTableCell>
+              <StyledTableCell align="right">Amount({getCurrencyName()})</StyledTableCell>
               <StyledTableCell align="right">Recipents</StyledTableCell>
               <StyledTableCell align="right">Fee</StyledTableCell>
             </TableRow>
@@ -78,7 +80,13 @@ function LatestTransactions() {
                     </Link>
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {(+tx.totalAmount.toFixed(2)).toLocaleString('en')}
+                    {tx.isNonStandard ? (
+                      <Tooltip title="Because the transaction is shielded, the amount sent is unknown.">
+                        <span>Unknown</span>
+                      </Tooltip>
+                    ) : (
+                      <>{(+tx.totalAmount.toFixed(2)).toLocaleString('en')}</>
+                    )}
                   </StyledTableCell>
                   <StyledTableCell align="right">{tx.recipientCount}</StyledTableCell>
                   <StyledTableCell align="right">{tx.fee || '--'}</StyledTableCell>

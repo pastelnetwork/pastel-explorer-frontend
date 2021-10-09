@@ -1,3 +1,5 @@
+import { getCurrencyName } from '@utils/appInfo';
+
 export interface SummaryItemProps {
   id: number;
   name: string;
@@ -30,7 +32,7 @@ export const initialSummaryList: Array<SummaryItemProps> = [
   },
   {
     id: 3,
-    name: 'Coin Supply (PSL)',
+    name: `Coin Supply (${getCurrencyName()})`,
     value: null,
     previousValue: null,
     key: 'coinSupply',
@@ -39,7 +41,7 @@ export const initialSummaryList: Array<SummaryItemProps> = [
   },
   {
     id: 4,
-    name: 'PSL Price (in USD)',
+    name: `${getCurrencyName()} Price (in USD)`,
     value: null,
     previousValue: null,
     key: 'usdPrice',

@@ -1,6 +1,7 @@
 import { Grid, Typography } from '@material-ui/core';
 
 import { HeaderType } from '@components/Table/Table';
+import { getCurrencyName } from '@utils/appInfo';
 
 import * as Styles from './BlockDetails.styles';
 
@@ -14,7 +15,7 @@ export const blockHeaders: Array<HeaderType> = [
 export const transactionHeaders: Array<HeaderType> = [
   { id: 1, header: 'Hash', key: 'id' },
   { id: 2, header: 'Recipients', key: 'recipientCount' },
-  { id: 3, header: 'Amount (PSL)', key: 'totalAmount' },
+  { id: 3, header: `Amount (${getCurrencyName()})`, key: 'totalAmount' },
 ];
 
 export const generateDetailsElement = (name: string, value: string) => (
