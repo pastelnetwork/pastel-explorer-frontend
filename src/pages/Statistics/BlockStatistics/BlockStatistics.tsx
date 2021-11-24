@@ -98,17 +98,44 @@ const StatisticsBlocks: React.FC = () => {
       setBlocksUnconfirmed(txs?.data || null);
     });
   };
+
   React.useEffect(() => {
+    handleBlocksData();
+
     socket.on('getUpdateBlock', () => {
       handleBlocksData();
     });
+
     return () => {
       socket.off('getUpdateBlock');
     };
   }, []);
-  React.useEffect(() => {
-    handleBlocksData();
-  }, []);
+
+  const renderMempoolBlock = () => {
+    if (blocksUnconfirmed?.length) {
+      const size = blocksUnconfirmed.reduce((a, b) => {
+        return a + b.size;
+      }, 0);
+      const txsCount = blocksUnconfirmed.reduce((a, b) => {
+        return a + b.txsCount;
+      }, 0);
+
+      return (
+        <Grid item>
+          <BlockVisualization
+            title="Mempool:"
+            height={<span style={{ fontSize: 14 }}>Pending Block</span>}
+            className="block-unconfirmed"
+            size={`${(size / 1024).toFixed(2)} kB`}
+            transactionCount={`${txsCount} ${txsCount > 1 ? 'transactions' : 'transaction'}`}
+            minutesAgo={`In ~${blocksUnconfirmed.length * 10} minutes`}
+          />
+        </Grid>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <>
@@ -125,22 +152,7 @@ const StatisticsBlocks: React.FC = () => {
             alignItems="center"
             spacing={8}
           >
-            {blocksUnconfirmed && blocksUnconfirmed.length
-              ? blocksUnconfirmed.map(({ height, size, txsCount }, idx) => (
-                  <Grid item key={height}>
-                    <BlockVisualization
-                      title="Mempool:"
-                      height={<span style={{ fontSize: 14 }}>Pending Block</span>}
-                      className="block-unconfirmed"
-                      size={`${(size / 1024).toFixed(2)} kB`}
-                      transactionCount={`${txsCount} ${
-                        txsCount > 1 ? 'transactions' : 'transaction'
-                      }`}
-                      minutesAgo={`In ~${(blocksUnconfirmed.length - idx) * 10} minutes`}
-                    />
-                  </Grid>
-                ))
-              : null}
+            {renderMempoolBlock()}
             <Grid item>
               <div
                 style={{
