@@ -27,6 +27,7 @@ export type PeriodTypes =
   | '3h'
   | '6h'
   | '12h'
+  | '1d'
   | '2d'
   | '4d'
   | '7d'

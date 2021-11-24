@@ -14,7 +14,7 @@ import { getCurrencyName } from '@utils/appInfo';
 const CHART_HEIGHT = 386;
 
 const NetworkStatistics: React.FC = () => {
-  const [period, setPeriod] = useState(periods[1][0]);
+  const [period, setPeriod] = useState(periods[4][0]);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
 
   const { isLoading, data: chartData } = useDeferredData<IHashRateResponse, TLineChartData>(
@@ -41,7 +41,7 @@ const NetworkStatistics: React.FC = () => {
         info={info}
         offset={1000}
         period={period}
-        periods={periods[1]}
+        periods={periods[4]}
         handleBgColorChange={handleBgColorChange}
         handlePeriodFilterChange={handlePeriodFilterChange}
       />

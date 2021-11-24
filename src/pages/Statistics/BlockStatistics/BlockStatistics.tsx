@@ -14,11 +14,12 @@ import { BlockUnconfirmed } from '@utils/types/ITransactions';
 
 import * as ROUTES from '@utils/constants/routes';
 import * as URLS from '@utils/constants/urls';
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
+import { useFetch, useDeferredData } from '@utils/helpers/useFetch/useFetch';
 import { IBlock } from '@utils/types/IBlocks';
 import { useBackgroundChart } from '@utils/hooks';
+import { PeriodTypes } from '@utils/helpers/statisticsLib';
 
-import { info } from '@utils/constants/statistics';
+import { periods, info } from '@utils/constants/statistics';
 import { SocketContext } from '@context/socket';
 
 import BlockVisualization from './BlockVisualization/BlockVisualization';
@@ -57,9 +58,9 @@ const StatisticsBlocks: React.FC = () => {
   const history = useHistory();
   const classes = useStyles();
   const [blockElements, setBlockElements] = React.useState<Array<ITransformBlocksData>>([]);
-  const [chartData, setChartData] = React.useState<ChartProps | null>(null);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const [blocksUnconfirmed, setBlocksUnconfirmed] = React.useState<BlockUnconfirmed[] | null>(null);
+  const [period, setPeriod] = React.useState(periods[5][0]);
   const fetchUnconfirmedTxs = useFetch<{ data: BlockUnconfirmed[] }>({
     method: 'get',
     url: URLS.GET_UNCONFIRMED_TRANSACTIONS,
@@ -86,13 +87,21 @@ const StatisticsBlocks: React.FC = () => {
 
     return groupedBlocks;
   };
+
+  const { isLoading, data: chartData } = useDeferredData<{ data: Array<IBlock> }, ChartProps>(
+    { method: 'get', url: `${URLS.BLOCK_URL}?period=${period}` },
+    ({ data }) => generateChartData(data),
+    undefined,
+    undefined,
+    [period, blockElements],
+  );
+
   const handleBlocksData = () => {
     Promise.all([
       fetchBlocksData.fetchData({ params: { limit: BLOCK_ELEMENTS_COUNT } }),
       fetchUnconfirmedTxs.fetchData(),
     ]).then(([blocksData, txs]) => {
       if (blocksData) {
-        setChartData(generateChartData(blocksData.data));
         setBlockElements(transformBlocksData(blocksData.data, blocksData.timestamp));
       }
       setBlocksUnconfirmed(txs?.data || null);
@@ -135,6 +144,10 @@ const StatisticsBlocks: React.FC = () => {
     }
 
     return null;
+  };
+
+  const handlePeriodFilterChange = (value: PeriodTypes) => {
+    setPeriod(value);
   };
 
   return (
@@ -180,7 +193,7 @@ const StatisticsBlocks: React.FC = () => {
           <Skeleton animation="wave" variant="rect" height={300} />
         )}
         <Grid item xs={12} lg={12}>
-          {chartData && (
+          {chartData || !isLoading ? (
             <div style={{ flex: 1, backgroundColor: currentBgColor }}>
               <EChartsLineChart
                 chartName="hashrate"
@@ -190,8 +203,13 @@ const StatisticsBlocks: React.FC = () => {
                 info={info}
                 offset={1}
                 handleBgColorChange={handleBgColorChange}
+                period={period}
+                periods={periods[5]}
+                handlePeriodFilterChange={handlePeriodFilterChange}
               />
             </div>
+          ) : (
+            <Skeleton animation="wave" variant="rect" height={300} />
           )}
         </Grid>
       </Grid>
