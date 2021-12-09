@@ -107,13 +107,13 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
         search: queryParams.toString(),
       });
       setApiHosting(id, value === 'mainnet' ? DEFAULT_CURRENCY : TEST_CURRENCY_NAME);
+      window.location.reload();
     },
     [replace],
   );
 
   const handleClusterClose = () => {
     toggle();
-    window.location.reload();
   };
 
   return (
