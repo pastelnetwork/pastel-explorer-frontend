@@ -5,10 +5,23 @@ import { TCsvHeaderType } from './types';
 import { getCurrencyName } from '../appInfo';
 
 const BASE_API_URL = process.env.REACT_APP_EXPLORER_WEB_API_URL as string;
+const getBaseURL = () => {
+  try {
+    const persist = localStorage.getItem('persist:root');
+    if (persist) {
+      const store = JSON.parse(persist);
+      const tmp = JSON.parse(store.cluster);
+      return tmp.url;
+    }
+    return BASE_API_URL;
+  } catch {
+    return BASE_API_URL;
+  }
+};
 
 function generatePreviewUrl(path: string): string {
   const lastPath = path.split('/').pop();
-  return `${BASE_API_URL}/static/charts/${lastPath}/${lastPath}.png`;
+  return `${getBaseURL()}/static/charts/${lastPath}/${lastPath}.png`;
 }
 
 export const statistics = [
