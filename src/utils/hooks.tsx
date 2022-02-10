@@ -39,6 +39,8 @@ export function useSortData<T>({
       if (inititalData && inititalData.length) {
         setList(inititalData);
       }
+    } else if (inititalData && inititalData.length && inititalData !== list) {
+      setList(inititalData);
     }
   }, [fetchData, inititalData]);
 
