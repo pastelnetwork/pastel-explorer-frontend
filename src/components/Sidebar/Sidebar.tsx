@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NavLink, withRouter, RouteComponentProps, match } from 'react-router-dom';
 
 import { useCallback } from 'react';
-import { Box, Grid, Collapse, Drawer, List, Hidden, ListItem, IconButton } from '@material-ui/core';
+import { Box, Collapse, Drawer, List, Hidden, ListItem } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import * as ROUTES from '@utils/constants/routes';
@@ -12,44 +12,7 @@ import { sidebarRoutes as routes } from '@routes/index';
 import SwitchMode from '@components/SearchBar/SwitchMode';
 import PastelLogoWhite from '@assets/images/pastel-logo-white.png';
 import PastelLogo from '@assets/images/pastel-logo.png';
-import { footerIcons } from './SideBar.helpers';
 import * as Styles from './Sidebar.styles';
-
-interface SidebarCategoryPropsType {
-  name: string;
-  icon: JSX.Element;
-  classes?: string;
-  isOpen?: boolean;
-  isCollapsable: boolean;
-  badge?: string | number;
-  activeClassName?: string;
-  button: true;
-  onClick?: () => void;
-  to?: string;
-  exact?: boolean;
-  component?: typeof NavLink;
-  isActive?: (_match: match, _location: Location) => boolean;
-}
-
-const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
-  name,
-  icon,
-  isOpen,
-  isCollapsable,
-  badge,
-  ...rest
-}) => {
-  const categoryIcon = isOpen ? <Styles.CategoryIconMore /> : <Styles.CategoryIconLess />;
-
-  return (
-    <Styles.Category {...rest}>
-      {icon}
-      <Styles.CategoryText>{name}</Styles.CategoryText>
-      {isCollapsable ? categoryIcon : null}
-      {badge ? <Styles.CategoryBadge label={badge} /> : ''}
-    </Styles.Category>
-  );
-};
 
 interface SidebarLinkPropsType {
   name: string;
@@ -67,17 +30,62 @@ const SidebarLink: React.FC<SidebarLinkPropsType> = ({ name, to, badge }) => {
   );
 };
 
+interface SidebarCategoryPropsType {
+  name: string;
+  classes?: string;
+  isOpen?: boolean;
+  isCollapsable: boolean;
+  badge?: string | number;
+  activeClassName?: string;
+  button: true;
+  onClick?: () => void;
+  to?: string;
+  exact?: boolean;
+  component?: typeof NavLink;
+  isActive?: (_match: match, _location: Location) => boolean;
+  category?: RouteType;
+}
+
+const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
+  name,
+  isOpen,
+  isCollapsable,
+  badge,
+  category,
+  ...rest
+}) => {
+  const categoryIcon = isOpen ? <Styles.CategoryIconMore /> : <Styles.CategoryIconLess />;
+
+  return (
+    <Styles.Category {...rest}>
+      <Styles.CategoryText className="menu-text">
+        {name}
+        {isCollapsable ? categoryIcon : null}
+      </Styles.CategoryText>
+      {badge ? <Styles.CategoryBadge label={badge} /> : ''}
+      {category?.children ? (
+        <Collapse in={!isOpen} timeout="auto" unmountOnExit className="submenu">
+          {category.children.map((route: RouteChildType) => (
+            <SidebarLink
+              key={route.name}
+              name={route.name}
+              to={route.path}
+              icon={route.icon}
+              badge={route.badge}
+            />
+          ))}
+        </Collapse>
+      ) : null}
+    </Styles.Category>
+  );
+};
+
 interface SidebarPropsType {
   staticContext: string | undefined;
   location: {
     pathname: string;
   };
   routes: Array<RouteType>;
-  PaperProps: {
-    style: {
-      width: number;
-    };
-  };
   variant?: 'permanent' | 'persistent' | 'temporary';
   open?: boolean;
   onClose?: () => void;
@@ -130,9 +138,9 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
     [],
   );
   const generateCategoryIcon = (category: RouteType): JSX.Element | null => {
-    const { id, icon, path, badge, exact = true } = category;
+    const { id, path, badge, exact = true } = category;
 
-    if (icon) {
+    if (id) {
       return (
         <SidebarCategory
           isCollapsable={false}
@@ -141,7 +149,6 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
           activeClassName="active"
           component={NavLink}
           isActive={handleIsActiveLink(path)}
-          icon={icon}
           exact={exact}
           button
           badge={badge}
@@ -152,71 +159,46 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
     return null;
   };
 
-  const { PaperProps, open, onClose, variant } = rest;
+  const { open, onClose, variant } = rest;
   const isDarkMode = useSelector(getThemeState).darkMode;
   return (
-    <Drawer variant={variant || 'permanent'} PaperProps={PaperProps} open={open} onClose={onClose}>
+    <Drawer variant={variant || 'permanent'} className="main-menu" open={open} onClose={onClose}>
       <Styles.Brand component={NavLink} to={ROUTES.EXPLORER} button>
         <Box ml={1}>
           <Styles.BrandLogo src={isDarkMode ? PastelLogoWhite : PastelLogo} alt="Pastel Logo" />
         </Box>
       </Styles.Brand>
-      <Styles.Scrollbar>
-        <List disablePadding>
-          <Styles.Items>
-            {routes.map((category: RouteType, index: number) => (
-              <React.Fragment key={category.id}>
-                {category.header ? (
-                  <Styles.SidebarSection>{category.header}</Styles.SidebarSection>
-                ) : null}
+      <List disablePadding>
+        <Styles.Items>
+          {routes.map((category: RouteType, index: number) => (
+            <React.Fragment key={category.id}>
+              {category.header ? (
+                <Styles.SidebarSection>{category.header}</Styles.SidebarSection>
+              ) : null}
 
-                {category.children && category.icon ? (
-                  <React.Fragment key={category.id}>
-                    <SidebarCategory
-                      isOpen={!openRoutes[index]}
-                      isCollapsable
-                      name={category.id}
-                      icon={category.icon}
-                      button
-                      onClick={() => toggle(index)}
-                    />
-
-                    <Collapse in={openRoutes[index] || true} timeout="auto" unmountOnExit>
-                      {category.children.map((route: RouteChildType) => (
-                        <SidebarLink
-                          key={route.name}
-                          name={route.name}
-                          to={route.path}
-                          icon={route.icon}
-                          badge={route.badge}
-                        />
-                      ))}
-                    </Collapse>
-                  </React.Fragment>
-                ) : (
-                  generateCategoryIcon(category)
-                )}
-              </React.Fragment>
-            ))}
-            <Hidden mdUp>
-              <ListItem style={{ justifyContent: 'flex-start', padding: '8px 0' }}>
-                <SwitchMode isMobile />
-              </ListItem>
-            </Hidden>
-          </Styles.Items>
-        </List>
-      </Styles.Scrollbar>
-      <Styles.SidebarFooter>
-        <Styles.SidebarContainer container spacing={2} justify="space-around" alignItems="center">
-          {footerIcons.map(({ id, url, icon }) => (
-            <Grid item key={id}>
-              <IconButton target="_blank" href={url} className="social-icon">
-                {icon}
-              </IconButton>
-            </Grid>
+              {category.children && category.icon ? (
+                <React.Fragment key={category.id}>
+                  <SidebarCategory
+                    isOpen={!openRoutes[index]}
+                    isCollapsable
+                    name={category.id}
+                    button
+                    onClick={() => toggle(index)}
+                    category={category}
+                  />
+                </React.Fragment>
+              ) : (
+                generateCategoryIcon(category)
+              )}
+            </React.Fragment>
           ))}
-        </Styles.SidebarContainer>
-      </Styles.SidebarFooter>
+          <Hidden mdUp>
+            <ListItem style={{ justifyContent: 'flex-start', padding: '8px 0' }}>
+              <SwitchMode isMobile />
+            </ListItem>
+          </Hidden>
+        </Styles.Items>
+      </List>
     </Drawer>
   );
 };

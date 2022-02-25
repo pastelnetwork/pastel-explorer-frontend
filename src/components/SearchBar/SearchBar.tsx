@@ -118,7 +118,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
 
   const dropdownOpen = Boolean(searchData.length) || loading;
   return (
-    <Styles.AppBar position="sticky" elevation={0}>
+    <Styles.AppBar position="relative" elevation={0}>
       <Toolbar>
         <Grid container alignItems="center" wrap="nowrap">
           <Hidden mdUp>

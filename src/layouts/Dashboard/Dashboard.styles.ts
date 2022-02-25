@@ -25,22 +25,8 @@ export const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
 `;
 
 export const Root = styled.div`
-  display: flex;
+  display: block;
   min-height: 100vh;
-`;
-
-export const Drawer = styled.div`
-  ${props => props.theme.breakpoints.up('md')} {
-    width: ${drawerWidth}px;
-    flex-shrink: 0;
-  }
-`;
-
-export const AppContent = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  max-width: 100%;
 `;
 
 export const Paper = styled(MuiPaper)(spacing);

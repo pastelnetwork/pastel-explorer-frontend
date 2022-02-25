@@ -1,8 +1,6 @@
 import styled from 'styled-components/macro';
-import { rgba, darken } from 'polished';
-import PerfectScrollbar from 'react-perfect-scrollbar';
+import { rgba } from 'polished';
 import { NavLink, match } from 'react-router-dom';
-import themeVariant from '@theme/variants';
 
 import {
   Grid as MuiGrid,
@@ -27,19 +25,13 @@ export const Drawer = styled(MuiDrawer)`
   }
 `;
 
-export const Scrollbar = styled(PerfectScrollbar)`
-  background-color: ${props => props.theme.palette.background.default};
-  border-right: 1px solid rgba(0, 0, 0, 0.12);
-  padding: 0px ${props => props.theme.spacing(4)}px;
-`;
-
 export const List = styled(MuiList)`
   background-color: ${props => props.theme.sidebar.background.default};
 `;
 
 export const Items = styled.div`
-  padding-top: ${props => props.theme.spacing(2.5)}px;
-  padding-bottom: ${props => props.theme.spacing(2.5)}px;
+  display: flex;
+  margin: ${props => props.theme.spacing(2.5)}px 0;
 `;
 
 export const Brand = styled(ListItem)<{
@@ -47,24 +39,28 @@ export const Brand = styled(ListItem)<{
   component?: React.ReactNode;
   to?: string;
 }>`
+  width: auto;
   font-size: ${props => props.theme.typography.h5.fontSize};
   font-weight: ${props => props.theme.typography.fontWeightMedium};
   color: ${props => props.theme.sidebar.text.primary};
-  background-color: ${props => props.theme.sidebar.background.default};
   font-family: ${props => props.theme.typography.fontFamily};
   min-height: 56px;
-  padding-left: ${props => props.theme.spacing(6)}px;
-  padding-right: ${props => props.theme.spacing(6)}px;
+  padding: 0;
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+
   ${props => props.theme.breakpoints.up('sm')} {
     min-height: 70px;
+  }
+
+  &:hover {
+    background-color: transparent;
   }
 `;
 
 export const BrandLogo = styled.img`
-  width: 120px;
+  width: 100px;
 `;
 
 type CategoryType = {
@@ -78,47 +74,93 @@ type CategoryType = {
 };
 
 export const Category = styled(ListItem)<CategoryType>`
-  padding-top: ${props => props.theme.spacing(3)}px;
-  padding-bottom: ${props => props.theme.spacing(3)}px;
-  padding-left: ${props => props.theme.spacing(4)}px;
-  padding-right: ${props => props.theme.spacing(4)}px;
+  margin: 0 2px;
+  padding: 6px 0;
   font-weight: ${props => props.theme.typography.fontWeightRegular};
+  transition: all 0.3s ease-in-out;
+
   span {
+    position: relative;
+    display: flex;
+    align-items: center;
     color: ${props => props.theme.sidebar.text.primary};
+    white-space: nowrap;
+
+    &:before {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: #34a1ff;
+      transition: transform 0.5s cubic-bezier(0.8, 0, 0.2, 1);
+      transform: scaleX(0);
+      transform-origin: 100% 50%;
+    }
   }
+
   svg {
+    width: 16px;
+    height: 16px;
+    margin-left: 5px;
     color: ${props => props.theme.sidebar.text.primary};
     font-size: 1.25rem;
-    width: 20px;
-    height: 20px;
     opacity: 0.5;
     fill: ${props => props.theme.sidebar.text.primary};
   }
 
-  &:hover {
-    background: rgba(0, 0, 0, 0.08);
-    border-radius: ${props => props.theme.sidebar.radius.active};
+  .menu-text {
+    &:hover {
+      span {
+        &:before {
+          transform: scaleX(1);
+          transform-origin: 0 50%;
+        }
+      }
+    }
   }
-  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: transparent;
+  }
+
+  &:hover,
   &.${props => props.activeClassName} {
-    background-color: ${props => darken(0.03, props.theme.sidebar.background.active)};
-    border-radius: ${props => props.theme.sidebar.radius.active};
-    span {
-      color: ${props => props.theme.sidebar.text.active};
+    background-color: transparent;
+  }
+
+  &.${props => props.activeClassName} {
+    .menu-text {
+      span {
+        &:before {
+          transform: scaleX(1);
+          transform-origin: 0 50%;
+        }
+      }
     }
-    svg {
-      color: ${props => props.theme.sidebar.text.active};
-      fill: ${props => props.theme.sidebar.text.active};
-    }
+  }
+
+  .submenu {
+    position: absolute;
+    top: 42px;
+    left: 50%;
+    display: block;
+    padding: 5px 30px;
+    transform: translateX(-50%);
+    box-shadow: 1px 2px 40px 0 rgb(0 0 0 / 9%);
+    background: #fff;
+    border-radius: 8px;
   }
 `;
 
 export const CategoryText = styled(ListItemText)`
   margin: 0;
+
   span {
     color: ${props => props.theme.sidebar.text.primary};
     font-size: ${props => props.theme.typography.body1.fontSize}px;
-    padding: 0 ${props => props.theme.spacing(4)}px;
+    padding: 0 ${props => props.theme.spacing(3)}px;
   }
 `;
 
@@ -136,19 +178,19 @@ export const Link = styled(ListItem)<{
   exact: boolean;
   to: string;
 }>`
-  padding-left: ${props => props.theme.spacing(13)}px;
-  padding-top: ${props => props.theme.spacing(2)}px;
-  padding-bottom: ${props => props.theme.spacing(2)}px;
-  &:hover span {
-    color: ${props => rgba(props.theme.sidebar.text.primary, 0.9)};
-  }
+  padding-top: ${props => props.theme.spacing(3)}px;
+  padding-bottom: ${props => props.theme.spacing(3)}px;
 
   &:hover {
-    background-color: ${props => darken(0.015, props.theme.sidebar.background.default)};
+    background-color: transparent;
+
+    span {
+      color: ${props => rgba(props.theme.sidebar.text.primary, 0.9)};
+    }
   }
 
   &.${props => props.activeClassName} {
-    background-color: ${props => darken(0.03, props.theme.sidebar.background.default)};
+    background-color: transparent;
 
     span {
       color: ${props => props.theme.sidebar.text.primary};
@@ -157,12 +199,13 @@ export const Link = styled(ListItem)<{
 `;
 
 export const LinkText = styled(ListItemText)`
+  margin-top: 0;
+  margin-bottom: 0;
   color: ${props => props.theme.sidebar.text.primary};
+
   span {
     font-size: ${props => props.theme.typography.body1.fontSize}px;
   }
-  margin-top: 0;
-  margin-bottom: 0;
 `;
 
 export const LinkBadge = styled(Chip)`
@@ -202,9 +245,4 @@ export const SidebarSection = styled(Typography)`
 export const SidebarFooter = styled.div`
   background-color: ${props => props.theme.palette.background.paper};
   padding: 4px ${props => props.theme.spacing(4)}px;
-  border-right: 1px solid rgba(0, 0, 0, 0.12);
-  .social-icon {
-    color: ${themeVariant.custom.blue.slateBlue};
-    padding: 4px;
-  }
 `;

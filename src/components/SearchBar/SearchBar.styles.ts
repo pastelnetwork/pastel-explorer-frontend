@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 
 export const AppBar = styled(MuiAppBar)`
+  width: 44%;
   background: ${props => props.theme.palette.background.default};
   color: ${props => props.theme.header.color};
 
@@ -83,5 +84,77 @@ export const Input = styled(InputBase)`
     padding-bottom: ${props => props.theme.spacing(2.5)}px;
     padding-left: ${props => props.theme.spacing(12)}px;
     width: 100%;
+  }
+`;
+
+export const ModeToggle = styled.div`
+  position: relative;
+  top: 50%;
+  width: 52px;
+  min-width: 52px;
+  height: 26px;
+  border-radius: 100px;
+  overflow: hidden;
+
+  input {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 3;
+
+    &:checked {
+      & ~ .toggle-bg {
+        background-color: #1d1e31;
+      }
+
+      & + .toggle-switch {
+        :before {
+          content: ' ';
+          left: 30px;
+          background-color: #678be0;
+        }
+      }
+    }
+  }
+
+  .toggle-switch {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+
+    &:before {
+      content: ' ';
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      font-size: 16px;
+      text-align: center;
+      line-height: 18px;
+      color: #fff;
+      background-color: #34a1ff;
+      transition: all 0.3s ease, left 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15);
+    }
+  }
+
+  .toggle-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ebf7fc;
+    transition: all 0.3s ease;
+    z-index: 1;
   }
 `;
