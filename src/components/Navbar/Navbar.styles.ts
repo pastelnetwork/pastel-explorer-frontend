@@ -1,11 +1,39 @@
 import styled from 'styled-components/macro';
 
 export const NavContainer = styled.nav`
+  position: sticky;
+  top: 0;
   display: flex;
   justify-content: space-between;
   width: 100%;
   padding-left: 16px;
-  padding-right: 16px;
+  padding-right: 12px;
+  background: ${props => props.theme.sidebar.menu.background};
+  z-index: 100;
+  transaction: all 0.5s ease;
+
+  .cluster-button {
+    padding: 0;
+    border: 0;
+    min-width: unset;
+
+    &:hover {
+      background: transparent;
+
+      .cluster-icon {
+        color: ${props => props.theme.sidebar.menu.hover};
+      }
+    }
+  }
+
+  .cluster-icon {
+    color: ${props => props.theme.sidebar.menu.default};
+    transition: all 0.5s ease;
+
+    ${props => props.theme.breakpoints.down('sm')} {
+      width: 22px;
+    }
+  }
 `;
 
 export const BrandLogo = styled.img`
@@ -16,6 +44,10 @@ export const Menu = styled.div`
   display: flex;
 
   .main-menu {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
     & > .MuiDrawer-paper {
       position: relative;
       display: flex;
@@ -25,9 +57,17 @@ export const Menu = styled.div`
       left: unset;
       height: auto;
       flex-direction: unset;
-      background: #fff;
+      background: transparent;
       border-right: 0;
       overflow: unset;
+    }
+
+    & .MuiList-root {
+      margin-top: -5px;
+    }
+
+    & .disable-padding {
+      padding: 0;
     }
   }
 `;

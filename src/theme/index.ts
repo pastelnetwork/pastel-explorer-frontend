@@ -64,6 +64,23 @@ export const themeLight = createMuiTheme(
         active: '15px',
       },
       closeIcon: '#000',
+      menu: {
+        default: '#868f9b',
+        active: '#34a1ff',
+        background: '#fff',
+        hover: '#0062cc',
+        subMenu: {
+          background: '#fff',
+        },
+        toggle: {
+          background: '#ebf7fc',
+          switch: '#34a1ff',
+        },
+        mobile: {
+          border: '#e6e6e6',
+          borderTop: '#e6e6e6',
+        },
+      },
     },
     scrollbar: '#7d7d7e',
     link: {
@@ -117,6 +134,23 @@ export const themeDark = createMuiTheme(
         active: '15px',
       },
       closeIcon: '#fff',
+      menu: {
+        default: '#aca9c4',
+        active: '#30ddd8',
+        background: '#40406a',
+        hover: '#30ddd8',
+        subMenu: {
+          background: 'linear-gradient(-135deg, #2e2e4b, #323252)',
+        },
+        toggle: {
+          background: '#1d1e31',
+          switch: '#678be0',
+        },
+        mobile: {
+          border: '#e6e6e6',
+          borderTop: '#7773bd',
+        },
+      },
     },
     scrollbar: '#0a0b0e',
     link: {

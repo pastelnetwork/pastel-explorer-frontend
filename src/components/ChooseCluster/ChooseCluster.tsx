@@ -1,9 +1,7 @@
 import { memo, FC, useCallback, MouseEvent, useMemo } from 'react';
-import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
+import { Drawer, Button, Tooltip } from '@material-ui/core';
+import { Settings as SettingsIcon } from '@material-ui/icons';
 
-// import FilledInput from '@material-ui/core/FilledInput';
-// import { CloseOutlined } from '@material-ui/icons';
 import { useLocation, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
@@ -46,11 +44,10 @@ const useStyles = makeStyles((theme: TAppTheme) => ({
   },
   rootButtonLabel: {
     whiteSpace: 'nowrap',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down(960)]: {
       whiteSpace: 'normal',
       fontSize: 14,
       lineHeight: '14px',
-      padding: 5,
     },
   },
 }));
@@ -124,8 +121,11 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
         onClick={toggle}
         variant="outlined"
         color="primary"
+        className="cluster-button"
       >
-        {currentCluster.name}
+        <Tooltip title={currentCluster.name}>
+          <SettingsIcon className="cluster-icon" />
+        </Tooltip>
       </Button>
       <Drawer anchor="right" open={open} onClose={toggle} className={classes.root}>
         <div className={classes.list}>

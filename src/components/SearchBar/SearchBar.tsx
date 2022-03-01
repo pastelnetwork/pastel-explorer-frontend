@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme: TAppTheme) => ({
     border: '1px solid',
     borderColor: darken(0.1, theme.palette.background.paper),
     marginRight: 16,
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down(960)]: {
       marginRight: 0,
     },
   },
@@ -119,15 +119,8 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
   const dropdownOpen = Boolean(searchData.length) || loading;
   return (
     <Styles.AppBar position="relative" elevation={0}>
-      <Toolbar>
+      <Toolbar className="disable-padding">
         <Grid container alignItems="center" wrap="nowrap">
-          <Hidden mdUp>
-            <Grid item>
-              <Styles.IconButton color="inherit" aria-label="Open drawer" onClick={onDrawerToggle}>
-                <MenuIcon />
-              </Styles.IconButton>
-            </Grid>
-          </Hidden>
           <Styles.AutocompleteWrapper item>
             <MuiAutocomplete
               fullWidth
@@ -162,13 +155,13 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
                   InputLabelProps={{
                     ...params.InputLabelProps,
                     classes: {
-                      root: classes.labelInputRoot,
+                      root: `${classes.labelInputRoot} label-input`,
                     },
                   }}
                   InputProps={{
                     ...params.InputProps,
                     classes: {
-                      root: classes.inputRoot,
+                      root: `${classes.inputRoot} input`,
                     },
                     endAdornment: (
                       <>
@@ -182,11 +175,16 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
               )}
             />
           </Styles.AutocompleteWrapper>
+          <Hidden mdUp>
+            <Grid item>
+              <Styles.IconButton color="inherit" aria-label="Open drawer" onClick={onDrawerToggle}>
+                <MenuIcon />
+              </Styles.IconButton>
+            </Grid>
+          </Hidden>
         </Grid>
-        <Hidden mdDown>
-          <SwitchMode />
-          <ChooseCluster />
-        </Hidden>
+        <SwitchMode />
+        <ChooseCluster />
       </Toolbar>
     </Styles.AppBar>
   );

@@ -22,7 +22,7 @@ import { initialSummaryList, calculateDifference } from './Summary.helpers';
 const useStyles = makeStyles((_theme: TAppTheme) => ({
   wrapper: {
     [_theme.breakpoints.up('md')]: {
-      width: 'calc(100vw - 273px)',
+      width: '100%',
     },
     // [_theme.breakpoints.up('xl')]: {
     //   width: '100%',

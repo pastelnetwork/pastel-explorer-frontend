@@ -2,16 +2,18 @@ import * as React from 'react';
 import { NavLink, withRouter, RouteComponentProps, match } from 'react-router-dom';
 
 import { useCallback } from 'react';
-import { Box, Collapse, Drawer, List, Hidden, ListItem } from '@material-ui/core';
+import { Collapse, List, Hidden, Button, Box } from '@material-ui/core';
+import { Close as CloseIcon } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
+
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import * as ROUTES from '@utils/constants/routes';
 import { RouteType, RouteChildType } from '@utils/types/routes';
-
 import { sidebarRoutes as routes } from '@routes/index';
-import SwitchMode from '@components/SearchBar/SwitchMode';
+
 import PastelLogoWhite from '@assets/images/pastel-logo-white.png';
 import PastelLogo from '@assets/images/pastel-logo.png';
+
 import * as Styles from './Sidebar.styles';
 
 interface SidebarLinkPropsType {
@@ -55,10 +57,18 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
   ...rest
 }) => {
   const categoryIcon = isOpen ? <Styles.CategoryIconMore /> : <Styles.CategoryIconLess />;
+  let active = '';
+  if (
+    (window.location.pathname === ROUTES.STATISTICS ||
+      window.location.pathname === ROUTES.STATISTICS_OVERTIME) &&
+    category?.path === ROUTES.STATISTICS
+  ) {
+    active = 'active-submenu';
+  }
 
   return (
     <Styles.Category {...rest}>
-      <Styles.CategoryText className="menu-text">
+      <Styles.CategoryText className={`menu-text ${active}`}>
         {name}
         {isCollapsable ? categoryIcon : null}
       </Styles.CategoryText>
@@ -161,13 +171,26 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
 
   const { open, onClose, variant } = rest;
   const isDarkMode = useSelector(getThemeState).darkMode;
+
   return (
-    <Drawer variant={variant || 'permanent'} className="main-menu" open={open} onClose={onClose}>
-      <Styles.Brand component={NavLink} to={ROUTES.EXPLORER} button>
-        <Box ml={1}>
-          <Styles.BrandLogo src={isDarkMode ? PastelLogoWhite : PastelLogo} alt="Pastel Logo" />
-        </Box>
-      </Styles.Brand>
+    <Styles.DrawerMobile
+      variant={variant || 'permanent'}
+      className="main-menu"
+      open={open}
+      onClose={onClose}
+    >
+      <Hidden mdUp>
+        <Styles.SlideMenuMobileWrapper>
+          <Styles.Brand component={NavLink} to={ROUTES.EXPLORER} button>
+            <Box ml={1}>
+              <Styles.BrandLogo src={isDarkMode ? PastelLogoWhite : PastelLogo} alt="Pastel Logo" />
+            </Box>
+          </Styles.Brand>
+          <Button type="button" className="close-button" onClick={onClose}>
+            <CloseIcon className="close-icon" />
+          </Button>
+        </Styles.SlideMenuMobileWrapper>
+      </Hidden>
       <List disablePadding>
         <Styles.Items>
           {routes.map((category: RouteType, index: number) => (
@@ -192,14 +215,9 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
               )}
             </React.Fragment>
           ))}
-          <Hidden mdUp>
-            <ListItem style={{ justifyContent: 'flex-start', padding: '8px 0' }}>
-              <SwitchMode isMobile />
-            </ListItem>
-          </Hidden>
         </Styles.Items>
       </List>
-    </Drawer>
+    </Styles.DrawerMobile>
   );
 };
 

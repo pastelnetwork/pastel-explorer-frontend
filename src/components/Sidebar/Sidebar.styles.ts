@@ -25,6 +25,32 @@ export const Drawer = styled(MuiDrawer)`
   }
 `;
 
+export const DrawerMobile = styled(MuiDrawer)`
+  ${props => props.theme.breakpoints.down('sm')} {
+    .MuiDrawer-paper {
+      width: 90vw;
+    }
+
+    .close-button {
+      display: inline-block;
+      width: 50px;
+      min-width: unset;
+      height: 42px;
+      margin-left: auto;
+
+      span {
+        width: auto;
+        display: inline-block;
+      }
+    }
+
+    .close-icon {
+      width: 22px;
+      color: ${props => props.theme.sidebar.menu.default};
+    }
+  }
+`;
+
 export const List = styled(MuiList)`
   background-color: ${props => props.theme.sidebar.background.default};
 `;
@@ -32,6 +58,12 @@ export const List = styled(MuiList)`
 export const Items = styled.div`
   display: flex;
   margin: ${props => props.theme.spacing(2.5)}px 0;
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 0;
+  }
 `;
 
 export const Brand = styled(ListItem)<{
@@ -44,23 +76,33 @@ export const Brand = styled(ListItem)<{
   font-weight: ${props => props.theme.typography.fontWeightMedium};
   color: ${props => props.theme.sidebar.text.primary};
   font-family: ${props => props.theme.typography.fontFamily};
-  min-height: 56px;
+  margin-right: 15px;
   padding: 0;
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 
-  ${props => props.theme.breakpoints.up('sm')} {
-    min-height: 70px;
-  }
-
   &:hover {
     background-color: transparent;
+  }
+
+  .MuiBox-root {
+    display: flex;
+    align-items: center;
+    margin-left: 0;
+  }
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    margin-right: 5px;
   }
 `;
 
 export const BrandLogo = styled.img`
-  width: 100px;
+  width: 80px;
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    width: 70px;
+  }
 `;
 
 type CategoryType = {
@@ -79,12 +121,20 @@ export const Category = styled(ListItem)<CategoryType>`
   font-weight: ${props => props.theme.typography.fontWeightRegular};
   transition: all 0.3s ease-in-out;
 
+  ${props => props.theme.breakpoints.down('sm')} {
+    display: block;
+    margin-left: 0;
+    padding: 10px 0 10px 10px;
+    border-bottom: 1px solid ${props => props.theme.sidebar.menu.mobile.border};
+  }
+
   span {
     position: relative;
     display: flex;
     align-items: center;
     color: ${props => props.theme.sidebar.text.primary};
     white-space: nowrap;
+    transition: all 0.5s ease;
 
     &:before {
       content: '';
@@ -93,7 +143,7 @@ export const Category = styled(ListItem)<CategoryType>`
       left: 0;
       width: 100%;
       height: 2px;
-      background-color: #34a1ff;
+      background-color: ${props => props.theme.sidebar.menu.active};
       transition: transform 0.5s cubic-bezier(0.8, 0, 0.2, 1);
       transform: scaleX(0);
       transform-origin: 100% 50%;
@@ -111,11 +161,32 @@ export const Category = styled(ListItem)<CategoryType>`
   }
 
   .menu-text {
+    svg {
+      color: ${props => props.theme.sidebar.menu.default};
+      fill: ${props => props.theme.sidebar.menu.default};
+    }
+
+    &.active-submenu,
     &:hover {
       span {
+        color: ${props => props.theme.sidebar.menu.active};
+
         &:before {
           transform: scaleX(1);
           transform-origin: 0 50%;
+        }
+
+        svg {
+          color: ${props => props.theme.sidebar.menu.active};
+          fill: ${props => props.theme.sidebar.menu.active};
+        }
+      }
+    }
+
+    ${props => props.theme.breakpoints.down('sm')} {
+      span {
+        &:before {
+          display: none;
         }
       }
     }
@@ -128,11 +199,17 @@ export const Category = styled(ListItem)<CategoryType>`
   &:hover,
   &.${props => props.activeClassName} {
     background-color: transparent;
+
+    span {
+      color: ${props => props.theme.sidebar.menu.active};
+    }
   }
 
   &.${props => props.activeClassName} {
     .menu-text {
       span {
+        color: ${props => props.theme.sidebar.menu.active};
+
         &:before {
           transform: scaleX(1);
           transform-origin: 0 50%;
@@ -142,15 +219,31 @@ export const Category = styled(ListItem)<CategoryType>`
   }
 
   .submenu {
-    position: absolute;
-    top: 42px;
-    left: 50%;
     display: block;
     padding: 5px 30px;
-    transform: translateX(-50%);
-    box-shadow: 1px 2px 40px 0 rgb(0 0 0 / 9%);
-    background: #fff;
-    border-radius: 8px;
+
+    ${props => props.theme.breakpoints.down('sm')} {
+      margin-top: 15px;
+      margin-left: 10px;
+      padding-left: 5px;
+      border-top: 1px solid ${props => props.theme.sidebar.menu.mobile.border};
+      border-top-color: ${props => props.theme.sidebar.menu.mobile.borderTop};
+      border-radius: 0.25rem;
+    }
+
+    ${props => props.theme.breakpoints.up('sm')} {
+      position: absolute;
+      top: 42px;
+      left: 50%;
+      background: ${props => props.theme.sidebar.menu.subMenu.background};
+      transform: translateX(-50%);
+      box-shadow: 1px 2px 40px 0 rgb(0 0 0 / 9%);
+      border-radius: 8px;
+    }
+
+    span {
+      color: ${props => props.theme.sidebar.menu.default};
+    }
   }
 `;
 
@@ -158,9 +251,13 @@ export const CategoryText = styled(ListItemText)`
   margin: 0;
 
   span {
-    color: ${props => props.theme.sidebar.text.primary};
+    color: ${props => props.theme.sidebar.menu.default};
     font-size: ${props => props.theme.typography.body1.fontSize}px;
     padding: 0 ${props => props.theme.spacing(3)}px;
+
+    ${props => props.theme.breakpoints.down('sm')} {
+      justify-content: space-between;
+    }
   }
 `;
 
@@ -181,11 +278,20 @@ export const Link = styled(ListItem)<{
   padding-top: ${props => props.theme.spacing(3)}px;
   padding-bottom: ${props => props.theme.spacing(3)}px;
 
+  ${props => props.theme.breakpoints.down('sm')} {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  span {
+    transition: all 0.5s ease;
+  }
+
   &:hover {
     background-color: transparent;
 
     span {
-      color: ${props => rgba(props.theme.sidebar.text.primary, 0.9)};
+      color: ${props => props.theme.sidebar.menu.active};
     }
   }
 
@@ -193,7 +299,7 @@ export const Link = styled(ListItem)<{
     background-color: transparent;
 
     span {
-      color: ${props => props.theme.sidebar.text.primary};
+      color: ${props => props.theme.sidebar.menu.active};
     }
   }
 `;
@@ -245,4 +351,10 @@ export const SidebarSection = styled(Typography)`
 export const SidebarFooter = styled.div`
   background-color: ${props => props.theme.palette.background.paper};
   padding: 4px ${props => props.theme.spacing(4)}px;
+`;
+
+export const SlideMenuMobileWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 0 0 0 18px;
 `;

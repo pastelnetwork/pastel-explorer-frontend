@@ -16,9 +16,18 @@ export const Container = styled.footer`
   background: ${props => props.theme.palette.background.default};
   box-shadow: -1px 7px 12px 0px ${themeVariant.footer.color};
   z-index: 99;
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    display: block;
+    height: 60px;
+  }
 `;
 
 export const Typography = styled(MuiTypography)`
   font-size: 1rem;
   color: ${themeVariant.footer.color};
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    text-align: center;
+  }
 `;

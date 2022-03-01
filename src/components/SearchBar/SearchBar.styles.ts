@@ -8,13 +8,52 @@ import {
   Grid,
 } from '@material-ui/core';
 
+import sun from '@assets/icons/sun.png';
+import moon from '@assets/icons/moon.png';
+
 export const AppBar = styled(MuiAppBar)`
-  width: 44%;
-  background: ${props => props.theme.palette.background.default};
+  width: 78%;
+  background: ${props => props.theme.sidebar.menu.background};
   color: ${props => props.theme.header.color};
+
+  ${props => props.theme.breakpoints.up('md')} {
+    max-width: 34%;
+  }
+
+  ${props => props.theme.breakpoints.up('lg')} {
+    max-width: 50%;
+  }
 
   fieldset {
     border: 0;
+  }
+
+  .label-input {
+    max-width: 84%;
+    padding-left: 0 !important;
+    color: ${props => props.theme.sidebar.menu.default};
+    background: ${props => props.theme.sidebar.menu.background};
+    line-height: 18px;
+    overflow: hidden;
+    transform: translate(14px, 9px) scale(1);
+
+    &.MuiInputLabel-outlined.MuiInputLabel-shrink {
+      transform: translate(14px, -6px) scale(0.75);
+    }
+
+    ${props => props.theme.breakpoints.up('sm')} {
+      max-width: 91%;
+    }
+
+    ${props => props.theme.breakpoints.up('lg')} {
+      max-width: 94%;
+    }
+  }
+
+  .input {
+    padding: 3px !important;
+    border: 1px solid ${props => props.theme.sidebar.menu.default};
+    color: ${props => props.theme.sidebar.menu.default};
   }
 `;
 
@@ -23,6 +62,10 @@ export const IconButton = styled(MuiIconButton)`
     color: ${props => props.theme.palette.text.primary};
     width: 22px;
     height: 22px;
+  }
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    padding: 8px;
   }
 `;
 
@@ -45,9 +88,7 @@ export const Search = styled.div`
 export const AutocompleteWrapper = styled(Grid)`
   width: 100%;
   margin-right: 5px;
-  ${props => props.theme.breakpoints.down('md')} {
-    margin-right: 0;
-  }
+
   .MuiFormLabel-root {
     display: inline-block;
     width: auto;
@@ -89,12 +130,18 @@ export const Input = styled(InputBase)`
 
 export const ModeToggle = styled.div`
   position: relative;
-  top: 50%;
   width: 52px;
   min-width: 52px;
+  margin-right: 5px;
   height: 26px;
   border-radius: 100px;
   overflow: hidden;
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    width: 48px;
+    min-width: 48px;
+    margin-right: 0;
+  }
 
   input {
     position: relative;
@@ -108,14 +155,14 @@ export const ModeToggle = styled.div`
 
     &:checked {
       & ~ .toggle-bg {
-        background-color: #1d1e31;
+        background-color: ${props => props.theme.sidebar.menu.toggle.background};
       }
 
       & + .toggle-switch {
         :before {
-          content: ' ';
           left: 30px;
-          background-color: #678be0;
+          background-color: ${props => props.theme.sidebar.menu.toggle.switch};
+          background-image: url(${moon});
         }
       }
     }
@@ -141,8 +188,12 @@ export const ModeToggle = styled.div`
       text-align: center;
       line-height: 18px;
       color: #fff;
-      background-color: #34a1ff;
+      background-color: ${props => props.theme.sidebar.menu.toggle.switch};
       transition: all 0.3s ease, left 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15);
+      background-image: url(${sun});
+      background-size: 14px;
+      background-repeat: no-repeat;
+      background-position: center;
     }
   }
 
@@ -153,8 +204,12 @@ export const ModeToggle = styled.div`
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #ebf7fc;
+    background-color: ${props => props.theme.sidebar.menu.toggle.background};
     transition: all 0.3s ease;
     z-index: 1;
+  }
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    transform: scale(0.8);
   }
 `;
