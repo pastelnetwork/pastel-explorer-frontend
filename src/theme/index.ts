@@ -73,7 +73,7 @@ export const themeLight = createMuiTheme(
           background: '#fff',
         },
         toggle: {
-          background: '#d5ecf5',
+          background: '#E0F9F2',
           switch: '#34a1ff',
         },
         mobile: {
@@ -135,16 +135,16 @@ export const themeDark = createMuiTheme(
       },
       closeIcon: '#fff',
       menu: {
-        default: '#aca9c4',
-        active: '#30ddd8',
+        default: '#A0AEC0',
+        active: '#00D097',
         background: '#2D3748',
-        hover: '#30ddd8',
+        hover: '#00D097',
         subMenu: {
           background: 'linear-gradient(-135deg, #2e2e4b, #323252)',
         },
         toggle: {
           background: '#1d1e31',
-          switch: '#678be0',
+          switch: '#0971DC',
         },
         mobile: {
           border: '#e6e6e6',

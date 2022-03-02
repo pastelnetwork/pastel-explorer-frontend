@@ -10,8 +10,8 @@ import { useSelector } from 'react-redux';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import * as ROUTES from '@utils/constants/routes';
 
-import PastelLogoWhite from '@assets/images/pastel-logo-white.png';
-import PastelLogo from '@assets/images/pastel-logo.png';
+import PastelLogoWhite from '@assets/images/pastel-logo-white.svg';
+import PastelLogo from '@assets/images/pastel-logo.svg';
 
 import * as Styles from './Navbar.styles';
 import * as SidebarStyles from '../Sidebar/Sidebar.styles';

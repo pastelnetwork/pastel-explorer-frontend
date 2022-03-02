@@ -77,7 +77,7 @@ export const Brand = styled(ListItem)<{
   font-weight: ${props => props.theme.typography.fontWeightMedium};
   color: ${props => props.theme.sidebar.text.primary};
   font-family: ${props => props.theme.typography.fontFamily};
-  margin-right: 15px;
+  margin-right: 25px;
   padding: 0;
   justify-content: center;
   cursor: pointer;
@@ -159,12 +159,14 @@ export const Category = styled(ListItem)<CategoryType>`
     font-size: 1.25rem;
     opacity: 0.5;
     fill: ${props => props.theme.sidebar.text.primary};
+    transform: translateX(2px);
   }
 
   .menu-text {
     svg {
       color: ${props => props.theme.sidebar.menu.default};
       fill: ${props => props.theme.sidebar.menu.default};
+      opacity: 1;
     }
 
     &.active-submenu,
@@ -254,10 +256,15 @@ export const CategoryText = styled(ListItemText)`
   span {
     color: ${props => props.theme.sidebar.menu.default};
     font-size: ${props => props.theme.typography.body1.fontSize}px;
-    padding: 0 ${props => props.theme.spacing(3)}px;
+    margin: 0 11px;
+    padding: 0;
 
     ${props => props.theme.breakpoints.down('sm')} {
       justify-content: space-between;
+    }
+
+    ${props => props.theme.breakpoints.up('lg')} {
+      margin: 0 16px;
     }
   }
 `;

@@ -3,15 +3,7 @@ import { withTheme } from 'styled-components/macro';
 import _debounce from 'lodash.debounce';
 import { darken } from 'polished';
 
-import {
-  Grid,
-  Hidden,
-  Theme,
-  TextField,
-  CircularProgress,
-  makeStyles,
-  Popper,
-} from '@material-ui/core';
+import { Grid, Hidden, Theme, TextField, CircularProgress, makeStyles } from '@material-ui/core';
 import { Menu as MenuIcon, Search as SearchIcon } from '@material-ui/icons';
 import MuiAutocomplete from '@material-ui/lab/Autocomplete';
 
@@ -21,6 +13,7 @@ import { ISearchResponse } from '@utils/types/ISearch';
 import ChooseCluster from '@components/ChooseCluster/ChooseCluster';
 import RouterLink from '@components/RouterLink/RouterLink';
 import { TAppTheme } from '@theme/index';
+import breakpoints from '@theme/breakpoints';
 
 import SwitchMode from './SwitchMode';
 import * as Styles from './SearchBar.styles';
@@ -39,7 +32,7 @@ interface AppBarProps {
   onDrawerToggle: React.MouseEventHandler<HTMLElement>;
 }
 
-interface ISearchData {
+export interface ISearchData {
   value: string | number;
   category: TOptionsCategories;
 }
@@ -68,13 +61,43 @@ const useStyles = makeStyles((theme: TAppTheme) => ({
   },
 }));
 
+let isClicked = false;
+
 const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
   const classes = useStyles();
   const optionSelectedFromList = React.useRef(false);
   const { fetchData } = useFetch<ISearchResponse>({ method: 'get', url: URLS.SEARCH_URL });
   const [searchData, setSearchData] = React.useState<Array<ISearchData>>([]);
   const [loading, setLoading] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+  const [isShowSearchInput, setShowSearchInput] = React.useState(false);
+  const [forceShowSearchInput, setForceShowSearchInput] = React.useState(false);
+
+  const handleShowSearchInput = () => {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop > 10) {
+      setShowSearchInput(false);
+      if (!isClicked) {
+        setForceShowSearchInput(false);
+      }
+    } else if (!forceShowSearchInput) {
+      setShowSearchInput(true);
+    }
+  };
+
+  React.useEffect(() => {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop <= 0 && window.innerWidth < breakpoints.values.sm) {
+      setShowSearchInput(true);
+      setForceShowSearchInput(true);
+    }
+
+    window.addEventListener('scroll', handleShowSearchInput);
+    window.addEventListener('resize', handleShowSearchInput);
+    return () => {
+      window.removeEventListener('scroll', handleShowSearchInput);
+      window.removeEventListener('resize', handleShowSearchInput);
+    };
+  }, []);
 
   const sortSearchData = ({ data }: ISearchResponse) => {
     if (!data) return [];
@@ -150,7 +173,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         renderInput={params => (
           <TextField
             {...params}
-            label="Search: You may enter a block height, block hash, tx hash or address"
+            label="Search by block height, block hash, TX hash or address"
             InputLabelProps={{
               ...params.InputLabelProps,
               classes: {
@@ -176,26 +199,35 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
     </Styles.AutocompleteWrapper>
   );
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
+  const handleClick = () => {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop === 0 && forceShowSearchInput) {
+      setForceShowSearchInput(false);
+      setShowSearchInput(false);
+      isClicked = false;
+    } else {
+      setForceShowSearchInput(!isClicked);
+      isClicked = !forceShowSearchInput;
+    }
   };
-
-  const open = Boolean(anchorEl);
-  const id = open ? 'search-popper' : undefined;
 
   const onOpenDrawerClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     onDrawerToggle(event);
-    setAnchorEl(null);
   };
 
   return (
-    <Styles.AppBar position="relative" elevation={0}>
+    <Styles.AppBar
+      position="relative"
+      elevation={0}
+      className={`${isShowSearchInput ? 'search-show' : ''} ${forceShowSearchInput ? 'force' : ''}`}
+    >
       <Styles.ToolbarStyle className="disable-padding">
         <Styles.GridStyle className="top" container alignItems="center" wrap="nowrap">
           {renderSearchInput()}
         </Styles.GridStyle>
         <Styles.IconButton
           className="search-icon"
+          id="search-icon"
           color="inherit"
           aria-label="Open search"
           onClick={handleClick}
@@ -212,18 +244,9 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         <SwitchMode />
         <ChooseCluster />
       </Styles.ToolbarStyle>
-      <Popper
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        transition
-        placement="bottom-start"
-        style={{ zIndex: 100 }}
-      >
-        <Styles.GridStyle className="popup" container alignItems="center" wrap="nowrap">
-          {renderSearchInput()}
-        </Styles.GridStyle>
-      </Popper>
+      <Styles.GridStyle className="search-popup" container alignItems="center" wrap="nowrap">
+        {renderSearchInput()}
+      </Styles.GridStyle>
     </Styles.AppBar>
   );
 };

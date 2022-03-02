@@ -18,14 +18,23 @@ export const ToolbarStyle = styled(Toolbar)`
 `;
 
 export const GridStyle = styled(Grid)`
-  max-width: 350px;
+  max-width: 415px;
 
-  &.popup {
+  &.search-popup {
     display: none;
+    position: fixed;
+    right: 0;
+    top: 45px;
+    width: 97vw;
+    max-width: unset;
+    margin-top: 5px;
+    margin-left: 3px;
+    padding: 10px;
+    background: ${props => props.theme.sidebar.menu.background};
   }
 
   ${props => props.theme.breakpoints.down('md')} {
-    max-width: 440px;
+    max-width: 350px;
   }
 
   ${props => props.theme.breakpoints.down('xs')} {
@@ -33,15 +42,7 @@ export const GridStyle = styled(Grid)`
       display: none;
     }
 
-    &.popup {
-      display: block;
-      width: calc(100vw + 2px);
-      max-width: unset;
-      margin-top: 5px;
-      margin-left: 3px;
-      padding: 10px;
-      background: ${props => props.theme.sidebar.menu.background};
-
+    &.search-popup {
       .label-input {
         max-width: 90%;
         color: ${props => props.theme.sidebar.menu.default};
@@ -66,6 +67,7 @@ export const AppBar = styled(MuiAppBar)`
   width: 78%;
   background: ${props => props.theme.sidebar.menu.background};
   color: ${props => props.theme.header.color};
+  transition: all 0.5s ease-in;
 
   ${props => props.theme.breakpoints.up('md')} {
     max-width: 34%;
@@ -107,11 +109,28 @@ export const AppBar = styled(MuiAppBar)`
     border: 1px solid ${props => props.theme.sidebar.menu.default};
     color: ${props => props.theme.sidebar.menu.default};
   }
+
+  ${props => props.theme.breakpoints.down('xs')} {
+    &.search-show,
+    &.force {
+      min-height: 108px;
+
+      .search-popup {
+        display: block;
+      }
+
+      .search-icon {
+        svg {
+          fill: ${props => props.theme.sidebar.menu.active};
+        }
+      }
+    }
+  }
 `;
 
 export const IconButton = styled(MuiIconButton)`
   svg {
-    color: ${props => props.theme.palette.text.primary};
+    color: ${props => props.theme.sidebar.menu.default};
     width: 22px;
     height: 22px;
   }
@@ -121,7 +140,7 @@ export const IconButton = styled(MuiIconButton)`
   }
 
   ${props => props.theme.breakpoints.down('xs')} {
-    padding: 8px;
+    padding: 6px;
 
     &.search-icon {
       display: inline-block;
@@ -147,7 +166,7 @@ export const Search = styled.div`
 
 export const AutocompleteWrapper = styled(Grid)`
   width: 100%;
-  margin-right: 5px;
+  margin-right: 15px;
 
   .MuiFormLabel-root {
     display: inline-block;
@@ -192,7 +211,7 @@ export const ModeToggle = styled.div`
   position: relative;
   width: 52px;
   min-width: 52px;
-  margin-right: 5px;
+  margin-right: 13px;
   height: 26px;
   border-radius: 100px;
   overflow: hidden;
@@ -270,6 +289,7 @@ export const ModeToggle = styled.div`
   }
 
   ${props => props.theme.breakpoints.down('sm')} {
+    margin-right: 6px;
     transform: scale(0.8);
   }
 `;

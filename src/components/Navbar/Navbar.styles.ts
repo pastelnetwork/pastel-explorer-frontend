@@ -22,13 +22,13 @@ export const NavContainer = styled.nav`
       background: transparent;
 
       .cluster-icon {
-        color: ${props => props.theme.sidebar.menu.hover};
+        fill: ${props => props.theme.sidebar.menu.hover};
       }
     }
   }
 
   .cluster-icon {
-    color: ${props => props.theme.sidebar.menu.default};
+    fill: ${props => props.theme.sidebar.menu.default};
     transition: all 0.5s ease;
 
     ${props => props.theme.breakpoints.down('sm')} {
@@ -43,6 +43,11 @@ export const BrandLogo = styled.img`
 
 export const Menu = styled.div`
   display: flex;
+
+  ${props => props.theme.breakpoints.down('xs')} {
+    align-items: flex-start;
+    margin-top: 22px;
+  }
 
   .main-menu {
     display: flex;

@@ -1,6 +1,5 @@
 import { memo, FC, useCallback, MouseEvent, useMemo } from 'react';
 import { Drawer, Button, Tooltip } from '@material-ui/core';
-import { Settings as SettingsIcon } from '@material-ui/icons';
 
 import { useLocation, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
@@ -11,6 +10,8 @@ import { TAppTheme } from '@theme/index';
 import useBooleanState from '@hooks/useBooleanState';
 import { BASE_URL, BASE_URL_TESTNET, BASE_URL_DEVNET } from '@utils/constants/urls';
 import { DEFAULT_CURRENCY, TEST_CURRENCY_NAME } from '@utils/appInfo';
+
+import { ReactComponent as SettingIcon } from '@assets/icons/setting.svg';
 
 const useStyles = makeStyles((theme: TAppTheme) => ({
   root: {
@@ -130,7 +131,7 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
         className="cluster-button"
       >
         <Tooltip title="Choose a Cluster">
-          <SettingsIcon className="cluster-icon" />
+          <SettingIcon className="cluster-icon" />
         </Tooltip>
       </Button>
       <Drawer anchor="right" open={open} onClose={toggle} className={classes.root}>
