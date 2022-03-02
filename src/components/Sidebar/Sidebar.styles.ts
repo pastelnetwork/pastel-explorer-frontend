@@ -33,10 +33,11 @@ export const DrawerMobile = styled(MuiDrawer)`
 
     .close-button {
       display: inline-block;
-      width: 50px;
+      width: 40px;
       min-width: unset;
-      height: 42px;
+      height: 40px;
       margin-left: auto;
+      border-radius: 100%;
 
       span {
         width: auto;
