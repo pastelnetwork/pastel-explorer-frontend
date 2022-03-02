@@ -194,13 +194,6 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         <Styles.GridStyle className="top" container alignItems="center" wrap="nowrap">
           {renderSearchInput()}
         </Styles.GridStyle>
-        <Hidden mdUp>
-          <Grid item>
-            <Styles.IconButton color="inherit" aria-label="Open drawer" onClick={onOpenDrawerClick}>
-              <MenuIcon />
-            </Styles.IconButton>
-          </Grid>
-        </Hidden>
         <Styles.IconButton
           className="search-icon"
           color="inherit"
@@ -209,6 +202,13 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         >
           <SearchIcon />
         </Styles.IconButton>
+        <Hidden mdUp>
+          <Grid item>
+            <Styles.IconButton color="inherit" aria-label="Open drawer" onClick={onOpenDrawerClick}>
+              <MenuIcon />
+            </Styles.IconButton>
+          </Grid>
+        </Hidden>
         <SwitchMode />
         <ChooseCluster />
       </Styles.ToolbarStyle>

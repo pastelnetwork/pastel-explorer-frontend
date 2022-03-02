@@ -30,9 +30,6 @@ const BLOCK_ELEMENTS_COUNT = 8;
 const useStyles = makeStyles((_theme: TAppTheme) => ({
   wrapper: {
     margin: 0,
-    [_theme.breakpoints.up('md')]: {
-      width: 'calc(100vw - 314px)',
-    },
   },
   root: {
     padding: '25px 20px',
