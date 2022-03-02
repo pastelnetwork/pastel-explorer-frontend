@@ -73,7 +73,7 @@ export const themeLight = createMuiTheme(
           background: '#fff',
         },
         toggle: {
-          background: '#E0F9F2',
+          background: '#E9F2FB',
           switch: '#34a1ff',
         },
         mobile: {
@@ -140,11 +140,11 @@ export const themeDark = createMuiTheme(
         background: '#2D3748',
         hover: '#00D097',
         subMenu: {
-          background: 'linear-gradient(-135deg, #2e2e4b, #323252)',
+          background: '#2D3748',
         },
         toggle: {
           background: '#1d1e31',
-          switch: '#0971DC',
+          switch: '#00D097',
         },
         mobile: {
           border: '#e6e6e6',
