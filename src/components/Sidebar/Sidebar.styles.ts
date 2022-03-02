@@ -99,11 +99,7 @@ export const Brand = styled(ListItem)<{
 `;
 
 export const BrandLogo = styled.img`
-  width: 80px;
-
-  ${props => props.theme.breakpoints.down('sm')} {
-    width: 70px;
-  }
+  width: 100px;
 `;
 
 type CategoryType = {

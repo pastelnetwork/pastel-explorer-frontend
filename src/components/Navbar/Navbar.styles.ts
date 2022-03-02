@@ -46,7 +46,7 @@ export const Menu = styled.div`
 
   ${props => props.theme.breakpoints.down('xs')} {
     align-items: flex-start;
-    margin-top: 22px;
+    margin-top: 20px;
   }
 
   .main-menu {
