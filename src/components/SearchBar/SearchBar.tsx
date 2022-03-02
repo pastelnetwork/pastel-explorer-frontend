@@ -6,13 +6,13 @@ import { darken } from 'polished';
 import {
   Grid,
   Hidden,
-  Toolbar,
   Theme,
   TextField,
   CircularProgress,
   makeStyles,
+  Popper,
 } from '@material-ui/core';
-import { Menu as MenuIcon } from '@material-ui/icons';
+import { Menu as MenuIcon, Search as SearchIcon } from '@material-ui/icons';
 import MuiAutocomplete from '@material-ui/lab/Autocomplete';
 
 import * as URLS from '@utils/constants/urls';
@@ -74,6 +74,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
   const { fetchData } = useFetch<ISearchResponse>({ method: 'get', url: URLS.SEARCH_URL });
   const [searchData, setSearchData] = React.useState<Array<ISearchData>>([]);
   const [loading, setLoading] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
   const sortSearchData = ({ data }: ISearchResponse) => {
     if (!data) return [];
@@ -117,75 +118,112 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
   const handleClose = () => searchData.length && setSearchData([]);
 
   const dropdownOpen = Boolean(searchData.length) || loading;
+
+  const renderSearchInput = () => (
+    <Styles.AutocompleteWrapper item>
+      <MuiAutocomplete
+        fullWidth
+        open={dropdownOpen}
+        options={searchData}
+        classes={{
+          option: classes.option,
+          paper: classes.listboxOptions,
+        }}
+        groupBy={option => option.category}
+        getOptionLabel={option => `${option.value}`}
+        loading={loading}
+        onInputChange={handleInputChange}
+        onChange={handleChange}
+        onClose={handleClose}
+        forcePopupIcon={false}
+        getOptionSelected={(option, value) => option.value === value.value}
+        noOptionsText="No results containing all your search terms were found"
+        loadingText="Loading results..."
+        size="small"
+        renderOption={option => (
+          <RouterLink
+            styles={{ padding: '6px 24px 6px 16px' }}
+            route={`${getRoute(option.category)}/${option.value}`}
+            value={option.value}
+          />
+        )}
+        renderInput={params => (
+          <TextField
+            {...params}
+            label="Search: You may enter a block height, block hash, tx hash or address"
+            InputLabelProps={{
+              ...params.InputLabelProps,
+              classes: {
+                root: `${classes.labelInputRoot} label-input`,
+              },
+            }}
+            InputProps={{
+              ...params.InputProps,
+              classes: {
+                root: `${classes.inputRoot} input`,
+              },
+              endAdornment: (
+                <>
+                  {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                  {params.InputProps.endAdornment}
+                </>
+              ),
+            }}
+            variant="outlined"
+          />
+        )}
+      />
+    </Styles.AutocompleteWrapper>
+  );
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'search-popper' : undefined;
+
+  const onOpenDrawerClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    onDrawerToggle(event);
+    setAnchorEl(null);
+  };
+
   return (
     <Styles.AppBar position="relative" elevation={0}>
-      <Toolbar className="disable-padding">
-        <Grid container alignItems="center" wrap="nowrap">
-          <Styles.AutocompleteWrapper item>
-            <MuiAutocomplete
-              fullWidth
-              open={dropdownOpen}
-              options={searchData}
-              classes={{
-                option: classes.option,
-                paper: classes.listboxOptions,
-              }}
-              groupBy={option => option.category}
-              getOptionLabel={option => `${option.value}`}
-              loading={loading}
-              onInputChange={handleInputChange}
-              onChange={handleChange}
-              onClose={handleClose}
-              forcePopupIcon={false}
-              getOptionSelected={(option, value) => option.value === value.value}
-              noOptionsText="No results containing all your search terms were found"
-              loadingText="Loading results..."
-              size="small"
-              renderOption={option => (
-                <RouterLink
-                  styles={{ padding: '6px 24px 6px 16px' }}
-                  route={`${getRoute(option.category)}/${option.value}`}
-                  value={option.value}
-                />
-              )}
-              renderInput={params => (
-                <TextField
-                  {...params}
-                  label="Search: You may enter a block height, block hash, tx hash or address"
-                  InputLabelProps={{
-                    ...params.InputLabelProps,
-                    classes: {
-                      root: `${classes.labelInputRoot} label-input`,
-                    },
-                  }}
-                  InputProps={{
-                    ...params.InputProps,
-                    classes: {
-                      root: `${classes.inputRoot} input`,
-                    },
-                    endAdornment: (
-                      <>
-                        {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                        {params.InputProps.endAdornment}
-                      </>
-                    ),
-                  }}
-                  variant="outlined"
-                />
-              )}
-            />
-          </Styles.AutocompleteWrapper>
-          <Hidden mdUp>
-            <Grid item>
-              <Styles.IconButton color="inherit" aria-label="Open drawer" onClick={onDrawerToggle}>
-                <MenuIcon />
-              </Styles.IconButton>
-            </Grid>
-          </Hidden>
-        </Grid>
+      <Styles.ToolbarStyle className="disable-padding">
+        <Styles.GridStyle className="top" container alignItems="center" wrap="nowrap">
+          {renderSearchInput()}
+        </Styles.GridStyle>
+        <Hidden mdUp>
+          <Grid item>
+            <Styles.IconButton color="inherit" aria-label="Open drawer" onClick={onOpenDrawerClick}>
+              <MenuIcon />
+            </Styles.IconButton>
+          </Grid>
+        </Hidden>
+        <Styles.IconButton
+          className="search-icon"
+          color="inherit"
+          aria-label="Open search"
+          onClick={handleClick}
+        >
+          <SearchIcon />
+        </Styles.IconButton>
         <SwitchMode />
         <ChooseCluster />
-      </Toolbar>
+      </Styles.ToolbarStyle>
+      <Popper
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        transition
+        placement="bottom-start"
+        style={{ zIndex: 100 }}
+      >
+        <Styles.GridStyle className="popup" container alignItems="center" wrap="nowrap">
+          {renderSearchInput()}
+        </Styles.GridStyle>
+      </Popper>
     </Styles.AppBar>
   );
 };

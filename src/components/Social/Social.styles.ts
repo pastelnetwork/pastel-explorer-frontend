@@ -1,4 +1,15 @@
 import styled from 'styled-components/macro';
+import { IconButton } from '@material-ui/core';
+
+export const IconButtonLink = styled(IconButton)<{
+  target: string;
+  href: string;
+  className: string;
+}>`
+  &:hover {
+    background: none;
+  }
+`;
 
 export const Items = styled.ul`
   display: flex;

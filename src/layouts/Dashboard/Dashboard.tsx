@@ -21,10 +21,10 @@ const Dashboard: React.FC<DashboardPropsType> = ({ children, width, routes }) =>
       <CssBaseline />
       <Styles.GlobalStyle />
       <Navbar routes={routes} />
-      <main>
+      <Styles.MainWrapper>
         <Summary />
         <Styles.MainContent p={isWidthUp('lg', width) ? 12 : 5}>{children}</Styles.MainContent>
-      </main>
+      </Styles.MainWrapper>
       <Footer />
     </Styles.Root>
   );

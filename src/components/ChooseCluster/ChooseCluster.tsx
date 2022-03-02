@@ -19,12 +19,18 @@ const useStyles = makeStyles((theme: TAppTheme) => ({
   list: {
     width: 325,
     padding: '0 20px 20px 20px',
+    position: 'relative',
   },
   close: {
     minWidth: 'auto',
-    paddingLeft: 0,
+    position: 'absolute',
+    top: 5,
+    left: 5,
+    borderRadius: '100%',
+    padding: '6px 14px',
   },
   title: {
+    marginTop: 53,
     fontSize: 20,
     fontWeight: 500,
     textAlign: 'center',
@@ -123,7 +129,7 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
         color="primary"
         className="cluster-button"
       >
-        <Tooltip title={currentCluster.name}>
+        <Tooltip title="Choose a Cluster">
           <SettingsIcon className="cluster-icon" />
         </Tooltip>
       </Button>

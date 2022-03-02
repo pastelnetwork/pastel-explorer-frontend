@@ -73,7 +73,7 @@ export const themeLight = createMuiTheme(
           background: '#fff',
         },
         toggle: {
-          background: '#ebf7fc',
+          background: '#d5ecf5',
           switch: '#34a1ff',
         },
         mobile: {

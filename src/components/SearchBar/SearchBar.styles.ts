@@ -6,10 +6,61 @@ import {
   AppBar as MuiAppBar,
   IconButton as MuiIconButton,
   Grid,
+  Toolbar,
 } from '@material-ui/core';
 
-import sun from '@assets/icons/sun.png';
-import moon from '@assets/icons/moon.png';
+import sun from '@assets/icons/sun.svg';
+import moon from '@assets/icons/moon.svg';
+
+export const ToolbarStyle = styled(Toolbar)`
+  justify-content: end;
+  padding-right: 0;
+`;
+
+export const GridStyle = styled(Grid)`
+  max-width: 350px;
+
+  &.popup {
+    display: none;
+  }
+
+  ${props => props.theme.breakpoints.down('md')} {
+    max-width: 440px;
+  }
+
+  ${props => props.theme.breakpoints.down('xs')} {
+    &.top {
+      display: none;
+    }
+
+    &.popup {
+      display: block;
+      width: calc(100vw + 2px);
+      max-width: unset;
+      margin-top: 5px;
+      margin-left: 3px;
+      padding: 10px;
+      background: ${props => props.theme.sidebar.menu.background};
+
+      .label-input {
+        max-width: 90%;
+        color: ${props => props.theme.sidebar.menu.default};
+        background: ${props => props.theme.sidebar.menu.background};
+      }
+
+      .input {
+        border: 1px solid ${props => props.theme.sidebar.menu.default};
+        color: ${props => props.theme.sidebar.menu.default};
+      }
+    }
+
+    .MuiOutlinedInput-root.Mui-focused {
+      .MuiOutlinedInput-notchedOutline {
+        border: none;
+      }
+    }
+  }
+`;
 
 export const AppBar = styled(MuiAppBar)`
   width: 78%;
@@ -38,6 +89,7 @@ export const AppBar = styled(MuiAppBar)`
     transform: translate(14px, 9px) scale(1);
 
     &.MuiInputLabel-outlined.MuiInputLabel-shrink {
+      padding-left: 10px !important;
       transform: translate(14px, -6px) scale(0.75);
     }
 
@@ -64,8 +116,16 @@ export const IconButton = styled(MuiIconButton)`
     height: 22px;
   }
 
-  ${props => props.theme.breakpoints.down('sm')} {
+  &.search-icon {
+    display: none;
+  }
+
+  ${props => props.theme.breakpoints.down('xs')} {
     padding: 8px;
+
+    &.search-icon {
+      display: inline-block;
+    }
   }
 `;
 

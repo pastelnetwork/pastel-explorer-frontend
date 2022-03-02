@@ -31,6 +31,10 @@ export const Root = styled.div`
 
 export const Paper = styled(MuiPaper)(spacing);
 
+export const MainWrapper = styled.main`
+  min-height: calc(100vh - 116px);
+`;
+
 export const MainContent = styled(Paper)`
   padding: 20px;
   flex: 1;
