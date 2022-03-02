@@ -222,7 +222,7 @@ export const ModeToggle = styled.div`
         :before {
           left: 30px;
           background-color: ${props => props.theme.sidebar.menu.toggle.switch};
-          background-image: url(${moon});
+          background-image: url(${sun});
         }
       }
     }
@@ -250,7 +250,7 @@ export const ModeToggle = styled.div`
       color: #fff;
       background-color: ${props => props.theme.sidebar.menu.toggle.switch};
       transition: all 0.3s ease, left 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15);
-      background-image: url(${sun});
+      background-image: url(${moon});
       background-size: 14px;
       background-repeat: no-repeat;
       background-position: center;
