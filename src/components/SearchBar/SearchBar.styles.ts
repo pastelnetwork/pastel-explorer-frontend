@@ -14,6 +14,7 @@ import moon from '@assets/icons/moon.svg';
 
 export const ToolbarStyle = styled(Toolbar)`
   justify-content: end;
+  width: 100%;
   padding-right: 0;
 `;
 
@@ -25,10 +26,10 @@ export const GridStyle = styled(Grid)`
     position: fixed;
     right: 0;
     top: 45px;
-    width: 97vw;
+    width: 100vw;
     max-width: unset;
     margin-top: 5px;
-    margin-left: 3px;
+    margin-left: 0;
     padding: 10px;
     background: ${props => props.theme.sidebar.menu.background};
   }
@@ -64,7 +65,7 @@ export const GridStyle = styled(Grid)`
 `;
 
 export const AppBar = styled(MuiAppBar)`
-  width: 78%;
+  width: calc(100% - 120px);
   background: ${props => props.theme.sidebar.menu.background};
   color: ${props => props.theme.header.color};
   transition: min-height 0.5s ease-in;
