@@ -137,7 +137,7 @@ export const themeDark = createMuiTheme(
       menu: {
         default: '#aca9c4',
         active: '#30ddd8',
-        background: '#40406a',
+        background: '#2D3748',
         hover: '#30ddd8',
         subMenu: {
           background: 'linear-gradient(-135deg, #2e2e4b, #323252)',
