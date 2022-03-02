@@ -13,6 +13,7 @@ import sun from '@assets/icons/sun.svg';
 import moon from '@assets/icons/moon.svg';
 
 export const ToolbarStyle = styled(Toolbar)`
+  display: flex;
   justify-content: end;
   width: 100%;
   padding-right: 0;
