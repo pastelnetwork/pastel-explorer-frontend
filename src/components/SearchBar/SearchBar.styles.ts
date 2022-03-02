@@ -66,6 +66,7 @@ export const GridStyle = styled(Grid)`
 `;
 
 export const AppBar = styled(MuiAppBar)`
+  display: flex;
   width: calc(100% - 120px);
   background: ${props => props.theme.sidebar.menu.background};
   color: ${props => props.theme.header.color};
