@@ -201,12 +201,13 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
 
   const handleClick = () => {
     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-    if (scrollTop === 0 && forceShowSearchInput) {
+    if (scrollTop <= 0 && forceShowSearchInput) {
       setForceShowSearchInput(false);
       setShowSearchInput(false);
       isClicked = false;
     } else {
       setForceShowSearchInput(!isClicked);
+      setShowSearchInput(!isClicked);
       isClicked = !forceShowSearchInput;
     }
   };

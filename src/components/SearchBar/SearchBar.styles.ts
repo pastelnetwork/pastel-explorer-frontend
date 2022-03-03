@@ -14,7 +14,7 @@ import moon from '@assets/icons/moon.svg';
 
 export const ToolbarStyle = styled(Toolbar)`
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   width: 100%;
   padding-right: 0;
 `;
