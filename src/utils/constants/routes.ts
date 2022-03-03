@@ -5,6 +5,7 @@ export const RICHLIST = '/richlist';
 export const INFO = '/info';
 export const BLOCKS = '/blocks';
 export const SUPERNODES = '/supernodes';
+export const STATISTICS_PARENT = '/statistics-parent';
 export const STATISTICS = '/statistics';
 export const NOT_FOUND = '/not-found';
 

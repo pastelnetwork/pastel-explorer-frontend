@@ -61,7 +61,7 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
   if (
     (window.location.pathname === ROUTES.STATISTICS ||
       window.location.pathname === ROUTES.STATISTICS_OVERTIME) &&
-    category?.path === ROUTES.STATISTICS
+    category?.path === ROUTES.STATISTICS_PARENT
   ) {
     active = 'active-submenu';
   }

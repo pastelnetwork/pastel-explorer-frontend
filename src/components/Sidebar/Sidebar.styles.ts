@@ -83,6 +83,16 @@ export const Brand = styled(ListItem)<{
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 
+  &.footer {
+    margin-right: 0;
+    justify-content: flex-end;
+
+    &.start {
+      justify-content: flex-start;
+      margin-bottom: 25px;
+    }
+  }
+
   &:hover {
     background-color: transparent;
   }

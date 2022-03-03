@@ -105,7 +105,7 @@ const supernodesRoutes = {
 
 const statisticsRoutes = {
   id: 'Statistics',
-  path: ROUTES.STATISTICS,
+  path: ROUTES.STATISTICS_PARENT,
   icon: (
     <svg
       fill="#eeeeee"
