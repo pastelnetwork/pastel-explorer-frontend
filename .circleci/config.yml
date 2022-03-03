@@ -57,7 +57,7 @@ jobs:
           at: /tmp/workspace
       - add_ssh_keys:
           fingerprints:
-            - 'af:60:72:69:24:30:f6:31:96:e7:3e:2a:42:21:84:bd'
+            - 'f2:58:3c:ee:0a:fe:7c:a7:93:46:d8:0b:6f:96:0b:26'
       - run:
           name: Deploy Staging over SSH
           command: scp -o "StrictHostKeyChecking no" -r /tmp/workspace/build/* ubuntu@$STAGING_SERVER_IP:~/pastel-explorer-frontend/build
