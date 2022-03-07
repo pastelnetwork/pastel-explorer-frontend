@@ -45,7 +45,7 @@ export const Items = styled.ul`
 `;
 
 export const Item = styled.li`
-  margin-right: 13px;
+  margin-right: 15px;
 
   &:last-child {
     margin-right: 0;
