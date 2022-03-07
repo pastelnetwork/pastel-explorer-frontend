@@ -11,7 +11,7 @@ export const IconButtonLink = styled(IconButton)<{
   padding: 6px;
   border-radius: 100%;
   border: 1px solid ${props => props.theme.sidebar.menu.border};
-  transaction: all 0.5s ease;
+  transition: all 0.5s ease;
 
   &:hover {
     background: none;
@@ -20,7 +20,7 @@ export const IconButtonLink = styled(IconButton)<{
   svg {
     max-width: 100%;
     fill: ${props => props.theme.sidebar.menu.border};
-    transaction: all 0.5s ease;
+    transition: all 0.5s ease;
   }
 
   &:hover {
@@ -45,13 +45,9 @@ export const Items = styled.ul`
 `;
 
 export const Item = styled.li`
-  margin-right: 8px;
+  margin-right: 13px;
 
   &:last-child {
     margin-right: 0;
-  }
-
-  ${props => props.theme.breakpoints.down('xs')} {
-    margin-right: 16px;
   }
 `;

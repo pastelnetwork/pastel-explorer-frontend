@@ -56,7 +56,9 @@ const Footer: React.FC = () => {
         </Styles.FooterMenuWrapper>
         <Hidden xsDown implementation="css">
           <Styles.GridStyle item>
-            <Styles.Typography>{`© ${getYear(currentDate)} - Pastel Network`}</Styles.Typography>
+            <Styles.Typography>
+              Copyright © {getYear(currentDate)} Pastel. All rights reserved
+            </Styles.Typography>
           </Styles.GridStyle>
         </Hidden>
       </div>
@@ -75,7 +77,9 @@ const Footer: React.FC = () => {
       </div>
       <Hidden smUp implementation="js">
         <Styles.GridStyle item>
-          <Styles.Typography>{`© ${getYear(currentDate)} - Pastel Network`}</Styles.Typography>
+          <Styles.Typography>
+            Copyright © {getYear(currentDate)} Pastel. All rights reserved
+          </Styles.Typography>
         </Styles.GridStyle>
       </Hidden>
     </Styles.Container>
