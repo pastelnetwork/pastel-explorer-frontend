@@ -24,7 +24,7 @@ export const Card = styled(MuiCard)`
   width: calc(20% - 10px);
   min-height: 150px;
   margin: 0 12px 12px 0;
-  box-shadow: 0 20px 30px rgb(16 16 16 / 6%);
+  box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
   overflow: unset;
   background: ${props => props.theme.sidebar.menu.background};
 
@@ -85,8 +85,6 @@ export const CardContent = styled(MuiCardContent)`
   position: relative;
   margin-top: 0;
   padding: 20px;
-  background: ${props => props.theme.sidebar.menu.background};
-  border-radius: 10px;
 
   &:last-child {
     padding-bottom: ${props => props.theme.spacing(2)}px;
