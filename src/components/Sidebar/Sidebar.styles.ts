@@ -87,8 +87,8 @@ export const Brand = styled(ListItem)<{
     margin-right: 0;
     justify-content: flex-end;
 
-    &.start {
-      justify-content: flex-start;
+    &.center {
+      justify-content: center;
       margin-bottom: 25px;
     }
   }

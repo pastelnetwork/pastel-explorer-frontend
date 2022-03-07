@@ -32,3 +32,5 @@ export const GET_STATISTICS_MARKET_PRICE = 'v1/stats/market/chart';
 export const TWITTER_URL = 'https://twitter.com/pastelnetwork';
 export const TELEGRAM_URL = 'https://t.me/PastelNetwork';
 export const GITHUB_URL = 'https://github.com/pastelnetwork';
+export const DISCORD_URL = 'https://discord.com/invite/qudewKS3kp';
+export const MEDIUM_URL = 'https://medium.com/pastelnetwork';

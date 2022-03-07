@@ -21,12 +21,12 @@ export const footerMenu = [
     children: [
       {
         name: 'Github',
-        path: 'https://github.com/pastelnetwork/pastel-explorer-frontend',
+        path: 'https://github.com/pastelnetwork',
         target: '_blank',
       },
       {
         name: 'Documentation',
-        path: 'https://github.com/pastelnetwork/pastel-explorer-frontend/blob/master/README.md',
+        path: 'https://docs.pastel.network',
         target: '_blank',
       },
     ],

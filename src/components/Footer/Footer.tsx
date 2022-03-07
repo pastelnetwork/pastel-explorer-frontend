@@ -26,7 +26,7 @@ const Footer: React.FC = () => {
             component={NavLink}
             to={ROUTES.EXPLORER}
             button
-            className="footer start"
+            className="footer center"
           >
             <Box>
               <SidebarStyles.BrandLogo

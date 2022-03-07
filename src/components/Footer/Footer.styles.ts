@@ -26,12 +26,16 @@ export const Typography = styled(MuiTypography)`
   color: ${themeVariant.footer.color};
 
   ${props => props.theme.breakpoints.down('xs')} {
-    text-align: left;
+    text-align: center;
   }
 `;
 
 export const FooterMenuWrapper = styled.div`
   display: flex;
+
+  ${props => props.theme.breakpoints.down('xs')} {
+    justify-content: center;
+  }
 `;
 
 export const FooterMenuBlock = styled.div`
@@ -39,6 +43,10 @@ export const FooterMenuBlock = styled.div`
 
   &:last-child {
     margin-right: 0;
+  }
+
+  ${props => props.theme.breakpoints.down('xs')} {
+    margin-right: 78px;
   }
 `;
 
@@ -76,6 +84,6 @@ export const GridStyle = styled(Grid)`
   margin-top: 30px;
 
   ${props => props.theme.breakpoints.down('xs')} {
-    margin-top: 10px;
+    margin-top: 15px;
   }
 `;

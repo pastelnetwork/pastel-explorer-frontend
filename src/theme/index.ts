@@ -76,6 +76,7 @@ export const themeLight = createMuiTheme(
           background: '#E9F2FB',
           switch: '#34a1ff',
         },
+        border: '#2D3748',
         mobile: {
           border: '#e6e6e6',
           borderTop: '#e6e6e6',
@@ -146,6 +147,7 @@ export const themeDark = createMuiTheme(
           background: '#1d1e31',
           switch: '#00D097',
         },
+        border: '#FCFCFD',
         mobile: {
           border: '#e6e6e6',
           borderTop: '#7773bd',

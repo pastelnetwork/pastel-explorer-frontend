@@ -6,42 +6,52 @@ export const IconButtonLink = styled(IconButton)<{
   href: string;
   className: string;
 }>`
+  width: 30px;
+  height: 30px;
+  padding: 6px;
+  border-radius: 100%;
+  border: 1px solid ${props => props.theme.sidebar.menu.border};
+  transaction: all 0.5s ease;
+
   &:hover {
     background: none;
+  }
+
+  svg {
+    max-width: 100%;
+    fill: ${props => props.theme.sidebar.menu.border};
+    transaction: all 0.5s ease;
+  }
+
+  &:hover {
+    border-color: ${props => props.theme.sidebar.menu.active};
+
+    svg {
+      fill: ${props => props.theme.sidebar.menu.active};
+    }
   }
 `;
 
 export const Items = styled.ul`
   display: flex;
   list-style: none;
+  margin-top: 25px;
 
   ${props => props.theme.breakpoints.down('xs')} {
-    justify-content: flex-start;
-    margin: 10px 0 0;
+    justify-content: center;
+    margin: 20px 0 0;
     padding: 0;
   }
 `;
 
 export const Item = styled.li`
-  margin-right: 5px;
+  margin-right: 8px;
 
   &:last-child {
     margin-right: 0;
   }
 
-  svg {
-    width: 20px;
-    color: ${props => props.theme.sidebar.menu.default};
-    transaction: all 0.5s ease;
-  }
-
-  .social-icon {
-    padding: 5px;
-
-    &:hover {
-      svg {
-        color: ${props => props.theme.sidebar.menu.active};
-      }
-    }
+  ${props => props.theme.breakpoints.down('xs')} {
+    margin-right: 16px;
   }
 `;
