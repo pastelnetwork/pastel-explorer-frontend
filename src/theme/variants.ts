@@ -15,11 +15,13 @@ const themeVariant = {
       light: green[200],
       main: green[500],
       dark: green[800],
+      success: '#00D097',
     },
     red: {
       light: red[200],
       main: red[500],
       dark: red[800],
+      error: '#FE634C',
     },
     orange: {
       light: orange[200],

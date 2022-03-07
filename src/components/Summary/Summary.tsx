@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import { darken } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/styles';
 import { useDispatch } from 'react-redux';
@@ -28,28 +27,10 @@ const useStyles = makeStyles((_theme: TAppTheme) => ({
     //   width: '100%',
     // },
   },
-  root: {
-    display: 'flex',
-    padding: `${_theme.spacing(4)}px ${_theme.spacing(3)}px ${_theme.spacing(6)}px`,
-    backgroundColor: _theme.palette.background.paper,
-    overflowX: 'auto',
-    [_theme.breakpoints.down('md')]: {
-      padding: `${_theme.spacing(2)}px`,
-    },
-    '&::-webkit-scrollbar': {
-      background: _theme.palette.background.default,
-    },
-    '&::-webkit-scrollbar-thumb': {
-      background: darken(_theme.palette.background.paper, 0.5),
-    },
-  },
   cardItem: {
-    margin: `0 ${_theme.spacing(3)}px`,
-    minWidth: '142px',
     flex: '0 0 auto',
-    [_theme.breakpoints.down('md')]: {
-      margin: `0 ${_theme.spacing(2)}px`,
-    },
+    borderRadius: '10px',
+    border: 0,
   },
   textTitle: {
     fontSize: 14,
@@ -125,14 +106,14 @@ const Summary: React.FC = () => {
 
   return (
     <div className={classes.wrapper}>
-      <div className={classes.root}>
+      <Styles.Wrapper>
         {summaryList.map(({ id, name, value, difference }) => (
           <Styles.Card key={id} classes={{ root: classes.cardItem }}>
             <Styles.CardContent>
-              <Styles.Typography variant="h6" my={2} className={classes.textTitle}>
+              <Styles.Typography variant="h6" className={classes.textTitle}>
                 {name}
               </Styles.Typography>
-              <Styles.Typography variant="h4" my={2} className={classes.textNumber}>
+              <Styles.Typography variant="h4" className={classes.textNumber}>
                 <Styles.Values>
                   {value === null ? <Skeleton animation="wave" variant="text" /> : value}
                 </Styles.Values>
@@ -146,12 +127,14 @@ const Summary: React.FC = () => {
                   color="textSecondary"
                   noWrap
                   percentagecolor={`${
-                    difference > 0 ? themeVariant.custom.green.dark : themeVariant.custom.red.dark
+                    difference > 0
+                      ? themeVariant.custom.green.success
+                      : themeVariant.custom.red.error
                   }`}
                 >
                   Since yesterday
                   <br />
-                  <span style={{ fontWeight: 'normal', marginTop: 8, fontSize: 16 }}>
+                  <span>
                     {`${difference > 0 ? '+' : ''}`}
                     {difference}%&nbsp;
                     {difference > 0 ? (
@@ -191,7 +174,7 @@ const Summary: React.FC = () => {
             </Styles.CardContent>
           </Styles.Card>
         ))}
-      </div>
+      </Styles.Wrapper>
     </div>
   );
 };
