@@ -12,3 +12,30 @@ export const ExplorerWrapper = styled.div`
     }
   }
 `;
+
+export const Gird = styled.div`
+  display: flex;
+
+  ${props => props.theme.breakpoints.down('lg')} {
+    flex-wrap: wrap;
+  }
+`;
+
+export const ExplorerMapColumn = styled.div`
+  width: 60%;
+  margin-right: 12px;
+
+  ${props => props.theme.breakpoints.down('lg')} {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 12px;
+  }
+`;
+
+export const SupernodeColumn = styled.div`
+  width: calc(40% - 4px);
+
+  ${props => props.theme.breakpoints.down('lg')} {
+    width: 100%;
+  }
+`;

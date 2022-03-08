@@ -48,14 +48,14 @@ const Explorer: React.FC = () => {
 
   return (
     <Styles.ExplorerWrapper>
-      <Grid container spacing={6}>
-        <Grid item xs={12} lg={7}>
+      <Styles.Gird>
+        <Styles.ExplorerMapColumn>
           <ExplorerMap geoLocationList={geoLocationList} nodesLength={nodesLength} />
-        </Grid>
-        <Grid item xs={12} lg={5}>
+        </Styles.ExplorerMapColumn>
+        <Styles.SupernodeColumn>
           <SupernodeStatistics supernodes={supernodeList} />
-        </Grid>
-      </Grid>
+        </Styles.SupernodeColumn>
+      </Styles.Gird>
       <Grid container spacing={6}>
         <Grid item xs={12} lg={6}>
           <LatestBlocks />
