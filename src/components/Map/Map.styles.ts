@@ -1,13 +1,19 @@
 import styled from 'styled-components/macro';
 
 import { Card as MuiCard, CardContent as MuiCardContent } from '@material-ui/core';
-import { spacing } from '@material-ui/system';
 
 export const MapContainer = styled.div`
   height: 340px;
 `;
 
-export const Card = styled(MuiCard)(spacing);
+export const Card = styled(MuiCard)`
+  background: transparent;
+  box-shadow: none;
+
+  h4 {
+    padding-left: 16px;
+  }
+`;
 
 export const CardContent = styled(MuiCardContent)`
   &:last-child {

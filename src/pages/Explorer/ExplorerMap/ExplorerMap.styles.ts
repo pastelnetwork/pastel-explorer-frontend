@@ -6,6 +6,10 @@ import themeVariant from '@theme/variants';
 
 export const Container = styled.div`
   position: relative;
+  box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
+  background: ${props => props.theme.sidebar.menu.background};
+  border-radius: 10px;
+  overflow: hidden;
 `;
 
 export const Wrapper = styled.div`

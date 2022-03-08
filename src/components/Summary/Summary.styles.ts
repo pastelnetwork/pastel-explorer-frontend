@@ -3,15 +3,8 @@ import {
   Card as MuiCard,
   CardContent as MuiCardContent,
   Typography as MuiTypography,
-  // Grid as MuiGrid,
 } from '@material-ui/core';
 import { rgba } from 'polished';
-
-// export const Grid = styled(MuiGrid)`
-//   margin: 0;
-//   width: 100%;
-//   background-color: ${props => props.theme.palette.background.paper};
-// `;
 
 export const Wrapper = styled.div`
   display: flex;
@@ -22,7 +15,6 @@ export const Wrapper = styled.div`
 
 export const Card = styled(MuiCard)`
   width: calc(20% - 10px);
-  min-height: 150px;
   margin: 0 12px 12px 0;
   box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
   overflow: unset;
@@ -47,11 +39,31 @@ export const Card = styled(MuiCard)`
     }
   }
 
+  ${props => props.theme.breakpoints.down('md')} {
+    width: calc(33.33% - 10px);
+
+    &:nth-child(3),
+    &:nth-child(6),
+    &:nth-child(9) {
+      margin-right: 0;
+    }
+
+    &:nth-child(5),
+    &:nth-child(10),
+    &:nth-child(4),
+    &:nth-child(8) {
+      margin-right: 12px;
+    }
+  }
+
   ${props => props.theme.breakpoints.down('sm')} {
     width: calc(50% - 10px);
 
     &:nth-child(5),
-    &:nth-child(10) {
+    &:nth-child(10),
+    &:nth-child(3),
+    &:nth-child(6),
+    &:nth-child(9) {
       margin-right: 12px;
     }
 
@@ -67,13 +79,21 @@ export const Card = styled(MuiCard)`
   }
 `;
 
+export const ValueWrapper = styled.div`
+  text-align: left;
+`;
+
+export const PercentageWrapper = styled.div`
+  text-align: right;
+`;
+
 export const Typography = styled(MuiTypography)`
   color: ${props => props.theme.sidebar.menu.default};
 `;
 
 export const Values = styled.div`
-  margin-left: ${props => props.theme.spacing(2)}px;
-  margin-right: ${props => props.theme.spacing(2)}px;
+  margin-top: 8px;
+  font-size: 18px;
   font-weight: 700;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -81,13 +101,16 @@ export const Values = styled.div`
 `;
 
 export const CardContent = styled(MuiCardContent)`
-  text-align: center;
   position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   margin-top: 0;
-  padding: 20px;
+  padding: 15px;
+  text-align: center;
 
   &:last-child {
-    padding-bottom: ${props => props.theme.spacing(2)}px;
+    padding-bottom: 15px;
   }
 `;
 
@@ -95,7 +118,6 @@ export const Percentage = styled(MuiTypography)<{
   percentagecolor: string;
   mb: number;
 }>`
-  margin-top: ${props => props.theme.spacing(3)}px;
   font-size: 0.8rem;
   color: ${props => props.theme.sidebar.menu.default};
 

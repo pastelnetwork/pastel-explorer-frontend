@@ -1,5 +1,4 @@
 import styled from 'styled-components/macro';
-import { spacing } from '@material-ui/system';
 
 import themeVariant from '@theme/variants';
 
@@ -11,7 +10,14 @@ import {
   Grid,
 } from '@material-ui/core';
 
-export const Card = styled(MuiCard)(spacing);
+export const Card = styled(MuiCard)`
+  background: transparent;
+  box-shadow: none;
+
+  h4 {
+    padding-left: 16px;
+  }
+`;
 
 export const CardContent = styled(MuiCardContent)`
   @media (min-width: 960px) {
