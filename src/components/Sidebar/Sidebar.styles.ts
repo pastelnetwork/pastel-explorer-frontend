@@ -38,6 +38,8 @@ export const DrawerMobile = styled(MuiDrawer)`
       min-width: unset;
       height: 40px;
       margin-left: auto;
+      margin-right: 6px;
+      margin-top: 6px;
       border-radius: 100%;
 
       span {
@@ -47,7 +49,7 @@ export const DrawerMobile = styled(MuiDrawer)`
     }
 
     .close-icon {
-      width: 20px;
+      width: 16px;
       color: ${props => props.theme.sidebar.menu.default};
     }
   }
@@ -132,8 +134,7 @@ export const Category = styled(ListItem)<CategoryType>`
   ${props => props.theme.breakpoints.down('sm')} {
     display: block;
     margin-left: 0;
-    padding: 10px 0 10px 10px;
-    border-bottom: 1px solid ${props => props.theme.sidebar.menu.mobile.border};
+    padding: 12px 0 12px 42px;
   }
 
   span {
@@ -237,12 +238,13 @@ export const Category = styled(ListItem)<CategoryType>`
     padding: 5px 30px;
 
     ${props => props.theme.breakpoints.down('sm')} {
-      margin-top: 15px;
+      margin-top: 4px;
       margin-left: 10px;
       padding-left: 5px;
-      border-top: 1px solid ${props => props.theme.sidebar.menu.mobile.border};
-      border-top-color: ${props => props.theme.sidebar.menu.mobile.borderTop};
-      border-radius: 0.25rem;
+
+      span {
+        font-size: 14px;
+      }
     }
 
     ${props => props.theme.breakpoints.up('md')} {
@@ -381,7 +383,7 @@ export const SlideMenuMobileWrapper = styled.div`
 export const SlideLogoMobileWrapper = styled.div`
   display: flex;
   width: 100%;
-  margin-top: 12px;
+  margin-top: 35px;
   margin-bottom: 20px;
-  padding: 0 0 0 18px;
+  padding: 0 0 0 52px;
 `;

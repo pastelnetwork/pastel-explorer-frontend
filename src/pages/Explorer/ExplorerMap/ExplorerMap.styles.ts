@@ -22,18 +22,20 @@ export const Wrapper = styled.div`
   height: 100%;
 
   ${props => props.theme.breakpoints.down('xs')} {
-    width: 258px;
+    width: 310px;
   }
 `;
 
 export const Title = styled(Typography)`
-  margin-top: 53px;
-  margin-bottom: 20px;
+  margin-top: 33px;
+  margin-bottom: 18px;
   font-size: 20px;
   font-weight: 500;
+  text-align: center;
 `;
 
 export const SubTitle = styled(Typography)`
+  margin-bottom: 16px;
   font-size: 15px;
   font-weight: 500;
   text-align: left;
@@ -48,14 +50,23 @@ export const InfoBlock = styled(Grid)`
 `;
 
 export const Accordion = styled(MuiAccordion)`
+  margin-bottom: 14px;
   background-color: transparent;
   border: 1px solid ${props => props.theme.card.border.default};
   color: ${props => props.theme.card.text.default};
   transition: all 0.5s ease;
 
+  svg {
+    fill: ${props => props.theme.card.text.default};
+  }
+
   &:hover {
     border-color: ${props => props.theme.card.border.active};
     color: ${props => props.theme.card.text.active};
+
+    svg {
+      fill: ${props => props.theme.card.text.active};
+    }
   }
 `;
 
@@ -75,4 +86,9 @@ export const LegendElement = styled.div<{ backgroundcolor: string }>`
 
 export const TitleRow = styled(Grid)`
   width: 100%;
+  padding-bottom: 0 !important;
+
+  &.subTitle {
+    padding-top: 0 !important;
+  }
 `;

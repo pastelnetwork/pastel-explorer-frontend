@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { NavLink, withRouter, RouteComponentProps, match } from 'react-router-dom';
+import { makeStyles } from '@material-ui/styles';
 
 import { useCallback } from 'react';
 import { Collapse, List, Hidden, Button, Box } from '@material-ui/core';
-import { Close as CloseIcon } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 
 import { getThemeState } from '@redux/reducers/appThemeReducer';
@@ -16,6 +16,17 @@ import PastelLogoWhite from '@assets/images/pastel-logo-white.png';
 import PastelLogo from '@assets/images/pastel-logo.png';
 
 import * as Styles from './Sidebar.styles';
+
+const useStyles = makeStyles(() => ({
+  close: {
+    minWidth: 'auto',
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    borderRadius: '100%',
+    padding: '6px 14px',
+  },
+}));
 
 interface SidebarLinkPropsType {
   name: string;
@@ -123,6 +134,8 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
   interface InitOptionsProps {
     [key: number]: boolean;
   }
+  const classes = useStyles();
+
   const initOpenRoutes = (): InitOptionsProps => {
     const pathName = location.pathname;
 
@@ -199,8 +212,8 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
     >
       <Hidden mdUp>
         <Styles.SlideMenuMobileWrapper>
-          <Button type="button" className="close-button" onClick={onClose}>
-            <CloseIcon className="close-icon" />
+          <Button type="button" className={classes.close} onClick={onClose}>
+            ×
           </Button>
         </Styles.SlideMenuMobileWrapper>
         <Styles.SlideLogoMobileWrapper>
