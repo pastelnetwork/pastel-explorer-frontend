@@ -96,6 +96,14 @@ export const themeLight = createMuiTheme(
     card: {
       color: '#4A5568',
       titleColor: '#F8F9FA',
+      border: {
+        default: 'rgba(0, 0, 0, 0.23)',
+        active: 'rgba(39, 153, 137, 0.5)',
+      },
+      text: {
+        default: '#2D3748',
+        active: '#279989',
+      },
     },
   },
 );
@@ -171,6 +179,14 @@ export const themeDark = createMuiTheme(
     card: {
       color: '#fff',
       titleColor: '#1A202C',
+      border: {
+        default: 'rgba(0, 0, 0, 0.23)',
+        active: 'rgba(39, 153, 137, 0.5)',
+      },
+      text: {
+        default: '#F8F8FA',
+        active: '#279989',
+      },
     },
   },
 );

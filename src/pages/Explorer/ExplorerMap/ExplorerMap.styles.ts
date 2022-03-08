@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Grid, Accordion as MuiAccordion } from '@material-ui/core';
+import { Grid, Accordion as MuiAccordion, Typography } from '@material-ui/core';
 
 import themeVariant from '@theme/variants';
 
@@ -13,13 +13,30 @@ export const Container = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  width: 258px;
-  padding: 10px;
+  width: 325px;
+  padding: 20px;
   overflow-x: hidden;
   overflow-y: auto;
-  background-color: ${themeVariant.sidebar.background};
-  color: ${themeVariant.sidebar.color};
+  background-color: ${props => props.theme.palette.background.paper};
+  color: ${props => props.theme.palette.text.primary};
   height: 100%;
+
+  ${props => props.theme.breakpoints.down('xs')} {
+    width: 258px;
+  }
+`;
+
+export const Title = styled(Typography)`
+  margin-top: 53px;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 500;
+`;
+
+export const SubTitle = styled(Typography)`
+  font-size: 15px;
+  font-weight: 500;
+  text-align: left;
 `;
 
 export const InfoBlock = styled(Grid)`
@@ -31,7 +48,15 @@ export const InfoBlock = styled(Grid)`
 `;
 
 export const Accordion = styled(MuiAccordion)`
-  background-color: ${themeVariant.map.background};
+  background-color: transparent;
+  border: 1px solid ${props => props.theme.card.border.default};
+  color: ${props => props.theme.card.text.default};
+  transition: all 0.5s ease;
+
+  &:hover {
+    border-color: ${props => props.theme.card.border.active};
+    color: ${props => props.theme.card.text.active};
+  }
 `;
 
 export const LegendContainer = styled.div`
@@ -46,4 +71,8 @@ export const LegendElement = styled.div<{ backgroundcolor: string }>`
   border-radius: 50%;
   background-color: ${({ backgroundcolor }) => backgroundcolor};
   margin: 0 5px;
+`;
+
+export const TitleRow = styled(Grid)`
+  width: 100%;
 `;

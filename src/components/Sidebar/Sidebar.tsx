@@ -10,6 +10,7 @@ import { getThemeState } from '@redux/reducers/appThemeReducer';
 import * as ROUTES from '@utils/constants/routes';
 import { RouteType, RouteChildType } from '@utils/types/routes';
 import { sidebarRoutes as routes } from '@routes/index';
+import breakpoints from '@theme/breakpoints';
 
 import PastelLogoWhite from '@assets/images/pastel-logo-white.png';
 import PastelLogo from '@assets/images/pastel-logo.png';
@@ -56,6 +57,7 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
   category,
   ...rest
 }) => {
+  const [isMobile, setMobileView] = React.useState(false);
   const categoryIcon = isOpen ? <Styles.CategoryIconMore /> : <Styles.CategoryIconLess />;
   let active = '';
   if (
@@ -66,6 +68,22 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
     active = 'active-submenu';
   }
 
+  const handleShowSubMenu = () => {
+    setMobileView(false);
+    if (window.innerWidth < breakpoints.values.md) {
+      setMobileView(true);
+    }
+  };
+
+  React.useEffect(() => {
+    handleShowSubMenu();
+
+    window.addEventListener('resize', handleShowSubMenu);
+    return () => {
+      window.removeEventListener('resize', handleShowSubMenu);
+    };
+  }, []);
+
   return (
     <Styles.Category {...rest}>
       <Styles.CategoryText className={`menu-text ${active}`}>
@@ -74,7 +92,7 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
       </Styles.CategoryText>
       {badge ? <Styles.CategoryBadge label={badge} /> : ''}
       {category?.children ? (
-        <Collapse in={!isOpen} timeout="auto" unmountOnExit className="submenu">
+        <Collapse in={!isOpen || isMobile} timeout="auto" unmountOnExit className="submenu">
           {category.children.map((route: RouteChildType) => (
             <SidebarLink
               key={route.name}
@@ -181,15 +199,17 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
     >
       <Hidden mdUp>
         <Styles.SlideMenuMobileWrapper>
+          <Button type="button" className="close-button" onClick={onClose}>
+            <CloseIcon className="close-icon" />
+          </Button>
+        </Styles.SlideMenuMobileWrapper>
+        <Styles.SlideLogoMobileWrapper>
           <Styles.Brand component={NavLink} to={ROUTES.EXPLORER} button>
             <Box ml={1}>
               <Styles.BrandLogo src={isDarkMode ? PastelLogoWhite : PastelLogo} alt="Pastel Logo" />
             </Box>
           </Styles.Brand>
-          <Button type="button" className="close-button" onClick={onClose}>
-            <CloseIcon className="close-icon" />
-          </Button>
-        </Styles.SlideMenuMobileWrapper>
+        </Styles.SlideLogoMobileWrapper>
       </Hidden>
       <List disablePadding>
         <Styles.Items>

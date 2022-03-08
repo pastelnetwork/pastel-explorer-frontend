@@ -29,6 +29,7 @@ export const DrawerMobile = styled(MuiDrawer)`
   ${props => props.theme.breakpoints.down('sm')} {
     .MuiDrawer-paper {
       width: 90vw;
+      max-width: 325px;
     }
 
     .close-button {
@@ -46,7 +47,7 @@ export const DrawerMobile = styled(MuiDrawer)`
     }
 
     .close-icon {
-      width: 22px;
+      width: 20px;
       color: ${props => props.theme.sidebar.menu.default};
     }
   }
@@ -198,6 +199,10 @@ export const Category = styled(ListItem)<CategoryType>`
           display: none;
         }
       }
+
+      svg {
+        display: none;
+      }
     }
   }
 
@@ -240,7 +245,7 @@ export const Category = styled(ListItem)<CategoryType>`
       border-radius: 0.25rem;
     }
 
-    ${props => props.theme.breakpoints.up('sm')} {
+    ${props => props.theme.breakpoints.up('md')} {
       position: absolute;
       top: 42px;
       left: 50%;
@@ -370,5 +375,13 @@ export const SidebarFooter = styled.div`
 export const SlideMenuMobileWrapper = styled.div`
   display: flex;
   width: 100%;
+  padding: 0;
+`;
+
+export const SlideLogoMobileWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  margin-top: 12px;
+  margin-bottom: 20px;
   padding: 0 0 0 18px;
 `;

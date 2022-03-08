@@ -21,14 +21,14 @@ export const generateDrawerContent = ({ name, latLng, data }: MarkerProps) => {
   return (
     <Styles.Wrapper>
       <Grid container spacing={5}>
-        <Grid item>
-          <Typography variant="h3">Map details</Typography>
-        </Grid>
-        <Grid item>
-          <Typography variant="h4" align="center" gutterBottom>
+        <Styles.TitleRow item>
+          <Styles.Title variant="h3">Map details</Styles.Title>
+        </Styles.TitleRow>
+        <Styles.TitleRow item>
+          <Styles.SubTitle variant="h4" align="center" gutterBottom>
             {name}
-          </Typography>
-        </Grid>
+          </Styles.SubTitle>
+        </Styles.TitleRow>
       </Grid>
       <Grid container direction="column" spacing={2}>
         {data.map(({ type, country, city, id, ip }, index: number) => (
