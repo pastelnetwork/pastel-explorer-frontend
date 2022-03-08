@@ -22,6 +22,7 @@ const DISPLAY_COUNTRY_QUANTITY = 5;
 const tableStyles = {
   height: '340px',
   overflow: 'auto',
+  background: 'transparent',
 };
 
 const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ supernodes }) => {

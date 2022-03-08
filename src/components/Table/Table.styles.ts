@@ -13,7 +13,6 @@ export const Card = styled(StyledCard)(spacing);
 
 export const TableWrapper = styled.div`
   overflow-y: auto;
-  background: ${props => props.theme.palette.background.default};
   max-width: calc(100vw - ${props => props.theme.spacing(12)}px);
   border-radius: 6px;
   overflow: hidden;
@@ -43,4 +42,5 @@ export const RowCell = styled(MuiTableCell)`
 
 export const PaperWrapper = styled(Paper)`
   box-shadow: rgb(50 50 93 / 3%) 0px 2px 5px -1px, rgb(0 0 0 / 5%) 0px 1px 3px -1px !important;
+  background: transparent;
 `;

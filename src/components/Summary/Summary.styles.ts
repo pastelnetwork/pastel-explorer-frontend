@@ -9,7 +9,7 @@ import { rgba } from 'polished';
 export const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  padding: 16px 12px 24px;
+  padding: 16px 12px 12px;
   background: ${props => props.theme.palette.background.paper};
 `;
 

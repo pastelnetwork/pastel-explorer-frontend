@@ -36,7 +36,7 @@ export const MainWrapper = styled.main`
 `;
 
 export const MainContent = styled(Paper)`
-  padding: 20px;
+  padding: 0 12px 20px;
   flex: 1;
   background: ${props => props.theme.palette.background.paper};
 
