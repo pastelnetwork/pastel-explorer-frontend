@@ -10,7 +10,6 @@ export const NavContainer = styled.nav`
   padding-right: 12px;
   background: ${props => props.theme.sidebar.menu.background};
   z-index: 100;
-  transition: all 0.5s ease;
   box-shadow: 0 14px 20px rgb(16 16 16 / 6%);
 
   .cluster-button {

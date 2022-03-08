@@ -11,7 +11,11 @@ export const Card = styled(MuiCard)`
   box-shadow: none;
 
   h4 {
+    margin: 0;
+    padding-top: 18px;
+    padding-bottom: 18px;
     padding-left: 16px;
+    background: ${props => props.theme.card.titleColor};
   }
 `;
 

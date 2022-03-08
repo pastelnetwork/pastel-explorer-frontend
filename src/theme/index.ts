@@ -95,6 +95,7 @@ export const themeLight = createMuiTheme(
     },
     card: {
       color: '#4A5568',
+      titleColor: '#F8F9FA',
     },
   },
 );
@@ -169,6 +170,7 @@ export const themeDark = createMuiTheme(
     },
     card: {
       color: '#fff',
+      titleColor: '#1A202C',
     },
   },
 );
