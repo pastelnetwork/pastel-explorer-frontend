@@ -1,14 +1,13 @@
 import * as React from 'react';
 
 import Table, { RowsProps } from '@components/Table/Table';
-import DoughnutChart from '@components/Charts/DoughnutChart/DoughnutChart';
+import BarChart from '@components/Charts/BarChart/BarChart';
 
 import { INetworkSupernodes } from '@utils/types/INetwork';
 
 import {
   headers,
   generateSupernodeCountriesList,
-  generateChartData,
   CountryList,
 } from './SupernodeStatistics.helpers';
 import * as ExplorerMapStyles from '../ExplorerMap/ExplorerMap.styles';
@@ -60,16 +59,18 @@ const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ supernodes })
     }
   }, [supernodes]);
 
+  const chartData = {
+    labels: countryChartData?.headers || [],
+    data: countryChartData?.quantities || [],
+  };
+
   return (
     <ExplorerMapStyles.Container>
-      <DoughnutChart
+      <BarChart
         title="Supernode Statistics"
         innerTitle="Total"
         innerSubtitle={countryQuantity}
-        data={
-          countryChartData &&
-          generateChartData(countryChartData.headers, countryChartData.quantities)
-        }
+        data={chartData}
         table={<Table headers={headers} rows={countries} styles={tableStyles} />}
       />
     </ExplorerMapStyles.Container>

@@ -83,6 +83,10 @@ const themeVariant = {
       color: '#FFF',
       background: '#41B6E6',
     },
+    chart: {
+      light: '#2D3748',
+      dark: '#A0AEC0',
+    },
   },
 };
 
