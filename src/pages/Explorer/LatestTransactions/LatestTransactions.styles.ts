@@ -7,7 +7,7 @@ export const Typography = styled(MuiTypography)`
 `;
 
 export const LatestTransactionsWrapper = styled.div`
-  margin-top: 44px;
+  margin-top: 24px;
   box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
   background: ${props => props.theme.sidebar.menu.background};
   border-radius: 10px;

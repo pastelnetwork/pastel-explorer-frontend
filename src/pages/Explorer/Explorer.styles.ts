@@ -53,8 +53,8 @@ export const BlockWrapper = styled.div`
   border-radius: 10px;
   overflow: hidden;
 
-  &.mt-44 {
-    margin-top: 44px;
+  &.mt-24 {
+    margin-top: 24px;
   }
 `;
 

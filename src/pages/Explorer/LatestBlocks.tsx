@@ -59,7 +59,7 @@ function LatestBlocks() {
   }, []);
 
   return (
-    <Styles.BlockWrapper className="mt-44">
+    <Styles.BlockWrapper className="mt-24">
       <Styles.BlockTitle>Latest Blocks (Live)</Styles.BlockTitle>
       <TableContainer component={Paper}>
         <Table aria-label="customized table">
