@@ -50,13 +50,7 @@ export default function ChartSVG({ data, labels }: ChartSVGProps) {
       <svg width="100%" viewBox="0 0 610 221" fill="none" xmlns="http://www.w3.org/2000/svg">
         {shortLabels.map((label, index) => (
           <g key={label}>
-            <text
-              fill="#718EBF"
-              stroke="#718EBF"
-              xmlSpace="preserve"
-              style={{ whiteSpace: 'pre' }}
-              letterSpacing="0em"
-            >
+            <text fill="#718EBF" xmlSpace="preserve" letterSpacing="0em">
               <tspan x={tspan[index]?.x} y={tspan[index]?.y}>
                 {label}
               </tspan>
@@ -65,71 +59,31 @@ export default function ChartSVG({ data, labels }: ChartSVGProps) {
           </g>
         ))}
         <path d="M35.9395 191H42.3271" stroke="#718EBF" />
-        <text
-          fill="#718EBF"
-          stroke="#718EBF"
-          xmlSpace="preserve"
-          style={{ whiteSpace: 'pre' }}
-          fontFamily="Avenir"
-          fontSize="14"
-          letterSpacing="0em"
-        >
+        <text fill="#718EBF" xmlSpace="preserve" fontSize="14" letterSpacing="0em">
           <tspan x="19.6406" y="195.438">
             0
           </tspan>
         </text>
         <path d="M36.5879 144.766H42.9268" stroke="#718EBF" />
-        <text
-          fill="#718EBF"
-          stroke="#718EBF"
-          xmlSpace="preserve"
-          style={{ whiteSpace: 'pre' }}
-          fontFamily="Avenir"
-          fontSize="14"
-          letterSpacing="0em"
-        >
+        <text fill="#718EBF" xmlSpace="preserve" fontSize="14" letterSpacing="0em">
           <tspan x="5.61293" y="149.438">
             20%
           </tspan>
         </text>
         <path d="M36.5879 99.1602H42.9268" stroke="#718EBF" />
-        <text
-          fill="#718EBF"
-          stroke="#718EBF"
-          xmlSpace="preserve"
-          style={{ whiteSpace: 'pre' }}
-          fontFamily="Avenir"
-          fontSize="14"
-          letterSpacing="0em"
-        >
+        <text fill="#718EBF" xmlSpace="preserve" fontSize="14" letterSpacing="0em">
           <tspan x="5.19034" y="103.598">
             40%
           </tspan>
         </text>
         <path d="M36.5879 52.1602H42.9268" stroke="#718EBF" />
-        <text
-          fill="#718EBF"
-          stroke="#718EBF"
-          xmlSpace="preserve"
-          style={{ whiteSpace: 'pre' }}
-          fontFamily="Avenir"
-          fontSize="14"
-          letterSpacing="0em"
-        >
+        <text fill="#718EBF" xmlSpace="preserve" fontSize="14" letterSpacing="0em">
           <tspan x="5.19034" y="56.5981">
             60%
           </tspan>
         </text>
         <path d="M36.5879 6.16016H42.9268" stroke="#718EBF" />
-        <text
-          fill="#718EBF"
-          stroke="#718EBF"
-          xmlSpace="preserve"
-          style={{ whiteSpace: 'pre' }}
-          fontFamily="Avenir"
-          fontSize="14"
-          letterSpacing="0em"
-        >
+        <text fill="#718EBF" xmlSpace="preserve" fontSize="14" letterSpacing="0em">
           <tspan x="5.19034" y="10.5981">
             80%
           </tspan>
@@ -161,13 +115,7 @@ export default function ChartSVG({ data, labels }: ChartSVGProps) {
           );
         })}
         {data.map((item, index) => (
-          <text
-            fill="#A0AEC0"
-            xmlSpace="preserve"
-            style={{ whiteSpace: 'pre' }}
-            letterSpacing="0em"
-            key={item}
-          >
+          <text fill="#A0AEC0" xmlSpace="preserve" letterSpacing="0em" key={item}>
             <tspan x={barLabel[index].x} y={barLabel[index].y}>
               {item}
             </tspan>
