@@ -11,6 +11,7 @@ import {
   CountryList,
 } from './SupernodeStatistics.helpers';
 import * as ExplorerMapStyles from '../ExplorerMap/ExplorerMap.styles';
+import * as Styles from '../Explorer.styles';
 
 interface SupernodeStatisticsProps {
   supernodes: Array<INetworkSupernodes> | null;
@@ -63,6 +64,10 @@ const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ supernodes })
     labels: countryChartData?.headers || [],
     data: countryChartData?.quantities || [],
   };
+  let sum = 0;
+  if (countryChartData?.quantities) {
+    sum = countryChartData.quantities.reduce((a, b) => a + b);
+  }
 
   return (
     <ExplorerMapStyles.Container>
@@ -73,6 +78,7 @@ const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ supernodes })
         data={chartData}
         table={<Table headers={headers} rows={countries} styles={tableStyles} />}
       />
+      <Styles.ChartLegend>Total ({sum} Supernodes)</Styles.ChartLegend>
     </ExplorerMapStyles.Container>
   );
 };

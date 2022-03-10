@@ -7,17 +7,10 @@ import { setFilterValueAction } from '@redux/actions/filterAction';
 import { TAppTheme } from '@theme/index';
 import { TFilter } from '@utils/types/IFilter';
 import { getFilterState } from '@redux/reducers/filterReducer';
+import * as Styles from './InfinityTable.styles';
 
 const useStyles = makeStyles((theme: TAppTheme) => {
   return {
-    root: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      [theme.breakpoints.down('sm')]: {
-        flexDirection: 'column',
-      },
-    },
     listFilter: {
       display: 'flex',
       alignItems: 'center',
@@ -50,9 +43,10 @@ interface IProps {
   title: string;
   id?: string;
   filters: TFilter[];
+  headerBackground?: boolean;
 }
 
-const Filters: FC<IProps> = ({ filters, title }) => {
+const Filters: FC<IProps> = ({ filters, title, headerBackground }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const { dateRange } = useSelector(getFilterState);
@@ -68,7 +62,7 @@ const Filters: FC<IProps> = ({ filters, title }) => {
     };
   }, [dispatch]);
   return (
-    <div className={classes.root}>
+    <Styles.Wrapper className={headerBackground ? 'background' : ''}>
       <h4>{title}</h4>
       <div className={`${classes.listFilter} list-filter`}>
         {filters.map(({ name, value }) => (
@@ -91,7 +85,7 @@ const Filters: FC<IProps> = ({ filters, title }) => {
           </MenuItem>
         ))}
       </div>
-    </div>
+    </Styles.Wrapper>
   );
 };
 

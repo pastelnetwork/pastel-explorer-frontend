@@ -20,6 +20,7 @@ import { useBlockLatestBlocks } from '@redux/hooks/blocksHooks';
 import Skeleton from '@material-ui/lab/Skeleton';
 import * as ROUTES from '@utils/constants/routes';
 import { Link } from '@components/Link/Link.styles';
+import * as Styles from './Explorer.styles';
 
 const StyledTableCell = withStyles((theme: TAppTheme) => ({
   head: {
@@ -58,8 +59,8 @@ function LatestBlocks() {
   }, []);
 
   return (
-    <div>
-      <h4>Latest Blocks (Live)</h4>
+    <Styles.BlockWrapper className="mt-44">
+      <Styles.BlockTitle>Latest Blocks (Live)</Styles.BlockTitle>
       <TableContainer component={Paper}>
         <Table aria-label="customized table">
           <TableHead>
@@ -109,7 +110,7 @@ function LatestBlocks() {
           <Typography align="center" className={classes.viewAll}>{`View all >>`}</Typography>
         </Link>
       </div>
-    </div>
+    </Styles.BlockWrapper>
   );
 }
 

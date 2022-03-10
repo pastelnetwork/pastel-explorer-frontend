@@ -1,6 +1,16 @@
 import React from 'react';
 
-import { lines, tspan, barLabel, barsChart, generateCountries } from './ChartSVG.helper';
+import {
+  lines,
+  tspan,
+  barLabel,
+  barsChart,
+  generateCountries,
+  transform,
+  transformValue,
+  percentPosition,
+  percentLine,
+} from './ChartSVG.helper';
 import * as Styles from './BarChartstyles';
 
 interface ChartSVGProps {
@@ -13,7 +23,9 @@ type TLinearGradientProps = {
   y2: number;
 };
 
-const VIEW_BOX_HEIGHT = 188;
+const VIEW_BOX_HEIGHT = 322;
+
+const percentRange = [0, 20, 40, 60, 80, 100];
 
 export default function ChartSVG({ data, labels }: ChartSVGProps) {
   if (!labels?.length || !data.length) {
@@ -44,68 +56,65 @@ export default function ChartSVG({ data, labels }: ChartSVGProps) {
   };
   const shortLabels = generateCountries(labels);
   const linearGradient: TLinearGradientProps[] = [];
+
   return (
     <Styles.ChartSVGWrapper>
       <Styles.ChartSVGTooltip id="tooltip" />
-      <svg width="100%" viewBox="0 0 610 221" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" viewBox="0 0 610 322" fill="none" xmlns="http://www.w3.org/2000/svg">
         {shortLabels.map((label, index) => (
           <g key={label}>
-            <text fill="#718EBF" xmlSpace="preserve" letterSpacing="0em">
+            <text
+              xmlSpace="preserve"
+              letterSpacing="0em"
+              style={{ transform: `translateX(${transform[index]}px)` }}
+              className="chart-label"
+            >
               <tspan x={tspan[index]?.x} y={tspan[index]?.y}>
                 {label}
               </tspan>
             </text>
-            <path d={lines[index]} stroke="#718EBF" />
+            <path
+              d={lines[index]}
+              stroke="#718EBF"
+              style={{ transform: `translateX(${transform[index]}px)` }}
+            />
           </g>
         ))}
-        <path d="M35.9395 191H42.3271" stroke="#718EBF" />
-        <text fill="#718EBF" xmlSpace="preserve" fontSize="14" letterSpacing="0em">
-          <tspan x="19.6406" y="195.438">
-            0
-          </tspan>
-        </text>
-        <path d="M36.5879 144.766H42.9268" stroke="#718EBF" />
-        <text fill="#718EBF" xmlSpace="preserve" fontSize="14" letterSpacing="0em">
-          <tspan x="5.61293" y="149.438">
-            20%
-          </tspan>
-        </text>
-        <path d="M36.5879 99.1602H42.9268" stroke="#718EBF" />
-        <text fill="#718EBF" xmlSpace="preserve" fontSize="14" letterSpacing="0em">
-          <tspan x="5.19034" y="103.598">
-            40%
-          </tspan>
-        </text>
-        <path d="M36.5879 52.1602H42.9268" stroke="#718EBF" />
-        <text fill="#718EBF" xmlSpace="preserve" fontSize="14" letterSpacing="0em">
-          <tspan x="5.19034" y="56.5981">
-            60%
-          </tspan>
-        </text>
-        <path d="M36.5879 6.16016H42.9268" stroke="#718EBF" />
-        <text fill="#718EBF" xmlSpace="preserve" fontSize="14" letterSpacing="0em">
-          <tspan x="5.19034" y="10.5981">
-            80%
-          </tspan>
-        </text>
-        <path d="M43 191H610" stroke="#DFE5EE" strokeDasharray="4 4" />
-        <path d="M43 145H610" stroke="#DFE5EE" strokeDasharray="4 4" />
-        <path d="M43 98H610" stroke="#DFE5EE" strokeDasharray="4 4" />
-        <path d="M43 52H610" stroke="#DFE5EE" strokeDasharray="4 4" />
-        <path d="M43 6H610" stroke="#DFE5EE" strokeDasharray="4 4" />
+
+        {percentRange.map((item, index) => (
+          <g key={item}>
+            <path
+              d="M35.9395 278.968H42.3271"
+              stroke="#718EBF"
+              style={{ transform: `translateY(${percentLine[index]}px)` }}
+            />
+            <text xmlSpace="preserve" letterSpacing="0em" className="chart-label-percent">
+              <tspan x={percentPosition[index].x} y={percentPosition[index].y}>
+                {item}%
+              </tspan>
+            </text>
+            <path
+              d="M43 278.967H610"
+              stroke="#DFE5EE"
+              strokeDasharray="4 4"
+              style={{ transform: `translateY(${percentLine[index]}px)` }}
+            />
+          </g>
+        ))}
+
         {data.map((item, index) => {
           const percent = Math.floor((item * 100) / sum);
-          const height = (percent * VIEW_BOX_HEIGHT) / 80;
+          const height = (percent * VIEW_BOX_HEIGHT) / 100 - 15;
           linearGradient.push({
-            y1: VIEW_BOX_HEIGHT - height,
+            y1: VIEW_BOX_HEIGHT - height - 42,
             y2: VIEW_BOX_HEIGHT,
           });
           return (
             <rect
               key={item}
-              width="33"
+              width="44"
               height={height}
-              y={VIEW_BOX_HEIGHT - height}
+              y={VIEW_BOX_HEIGHT - height - 42}
               x={barsChart[index].x}
               fill={barsChart[index].fill}
               rx="5"
@@ -114,8 +123,16 @@ export default function ChartSVG({ data, labels }: ChartSVGProps) {
             />
           );
         })}
+
         {data.map((item, index) => (
-          <text fill="#A0AEC0" xmlSpace="preserve" letterSpacing="0em" key={item}>
+          <text
+            xmlSpace="preserve"
+            fontSize="12"
+            letterSpacing="0em"
+            key={item}
+            style={{ transform: `translateX(${transformValue[index]}px)` }}
+            className="chart-label-value"
+          >
             <tspan x={barLabel[index].x} y={barLabel[index].y}>
               {item}
             </tspan>

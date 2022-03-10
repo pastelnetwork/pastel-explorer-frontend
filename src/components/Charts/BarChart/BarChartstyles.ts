@@ -35,16 +35,14 @@ export const CardContent = styled(MuiCardContent)`
 `;
 
 export const ChartWrapper = styled(Grid)`
-  height: 160px;
   position: relative;
 
   @media (min-width: 960px) {
     padding: 10px 40px;
-    height: 332px;
   }
 
   @media (min-width: 1280px) {
-    padding: 40px 20px;
+    padding: 40px 20px 5px;
   }
 
   .chartjs-render-monitor {
@@ -93,7 +91,17 @@ export const RedText = styled.span`
 
 export const ChartSVGWrapper = styled.div`
   position: relative;
-  margin-top: 14px;
+
+  .chart-label,
+  .chart-label-percent,
+  .chart-label-value {
+    fill: ${props => props.theme.sidebar.closeIcon};
+    font-size: 14px;
+  }
+
+  @media (max-width: 1440px) {
+    margin-top: 20px;
+  }
 `;
 
 export const ChartSVGTooltip = styled.div`
@@ -104,6 +112,7 @@ export const ChartSVGTooltip = styled.div`
   box-shadow: 1px 2px 40px 0 rgb(0 0 0 / 9%);
   border-radius: 8px;
   color: ${props => props.theme.sidebar.menu.default};
+  z-index: 100;
 
   .tooltip-country {
     font-size: 16px;

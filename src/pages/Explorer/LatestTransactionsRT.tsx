@@ -23,6 +23,7 @@ import { ITransaction } from '@utils/types/ITransactions';
 import { TRANSACTION_DETAILS } from '@utils/constants/routes';
 import { Link } from '@components/Link/Link.styles';
 import { getCurrencyName } from '@utils/appInfo';
+import * as Styles from './Explorer.styles';
 
 const StyledTableCell = withStyles((theme: TAppTheme) => ({
   head: {
@@ -52,8 +53,8 @@ function LatestTransactions() {
   }, []);
 
   return (
-    <div>
-      <h4>Latest Transactions (Live)</h4>
+    <Styles.BlockWrapper className="mt-44">
+      <Styles.BlockTitle>Latest Transactions (Live)</Styles.BlockTitle>
       <TableContainer component={Paper}>
         <Table aria-label="customized table">
           <TableHead>
@@ -102,7 +103,7 @@ function LatestTransactions() {
           </TableBody>
         </Table>
       </TableContainer>
-    </div>
+    </Styles.BlockWrapper>
   );
 }
 

@@ -59,6 +59,7 @@ interface IInfinityTableComponentProps {
   // eslint-disable-next-line
   onHeaderClick?: (info: ISortData) => void;
   className?: string;
+  headerBackground?: boolean;
 }
 
 const noRowsRenderer = () => (
@@ -108,6 +109,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   disableLoading,
   renderAllRows,
   className,
+  headerBackground,
 }) => {
   const [loading, setLoading] = React.useState(false);
   const isDarkMode = useGetThemeMode();
@@ -154,7 +156,11 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
     <Styles.Card mb={3} className={className}>
       {title && (
         <div className="pl-0 pr-0">
-          {!filters ? <h4>{title}</h4> : <Filters filters={filters} title={title} />}
+          {!filters ? (
+            <h4>{title}</h4>
+          ) : (
+            <Filters filters={filters} title={title} headerBackground={headerBackground} />
+          )}
         </div>
       )}
       <Styles.TableContainer>

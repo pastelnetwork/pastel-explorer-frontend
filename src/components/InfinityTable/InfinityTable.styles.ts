@@ -118,3 +118,23 @@ export const Loader = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+export const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    flex-direction: column;
+  }
+
+  &.background {
+    margin: 0;
+    padding: 18px 16px;
+    background: ${props => props.theme.card.titleColor};
+
+    h4 {
+      margin: 0;
+    }
+  }
+`;
