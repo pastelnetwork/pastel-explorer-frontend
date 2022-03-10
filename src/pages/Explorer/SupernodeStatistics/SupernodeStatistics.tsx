@@ -65,7 +65,7 @@ const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ supernodes })
     data: countryChartData?.quantities || [],
   };
   let sum = 0;
-  if (countryChartData?.quantities) {
+  if (countryChartData?.quantities?.length) {
     sum = countryChartData.quantities.reduce((a, b) => a + b);
   }
 
