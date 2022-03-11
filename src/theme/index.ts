@@ -97,7 +97,7 @@ export const themeLight = createMuiTheme(
     },
     filter: {
       border: 'rgba(0, 0, 0, 0.12)',
-      background: 'rgba(45, 55, 72, 0.04)',
+      background: '#B9BFCB',
     },
     card: {
       color: '#4A5568',
@@ -185,7 +185,7 @@ export const themeDark = createMuiTheme(
       hover: '#718096',
     },
     filter: {
-      border: '#868f9b',
+      border: 'rgb(35, 38, 48)',
       background: 'rgb(35, 38, 48)',
     },
     card: {

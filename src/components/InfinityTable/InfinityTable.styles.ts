@@ -8,6 +8,7 @@ const StyledCard = styled(MuiCard)`
   padding: 0 ${props => props.theme.spacing(9)}px;
   padding-bottom: 32px !important;
   box-shadow: none;
+
   @media (max-width: 960px) {
     padding: 0 ${props => props.theme.spacing(2)}px;
     padding-bottom: 8px !important;
@@ -26,15 +27,12 @@ const StyledCard = styled(MuiCard)`
   }
 
   .filter-item {
-    transition: all 0.5s ease;
+    transition: none;
 
+    &-active,
     &:hover {
-      background-color: ${props => props.theme.filter.background};
+      background: ${props => props.theme.filter.background};
     }
-  }
-
-  .filter-item-active {
-    background-color: ${props => props.theme.filter.background};
   }
 `;
 
@@ -42,7 +40,7 @@ export const Card = styled(StyledCard)(spacing);
 
 export const TableWrapper = styled.div`
   overflow-y: auto;
-  max-width: calc(100vw - ${props => props.theme.spacing(12)}px);
+  max-width: 100%;
   background-color: ${props => props.theme.palette.background.default} !important;
 
   * {
@@ -131,7 +129,6 @@ export const Loader = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.9);
   z-index: 1;
   justify-content: center;
   align-items: center;

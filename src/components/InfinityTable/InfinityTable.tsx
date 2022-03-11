@@ -122,7 +122,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
     ({ clientHeight, scrollHeight, scrollTop }: ScrollEventData) => {
       if (!onBottomReach || rows.length < loadMoreFrom) return null;
 
-      const bottomReached = clientHeight + scrollTop >= scrollHeight;
+      const bottomReached = clientHeight + scrollTop + 5 >= scrollHeight;
       !loading && bottomReached && setLoading(true);
 
       return onBottomReach(bottomReached);
@@ -153,7 +153,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   }, [rows]);
 
   return (
-    <Styles.Card mb={3} className={className}>
+    <Styles.Card className={className}>
       {title && (
         <div className="pl-0 pr-0">
           {!filters ? (
