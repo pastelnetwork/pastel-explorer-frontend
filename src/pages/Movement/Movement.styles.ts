@@ -6,7 +6,7 @@ export const GridWrapper = styled(Grid)`
   background: ${props => props.theme.sidebar.menu.background};
   border-radius: 10px;
   overflow: hidden;
-  
+
   .pl-8px {
     padding-left: 8px;
   }

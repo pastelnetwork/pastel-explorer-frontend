@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-import { Typography as MuiTypography, Accordion as MuiAccordion, Grid, IconButton } from '@material-ui/core';
+import {
+  Typography as MuiTypography,
+  Accordion as MuiAccordion,
+  Grid,
+  IconButton,
+} from '@material-ui/core';
 
 export const Typography = styled(MuiTypography)`
   flex-grow: 1;
