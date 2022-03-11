@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-import { Card as MuiCard, darken, TableCell, Paper } from '@material-ui/core';
+import { Card as MuiCard, TableCell, Paper } from '@material-ui/core';
 import { spacing } from '@material-ui/system';
 
 const StyledCard = styled(MuiCard)`
@@ -26,6 +26,8 @@ const StyledCard = styled(MuiCard)`
   }
 
   .filter-item {
+    transition: all 0.5s ease;
+
     &:hover {
       background-color: ${props => props.theme.filter.background};
     }
@@ -42,7 +44,6 @@ export const TableWrapper = styled.div`
   overflow-y: auto;
   max-width: calc(100vw - ${props => props.theme.spacing(12)}px);
   background-color: ${props => props.theme.palette.background.default} !important;
-  border-radius: 6px;
 
   * {
     outline: 0;
@@ -54,11 +55,17 @@ export const TableWrapper = styled.div`
     background-color: ${props => props.theme.palette.background.default} !important;
 
     &::-webkit-scrollbar {
-      width: 18px;
+      width: 12px;
     }
+
     &::-webkit-scrollbar-thumb {
       background: ${props => props.theme.scrollbar};
+      border-radius: 8px;
     }
+  }
+
+  .ReactVirtualized__Grid {
+    padding-right: 0;
   }
 
   .ReactVirtualized__Grid__innerScrollContainer {
@@ -67,10 +74,8 @@ export const TableWrapper = styled.div`
 
   .ReactVirtualized__Table__row {
     width: 100% !important;
-    background-color: ${props => props.theme.palette.background.default};
-    &:nth-of-type(odd): {
-      background-color: ${props => darken(props.theme.palette.background.default, 0.5)} !important;
-    }
+    padding-right: 0 !important;
+
     svg {
       color: ${props => props.theme.palette.text.primary};
     }
@@ -78,9 +83,22 @@ export const TableWrapper = styled.div`
   .ReactVirtualized__Table__headerRow,
   .ReactVirtualized__Table__row {
     display: flex;
-    transition: all 0.2s ease-in !important;
+    transition: all 0.5s ease !important;
+  }
+
+  .ReactVirtualized__Table__headerRow {
+    background-color: ${props => props.theme.table.header} !important;
+  }
+
+  .ReactVirtualized__Table__row {
+    background-color: ${props => props.theme.table.even} !important;
+
+    &:nth-of-type(odd) {
+      background-color: ${props => props.theme.table.odd} !important;
+    }
+
     &:hover {
-      background-color: ${props => darken(props.theme.palette.background.default, 0.07)} !important;
+      background-color: ${props => props.theme.table.hover} !important;
     }
   }
 `;
@@ -130,7 +148,7 @@ export const Wrapper = styled.div`
 
   &.background {
     margin: 0;
-    padding: 18px 16px;
+    padding: 13px 16px;
     background: ${props => props.theme.card.titleColor};
 
     h4 {

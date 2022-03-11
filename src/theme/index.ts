@@ -89,6 +89,12 @@ export const themeLight = createMuiTheme(
       hover: '#0E80F5',
       pressed: '#0971DC',
     },
+    table: {
+      header: '#fff',
+      odd: '#ECEFF3',
+      even: '#FCFCFD',
+      hover: '#EBEAEA',
+    },
     filter: {
       border: 'rgba(0, 0, 0, 0.12)',
       background: 'rgba(45, 55, 72, 0.04)',
@@ -166,14 +172,20 @@ export const themeDark = createMuiTheme(
         },
       },
     },
-    scrollbar: '#0a0b0e',
+    scrollbar: '#8894AA',
     link: {
-      main: '#3F9AF7',
-      hover: '#0E80F5',
-      pressed: '#0971DC',
+      main: '#00D097',
+      hover: '#00C28D',
+      pressed: '#00B282',
+    },
+    table: {
+      header: '#4A5568',
+      odd: '#2D3748',
+      even: '#4A5568',
+      hover: '#718096',
     },
     filter: {
-      border: 'rgb(35, 38, 48)',
+      border: '#868f9b',
       background: 'rgb(35, 38, 48)',
     },
     card: {

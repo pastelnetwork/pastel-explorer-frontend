@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import Header from '@components/Header/Header';
 import InfinityTable, {
   RowsProps,
   SortDirectionsType,
@@ -18,7 +17,7 @@ import {
   DATA_OFFSET,
   DATA_DEFAULT_SORT,
 } from './Supernodes.helpers';
-import { GridWrapper } from './Supernodes.styles';
+import { GridWrapper, BlockWrapper, BlockTitle } from './Supernodes.styles';
 
 interface ISupernodeData {
   sortBy: string;
@@ -63,8 +62,8 @@ const Supernodes: React.FC = () => {
   }, []);
 
   return (
-    <>
-      <Header title="Supernode List" />
+    <BlockWrapper>
+      <BlockTitle>Supernode List</BlockTitle>
       <GridWrapper item>
         <InfinityTable
           sortBy={sortData.sortBy}
@@ -78,7 +77,7 @@ const Supernodes: React.FC = () => {
           className="supernode-table"
         />
       </GridWrapper>
-    </>
+    </BlockWrapper>
   );
 };
 

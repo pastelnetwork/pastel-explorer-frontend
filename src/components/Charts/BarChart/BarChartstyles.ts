@@ -42,7 +42,7 @@ export const ChartWrapper = styled(Grid)`
   }
 
   @media (min-width: 1280px) {
-    padding: 40px 20px 5px;
+    padding: 30px 20px 5px;
   }
 
   .chartjs-render-monitor {

@@ -53,11 +53,11 @@ function LatestTransactions() {
   }, []);
 
   return (
-    <Styles.BlockWrapper className="mt-24">
+    <Styles.BlockWrapper className="mt-24 latest-transactions-wrapper">
       <Styles.BlockTitle>Latest Transactions (Live)</Styles.BlockTitle>
-      <TableContainer component={Paper}>
-        <Table aria-label="customized table">
-          <TableHead>
+      <TableContainer component={Paper} className="table-container">
+        <Table aria-label="customized table" className="custom-table">
+          <TableHead className="table__row-header">
             <TableRow>
               <StyledTableCell>Block</StyledTableCell>
               <StyledTableCell>TXID</StyledTableCell>
@@ -69,7 +69,7 @@ function LatestTransactions() {
           <TableBody>
             {transactions.size > 0 ? (
               Array.from(transactions.values()).map((tx: ITransaction) => (
-                <StyledTableRow key={tx.id}>
+                <StyledTableRow key={tx.id} className="table__row">
                   <StyledTableCell component="th" scope="row">
                     {generateBlockKeyValue(tx.blockHash || '', tx.block.height || '')}
                   </StyledTableCell>

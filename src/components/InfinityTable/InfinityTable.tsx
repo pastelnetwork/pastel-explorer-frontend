@@ -182,7 +182,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
                     rowGetter={({ index }: { index: number }) => rows[index]}
                     rowCount={rows.length}
                     rowStyle={(info: Index) => handleRowStyle(info)}
-                    width={1920}
+                    width={100}
                     sortBy={sortBy}
                     sort={handleSort}
                     sortDirection={sortDirection}

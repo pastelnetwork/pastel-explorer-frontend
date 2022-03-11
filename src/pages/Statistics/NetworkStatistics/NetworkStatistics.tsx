@@ -11,6 +11,8 @@ import { periods, info } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { EChartsLineChart } from '@pages/HistoricalStatistics/Chart/EChartsLineChart';
 
+import * as Styles from '../Statistics.styles';
+
 const CHART_HEIGHT = 386;
 
 const NetworkStatistics: React.FC = () => {
@@ -29,8 +31,8 @@ const NetworkStatistics: React.FC = () => {
     setPeriod(value);
   };
   return (
-    <div className="network-block">
-      <h4>Network Statistics</h4>
+    <Styles.BlockWrapper>
+      <Styles.BlockTitle>Network Statistics</Styles.BlockTitle>
       <Grid container>
         <Grid item xs={12}>
           {chartData || !isLoading ? (
@@ -53,7 +55,7 @@ const NetworkStatistics: React.FC = () => {
           )}
         </Grid>
       </Grid>
-    </div>
+    </Styles.BlockWrapper>
   );
 };
 

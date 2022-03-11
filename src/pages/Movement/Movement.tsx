@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 
-import Header from '@components/Header/Header';
 import InfinityTable, {
   RowsProps,
   SortDirectionsType,
@@ -115,23 +114,21 @@ const Movement: React.FC = () => {
   }, [filter.dateRange]);
 
   return (
-    <>
-      <Header title="Movement Transactions" />
-      <Styles.GridWrapper item>
-        <InfinityTable
-          sortBy={fetchParams.current.sortBy}
-          sortDirection={fetchParams.current.sortDirection}
-          rows={movementList}
-          columns={columns}
-          tableHeight={950}
-          title="   "
-          filters={defaultFilters}
-          onBottomReach={handleFetchMoreMovements}
-          onHeaderClick={handleSort}
-          className="movement-table"
-        />
-      </Styles.GridWrapper>
-    </>
+    <Styles.GridWrapper item>
+      <InfinityTable
+        sortBy={fetchParams.current.sortBy}
+        sortDirection={fetchParams.current.sortDirection}
+        rows={movementList}
+        columns={columns}
+        tableHeight={950}
+        title="Movement Transactions"
+        filters={defaultFilters}
+        onBottomReach={handleFetchMoreMovements}
+        onHeaderClick={handleSort}
+        className="movement-table"
+        headerBackground
+      />
+    </Styles.GridWrapper>
   );
 };
 

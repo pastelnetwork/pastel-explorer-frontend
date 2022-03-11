@@ -34,4 +34,8 @@ export const LatestTransactionsWrapper = styled.div`
     padding-right: 0;
     padding-bottom: 0 !important;
   }
+
+  ${props => props.theme.breakpoints.down('lg')} {
+    margin-top: 12px;
+  }
 `;

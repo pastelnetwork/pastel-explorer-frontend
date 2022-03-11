@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 
-import Header from '@components/Header/Header';
 import InfinityTable, {
   RowsProps,
   SortDirectionsType,
@@ -123,23 +122,21 @@ const Blocks = () => {
   }, [filter.dateRange]);
 
   return (
-    <>
-      <Header title="Block List" />
-      <Styles.TableContainer item>
-        <InfinityTable
-          sortBy={fetchParams.current.sortBy}
-          sortDirection={fetchParams.current.sortDirection}
-          rows={blockList}
-          filters={blocksFilters}
-          title="   "
-          columns={columns}
-          tableHeight={650}
-          onBottomReach={handleFetchMoreBlocks}
-          onHeaderClick={handleSort}
-          className="block-list-table"
-        />
-      </Styles.TableContainer>
-    </>
+    <Styles.TableContainer item>
+      <InfinityTable
+        sortBy={fetchParams.current.sortBy}
+        sortDirection={fetchParams.current.sortDirection}
+        rows={blockList}
+        filters={blocksFilters}
+        title="Block List"
+        columns={columns}
+        tableHeight={650}
+        onBottomReach={handleFetchMoreBlocks}
+        onHeaderClick={handleSort}
+        className="block-list-table"
+        headerBackground
+      />
+    </Styles.TableContainer>
   );
 };
 

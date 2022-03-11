@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Grid } from '@material-ui/core';
 
 export const ExplorerWrapper = styled.div`
   .MuiPaper-elevation1 {
@@ -42,7 +43,7 @@ export const SupernodeColumn = styled.div`
 
 export const ChartLegend = styled.div`
   position: relative;
-  bottom: 10px;
+  bottom: 6px;
   font-size: 14px;
   text-align: center;
 `;
@@ -56,6 +57,54 @@ export const BlockWrapper = styled.div`
   &.mt-24 {
     margin-top: 24px;
   }
+
+  ${props => props.theme.breakpoints.down('lg')} {
+    &.mt-24 {
+      margin-top: 12px;
+    }
+
+    &.latest-transactions-wrapper {
+      margin-top: 0;
+    }
+  }
+
+  .table-container {
+    border-radius: 0;
+  }
+
+  .custom-table {
+    .table__row-header {
+      th {
+        padding: 9px 16px;
+        background-color: ${props => props.theme.table.header} !important;
+      }
+    }
+
+    .table__row {
+      background-color: ${props => props.theme.table.even} !important;
+      transition: all 0.5s ease;
+
+      &:nth-of-type(odd) {
+        background-color: ${props => props.theme.table.odd} !important;
+      }
+
+      td,
+      th {
+        padding: 12px 16px;
+      }
+
+      &:last-child {
+        td,
+        th {
+          border-bottom: none;
+        }
+      }
+
+      &:hover {
+        background-color: ${props => props.theme.table.hover} !important;
+      }
+    }
+  }
 `;
 
 export const BlockTitle = styled.h4`
@@ -64,4 +113,48 @@ export const BlockTitle = styled.h4`
   padding-bottom: 18px;
   padding-left: 16px;
   background: ${props => props.theme.card.titleColor};
+
+  &.latest-blocks {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 16px;
+
+    p {
+      padding: 0;
+    }
+
+    svg {
+      width: 12px;
+      height: auto;
+      margin-left: 5px;
+    }
+
+    .view-all {
+      p {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+`;
+
+export const GirdStyle = styled(Grid)`
+  &.left {
+    padding-right: 6px;
+  }
+
+  &.right {
+    padding-left: 6px;
+  }
+
+  ${props => props.theme.breakpoints.down('lg')} {
+    &.left {
+      padding-right: 12px;
+    }
+
+    &.right {
+      padding-left: 12px;
+      padding-top: 0;
+    }
+  }
 `;

@@ -48,3 +48,10 @@ export const MainContent = styled(Paper)`
     box-shadow: none;
   }
 `;
+
+export const EmptySection = styled.div`
+  display: block;
+  width: 100%;
+  height: 20px;
+  background: ${props => props.theme.palette.background.paper};
+`;

@@ -1,14 +1,7 @@
 import * as React from 'react';
 import { Redirect, useParams, useHistory } from 'react-router-dom';
 
-import {
-  Grid,
-  IconButton,
-  Tooltip,
-  AccordionSummary,
-  AccordionDetails,
-  Typography,
-} from '@material-ui/core';
+import { Grid, Tooltip, AccordionSummary, AccordionDetails, Typography } from '@material-ui/core';
 import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 
 import RouterLink from '@components/RouterLink/RouterLink';
@@ -126,7 +119,9 @@ const BlockDetails = () => {
 
       return (
         <Tooltip title={tooltip} arrow>
-          <IconButton onClick={() => handleBlockChange(hash)}>{icon}</IconButton>
+          <Styles.IconButtonStyle onClick={() => handleBlockChange(hash)}>
+            {icon}
+          </Styles.IconButtonStyle>
         </Tooltip>
       );
     }

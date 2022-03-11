@@ -25,7 +25,6 @@ export const columns = [
     label: 'Amount',
     dataKey: AMOUNT_MOVEMENT_KEY,
     disableSort: false,
-    className: 'pl-8px',
   },
   {
     width: 480,

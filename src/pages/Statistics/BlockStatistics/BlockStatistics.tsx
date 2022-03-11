@@ -25,6 +25,8 @@ import { SocketContext } from '@context/socket';
 import BlockVisualization from './BlockVisualization/BlockVisualization';
 import { transformBlocksData, ITransformBlocksData } from './BlockStatistics.helpers';
 
+import * as Styles from '../Statistics.styles';
+
 const BLOCK_ELEMENTS_COUNT = 8;
 
 const useStyles = makeStyles((_theme: TAppTheme) => ({
@@ -150,66 +152,70 @@ const StatisticsBlocks: React.FC = () => {
   return (
     <>
       <Header title="Current Statistics" />
-      <h4>Blocks Statistics</h4>
-      <Grid classes={{ root: classes.wrapper }} container>
-        {blockElements && blockElements.length ? (
-          <Grid
-            classes={{ container: classes.root }}
-            className={classes.root}
-            wrap="nowrap"
-            container
-            justify="flex-start"
-            alignItems="center"
-            spacing={8}
-          >
-            {renderMempoolBlock()}
-            <Grid item>
-              <div
-                style={{
-                  width: 3,
-                  height: 145,
-                  borderLeft: '3px dashed',
-                  marginLeft: -10,
-                  marginTop: -30,
-                }}
-              />
-            </Grid>
-            {blockElements.slice(1, 8).map(({ id, height, size, transactionCount, minutesAgo }) => (
-              <Grid item key={id}>
-                <BlockVisualization
-                  clickHandler={() => history.push(`${ROUTES.BLOCK_DETAILS}/${id}`)}
-                  height={height}
-                  size={size}
-                  transactionCount={transactionCount}
-                  minutesAgo={minutesAgo}
+      <Styles.BlockWrapper>
+        <Styles.BlockTitle>Blocks Statistics</Styles.BlockTitle>
+        <Grid classes={{ root: classes.wrapper }} container>
+          {blockElements && blockElements.length ? (
+            <Grid
+              classes={{ container: classes.root }}
+              className={classes.root}
+              wrap="nowrap"
+              container
+              justify="flex-start"
+              alignItems="center"
+              spacing={8}
+            >
+              {renderMempoolBlock()}
+              <Grid item>
+                <div
+                  style={{
+                    width: 3,
+                    height: 145,
+                    borderLeft: '3px dashed',
+                    marginLeft: -10,
+                    marginTop: -30,
+                  }}
                 />
               </Grid>
-            ))}
-          </Grid>
-        ) : (
-          <Skeleton animation="wave" variant="rect" height={300} />
-        )}
-        <Grid item xs={12} lg={12}>
-          {chartData || !isLoading ? (
-            <div style={{ flex: 1, backgroundColor: currentBgColor }}>
-              <EChartsLineChart
-                chartName="hashrate"
-                dataX={chartData?.labels}
-                dataY={chartData?.data}
-                title="Block sizes (kB)"
-                info={info}
-                offset={1}
-                handleBgColorChange={handleBgColorChange}
-                period={period}
-                periods={periods[5]}
-                handlePeriodFilterChange={handlePeriodFilterChange}
-              />
-            </div>
+              {blockElements
+                .slice(1, 8)
+                .map(({ id, height, size, transactionCount, minutesAgo }) => (
+                  <Grid item key={id}>
+                    <BlockVisualization
+                      clickHandler={() => history.push(`${ROUTES.BLOCK_DETAILS}/${id}`)}
+                      height={height}
+                      size={size}
+                      transactionCount={transactionCount}
+                      minutesAgo={minutesAgo}
+                    />
+                  </Grid>
+                ))}
+            </Grid>
           ) : (
             <Skeleton animation="wave" variant="rect" height={300} />
           )}
+          <Grid item xs={12} lg={12}>
+            {chartData || !isLoading ? (
+              <div style={{ flex: 1, backgroundColor: currentBgColor }}>
+                <EChartsLineChart
+                  chartName="hashrate"
+                  dataX={chartData?.labels}
+                  dataY={chartData?.data}
+                  title="Block sizes (kB)"
+                  info={info}
+                  offset={1}
+                  handleBgColorChange={handleBgColorChange}
+                  period={period}
+                  periods={periods[5]}
+                  handlePeriodFilterChange={handlePeriodFilterChange}
+                />
+              </div>
+            ) : (
+              <Skeleton animation="wave" variant="rect" height={300} />
+            )}
+          </Grid>
         </Grid>
-      </Grid>
+      </Styles.BlockWrapper>
     </>
   );
 };

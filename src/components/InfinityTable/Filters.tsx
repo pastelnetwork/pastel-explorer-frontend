@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: TAppTheme) => {
       width: '100%',
       textAlign: 'left',
       backgroundColor: 'inherit !important',
-      padding: `${theme.spacing(1.5)}px ${theme.spacing(4)}px`,
+      padding: '2px 10px',
     },
   };
 });

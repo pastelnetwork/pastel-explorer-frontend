@@ -35,37 +35,39 @@ const TableComponent: React.FC<TableComponentProps> = ({
     }
   }, []);
   return (
-    <Styles.Card mb={3} style={styles}>
-      {title && <h4>{title}</h4>}
-      <Styles.PaperWrapper>
-        {rows ? (
-          <Styles.TableWrapper>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  {headers.map(({ id, header, key }) => (
-                    <Styles.TableCell key={id} data-id={key} onClick={onClickHeader}>
-                      {header}
-                    </Styles.TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map(({ id, data }) => (
-                  <TableRow key={id}>
-                    {data.map(dataElement => (
-                      <Styles.RowCell key={dataElement.id}>{dataElement.value}</Styles.RowCell>
+    <Styles.BlockWrapper>
+      <Styles.Card mb={3} style={styles}>
+        {title && <Styles.BlockTitle>{title}</Styles.BlockTitle>}
+        <Styles.PaperWrapper>
+          {rows ? (
+            <Styles.TableWrapper>
+              <Table className="custom-table">
+                <TableHead className="table__row-header">
+                  <TableRow>
+                    {headers.map(({ id, header, key }) => (
+                      <Styles.TableCell key={id} data-id={key} onClick={onClickHeader}>
+                        {header}
+                      </Styles.TableCell>
                     ))}
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Styles.TableWrapper>
-        ) : (
-          <Skeleton animation="wave" variant="rect" height={styles?.height || 200} />
-        )}
-      </Styles.PaperWrapper>
-    </Styles.Card>
+                </TableHead>
+                <TableBody>
+                  {rows.map(({ id, data }) => (
+                    <TableRow key={id} className="table__row">
+                      {data.map(dataElement => (
+                        <Styles.RowCell key={dataElement.id}>{dataElement.value}</Styles.RowCell>
+                      ))}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Styles.TableWrapper>
+          ) : (
+            <Skeleton animation="wave" variant="rect" height={styles?.height || 200} />
+          )}
+        </Styles.PaperWrapper>
+      </Styles.Card>
+    </Styles.BlockWrapper>
   );
 };
 

@@ -44,3 +44,52 @@ export const PaperWrapper = styled(Paper)`
   box-shadow: rgb(50 50 93 / 3%) 0px 2px 5px -1px, rgb(0 0 0 / 5%) 0px 1px 3px -1px !important;
   background: transparent;
 `;
+
+export const BlockWrapper = styled.div`
+  box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
+  background: ${props => props.theme.sidebar.menu.background};
+  border-radius: 10px;
+  overflow: hidden;
+
+  .custom-table {
+    .table__row-header {
+      th {
+        padding: 9px 16px;
+        background-color: ${props => props.theme.table.header} !important;
+      }
+    }
+
+    .table__row {
+      background-color: ${props => props.theme.table.even} !important;
+      transition: all 0.5s ease;
+
+      &:nth-of-type(odd) {
+        background-color: ${props => props.theme.table.odd} !important;
+      }
+
+      td,
+      th {
+        padding: 12px 16px;
+      }
+
+      &:last-child {
+        td,
+        th {
+          border-bottom: none;
+        }
+      }
+
+      &:hover {
+        background-color: ${props => props.theme.table.hover} !important;
+      }
+    }
+  }
+`;
+
+export const BlockTitle = styled.h4`
+  margin: 0;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-left: 16px;
+  background: ${props => props.theme.card.titleColor};
+`;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Typography as MuiTypography, Accordion as MuiAccordion, Grid } from '@material-ui/core';
+import { Typography as MuiTypography, Accordion as MuiAccordion, Grid, IconButton } from '@material-ui/core';
 
 export const Typography = styled(MuiTypography)`
   flex-grow: 1;
@@ -24,4 +24,8 @@ export const DetailsValueText = styled(MuiTypography)`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+`;
+
+export const IconButtonStyle = styled(IconButton)`
+  padding: 0;
 `;
