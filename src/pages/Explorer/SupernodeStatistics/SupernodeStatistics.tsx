@@ -1,16 +1,17 @@
 import * as React from 'react';
 
 import Table, { RowsProps } from '@components/Table/Table';
-import DoughnutChart from '@components/Charts/DoughnutChart/DoughnutChart';
+import BarChart from '@components/Charts/BarChart/BarChart';
 
 import { INetworkSupernodes } from '@utils/types/INetwork';
 
 import {
   headers,
   generateSupernodeCountriesList,
-  generateChartData,
   CountryList,
 } from './SupernodeStatistics.helpers';
+import * as ExplorerMapStyles from '../ExplorerMap/ExplorerMap.styles';
+import * as Styles from '../Explorer.styles';
 
 interface SupernodeStatisticsProps {
   supernodes: Array<INetworkSupernodes> | null;
@@ -21,6 +22,7 @@ const DISPLAY_COUNTRY_QUANTITY = 5;
 const tableStyles = {
   height: '340px',
   overflow: 'auto',
+  background: 'transparent',
 };
 
 const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ supernodes }) => {
@@ -58,16 +60,26 @@ const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ supernodes })
     }
   }, [supernodes]);
 
+  const chartData = {
+    labels: countryChartData?.headers || [],
+    data: countryChartData?.quantities || [],
+  };
+  let sum = 0;
+  if (countryChartData?.quantities?.length) {
+    sum = countryChartData.quantities.reduce((a, b) => a + b);
+  }
+
   return (
-    <DoughnutChart
-      title="Supernode Statistics"
-      innerTitle="Total"
-      innerSubtitle={countryQuantity}
-      data={
-        countryChartData && generateChartData(countryChartData.headers, countryChartData.quantities)
-      }
-      table={<Table headers={headers} rows={countries} styles={tableStyles} />}
-    />
+    <ExplorerMapStyles.Container>
+      <BarChart
+        title="Supernode Statistics"
+        innerTitle="Total"
+        innerSubtitle={countryQuantity}
+        data={chartData}
+        table={<Table headers={headers} rows={countries} styles={tableStyles} />}
+      />
+      <Styles.ChartLegend>Total ({sum} Supernodes)</Styles.ChartLegend>
+    </ExplorerMapStyles.Container>
   );
 };
 

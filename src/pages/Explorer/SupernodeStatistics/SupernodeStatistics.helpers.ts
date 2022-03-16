@@ -44,8 +44,9 @@ export const generateChartData = (labels: Array<string>, data: Array<number>) =>
           themeVariant.custom.red.dark,
           themeVariant.custom.orange.dark,
         ],
-        borderWidth: 5,
+        borderWidth: 1,
         borderColor: themeVariant.palette.background.paper,
+        barThickness: 40,
       },
     ],
   };

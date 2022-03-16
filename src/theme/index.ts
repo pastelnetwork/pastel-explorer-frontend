@@ -64,6 +64,24 @@ export const themeLight = createMuiTheme(
         active: '15px',
       },
       closeIcon: '#000',
+      menu: {
+        default: '#868f9b',
+        active: '#34a1ff',
+        background: '#fff',
+        hover: '#0062cc',
+        subMenu: {
+          background: '#fff',
+        },
+        toggle: {
+          background: '#E9F2FB',
+          switch: '#34a1ff',
+        },
+        border: '#2D3748',
+        mobile: {
+          border: '#e6e6e6',
+          borderTop: '#e6e6e6',
+        },
+      },
     },
     scrollbar: '#7d7d7e',
     link: {
@@ -71,9 +89,28 @@ export const themeLight = createMuiTheme(
       hover: '#0E80F5',
       pressed: '#0971DC',
     },
+    table: {
+      header: '#fff',
+      odd: '#ECEFF3',
+      even: '#FCFCFD',
+      hover: '#EBEAEA',
+      label: '#2D3748',
+    },
     filter: {
       border: 'rgba(0, 0, 0, 0.12)',
-      background: 'rgba(45, 55, 72, 0.04)',
+      background: '#B9BFCB',
+    },
+    card: {
+      color: '#4A5568',
+      titleColor: '#EBEAEA',
+      border: {
+        default: 'rgba(0, 0, 0, 0.23)',
+        active: 'rgba(39, 153, 137, 0.5)',
+      },
+      text: {
+        default: '#2D3748',
+        active: '#279989',
+      },
     },
   },
 );
@@ -117,16 +154,53 @@ export const themeDark = createMuiTheme(
         active: '15px',
       },
       closeIcon: '#fff',
+      menu: {
+        default: '#A0AEC0',
+        active: '#00D097',
+        background: '#2D3748',
+        hover: '#00D097',
+        subMenu: {
+          background: '#2D3748',
+        },
+        toggle: {
+          background: '#1d1e31',
+          switch: '#00D097',
+        },
+        border: '#FCFCFD',
+        mobile: {
+          border: '#e6e6e6',
+          borderTop: '#7773bd',
+        },
+      },
     },
-    scrollbar: '#0a0b0e',
+    scrollbar: '#8894AA',
     link: {
-      main: '#3F9AF7',
-      hover: '#0E80F5',
-      pressed: '#0971DC',
+      main: '#00D097',
+      hover: '#00C28D',
+      pressed: '#00B282',
+    },
+    table: {
+      header: '#4A5568',
+      odd: '#2D3748',
+      even: '#4A5568',
+      hover: '#718096',
+      label: '#F8F8FA',
     },
     filter: {
       border: 'rgb(35, 38, 48)',
       background: 'rgb(35, 38, 48)',
+    },
+    card: {
+      color: '#fff',
+      titleColor: '#1A202C',
+      border: {
+        default: '#4A5568',
+        active: 'rgba(39, 153, 137, 0.5)',
+      },
+      text: {
+        default: '#F8F8FA',
+        active: '#279989',
+      },
     },
   },
 );

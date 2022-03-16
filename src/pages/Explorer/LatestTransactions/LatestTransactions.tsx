@@ -137,6 +137,7 @@ const LatestTransactions: React.FC = () => {
         onBottomReach={handleFetchMoreTransactions}
         onHeaderClick={handleSort}
         className="latest-transactions-table"
+        headerBackground
       />
     </Styles.LatestTransactionsWrapper>
   );

@@ -1,14 +1,7 @@
 import * as React from 'react';
 import { Redirect, useParams, useHistory } from 'react-router-dom';
 
-import {
-  Grid,
-  IconButton,
-  Tooltip,
-  AccordionSummary,
-  AccordionDetails,
-  Typography,
-} from '@material-ui/core';
+import { Grid, Tooltip, AccordionSummary, AccordionDetails, Typography } from '@material-ui/core';
 import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 
 import RouterLink from '@components/RouterLink/RouterLink';
@@ -90,6 +83,7 @@ const BlockDetails = () => {
                   route={`${ROUTES.TRANSACTION_DETAILS}/${transaction.id}`}
                   value={transaction.id}
                   textSize="large"
+                  className="transaction-hash"
                 />
               </Grid>
             ),
@@ -126,7 +120,9 @@ const BlockDetails = () => {
 
       return (
         <Tooltip title={tooltip} arrow>
-          <IconButton onClick={() => handleBlockChange(hash)}>{icon}</IconButton>
+          <Styles.IconButtonStyle className={type} onClick={() => handleBlockChange(hash)}>
+            {icon}
+          </Styles.IconButtonStyle>
         </Tooltip>
       );
     }
@@ -151,46 +147,49 @@ const BlockDetails = () => {
   }
 
   return block ? (
-    <>
+    <Styles.Wrapper>
       <Header title="Block Details" />
       <Grid container direction="column" spacing={2}>
-        <Grid item>
+        <Styles.GridStyle item>
           <Table
             title={generateTableHeaderWithNavigation(block)}
             headers={blockHeaders}
             rows={generateBlockTable(block)}
             // handleClickSort={handleClickSort}
-          />
-        </Grid>
-        <Grid item>
-          <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography>{isExpanded ? 'Hide Details' : 'Show Details'}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Grid container direction="column">
-                {generateDetailsElement(
-                  'Difficulty',
-                  formatNumber(block.difficulty, { decimalsLength: 2 }),
-                )}
-                {generateDetailsElement('Nonce', block.nonce)}
-                {generateDetailsElement('Merkle Root', block.merkleRoot)}
-                {generateDetailsElement('Previous Block', block.previousBlockHash)}
-                {generateDetailsElement('Next Block', block.nextBlockHash)}
-              </Grid>
-            </AccordionDetails>
-          </Styles.Accordion>
-        </Grid>
-        <Grid item>
+            className="block"
+            blockWrapperClassName="block-wrapper"
+            tableWrapperClassName="block-table-wrapper"
+          >
+            <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>{isExpanded ? 'Hide Details' : 'Show Details'}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container direction="column">
+                  {generateDetailsElement(
+                    'Difficulty',
+                    formatNumber(block.difficulty, { decimalsLength: 2 }),
+                  )}
+                  {generateDetailsElement('Nonce', block.nonce)}
+                  {generateDetailsElement('Merkle Root', block.merkleRoot)}
+                  {generateDetailsElement('Previous Block', block.previousBlockHash)}
+                  {generateDetailsElement('Next Block', block.nextBlockHash)}
+                </Grid>
+              </AccordionDetails>
+            </Styles.Accordion>
+          </Table>
+        </Styles.GridStyle>
+        <Styles.GridStyle item>
           <Table
             title="Latest Transactions"
             headers={transactionHeaders}
             rows={generateLatestTransactions(transactions)}
             handleClickSort={handleClickSortTransaction}
+            className="transactions"
           />
-        </Grid>
+        </Styles.GridStyle>
       </Grid>
-    </>
+    </Styles.Wrapper>
   ) : null;
 };
 

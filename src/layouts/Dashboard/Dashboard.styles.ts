@@ -25,28 +25,18 @@ export const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
 `;
 
 export const Root = styled.div`
-  display: flex;
+  display: block;
   min-height: 100vh;
-`;
-
-export const Drawer = styled.div`
-  ${props => props.theme.breakpoints.up('md')} {
-    width: ${drawerWidth}px;
-    flex-shrink: 0;
-  }
-`;
-
-export const AppContent = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  max-width: 100%;
 `;
 
 export const Paper = styled(MuiPaper)(spacing);
 
+export const MainWrapper = styled.main`
+  min-height: calc(100vh - 116px);
+`;
+
 export const MainContent = styled(Paper)`
-  padding: 20px;
+  padding: 0 12px 20px;
   flex: 1;
   background: ${props => props.theme.palette.background.paper};
 
@@ -57,4 +47,11 @@ export const MainContent = styled(Paper)`
   .MuiPaper-root .MuiPaper-root {
     box-shadow: none;
   }
+`;
+
+export const EmptySection = styled.div`
+  display: block;
+  width: 100%;
+  height: 20px;
+  background: ${props => props.theme.palette.background.paper};
 `;

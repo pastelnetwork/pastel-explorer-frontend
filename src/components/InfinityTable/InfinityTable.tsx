@@ -37,7 +37,7 @@ export interface RowsProps {
 }
 
 interface IInfinityTableComponentProps {
-  title?: string;
+  title?: React.ReactNode;
   columns: Array<{
     width: number;
     flexGrow: number;
@@ -59,6 +59,7 @@ interface IInfinityTableComponentProps {
   // eslint-disable-next-line
   onHeaderClick?: (info: ISortData) => void;
   className?: string;
+  headerBackground?: boolean;
 }
 
 const noRowsRenderer = () => (
@@ -108,6 +109,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   disableLoading,
   renderAllRows,
   className,
+  headerBackground,
 }) => {
   const [loading, setLoading] = React.useState(false);
   const isDarkMode = useGetThemeMode();
@@ -120,7 +122,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
     ({ clientHeight, scrollHeight, scrollTop }: ScrollEventData) => {
       if (!onBottomReach || rows.length < loadMoreFrom) return null;
 
-      const bottomReached = clientHeight + scrollTop >= scrollHeight;
+      const bottomReached = clientHeight + scrollTop + 5 >= scrollHeight;
       !loading && bottomReached && setLoading(true);
 
       return onBottomReach(bottomReached);
@@ -151,10 +153,14 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   }, [rows]);
 
   return (
-    <Styles.Card mb={3} className={className}>
+    <Styles.Card className={className}>
       {title && (
         <div className="pl-0 pr-0">
-          {!filters ? <h4>{title}</h4> : <Filters filters={filters} title={title} />}
+          {!filters ? (
+            <h4>{title}</h4>
+          ) : (
+            <Filters filters={filters} title={title} headerBackground={headerBackground} />
+          )}
         </div>
       )}
       <Styles.TableContainer>
@@ -176,7 +182,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
                     rowGetter={({ index }: { index: number }) => rows[index]}
                     rowCount={rows.length}
                     rowStyle={(info: Index) => handleRowStyle(info)}
-                    width={1920}
+                    width={100}
                     sortBy={sortBy}
                     sort={handleSort}
                     sortDirection={sortDirection}

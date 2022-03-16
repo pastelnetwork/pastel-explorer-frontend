@@ -76,7 +76,7 @@ const blocksRoutes = {
 };
 
 const richlistRoutes = {
-  id: 'Richlist (Top 100)',
+  id: 'Richlist',
   path: ROUTES.RICHLIST,
   icon: <LocalAtmIcon />,
   component: Richlist,
@@ -104,8 +104,8 @@ const supernodesRoutes = {
 };
 
 const statisticsRoutes = {
-  id: 'Current Statistics',
-  path: ROUTES.STATISTICS,
+  id: 'Statistics',
+  path: ROUTES.STATISTICS_PARENT,
   icon: (
     <svg
       fill="#eeeeee"
@@ -118,25 +118,19 @@ const statisticsRoutes = {
     </svg>
   ),
   component: Statistics,
-  seoTitle: 'Current Statistics',
-  children: null,
-  // children: [
-  //   {
-  //     path: ROUTES.STATISTICS_BLOCKS,
-  //     name: 'Blocks',
-  //     component: BlockStatistics,
-  //   },
-  //   {
-  //     path: ROUTES.STATISTICS_NETWORK,
-  //     name: 'Network',
-  //     component: NetworkStatistics,
-  //   },
-  //   {
-  //     path: ROUTES.STATISTICS_TRANSACTIONS,
-  //     name: 'Transactions',
-  //     component: TransactionStatistics,
-  //   },
-  // ],
+  seoTitle: 'Statistics',
+  children: [
+    {
+      path: ROUTES.STATISTICS,
+      name: 'Current Statistics',
+      component: Statistics,
+    },
+    {
+      path: ROUTES.STATISTICS_OVERTIME,
+      name: 'Historical Statistics',
+      component: StatisticsOvertime,
+    },
+  ],
 };
 // Statistics overtime routes
 const statisticsOvertimeRoutes = {
@@ -375,6 +369,6 @@ export const sidebarRoutes = [
   richlistRoutes,
   supernodesRoutes,
   statisticsRoutes,
-  statisticsOvertimeRoutes,
+  // statisticsOvertimeRoutes,
   // infoRoutes,
 ];

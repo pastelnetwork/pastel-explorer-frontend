@@ -11,6 +11,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import { ArrowForwardIos } from '@material-ui/icons';
 // application
 import { formattedDate } from '@utils/helpers/date/date';
 import { TAppTheme } from '@theme/index';
@@ -20,6 +21,7 @@ import { useBlockLatestBlocks } from '@redux/hooks/blocksHooks';
 import Skeleton from '@material-ui/lab/Skeleton';
 import * as ROUTES from '@utils/constants/routes';
 import { Link } from '@components/Link/Link.styles';
+import * as Styles from './Explorer.styles';
 
 const StyledTableCell = withStyles((theme: TAppTheme) => ({
   head: {
@@ -58,12 +60,19 @@ function LatestBlocks() {
   }, []);
 
   return (
-    <div>
-      <h4>Latest Blocks (Live)</h4>
-      <TableContainer component={Paper}>
-        <Table aria-label="customized table">
+    <Styles.BlockWrapper className="mt-24 latest-blocks-wrapper">
+      <Styles.BlockTitle className="latest-blocks">
+        Latest Blocks (Live)
+        <Link to="/blocks" className="view-all">
+          <Typography align="center" className={classes.viewAll}>
+            View all <ArrowForwardIos />
+          </Typography>
+        </Link>
+      </Styles.BlockTitle>
+      <TableContainer component={Paper} className="table-container">
+        <Table aria-label="customized table" className="custom-table">
           <TableHead>
-            <TableRow>
+            <TableRow className="table__row-header">
               <StyledTableCell style={{ width: 44 }}>Block</StyledTableCell>
               <StyledTableCell>Hash</StyledTableCell>
               <StyledTableCell align="right">TXs</StyledTableCell>
@@ -74,7 +83,7 @@ function LatestBlocks() {
           <TableBody>
             {latestBlocks && latestBlocks.size ? (
               Array.from(latestBlocks.values()).map(block => (
-                <StyledTableRow key={block.id}>
+                <StyledTableRow key={block.id} className="table__row">
                   <StyledTableCell component="th" scope="row">
                     {block.height || ''}
                   </StyledTableCell>
@@ -104,12 +113,7 @@ function LatestBlocks() {
           </TableBody>
         </Table>
       </TableContainer>
-      <div>
-        <Link to="/blocks">
-          <Typography align="center" className={classes.viewAll}>{`View all >>`}</Typography>
-        </Link>
-      </div>
-    </div>
+    </Styles.BlockWrapper>
   );
 }
 

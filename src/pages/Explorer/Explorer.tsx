@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { Grid } from '@material-ui/core';
 
-import Header from '@components/Header/Header';
 import { MarkerProps } from '@components/Map/Map';
 
 import * as URLS from '@utils/constants/urls';
@@ -49,22 +48,21 @@ const Explorer: React.FC = () => {
 
   return (
     <Styles.ExplorerWrapper>
-      <Header title="Explorer" />
-      <Grid container spacing={6}>
-        <Grid item xs={12} lg={7}>
+      <Styles.Gird>
+        <Styles.ExplorerMapColumn>
           <ExplorerMap geoLocationList={geoLocationList} nodesLength={nodesLength} />
-        </Grid>
-        <Grid item xs={12} lg={5}>
+        </Styles.ExplorerMapColumn>
+        <Styles.SupernodeColumn>
           <SupernodeStatistics supernodes={supernodeList} />
-        </Grid>
-      </Grid>
+        </Styles.SupernodeColumn>
+      </Styles.Gird>
       <Grid container spacing={6}>
-        <Grid item xs={12} lg={6}>
+        <Styles.GirdStyle item xs={12} lg={6} className="left">
           <LatestBlocks />
-        </Grid>
-        <Grid item xs={12} lg={6}>
+        </Styles.GirdStyle>
+        <Styles.GirdStyle item xs={12} lg={6} className="right">
           <LatestTransactionsRT />
-        </Grid>
+        </Styles.GirdStyle>
       </Grid>
       <Grid item>
         <LatestTransactions />

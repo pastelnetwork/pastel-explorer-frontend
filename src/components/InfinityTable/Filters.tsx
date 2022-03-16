@@ -1,4 +1,4 @@
-import { memo, FC, useCallback, MouseEvent, useEffect } from 'react';
+import { memo, FC, useCallback, MouseEvent, useEffect, ReactNode } from 'react';
 import makeStyles from '@material-ui/styles/makeStyles';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -7,22 +7,18 @@ import { setFilterValueAction } from '@redux/actions/filterAction';
 import { TAppTheme } from '@theme/index';
 import { TFilter } from '@utils/types/IFilter';
 import { getFilterState } from '@redux/reducers/filterReducer';
+import * as Styles from './InfinityTable.styles';
 
 const useStyles = makeStyles((theme: TAppTheme) => {
   return {
-    root: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      [theme.breakpoints.down('sm')]: {
-        flexDirection: 'column',
-      },
-    },
     listFilter: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'flex-end',
       borderRadius: `${theme.spacing(1)}px`,
+      [theme.breakpoints.down('xs')]: {
+        maxWidth: '100%',
+      },
     },
     button: {
       paddingRight: 0,
@@ -41,18 +37,19 @@ const useStyles = makeStyles((theme: TAppTheme) => {
       width: '100%',
       textAlign: 'left',
       backgroundColor: 'inherit !important',
-      padding: `${theme.spacing(1.5)}px ${theme.spacing(4)}px`,
+      padding: '2px 10px',
     },
   };
 });
 
 interface IProps {
-  title: string;
+  title: ReactNode;
   id?: string;
   filters: TFilter[];
+  headerBackground?: boolean;
 }
 
-const Filters: FC<IProps> = ({ filters, title }) => {
+const Filters: FC<IProps> = ({ filters, title, headerBackground }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const { dateRange } = useSelector(getFilterState);
@@ -68,7 +65,7 @@ const Filters: FC<IProps> = ({ filters, title }) => {
     };
   }, [dispatch]);
   return (
-    <div className={classes.root}>
+    <Styles.Wrapper className={headerBackground ? 'background' : ''}>
       <h4>{title}</h4>
       <div className={`${classes.listFilter} list-filter`}>
         {filters.map(({ name, value }) => (
@@ -91,7 +88,7 @@ const Filters: FC<IProps> = ({ filters, title }) => {
           </MenuItem>
         ))}
       </div>
-    </div>
+    </Styles.Wrapper>
   );
 };
 

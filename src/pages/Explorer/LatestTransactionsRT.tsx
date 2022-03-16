@@ -23,6 +23,7 @@ import { ITransaction } from '@utils/types/ITransactions';
 import { TRANSACTION_DETAILS } from '@utils/constants/routes';
 import { Link } from '@components/Link/Link.styles';
 import { getCurrencyName } from '@utils/appInfo';
+import * as Styles from './Explorer.styles';
 
 const StyledTableCell = withStyles((theme: TAppTheme) => ({
   head: {
@@ -52,11 +53,11 @@ function LatestTransactions() {
   }, []);
 
   return (
-    <div>
-      <h4>Latest Transactions (Live)</h4>
-      <TableContainer component={Paper}>
-        <Table aria-label="customized table">
-          <TableHead>
+    <Styles.BlockWrapper className="mt-24 latest-transactions-wrapper">
+      <Styles.BlockTitle>Latest Transactions (Live)</Styles.BlockTitle>
+      <TableContainer component={Paper} className="table-container">
+        <Table aria-label="customized table" className="custom-table">
+          <TableHead className="table__row-header">
             <TableRow>
               <StyledTableCell>Block</StyledTableCell>
               <StyledTableCell>TXID</StyledTableCell>
@@ -68,7 +69,7 @@ function LatestTransactions() {
           <TableBody>
             {transactions.size > 0 ? (
               Array.from(transactions.values()).map((tx: ITransaction) => (
-                <StyledTableRow key={tx.id}>
+                <StyledTableRow key={tx.id} className="table__row">
                   <StyledTableCell component="th" scope="row">
                     {generateBlockKeyValue(tx.blockHash || '', tx.block.height || '')}
                   </StyledTableCell>
@@ -102,7 +103,7 @@ function LatestTransactions() {
           </TableBody>
         </Table>
       </TableContainer>
-    </div>
+    </Styles.BlockWrapper>
   );
 }
 

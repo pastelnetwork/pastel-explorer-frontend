@@ -23,7 +23,7 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
   innerSubtitle,
 }) => {
   return (
-    <Styles.Card mb={3}>
+    <Styles.Card>
       {title && <h4>{title}</h4>}
       <Styles.CardContent>
         <Grid container justify="center" alignItems="flex-start">

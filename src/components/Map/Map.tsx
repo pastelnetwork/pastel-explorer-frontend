@@ -33,7 +33,7 @@ export interface MapProps {
 
 const Map: React.FC<MapProps> = ({ title, markers, options }) => {
   return (
-    <Styles.Card mb={4}>
+    <Styles.Card>
       <h4>{title}</h4>
       <Styles.CardContent>
         <Styles.MapContainer>
