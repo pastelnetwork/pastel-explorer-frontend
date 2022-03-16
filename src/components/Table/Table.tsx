@@ -1,4 +1,4 @@
-import { MouseEvent, useCallback } from 'react';
+import { MouseEvent, useCallback, ReactNode } from 'react';
 import { Table, TableBody, TableHead, TableRow } from '@material-ui/core';
 import { CSSProperties } from '@material-ui/styles';
 import { Skeleton } from '@material-ui/lab';
@@ -20,6 +20,10 @@ interface TableComponentProps {
   rows: Array<RowsProps> | null;
   styles?: Partial<CSSProperties>;
   handleClickSort?: (_event: MouseEvent<HTMLTableHeaderCellElement>) => void;
+  className?: string;
+  blockWrapperClassName?: string;
+  tableWrapperClassName?: string;
+  children?: ReactNode;
 }
 
 const TableComponent: React.FC<TableComponentProps> = ({
@@ -28,6 +32,10 @@ const TableComponent: React.FC<TableComponentProps> = ({
   rows,
   styles,
   handleClickSort,
+  className = '',
+  blockWrapperClassName = '',
+  tableWrapperClassName = '',
+  children,
 }) => {
   const onClickHeader = useCallback((event: MouseEvent<HTMLTableHeaderCellElement>) => {
     if (handleClickSort) {
@@ -35,13 +43,13 @@ const TableComponent: React.FC<TableComponentProps> = ({
     }
   }, []);
   return (
-    <Styles.BlockWrapper>
+    <Styles.BlockWrapper className={blockWrapperClassName}>
       <Styles.Card mb={3} style={styles}>
         {title && <Styles.BlockTitle>{title}</Styles.BlockTitle>}
         <Styles.PaperWrapper>
           {rows ? (
-            <Styles.TableWrapper>
-              <Table className="custom-table">
+            <Styles.TableWrapper className={tableWrapperClassName}>
+              <Table className={`custom-table ${className}`}>
                 <TableHead className="table__row-header">
                   <TableRow>
                     {headers.map(({ id, header, key }) => (
@@ -67,6 +75,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
           )}
         </Styles.PaperWrapper>
       </Styles.Card>
+      {children}
     </Styles.BlockWrapper>
   );
 };

@@ -169,7 +169,10 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
         return true;
       }
       if (path.startsWith('/blocks')) {
-        return !!['/block', '/tx'].some(el => locationLink.pathname.startsWith(el));
+        return !!['/block'].some(el => locationLink.pathname.startsWith(el));
+      }
+      if (path.startsWith('/movement')) {
+        return !!['/tx'].some(el => locationLink.pathname.startsWith(el));
       }
       if (path.startsWith('/supernodes')) {
         return !!['/address'].some(el => locationLink.pathname.startsWith(el));

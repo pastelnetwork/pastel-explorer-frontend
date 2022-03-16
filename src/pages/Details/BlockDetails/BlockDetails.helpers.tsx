@@ -13,7 +13,7 @@ export const blockHeaders: Array<HeaderType> = [
 ];
 
 export const transactionHeaders: Array<HeaderType> = [
-  { id: 1, header: 'Hash', key: 'id' },
+  { id: 1, header: 'TXID', key: 'id' },
   { id: 2, header: 'Recipients', key: 'recipientCount' },
   { id: 3, header: `Amount (${getCurrencyName()})`, key: 'totalAmount' },
 ];

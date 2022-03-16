@@ -5,6 +5,7 @@ import { Card as MuiCard, TableCell as MuiTableCell, CardHeader, Paper } from '@
 import { spacing } from '@material-ui/system';
 
 const StyledCard = styled(MuiCard)`
+  margin-bottom: 1px !important;
   box-shadow: none;
   overflow: unset;
 `;
@@ -13,7 +14,7 @@ export const Card = styled(StyledCard)(spacing);
 
 export const TableWrapper = styled.div`
   overflow-y: auto;
-  max-width: calc(100vw - ${props => props.theme.spacing(12)}px);
+  max-width: 100%;
   border-radius: 6px;
   overflow: hidden;
 `;
@@ -46,6 +47,7 @@ export const PaperWrapper = styled(Paper)`
 `;
 
 export const BlockWrapper = styled.div`
+  margin-bottom: 30px;
   box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
   background: ${props => props.theme.sidebar.menu.background};
   border-radius: 10px;
@@ -88,8 +90,6 @@ export const BlockWrapper = styled.div`
 
 export const BlockTitle = styled.h4`
   margin: 0;
-  padding-top: 18px;
-  padding-bottom: 18px;
-  padding-left: 16px;
+  padding: 18px 16px;
   background: ${props => props.theme.card.titleColor};
 `;

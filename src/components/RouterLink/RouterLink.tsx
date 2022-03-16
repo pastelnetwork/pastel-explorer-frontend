@@ -7,6 +7,7 @@ interface RouterLinkProps {
   textSize?: 'normal' | 'large';
   styles?: Partial<CSSProperties>;
   title?: string;
+  className?: string;
 }
 
 const RouterLink: React.FC<RouterLinkProps> = ({
@@ -15,9 +16,16 @@ const RouterLink: React.FC<RouterLinkProps> = ({
   textSize = 'normal',
   styles,
   title,
+  className,
 }) => {
   return (
-    <Styles.RouterLink style={styles} title={title} to={`${route}`} textsize={textSize}>
+    <Styles.RouterLink
+      className={className}
+      style={styles}
+      title={title}
+      to={`${route}`}
+      textsize={textSize}
+    >
       {value}
     </Styles.RouterLink>
   );

@@ -10,6 +10,7 @@ export const columns = [
     label: 'Block',
     dataKey: BLOCK_ID_KEY,
     disableSort: false,
+    className: 'col-block',
   },
   {
     width: 390,
@@ -17,6 +18,7 @@ export const columns = [
     label: 'Hash',
     dataKey: BLOCK_HASH,
     disableSort: false,
+    className: 'col-hash',
   },
   {
     width: 40,
@@ -24,7 +26,7 @@ export const columns = [
     label: 'Transaction Quantity',
     dataKey: TRANSACTIONS_QTY_KEY,
     disableSort: false,
-    className: 'pl-8px',
+    className: 'pl-8px col-transaction-quantity',
   },
   {
     width: 100,
@@ -32,6 +34,6 @@ export const columns = [
     label: 'Timestamp',
     dataKey: TIMESTAMP_BLOCKS_KEY,
     disableSort: false,
-    className: 'pl-12px',
+    className: 'pl-12px col-timestamp',
   },
 ];

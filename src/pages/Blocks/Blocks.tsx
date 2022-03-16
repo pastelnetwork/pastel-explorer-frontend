@@ -12,6 +12,8 @@ import * as URLS from '@utils/constants/urls';
 import { IBlock } from '@utils/types/IBlocks';
 import { blocksFilters } from '@utils/constants/filter';
 import { getFilterState } from '@redux/reducers/filterReducer';
+import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
+import breakpoints from '@theme/breakpoints';
 
 import { TIMESTAMP_BLOCKS_KEY, columns, BLOCK_ID_KEY } from './Blocks.columns';
 import {
@@ -34,12 +36,30 @@ const Blocks = () => {
     sortBy: TIMESTAMP_BLOCKS_KEY,
     sortDirection: DATA_DEFAULT_SORT,
   });
+  const [isMobile, setMobileView] = React.useState(false);
+  const [totalItem, setTotalItem] = React.useState<number>(0);
   const [blockList, setBlocksList] = React.useState<Array<RowsProps>>([]);
   const filter = useSelector(getFilterState);
-  const fetchBlocksData = useFetch<{ data: Array<IBlock> }>({
+  const fetchBlocksData = useFetch<{ data: Array<IBlock>; total: number }>({
     method: 'get',
     url: URLS.BLOCK_URL,
   });
+
+  const handleShowSubMenu = () => {
+    setMobileView(false);
+    if (window.innerWidth < breakpoints.values.lg) {
+      setMobileView(true);
+    }
+  };
+
+  React.useEffect(() => {
+    handleShowSubMenu();
+
+    window.addEventListener('resize', handleShowSubMenu);
+    return () => {
+      window.removeEventListener('resize', handleShowSubMenu);
+    };
+  }, []);
 
   const handleFetchBlocks = (
     offset: number,
@@ -70,6 +90,7 @@ const Blocks = () => {
       .fetchData({ params })
       .then(response => {
         if (response) {
+          setTotalItem(response?.total);
           return transformTableData(response.data);
         }
         return [];
@@ -121,6 +142,15 @@ const Blocks = () => {
     }
   }, [filter.dateRange]);
 
+  const getMovementTransactionsTitle = () => (
+    <Styles.TitleWrapper>
+      <Styles.Title>Block List</Styles.Title>{' '}
+      {totalItem > 0 ? (
+        <Styles.SubTitle>Total {formatNumber(totalItem)} blocks</Styles.SubTitle>
+      ) : null}
+    </Styles.TitleWrapper>
+  );
+
   return (
     <Styles.TableContainer item>
       <InfinityTable
@@ -128,13 +158,14 @@ const Blocks = () => {
         sortDirection={fetchParams.current.sortDirection}
         rows={blockList}
         filters={blocksFilters}
-        title="Block List"
+        title={getMovementTransactionsTitle()}
         columns={columns}
-        tableHeight={650}
+        tableHeight={isMobile ? 750 : 650}
         onBottomReach={handleFetchMoreBlocks}
         onHeaderClick={handleSort}
         className="block-list-table"
         headerBackground
+        rowHeight={isMobile ? 180 : 45}
       />
     </Styles.TableContainer>
   );

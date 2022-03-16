@@ -1,4 +1,4 @@
-import { memo, FC, useCallback, MouseEvent, useEffect } from 'react';
+import { memo, FC, useCallback, MouseEvent, useEffect, ReactNode } from 'react';
 import makeStyles from '@material-ui/styles/makeStyles';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme: TAppTheme) => {
       alignItems: 'center',
       justifyContent: 'flex-end',
       borderRadius: `${theme.spacing(1)}px`,
+      [theme.breakpoints.down('xs')]: {
+        maxWidth: '100%',
+      },
     },
     button: {
       paddingRight: 0,
@@ -40,7 +43,7 @@ const useStyles = makeStyles((theme: TAppTheme) => {
 });
 
 interface IProps {
-  title: string;
+  title: ReactNode;
   id?: string;
   filters: TFilter[];
   headerBackground?: boolean;

@@ -37,7 +37,7 @@ export interface RowsProps {
 }
 
 interface IInfinityTableComponentProps {
-  title?: string;
+  title?: React.ReactNode;
   columns: Array<{
     width: number;
     flexGrow: number;

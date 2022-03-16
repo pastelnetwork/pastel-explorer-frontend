@@ -139,7 +139,7 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  ${props => props.theme.breakpoints.down('sm')} {
+  ${props => props.theme.breakpoints.down('xs')} {
     flex-direction: column;
   }
 

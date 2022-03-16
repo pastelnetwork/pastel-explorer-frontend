@@ -95,6 +95,7 @@ const TransactionDetails = () => {
                     value={address}
                     textSize="large"
                     title={address}
+                    className="address-link"
                   />
                 </Styles.RowWrapper>
               </Grid>
@@ -113,22 +114,30 @@ const TransactionDetails = () => {
     blockHash,
     timestamp,
     block,
+    totalAmount,
+    recipientCount,
   }: ITransactionDetails): RowsProps[] => {
     return [
       {
         id: 1,
         data: [
-          { id: 1, value: block.confirmations },
           {
-            id: 2,
+            id: 1,
             value:
               blockHash !== 'N/A' ? (
-                <RouterLink route={`${ROUTES.BLOCK_DETAILS}/${blockHash}`} value={blockHash} />
+                <RouterLink
+                  route={`${ROUTES.BLOCK_DETAILS}/${blockHash}`}
+                  value={blockHash}
+                  className="transaction-hash"
+                />
               ) : (
                 '-'
               ),
           },
-          { id: 3, value: formattedDate(timestamp) },
+          { id: 2, value: block.confirmations },
+          { id: 3, value: recipientCount },
+          { id: 4, value: formatNumber(totalAmount) },
+          { id: 5, value: formattedDate(timestamp) },
         ],
       },
     ];
@@ -139,21 +148,27 @@ const TransactionDetails = () => {
   }
 
   return transaction ? (
-    <>
+    <Styles.Wrapper>
       <Header title="Transaction Details" />
       <Grid container direction="column" spacing={2}>
-        <Styles.TransactionDesc item onClick={toggleOpenRawData}>
-          {generateTableTitle(transaction)}
+        <Styles.TransactionDesc item>
+          {generateTableTitle(transaction, toggleOpenRawData)}
         </Styles.TransactionDesc>
         <TransactionRawData
           open={openRawDataModal}
           toggleOpen={toggleOpenRawData}
           rawData={transaction.rawData}
         />
-        <Grid item>
-          <Table headers={transactionHeaders} rows={generateTransactionTable(transaction)} />
-        </Grid>
-        <Grid container spacing={6}>
+        <Styles.GridStyle item>
+          <Table
+            headers={transactionHeaders}
+            rows={generateTransactionTable(transaction)}
+            className="transaction"
+            blockWrapperClassName="transaction-wrapper"
+            title="Overview"
+          />
+        </Styles.GridStyle>
+        <Styles.GridStyle container spacing={6}>
           {transaction.isNonStandard ? (
             generateNonStandardTransactionInfo()
           ) : (
@@ -167,6 +182,8 @@ const TransactionDetails = () => {
                     headers={addressHeaders}
                     handleClickSort={handleClickSort}
                     rows={generateTransactionEvents(transactionEvents, 'Outgoing')}
+                    className="input-addresses"
+                    blockWrapperClassName="input-addresses-wrapper"
                   />
                 )}
               </Grid>
@@ -176,13 +193,14 @@ const TransactionDetails = () => {
                   headers={addressHeaders}
                   rows={generateTransactionEvents(transactionEvents, 'Incoming')}
                   handleClickSort={handleClickSort}
+                  className="recipients"
                 />
               </Grid>
             </>
           )}
-        </Grid>
+        </Styles.GridStyle>
       </Grid>
-    </>
+    </Styles.Wrapper>
   ) : null;
 };
 
