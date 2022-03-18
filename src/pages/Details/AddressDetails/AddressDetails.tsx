@@ -113,7 +113,7 @@ const AddressDetails = () => {
   }
 
   return addresses ? (
-    <>
+    <Styles.Wrapper>
       <Header title="Address Details" />
       <Grid container direction="column">
         <Grid item>
@@ -121,6 +121,7 @@ const AddressDetails = () => {
             title={`${getCurrencyName()} address: ${id}`}
             headers={addressHeaders}
             rows={generateAddressSummary(addresses)}
+            tableWrapperClassName="address-table-wrapper"
           />
         </Grid>
         <Styles.TableWrapper item>
@@ -137,7 +138,7 @@ const AddressDetails = () => {
           />
         </Styles.TableWrapper>
       </Grid>
-    </>
+    </Styles.Wrapper>
   ) : null;
 };
 

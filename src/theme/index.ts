@@ -121,6 +121,19 @@ export const themeLight = createMuiTheme(
       silver: '#A5A195',
       bronze: '#AD4005',
     },
+    supernodes: {
+      status: {
+        background: {
+          enabled: '#00D097',
+          newStart: '#FFA21B',
+        },
+        color: '#fff',
+      },
+    },
+    dropdown: {
+      border: '#A0AEC0',
+      color: '#4A5568',
+    },
   },
 );
 
@@ -219,6 +232,19 @@ export const themeDark = createMuiTheme(
       gold: '#D69B00',
       silver: '#A5A195',
       bronze: '#AD4005',
+    },
+    supernodes: {
+      status: {
+        background: {
+          enabled: '#00D097',
+          newStart: '#FFA21B',
+        },
+        color: '#fff',
+      },
+    },
+    dropdown: {
+      border: '#A0AEC0',
+      color: '#F8F9FA',
     },
   },
 );

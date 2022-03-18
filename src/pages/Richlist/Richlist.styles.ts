@@ -201,6 +201,10 @@ export const InfoItem = styled.div`
   &:nth-child(3),
   &:nth-child(4) {
     margin-bottom: 0;
+
+    &:before {
+      display: none;
+    }
   }
 
   ${props => props.theme.breakpoints.down('md')} {
@@ -216,6 +220,10 @@ export const InfoItem = styled.div`
 
     &:nth-child(3) {
       margin-bottom: 12px;
+
+      &:before {
+        display: block;
+      }
     }
 
     &:before {

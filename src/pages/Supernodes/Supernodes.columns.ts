@@ -11,7 +11,8 @@ export const columns = [
     flexGrow: 1,
     label: 'Supernode IP',
     dataKey: SUPERNODE_IP_KEY,
-    disableSort: true,
+    disableSort: false,
+    className: 'col-supernode-ip',
   },
   {
     width: 20,
@@ -19,6 +20,7 @@ export const columns = [
     label: 'Port',
     dataKey: SUPERNODE_PORT_KEY,
     disableSort: true,
+    className: 'col-port',
   },
   {
     width: 320,
@@ -34,7 +36,7 @@ export const columns = [
     label: 'Status',
     dataKey: SUPERNODE_STATUS_KEY,
     disableSort: true,
-    className: 'pl-8px',
+    className: 'col-status',
   },
   {
     width: 100,
@@ -42,7 +44,7 @@ export const columns = [
     label: 'Country',
     dataKey: SUPERNODE_COUNTRY_KEY,
     disableSort: false,
-    className: 'pl-14px',
+    className: 'col-country',
   },
   {
     width: 120,
@@ -50,6 +52,6 @@ export const columns = [
     label: 'Last paid',
     dataKey: SUPERNODE_LAST_PAID_KEY,
     disableSort: false,
-    className: 'pl-12px',
+    className: 'col-last-paid',
   },
 ];

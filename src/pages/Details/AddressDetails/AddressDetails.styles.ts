@@ -7,3 +7,10 @@ export const TableWrapper = styled(Grid)`
     padding-right: 0;
   }
 `;
+
+export const Wrapper = styled.div`
+  .address-table-wrapper {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+`;

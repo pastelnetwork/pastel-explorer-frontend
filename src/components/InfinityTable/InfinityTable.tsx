@@ -157,7 +157,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
       {title && (
         <div className="pl-0 pr-0">
           {!filters ? (
-            <h4>{title}</h4>
+            <h4 className="table-title">{title}</h4>
           ) : (
             <Filters filters={filters} title={title} headerBackground={headerBackground} />
           )}
