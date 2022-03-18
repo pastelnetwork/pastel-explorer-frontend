@@ -20,8 +20,8 @@ type TTooltipParams = {
 
 const colors = [
   ['#3F9AF7', '#6C5DD3'],
-  ['#FD49EB', '#FF6030'],
   ['#16B4EB', '#23E73C'],
+  ['#FD49EB', '#FF6030'],
   ['#D437FF', '#6398FF'],
 ];
 

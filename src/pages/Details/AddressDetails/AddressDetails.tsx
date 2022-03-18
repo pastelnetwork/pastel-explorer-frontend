@@ -122,6 +122,8 @@ const AddressDetails = () => {
             headers={addressHeaders}
             rows={generateAddressSummary(addresses)}
             tableWrapperClassName="address-table-wrapper"
+            className="address"
+            blockWrapperClassName="address-wrapper"
           />
         </Grid>
         <Styles.TableWrapper item>

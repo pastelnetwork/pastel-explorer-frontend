@@ -236,8 +236,8 @@ export const themeDark = createMuiTheme(
     supernodes: {
       status: {
         background: {
-          enabled: '#00D097',
-          newStart: '#FFA21B',
+          enabled: '#0971DC',
+          newStart: '#E88A00',
         },
         color: '#fff',
       },

@@ -176,8 +176,8 @@ const generateWealthDistributionItem = (
 };
 
 export const generateWealthDistributionData = (list: IRichlist[]) => {
+  const newList = list.sort((a, b) => a.rank - b.rank);
   const dividedLists = LIST_DIVIDERS.map(([firstDivider, lastDivider]) => {
-    const newList = list.sort((a, b) => a.rank - b.rank);
     const currentWealthDistributionList = newList.slice(firstDivider, lastDivider);
     const rowLabel = `Top ${firstDivider + 1}-${lastDivider}`;
     return generateWealthDistributionItem(
@@ -186,6 +186,5 @@ export const generateWealthDistributionData = (list: IRichlist[]) => {
       `top-${firstDivider + 1}-${lastDivider}`,
     );
   });
-
   return dividedLists;
 };

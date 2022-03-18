@@ -142,6 +142,7 @@ export const SubTitle = styled.span`
 
 export const Status = styled.div`
   padding: 2px 10px;
+  font-size: 14px;
   background: ${props => props.theme.supernodes.status.background.newStart};
   color: ${props => props.theme.supernodes.status.color};
   border-radius: 8px;

@@ -5,7 +5,7 @@ import Select from '@material-ui/core/Select';
 
 import * as Styles from './Dropdown.styles';
 
-type OptionsProps = {
+export type OptionsProps = {
   value: string | number;
   name: string;
 };
@@ -19,12 +19,14 @@ type DropdownProps = {
     }>,
   ) => void;
   options: OptionsProps[];
+  label?: React.ReactNode;
 };
 
-export const Dropdown = ({ value, onChange, options }: DropdownProps): JSX.Element => {
+export const Dropdown = ({ value, onChange, options, label }: DropdownProps): JSX.Element => {
   return (
     <Styles.Wrapper>
-      <Select value={value} onChange={onChange} label="Status">
+      {label ? <Styles.Label>{label}</Styles.Label> : null}
+      <Select value={value} onChange={onChange}>
         {options.map((option: OptionsProps) => (
           <MenuItem value={option.value} key={option.value}>
             {option.name}
@@ -33,4 +35,8 @@ export const Dropdown = ({ value, onChange, options }: DropdownProps): JSX.Eleme
       </Select>
     </Styles.Wrapper>
   );
+};
+
+Dropdown.defaultProps = {
+  label: undefined,
 };

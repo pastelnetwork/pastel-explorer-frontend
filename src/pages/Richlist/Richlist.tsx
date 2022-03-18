@@ -36,7 +36,7 @@ const Richlist: React.FC = () => {
     () => (list && list.length ? generateWealthDistributionData(list) : null),
     [list],
   );
-
+  const wealthDistributionData = wealthDistribution?.sort((a, b) => b.amount - a.amount);
   return (
     <Styles.Wrapper>
       <Grid item>
@@ -44,9 +44,10 @@ const Richlist: React.FC = () => {
           <Styles.Title>Wealth Distribution</Styles.Title>
           <Styles.ContentWrapper>
             <Styles.Info>
-              {wealthDistribution?.map(item => (
-                <Styles.InfoItem key={item.id}>{item.data}</Styles.InfoItem>
-              ))}
+              <Styles.InfoItem>{wealthDistributionData?.[0]?.data}</Styles.InfoItem>
+              <Styles.InfoItem>{wealthDistributionData?.[2]?.data}</Styles.InfoItem>
+              <Styles.InfoItem>{wealthDistributionData?.[1]?.data}</Styles.InfoItem>
+              <Styles.InfoItem>{wealthDistributionData?.[3]?.data}</Styles.InfoItem>
             </Styles.Info>
             <Styles.Chart>
               {wealthDistribution?.length ? <BarChart data={wealthDistribution} /> : null}

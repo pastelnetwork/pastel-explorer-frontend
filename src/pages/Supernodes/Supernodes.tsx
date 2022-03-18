@@ -11,7 +11,7 @@ import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { INetwork, INetworkSupernodes } from '@utils/types/INetwork';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import breakpoints from '@theme/breakpoints';
-import { Dropdown } from '@components/Dropdown/Dropdown';
+import { Dropdown, OptionsProps } from '@components/Dropdown/Dropdown';
 
 import { columns, SUPERNODE_LAST_PAID_KEY } from './Supernodes.columns';
 import {
@@ -52,7 +52,7 @@ const Supernodes: React.FC = () => {
         }
         return response ? transformSupernodesData(response.masternodes) : [];
       })
-      .then(data => setSupernodes(prevState => [...prevState, ...data]));
+      .then(data => setSupernodes(data));
   };
 
   const handleSort = ({ sortBy, sortDirection }: ISortData) => {
@@ -114,6 +114,23 @@ const Supernodes: React.FC = () => {
     }
   };
 
+  const generateStatusOptions = () => {
+    const results: OptionsProps[] = [];
+    STATUS_LIST.map((item: OptionsProps) => {
+      let total = originalSupernodes.filter((i: INetworkSupernodes) => i.status === item.value)
+        .length;
+      if (item.value === 'all') {
+        total = originalSupernodes.length;
+      }
+      return results.push({
+        value: item.value,
+        name: `${item.name} (${total})`,
+      });
+    });
+
+    return results;
+  };
+
   const getSupernodeTitle = () => (
     <Styles.TitleContainer>
       <Styles.TitleWrapper>
@@ -123,7 +140,12 @@ const Supernodes: React.FC = () => {
         ) : null}
       </Styles.TitleWrapper>
       <Styles.FilterBlock>
-        <Dropdown value={status} onChange={handleChange} options={STATUS_LIST} />
+        <Dropdown
+          value={status}
+          onChange={handleChange}
+          options={generateStatusOptions()}
+          label="Supernode's status"
+        />
       </Styles.FilterBlock>
     </Styles.TitleContainer>
   );
