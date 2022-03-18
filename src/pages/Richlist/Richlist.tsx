@@ -49,7 +49,7 @@ const Richlist: React.FC = () => {
               ))}
             </Styles.Info>
             <Styles.Chart>
-              <BarChart data={wealthDistribution} />
+              {wealthDistribution?.length ? <BarChart data={wealthDistribution} /> : null}
             </Styles.Chart>
           </Styles.ContentWrapper>
         </Styles.BlockWrapper>

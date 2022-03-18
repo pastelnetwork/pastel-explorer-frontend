@@ -306,6 +306,10 @@ export const RankStyle = styled.div`
     display: inline-block;
     margin-top: 4px;
     line-height: 1;
+
+    ${props => props.theme.breakpoints.down('md')} {
+      margin-top: 0;
+    }
   }
 
   ${props => props.theme.breakpoints.down('md')} {
