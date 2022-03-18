@@ -204,6 +204,9 @@ export const InfoItem = styled.div`
   }
 
   ${props => props.theme.breakpoints.down('md')} {
+    padding-left: 0;
+    padding-right: 0;
+
     &,
     &:nth-child(2),
     &:nth-child(4) {
