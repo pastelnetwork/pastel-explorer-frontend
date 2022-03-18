@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Grid } from '@material-ui/core';
 
-import Header from '@components/Header/Header';
 import Table, { RowsProps } from '@components/Table/Table';
 
 import * as URLS from '@utils/constants/urls';
@@ -10,11 +9,18 @@ import { IRichlist } from '@utils/types/IRichlists';
 import { useSortData } from '@utils/hooks';
 import {
   balanceHeaders,
-  distributionHeaders,
   generateBalanceTable,
-  generateWealthDistributionTable,
+  generateWealthDistributionData,
 } from './Richlist.helpers';
+import { BarChart } from './BarChart';
 import * as Styles from './Richlist.styles';
+
+export type WealthDistributionProps = {
+  id: string;
+  data: React.ReactNode;
+  title: string;
+  amount: number;
+};
 
 const Richlist: React.FC = () => {
   const { fetchData } = useFetch<{ data: Array<IRichlist> }>({
@@ -26,32 +32,39 @@ const Richlist: React.FC = () => {
     () => (list && list.length ? generateBalanceTable(list) : null),
     [list],
   );
-  const wealthDistribution = React.useMemo<RowsProps[] | null>(
-    () => (list && list.length ? generateWealthDistributionTable(list) : null),
+  const wealthDistribution = React.useMemo<WealthDistributionProps[] | null>(
+    () => (list && list.length ? generateWealthDistributionData(list) : null),
     [list],
   );
 
   return (
-    <>
-      <Header title="TOP 100" />
-      <Grid container spacing={6}>
-        <Styles.GridWrapper item xs={12} lg={7}>
-          <Table
-            headers={balanceHeaders}
-            rows={richlist}
-            title="Current Balance"
-            handleClickSort={handleClickSort}
-          />
-        </Styles.GridWrapper>
-        <Grid item xs={12} lg={5}>
-          <Table
-            headers={distributionHeaders}
-            rows={wealthDistribution}
-            title="Wealth Distribution"
-          />
-        </Grid>
+    <Styles.Wrapper>
+      <Grid item>
+        <Styles.BlockWrapper>
+          <Styles.Title>Wealth Distribution</Styles.Title>
+          <Styles.ContentWrapper>
+            <Styles.Info>
+              {wealthDistribution?.map(item => (
+                <Styles.InfoItem key={item.id}>{item.data}</Styles.InfoItem>
+              ))}
+            </Styles.Info>
+            <Styles.Chart>
+              <BarChart data={wealthDistribution} />
+            </Styles.Chart>
+          </Styles.ContentWrapper>
+        </Styles.BlockWrapper>
       </Grid>
-    </>
+      <Styles.GridWrapper item>
+        <Table
+          headers={balanceHeaders}
+          rows={richlist}
+          title="Top 100"
+          handleClickSort={handleClickSort}
+          className="richlist"
+          tableWrapperClassName="richlist-table-wrapper"
+        />
+      </Styles.GridWrapper>
+    </Styles.Wrapper>
   );
 };
 

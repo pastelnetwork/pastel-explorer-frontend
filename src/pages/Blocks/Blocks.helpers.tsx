@@ -23,7 +23,13 @@ export const transformTableData = (transactions: Array<IBlock>) =>
     id,
     [BLOCK_ID_KEY]: (
       <Styles.BlockHeight>
-        <BoxIcon /> {height}
+        <BoxIcon />{' '}
+        <RouterLink
+          className="hash-link"
+          route={`${ROUTES.BLOCK_DETAILS}/${id}`}
+          value={height}
+          title={height.toString()}
+        />
       </Styles.BlockHeight>
     ),
     [BLOCK_HASH]: (

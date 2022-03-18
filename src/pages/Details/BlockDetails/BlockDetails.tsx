@@ -162,7 +162,7 @@ const BlockDetails = () => {
           >
             <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>{isExpanded ? 'Hide Details' : 'Show Details'}</Typography>
+                <Typography>{isExpanded ? 'Click to see less' : 'Click to see more'}</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container direction="column">
@@ -186,6 +186,7 @@ const BlockDetails = () => {
             rows={generateLatestTransactions(transactions)}
             handleClickSort={handleClickSortTransaction}
             className="transactions"
+            tableWrapperClassName="transactions-table-wrapper"
           />
         </Styles.GridStyle>
       </Grid>

@@ -118,7 +118,7 @@ const Blocks = () => {
 
     return handleFetchBlocks(
       DATA_OFFSET,
-      sortBy,
+      sortBy === 'blockHash' ? 'id' : sortBy,
       fetchParams.current.sortDirection,
       true,
       filterBy,

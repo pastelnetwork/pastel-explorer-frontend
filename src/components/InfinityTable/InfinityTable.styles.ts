@@ -6,7 +6,7 @@ import { spacing } from '@material-ui/system';
 const StyledCard = styled(MuiCard)`
   background-color: ${props => props.theme.palette.background.paper} !important;
   padding: 0 ${props => props.theme.spacing(9)}px;
-  padding-bottom: 32px !important;
+  padding-bottom: 0 !important;
   box-shadow: none;
 
   @media (max-width: 960px) {

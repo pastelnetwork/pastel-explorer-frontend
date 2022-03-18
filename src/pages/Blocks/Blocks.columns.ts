@@ -26,7 +26,7 @@ export const columns = [
     label: 'Transaction Quantity',
     dataKey: TRANSACTIONS_QTY_KEY,
     disableSort: false,
-    className: 'pl-8px col-transaction-quantity',
+    className: 'col-transaction-quantity',
   },
   {
     width: 100,
@@ -34,6 +34,6 @@ export const columns = [
     label: 'Timestamp',
     dataKey: TIMESTAMP_BLOCKS_KEY,
     disableSort: false,
-    className: 'pl-12px col-timestamp',
+    className: 'col-timestamp',
   },
 ];

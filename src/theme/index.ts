@@ -111,6 +111,15 @@ export const themeLight = createMuiTheme(
         default: '#2D3748',
         active: '#279989',
       },
+      richlist: {
+        background: '#FCFCFD',
+        border: '#ECEFF3',
+      },
+    },
+    crown: {
+      gold: '#D69B00',
+      silver: '#A5A195',
+      bronze: '#AD4005',
     },
   },
 );
@@ -201,6 +210,15 @@ export const themeDark = createMuiTheme(
         default: '#F8F8FA',
         active: '#279989',
       },
+      richlist: {
+        background: '#4A5568',
+        border: '#2D3748',
+      },
+    },
+    crown: {
+      gold: '#D69B00',
+      silver: '#A5A195',
+      bronze: '#AD4005',
     },
   },
 );

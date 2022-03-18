@@ -86,6 +86,10 @@ const themeVariant = {
     chart: {
       light: '#2D3748',
       dark: '#A0AEC0',
+      label: {
+        dark: '#fff',
+        light: '#1A202C',
+      },
     },
   },
 };
