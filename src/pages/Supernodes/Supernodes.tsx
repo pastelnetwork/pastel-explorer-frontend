@@ -70,7 +70,6 @@ const Supernodes: React.FC = () => {
   };
 
   const handleShowSubMenu = () => {
-    setMobileView(false);
     if (window.innerWidth < breakpoints.values.lg) {
       setMobileView(true);
     }
@@ -136,7 +135,9 @@ const Supernodes: React.FC = () => {
       <Styles.TitleWrapper>
         <Styles.Title>Supernode List</Styles.Title>{' '}
         {supernodes.length > 0 ? (
-          <Styles.SubTitle>Total {formatNumber(supernodes.length)} Supernodes</Styles.SubTitle>
+          <Styles.SubTitle>
+            Total {formatNumber(originalSupernodes.length)} Supernodes
+          </Styles.SubTitle>
         ) : null}
       </Styles.TitleWrapper>
       <Styles.FilterBlock>

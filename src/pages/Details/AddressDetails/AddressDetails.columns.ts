@@ -11,6 +11,7 @@ export const columns = [
     label: 'Timestamp',
     dataKey: ADDRESS_TRANSACTION_TIMESTAMP_KEY,
     disableSort: false,
+    className: 'col-timestamp',
   },
   {
     width: 500,
@@ -18,6 +19,7 @@ export const columns = [
     label: 'Hash',
     dataKey: ADDRESS_TRANSACTION_HASH_KEY,
     disableSort: false,
+    className: 'col-hash',
   },
   {
     width: 40,
@@ -25,5 +27,6 @@ export const columns = [
     label: `Amount (${getCurrencyName()})`,
     dataKey: ADDRESS_TRANSACTION_AMOUNT_KEY,
     disableSort: false,
+    className: 'col-amount',
   },
 ];

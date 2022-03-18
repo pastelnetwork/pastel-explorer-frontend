@@ -15,6 +15,7 @@ import * as ROUTES from '@utils/constants/routes';
 import { IAddress } from '@utils/types/IAddress';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { getCurrencyName } from '@utils/appInfo';
+import breakpoints from '@theme/breakpoints';
 
 import {
   addressHeaders,
@@ -39,6 +40,7 @@ interface IAddressDataRef {
 }
 
 const AddressDetails = () => {
+  const [isMobile, setMobileView] = React.useState(false);
   const fetchParams = React.useRef<IAddressDataRef>({
     offset: DATA_OFFSET,
     sortBy: ADDRESS_TRANSACTION_TIMESTAMP_KEY,
@@ -108,9 +110,34 @@ const AddressDetails = () => {
     );
   }, [id]);
 
+  const handleShowSubMenu = () => {
+    if (window.innerWidth < breakpoints.values.lg) {
+      setMobileView(true);
+    }
+  };
+
+  React.useEffect(() => {
+    handleShowSubMenu();
+
+    window.addEventListener('resize', handleShowSubMenu);
+    return () => {
+      window.removeEventListener('resize', handleShowSubMenu);
+    };
+  }, []);
+
   if (redirect.current) {
     return <Redirect to={ROUTES.NOT_FOUND} />;
   }
+
+  const generateAddTitle = () => {
+    return (
+      <Styles.AddressTitleBlock>
+        {getCurrencyName()} address: <span>{id}</span>
+      </Styles.AddressTitleBlock>
+    );
+  };
+
+  const getAddressDetailsTitle = () => <Styles.Title>Latest Transactions</Styles.Title>;
 
   return addresses ? (
     <Styles.Wrapper>
@@ -118,7 +145,7 @@ const AddressDetails = () => {
       <Grid container direction="column">
         <Grid item>
           <Table
-            title={`${getCurrencyName()} address: ${id}`}
+            title={generateAddTitle()}
             headers={addressHeaders}
             rows={generateAddressSummary(addresses)}
             tableWrapperClassName="address-table-wrapper"
@@ -128,7 +155,7 @@ const AddressDetails = () => {
         </Grid>
         <Styles.TableWrapper item>
           <InfinityTable
-            title="Latest Transactions"
+            title={getAddressDetailsTitle()}
             sortBy={fetchParams.current.sortBy}
             sortDirection={fetchParams.current.sortDirection}
             rows={generateLatestTransactions(addresses.data)}
@@ -137,6 +164,9 @@ const AddressDetails = () => {
             onBottomReach={handleFetchMoreTransactions}
             onHeaderClick={handleSort}
             className="latest-transaction-table"
+            headerBackground
+            rowHeight={isMobile ? 135 : 45}
+            tableHeight={isMobile ? 600 : 400}
           />
         </Styles.TableWrapper>
       </Grid>
