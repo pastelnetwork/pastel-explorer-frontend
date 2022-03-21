@@ -6,14 +6,6 @@ export const ADDRESS_TRANSACTION_AMOUNT_KEY = 'amount';
 
 export const columns = [
   {
-    width: 90,
-    flexGrow: 1,
-    label: 'Timestamp',
-    dataKey: ADDRESS_TRANSACTION_TIMESTAMP_KEY,
-    disableSort: false,
-    className: 'col-timestamp',
-  },
-  {
     width: 500,
     flexGrow: 1,
     label: 'Hash',
@@ -28,5 +20,13 @@ export const columns = [
     dataKey: ADDRESS_TRANSACTION_AMOUNT_KEY,
     disableSort: false,
     className: 'col-amount',
+  },
+  {
+    width: 90,
+    flexGrow: 1,
+    label: 'Timestamp',
+    dataKey: ADDRESS_TRANSACTION_TIMESTAMP_KEY,
+    disableSort: false,
+    className: 'col-timestamp',
   },
 ];

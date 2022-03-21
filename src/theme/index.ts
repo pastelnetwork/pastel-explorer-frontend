@@ -75,6 +75,8 @@ export const themeLight = createMuiTheme(
         toggle: {
           background: '#E9F2FB',
           switch: '#34a1ff',
+          hover: '#0E80F5',
+          period: '#6C80A2',
         },
         border: '#2D3748',
         mobile: {
@@ -115,6 +117,11 @@ export const themeLight = createMuiTheme(
         background: '#FCFCFD',
         border: '#ECEFF3',
       },
+      item: {
+        background: '#fff',
+        border: '#ECEFF3',
+        titleBackground: '#F6F7F9',
+      },
     },
     crown: {
       gold: '#D69B00',
@@ -143,7 +150,7 @@ export const themeDark = createMuiTheme(
       ...themeVariant.palette,
       background: {
         default: '#232630',
-        paper: '#14161D',
+        paper: '#0d0d0d',
       },
       text: {
         primary: '#F8F8FA',
@@ -187,6 +194,8 @@ export const themeDark = createMuiTheme(
         toggle: {
           background: '#1d1e31',
           switch: '#00D097',
+          hover: '#00D097',
+          period: '#1d1e31',
         },
         border: '#FCFCFD',
         mobile: {
@@ -226,6 +235,11 @@ export const themeDark = createMuiTheme(
       richlist: {
         background: '#4A5568',
         border: '#2D3748',
+      },
+      item: {
+        background: '#4A5568',
+        border: '#2D3748',
+        titleBackground: '#2D3748',
       },
     },
     crown: {

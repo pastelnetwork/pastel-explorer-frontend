@@ -38,7 +38,8 @@ const useStyles = makeStyles((_theme: TAppTheme) => ({
     overflowX: 'auto',
     width: '100%',
     margin: 0,
-    marginBottom: 16,
+    marginBottom: 0,
+    background: _theme.palette.background.paper,
     '&::-webkit-scrollbar': {
       background: _theme.palette.background.default,
     },

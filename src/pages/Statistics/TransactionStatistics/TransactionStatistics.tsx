@@ -10,7 +10,7 @@ const TransactionStatistics: React.FC = () => {
     <Styles.BlockWrapper>
       <Styles.BlockTitle>Transactions Statistics</Styles.BlockTitle>
       <Grid container>
-        <Grid item xs={12} style={{ marginBottom: 24 }}>
+        <Grid item xs={12}>
           <VolumeTransactions />
         </Grid>
         <Grid item xs={12}>

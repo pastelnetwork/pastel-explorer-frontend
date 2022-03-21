@@ -56,9 +56,9 @@ export const generateAddressSummary = ({
     {
       id: 1,
       data: [
-        { id: 1, value: formatNumber(outgoingAbsoluteSum, { decimalsLength: 2 }) },
-        { id: 2, value: formatNumber(incomingSum, { decimalsLength: 2 }) },
-        { id: 3, value: formatNumber(incomingSum - outgoingAbsoluteSum, { decimalsLength: 2 }) },
+        { id: 1, value: formatNumber(incomingSum, { decimalsLength: 2 }) },
+        { id: 2, value: formatNumber(incomingSum - outgoingAbsoluteSum, { decimalsLength: 2 }) },
+        { id: 3, value: formatNumber(outgoingAbsoluteSum, { decimalsLength: 2 }) },
       ],
     },
   ];

@@ -177,6 +177,9 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
       if (path.startsWith('/supernodes')) {
         return !!['/address'].some(el => locationLink.pathname.startsWith(el));
       }
+      if (path.startsWith('/richlist')) {
+        return !!['/address'].some(el => locationLink.pathname.startsWith(el));
+      }
       return false;
     },
     [],

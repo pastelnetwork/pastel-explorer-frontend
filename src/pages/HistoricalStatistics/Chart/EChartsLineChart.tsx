@@ -3,7 +3,6 @@ import * as echarts from 'echarts';
 import ReactECharts from 'echarts-for-react';
 import { saveAs } from 'file-saver';
 import * as htmlToImage from 'html-to-image';
-import { CSVLink } from 'react-csv';
 import { Data } from 'react-csv/components/CommonPropTypes';
 import { makeDownloadFileName } from '@utils/helpers/statisticsLib';
 import { csvHeaders, themes } from '@utils/constants/statistics';
@@ -11,6 +10,7 @@ import { TLineChartProps, TThemeColor, TThemeInitOption } from '@utils/constants
 import { getThemeInitOption, getThemeUpdateOption } from '@utils/helpers/chartOptions';
 import { useUpdatChartTheme } from '@utils/hooks';
 import { eChartLineStyles } from './styles';
+import * as Styles from './EChartsLineChart.styles';
 
 export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
   const {
@@ -128,7 +128,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
 
   const getActivePriodButtonStyle = (index: string): string => {
     if (selectedPeriodButton === index) {
-      return styles.activeButton;
+      return 'active';
     }
     return '';
   };
@@ -184,8 +184,8 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
             <div className={styles.periodSelect}>
               <span style={{ color: currentTheme?.color }}>Period: </span>
               {periods.map(period => (
-                <button
-                  className={`${getActivePriodButtonStyle(period)} ${styles.filterButton}`}
+                <Styles.PeriodButton
+                  className={getActivePriodButtonStyle(period)}
                   onClick={() => {
                     if (handlePeriodFilterChange) {
                       handlePeriodFilterChange(period);
@@ -195,7 +195,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
                   key={`button-filter-${period}`}
                 >
                   {period}
-                </button>
+                </Styles.PeriodButton>
               ))}
             </div>
           ) : null}
@@ -229,19 +229,18 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
           ))}
         </div>
         <div className={styles.lineChartDownloadButtonBar}>
-          <button className={styles.uploadButton} type="button" onClick={downloadPNG}>
+          <Styles.DonwloadButton type="button" onClick={downloadPNG}>
             Download PNG
-          </button>
-          <CSVLink
+          </Styles.DonwloadButton>
+          <Styles.CSVLinkButton
             data={csvData}
             filename={`${makeDownloadFileName(info.currencyName, chartName)}.csv`}
             headers={csvHeaders[chartName]}
             separator=";"
             ref={downloadRef}
-            className={styles.uploadButton}
           >
             Download CSV
-          </CSVLink>
+          </Styles.CSVLinkButton>
         </div>
       </div>
     </div>
