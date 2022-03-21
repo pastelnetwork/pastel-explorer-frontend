@@ -39,7 +39,10 @@ function TransactionFee() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
+    <HistoricalStatisticsLayout
+      currentBgColor={currentBgColor}
+      title="Average Transaction Fee (USD)"
+    >
       {chartData ? (
         <EChartsLineChart
           chartName="transactionfee"

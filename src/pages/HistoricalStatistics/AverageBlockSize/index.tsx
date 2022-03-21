@@ -48,7 +48,7 @@ const AverageBlockSize = (): JSX.Element => {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Average Block Size (kB)">
       {chartData ? (
         <EChartsLineChart
           chartName="averageblocksize"

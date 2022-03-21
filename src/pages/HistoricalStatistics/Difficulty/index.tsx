@@ -38,7 +38,7 @@ function Difficulty() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Network Difficulty">
       {chartData ? (
         <EChartsLineChart
           chartName="difficulty"

@@ -37,7 +37,7 @@ function Nettotals() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Network Total">
       {chartData ? (
         <EChartsLineChart
           chartName="networktotals"

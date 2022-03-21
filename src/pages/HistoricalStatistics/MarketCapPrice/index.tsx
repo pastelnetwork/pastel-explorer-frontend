@@ -51,7 +51,7 @@ function PriceOvertime() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Price - Cap">
       {transformLineChartData ? (
         <EChartsMultiLineChart
           chartName="prices"

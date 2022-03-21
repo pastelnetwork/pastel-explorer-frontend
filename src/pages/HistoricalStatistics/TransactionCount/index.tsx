@@ -39,7 +39,7 @@ function StatisticsTransactionsCount() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Transaction Count">
       {chartData ? (
         <EChartsLineChart
           chartName="transactionspersecond"

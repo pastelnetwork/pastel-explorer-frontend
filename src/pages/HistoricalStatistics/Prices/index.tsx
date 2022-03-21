@@ -39,7 +39,10 @@ function PriceOvertime() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
+    <HistoricalStatisticsLayout
+      currentBgColor={currentBgColor}
+      title={`${info.currencyName} Prices`}
+    >
       {transformLineChartData ? (
         <EChartsMultiLineChart
           chartName="prices"

@@ -39,7 +39,7 @@ function TransactionInBlock() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Transactions In Block">
       {chartData ? (
         <EChartsScatterChart
           chartName="transactionsinblock"

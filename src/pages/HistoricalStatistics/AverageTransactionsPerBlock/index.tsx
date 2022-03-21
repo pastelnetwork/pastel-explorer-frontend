@@ -38,7 +38,10 @@ function AverageTransactionsPerBlock() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
+    <HistoricalStatisticsLayout
+      currentBgColor={currentBgColor}
+      title="Average Transaction Per Block"
+    >
       {chartData ? (
         <EChartsLineChart
           chartName="transactionfee"
