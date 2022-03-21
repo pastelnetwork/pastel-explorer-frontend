@@ -136,7 +136,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
   const getActiveGranularityButtonStyle = useMemo(
     () => (granularity: string): string => {
       if (selectedGranularityButton === granularity) {
-        return styles.activeButton;
+        return 'active';
       }
       return '';
     },
@@ -162,7 +162,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
               <span style={{ color: currentTheme?.color }}>Granularity: </span>
               {granularities?.map(granularity => {
                 return (
-                  <button
+                  <Styles.PeriodButton
                     className={`${getActiveGranularityButtonStyle(granularity)} ${
                       styles.filterButton
                     }`}
@@ -175,7 +175,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
                     key={`button-filter-${granularity}`}
                   >
                     {granularity}
-                  </button>
+                  </Styles.PeriodButton>
                 );
               })}
             </div>
