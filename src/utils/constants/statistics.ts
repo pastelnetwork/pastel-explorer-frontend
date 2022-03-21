@@ -132,9 +132,9 @@ export const statistics = [
 export const themes = [
   {
     name: 'theme1',
-    backgroundColor: '#0d0d0d',
+    backgroundColor: '#2D3748',
     splitLineColor: '#202021',
-    color: '#abaac1',
+    color: '#F8F8FA',
   },
   {
     name: 'theme2',
@@ -196,7 +196,7 @@ export const periods: PeriodTypes[][] = [
   ['1h', '1d', '7d', '30d'],
 ];
 
-export const CHART_THEME_BACKGROUND_DEFAULT_COLOR = '#0d0d0d';
+export const CHART_THEME_BACKGROUND_DEFAULT_COLOR = '#2D3748';
 export const CHART_THEME_BACKGROUND_DEFAULT_COLOR_LIGHT = '#fff';
 export const BLOCK_CHART_DEFAULT_GRANULARITY = '1d';
 

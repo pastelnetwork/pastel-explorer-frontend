@@ -145,7 +145,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
 
   const getActiveThemeButtonStyle = (index: number): string => {
     if (selectedThemeButton === index) {
-      return styles.activeThemeButton;
+      return 'active';
     }
     return '';
   };
@@ -215,7 +215,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
       <div className={styles.lineChartFooter}>
         <div className={styles.lineChartThemeSelect}>
           {themes.map((theme, index) => (
-            <button
+            <Styles.ThemeButton
               className={`${styles.themeSelectButton} ${getActiveThemeButtonStyle(index)}`}
               onClick={() => handleThemeButtonClick(theme, index)}
               style={{
@@ -225,7 +225,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
               key={`button-filter-${theme.name}`}
             >
               {' '}
-            </button>
+            </Styles.ThemeButton>
           ))}
         </div>
         <div className={styles.lineChartDownloadButtonBar}>

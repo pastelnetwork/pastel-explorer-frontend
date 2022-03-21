@@ -70,6 +70,21 @@ export const PeriodButton = styled.button`
 
   &:hover,
   &.active {
-    background: ${props => props.theme.sidebar.menu.toggle.hover};
+    background: ${props => props.theme.sidebar.menu.toggle.switch};
+  }
+`;
+
+export const ThemeButton = styled.button`
+  cursor: pointer;
+  border-radius: 10px;
+  border: 1px solid ${props => props.theme.sidebar.menu.active};
+  outline: none;
+  text-decoration: none;
+  transition: all 0.5s ease;
+  box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
+  overflow: hidden;
+
+  &.active {
+    border: 3px solid ${props => props.theme.card.border.changeTheme};
   }
 `;

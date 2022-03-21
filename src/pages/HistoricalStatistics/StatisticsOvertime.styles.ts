@@ -16,9 +16,6 @@ export const Wrapper = styled.section`
     font-weight: 500;
     font-size: 1.25rem;
   }
-  .card-item {
-    cursor: pointer;
-  }
 `;
 
 export const Container = styled.div`
@@ -43,16 +40,15 @@ export const PageTitle = styled.h3`
 `;
 
 export const ContentWrapper = styled.div`
-  padding: 12px;
+  padding: 12px 0;
 `;
 
 export const CardItem = styled.div`
   padding: 0;
   margin: 0;
-  background-color: ${props => props.theme.card.item.background};
-  border: 1px solid ${props => props.theme.card.item.border};
+  background-color: ${props => props.theme.sidebar.menu.background};
   border-radius: 10px;
-  box-shadow: 0 0.5rem 1.2rem rgb(189 197 209 / 20%);
+  box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
   overflow: hidden;
 `;
 
@@ -61,7 +57,7 @@ export const BlockTitle = styled.h4`
   padding: 12px;
   font-size: 16px;
   font-weight: 600;
-  background-color: ${props => props.theme.card.item.titleBackground};
+  background: ${props => props.theme.card.titleColor};
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 `;

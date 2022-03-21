@@ -2,19 +2,25 @@ import styled from 'styled-components/macro';
 
 export const BackButtonWrapper = styled.div`
   margin-bottom: 12px;
+  padding: 14px 16px;
+  background: ${props => props.theme.card.titleColor};
+  border-radius: 10px;
+  overflow: hidden;
 `;
 
 export const BackButton = styled.button`
   display: flex;
   align-items: center;
-  width: 40px;
-  height: 40px;
   border: 0;
-  border-radius: 100%;
   cursor: pointer;
+  background: transparent;
+  color: ${props => props.theme.palette.text.primary};
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.3;
 
   &:hover {
-    background-color: #ECEFF3;
+    background: transparent;
   }
 `;
 

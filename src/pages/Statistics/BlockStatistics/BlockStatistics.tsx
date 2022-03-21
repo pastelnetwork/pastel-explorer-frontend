@@ -39,7 +39,6 @@ const useStyles = makeStyles((_theme: TAppTheme) => ({
     width: '100%',
     margin: 0,
     marginBottom: 0,
-    background: _theme.palette.background.paper,
     '&::-webkit-scrollbar': {
       background: _theme.palette.background.default,
     },
@@ -155,14 +154,14 @@ const StatisticsBlocks: React.FC = () => {
       <Header title="Current Statistics" />
       <Styles.BlockWrapper>
         <Styles.BlockTitle>Blocks Statistics</Styles.BlockTitle>
-        <Grid classes={{ root: classes.wrapper }} container>
+        <Styles.GridStyle classes={{ root: classes.wrapper }} container>
           {blockElements && blockElements.length ? (
             <Grid
               classes={{ container: classes.root }}
               className={classes.root}
               wrap="nowrap"
               container
-              justify="flex-start"
+              justify="space-between"
               alignItems="center"
               spacing={8}
             >
@@ -215,7 +214,7 @@ const StatisticsBlocks: React.FC = () => {
               <Skeleton animation="wave" variant="rect" height={300} />
             )}
           </Grid>
-        </Grid>
+        </Styles.GridStyle>
       </Styles.BlockWrapper>
     </>
   );

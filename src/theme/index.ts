@@ -108,6 +108,7 @@ export const themeLight = createMuiTheme(
       border: {
         default: 'rgba(0, 0, 0, 0.23)',
         active: 'rgba(39, 153, 137, 0.5)',
+        changeTheme: '#00B282',
       },
       text: {
         default: '#2D3748',
@@ -227,6 +228,7 @@ export const themeDark = createMuiTheme(
       border: {
         default: '#4A5568',
         active: 'rgba(39, 153, 137, 0.5)',
+        changeTheme: '#0971DC',
       },
       text: {
         default: '#F8F8FA',

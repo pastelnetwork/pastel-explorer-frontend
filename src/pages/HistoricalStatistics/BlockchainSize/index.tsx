@@ -39,7 +39,7 @@ function BlockchainSize() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Blockchain Size">
       {chartData ? (
         <EChartsLineChart
           chartName="transactionfee"

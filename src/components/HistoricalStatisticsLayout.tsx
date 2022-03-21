@@ -12,6 +12,7 @@ import * as Styles from './HistoricalStatisticsLayout.styles';
 interface IProps {
   children: ReactNode;
   currentBgColor: string;
+  title?: string;
 }
 
 const useStyles = makeStyles((theme: TAppTheme) => ({
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme: TAppTheme) => ({
   },
 }));
 
-const HistoricalStatisticsLayout = ({ children, currentBgColor }: IProps) => {
+const HistoricalStatisticsLayout = ({ children, currentBgColor, title }: IProps) => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -52,7 +53,7 @@ const HistoricalStatisticsLayout = ({ children, currentBgColor }: IProps) => {
       <div style={{ flex: 1 }}>
         <Styles.BackButtonWrapper>
           <Styles.BackButton type="button" onClick={() => history.goBack()}>
-            <NavigateBeforeIcon />
+            <NavigateBeforeIcon /> {title ? <span>{title}</span> : null}
           </Styles.BackButton>
         </Styles.BackButtonWrapper>
         <Styles.ChartWrapper style={{ backgroundColor: currentBgColor }}>
@@ -61,6 +62,10 @@ const HistoricalStatisticsLayout = ({ children, currentBgColor }: IProps) => {
       </div>
     </div>
   );
+};
+
+HistoricalStatisticsLayout.defaultProps = {
+  title: '',
 };
 
 export default memo(HistoricalStatisticsLayout);

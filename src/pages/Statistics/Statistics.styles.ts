@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-import { darken } from '@material-ui/core';
+import { Grid, darken } from '@material-ui/core';
 
 import themeVariant from '@theme/variants';
 
@@ -46,4 +46,8 @@ export const BlockTitle = styled.h4`
   padding-bottom: 18px;
   padding-left: 16px;
   background: ${props => props.theme.card.titleColor};
+`;
+
+export const GridStyle = styled(Grid)`
+  background: ${props => props.theme.sidebar.menu.background};
 `;
