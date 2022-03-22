@@ -39,7 +39,7 @@ function HashRate() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Hashrate">
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Historical statistics">
       {chartData ? (
         <EChartsLineChart
           chartName="hashrate"

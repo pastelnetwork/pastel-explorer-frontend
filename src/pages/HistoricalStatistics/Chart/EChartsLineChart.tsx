@@ -3,12 +3,14 @@ import * as echarts from 'echarts';
 import ReactECharts from 'echarts-for-react';
 import { saveAs } from 'file-saver';
 import * as htmlToImage from 'html-to-image';
+
 import { Data } from 'react-csv/components/CommonPropTypes';
 import { makeDownloadFileName } from '@utils/helpers/statisticsLib';
 import { csvHeaders, themes } from '@utils/constants/statistics';
 import { TLineChartProps, TThemeColor, TThemeInitOption } from '@utils/constants/types';
 import { getThemeInitOption, getThemeUpdateOption } from '@utils/helpers/chartOptions';
 import { useUpdatChartTheme } from '@utils/hooks';
+
 import { eChartLineStyles } from './styles';
 import * as Styles from './Chart.styles';
 
@@ -42,6 +44,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
   const [eChartInstance, setEChartInstance] = useState<echarts.ECharts>();
   const [minY, setMinY] = useState(0);
   const [maxY, setMaxY] = useState(0);
+
   useEffect(() => {
     const chartInstance = eChartRef?.getEchartsInstance();
     setEChartInstance(chartInstance);

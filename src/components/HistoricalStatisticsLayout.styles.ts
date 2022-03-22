@@ -36,9 +36,20 @@ export const BackButton = styled.button`
   font-size: 16px;
   font-weight: 400;
   line-height: 1.3;
+  transition: all 0.5s ease;
+
+  svg {
+    transition: background 0.5s ease;
+    border-radius: 100%;
+  }
 
   &:hover {
     background: transparent;
+    color: ${props => props.theme.sidebar.menu.active};
+
+    svg {
+      background: rgba(0, 0, 0, 0.04);
+    }
   }
 `;
 
