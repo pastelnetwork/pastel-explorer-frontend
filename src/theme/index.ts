@@ -76,7 +76,7 @@ export const themeLight = createMuiTheme(
           background: '#E9F2FB',
           switch: '#34a1ff',
           hover: '#0E80F5',
-          period: '#6C80A2',
+          period: '#868f9b',
         },
         border: '#2D3748',
         mobile: {
@@ -196,7 +196,7 @@ export const themeDark = createMuiTheme(
           background: '#1d1e31',
           switch: '#00D097',
           hover: '#00D097',
-          period: '#1d1e31',
+          period: '#4A5568',
         },
         border: '#FCFCFD',
         mobile: {

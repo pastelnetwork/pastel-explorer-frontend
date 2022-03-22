@@ -49,6 +49,7 @@ function TotalTransactionFees() {
           periods={periods[1]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
+          setHeaderBackground
         />
       )}
     </HistoricalStatisticsLayout>

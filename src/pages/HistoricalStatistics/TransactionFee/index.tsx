@@ -39,10 +39,7 @@ function TransactionFee() {
   };
 
   return (
-    <HistoricalStatisticsLayout
-      currentBgColor={currentBgColor}
-      title="Average Transaction Fee (USD)"
-    >
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Average Transaction Fee">
       {chartData ? (
         <EChartsLineChart
           chartName="transactionfee"
@@ -55,6 +52,7 @@ function TransactionFee() {
           periods={periods[1]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
+          setHeaderBackground
         />
       ) : (
         <Skeleton animation="wave" variant="rect" height={386} />

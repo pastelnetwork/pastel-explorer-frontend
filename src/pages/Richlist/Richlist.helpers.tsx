@@ -71,7 +71,7 @@ export const generateBalanceTable = (list: Array<IRichlist>) => {
             <Grid container alignItems="center" wrap="nowrap">
               <CopyButton copyText={address} />
               <RouterLink
-                route={`${ROUTES.ADDRESS_DETAILS}/${address}`}
+                route={`${ROUTES.ADDRESS_DETAILS}/${address}?p=richlist`}
                 value={address}
                 textSize="large"
                 className="address-link"

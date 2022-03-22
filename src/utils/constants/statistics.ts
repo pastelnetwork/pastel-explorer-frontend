@@ -133,21 +133,21 @@ export const themes = [
   {
     name: 'theme1',
     backgroundColor: '#2D3748',
-    splitLineColor: '#202021',
+    splitLineColor: '#53658C',
     color: '#F8F8FA',
   },
   {
     name: 'theme2',
     backgroundColor: '#FFF7C6',
     stack: 'confidence-band',
-    splitLineColor: '#C7C4CC',
+    splitLineColor: '#53658C',
     smooth: true,
     color: '#100c2a',
   },
   {
     name: 'theme3',
     backgroundColor: '#FFF',
-    splitLineColor: '#EEE',
+    splitLineColor: '#6C80A2',
     color: '#202021',
   },
 ];

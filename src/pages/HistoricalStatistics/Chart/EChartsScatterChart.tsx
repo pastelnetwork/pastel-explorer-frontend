@@ -3,7 +3,6 @@ import * as echarts from 'echarts';
 import ReactECharts from 'echarts-for-react';
 import { saveAs } from 'file-saver';
 import * as htmlToImage from 'html-to-image';
-import { CSVLink } from 'react-csv';
 import { Data } from 'react-csv/components/CommonPropTypes';
 import { csvHeaders, themes } from '@utils/constants/statistics';
 // import { PrevButton } from '../PrevButton';
@@ -12,6 +11,7 @@ import { makeDownloadFileName } from '@utils/helpers/statisticsLib';
 import { getThemeInitOption, getThemeUpdateOption } from '@utils/helpers/chartOptions';
 import { useUpdatChartTheme } from '@utils/hooks';
 import { eChartLineStyles } from './styles';
+import * as Styles from './Chart.styles';
 
 export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
   const {
@@ -25,6 +25,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
     periods,
     handlePeriodFilterChange,
     handleBgColorChange,
+    setHeaderBackground,
   } = props;
   const styles = eChartLineStyles();
   const downloadRef = useRef(null);
@@ -105,30 +106,27 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
 
   const getActivePriodButtonStyle = (index: string): string => {
     if (selectedPeriodButton === index) {
-      return styles.activeButton;
+      return 'active';
     }
     return '';
   };
 
   const getActiveThemeButtonStyle = (index: number): string => {
     if (selectedThemeButton === index) {
-      return styles.activeThemeButton;
+      return 'active';
     }
     return '';
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.lineChartHeader}>
-        {/* <PrevButton color="#c3921f" /> */}
-        <div className={styles.lineChartTitle} style={{ color: currentTheme?.color }}>
-          {title}
-        </div>
-        <div className={styles.periodSelect}>
+    <Styles.ChartContainer>
+      <Styles.LineChartHeader className={setHeaderBackground ? 'has-bg' : ''}>
+        <Styles.ChartTitle>{title}</Styles.ChartTitle>
+        <Styles.PeriodSelect>
           <span style={{ color: currentTheme?.color }}>period: </span>
           {periods.map(period => (
-            <button
-              className={`${getActivePriodButtonStyle(period)} ${styles.filterButton}`}
+            <Styles.PeriodButton
+              className={getActivePriodButtonStyle(period)}
               onClick={() => {
                 if (handlePeriodFilterChange) {
                   handlePeriodFilterChange(period);
@@ -138,11 +136,11 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
               key={`button-filter-${period}`}
             >
               {period}
-            </button>
+            </Styles.PeriodButton>
           ))}
-        </div>
-      </div>
-      <div className={styles.lineChartWrap}>
+        </Styles.PeriodSelect>
+      </Styles.LineChartHeader>
+      <Styles.LineChartWrap>
         <ReactECharts
           notMerge={false}
           lazyUpdate
@@ -150,11 +148,11 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
           className={styles.reactECharts}
           ref={e => setEChartRef(e)}
         />
-      </div>
-      <div className={styles.lineChartFooter}>
+      </Styles.LineChartWrap>
+      <Styles.LineChartFooter>
         <div className={styles.lineChartThemeSelect}>
           {themes.map((theme, index) => (
-            <button
+            <Styles.ThemeButton
               className={`${styles.themeSelectButton} ${getActiveThemeButtonStyle(index)}`}
               onClick={() => handleThemeButtonClick(theme, index)}
               style={{
@@ -164,14 +162,14 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
               key={`button-filter-${theme.name}`}
             >
               {'  '}
-            </button>
+            </Styles.ThemeButton>
           ))}
         </div>
         <div className={styles.lineChartDownloadButtonBar}>
-          <button className={styles.uploadButton} type="button" onClick={downloadPNG}>
+          <Styles.DonwloadButton type="button" onClick={downloadPNG}>
             Download PNG
-          </button>
-          <CSVLink
+          </Styles.DonwloadButton>
+          <Styles.CSVLinkButton
             data={csvData}
             filename={`${makeDownloadFileName(info.currencyName, chartName)}.csv`}
             headers={csvHeaders[chartName]}
@@ -180,9 +178,9 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
             className={styles.uploadButton}
           >
             Download CSV
-          </CSVLink>
+          </Styles.CSVLinkButton>
         </div>
-      </div>
-    </div>
+      </Styles.LineChartFooter>
+    </Styles.ChartContainer>
   );
 };

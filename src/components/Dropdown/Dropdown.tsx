@@ -26,7 +26,15 @@ export const Dropdown = ({ value, onChange, options, label }: DropdownProps): JS
   return (
     <Styles.Wrapper>
       {label ? <Styles.Label>{label}</Styles.Label> : null}
-      <Select value={value} onChange={onChange}>
+      <Select
+        value={value}
+        onChange={onChange}
+        MenuProps={{
+          style: {
+            maxHeight: '50vh',
+          },
+        }}
+      >
         {options.map((option: OptionsProps) => (
           <MenuItem value={option.value} key={option.value}>
             {option.name}

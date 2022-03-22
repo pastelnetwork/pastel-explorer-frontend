@@ -44,6 +44,7 @@ function TotalTransactionCount() {
           info={info}
           offset={1}
           handleBgColorChange={handleBgColorChange}
+          setHeaderBackground
         />
       ) : (
         <Skeleton animation="wave" variant="rect" height={386} />

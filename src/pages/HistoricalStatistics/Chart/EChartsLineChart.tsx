@@ -10,7 +10,7 @@ import { TLineChartProps, TThemeColor, TThemeInitOption } from '@utils/constants
 import { getThemeInitOption, getThemeUpdateOption } from '@utils/helpers/chartOptions';
 import { useUpdatChartTheme } from '@utils/hooks';
 import { eChartLineStyles } from './styles';
-import * as Styles from './EChartsLineChart.styles';
+import * as Styles from './Chart.styles';
 
 export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
   const {
@@ -29,6 +29,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     handlePeriodFilterChange,
     handleGranularityFilterChange,
     handleBgColorChange,
+    setHeaderBackground,
   } = props;
   const styles = eChartLineStyles();
   const downloadRef = useRef(null);
@@ -36,6 +37,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
   const [selectedThemeButton, setSelectedThemeButton] = useState(0);
   // const [selectedGranularityButton, setSelectedGranularityButton] = useState(0);
   const [currentTheme, setCurrentTheme] = useUpdatChartTheme();
+  const [isSelectedTheme, setSelectedTheme] = useState(false);
   const [eChartRef, setEChartRef] = useState<ReactECharts | null>();
   const [eChartInstance, setEChartInstance] = useState<echarts.ECharts>();
   const [minY, setMinY] = useState(0);
@@ -82,7 +84,6 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
       }
     }
   }, [dataX, dataY]);
-
   const params: TThemeInitOption = {
     theme: currentTheme,
     dataX,
@@ -113,6 +114,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     setCurrentTheme(theme);
     setSelectedThemeButton(index);
     handleBgColorChange(theme.backgroundColor);
+    setSelectedTheme(true);
 
     const paramsOption: TThemeInitOption = {
       theme,
@@ -144,21 +146,19 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
   );
 
   const getActiveThemeButtonStyle = (index: number): string => {
-    if (selectedThemeButton === index) {
+    if (selectedThemeButton === index && isSelectedTheme) {
       return 'active';
     }
     return '';
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.lineChartHeader}>
-        <div className={styles.lineChartTitle} style={{ color: currentTheme?.color }}>
-          {title}
-        </div>
-        <div>
+    <Styles.ChartContainer>
+      <Styles.LineChartHeader className={setHeaderBackground ? 'has-bg' : ''}>
+        <Styles.ChartTitle>{title}</Styles.ChartTitle>
+        <Styles.ChartFilterWrapper>
           {granularities && (
-            <div className={styles.periodSelect}>
+            <Styles.GranularitySelect>
               <span style={{ color: currentTheme?.color }}>Granularity: </span>
               {granularities?.map(granularity => {
                 return (
@@ -178,10 +178,10 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
                   </Styles.PeriodButton>
                 );
               })}
-            </div>
+            </Styles.GranularitySelect>
           )}
           {periods && periods.length ? (
-            <div className={styles.periodSelect}>
+            <Styles.PeriodSelect>
               <span style={{ color: currentTheme?.color }}>Period: </span>
               {periods.map(period => (
                 <Styles.PeriodButton
@@ -197,11 +197,11 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
                   {period}
                 </Styles.PeriodButton>
               ))}
-            </div>
+            </Styles.PeriodSelect>
           ) : null}
-        </div>
-      </div>
-      <div className={styles.lineChartWrap}>
+        </Styles.ChartFilterWrapper>
+      </Styles.LineChartHeader>
+      <Styles.LineChartWrap>
         <ReactECharts
           notMerge={false}
           lazyUpdate
@@ -211,8 +211,8 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
             setEChartRef(e);
           }}
         />
-      </div>
-      <div className={styles.lineChartFooter}>
+      </Styles.LineChartWrap>
+      <Styles.LineChartFooter>
         <div className={styles.lineChartThemeSelect}>
           {themes.map((theme, index) => (
             <Styles.ThemeButton
@@ -242,7 +242,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
             Download CSV
           </Styles.CSVLinkButton>
         </div>
-      </div>
-    </div>
+      </Styles.LineChartFooter>
+    </Styles.ChartContainer>
   );
 };

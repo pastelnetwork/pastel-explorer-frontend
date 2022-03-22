@@ -3,7 +3,6 @@ import { Redirect, useParams } from 'react-router-dom';
 
 import { Grid } from '@material-ui/core';
 
-import Header from '@components/Header/Header';
 import Table from '@components/Table/Table';
 import InfinityTable, {
   SortDirectionsType,
@@ -141,7 +140,6 @@ const AddressDetails = () => {
 
   return addresses ? (
     <Styles.Wrapper>
-      <Header title="Address Details" />
       <Grid container direction="column">
         <Grid item>
           <Table

@@ -1,4 +1,4 @@
-import { memo, ReactNode } from 'react';
+import { memo, ReactNode, useState } from 'react';
 // import { BackIcon } from '@components/Icons';
 import { makeStyles } from '@material-ui/styles';
 import { useHistory } from 'react-router-dom';
@@ -6,6 +6,8 @@ import { Skeleton } from '@material-ui/lab';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 // application
 import { TAppTheme } from '@theme/index';
+import { Dropdown, OptionsProps } from '@components/Dropdown/Dropdown';
+import { statistics } from '@utils/constants/statistics';
 
 import * as Styles from './HistoricalStatisticsLayout.styles';
 
@@ -46,7 +48,41 @@ const useStyles = makeStyles((theme: TAppTheme) => ({
 
 const HistoricalStatisticsLayout = ({ children, currentBgColor, title }: IProps) => {
   const classes = useStyles();
+  const [selectedChart, setSelectedChart] = useState('0');
   const history = useHistory();
+
+  const handleDropdownChange = (
+    event: React.ChangeEvent<{
+      name?: string | undefined;
+      value: unknown;
+    }>,
+  ) => {
+    if (event.target.value) {
+      const url = event.target.value as string;
+      setSelectedChart(url);
+      if (url !== '0') {
+        history.push(url);
+      }
+    }
+  };
+
+  const generateChartOption = () => {
+    const results: OptionsProps[] = [
+      {
+        name: 'Select chart',
+        value: '0',
+      },
+    ];
+    for (let i = 0; i < statistics.length; i += 1) {
+      if (statistics[i].title !== title) {
+        results.push({
+          name: statistics[i].title,
+          value: statistics[i].url,
+        });
+      }
+    }
+    return results;
+  };
 
   return (
     <div className={classes.root}>
@@ -55,6 +91,13 @@ const HistoricalStatisticsLayout = ({ children, currentBgColor, title }: IProps)
           <Styles.BackButton type="button" onClick={() => history.goBack()}>
             <NavigateBeforeIcon /> {title ? <span>{title}</span> : null}
           </Styles.BackButton>
+          <Styles.DropdownWrapper>
+            <Dropdown
+              value={selectedChart}
+              onChange={handleDropdownChange}
+              options={generateChartOption()}
+            />
+          </Styles.DropdownWrapper>
         </Styles.BackButtonWrapper>
         <Styles.ChartWrapper style={{ backgroundColor: currentBgColor }}>
           {children || <Skeleton animation="wave" variant="rect" height={386} />}

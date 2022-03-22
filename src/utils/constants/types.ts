@@ -46,6 +46,7 @@ export type TLineChartProps = {
   handleGranularityFilterChange?: (_granularity: TGranularity) => void;
   handleBgColorChange: (_color: string) => void;
   handlePeriodFilterChange?: (_period: PeriodTypes) => void;
+  setHeaderBackground?: boolean;
 };
 
 export type TCsvHeaderType = {
@@ -64,4 +65,5 @@ export type TScatterChartProps = {
   handleBgColorChange: (_color: string) => void;
   handlePeriodFilterChange?: (_period: PeriodTypes) => void;
   handleGranularityFilterChange?: (_granularity: TGranularity) => void;
+  setHeaderBackground?: boolean;
 };

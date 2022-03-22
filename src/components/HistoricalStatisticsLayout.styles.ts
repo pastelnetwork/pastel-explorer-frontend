@@ -1,11 +1,29 @@
 import styled from 'styled-components/macro';
 
 export const BackButtonWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 12px;
-  padding: 14px 16px;
+  padding: 14px 16px 14px 0;
   background: ${props => props.theme.card.titleColor};
   border-radius: 10px;
   overflow: hidden;
+
+  ${props => props.theme.breakpoints.down(500)} {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+`;
+
+export const DropdownWrapper = styled.div`
+  ${props => props.theme.breakpoints.down(500)} {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 5px;
+  }
 `;
 
 export const BackButton = styled.button`

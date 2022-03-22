@@ -12,8 +12,10 @@ export const TableWrapper = styled(Grid)`
 
 export const Wrapper = styled.div`
   .address-table-wrapper {
+    padding: 10px 0;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+    background: ${props => props.theme.sidebar.menu.background};
   }
 
   .address-wrapper {
@@ -28,59 +30,61 @@ export const Wrapper = styled.div`
     margin: 16px 0 0;
   }
 
+  .custom-table {
+    .table__row-header {
+      display: none;
+    }
+
+    .table__row {
+      display: flex;
+      flex-direction: column;
+
+      td {
+        display: flex;
+        padding: 5px 16px;
+        border-bottom: 0;
+        background: ${props => props.theme.sidebar.menu.background};
+
+        &:before {
+          position: relative;
+          min-width: 150px;
+          display: inline-block;
+          font-weight: 600;
+          font-size: 16px;
+          color: ${props => props.theme.table.label};
+        }
+      }
+    }
+
+    &.address {
+      .table__row {
+        td {
+          &:nth-child(1) {
+            &:before {
+              content: 'Total Sent (${getCurrencyName})';
+            }
+          }
+
+          &:nth-child(2) {
+            &:before {
+              content: 'Total Received (${getCurrencyName})';
+            }
+          }
+
+          &:nth-child(3) {
+            &:before {
+              content: 'Balance (${getCurrencyName})';
+            }
+          }
+        }
+      }
+    }
+  }
+
   ${props => props.theme.breakpoints.down('md')} {
     .transaction-hash,
     .transaction-hash-link {
       max-width: calc(100vw - 225px);
-    }
-
-    .custom-table {
-      .table__row-header {
-        display: none;
-      }
-
-      .table__row {
-        display: flex;
-        flex-direction: column;
-
-        td {
-          display: flex;
-          border-bottom: 0;
-
-          &:before {
-            position: relative;
-            min-width: 150px;
-            display: inline-block;
-            font-weight: 600;
-            font-size: 16px;
-            color: ${props => props.theme.table.label};
-          }
-        }
-      }
-
-      &.address {
-        .table__row {
-          td {
-            &:nth-child(1) {
-              &:before {
-                content: 'Total Sent (${getCurrencyName})';
-              }
-            }
-
-            &:nth-child(2) {
-              &:before {
-                content: 'Total Received (${getCurrencyName})';
-              }
-            }
-
-            &:nth-child(3) {
-              &:before {
-                content: 'Balance (${getCurrencyName})';
-              }
-            }
-          }
-        }
-      }
     }
 
     .ReactVirtualized__Grid {

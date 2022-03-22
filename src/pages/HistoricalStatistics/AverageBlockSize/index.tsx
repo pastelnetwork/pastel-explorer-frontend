@@ -48,7 +48,7 @@ const AverageBlockSize = (): JSX.Element => {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Average Block Size (kB)">
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Average Block Size">
       {chartData ? (
         <EChartsLineChart
           chartName="averageblocksize"
@@ -64,6 +64,7 @@ const AverageBlockSize = (): JSX.Element => {
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
           handleGranularityFilterChange={handleGranularityFilterChange}
+          setHeaderBackground
         />
       ) : (
         <Skeleton animation="wave" variant="rect" height={386} />
