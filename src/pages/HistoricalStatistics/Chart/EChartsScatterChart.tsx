@@ -123,7 +123,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
       <Styles.LineChartHeader className={setHeaderBackground ? 'has-bg' : ''}>
         <Styles.ChartTitle>{title}</Styles.ChartTitle>
         <Styles.PeriodSelect>
-          <span style={{ color: currentTheme?.color }}>period: </span>
+          <span>period: </span>
           {periods.map(period => (
             <Styles.PeriodButton
               className={getActivePriodButtonStyle(period)}

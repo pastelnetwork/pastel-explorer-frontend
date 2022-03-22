@@ -268,7 +268,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
       <Styles.LineChartHeader className={setHeaderBackground ? 'has-bg' : ''}>
         <Styles.LineChartTitle>{title}</Styles.LineChartTitle>
         <Styles.PeriodSelect>
-          <span style={{ color: currentTheme?.color }}>Period: </span>
+          <span>Period: </span>
           {periods.length &&
             periods.map(period => (
               <Styles.PeriodButton

@@ -182,7 +182,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
           )}
           {periods && periods.length ? (
             <Styles.PeriodSelect>
-              <span style={{ color: currentTheme?.color }}>Period: </span>
+              <span>Period: </span>
               {periods.map(period => (
                 <Styles.PeriodButton
                   className={getActivePriodButtonStyle(period)}
