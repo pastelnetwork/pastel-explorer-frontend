@@ -35,6 +35,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     handlePeriodFilterChange,
     handleBgColorChange,
     setHeaderBackground,
+    isDynamicTitleColor,
   } = props;
   const downloadRef = useRef(null);
   const { darkMode } = useSelector(getThemeState);
@@ -285,7 +286,11 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
   return (
     <Styles.ChartContainer>
       <Styles.LineChartHeader className={setHeaderBackground ? 'has-bg' : ''}>
-        <Styles.LineChartTitle>{title}</Styles.LineChartTitle>
+        {isDynamicTitleColor ? (
+          <Styles.ChartTitle style={{ color: currentTheme?.color }}>{title}</Styles.ChartTitle>
+        ) : (
+          <Styles.ChartTitle>{title}</Styles.ChartTitle>
+        )}
         <Styles.PeriodSelect>
           <span>Period: </span>
           {periods.length &&

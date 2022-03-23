@@ -205,6 +205,7 @@ const StatisticsBlocks: React.FC = () => {
                   period={period}
                   periods={periods[5]}
                   handlePeriodFilterChange={handlePeriodFilterChange}
+                  isDynamicTitleColor
                 />
               </div>
             ) : (

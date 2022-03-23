@@ -29,6 +29,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
     handlePeriodFilterChange,
     handleBgColorChange,
     setHeaderBackground,
+    isDynamicTitleColor,
   } = props;
   const styles = eChartLineStyles();
   const { darkMode } = useSelector(getThemeState);
@@ -90,7 +91,6 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
     maxY,
   };
   const options = getThemeInitOption(params);
-  console.log('option', options);
   const downloadPNG = () => {
     if (eChartRef?.ele) {
       htmlToImage
@@ -120,7 +120,6 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
       chartName,
     };
     const option = getThemeUpdateOption(themeInit);
-    console.log('option handleThemeButtonClick', option)
     eChartInstance?.setOption(option);
   };
 
@@ -141,7 +140,11 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
   return (
     <Styles.ChartContainer>
       <Styles.LineChartHeader className={setHeaderBackground ? 'has-bg' : ''}>
-        <Styles.ChartTitle>{title}</Styles.ChartTitle>
+        {isDynamicTitleColor ? (
+          <Styles.ChartTitle style={{ color: currentTheme?.color }}>{title}</Styles.ChartTitle>
+        ) : (
+          <Styles.ChartTitle>{title}</Styles.ChartTitle>
+        )}
         <Styles.PeriodSelect>
           <span>period: </span>
           {periods.map(period => (

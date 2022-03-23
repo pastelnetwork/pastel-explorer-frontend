@@ -41,6 +41,7 @@ const StatisticsBlocks: React.FC = () => {
         info={info}
         offset={1}
         handleBgColorChange={handleBgColorChange}
+        isDynamicTitleColor
       />
     </div>
   );

@@ -33,6 +33,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     handleGranularityFilterChange,
     handleBgColorChange,
     setHeaderBackground,
+    isDynamicTitleColor,
   } = props;
   const { darkMode } = useSelector(getThemeState);
   const styles = eChartLineStyles();
@@ -173,11 +174,15 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
   return (
     <Styles.ChartContainer>
       <Styles.LineChartHeader className={setHeaderBackground ? 'has-bg' : ''}>
-        <Styles.ChartTitle>{title}</Styles.ChartTitle>
+        {isDynamicTitleColor ? (
+          <Styles.ChartTitle style={{ color: currentTheme?.color }}>{title}</Styles.ChartTitle>
+        ) : (
+          <Styles.ChartTitle>{title}</Styles.ChartTitle>
+        )}
         <Styles.ChartFilterWrapper>
           {granularities && (
             <Styles.GranularitySelect>
-              <span style={{ color: currentTheme?.color }}>Granularity: </span>
+              <span>Granularity: </span>
               {granularities?.map(granularity => {
                 return (
                   <Styles.PeriodButton

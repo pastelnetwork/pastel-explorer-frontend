@@ -48,6 +48,7 @@ const NetworkStatistics: React.FC = () => {
         periods={periods[4]}
         handleBgColorChange={handleBgColorChange}
         handlePeriodFilterChange={handlePeriodFilterChange}
+        isDynamicTitleColor
       />
     </div>
   );

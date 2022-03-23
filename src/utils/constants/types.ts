@@ -47,6 +47,7 @@ export type TLineChartProps = {
   handleBgColorChange: (_color: string) => void;
   handlePeriodFilterChange?: (_period: PeriodTypes) => void;
   setHeaderBackground?: boolean;
+  isDynamicTitleColor?: boolean;
 };
 
 export type TCsvHeaderType = {
@@ -66,4 +67,5 @@ export type TScatterChartProps = {
   handlePeriodFilterChange?: (_period: PeriodTypes) => void;
   handleGranularityFilterChange?: (_granularity: TGranularity) => void;
   setHeaderBackground?: boolean;
+  isDynamicTitleColor?: boolean;
 };
