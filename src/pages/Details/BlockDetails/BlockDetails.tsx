@@ -59,7 +59,7 @@ const BlockDetails = () => {
         data: [
           { id: 1, value: height },
           { id: 3, value: formatNumber(confirmations) },
-          { id: 4, value: formatNumber(size / 1000, { decimalsLength: 2 }) },
+          { id: 4, value: formatNumber(size / 1024, { decimalsLength: 2 }) },
           { id: 6, value: formattedDate(timestamp) },
         ],
       },
