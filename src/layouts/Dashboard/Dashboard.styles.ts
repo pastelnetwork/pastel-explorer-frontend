@@ -32,7 +32,7 @@ export const Root = styled.div`
 export const Paper = styled(MuiPaper)(spacing);
 
 export const MainWrapper = styled.main`
-  min-height: 50vh;
+  min-height: auto;
 `;
 
 export const MainContent = styled(Paper)`
