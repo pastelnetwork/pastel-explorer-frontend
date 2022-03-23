@@ -96,7 +96,7 @@ export function useBackgroundChart(): [string, (_color: string) => void] {
     } else {
       setBgColor(CHART_THEME_BACKGROUND_DEFAULT_COLOR_LIGHT);
     }
-  }, [darkMode]);
+  }, []);
   const handleBgColorChange = React.useCallback((color: string) => {
     setBgColor(color);
   }, []);

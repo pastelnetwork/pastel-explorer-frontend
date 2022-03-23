@@ -16,6 +16,10 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
   const { theme, data, dataX, dataY, dataY1, dataY2, chartName, minY, maxY } = args;
   const chartOptions: TChartOption = {
     difficulty: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
       grid: {
         top: 8,
         right: 8,
@@ -72,6 +76,10 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
     },
     hashrate: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
       grid: {
         top: 8,
         right: 8,
@@ -134,6 +142,10 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
     },
     networktotals: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
       color: ['#80FFA5', '#37A2FF'],
       grid: {
         top: 8,
@@ -241,6 +253,10 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
     },
     mempoolsize: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
       grid: {
         top: 8,
         right: 8,
@@ -307,6 +323,10 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
     },
     averageblocksize: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
       color: ['#5470c6', '#91cc75', '#fac858'],
       grid: {
         top: 8,
@@ -352,6 +372,10 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
     },
     transactionfee: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
       color: ['#cd6661'],
       grid: {
         top: 8,
@@ -409,6 +433,10 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
     },
     transactionspersecond: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
       color: ['#5470c6', '#91cc75', '#fac858'],
       grid: {
         top: 8,
@@ -453,6 +481,10 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
     },
     transactionsinblock: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
       grid: {
         top: 8,
         right: 8,

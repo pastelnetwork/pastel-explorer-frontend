@@ -24,6 +24,12 @@ export const DropdownWrapper = styled.div`
     width: 100%;
     margin-top: 5px;
   }
+
+  ${props => props.theme.breakpoints.down(380)} {
+    .historical-statistics {
+      flex-direction: column;
+    }
+  }
 `;
 
 export const BackButton = styled.button`

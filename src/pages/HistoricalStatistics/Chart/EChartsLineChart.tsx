@@ -3,13 +3,14 @@ import * as echarts from 'echarts';
 import ReactECharts from 'echarts-for-react';
 import { saveAs } from 'file-saver';
 import * as htmlToImage from 'html-to-image';
+import { useSelector } from 'react-redux';
 
 import { Data } from 'react-csv/components/CommonPropTypes';
 import { makeDownloadFileName } from '@utils/helpers/statisticsLib';
 import { csvHeaders, themes } from '@utils/constants/statistics';
-import { TLineChartProps, TThemeColor, TThemeInitOption } from '@utils/constants/types';
+import { TLineChartProps, TThemeInitOption, TThemeColor } from '@utils/constants/types';
 import { getThemeInitOption, getThemeUpdateOption } from '@utils/helpers/chartOptions';
-import { useUpdatChartTheme } from '@utils/hooks';
+import { getThemeState } from '@redux/reducers/appThemeReducer';
 
 import { eChartLineStyles } from './styles';
 import * as Styles from './Chart.styles';
@@ -33,17 +34,31 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     handleBgColorChange,
     setHeaderBackground,
   } = props;
+  const { darkMode } = useSelector(getThemeState);
   const styles = eChartLineStyles();
   const downloadRef = useRef(null);
   const [csvData, setCsvData] = useState<string | Data>('');
   const [selectedThemeButton, setSelectedThemeButton] = useState(0);
   // const [selectedGranularityButton, setSelectedGranularityButton] = useState(0);
-  const [currentTheme, setCurrentTheme] = useUpdatChartTheme();
+  const [currentTheme, setCurrentTheme] = useState<TThemeColor | null>(null);
   const [isSelectedTheme, setSelectedTheme] = useState(false);
   const [eChartRef, setEChartRef] = useState<ReactECharts | null>();
   const [eChartInstance, setEChartInstance] = useState<echarts.ECharts>();
   const [minY, setMinY] = useState(0);
   const [maxY, setMaxY] = useState(0);
+
+  useEffect(() => {
+    if (isSelectedTheme) {
+      setCurrentTheme(currentTheme);
+      handleBgColorChange(currentTheme?.backgroundColor || '');
+    } else if (darkMode) {
+      setCurrentTheme(themes[0]);
+      handleBgColorChange(themes[0].backgroundColor);
+    } else {
+      setCurrentTheme(themes[2]);
+      handleBgColorChange(themes[2].backgroundColor);
+    }
+  }, [darkMode]);
 
   useEffect(() => {
     const chartInstance = eChartRef?.getEchartsInstance();

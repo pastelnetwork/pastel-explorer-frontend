@@ -39,7 +39,7 @@ function MempoolSize() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Historical statistics">
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Mempool Size">
       {chartData ? (
         <EChartsLineChart
           chartName="mempoolsize"

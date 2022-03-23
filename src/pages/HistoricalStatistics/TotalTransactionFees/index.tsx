@@ -36,7 +36,7 @@ function TotalTransactionFees() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Historical statistics">
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Total Transaction Fees">
       {chartData && (
         <EChartsLineChart
           chartName="averageblocksize"

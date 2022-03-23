@@ -38,7 +38,7 @@ function TransactionPerSecond() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Historical statistics">
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Transaction Per Second">
       {chartData ? (
         <EChartsLineChart
           chartName="transactionspersecond"

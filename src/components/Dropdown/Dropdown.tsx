@@ -20,11 +20,18 @@ type DropdownProps = {
   ) => void;
   options: OptionsProps[];
   label?: React.ReactNode;
+  classNameWrapper?: string;
 };
 
-export const Dropdown = ({ value, onChange, options, label }: DropdownProps): JSX.Element => {
+export const Dropdown = ({
+  value,
+  onChange,
+  options,
+  label,
+  classNameWrapper,
+}: DropdownProps): JSX.Element => {
   return (
-    <Styles.Wrapper>
+    <Styles.Wrapper className={classNameWrapper}>
       {label ? <Styles.Label>{label}</Styles.Label> : null}
       <Select
         value={value}
@@ -47,4 +54,5 @@ export const Dropdown = ({ value, onChange, options, label }: DropdownProps): JS
 
 Dropdown.defaultProps = {
   label: undefined,
+  classNameWrapper: '',
 };

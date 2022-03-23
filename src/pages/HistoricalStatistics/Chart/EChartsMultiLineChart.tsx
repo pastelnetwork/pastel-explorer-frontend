@@ -3,12 +3,14 @@ import ReactECharts from 'echarts-for-react';
 import * as htmlToImage from 'html-to-image';
 import * as echarts from 'echarts';
 import { saveAs } from 'file-saver';
+import { useSelector } from 'react-redux';
 
 import { Data } from 'react-csv/components/CommonPropTypes';
 import { makeDownloadFileName, PeriodTypes } from '@utils/helpers/statisticsLib';
 import { pricesCSVHeaders, themes } from '@utils/constants/statistics';
 import { TLineChartProps, TThemeColor } from '@utils/constants/types';
-import { useUpdatChartTheme } from '@utils/hooks';
+import { getThemeState } from '@redux/reducers/appThemeReducer';
+
 import { eChartLineStyles } from './styles';
 import * as Styles from './Chart.styles';
 
@@ -35,15 +37,31 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     setHeaderBackground,
   } = props;
   const downloadRef = useRef(null);
+  const { darkMode } = useSelector(getThemeState);
   const [csvData, setCsvData] = useState<string | Data>('');
-  const [currentTheme, setCurrentTheme] = useUpdatChartTheme();
+  const [currentTheme, setCurrentTheme] = useState<TThemeColor | null>(null);
   const [eChartRef, setEChartRef] = useState<ReactECharts | null>();
   const [eChartInstance, setEChartInstance] = useState<echarts.ECharts>();
   const [selectedThemeButton, setSelectedThemeButton] = useState(0);
+  const [isSelectedTheme, setSelectedTheme] = useState(false);
   const [minY1, setMinY1] = useState(0);
   const [minY2, setMinY2] = useState(0);
   const [maxY1, setMaxY1] = useState(0);
   const [maxY2, setMaxY2] = useState(0);
+
+  useEffect(() => {
+    if (isSelectedTheme) {
+      setCurrentTheme(currentTheme);
+      handleBgColorChange(currentTheme?.backgroundColor || '');
+    } else if (darkMode) {
+      setCurrentTheme(themes[0]);
+      handleBgColorChange(themes[0].backgroundColor);
+    } else {
+      setCurrentTheme(themes[2]);
+      handleBgColorChange(themes[2].backgroundColor);
+    }
+  }, [darkMode]);
+
   useEffect(() => {
     const chartInstance = eChartRef?.getEchartsInstance();
     setEChartInstance(chartInstance);
@@ -184,6 +202,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     setCurrentTheme(theme);
     setSelectedThemeButton(index);
     handleBgColorChange(theme.backgroundColor);
+    setSelectedTheme(true);
     const option = {
       backgroundColor: theme.backgroundColor,
       textStyle: {
@@ -249,7 +268,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
   };
 
   const getActiveThemeButtonStyle = (index: number): string => {
-    if (selectedThemeButton === index) {
+    if (selectedThemeButton === index && isSelectedTheme) {
       return 'active';
     }
     return '';

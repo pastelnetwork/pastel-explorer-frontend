@@ -69,7 +69,7 @@ const HistoricalStatisticsLayout = ({ children, currentBgColor, title }: IProps)
   const generateChartOption = () => {
     const results: OptionsProps[] = [
       {
-        name: 'Select chart',
+        name: title?.toString() || '',
         value: '0',
       },
     ];
@@ -89,13 +89,15 @@ const HistoricalStatisticsLayout = ({ children, currentBgColor, title }: IProps)
       <div style={{ flex: 1 }}>
         <Styles.BackButtonWrapper>
           <Styles.BackButton type="button" onClick={() => history.goBack()}>
-            <NavigateBeforeIcon /> {title ? <span>{title}</span> : null}
+            <NavigateBeforeIcon /> Back
           </Styles.BackButton>
           <Styles.DropdownWrapper>
             <Dropdown
               value={selectedChart}
               onChange={handleDropdownChange}
               options={generateChartOption()}
+              label="Historical statistic:"
+              classNameWrapper="historical-statistics"
             />
           </Styles.DropdownWrapper>
         </Styles.BackButtonWrapper>

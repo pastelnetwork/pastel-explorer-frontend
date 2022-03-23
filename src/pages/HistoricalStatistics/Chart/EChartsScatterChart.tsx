@@ -3,13 +3,16 @@ import * as echarts from 'echarts';
 import ReactECharts from 'echarts-for-react';
 import { saveAs } from 'file-saver';
 import * as htmlToImage from 'html-to-image';
+import { useSelector } from 'react-redux';
+
 import { Data } from 'react-csv/components/CommonPropTypes';
 import { csvHeaders, themes } from '@utils/constants/statistics';
 // import { PrevButton } from '../PrevButton';
 import { TScatterChartProps, TThemeColor, TThemeInitOption } from '@utils/constants/types';
 import { makeDownloadFileName } from '@utils/helpers/statisticsLib';
 import { getThemeInitOption, getThemeUpdateOption } from '@utils/helpers/chartOptions';
-import { useUpdatChartTheme } from '@utils/hooks';
+import { getThemeState } from '@redux/reducers/appThemeReducer';
+
 import { eChartLineStyles } from './styles';
 import * as Styles from './Chart.styles';
 
@@ -28,14 +31,29 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
     setHeaderBackground,
   } = props;
   const styles = eChartLineStyles();
+  const { darkMode } = useSelector(getThemeState);
   const downloadRef = useRef(null);
   const [csvData, setCsvData] = useState<string | Data>('');
   const [selectedThemeButton, setSelectedThemeButton] = useState(0);
-  const [currentTheme, setCurrentTheme] = useUpdatChartTheme();
+  const [currentTheme, setCurrentTheme] = useState<TThemeColor | null>(null);
   const [eChartRef, setEChartRef] = useState<ReactECharts | null>();
   const [eChartInstance, setEChartInstance] = useState<echarts.ECharts>();
+  const [isSelectedTheme, setSelectedTheme] = useState(false);
   const [minY, setMinY] = useState(0);
   const [maxY, setMaxY] = useState(0);
+
+  useEffect(() => {
+    if (isSelectedTheme) {
+      setCurrentTheme(currentTheme);
+      handleBgColorChange(currentTheme?.backgroundColor || '');
+    } else if (darkMode) {
+      setCurrentTheme(themes[0]);
+      handleBgColorChange(themes[0].backgroundColor);
+    } else {
+      setCurrentTheme(themes[2]);
+      handleBgColorChange(themes[2].backgroundColor);
+    }
+  }, [darkMode]);
 
   useEffect(() => {
     const chartInstance = eChartRef?.getEchartsInstance();
@@ -72,7 +90,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
     maxY,
   };
   const options = getThemeInitOption(params);
-
+  console.log('option', options);
   const downloadPNG = () => {
     if (eChartRef?.ele) {
       htmlToImage
@@ -92,6 +110,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
     setCurrentTheme(theme);
     setSelectedThemeButton(index);
     handleBgColorChange(theme.backgroundColor);
+    setSelectedTheme(true);
 
     const themeInit: TThemeInitOption = {
       theme,
@@ -101,6 +120,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
       chartName,
     };
     const option = getThemeUpdateOption(themeInit);
+    console.log('option handleThemeButtonClick', option)
     eChartInstance?.setOption(option);
   };
 
@@ -112,7 +132,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
   };
 
   const getActiveThemeButtonStyle = (index: number): string => {
-    if (selectedThemeButton === index) {
+    if (selectedThemeButton === index && isSelectedTheme) {
       return 'active';
     }
     return '';
