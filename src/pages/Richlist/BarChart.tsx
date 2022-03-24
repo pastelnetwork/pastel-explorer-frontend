@@ -19,10 +19,10 @@ type TTooltipParams = {
 };
 
 const colors = [
-  ['#3F9AF7', '#6C5DD3'],
+  ['#D437FF', '#6398FF'],
   ['#16B4EB', '#23E73C'],
   ['#FD49EB', '#FF6030'],
-  ['#D437FF', '#6398FF'],
+  ['#3F9AF7', '#6C5DD3'],
 ];
 
 export const BarChart = ({ data }: BarChartProps): JSX.Element => {
@@ -31,7 +31,7 @@ export const BarChart = ({ data }: BarChartProps): JSX.Element => {
   const yAxisData = [];
   const seriesData = [];
   if (data?.length) {
-    for (let i = 0; i < data.sort((a, b) => a.amount - b.amount).length; i += 1) {
+    for (let i = 0; i < data.sort((a, b) => b.amount - a.amount).length; i += 1) {
       yAxisData.push(data[i].title);
       seriesData.push({
         value: data[i].amount,

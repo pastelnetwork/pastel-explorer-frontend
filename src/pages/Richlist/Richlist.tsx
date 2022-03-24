@@ -36,7 +36,7 @@ const Richlist: React.FC = () => {
     () => (list && list.length ? generateWealthDistributionData(list) : null),
     [list],
   );
-  const wealthDistributionData = wealthDistribution?.sort((a, b) => b.amount - a.amount);
+  const wealthDistributionData = wealthDistribution?.sort((a, b) => a.amount - b.amount);
   return (
     <Styles.Wrapper>
       <Grid item>
@@ -58,7 +58,7 @@ const Richlist: React.FC = () => {
       <Styles.GridWrapper item>
         <Table
           headers={balanceHeaders}
-          rows={richlist}
+          rows={richlist ? richlist.slice(0, 100) : []}
           title="Top 100"
           handleClickSort={handleClickSort}
           className="richlist"

@@ -21,10 +21,18 @@ export const Card = styled(MuiCard)`
     padding-left: 16px;
     background: ${props => props.theme.card.titleColor};
   }
+
+  @media screen and (min-width: 1280px) and (max-width: 1440px) {
+    min-height: 394px;
+  }
 `;
 
 export const CardContent = styled(MuiCardContent)`
-  @media (min-width: 960px) {
+  ${props => props.theme.breakpoints.up(1280)} {
+    max-height: 414px;
+  }
+
+  ${props => props.theme.breakpoints.up(1440)} {
     max-height: 356px;
   }
 

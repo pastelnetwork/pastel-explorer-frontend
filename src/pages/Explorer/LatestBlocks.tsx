@@ -21,6 +21,7 @@ import { useBlockLatestBlocks } from '@redux/hooks/blocksHooks';
 import Skeleton from '@material-ui/lab/Skeleton';
 import * as ROUTES from '@utils/constants/routes';
 import { Link } from '@components/Link/Link.styles';
+import RouterLink from '@components/RouterLink/RouterLink';
 import * as Styles from './Explorer.styles';
 
 const StyledTableCell = withStyles((theme: TAppTheme) => ({
@@ -85,7 +86,10 @@ function LatestBlocks() {
               Array.from(latestBlocks.values()).map(block => (
                 <StyledTableRow key={block.id} className="table__row">
                   <StyledTableCell component="th" scope="row">
-                    {block.height || ''}
+                    <RouterLink
+                      route={`${ROUTES.BLOCK_DETAILS}/${block.height}`}
+                      value={block.height || ''}
+                    />
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row" style={{ maxWidth: 150 }}>
                     <Link to={`${ROUTES.BLOCK_DETAILS}/${block.id}`}>

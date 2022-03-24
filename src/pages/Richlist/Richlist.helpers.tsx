@@ -19,10 +19,10 @@ import { ReactComponent as CrownPolygonIcon4 } from '@assets/icons/crown-polygon
 import * as Styles from './Richlist.styles';
 
 const LIST_DIVIDERS = [
+  [0, 10],
   [0, 25],
-  [25, 50],
-  [50, 75],
-  [75, 100],
+  [0, 100],
+  [0, 250],
 ];
 
 export const balanceHeaders: Array<HeaderType> = [
@@ -151,10 +151,10 @@ const generateWealthDistributionItem = (
     data: (
       <>
         <Styles.Icon>
-          {className === 'top-1-25' ? <CrownPolygonIcon1 className={className} /> : null}
-          {className === 'top-26-50' ? <CrownPolygonIcon2 className={className} /> : null}
-          {className === 'top-51-75' ? <CrownPolygonIcon3 className={className} /> : null}
-          {className === 'top-76-100' ? <CrownPolygonIcon4 className={className} /> : null}
+          {className === 'top-1-10' ? <CrownPolygonIcon1 className={className} /> : null}
+          {className === 'top-1-25' ? <CrownPolygonIcon2 className={className} /> : null}
+          {className === 'top-1-100' ? <CrownPolygonIcon3 className={className} /> : null}
+          {className === 'top-1-250' ? <CrownPolygonIcon4 className={className} /> : null}
         </Styles.Icon>
         <Styles.Content>
           <Styles.ValueWrapper>

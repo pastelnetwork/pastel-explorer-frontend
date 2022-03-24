@@ -73,16 +73,20 @@ export const Wrapper = styled('div')`
 
       &.transaction {
         .table__row {
+          &:nth-of-type(odd) {
+            background-color: ${props => props.theme.sidebar.background.default} !important;
+          }
+
           td {
             &:nth-child(1) {
               &:before {
-                content: 'Confirmations';
+                content: 'Block Hash';
               }
             }
 
             &:nth-child(2) {
               &:before {
-                content: 'Block Hash';
+                content: 'Confirmations';
               }
             }
 

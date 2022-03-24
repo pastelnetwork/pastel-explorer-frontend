@@ -17,7 +17,7 @@ export const ExplorerWrapper = styled.div`
 export const Gird = styled.div`
   display: flex;
 
-  ${props => props.theme.breakpoints.down('lg')} {
+  ${props => props.theme.breakpoints.down('md')} {
     flex-wrap: wrap;
   }
 `;
@@ -26,7 +26,7 @@ export const ExplorerMapColumn = styled.div`
   width: 60%;
   margin-right: 12px;
 
-  ${props => props.theme.breakpoints.down('lg')} {
+  ${props => props.theme.breakpoints.down('md')} {
     width: 100%;
     margin-right: 0;
     margin-bottom: 12px;
@@ -36,7 +36,7 @@ export const ExplorerMapColumn = styled.div`
 export const SupernodeColumn = styled.div`
   width: calc(40% - 4px);
 
-  ${props => props.theme.breakpoints.down('lg')} {
+  ${props => props.theme.breakpoints.down('md')} {
     width: 100%;
   }
 `;
@@ -46,6 +46,10 @@ export const ChartLegend = styled.div`
   bottom: 6px;
   font-size: 14px;
   text-align: center;
+
+  @media screen and (min-width: 1280px) and (max-width: 1440px) {
+    bottom: 30px;
+  }
 `;
 
 export const BlockWrapper = styled.div`
@@ -58,7 +62,7 @@ export const BlockWrapper = styled.div`
     margin-top: 24px;
   }
 
-  ${props => props.theme.breakpoints.down('lg')} {
+  ${props => props.theme.breakpoints.down('md')} {
     &.mt-24 {
       margin-top: 12px;
     }
@@ -147,7 +151,7 @@ export const GirdStyle = styled(Grid)`
     padding-left: 6px;
   }
 
-  ${props => props.theme.breakpoints.down('lg')} {
+  ${props => props.theme.breakpoints.down('md')} {
     &.left {
       padding-right: 12px;
     }

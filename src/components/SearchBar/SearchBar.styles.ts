@@ -77,7 +77,7 @@ export const AppBar = styled(MuiAppBar)`
   }
 
   ${props => props.theme.breakpoints.up('lg')} {
-    max-width: 50%;
+    max-width: calc(100% - 717px);
   }
 
   fieldset {
