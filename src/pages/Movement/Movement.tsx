@@ -141,7 +141,7 @@ const Movement: React.FC = () => {
     <Styles.TitleWrapper>
       <Styles.Title>Movement Transactions</Styles.Title>{' '}
       {totalItem > 0 ? (
-        <Styles.SubTitle>Total {formatNumber(totalItem)} txs</Styles.SubTitle>
+        <Styles.SubTitle>(Total {formatNumber(totalItem)} txs)</Styles.SubTitle>
       ) : null}
     </Styles.TitleWrapper>
   );

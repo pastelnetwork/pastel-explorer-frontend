@@ -52,12 +52,14 @@ export const useFetch = <FetchedData, Transform = FetchedData>(
   callback?: (_data: FetchedData) => Transform,
 ) => {
   const dispatch = useDispatch();
-
+  const [isLoading, setLoading] = useState(false);
   const fetchData = async (
     options: IFetchDataOptions = {},
-  ): Promise<FetchedData | Transform | undefined> =>
-    axiosInstance[method](url, options)
+  ): Promise<FetchedData | Transform | undefined> => {
+    setLoading(true);
+    return axiosInstance[method](url, options)
       .then(({ data }) => {
+        setLoading(false);
         if (callback) {
           return callback(data);
         }
@@ -66,11 +68,12 @@ export const useFetch = <FetchedData, Transform = FetchedData>(
       .catch((error: AxiosError) => {
         console.error(error);
         dispatch(setResponseError(true, error.message));
-
+        setLoading(false);
         return undefined;
       });
+  };
 
-  return { fetchData };
+  return { fetchData, isLoading };
 };
 
 export type IDeferredDataState<T> = { isLoading: boolean; data: T };

@@ -69,7 +69,7 @@ const Supernodes: React.FC = () => {
   };
 
   const handleShowSubMenu = () => {
-    if (window.innerWidth < 1025) {
+    if (window.innerWidth < 1024) {
       setMobileView(true);
     } else {
       setMobileView(false);

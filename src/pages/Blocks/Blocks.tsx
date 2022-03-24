@@ -145,7 +145,7 @@ const Blocks = () => {
     <Styles.TitleWrapper>
       <Styles.Title>Block List</Styles.Title>{' '}
       {totalItem > 0 ? (
-        <Styles.SubTitle>Total {formatNumber(totalItem)} blocks</Styles.SubTitle>
+        <Styles.SubTitle>(Total {formatNumber(totalItem)} blocks)</Styles.SubTitle>
       ) : null}
     </Styles.TitleWrapper>
   );

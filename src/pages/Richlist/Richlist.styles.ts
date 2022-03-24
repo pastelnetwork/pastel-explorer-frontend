@@ -207,7 +207,7 @@ export const InfoItem = styled.div`
     }
   }
 
-  ${props => props.theme.breakpoints.down('md')} {
+  ${props => props.theme.breakpoints.down(1024)} {
     padding-left: 0;
     padding-right: 0;
 
@@ -283,6 +283,10 @@ export const InfoValue = styled.div`
   font-weight: 700;
   overflow: hidden;
   color: ${props => props.theme.card.color};
+
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    font-size: 17px;
+  }
 
   ${props => props.theme.breakpoints.down('xs')} {
     font-size: 14px;

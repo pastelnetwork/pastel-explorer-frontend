@@ -64,7 +64,7 @@ export const BlockWrapper = styled.div`
     margin-top: 24px;
   }
 
-  ${props => props.theme.breakpoints.down('md')} {
+  ${props => props.theme.breakpoints.down(1024)} {
     &.mt-24 {
       margin-top: 12px;
     }
@@ -109,6 +109,10 @@ export const BlockWrapper = styled.div`
       &:hover {
         background-color: ${props => props.theme.table.hover} !important;
       }
+    }
+
+    .MuiTypography-root {
+      max-width: 74px;
     }
   }
 
@@ -260,7 +264,7 @@ export const GirdStyle = styled(Grid)`
     padding-left: 6px;
   }
 
-  ${props => props.theme.breakpoints.down('md')} {
+  ${props => props.theme.breakpoints.down(1024)} {
     &.left {
       padding-right: 12px;
     }
