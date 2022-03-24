@@ -89,7 +89,7 @@ export const Wrapper = styled('div')`
       }
     }
   }
-  ${props => props.theme.breakpoints.down('md')} {
+  ${props => props.theme.breakpoints.down(1024)} {
     .transaction-hash {
       max-width: calc(100vw - 225px);
     }
@@ -181,7 +181,7 @@ export const Typography = styled(MuiTypography)`
   flex-grow: 1;
   margin: 0 5px;
 
-  ${props => props.theme.breakpoints.down('md')} {
+  ${props => props.theme.breakpoints.down(1024)} {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: calc(100vw - 122px);
@@ -258,7 +258,7 @@ export const IconButtonStyle = styled(IconButton)`
     fill: ${props => props.theme.palette.text.primary};
   }
 
-  ${props => props.theme.breakpoints.down('md')} {
+  ${props => props.theme.breakpoints.down(1024)} {
     &.previous {
       margin-left: -12px;
     }

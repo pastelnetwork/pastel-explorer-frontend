@@ -56,7 +56,7 @@ function LatestTransactions() {
     <Styles.BlockWrapper className="mt-24 latest-transactions-wrapper">
       <Styles.BlockTitle>Latest Transactions (Live)</Styles.BlockTitle>
       <TableContainer component={Paper} className="table-container">
-        <Table aria-label="customized table" className="custom-table">
+        <Table aria-label="customized table" className="custom-table latest-transactions">
           <TableHead className="table__row-header">
             <TableRow>
               <StyledTableCell>Block</StyledTableCell>

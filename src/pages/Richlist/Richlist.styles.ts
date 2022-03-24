@@ -43,7 +43,7 @@ export const Wrapper = styled.div`
     border-top-right-radius: 0;
   }
 
-  ${props => props.theme.breakpoints.down('md')} {
+  ${props => props.theme.breakpoints.down(960)} {
     .custom-table {
       .table__row-header {
         display: none;

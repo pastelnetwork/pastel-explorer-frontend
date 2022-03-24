@@ -28,7 +28,7 @@ export const Wrapper = styled('div')`
     border-top-right-radius: 0;
   }
 
-  ${props => props.theme.breakpoints.down('md')} {
+  ${props => props.theme.breakpoints.down(1024)} {
     .transaction-hash {
       max-width: calc(100vw - 225px);
     }
@@ -177,7 +177,7 @@ export const RowWrapper = styled.div`
 `;
 
 export const GridStyle = styled(Grid)`
-  ${props => props.theme.breakpoints.down('md')} {
+  ${props => props.theme.breakpoints.down(1024)} {
     width: 100%;
     margin-bottom: 6px;
     margin-left: 0;

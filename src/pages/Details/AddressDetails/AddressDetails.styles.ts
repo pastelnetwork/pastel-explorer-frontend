@@ -81,7 +81,7 @@ export const Wrapper = styled.div`
     }
   }
 
-  ${props => props.theme.breakpoints.down('md')} {
+  ${props => props.theme.breakpoints.down(1024)} {
     .transaction-hash,
     .transaction-hash-link {
       max-width: calc(100vw - 225px);
@@ -154,7 +154,7 @@ export const AddressTitleBlock = styled.div`
     margin-left: 5px;
   }
 
-  ${props => props.theme.breakpoints.down('md')} {
+  ${props => props.theme.breakpoints.down(1024)} {
     span {
       max-width: calc(100vw - 145px);
       overflow: hidden;

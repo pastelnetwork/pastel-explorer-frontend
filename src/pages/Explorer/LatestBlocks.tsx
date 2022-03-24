@@ -71,7 +71,7 @@ function LatestBlocks() {
         </Link>
       </Styles.BlockTitle>
       <TableContainer component={Paper} className="table-container">
-        <Table aria-label="customized table" className="custom-table">
+        <Table aria-label="customized table" className="custom-table latest-blocks">
           <TableHead>
             <TableRow className="table__row-header">
               <StyledTableCell style={{ width: 44 }}>Block</StyledTableCell>

@@ -15,7 +15,7 @@ export const GridWrapper = styled(Grid)`
     border-top-right-radius: 0;
   }
 
-  ${props => props.theme.breakpoints.down('md')} {
+  ${props => props.theme.breakpoints.down(1024)} {
     .address-link {
       max-width: calc(100vw - 185px);
     }
@@ -151,7 +151,7 @@ export const Status = styled.div`
     background: ${props => props.theme.supernodes.status.background.enabled};
   }
 
-  ${props => props.theme.breakpoints.down('md')} {
+  ${props => props.theme.breakpoints.down(1024)} {
     max-width: calc(100vw - 165px);
     overflow: hidden;
     text-overflow: ellipsis;

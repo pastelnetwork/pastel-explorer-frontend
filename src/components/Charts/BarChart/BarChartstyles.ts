@@ -45,7 +45,16 @@ export const CardContent = styled(MuiCardContent)`
 export const ChartWrapper = styled(Grid)`
   position: relative;
 
-  @media (min-width: 960px) {
+  @media screen and (min-width: 1024px) and (max-width: 1280px) {
+    max-height: 230px;
+    padding: 10px;
+
+    svg {
+      height: 200px;
+    }
+  }
+
+  @media (min-width: 960px) and (max-width: 1024px) {
     padding: 10px 40px;
   }
 

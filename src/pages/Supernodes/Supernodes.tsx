@@ -10,7 +10,6 @@ import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { INetwork, INetworkSupernodes } from '@utils/types/INetwork';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import breakpoints from '@theme/breakpoints';
 import { Dropdown, OptionsProps } from '@components/Dropdown/Dropdown';
 
 import { columns, SUPERNODE_LAST_PAID_KEY } from './Supernodes.columns';
@@ -70,8 +69,10 @@ const Supernodes: React.FC = () => {
   };
 
   const handleShowSubMenu = () => {
-    if (window.innerWidth < breakpoints.values.lg) {
+    if (window.innerWidth < 1025) {
       setMobileView(true);
+    } else {
+      setMobileView(false);
     }
   };
 

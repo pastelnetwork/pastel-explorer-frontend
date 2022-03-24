@@ -11,6 +11,10 @@ export const Container = styled.div`
   border-radius: 10px;
   overflow: hidden;
 
+  @media screen and (min-width: 1024px) and (max-width: 1280px) {
+    height: 332px;
+  }
+
   @media (min-width: 1440px) {
     min-height: 414px;
   }

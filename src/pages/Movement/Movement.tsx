@@ -13,7 +13,6 @@ import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { ITransaction } from '@utils/types/ITransactions';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import breakpoints from '@theme/breakpoints';
 import * as Styles from './Movement.styles';
 
 import { TIMESTAMP_MOVEMENT_KEY, columns } from './Movement.columns';
@@ -48,7 +47,7 @@ const Movement: React.FC = () => {
 
   const handleShowSubMenu = () => {
     setMobileView(false);
-    if (window.innerWidth < breakpoints.values.lg) {
+    if (window.innerWidth < 960) {
       setMobileView(true);
     }
   };

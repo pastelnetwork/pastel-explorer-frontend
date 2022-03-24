@@ -14,7 +14,6 @@ import * as ROUTES from '@utils/constants/routes';
 import { IAddress } from '@utils/types/IAddress';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { getCurrencyName } from '@utils/appInfo';
-import breakpoints from '@theme/breakpoints';
 
 import {
   addressHeaders,
@@ -110,8 +109,10 @@ const AddressDetails = () => {
   }, [id]);
 
   const handleShowSubMenu = () => {
-    if (window.innerWidth < breakpoints.values.lg) {
+    if (window.innerWidth < 1024) {
       setMobileView(true);
+    } else {
+      setMobileView(false);
     }
   };
 

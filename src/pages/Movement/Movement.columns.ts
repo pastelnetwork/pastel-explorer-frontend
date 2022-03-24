@@ -5,7 +5,7 @@ export const AMOUNT_MOVEMENT_KEY = 'totalAmount';
 
 export const columns = [
   {
-    width: 420,
+    width: 350,
     flexGrow: 1,
     label: 'txID',
     dataKey: TXID_KEY,
