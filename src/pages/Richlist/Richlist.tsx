@@ -20,6 +20,7 @@ export type WealthDistributionProps = {
   data: React.ReactNode;
   title: string;
   amount: number;
+  top: number;
 };
 
 const Richlist: React.FC = () => {
@@ -36,7 +37,7 @@ const Richlist: React.FC = () => {
     () => (list && list.length ? generateWealthDistributionData(list) : null),
     [list],
   );
-  const wealthDistributionData = wealthDistribution?.sort((a, b) => a.amount - b.amount);
+  const wealthDistributionData = wealthDistribution?.sort((a, b) => a.top - b.top);
   return (
     <Styles.Wrapper>
       <Grid item>
@@ -50,7 +51,9 @@ const Richlist: React.FC = () => {
               <Styles.InfoItem>{wealthDistributionData?.[3]?.data}</Styles.InfoItem>
             </Styles.Info>
             <Styles.Chart>
-              {wealthDistribution?.length ? <BarChart data={wealthDistribution} /> : null}
+              {wealthDistribution?.length ? (
+                <BarChart data={wealthDistribution?.sort((a, b) => b.top - a.top)} />
+              ) : null}
             </Styles.Chart>
           </Styles.ContentWrapper>
         </Styles.BlockWrapper>

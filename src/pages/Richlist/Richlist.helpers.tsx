@@ -131,6 +131,7 @@ const generateWealthDistributionItem = (
   list: Array<IRichlist>,
   rowLabel: string,
   className: string,
+  top: number,
 ) => {
   const rowId = list[0]?.address || '';
 
@@ -148,6 +149,7 @@ const generateWealthDistributionItem = (
     id: rowId,
     title: rowLabel,
     amount,
+    top,
     data: (
       <>
         <Styles.Icon>
@@ -184,6 +186,7 @@ export const generateWealthDistributionData = (list: IRichlist[]) => {
       currentWealthDistributionList,
       rowLabel,
       `top-${firstDivider + 1}-${lastDivider}`,
+      firstDivider + 1 + lastDivider,
     );
   });
   return dividedLists;
