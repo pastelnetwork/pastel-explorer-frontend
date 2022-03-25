@@ -24,7 +24,7 @@ export type WealthDistributionProps = {
 };
 
 const Richlist: React.FC = () => {
-  const { fetchData } = useFetch<{ data: Array<IRichlist> }>({
+  const { fetchData, isLoading } = useFetch<{ data: Array<IRichlist> }>({
     method: 'get',
     url: `${URLS.RICHLIST_URL}`,
   });
@@ -66,6 +66,7 @@ const Richlist: React.FC = () => {
           handleClickSort={handleClickSort}
           className="richlist"
           tableWrapperClassName="richlist-table-wrapper"
+          isLoading={isLoading}
         />
       </Styles.GridWrapper>
     </Styles.Wrapper>

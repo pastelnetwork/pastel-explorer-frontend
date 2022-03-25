@@ -1,7 +1,6 @@
 import { MouseEvent, useCallback, ReactNode } from 'react';
-import { Table, TableBody, TableHead, TableRow } from '@material-ui/core';
+import { CircularProgress, Table, TableBody, TableHead, TableRow } from '@material-ui/core';
 import { CSSProperties } from '@material-ui/styles';
-import { Skeleton } from '@material-ui/lab';
 
 import * as Styles from './Table.styles';
 
@@ -24,6 +23,7 @@ interface TableComponentProps {
   blockWrapperClassName?: string;
   tableWrapperClassName?: string;
   children?: ReactNode;
+  isLoading?: boolean;
 }
 
 const TableComponent: React.FC<TableComponentProps> = ({
@@ -36,6 +36,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
   blockWrapperClassName = '',
   tableWrapperClassName = '',
   children,
+  isLoading,
 }) => {
   const onClickHeader = useCallback((event: MouseEvent<HTMLTableHeaderCellElement>) => {
     if (handleClickSort) {
@@ -47,7 +48,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
       <Styles.Card mb={3} style={styles}>
         {title && <Styles.BlockTitle>{title}</Styles.BlockTitle>}
         <Styles.PaperWrapper>
-          {rows ? (
+          {!isLoading ? (
             <Styles.TableWrapper className={tableWrapperClassName}>
               <Table className={`custom-table ${className}`}>
                 <TableHead className="table__row-header">
@@ -60,7 +61,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map(({ id, data }) => (
+                  {rows?.map(({ id, data }) => (
                     <TableRow key={id} className="table__row">
                       {data.map(dataElement => (
                         <Styles.RowCell key={dataElement.id}>{dataElement.value}</Styles.RowCell>
@@ -71,7 +72,9 @@ const TableComponent: React.FC<TableComponentProps> = ({
               </Table>
             </Styles.TableWrapper>
           ) : (
-            <Skeleton animation="wave" variant="rect" height={styles?.height || 200} />
+            <Styles.Loader style={{ height: styles?.height || 200 }}>
+              <CircularProgress size={40} />
+            </Styles.Loader>
           )}
         </Styles.PaperWrapper>
       </Styles.Card>

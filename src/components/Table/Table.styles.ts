@@ -93,3 +93,7 @@ export const BlockTitle = styled.h4`
   padding: 18px 16px;
   background: ${props => props.theme.card.titleColor};
 `;
+
+export const Loader = styled.h4`
+  text-align: center;
+`;

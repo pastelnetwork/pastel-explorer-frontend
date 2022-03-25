@@ -36,7 +36,7 @@ const Supernodes: React.FC = () => {
   });
   const [supernodes, setSupernodes] = React.useState<Array<RowsProps>>([]);
   const [originalSupernodes, setOriginalSupernodes] = React.useState<Array<INetworkSupernodes>>([]);
-  const { fetchData } = useFetch<INetwork>({
+  const { fetchData, isLoading } = useFetch<INetwork>({
     method: 'get',
     url: URLS.NETWORK_URL,
   });
@@ -168,6 +168,7 @@ const Supernodes: React.FC = () => {
           className="supernode-table"
           headerBackground
           rowHeight={isMobile ? 270 : 45}
+          isLoading={isLoading}
         />
       </Styles.GridWrapper>
     </Styles.BlockWrapper>

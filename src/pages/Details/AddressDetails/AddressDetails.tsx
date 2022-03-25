@@ -47,7 +47,7 @@ const AddressDetails = () => {
   const { id } = useParams<ParamTypes>();
   const [addresses, setAddresses] = React.useState<IAddress>(DEFAULT_ADDRESS_DATA);
   const redirect = React.useRef(false);
-  const { fetchData } = useFetch<IAddress>({
+  const { fetchData, isLoading } = useFetch<IAddress>({
     method: 'get',
     url: `${URLS.ADDRESS_URL}/${id}`,
   });
@@ -166,6 +166,7 @@ const AddressDetails = () => {
             headerBackground
             rowHeight={isMobile ? 135 : 45}
             tableHeight={isMobile ? 600 : 400}
+            isLoading={isLoading}
           />
         </Styles.TableWrapper>
       </Grid>

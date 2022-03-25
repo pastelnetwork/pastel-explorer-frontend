@@ -13,7 +13,6 @@ import {
 import { CSSProperties } from '@material-ui/styles';
 import { CircularProgress, darken } from '@material-ui/core';
 import { ArrowDropDown, ArrowDropUp } from '@material-ui/icons';
-import { Skeleton } from '@material-ui/lab';
 import { useGetThemeMode } from '@redux/reducers/appThemeReducer';
 import themeVariant from '@theme/variants';
 import { TFilter } from '@utils/types/IFilter';
@@ -60,13 +59,10 @@ interface IInfinityTableComponentProps {
   onHeaderClick?: (info: ISortData) => void;
   className?: string;
   headerBackground?: boolean;
+  isLoading?: boolean;
 }
 
-const noRowsRenderer = () => (
-  <Styles.Loader>
-    <CircularProgress size={40} />
-  </Styles.Loader>
-);
+const noRowsRenderer = () => <Styles.EmptyData />;
 const headerRenderer = ({
   label,
   dataKey,
@@ -110,6 +106,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   renderAllRows,
   className,
   headerBackground,
+  isLoading,
 }) => {
   const [loading, setLoading] = React.useState(false);
   const isDarkMode = useGetThemeMode();
@@ -169,8 +166,8 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
             <CircularProgress size={40} />
           </Styles.Loader>
         )}
-        {rows.length ? (
-          <Styles.TableWrapper>
+        {!isLoading ? (
+          <Styles.TableWrapper className={`${rows.length ? '' : 'empty-table'}`}>
             <AutoSizer disableHeight>
               {({ width }) => (
                 <div style={{ width }}>
@@ -210,7 +207,11 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
             </AutoSizer>
           </Styles.TableWrapper>
         ) : (
-          <Skeleton animation="wave" variant="rect" height={tableHeight} />
+          <div style={{ height: tableHeight }}>
+            <Styles.Loader>
+              <CircularProgress size={40} />
+            </Styles.Loader>
+          </div>
         )}
       </Styles.TableContainer>
     </Styles.Card>

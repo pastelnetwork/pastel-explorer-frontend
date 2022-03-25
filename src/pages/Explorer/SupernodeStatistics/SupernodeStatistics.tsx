@@ -78,7 +78,7 @@ const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ supernodes })
         data={chartData}
         table={<Table headers={headers} rows={countries} styles={tableStyles} />}
       />
-      <Styles.ChartLegend>Total ({sum} Supernodes)</Styles.ChartLegend>
+      {sum ? <Styles.ChartLegend>Total ({sum} Supernodes)</Styles.ChartLegend> : null}
     </ExplorerMapStyles.Container>
   );
 };

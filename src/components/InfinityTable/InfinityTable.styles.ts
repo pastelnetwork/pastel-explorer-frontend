@@ -99,6 +99,12 @@ export const TableWrapper = styled.div`
       background-color: ${props => props.theme.table.hover} !important;
     }
   }
+
+  &.empty-table {
+    .ReactVirtualized__Grid {
+      height: 46vh !important;
+    }
+  }
 `;
 
 export const TableContainer = styled(Paper)`
@@ -152,4 +158,9 @@ export const Wrapper = styled.div`
       margin: 0;
     }
   }
+`;
+
+export const EmptyData = styled.div`
+  display: block;
+  min-height: 10vh;
 `;
