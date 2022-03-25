@@ -137,7 +137,7 @@ const Supernodes: React.FC = () => {
         <Styles.Title>Supernode List</Styles.Title>{' '}
         {supernodes.length > 0 ? (
           <Styles.SubTitle>
-            Total {formatNumber(originalSupernodes.length)} Supernodes
+            (Total {formatNumber(originalSupernodes.length)} Supernodes)
           </Styles.SubTitle>
         ) : null}
       </Styles.TitleWrapper>
