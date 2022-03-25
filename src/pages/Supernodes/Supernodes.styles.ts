@@ -128,7 +128,7 @@ export const TitleWrapper = styled.div`
 `;
 
 export const Title = styled.span`
-  margin-right: 10px;
+  margin-right: 0;
 `;
 
 export const SubTitle = styled.span`
