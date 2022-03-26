@@ -27,14 +27,14 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
       {title && <h4>{title}</h4>}
       <Styles.CardContent>
         <Grid container justify="center" alignItems="flex-start">
-          <Styles.ChartWrapper item sm={12} md={5}>
+          <Styles.ChartWrapper item xs={12} sm={5}>
             <Styles.DoughnutInner>
               {innerTitle && <Typography variant="h4">{innerTitle}</Typography>}
               {innerSubtitle && <Typography variant="caption">{innerSubtitle}</Typography>}
             </Styles.DoughnutInner>
             {data && <Doughnut data={data} options={defaultChartOptions} type="doughnut" />}
           </Styles.ChartWrapper>
-          <Grid item sm={12} md={7}>
+          <Grid item xs={12} sm={7}>
             {table}
           </Grid>
         </Grid>

@@ -97,6 +97,7 @@ export const themeLight = createMuiTheme(
       even: '#FCFCFD',
       hover: '#EBEAEA',
       label: '#2D3748',
+      oddSupernode: '#ECEFF3',
     },
     filter: {
       border: 'rgba(0, 0, 0, 0.12)',
@@ -217,6 +218,7 @@ export const themeDark = createMuiTheme(
       even: '#4A5568',
       hover: '#718096',
       label: '#F8F8FA',
+      oddSupernode: '#1A202C',
     },
     filter: {
       border: 'rgb(35, 38, 48)',
