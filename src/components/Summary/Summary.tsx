@@ -15,6 +15,7 @@ import themeVariant from '@theme/variants';
 import { AppThunkDispatch } from '@redux/types';
 import { BlockThunks, TransactionThunks } from '@redux/thunk';
 import { ISocketData } from '@utils/types/ISocketData';
+
 import * as Styles from './Summary.styles';
 import { initialSummaryList, calculateDifference } from './Summary.helpers';
 
@@ -23,9 +24,6 @@ const useStyles = makeStyles((_theme: TAppTheme) => ({
     [_theme.breakpoints.up('md')]: {
       width: '100%',
     },
-    // [_theme.breakpoints.up('xl')]: {
-    //   width: '100%',
-    // },
   },
   cardItem: {
     flex: '0 0 auto',
@@ -46,7 +44,6 @@ const Summary: React.FC = () => {
   const dispatch = useDispatch<AppThunkDispatch>();
   const generateSummaryData = React.useCallback((summary: ISummary) => {
     const { currentStats, lastDayStats } = summary;
-
     setSummaryList(prev => {
       const items = prev.map(summaryElement => {
         const key = summaryElement.key as keyof ISummaryStats;
@@ -57,10 +54,10 @@ const Summary: React.FC = () => {
             decimalsLength: summaryElement.decimals,
             divideToAmount: summaryElement.divideToAmount,
           }),
-          previousValue: formatNumber(lastDayStats[key] || 0, {
+          previousValue: formatNumber(lastDayStats?.[key] || 0, {
             decimalsLength: summaryElement.decimals,
           }),
-          difference: calculateDifference(currentStats[key] || 0, lastDayStats[key] || 0),
+          difference: calculateDifference(currentStats[key] || 0, lastDayStats?.[key] || 0),
         };
       });
       return items;
