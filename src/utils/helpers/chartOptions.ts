@@ -1,5 +1,6 @@
 import * as echarts from 'echarts';
 import { EChartsOption } from 'echarts-for-react';
+
 // aplication
 import { TThemeInitOption } from '@utils/constants/types';
 import { convertYAxisLabel } from '@utils/helpers/statisticsLib';
@@ -748,6 +749,591 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
           },
         },
       ],
+    },
+  };
+  return chartOptions[chartName];
+}
+
+export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOption {
+  const { theme, dataX, dataY, dataY1, dataY2, chartName, minY, maxY } = args;
+
+  const chartOptions: TChartOption = {
+    gigaHashPerSec: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#80FFA5', '#37A2FF'],
+      grid: {
+        top: 8,
+        right: 8,
+        bottom: 8,
+        left: 8,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            backgroundColor: '#6a7985',
+          },
+        },
+      },
+      legend: {
+        show: false,
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      yAxis: {
+        type: 'value',
+        splitLine: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+      },
+      series: [
+        {
+          name: 'Traffic receive',
+          type: 'line',
+          smooth: true,
+          lineStyle: {
+            width: 0,
+          },
+          showSymbol: false,
+          areaStyle: {
+            opacity: 0.8,
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: '#80ffa5',
+              },
+              {
+                offset: 1,
+                color: '#00BFEC',
+              },
+            ]),
+          },
+          emphasis: {
+            focus: 'series',
+          },
+          data: dataY1,
+        },
+        {
+          name: 'Traffic sent',
+          type: 'line',
+          smooth: true,
+          lineStyle: {
+            width: 0,
+          },
+          showSymbol: false,
+          areaStyle: {
+            opacity: 0.8,
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: '#37a2ff',
+              },
+              {
+                offset: 1,
+                color: '#7415db',
+              },
+            ]),
+          },
+          emphasis: {
+            focus: 'series',
+          },
+          data: dataY2,
+        },
+      ],
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    difficulty: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      grid: {
+        top: 8,
+        right: 8,
+        bottom: 8,
+        left: 8,
+        show: false,
+      },
+      visualMap: {
+        show: false,
+        type: 'continuous',
+        seriesIndex: 0,
+        min: minY,
+        max: maxY,
+      },
+      tooltip: {
+        trigger: 'axis',
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        max: maxY,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      series: {
+        type: 'line',
+        showSymbol: false,
+        data: dataY,
+        lineStyle: {
+          width: 3,
+          shadowColor: 'rgba(0,0,0,0.5)',
+          shadowBlur: 10,
+          shadowOffsetY: 12,
+        },
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    coinSupply: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#cd6661'],
+      grid: {
+        top: 8,
+        right: 8,
+        bottom: 8,
+        left: 8,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      yAxis: {
+        type: 'value',
+        min: 0,
+        max: maxY,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      series: {
+        type: 'line',
+        sampling: 'lttb',
+        data: dataY,
+        smooth: true,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#cd6661',
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor ?? '#F4F4F4',
+            },
+          ]),
+        },
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    nonZeroAddressesCount: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#5470c6', '#91cc75', '#fac858'],
+      grid: {
+        top: 8,
+        right: 8,
+        bottom: 8,
+        left: 8,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      yAxis: {
+        type: 'value',
+        min: 0,
+        max: maxY,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      series: {
+        type: 'line',
+        data: dataY,
+        areaStyle: {},
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    avgTransactionsPerSecond: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#5470c6', '#91cc75', '#fac858'],
+      grid: {
+        top: 8,
+        right: 8,
+        bottom: 8,
+        left: 8,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      yAxis: {
+        type: 'value',
+        min: 0,
+        max: maxY,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      series: {
+        type: 'line',
+        data: dataY,
+        areaStyle: {},
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    avgBlockSizeLast24Hour: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#cd6661'],
+      grid: {
+        top: 8,
+        right: 8,
+        bottom: 8,
+        left: 8,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      yAxis: {
+        type: 'value',
+        min: 0,
+        max: maxY,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      series: {
+        type: 'line',
+        sampling: 'lttb',
+        data: dataY,
+        smooth: true,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#cd6661',
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor ?? '#F4F4F4',
+            },
+          ]),
+        },
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    avgTransactionPerBlockLast24Hour: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#cd6661'],
+      grid: {
+        top: 8,
+        right: 8,
+        bottom: 8,
+        left: 8,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      yAxis: {
+        type: 'value',
+        min: 0,
+        max: maxY,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      series: {
+        type: 'line',
+        sampling: 'lttb',
+        data: dataY,
+        smooth: true,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#cd6661',
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor ?? '#F4F4F4',
+            },
+          ]),
+        },
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    avgTransactionFeeLast24Hour: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#cd6661'],
+      grid: {
+        top: 8,
+        right: 8,
+        bottom: 8,
+        left: 8,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      yAxis: {
+        type: 'value',
+        min: 0,
+        max: maxY,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      series: {
+        type: 'line',
+        sampling: 'lttb',
+        data: dataY,
+        smooth: true,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#cd6661',
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor ?? '#F4F4F4',
+            },
+          ]),
+        },
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    memPoolSize: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      grid: {
+        top: 8,
+        right: 8,
+        bottom: 8,
+        left: 8,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        max: maxY,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      series: {
+        type: 'line',
+        sampling: 'lttb',
+        lineStyle: {
+          color: '#176987',
+        },
+        smooth: true,
+        symbol: false,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#1A4369',
+            },
+            {
+              offset: 1,
+              color: '#1A272A4D',
+            },
+          ]),
+        },
+        data: dataY,
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
     },
   };
   return chartOptions[chartName];

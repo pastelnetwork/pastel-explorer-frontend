@@ -4,6 +4,7 @@ import { Skeleton } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/styles';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+
 // application
 import { TAppTheme } from '@theme/index';
 import * as URLS from '@utils/constants/urls';
@@ -15,9 +16,21 @@ import themeVariant from '@theme/variants';
 import { AppThunkDispatch } from '@redux/types';
 import { BlockThunks, TransactionThunks } from '@redux/thunk';
 import { ISocketData } from '@utils/types/ISocketData';
+import {
+  transformNetTotals,
+  transformDifficultyInfo,
+  transformCharts,
+  transformPriceInfo,
+  transformTransactionPerSecond,
+  transformTotalData,
+  transformMempoolInfo,
+} from '@utils/helpers/statisticsLib';
 
 import * as Styles from './Summary.styles';
+import { LineChart } from './LineChart';
+import { MultiLineChart } from './MultiLineChart';
 import { initialSummaryList, calculateDifference } from './Summary.helpers';
+import * as mockupData from './mockup';
 
 const useStyles = makeStyles((_theme: TAppTheme) => ({
   wrapper: {
@@ -34,6 +47,14 @@ const useStyles = makeStyles((_theme: TAppTheme) => ({
     fontSize: 14,
   },
 }));
+
+type TChartDataProps = {
+  dataX?: string[];
+  dataY?: number[];
+  dataY1?: number[];
+  dataY2?: number[];
+  offset: number;
+};
 
 const Summary: React.FC = () => {
   const [summaryList, setSummaryList] = React.useState(initialSummaryList);
@@ -98,10 +119,93 @@ const Summary: React.FC = () => {
   }, []);
   React.useEffect(() => updateSummaryList(), []);
 
+  const generateChartData = (key: string): TChartDataProps => {
+    let dataX;
+    let dataY;
+    let dataY1;
+    let dataY2;
+    let parseData;
+    let offset = 0;
+    switch (key) {
+      case 'gigaHashPerSec':
+        parseData = transformNetTotals(mockupData.gigaHashPerSec);
+        dataX = parseData?.dataX;
+        dataY1 = parseData?.dataY1;
+        dataY2 = parseData?.dataY2;
+        offset = 0;
+        break;
+      case 'difficulty':
+        parseData = transformDifficultyInfo(mockupData.difficulty);
+        dataX = parseData?.dataX;
+        dataY = parseData?.dataY;
+        offset = 10000;
+        break;
+      case 'coinSupply':
+        parseData = transformCharts(mockupData.coinSupply);
+        dataX = parseData?.dataX;
+        dataY = parseData?.dataY;
+        offset = 1;
+        break;
+      case 'usdPrice':
+        parseData = transformPriceInfo(mockupData.usdPrice);
+        dataX = parseData?.dataX;
+        dataY1 = parseData?.dataY1;
+        dataY2 = parseData?.dataY2;
+        offset = 0.0001;
+        break;
+      case 'nonZeroAddressesCount':
+        parseData = transformCharts(mockupData.nonZeroAddressesCount);
+        dataX = parseData?.dataX;
+        dataY = parseData?.dataY;
+        offset = 0;
+        break;
+      case 'avgTransactionsPerSecond':
+        parseData = transformTransactionPerSecond(mockupData.avgTransactionsPerSecond);
+        dataX = parseData?.dataX;
+        dataY = parseData?.dataY;
+        offset = 0.05;
+        break;
+      case 'avgBlockSizeLast24Hour':
+        parseData = transformTotalData(mockupData.avgBlockSizeLast24Hour);
+        dataX = parseData?.dataX;
+        dataY = parseData?.dataY;
+        offset = 1;
+        break;
+      case 'avgTransactionPerBlockLast24Hour':
+        parseData = transformCharts(mockupData.avgTransactionPerBlockLast24Hour);
+        dataX = parseData?.dataX;
+        dataY = parseData?.dataY;
+        offset = 1;
+        break;
+      case 'avgTransactionFeeLast24Hour':
+        parseData = transformCharts(mockupData.avgTransactionFeeLast24Hour);
+        dataX = parseData?.dataX;
+        dataY = parseData?.dataY;
+        offset = 0.05;
+        break;
+      case 'memPoolSize':
+        parseData = transformMempoolInfo(mockupData.memPoolSize);
+        dataX = parseData?.dataX;
+        dataY = parseData?.dataY;
+        offset = 1;
+        break;
+      default:
+        break;
+    }
+
+    return {
+      dataX,
+      dataY,
+      dataY1,
+      dataY2,
+      offset,
+    };
+  };
+
   return (
     <div className={classes.wrapper}>
       <Styles.Wrapper>
-        {summaryList.map(({ id, name, value, difference }) => (
+        {summaryList.map(({ id, name, value, difference, key: sumKey }) => (
           <Styles.Card key={id} classes={{ root: classes.cardItem }}>
             <Styles.CardContent>
               <Styles.ValueWrapper>
@@ -170,6 +274,28 @@ const Summary: React.FC = () => {
                 )}
               </Styles.PercentageWrapper>
             </Styles.CardContent>
+            {generateChartData(sumKey)?.dataX?.length ? (
+              <div>
+                {sumKey !== 'usdPrice' ? (
+                  <LineChart
+                    chartName={sumKey}
+                    dataX={generateChartData(sumKey)?.dataX}
+                    dataY={generateChartData(sumKey)?.dataY}
+                    dataY1={generateChartData(sumKey)?.dataY1}
+                    dataY2={generateChartData(sumKey)?.dataY2}
+                    offset={generateChartData(sumKey)?.offset}
+                  />
+                ) : (
+                  <MultiLineChart
+                    chartName={sumKey}
+                    dataX={generateChartData(sumKey)?.dataX}
+                    dataY1={generateChartData(sumKey)?.dataY1}
+                    dataY2={generateChartData(sumKey)?.dataY2}
+                    offset={generateChartData(sumKey)?.offset}
+                  />
+                )}
+              </div>
+            ) : null}
           </Styles.Card>
         ))}
       </Styles.Wrapper>

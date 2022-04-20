@@ -15,4 +15,5 @@ export interface ISummaryStats {
 export interface ISummary {
   currentStats: ISummaryStats;
   lastDayStats: ISummaryStats;
+  last7DayStats: ISummaryStats[];
 }
