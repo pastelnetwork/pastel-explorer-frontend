@@ -146,7 +146,7 @@ export const Percentage = styled(MuiTypography)<{
 export const LineChartWrap = styled.div`
   width: 100%;
   height: auto;
-  padding: 0;
+  padding: 0 20px 20px;
 `;
 
 export const LineChartTitle = styled.div`

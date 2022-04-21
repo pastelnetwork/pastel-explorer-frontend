@@ -181,7 +181,7 @@ const Summary: React.FC = () => {
         parseChartData = transformChartData(key);
         dataX = parseChartData?.dataX;
         dataY = parseChartData?.dataY;
-        offset = 1000000;
+        offset = 10;
         break;
       case 'usdPrice':
         parseChartData = transformPriceChartData(key);
@@ -200,7 +200,7 @@ const Summary: React.FC = () => {
         parseChartData = transformChartData(key);
         dataX = parseChartData?.dataX;
         dataY = parseChartData?.dataY;
-        offset = 0.015;
+        offset = 0;
         break;
       case 'avgBlockSizeLast24Hour':
         parseChartData = transformChartData(key);

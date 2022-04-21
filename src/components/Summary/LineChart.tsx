@@ -43,6 +43,13 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
       } else if (chartName === 'difficulty') {
         setMinY(Math.floor(min / offset) * offset);
         setMaxY(Math.ceil(max / offset) * offset);
+      } else if (
+        chartName === 'avgTransactionsPerSecond' ||
+        chartName === 'avgTransactionPerBlockLast24Hour' ||
+        chartName === 'avgTransactionFeeLast24Hour'
+      ) {
+        setMinY(min);
+        setMaxY(max);
       } else {
         setMinY(Math.round(min) - offset);
         setMaxY(Math.floor(max) + offset);

@@ -802,7 +802,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       yAxis: {
         type: 'value',
-        min: 0,
+        min: minY,
         max: maxY,
         axisLabel: {
           show: false,
@@ -817,15 +817,14 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         type: 'line',
         data: dataY,
         areaStyle: {
-          opacity: 0.8,
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#37a2ff',
+              color: '#5470C6',
             },
             {
               offset: 1,
-              color: '#7415db',
+              color: '#fff',
             },
           ]),
         },
@@ -965,7 +964,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             },
             {
               offset: 1,
-              color: theme?.backgroundColor ?? '#F4F4F4',
+              color: '#fff',
             },
           ]),
         },
@@ -1019,7 +1018,18 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         name: 'Accounts',
         type: 'line',
         data: dataY,
-        areaStyle: {},
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#5470C6',
+            },
+            {
+              offset: 1,
+              color: '#fff',
+            },
+          ]),
+        },
       },
       stateAnimation: {
         duration: 300,
@@ -1049,8 +1059,8 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       xAxis: {
         type: 'category',
-        boundaryGap: false,
         data: dataX,
+        boundaryGap: false,
         axisLabel: {
           show: false,
         },
@@ -1061,11 +1071,11 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       yAxis: {
         type: 'value',
-        min: 0,
-        max: maxY,
+        min: minY,
         axisLabel: {
           show: false,
         },
+        splitNumber: 55,
         splitLine: {
           show: false,
         },
@@ -1075,73 +1085,15 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         name: `Transactions (avg/s)`,
         type: 'line',
         data: dataY,
-        areaStyle: {},
-      },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
-    },
-    avgBlockSizeLast24Hour: {
-      backgroundColor: theme?.backgroundColor,
-      textStyle: {
-        color: theme?.color,
-      },
-      color: ['#cd6661'],
-      grid: {
-        top: 8,
-        right: 0,
-        bottom: 0,
-        left: 0,
-        show: false,
-      },
-      tooltip: {
-        trigger: 'axis',
-        formatter: (params: TToolTipParamsProps[]) => {
-          return `${params[0].axisValue}<br />${params[0].marker}${
-            params[0].seriesName
-          }&nbsp;&nbsp;${formatNumber(params[0].data, { decimalsLength: 2 })}`;
-        },
-      },
-      xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: dataX,
-        axisLabel: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-        show: false,
-      },
-      yAxis: {
-        type: 'value',
-        min: 0,
-        max: maxY,
-        axisLabel: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-        show: false,
-      },
-      series: {
-        name: 'Block Size (avg)',
-        type: 'line',
-        sampling: 'lttb',
-        data: dataY,
-        smooth: true,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#cd6661',
+              color: '#5470C6',
             },
             {
               offset: 1,
-              color: theme?.backgroundColor ?? '#F4F4F4',
+              color: '#fff',
             },
           ]),
         },
@@ -1151,7 +1103,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         easing: 'cubicOut',
       },
     },
-    avgTransactionPerBlockLast24Hour: {
+    avgBlockSizeLast24Hour: {
       backgroundColor: theme?.backgroundColor,
       textStyle: {
         color: theme?.color,
@@ -1197,6 +1149,74 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
+        name: 'Block Size (avg)',
+        type: 'line',
+        sampling: 'lttb',
+        data: dataY,
+        smooth: true,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#cd6661',
+            },
+            {
+              offset: 1,
+              color: '#fff',
+            },
+          ]),
+        },
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    avgTransactionPerBlockLast24Hour: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#cd6661'],
+      grid: {
+        top: 8,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `${params[0].axisValue}<br />${params[0].marker}${
+            params[0].seriesName
+          }&nbsp;&nbsp;${formatNumber(params[0].data, { decimalsLength: 2 })}`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      series: {
         name: 'Transactions (avg/block)',
         type: 'line',
         sampling: 'lttb',
@@ -1210,7 +1230,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             },
             {
               offset: 1,
-              color: theme?.backgroundColor ?? '#F4F4F4',
+              color: '#fff',
             },
           ]),
         },
@@ -1279,7 +1299,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             },
             {
               offset: 1,
-              color: theme?.backgroundColor ?? '#F4F4F4',
+              color: '#fff',
             },
           ]),
         },
@@ -1297,7 +1317,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       grid: {
         top: 8,
         right: 0,
-        bottom: -22,
+        bottom: 0,
         left: 0,
         show: false,
       },
@@ -1319,7 +1339,6 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       yAxis: {
         type: 'value',
         min: minY,
-        max: maxY,
         axisLabel: {
           show: false,
         },
@@ -1345,7 +1364,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             },
             {
               offset: 1,
-              color: '#1A272A4D',
+              color: '#fff',
             },
           ]),
         },
