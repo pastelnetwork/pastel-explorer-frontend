@@ -24,7 +24,7 @@ export const MultiLineChart = (props: TMultiLineChartProps): JSX.Element | null 
       const max = Math.max(...dataY1);
       const min1 = Math.min(...dataY2);
       const max1 = Math.max(...dataY2);
-      if (chartName === 'prices') {
+      if (chartName === 'usdPrice') {
         setMinY1(min - offset);
         setMaxY1(max + offset);
         setMinY2(min1);
@@ -36,9 +36,9 @@ export const MultiLineChart = (props: TMultiLineChartProps): JSX.Element | null 
   const options = {
     grid: {
       top: 8,
-      right: 8,
+      right: 0,
       bottom: 8,
-      left: 8,
+      left: 0,
       show: false,
     },
     visualMap: {

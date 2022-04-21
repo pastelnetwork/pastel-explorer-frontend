@@ -870,9 +870,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       grid: {
         top: 8,
-        right: 8,
+        right: 0,
         bottom: 8,
-        left: 8,
+        left: 0,
         show: false,
       },
       visualMap: {
@@ -932,9 +932,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       color: ['#cd6661'],
       grid: {
         top: 8,
-        right: 8,
+        right: 0,
         bottom: 8,
-        left: 8,
+        left: 0,
         show: false,
       },
       tooltip: {
@@ -994,9 +994,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       color: ['#5470c6', '#91cc75', '#fac858'],
       grid: {
         top: 8,
-        right: 8,
+        right: 0,
         bottom: 8,
-        left: 8,
+        left: 0,
         show: false,
       },
       tooltip: {
@@ -1043,9 +1043,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       color: ['#5470c6', '#91cc75', '#fac858'],
       grid: {
         top: 8,
-        right: 8,
+        right: 0,
         bottom: 8,
-        left: 8,
+        left: 0,
         show: false,
       },
       tooltip: {
@@ -1092,9 +1092,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       color: ['#cd6661'],
       grid: {
         top: 8,
-        right: 8,
+        right: 0,
         bottom: 8,
-        left: 8,
+        left: 0,
         show: false,
       },
       tooltip: {
@@ -1154,9 +1154,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       color: ['#cd6661'],
       grid: {
         top: 8,
-        right: 8,
+        right: 0,
         bottom: 8,
-        left: 8,
+        left: 0,
         show: false,
       },
       tooltip: {
@@ -1216,9 +1216,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       color: ['#cd6661'],
       grid: {
         top: 8,
-        right: 8,
+        right: 0,
         bottom: 8,
-        left: 8,
+        left: 0,
         show: false,
       },
       tooltip: {
@@ -1277,9 +1277,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       grid: {
         top: 8,
-        right: 8,
+        right: 0,
         bottom: 8,
-        left: 8,
+        left: 0,
         show: false,
       },
       tooltip: {
