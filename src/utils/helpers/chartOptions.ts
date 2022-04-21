@@ -813,7 +813,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: 'Network (MH/s)',
+        name: 'Network (MH/s): ',
         type: 'line',
         data: dataY,
         areaStyle: {
@@ -951,7 +951,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: `Coin Supply (${getCurrencyName()})`,
+        name: `Coin Supply (${getCurrencyName()}): `,
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -1015,7 +1015,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: 'Accounts',
+        name: 'Accounts: ',
         type: 'line',
         data: dataY,
         areaStyle: {
@@ -1082,7 +1082,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: `Transactions (avg/s)`,
+        name: `Transactions (avg/s): `,
         type: 'line',
         data: dataY,
         areaStyle: {
@@ -1149,7 +1149,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: 'Block Size (avg)',
+        name: 'Block Size (avg): ',
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -1217,7 +1217,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: 'Transactions (avg/block)',
+        name: 'Transactions (avg/block): ',
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -1286,7 +1286,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: 'Transaction Fee (in USD)',
+        name: 'Transaction Fee (in USD): ',
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -1348,7 +1348,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: 'Mempool Size (kB)',
+        name: 'Mempool Size (kB): ',
         type: 'line',
         sampling: 'lttb',
         lineStyle: {
