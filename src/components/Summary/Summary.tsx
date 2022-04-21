@@ -10,27 +10,23 @@ import { TAppTheme } from '@theme/index';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import { ISummary, ISummaryStats } from '@utils/types/ISummary';
+import {
+  ISummary,
+  ISummaryStats,
+  ISummaryChartStats,
+  TSummaryChartProps,
+  TSummaryChartPriceProps,
+} from '@utils/types/ISummary';
 import { SocketContext } from '@context/socket';
 import themeVariant from '@theme/variants';
 import { AppThunkDispatch } from '@redux/types';
 import { BlockThunks, TransactionThunks } from '@redux/thunk';
 import { ISocketData } from '@utils/types/ISocketData';
-import {
-  transformNetTotals,
-  transformDifficultyInfo,
-  transformCharts,
-  transformPriceInfo,
-  transformTransactionPerSecond,
-  transformTotalData,
-  transformMempoolInfo,
-} from '@utils/helpers/statisticsLib';
 
 import * as Styles from './Summary.styles';
 import { LineChart } from './LineChart';
 import { MultiLineChart } from './MultiLineChart';
 import { initialSummaryList, calculateDifference } from './Summary.helpers';
-import * as mockupData from './mockup';
 
 const useStyles = makeStyles((_theme: TAppTheme) => ({
   wrapper: {
@@ -58,13 +54,15 @@ type TChartDataProps = {
 
 const Summary: React.FC = () => {
   const [summaryList, setSummaryList] = React.useState(initialSummaryList);
+  const [summaryChartData, setSummaryChartData] = React.useState<ISummaryChartStats>();
   const { fetchData } = useFetch<ISummary>({ method: 'get', url: URLS.SUMMARY_URL });
   const socket = React.useContext(SocketContext);
   const classes = useStyles();
   const { pathname } = useLocation();
   const dispatch = useDispatch<AppThunkDispatch>();
   const generateSummaryData = React.useCallback((summary: ISummary) => {
-    const { currentStats, lastDayStats } = summary;
+    const { currentStats, lastDayStats, chartStats } = summary;
+    setSummaryChartData(chartStats);
     setSummaryList(prev => {
       const items = prev.map(summaryElement => {
         const key = summaryElement.key as keyof ISummaryStats;
@@ -119,74 +117,113 @@ const Summary: React.FC = () => {
   }, []);
   React.useEffect(() => updateSummaryList(), []);
 
+  const transformChartData = (key: string) => {
+    const dataX = [];
+    const dataY = [];
+    if (summaryChartData) {
+      const items = summaryChartData[key as keyof ISummaryChartStats] as TSummaryChartProps[];
+      if (items.length) {
+        for (let i = 0; i < items.length; i += 1) {
+          dataX.push(new Date(items[i].time).toLocaleString());
+          dataY.push(Number(items[i].value));
+        }
+      }
+    }
+    return {
+      dataX,
+      dataY,
+    };
+  };
+
+  const transformPriceChartData = (key: string) => {
+    const dataX = [];
+    const dataY1 = [];
+    const dataY2 = [];
+    if (summaryChartData) {
+      const items = summaryChartData[key as keyof ISummaryChartStats] as TSummaryChartPriceProps[];
+      if (items.length) {
+        for (let i = 0; i < items.length; i += 1) {
+          dataX.push(new Date(items[i].time).toLocaleString());
+          dataY1.push(Number(items[i].usdPrice));
+          dataY2.push(Number(items[i].btcPrice));
+        }
+      }
+    }
+    return {
+      dataX,
+      dataY1,
+      dataY2,
+    };
+  };
+
   const generateChartData = (key: string): TChartDataProps => {
     let dataX;
     let dataY;
     let dataY1;
     let dataY2;
-    let parseData;
     let offset = 0;
+    let parseChartData;
+
     switch (key) {
       case 'gigaHashPerSec':
-        parseData = transformNetTotals(mockupData.gigaHashPerSec);
-        dataX = parseData?.dataX;
-        dataY1 = parseData?.dataY1;
-        dataY2 = parseData?.dataY2;
+        parseChartData = transformChartData(key);
+        dataX = parseChartData?.dataX;
+        dataY = parseChartData?.dataY;
         offset = 0;
         break;
       case 'difficulty':
-        parseData = transformDifficultyInfo(mockupData.difficulty);
-        dataX = parseData?.dataX;
-        dataY = parseData?.dataY;
+        parseChartData = transformChartData(key);
+        dataX = parseChartData?.dataX;
+        dataY = parseChartData?.dataY;
         offset = 10000;
         break;
       case 'coinSupply':
-        parseData = transformCharts(mockupData.coinSupply);
-        dataX = parseData?.dataX;
-        dataY = parseData?.dataY;
-        offset = 1;
+        parseChartData = transformChartData(key);
+        dataX = parseChartData?.dataX;
+        dataY = parseChartData?.dataY;
+        offset = 1000000;
         break;
       case 'usdPrice':
-        parseData = transformPriceInfo(mockupData.usdPrice);
-        dataX = parseData?.dataX;
-        dataY1 = parseData?.dataY1;
-        dataY2 = parseData?.dataY2;
+        parseChartData = transformPriceChartData(key);
+        dataX = parseChartData?.dataX;
+        dataY1 = parseChartData?.dataY1;
+        dataY2 = parseChartData?.dataY2;
         offset = 0.0001;
         break;
       case 'nonZeroAddressesCount':
-        parseData = transformCharts(mockupData.nonZeroAddressesCount);
-        dataX = parseData?.dataX;
-        dataY = parseData?.dataY;
-        offset = 0;
+        parseChartData = transformChartData(key);
+        dataX = parseChartData?.dataX;
+        dataY = parseChartData?.dataY;
+        offset = 1;
         break;
       case 'avgTransactionsPerSecond':
-        parseData = transformTransactionPerSecond(mockupData.avgTransactionsPerSecond);
-        dataX = parseData?.dataX;
-        dataY = parseData?.dataY;
-        offset = 0.05;
+        parseChartData = transformChartData(key);
+        dataX = parseChartData?.dataX;
+        dataY = parseChartData?.dataY;
+        offset = 0.015;
         break;
       case 'avgBlockSizeLast24Hour':
-        parseData = transformTotalData(mockupData.avgBlockSizeLast24Hour);
-        dataX = parseData?.dataX;
-        dataY = parseData?.dataY;
+        parseChartData = transformChartData(key);
+        dataX = parseChartData?.dataX;
+        dataY = parseChartData?.dataY;
         offset = 1;
         break;
       case 'avgTransactionPerBlockLast24Hour':
-        parseData = transformCharts(mockupData.avgTransactionPerBlockLast24Hour);
-        dataX = parseData?.dataX;
-        dataY = parseData?.dataY;
+        parseChartData = transformChartData(key);
+        dataX = parseChartData?.dataX;
+        dataY = parseChartData?.dataY;
         offset = 1;
         break;
       case 'avgTransactionFeeLast24Hour':
-        parseData = transformCharts(mockupData.avgTransactionFeeLast24Hour);
-        dataX = parseData?.dataX;
-        dataY = parseData?.dataY;
-        offset = 0.05;
+        parseChartData = transformChartData(key);
+        dataX = parseChartData?.dataX;
+        dataY = parseChartData?.dataY;
+        offset = 0.01;
         break;
       case 'memPoolSize':
-        parseData = transformMempoolInfo(mockupData.memPoolSize);
-        dataX = parseData?.dataX;
-        dataY = parseData?.dataY;
+        parseChartData = transformChartData(key);
+        dataX = parseChartData?.dataX;
+        dataY = parseChartData?.dataY;
         offset = 1;
         break;
       default:
@@ -281,8 +318,6 @@ const Summary: React.FC = () => {
                     chartName={sumKey}
                     dataX={generateChartData(sumKey)?.dataX}
                     dataY={generateChartData(sumKey)?.dataY}
-                    dataY1={generateChartData(sumKey)?.dataY1}
-                    dataY2={generateChartData(sumKey)?.dataY2}
                     offset={generateChartData(sumKey)?.offset}
                   />
                 ) : (

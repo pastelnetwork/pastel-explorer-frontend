@@ -2,6 +2,8 @@ import * as echarts from 'echarts';
 import { EChartsOption } from 'echarts-for-react';
 
 // aplication
+import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
+import { getCurrencyName } from '@utils/appInfo';
 import { TThemeInitOption } from '@utils/constants/types';
 import { convertYAxisLabel } from '@utils/helpers/statisticsLib';
 
@@ -754,8 +756,15 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
   return chartOptions[chartName];
 }
 
+type TToolTipParamsProps = {
+  axisValue: string;
+  marker: string;
+  seriesName: string;
+  data: number;
+};
+
 export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOption {
-  const { theme, dataX, dataY, dataY1, dataY2, chartName, minY, maxY } = args;
+  const { theme, dataX, dataY, chartName, minY, maxY } = args;
 
   const chartOptions: TChartOption = {
     gigaHashPerSec: {
@@ -763,25 +772,21 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       textStyle: {
         color: theme?.color,
       },
-      color: ['#80FFA5', '#37A2FF'],
+      color: ['#5470c6', '#91cc75', '#fac858'],
       grid: {
         top: 8,
-        right: 8,
-        bottom: 8,
-        left: 8,
+        right: 0,
+        bottom: 0,
+        left: 0,
         show: false,
       },
       tooltip: {
         trigger: 'axis',
-        axisPointer: {
-          type: 'cross',
-          label: {
-            backgroundColor: '#6a7985',
-          },
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `${params[0].axisValue}<br />${params[0].marker}${
+            params[0].seriesName
+          }&nbsp;&nbsp;${formatNumber(params[0].data, { decimalsLength: 2 })}`;
         },
-      },
-      legend: {
-        show: false,
       },
       xAxis: {
         type: 'category',
@@ -797,67 +802,34 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       yAxis: {
         type: 'value',
-        splitLine: {
-          show: false,
-        },
+        min: 0,
+        max: maxY,
         axisLabel: {
           show: false,
         },
+        splitLine: {
+          show: false,
+        },
+        show: false,
       },
-      series: [
-        {
-          name: 'Traffic receive',
-          type: 'line',
-          smooth: true,
-          lineStyle: {
-            width: 0,
-          },
-          showSymbol: false,
-          areaStyle: {
-            opacity: 0.8,
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              {
-                offset: 0,
-                color: '#80ffa5',
-              },
-              {
-                offset: 1,
-                color: '#00BFEC',
-              },
-            ]),
-          },
-          emphasis: {
-            focus: 'series',
-          },
-          data: dataY1,
+      series: {
+        name: 'Network (MH/s)',
+        type: 'line',
+        data: dataY,
+        areaStyle: {
+          opacity: 0.8,
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#37a2ff',
+            },
+            {
+              offset: 1,
+              color: '#7415db',
+            },
+          ]),
         },
-        {
-          name: 'Traffic sent',
-          type: 'line',
-          smooth: true,
-          lineStyle: {
-            width: 0,
-          },
-          showSymbol: false,
-          areaStyle: {
-            opacity: 0.8,
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              {
-                offset: 0,
-                color: '#37a2ff',
-              },
-              {
-                offset: 1,
-                color: '#7415db',
-              },
-            ]),
-          },
-          emphasis: {
-            focus: 'series',
-          },
-          data: dataY2,
-        },
-      ],
+      },
       stateAnimation: {
         duration: 300,
         easing: 'cubicOut',
@@ -871,8 +843,11 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       grid: {
         top: 8,
         right: 0,
-        bottom: 8,
+        bottom: 0,
         left: 0,
+        show: false,
+      },
+      legend: {
         show: false,
       },
       visualMap: {
@@ -884,9 +859,15 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       tooltip: {
         trigger: 'axis',
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `${params[0].axisValue}<br />${params[0].marker}${
+            params[0].seriesName
+          }&nbsp;&nbsp;${formatNumber(params[0].data, { decimalsLength: 2 })}`;
+        },
       },
       xAxis: {
         type: 'category',
+        boundaryGap: false,
         data: dataX,
         axisLabel: {
           show: false,
@@ -909,6 +890,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
+        name: 'Difficulty: ',
         type: 'line',
         showSymbol: false,
         data: dataY,
@@ -933,15 +915,21 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       grid: {
         top: 8,
         right: 0,
-        bottom: 8,
+        bottom: 0,
         left: 0,
         show: false,
       },
       tooltip: {
         trigger: 'axis',
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `${params[0].axisValue}<br />${params[0].marker}${
+            params[0].seriesName
+          }&nbsp;&nbsp;${formatNumber(params[0].data, { decimalsLength: 2 })}`;
+        },
       },
       xAxis: {
         type: 'category',
+        boundaryGap: false,
         data: dataX,
         axisLabel: {
           show: false,
@@ -953,7 +941,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       yAxis: {
         type: 'value',
-        min: 0,
+        min: minY,
         max: maxY,
         axisLabel: {
           show: false,
@@ -964,6 +952,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
+        name: `Coin Supply (${getCurrencyName()})`,
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -995,7 +984,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       grid: {
         top: 8,
         right: 0,
-        bottom: 8,
+        bottom: 0,
         left: 0,
         show: false,
       },
@@ -1004,6 +993,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       xAxis: {
         type: 'category',
+        boundaryGap: false,
         data: dataX,
         axisLabel: {
           show: false,
@@ -1015,7 +1005,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       yAxis: {
         type: 'value',
-        min: 0,
+        min: minY,
         max: maxY,
         axisLabel: {
           show: false,
@@ -1026,6 +1016,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
+        name: 'Accounts',
         type: 'line',
         data: dataY,
         areaStyle: {},
@@ -1044,15 +1035,21 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       grid: {
         top: 8,
         right: 0,
-        bottom: 8,
+        bottom: 0,
         left: 0,
         show: false,
       },
       tooltip: {
         trigger: 'axis',
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `${params[0].axisValue}<br />${params[0].marker}${
+            params[0].seriesName
+          }&nbsp;&nbsp;${formatNumber(params[0].data, { decimalsLength: 5 })}`;
+        },
       },
       xAxis: {
         type: 'category',
+        boundaryGap: false,
         data: dataX,
         axisLabel: {
           show: false,
@@ -1075,6 +1072,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
+        name: `Transactions (avg/s)`,
         type: 'line',
         data: dataY,
         areaStyle: {},
@@ -1093,15 +1091,21 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       grid: {
         top: 8,
         right: 0,
-        bottom: 8,
+        bottom: 0,
         left: 0,
         show: false,
       },
       tooltip: {
         trigger: 'axis',
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `${params[0].axisValue}<br />${params[0].marker}${
+            params[0].seriesName
+          }&nbsp;&nbsp;${formatNumber(params[0].data, { decimalsLength: 2 })}`;
+        },
       },
       xAxis: {
         type: 'category',
+        boundaryGap: false,
         data: dataX,
         axisLabel: {
           show: false,
@@ -1124,6 +1128,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
+        name: 'Block Size (avg)',
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -1155,15 +1160,21 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       grid: {
         top: 8,
         right: 0,
-        bottom: 8,
+        bottom: 0,
         left: 0,
         show: false,
       },
       tooltip: {
         trigger: 'axis',
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `${params[0].axisValue}<br />${params[0].marker}${
+            params[0].seriesName
+          }&nbsp;&nbsp;${formatNumber(params[0].data, { decimalsLength: 2 })}`;
+        },
       },
       xAxis: {
         type: 'category',
+        boundaryGap: false,
         data: dataX,
         axisLabel: {
           show: false,
@@ -1175,7 +1186,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       yAxis: {
         type: 'value',
-        min: 0,
+        min: minY,
         max: maxY,
         axisLabel: {
           show: false,
@@ -1186,6 +1197,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
+        name: 'Transactions (avg/block)',
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -1217,15 +1229,21 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       grid: {
         top: 8,
         right: 0,
-        bottom: 8,
+        bottom: 0,
         left: 0,
         show: false,
       },
       tooltip: {
         trigger: 'axis',
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `${params[0].axisValue}<br />${params[0].marker}${
+            params[0].seriesName
+          }&nbsp;&nbsp;${formatNumber(params[0].data, { decimalsLength: 5 })}`;
+        },
       },
       xAxis: {
         type: 'category',
+        boundaryGap: false,
         data: dataX,
         axisLabel: {
           show: false,
@@ -1248,6 +1266,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
+        name: 'Transaction Fee (in USD)',
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -1278,7 +1297,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       grid: {
         top: 8,
         right: 0,
-        bottom: 8,
+        bottom: -22,
         left: 0,
         show: false,
       },
@@ -1287,6 +1306,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       xAxis: {
         type: 'category',
+        boundaryGap: false,
         data: dataX,
         axisLabel: {
           show: false,
@@ -1309,6 +1329,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
+        name: 'Mempool Size (kB)',
         type: 'line',
         sampling: 'lttb',
         lineStyle: {

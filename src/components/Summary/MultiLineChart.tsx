@@ -37,7 +37,7 @@ export const MultiLineChart = (props: TMultiLineChartProps): JSX.Element | null 
     grid: {
       top: 8,
       right: 0,
-      bottom: 8,
+      bottom: 0,
       left: 0,
       show: false,
     },
@@ -93,11 +93,13 @@ export const MultiLineChart = (props: TMultiLineChartProps): JSX.Element | null 
     ],
     series: [
       {
+        name: 'USD Price: ',
         type: 'line',
         showSymbol: false,
         data: dataY1,
       },
       {
+        name: 'BTC Price: ',
         type: 'bar',
         yAxisIndex: 1,
         showSymbol: false,
@@ -115,7 +117,6 @@ export const MultiLineChart = (props: TMultiLineChartProps): JSX.Element | null 
   return (
     <Styles.LineChartWrap>
       <ReactECharts notMerge={false} lazyUpdate option={options} />
-      <Styles.LineChartTitle>Last 7 Days</Styles.LineChartTitle>
     </Styles.LineChartWrap>
   );
 };

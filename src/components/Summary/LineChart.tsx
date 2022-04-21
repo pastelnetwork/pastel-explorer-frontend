@@ -65,7 +65,6 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
   return (
     <Styles.LineChartWrap>
       <ReactECharts notMerge={false} lazyUpdate option={options} />
-      <Styles.LineChartTitle>Last 7 Days</Styles.LineChartTitle>
     </Styles.LineChartWrap>
   );
 };
