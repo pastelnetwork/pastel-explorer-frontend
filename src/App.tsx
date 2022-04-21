@@ -20,8 +20,10 @@ import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { setAppThemeAction } from '@redux/actions/appThemeAction';
 import { socket, SocketContext } from '@context/socket';
 
+import { ReactComponent as PastelLogo } from '@assets/images/pastel-logo.svg';
 import { themeLight, themeDark } from './theme';
 import Routes from './routes/Routes';
+import * as Styles from './App.styles';
 
 const jss = create({
   ...jssPreset(),
@@ -38,7 +40,11 @@ const App: React.FC = () => {
   }, [dispatch]);
   const isDarkMode = useSelector(getThemeState).darkMode;
   if (!succeed) {
-    return <div>Loading...</div>;
+    return (
+      <Styles.LoadingWrapper>
+        <PastelLogo />
+      </Styles.LoadingWrapper>
+    );
   }
   return (
     <HelmetProvider>

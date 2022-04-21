@@ -39,6 +39,7 @@ export const generateLatestTransactions = (transactionsList: Array<IAddressData>
           value={transactionHash}
           textSize="large"
           title={transactionHash}
+          className="transaction-hash-link"
         />
       </Grid>
     ),

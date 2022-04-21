@@ -4,6 +4,10 @@ import { Card as MuiCard, CardContent as MuiCardContent } from '@material-ui/cor
 
 export const MapContainer = styled.div`
   height: 340px;
+
+  @media screen and (min-width: 1024px) and (max-width: 1280px) {
+    height: 258px;
+  }
 `;
 
 export const Card = styled(MuiCard)`

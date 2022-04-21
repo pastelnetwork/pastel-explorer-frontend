@@ -165,15 +165,16 @@ const TransactionDetails = () => {
             rows={generateTransactionTable(transaction)}
             className="transaction"
             blockWrapperClassName="transaction-wrapper"
+            tableWrapperClassName="none-border-radius-top"
             title="Overview"
           />
         </Styles.GridStyle>
-        <Styles.GridStyle container spacing={6}>
+        <Styles.GridStyle item>
           {transaction.isNonStandard ? (
             generateNonStandardTransactionInfo()
           ) : (
-            <>
-              <Grid item xs={12} lg={6}>
+            <Styles.GirdWrapper>
+              <Styles.LeftColumn>
                 {transaction.coinbase === 1 ? (
                   generateCoinbaseInfo(transaction.totalAmount)
                 ) : (
@@ -184,19 +185,21 @@ const TransactionDetails = () => {
                     rows={generateTransactionEvents(transactionEvents, 'Outgoing')}
                     className="input-addresses"
                     blockWrapperClassName="input-addresses-wrapper"
+                    tableWrapperClassName="none-border-radius-top"
                   />
                 )}
-              </Grid>
-              <Grid item xs={12} lg={6}>
+              </Styles.LeftColumn>
+              <Styles.RightColumn>
                 <Table
                   title="Recipients"
                   headers={addressHeaders}
                   rows={generateTransactionEvents(transactionEvents, 'Incoming')}
                   handleClickSort={handleClickSort}
                   className="recipients"
+                  tableWrapperClassName="none-border-radius-top"
                 />
-              </Grid>
-            </>
+              </Styles.RightColumn>
+            </Styles.GirdWrapper>
           )}
         </Styles.GridStyle>
       </Grid>

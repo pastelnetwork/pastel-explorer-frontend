@@ -23,7 +23,12 @@ export const Wrapper = styled('div')`
     margin-bottom: 20px;
   }
 
-  ${props => props.theme.breakpoints.down('md')} {
+  .none-border-radius-top {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  ${props => props.theme.breakpoints.down(1024)} {
     .transaction-hash {
       max-width: calc(100vw - 225px);
     }
@@ -68,16 +73,20 @@ export const Wrapper = styled('div')`
 
       &.transaction {
         .table__row {
+          &:nth-of-type(odd) {
+            background-color: ${props => props.theme.sidebar.background.default} !important;
+          }
+
           td {
             &:nth-child(1) {
               &:before {
-                content: 'Confirmations';
+                content: 'Block Hash';
               }
             }
 
             &:nth-child(2) {
               &:before {
-                content: 'Block Hash';
+                content: 'Confirmations';
               }
             }
 
@@ -138,7 +147,6 @@ export const Alert = styled(MuiAlert)`
 
 export const TransactionDesc = styled(Grid)`
   margin-bottom: 12px;
-  cursor: pointer;
 
   & > .MuiAlert-root {
     border-radius: 10px;
@@ -169,7 +177,7 @@ export const RowWrapper = styled.div`
 `;
 
 export const GridStyle = styled(Grid)`
-  ${props => props.theme.breakpoints.down('md')} {
+  ${props => props.theme.breakpoints.down(1024)} {
     width: 100%;
     margin-bottom: 6px;
     margin-left: 0;
@@ -202,5 +210,32 @@ export const ViewTransactionRaw = styled('button')`
 
   &:active {
     color: ${props => props.theme.link.pressed};
+  }
+`;
+
+export const GirdWrapper = styled.div`
+  display: flex;
+
+  ${props => props.theme.breakpoints.down('lg')} {
+    flex-wrap: wrap;
+  }
+`;
+
+export const LeftColumn = styled.div`
+  width: 50%;
+  margin-right: 12px;
+
+  ${props => props.theme.breakpoints.down('lg')} {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 12px;
+  }
+`;
+
+export const RightColumn = styled.div`
+  width: calc(50% - 4px);
+
+  ${props => props.theme.breakpoints.down('lg')} {
+    width: 100%;
   }
 `;

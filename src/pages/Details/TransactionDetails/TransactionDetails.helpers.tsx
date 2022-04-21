@@ -32,10 +32,14 @@ export const generateTableTitle = (
 ) => (
   <Styles.ViewTransactionRawMuiAlert severity="info">
     <AlertTitle style={{ wordBreak: 'break-word' }}>
-      {getCurrencyName()} TXID: {transactionData.id}
-      <Styles.ViewTransactionRaw type="button" onClick={toggleOpenRawData}>
-        (View Transaction Raw Data)
-      </Styles.ViewTransactionRaw>
+      {getCurrencyName()} TXID: {transactionData.id}{' '}
+      <span>
+        (
+        <Styles.ViewTransactionRaw type="button" onClick={toggleOpenRawData}>
+          View Transaction Raw Data
+        </Styles.ViewTransactionRaw>
+        )
+      </span>
     </AlertTitle>
     {`This transaction was first broadcast to the ${getCurrencyName()} network on 
       ${formattedDate(transactionData.timestamp)}. 

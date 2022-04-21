@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Grid } from '@material-ui/core';
 
+import { getCurrencyName } from '@utils/appInfo';
+
 export const ExplorerWrapper = styled.div`
   .MuiPaper-elevation1 {
     &.MuiPaper-rounded {
@@ -17,7 +19,7 @@ export const ExplorerWrapper = styled.div`
 export const Gird = styled.div`
   display: flex;
 
-  ${props => props.theme.breakpoints.down('lg')} {
+  ${props => props.theme.breakpoints.down(1024)} {
     flex-wrap: wrap;
   }
 `;
@@ -26,7 +28,7 @@ export const ExplorerMapColumn = styled.div`
   width: 60%;
   margin-right: 12px;
 
-  ${props => props.theme.breakpoints.down('lg')} {
+  ${props => props.theme.breakpoints.down(1024)} {
     width: 100%;
     margin-right: 0;
     margin-bottom: 12px;
@@ -36,7 +38,7 @@ export const ExplorerMapColumn = styled.div`
 export const SupernodeColumn = styled.div`
   width: calc(40% - 4px);
 
-  ${props => props.theme.breakpoints.down('lg')} {
+  ${props => props.theme.breakpoints.down(1024)} {
     width: 100%;
   }
 `;
@@ -46,6 +48,10 @@ export const ChartLegend = styled.div`
   bottom: 6px;
   font-size: 14px;
   text-align: center;
+
+  @media screen and (min-width: 1280px) and (max-width: 1440px) {
+    bottom: 30px;
+  }
 `;
 
 export const BlockWrapper = styled.div`
@@ -58,7 +64,7 @@ export const BlockWrapper = styled.div`
     margin-top: 24px;
   }
 
-  ${props => props.theme.breakpoints.down('lg')} {
+  ${props => props.theme.breakpoints.down(1024)} {
     &.mt-24 {
       margin-top: 12px;
     }
@@ -104,6 +110,117 @@ export const BlockWrapper = styled.div`
         background-color: ${props => props.theme.table.hover} !important;
       }
     }
+
+    .MuiTypography-root {
+      max-width: 74px;
+    }
+  }
+
+  ${props => props.theme.breakpoints.down(960)} {
+    .custom-table {
+      thead {
+        display: none;
+      }
+
+      .table__row {
+        display: flex;
+        flex-direction: column;
+
+        td,
+        th {
+          display: flex;
+          padding: 5px 16px;
+          border-bottom: 0;
+          max-width: unset !important;
+          width: 100% !important;
+          flex-direction: unset;
+          text-align: left;
+
+          &:before {
+            position: relative;
+            min-width: 150px;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 16px;
+            color: ${props => props.theme.table.label};
+          }
+        }
+      }
+
+      &.latest-blocks {
+        .table__row {
+          td,
+          th {
+            &:nth-child(1) {
+              &:before {
+                content: 'Block';
+              }
+            }
+
+            &:nth-child(2) {
+              &:before {
+                content: 'Hash';
+              }
+            }
+
+            &:nth-child(3) {
+              &:before {
+                content: 'TXs';
+              }
+            }
+
+            &:nth-child(4) {
+              &:before {
+                content: 'Size';
+              }
+            }
+
+            &:nth-child(5) {
+              &:before {
+                content: 'Timestamp';
+              }
+            }
+          }
+        }
+      }
+
+      &.latest-transactions {
+        .table__row {
+          td,
+          th {
+            &:nth-child(1) {
+              &:before {
+                content: 'Block';
+              }
+            }
+
+            &:nth-child(2) {
+              &:before {
+                content: 'TXID';
+              }
+            }
+
+            &:nth-child(3) {
+              &:before {
+                content: 'Amount(${getCurrencyName()})';
+              }
+            }
+
+            &:nth-child(4) {
+              &:before {
+                content: 'Recipents';
+              }
+            }
+
+            &:nth-child(5) {
+              &:before {
+                content: 'Fee';
+              }
+            }
+          }
+        }
+      }
+    }
   }
 `;
 
@@ -147,7 +264,7 @@ export const GirdStyle = styled(Grid)`
     padding-left: 6px;
   }
 
-  ${props => props.theme.breakpoints.down('lg')} {
+  ${props => props.theme.breakpoints.down(1024)} {
     &.left {
       padding-right: 12px;
     }

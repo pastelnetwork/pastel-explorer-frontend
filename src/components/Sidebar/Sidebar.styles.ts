@@ -325,6 +325,31 @@ export const Link = styled(ListItem)<{
   }
 `;
 
+export const NavLinkStyle = styled(NavLink)`
+  display: block;
+  padding: 12px 16px;
+  padding-bottom: ${props => props.theme.spacing(3)}px;
+  text-decoration: none;
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  span {
+    transition: all 0.5s ease;
+  }
+
+  &:hover,
+  &.active {
+    background-color: transparent;
+
+    span {
+      color: ${props => props.theme.sidebar.menu.active};
+    }
+  }
+`;
+
 export const LinkText = styled(ListItemText)`
   margin-top: 0;
   margin-bottom: 0;

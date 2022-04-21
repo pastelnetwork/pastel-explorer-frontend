@@ -36,11 +36,13 @@ interface SidebarLinkPropsType {
 }
 
 const SidebarLink: React.FC<SidebarLinkPropsType> = ({ name, to, badge }) => {
+  const isActive = window.location.pathname.includes(to);
+
   return (
-    <Styles.Link button dense component={NavLink} exact to={to} activeClassName="active">
+    <Styles.NavLinkStyle exact to={to} className={isActive ? 'active' : ''}>
       <Styles.LinkText>{name}</Styles.LinkText>
       {badge ? <Styles.LinkBadge label={badge} /> : ''}
-    </Styles.Link>
+    </Styles.NavLinkStyle>
   );
 };
 
@@ -73,7 +75,8 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
   let active = '';
   if (
     (window.location.pathname === ROUTES.STATISTICS ||
-      window.location.pathname === ROUTES.STATISTICS_OVERTIME) &&
+      window.location.pathname === ROUTES.STATISTICS_OVERTIME ||
+      window.location.pathname.includes(ROUTES.STATISTICS_OVERTIME)) &&
     category?.path === ROUTES.STATISTICS_PARENT
   ) {
     active = 'active-submenu';
@@ -168,6 +171,7 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
       if (matchLink) {
         return true;
       }
+
       if (path.startsWith('/blocks')) {
         return !!['/block'].some(el => locationLink.pathname.startsWith(el));
       }
@@ -175,15 +179,23 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
         return !!['/tx'].some(el => locationLink.pathname.startsWith(el));
       }
       if (path.startsWith('/supernodes')) {
-        return !!['/address'].some(el => locationLink.pathname.startsWith(el));
+        return !!['/address'].some(
+          el =>
+            locationLink.pathname.startsWith(el) && !locationLink.search?.includes('p=richlist'),
+        );
       }
+      if (path.startsWith('/richlist')) {
+        return !!['/address'].some(
+          el => locationLink.pathname.startsWith(el) && locationLink.search?.includes('p=richlist'),
+        );
+      }
+
       return false;
     },
     [],
   );
   const generateCategoryIcon = (category: RouteType): JSX.Element | null => {
     const { id, path, badge, exact = true } = category;
-
     if (id) {
       return (
         <SidebarCategory

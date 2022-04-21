@@ -21,10 +21,18 @@ export const Card = styled(MuiCard)`
     padding-left: 16px;
     background: ${props => props.theme.card.titleColor};
   }
+
+  @media screen and (min-width: 1280px) and (max-width: 1440px) {
+    min-height: 394px;
+  }
 `;
 
 export const CardContent = styled(MuiCardContent)`
-  @media (min-width: 960px) {
+  ${props => props.theme.breakpoints.up(1280)} {
+    max-height: 414px;
+  }
+
+  ${props => props.theme.breakpoints.up(1440)} {
     max-height: 356px;
   }
 
@@ -37,7 +45,16 @@ export const CardContent = styled(MuiCardContent)`
 export const ChartWrapper = styled(Grid)`
   position: relative;
 
-  @media (min-width: 960px) {
+  @media screen and (min-width: 1024px) and (max-width: 1280px) {
+    max-height: 230px;
+    padding: 10px;
+
+    svg {
+      height: 200px;
+    }
+  }
+
+  @media (min-width: 960px) and (max-width: 1024px) {
     padding: 10px 40px;
   }
 

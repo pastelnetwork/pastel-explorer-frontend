@@ -13,6 +13,8 @@ import { DEFAULT_CURRENCY, TEST_CURRENCY_NAME } from '@utils/appInfo';
 
 import { ReactComponent as SettingIcon } from '@assets/icons/setting.svg';
 
+import * as Styles from './ChooseCluster.styles';
+
 const useStyles = makeStyles((theme: TAppTheme) => ({
   root: {
     padding: 20,
@@ -141,19 +143,18 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
           </Button>
           <h1 className={classes.title}>Choose a Cluster</h1>
           {data.map(({ id, name, value, api }) => (
-            <Button
+            <Styles.ButtonStyle
               type="button"
               key={id}
               id={api}
               value={value}
               onClick={onChangeCluster}
               variant="outlined"
-              color={currentCluster.value === value ? 'primary' : 'default'}
-              classes={{ root: classes.item, label: classes.itemLabel }}
+              className={currentCluster.value === value ? 'active' : ''}
             >
               <span className={classes.itemTitle}>{name}:</span>
               <span className={classes.itemTitle}>{api}</span>
-            </Button>
+            </Styles.ButtonStyle>
           ))}
         </div>
       </Drawer>

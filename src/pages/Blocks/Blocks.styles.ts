@@ -20,11 +20,14 @@ export const TableContainer = styled(Grid)`
     padding-right: 0;
   }
 
-  ${props => props.theme.breakpoints.down('md')} {
-    .ReactVirtualized__Grid {
+  ${props => props.theme.breakpoints.down(1024)} {
+    .ReactVirtualized__Grid,
+    .ReactVirtualized__Table__headerRow {
       min-width: unset;
     }
+  }
 
+  ${props => props.theme.breakpoints.down(960)} {
     .ReactVirtualized__Table__headerRow {
       display: none;
     }
@@ -104,13 +107,13 @@ export const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
 
-  ${props => props.theme.breakpoints.down('md')} {
+  ${props => props.theme.breakpoints.down(960)} {
     margin-bottom: 10px;
   }
 `;
 
 export const Title = styled.span`
-  margin-right: 10px;
+  margin-right: 0;
 `;
 
 export const SubTitle = styled.span`

@@ -57,10 +57,10 @@ const Explorer: React.FC = () => {
         </Styles.SupernodeColumn>
       </Styles.Gird>
       <Grid container spacing={6}>
-        <Styles.GirdStyle item xs={12} lg={6} className="left">
+        <Styles.GirdStyle item xs={12} md={6} className="left">
           <LatestBlocks />
         </Styles.GirdStyle>
-        <Styles.GirdStyle item xs={12} lg={6} className="right">
+        <Styles.GirdStyle item xs={12} md={6} className="right">
           <LatestTransactionsRT />
         </Styles.GirdStyle>
       </Grid>

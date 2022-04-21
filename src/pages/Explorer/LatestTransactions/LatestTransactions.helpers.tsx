@@ -25,10 +25,16 @@ export const DATA_DEFAULT_SORT = 'DESC';
 
 export const generateBlockKeyValue = (blockHash: string | number, blockHeight: string | number) => {
   if (blockHash) {
-    return <RouterLink route={`${ROUTES.BLOCK_DETAILS}/${blockHash}`} value={blockHeight} />;
+    return (
+      <RouterLink
+        route={`${ROUTES.BLOCK_DETAILS}/${blockHash}`}
+        value={blockHeight}
+        className="transaction-detail-link"
+      />
+    );
   }
 
-  return <Hourglass />;
+  return <Hourglass className="hourglass" />;
 };
 
 export const transformTransactionsData = (transactions: Array<ITransaction>) =>
@@ -44,6 +50,7 @@ export const transformTransactionsData = (transactions: Array<ITransaction>) =>
             route={`${ROUTES.TRANSACTION_DETAILS}/${id}`}
             value={id}
             textSize="large"
+            className="txid-link"
           />
         </Grid>
       ),

@@ -13,7 +13,6 @@ import { IBlock } from '@utils/types/IBlocks';
 import { blocksFilters } from '@utils/constants/filter';
 import { getFilterState } from '@redux/reducers/filterReducer';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import breakpoints from '@theme/breakpoints';
 
 import { TIMESTAMP_BLOCKS_KEY, columns, BLOCK_ID_KEY } from './Blocks.columns';
 import {
@@ -47,7 +46,7 @@ const Blocks = () => {
 
   const handleShowSubMenu = () => {
     setMobileView(false);
-    if (window.innerWidth < breakpoints.values.lg) {
+    if (window.innerWidth < 960) {
       setMobileView(true);
     }
   };
@@ -118,7 +117,7 @@ const Blocks = () => {
 
     return handleFetchBlocks(
       DATA_OFFSET,
-      sortBy,
+      sortBy === 'blockHash' ? 'id' : sortBy,
       fetchParams.current.sortDirection,
       true,
       filterBy,
@@ -146,7 +145,7 @@ const Blocks = () => {
     <Styles.TitleWrapper>
       <Styles.Title>Block List</Styles.Title>{' '}
       {totalItem > 0 ? (
-        <Styles.SubTitle>Total {formatNumber(totalItem)} blocks</Styles.SubTitle>
+        <Styles.SubTitle>(Total {formatNumber(totalItem)} blocks)</Styles.SubTitle>
       ) : null}
     </Styles.TitleWrapper>
   );

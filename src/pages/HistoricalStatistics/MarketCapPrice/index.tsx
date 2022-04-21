@@ -51,7 +51,7 @@ function PriceOvertime() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Market Price and Cap">
       {transformLineChartData ? (
         <EChartsMultiLineChart
           chartName="prices"
@@ -71,6 +71,7 @@ function PriceOvertime() {
           periods={periods[3]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
+          setHeaderBackground
         />
       ) : (
         <Skeleton animation="wave" variant="rect" height={386} />

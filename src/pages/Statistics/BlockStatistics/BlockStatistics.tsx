@@ -3,12 +3,10 @@ import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { format, fromUnixTime } from 'date-fns';
 
-import { Grid, darken } from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
+import { Grid, darken, CircularProgress } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { TAppTheme } from '@theme/index';
 // application
-import Header from '@components/Header/Header';
 import { EChartsLineChart } from '@pages/HistoricalStatistics/Chart/EChartsLineChart';
 import { BlockUnconfirmed } from '@utils/types/ITransactions';
 
@@ -38,7 +36,7 @@ const useStyles = makeStyles((_theme: TAppTheme) => ({
     overflowX: 'auto',
     width: '100%',
     margin: 0,
-    marginBottom: 16,
+    marginBottom: 0,
     '&::-webkit-scrollbar': {
       background: _theme.palette.background.default,
     },
@@ -151,17 +149,14 @@ const StatisticsBlocks: React.FC = () => {
 
   return (
     <>
-      <Header title="Current Statistics" />
       <Styles.BlockWrapper>
         <Styles.BlockTitle>Blocks Statistics</Styles.BlockTitle>
-        <Grid classes={{ root: classes.wrapper }} container>
+        <Styles.GridStyle classes={{ root: classes.wrapper }} container>
           {blockElements && blockElements.length ? (
-            <Grid
-              classes={{ container: classes.root }}
-              className={classes.root}
+            <Styles.GridBlocksStatisticsRoot
               wrap="nowrap"
               container
-              justify="flex-start"
+              justify="space-between"
               alignItems="center"
               spacing={8}
             >
@@ -190,9 +185,11 @@ const StatisticsBlocks: React.FC = () => {
                     />
                   </Grid>
                 ))}
-            </Grid>
+            </Styles.GridBlocksStatisticsRoot>
           ) : (
-            <Skeleton animation="wave" variant="rect" height={300} />
+            <Styles.Loader>
+              <CircularProgress size={40} />
+            </Styles.Loader>
           )}
           <Grid item xs={12} lg={12}>
             {chartData || !isLoading ? (
@@ -208,13 +205,16 @@ const StatisticsBlocks: React.FC = () => {
                   period={period}
                   periods={periods[5]}
                   handlePeriodFilterChange={handlePeriodFilterChange}
+                  isDynamicTitleColor
                 />
               </div>
             ) : (
-              <Skeleton animation="wave" variant="rect" height={300} />
+              <Styles.Loader>
+                <CircularProgress size={40} />
+              </Styles.Loader>
             )}
           </Grid>
-        </Grid>
+        </Styles.GridStyle>
       </Styles.BlockWrapper>
     </>
   );

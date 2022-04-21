@@ -11,6 +11,26 @@ export const Container = styled.div`
   border-radius: 10px;
   overflow: hidden;
 
+  .supernode-table-wrapper {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-top: 1px solid ${props => props.theme.table.odd};
+
+    .table__row {
+      &:nth-of-type(odd) {
+        background-color: ${props => props.theme.table.oddSupernode} !important;
+      }
+    }
+
+    & > .MuiCard-root {
+      height: auto !important;
+    }
+  }
+
+  @media screen and (min-width: 1024px) and (max-width: 1280px) {
+    height: 332px;
+  }
+
   @media (min-width: 1440px) {
     min-height: 414px;
   }

@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Grid } from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
+import { CircularProgress, Grid } from '@material-ui/core';
 
 import { TMiningInfo, TLineChartData } from '@utils/types/IStatistics';
 
@@ -12,8 +11,6 @@ import { useBackgroundChart } from '@utils/hooks';
 import { EChartsLineChart } from '@pages/HistoricalStatistics/Chart/EChartsLineChart';
 
 import * as Styles from '../Statistics.styles';
-
-const CHART_HEIGHT = 386;
 
 const NetworkStatistics: React.FC = () => {
   const [period, setPeriod] = useState(periods[2][periods[2].length - 1]);
@@ -48,10 +45,13 @@ const NetworkStatistics: React.FC = () => {
                 periods={periods[2]}
                 handleBgColorChange={handleBgColorChange}
                 handlePeriodFilterChange={handlePeriodFilterChange}
+                isDynamicTitleColor
               />
             </div>
           ) : (
-            <Skeleton animation="wave" variant="rect" height={CHART_HEIGHT} />
+            <Styles.Loader>
+              <CircularProgress size={40} />
+            </Styles.Loader>
           )}
         </Grid>
       </Grid>

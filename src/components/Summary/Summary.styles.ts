@@ -14,13 +14,19 @@ export const Wrapper = styled.div`
 `;
 
 export const Card = styled(MuiCard)`
-  width: calc(20% - 10px);
+  width: calc(25% - 10px);
   margin: 0 12px 12px 0;
   box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
   overflow: unset;
   background: ${props => props.theme.sidebar.menu.background};
 
-  &:nth-child(5),
+  &:nth-child(9),
+  &:nth-child(10) {
+    width: calc(50% - 10px);
+  }
+
+  &:nth-child(4),
+  &:nth-child(8),
   &:nth-child(10) {
     margin-right: 0;
   }
@@ -77,6 +83,10 @@ export const Card = styled(MuiCard)`
     margin-right: 0;
     margin-left: 0;
   }
+
+  .echarts-for-react {
+    height: 100px !important;
+  }
 `;
 
 export const ValueWrapper = styled.div`
@@ -106,7 +116,7 @@ export const CardContent = styled(MuiCardContent)`
   justify-content: space-between;
   align-items: flex-start;
   margin-top: 0;
-  padding: 15px;
+  padding: 15px 15px 0;
   text-align: center;
 
   &:last-child {
@@ -131,4 +141,17 @@ export const Percentage = styled(MuiTypography)<{
     font-weight: 500;
     font-size: 16px;
   }
+`;
+
+export const LineChartWrap = styled.div`
+  width: 100%;
+  height: auto;
+  padding: 0 20px 20px;
+`;
+
+export const LineChartTitle = styled.div`
+  font-size: 14px;
+  font-weight: 500;
+  color: ${props => props.theme.sidebar.menu.default};
+  text-align: center;
 `;

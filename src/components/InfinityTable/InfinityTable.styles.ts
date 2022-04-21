@@ -6,7 +6,7 @@ import { spacing } from '@material-ui/system';
 const StyledCard = styled(MuiCard)`
   background-color: ${props => props.theme.palette.background.paper} !important;
   padding: 0 ${props => props.theme.spacing(9)}px;
-  padding-bottom: 32px !important;
+  padding-bottom: 0 !important;
   box-shadow: none;
 
   @media (max-width: 960px) {
@@ -99,6 +99,12 @@ export const TableWrapper = styled.div`
       background-color: ${props => props.theme.table.hover} !important;
     }
   }
+
+  &.empty-table {
+    .ReactVirtualized__Grid {
+      height: 46vh !important;
+    }
+  }
 `;
 
 export const TableContainer = styled(Paper)`
@@ -152,4 +158,9 @@ export const Wrapper = styled.div`
       margin: 0;
     }
   }
+`;
+
+export const EmptyData = styled.div`
+  display: block;
+  min-height: 10vh;
 `;

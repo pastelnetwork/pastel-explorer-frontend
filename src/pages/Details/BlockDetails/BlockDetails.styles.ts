@@ -19,8 +19,12 @@ export const Wrapper = styled('div')`
   }
 
   .block-table-wrapper {
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
+    border-radius: 0;
+  }
+
+  .transactions-table-wrapper {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
   }
 
   .MuiAccordionSummary-content {
@@ -85,7 +89,7 @@ export const Wrapper = styled('div')`
       }
     }
   }
-  ${props => props.theme.breakpoints.down('md')} {
+  ${props => props.theme.breakpoints.down(1024)} {
     .transaction-hash {
       max-width: calc(100vw - 225px);
     }
@@ -101,6 +105,7 @@ export const Wrapper = styled('div')`
 
         td {
           display: flex;
+          border-bottom: 0;
 
           &:before {
             position: relative;
@@ -176,7 +181,7 @@ export const Typography = styled(MuiTypography)`
   flex-grow: 1;
   margin: 0 5px;
 
-  ${props => props.theme.breakpoints.down('md')} {
+  ${props => props.theme.breakpoints.down(1024)} {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: calc(100vw - 122px);
@@ -249,7 +254,11 @@ export const DetailsValueText = styled(MuiTypography)`
 export const IconButtonStyle = styled(IconButton)`
   padding: 0;
 
-  ${props => props.theme.breakpoints.down('md')} {
+  svg {
+    fill: ${props => props.theme.palette.text.primary};
+  }
+
+  ${props => props.theme.breakpoints.down(1024)} {
     &.previous {
       margin-left: -12px;
     }

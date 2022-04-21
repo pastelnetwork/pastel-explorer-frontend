@@ -3,7 +3,6 @@ import { Redirect, useParams } from 'react-router-dom';
 
 import { Grid } from '@material-ui/core';
 
-import Header from '@components/Header/Header';
 import Table from '@components/Table/Table';
 import InfinityTable, {
   SortDirectionsType,
@@ -39,6 +38,7 @@ interface IAddressDataRef {
 }
 
 const AddressDetails = () => {
+  const [isMobile, setMobileView] = React.useState(false);
   const fetchParams = React.useRef<IAddressDataRef>({
     offset: DATA_OFFSET,
     sortBy: ADDRESS_TRANSACTION_TIMESTAMP_KEY,
@@ -47,7 +47,7 @@ const AddressDetails = () => {
   const { id } = useParams<ParamTypes>();
   const [addresses, setAddresses] = React.useState<IAddress>(DEFAULT_ADDRESS_DATA);
   const redirect = React.useRef(false);
-  const { fetchData } = useFetch<IAddress>({
+  const { fetchData, isLoading } = useFetch<IAddress>({
     method: 'get',
     url: `${URLS.ADDRESS_URL}/${id}`,
   });
@@ -108,24 +108,53 @@ const AddressDetails = () => {
     );
   }, [id]);
 
+  const handleShowSubMenu = () => {
+    if (window.innerWidth < 1024) {
+      setMobileView(true);
+    } else {
+      setMobileView(false);
+    }
+  };
+
+  React.useEffect(() => {
+    handleShowSubMenu();
+
+    window.addEventListener('resize', handleShowSubMenu);
+    return () => {
+      window.removeEventListener('resize', handleShowSubMenu);
+    };
+  }, []);
+
   if (redirect.current) {
     return <Redirect to={ROUTES.NOT_FOUND} />;
   }
 
+  const generateAddTitle = () => {
+    return (
+      <Styles.AddressTitleBlock>
+        {getCurrencyName()} address: <span>{id}</span>
+      </Styles.AddressTitleBlock>
+    );
+  };
+
+  const getAddressDetailsTitle = () => <Styles.Title>Latest Transactions</Styles.Title>;
+
   return addresses ? (
-    <>
-      <Header title="Address Details" />
+    <Styles.Wrapper>
       <Grid container direction="column">
         <Grid item>
           <Table
-            title={`${getCurrencyName()} address: ${id}`}
+            title={generateAddTitle()}
             headers={addressHeaders}
             rows={generateAddressSummary(addresses)}
+            tableWrapperClassName="address-table-wrapper"
+            className="address"
+            blockWrapperClassName="address-wrapper"
           />
         </Grid>
         <Styles.TableWrapper item>
           <InfinityTable
-            title="Latest Transactions"
+            title={getAddressDetailsTitle()}
             sortBy={fetchParams.current.sortBy}
             sortDirection={fetchParams.current.sortDirection}
             rows={generateLatestTransactions(addresses.data)}
@@ -134,10 +163,14 @@ const AddressDetails = () => {
             onBottomReach={handleFetchMoreTransactions}
             onHeaderClick={handleSort}
             className="latest-transaction-table"
+            headerBackground
+            rowHeight={isMobile ? 135 : 45}
+            tableHeight={isMobile ? 600 : 400}
+            isLoading={isLoading}
           />
         </Styles.TableWrapper>
       </Grid>
-    </>
+    </Styles.Wrapper>
   ) : null;
 };
 

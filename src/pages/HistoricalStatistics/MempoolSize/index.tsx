@@ -39,7 +39,7 @@ function MempoolSize() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Mempool Size">
       {chartData ? (
         <EChartsLineChart
           chartName="mempoolsize"
@@ -52,6 +52,7 @@ function MempoolSize() {
           periods={periods[1]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
+          setHeaderBackground
         />
       ) : (
         <Skeleton animation="wave" variant="rect" height={386} />

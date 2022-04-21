@@ -75,6 +75,8 @@ export const themeLight = createMuiTheme(
         toggle: {
           background: '#E9F2FB',
           switch: '#34a1ff',
+          hover: '#0E80F5',
+          period: '#868f9b',
         },
         border: '#2D3748',
         mobile: {
@@ -95,6 +97,7 @@ export const themeLight = createMuiTheme(
       even: '#FCFCFD',
       hover: '#EBEAEA',
       label: '#2D3748',
+      oddSupernode: '#ECEFF3',
     },
     filter: {
       border: 'rgba(0, 0, 0, 0.12)',
@@ -106,11 +109,39 @@ export const themeLight = createMuiTheme(
       border: {
         default: 'rgba(0, 0, 0, 0.23)',
         active: 'rgba(39, 153, 137, 0.5)',
+        changeTheme: '#00B282',
       },
       text: {
         default: '#2D3748',
         active: '#279989',
       },
+      richlist: {
+        background: '#FCFCFD',
+        border: '#ECEFF3',
+      },
+      item: {
+        background: '#fff',
+        border: '#ECEFF3',
+        titleBackground: '#F6F7F9',
+      },
+    },
+    crown: {
+      gold: '#D69B00',
+      silver: '#A5A195',
+      bronze: '#AD4005',
+    },
+    supernodes: {
+      status: {
+        background: {
+          enabled: '#00D097',
+          newStart: '#FFA21B',
+        },
+        color: '#fff',
+      },
+    },
+    dropdown: {
+      border: '#A0AEC0',
+      color: '#4A5568',
     },
   },
 );
@@ -121,7 +152,7 @@ export const themeDark = createMuiTheme(
       ...themeVariant.palette,
       background: {
         default: '#232630',
-        paper: '#14161D',
+        paper: '#0d0d0d',
       },
       text: {
         primary: '#F8F8FA',
@@ -165,6 +196,8 @@ export const themeDark = createMuiTheme(
         toggle: {
           background: '#1d1e31',
           switch: '#00D097',
+          hover: '#00D097',
+          period: '#4A5568',
         },
         border: '#FCFCFD',
         mobile: {
@@ -185,6 +218,7 @@ export const themeDark = createMuiTheme(
       even: '#4A5568',
       hover: '#718096',
       label: '#F8F8FA',
+      oddSupernode: '#1A202C',
     },
     filter: {
       border: 'rgb(35, 38, 48)',
@@ -196,11 +230,39 @@ export const themeDark = createMuiTheme(
       border: {
         default: '#4A5568',
         active: 'rgba(39, 153, 137, 0.5)',
+        changeTheme: '#0971DC',
       },
       text: {
         default: '#F8F8FA',
         active: '#279989',
       },
+      richlist: {
+        background: '#4A5568',
+        border: '#2D3748',
+      },
+      item: {
+        background: '#4A5568',
+        border: '#2D3748',
+        titleBackground: '#2D3748',
+      },
+    },
+    crown: {
+      gold: '#D69B00',
+      silver: '#A5A195',
+      bronze: '#AD4005',
+    },
+    supernodes: {
+      status: {
+        background: {
+          enabled: '#0971DC',
+          newStart: '#E88A00',
+        },
+        color: '#fff',
+      },
+    },
+    dropdown: {
+      border: '#A0AEC0',
+      color: '#F8F9FA',
     },
   },
 );

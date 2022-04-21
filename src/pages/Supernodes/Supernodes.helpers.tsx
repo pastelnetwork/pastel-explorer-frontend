@@ -1,4 +1,4 @@
-import { Chip, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import CopyButton from '@components/CopyButton/CopyButton';
@@ -15,18 +15,53 @@ import {
   SUPERNODE_COUNTRY_KEY,
   SUPERNODE_LAST_PAID_KEY,
 } from './Supernodes.columns';
+import * as Styles from './Supernodes.styles';
 
 export const DATA_FETCH_LIMIT = 20;
 export const DATA_OFFSET = 0;
 export const DATA_DEFAULT_SORT = 'DESC';
+export const STATUS_LIST = [
+  {
+    value: 'all',
+    name: 'ALL',
+  },
+  {
+    value: 'PRE_ENABLED',
+    name: 'PRE_ENABLED',
+  },
+  {
+    value: 'ENABLED',
+    name: 'ENABLED',
+  },
+  {
+    value: 'EXPIRED',
+    name: 'EXPIRED',
+  },
+  {
+    value: 'WATCHDOG_EXPIRED',
+    name: 'WATCHDOG_EXPIRED',
+  },
+  {
+    value: 'NEW_START_REQUIRED',
+    name: 'NEW_START_REQUIRED',
+  },
+  {
+    value: 'UPDATE_REQUIRED',
+    name: 'UPDATE_REQUIRED',
+  },
+  {
+    value: 'POSE_BAN',
+    name: 'POSE_BAN',
+  },
+  {
+    value: 'OUTPOINT_SPENT',
+    name: 'OUTPOINT_SPENT',
+  },
+];
 
-const statusColor = (status: string) => (
-  <Chip
-    label={status}
-    color={status.toLowerCase() !== 'enabled' ? 'default' : 'primary'}
-    size="small"
-  />
-);
+const generateStutusData = (status: string) => {
+  return <Styles.Status className={status.toLowerCase()}>{status}</Styles.Status>;
+};
 
 export const transformSupernodesData = (masternodes: Array<INetworkSupernodes>) =>
   masternodes.map(({ ip, port, address, status, country, lastPaidTime }) => ({
@@ -40,10 +75,11 @@ export const transformSupernodesData = (masternodes: Array<INetworkSupernodes>) 
           value={address}
           textSize="large"
           title={address}
+          className="address-link"
         />
       </Grid>
     ),
-    [SUPERNODE_STATUS_KEY]: statusColor(status),
+    [SUPERNODE_STATUS_KEY]: generateStutusData(status),
     [SUPERNODE_COUNTRY_KEY]: country,
     [SUPERNODE_LAST_PAID_KEY]: formattedTimeElapsed(lastPaidTime),
   }));

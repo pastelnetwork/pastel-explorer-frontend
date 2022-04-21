@@ -38,7 +38,7 @@ function Difficulty() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Difficulty">
       {chartData ? (
         <EChartsLineChart
           chartName="difficulty"
@@ -51,6 +51,7 @@ function Difficulty() {
           periods={periods[1]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
+          setHeaderBackground
         />
       ) : (
         <Skeleton animation="wave" variant="rect" height={386} />

@@ -38,7 +38,10 @@ function AverageTransactionsPerBlock() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
+    <HistoricalStatisticsLayout
+      currentBgColor={currentBgColor}
+      title="Average Transactions Per Block"
+    >
       {chartData ? (
         <EChartsLineChart
           chartName="transactionfee"
@@ -51,6 +54,7 @@ function AverageTransactionsPerBlock() {
           periods={periods[1]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
+          setHeaderBackground
         />
       ) : (
         <Skeleton animation="wave" variant="rect" height={386} />

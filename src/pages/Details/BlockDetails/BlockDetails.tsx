@@ -59,7 +59,7 @@ const BlockDetails = () => {
         data: [
           { id: 1, value: height },
           { id: 3, value: formatNumber(confirmations) },
-          { id: 4, value: formatNumber(size / 1000, { decimalsLength: 2 }) },
+          { id: 4, value: formatNumber(size / 1024, { decimalsLength: 2 }) },
           { id: 6, value: formattedDate(timestamp) },
         ],
       },
@@ -162,7 +162,7 @@ const BlockDetails = () => {
           >
             <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>{isExpanded ? 'Hide Details' : 'Show Details'}</Typography>
+                <Typography>{isExpanded ? 'Click to see less' : 'Click to see more'}</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container direction="column">
@@ -186,6 +186,7 @@ const BlockDetails = () => {
             rows={generateLatestTransactions(transactions)}
             handleClickSort={handleClickSortTransaction}
             className="transactions"
+            tableWrapperClassName="transactions-table-wrapper"
           />
         </Styles.GridStyle>
       </Grid>
