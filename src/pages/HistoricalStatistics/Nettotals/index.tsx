@@ -23,7 +23,7 @@ function Nettotals() {
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { period, sortDirection: 'DESC' },
+        params: { period, sortDirection: 'ASC' },
       });
       if (data) {
         const parseData = transformNetTotals(data.data);

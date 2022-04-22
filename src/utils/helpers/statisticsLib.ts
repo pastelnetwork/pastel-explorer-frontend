@@ -164,12 +164,11 @@ export function transformNetTotals(nettotals: TNettotalsInfo[]): TMultiLineChart
   const dataX: string[] = [];
   const dataY1: number[] = [];
   const dataY2: number[] = [];
-  const newNetTotals = nettotals.sort((a, b) => a.timestamp - b.timestamp);
-  for (let i = 0; i < newNetTotals.length; i += 1) {
-    if (newNetTotals[i].timemillis !== null) {
-      const createTime = Number(newNetTotals[i].timemillis);
-      const recv = Number(newNetTotals[i].totalbytesrecv);
-      const sent = Number(newNetTotals[i].totalbytessent);
+  for (let i = 0; i < nettotals.length; i += 1) {
+    if (nettotals[i].timemillis !== null) {
+      const createTime = Number(nettotals[i].timemillis);
+      const recv = Number(nettotals[i].totalbytesrecv);
+      const sent = Number(nettotals[i].totalbytessent);
       dataY1.push(recv);
       dataY2.push(sent);
       dataX.push(format(createTime, 'MM/dd/yyyy'));
@@ -239,8 +238,7 @@ export const transformChartData = (
 export function transformCharts(data: TChartResponseItem[], range = 1): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
-  const newData = data.sort((a, b) => new Date(a.label).getTime() - new Date(b.label).getTime());
-  newData.forEach(({ value, label }) => {
+  data.forEach(({ value, label }) => {
     dataX.push(label);
     dataY.push(+(value / range).toFixed(2));
   });
