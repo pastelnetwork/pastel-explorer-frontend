@@ -239,7 +239,8 @@ export const transformChartData = (
 export function transformCharts(data: TChartResponseItem[], range = 1): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
-  data.forEach(({ value, label }) => {
+  const newData = data.sort((a, b) => new Date(a.label).getTime() - new Date(b.label).getTime());
+  newData.forEach(({ value, label }) => {
     dataX.push(label);
     dataY.push(+(value / range).toFixed(2));
   });
