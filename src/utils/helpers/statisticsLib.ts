@@ -164,14 +164,15 @@ export function transformNetTotals(nettotals: TNettotalsInfo[]): TMultiLineChart
   const dataX: string[] = [];
   const dataY1: number[] = [];
   const dataY2: number[] = [];
-  for (let i = 0; i < nettotals.length; i += 1) {
-    if (nettotals[i].timemillis !== null) {
-      const createTime = Number(nettotals[i].timemillis);
-      const recv = Number(nettotals[i].totalbytesrecv);
-      const sent = Number(nettotals[i].totalbytessent);
+  const newNetTotals = nettotals.sort((a, b) => a.timestamp - b.timestamp);
+  for (let i = 0; i < newNetTotals.length; i += 1) {
+    if (newNetTotals[i].timemillis !== null) {
+      const createTime = Number(newNetTotals[i].timemillis);
+      const recv = Number(newNetTotals[i].totalbytesrecv);
+      const sent = Number(newNetTotals[i].totalbytessent);
       dataY1.push(recv);
       dataY2.push(sent);
-      dataX.push(new Date(createTime).toLocaleString());
+      dataX.push(format(createTime, 'MM/dd/yyyy'));
     }
   }
   return { dataX, dataY1, dataY2 };
