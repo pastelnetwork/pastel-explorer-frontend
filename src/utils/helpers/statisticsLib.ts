@@ -154,7 +154,10 @@ export function transformHashrateInfo(hashrateInfo: TMiningInfo[]): TLineChartDa
   return { dataX, dataY };
 }
 
-export function transformMempoolInfo(mempoolInfo: TMempoolInfo[], period: PeriodTypes): TLineChartData {
+export function transformMempoolInfo(
+  mempoolInfo: TMempoolInfo[],
+  period: PeriodTypes,
+): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
   for (let i = 0; i < mempoolInfo.length; i += 1) {
@@ -172,7 +175,10 @@ export function transformMempoolInfo(mempoolInfo: TMempoolInfo[], period: Period
   return { dataX, dataY };
 }
 
-export function transformNetTotals(nettotals: TNettotalsInfo[]): TMultiLineChartData {
+export function transformNetTotals(
+  nettotals: TNettotalsInfo[],
+  period: PeriodTypes,
+): TMultiLineChartData {
   const dataX: string[] = [];
   const dataY1: number[] = [];
   const dataY2: number[] = [];
@@ -183,7 +189,11 @@ export function transformNetTotals(nettotals: TNettotalsInfo[]): TMultiLineChart
       const sent = Number(nettotals[i].totalbytessent);
       dataY1.push(recv);
       dataY2.push(sent);
-      dataX.push(format(createTime, 'MM/dd/yyyy'));
+      dataX.push(
+        ['1y', 'all'].includes(period)
+          ? format(createTime, 'MM/dd/yyyy')
+          : new Date(createTime).toLocaleString(),
+      );
     }
   }
   return { dataX, dataY1, dataY2 };
