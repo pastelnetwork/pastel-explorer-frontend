@@ -26,7 +26,7 @@ function Difficulty() {
         params: { sortDirection: 'DESC', period },
       });
       if (data) {
-        const parseData = transformDifficultyInfo(data.data);
+        const parseData = transformDifficultyInfo(data.data, period);
         setChartData(parseData);
       }
     };

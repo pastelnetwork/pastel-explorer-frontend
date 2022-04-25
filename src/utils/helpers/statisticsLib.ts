@@ -91,7 +91,7 @@ export function getStartPoint(period: PeriodTypes): number {
 
 export function transformDifficultyInfo(
   difficulties: IStatistic[],
-  // period: PeriodTypes,
+  period: PeriodTypes,
 ): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
@@ -103,7 +103,11 @@ export function transformDifficultyInfo(
       const createTime = Number(difficulties[i].timestamp);
       // if (createTime > startDate) {
       dataY.push(Number(difficulties[i].difficulty));
-      dataX.push(new Date(createTime).toLocaleString());
+      dataX.push(
+        ['1y', 'all'].includes(period)
+          ? format(createTime, 'MM/dd/yyyy')
+          : new Date(createTime).toLocaleString(),
+      );
       // }
     }
   }
@@ -111,7 +115,7 @@ export function transformDifficultyInfo(
   return { dataX, dataY };
 }
 
-export function transformPriceInfo(prices: IStatistic[]): TMultiLineChartData {
+export function transformPriceInfo(prices: IStatistic[], period: PeriodTypes): TMultiLineChartData {
   const dataX: string[] = [];
   const dataY1: number[] = [];
   const dataY2: number[] = [];
@@ -125,7 +129,11 @@ export function transformPriceInfo(prices: IStatistic[]): TMultiLineChartData {
     const btc = Number(prices[i].btcPrice);
     dataY1.push(usd);
     dataY2.push(btc);
-    dataX.push(new Date(createTime).toLocaleString());
+    dataX.push(
+      ['1y', 'all'].includes(period)
+        ? format(createTime, 'MM/dd/yyyy')
+        : new Date(createTime).toLocaleString(),
+    );
     // }
   }
   return { dataX, dataY1, dataY2 };
@@ -146,7 +154,7 @@ export function transformHashrateInfo(hashrateInfo: TMiningInfo[]): TLineChartDa
   return { dataX, dataY };
 }
 
-export function transformMempoolInfo(mempoolInfo: TMempoolInfo[]): TLineChartData {
+export function transformMempoolInfo(mempoolInfo: TMempoolInfo[], period: PeriodTypes): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
   for (let i = 0; i < mempoolInfo.length; i += 1) {
@@ -154,7 +162,11 @@ export function transformMempoolInfo(mempoolInfo: TMempoolInfo[]): TLineChartDat
       const createTime = Number(mempoolInfo[i].timestamp);
       const bytes = Number(mempoolInfo[i].usage) / 1000;
       dataY.push(bytes);
-      dataX.push(new Date(createTime).toLocaleString());
+      dataX.push(
+        ['1y', 'all'].includes(period)
+          ? format(createTime, 'MM/dd/yyyy')
+          : new Date(createTime).toLocaleString(),
+      );
     }
   }
   return { dataX, dataY };

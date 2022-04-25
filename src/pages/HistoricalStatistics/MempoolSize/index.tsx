@@ -27,7 +27,7 @@ function MempoolSize() {
         params: { period, sortDirection: 'DESC' },
       });
       if (data) {
-        const parseData = transformMempoolInfo(data.data);
+        const parseData = transformMempoolInfo(data.data, period);
         setChartData(parseData);
       }
     };
