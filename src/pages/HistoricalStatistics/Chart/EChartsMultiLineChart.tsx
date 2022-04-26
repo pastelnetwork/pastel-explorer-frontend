@@ -4,6 +4,7 @@ import * as htmlToImage from 'html-to-image';
 import * as echarts from 'echarts';
 import { saveAs } from 'file-saver';
 import { useSelector } from 'react-redux';
+import format from 'date-fns/format';
 
 import { Data } from 'react-csv/components/CommonPropTypes';
 import { makeDownloadFileName, PeriodTypes } from '@utils/helpers/statisticsLib';
@@ -118,6 +119,14 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     xAxis: {
       type: 'category',
       data: dataX,
+      axisLabel: {
+        formatter(value: string) {
+          const date = new Date(value);
+          return selectedPeriodButton !== '24h'
+            ? format(date, 'MM/dd/yyyy')
+            : new Date(value).toLocaleString();
+        },
+      },
     },
     yAxis: [
       {

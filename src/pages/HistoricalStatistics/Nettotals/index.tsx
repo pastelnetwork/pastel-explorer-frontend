@@ -26,7 +26,7 @@ function Nettotals() {
         params: { period, sortDirection: 'ASC' },
       });
       if (data) {
-        const parseData = transformNetTotals(data.data, period);
+        const parseData = transformNetTotals(data.data);
         setChartData(parseData);
       }
     };

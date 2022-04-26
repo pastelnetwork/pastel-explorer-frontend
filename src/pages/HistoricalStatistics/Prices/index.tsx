@@ -28,7 +28,7 @@ function PriceOvertime() {
         params: { sortDirection: 'DESC', period },
       });
       if (data) {
-        const parseData = transformPriceInfo(data.data, period);
+        const parseData = transformPriceInfo(data.data);
         setTransformLineChartData(parseData);
       }
     };
