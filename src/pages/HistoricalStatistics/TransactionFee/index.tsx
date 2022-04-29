@@ -24,7 +24,7 @@ function TransactionFee() {
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { period, sortDirection: 'DESC', func: 'AVG', col: 'fee' },
+        params: { period, sortDirection: 'ASC', func: 'AVG', col: 'fee' },
       });
       if (data) {
         const parseData = transformCharts(data.data);

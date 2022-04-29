@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 // third party
 import { Skeleton } from '@material-ui/lab';
-// import { format } from 'date-fns';
+import { format } from 'date-fns';
 // application
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
@@ -36,7 +36,9 @@ function PriceOvertime() {
         for (let i = 0; i < prices.length; i += 1) {
           const [x, y1] = prices[i];
           const [, y2] = total_volumes[i];
-          dataX.push(new Date(x).toLocaleString());
+          dataX.push(
+            ['1y', 'all'].includes(period) ? format(x, 'MM/dd/yyyy') : new Date(x).toLocaleString(),
+          );
           dataY1.push(+y1.toFixed(8));
           dataY2.push(Math.round(y2));
         }

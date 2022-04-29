@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 // third party
 import { Skeleton } from '@material-ui/lab';
-// import { format } from 'date-fns';
 // application
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
