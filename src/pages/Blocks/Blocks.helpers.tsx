@@ -3,6 +3,7 @@ import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
 import { formattedDate } from '@utils/helpers/date/date';
 import { IBlock } from '@utils/types/IBlocks';
+import { formatAddress } from '@utils/helpers/format';
 
 import { ReactComponent as BoxIcon } from '@assets/icons/box.svg';
 
@@ -18,7 +19,7 @@ export const DATA_FETCH_LIMIT = 20;
 export const DATA_OFFSET = 0;
 export const DATA_DEFAULT_SORT = 'DESC';
 
-export const transformTableData = (transactions: Array<IBlock>) =>
+export const transformTableData = (transactions: Array<IBlock>, isMobile: boolean) =>
   transactions.map(({ id, timestamp, transactionCount, height }) => ({
     id,
     [BLOCK_ID_KEY]: (
@@ -36,7 +37,7 @@ export const transformTableData = (transactions: Array<IBlock>) =>
       <RouterLink
         className="hash-link"
         route={`${ROUTES.BLOCK_DETAILS}/${id}`}
-        value={id}
+        value={isMobile ? formatAddress(id) : id}
         title={id}
       />
     ),

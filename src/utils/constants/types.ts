@@ -22,6 +22,7 @@ export type TThemeInitOption = {
   chartName: string;
   minY: number;
   maxY: number;
+  darkMode?: boolean;
 };
 
 export type TLineChartProps = {

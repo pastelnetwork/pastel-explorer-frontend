@@ -66,6 +66,7 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
     chartName,
     minY,
     maxY,
+    darkMode,
   };
   const options = getSummaryThemeUpdateOption(params);
 

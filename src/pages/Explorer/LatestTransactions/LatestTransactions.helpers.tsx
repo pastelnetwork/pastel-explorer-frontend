@@ -8,6 +8,7 @@ import * as ROUTES from '@utils/constants/routes';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { formattedDate } from '@utils/helpers/date/date';
 import { ITransaction } from '@utils/types/ITransactions';
+import { formatAddress } from '@utils/helpers/format';
 
 import * as Styles from './LatestTransactions.styles';
 
@@ -48,7 +49,7 @@ export const transformTransactionsData = (transactions: Array<ITransaction>) =>
           <RouterLink
             title={id}
             route={`${ROUTES.TRANSACTION_DETAILS}/${id}`}
-            value={id}
+            value={formatAddress(id)}
             textSize="large"
             className="txid-link"
           />

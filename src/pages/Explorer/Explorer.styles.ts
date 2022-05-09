@@ -83,6 +83,26 @@ export const BlockWrapper = styled.div`
       th {
         padding: 9px 16px;
         background-color: ${props => props.theme.table.header} !important;
+
+        &.th-block,
+        &.th-fee,
+        &.th-txs {
+          width: 60px;
+        }
+
+        &.th-amount,
+        &.th-size {
+          width: 90px;
+        }
+
+        &.th-recipents {
+          width: 80px;
+        }
+        }
+
+        &.th-timestamp {
+          width: 120px;
+        }
       }
     }
 
@@ -113,6 +133,10 @@ export const BlockWrapper = styled.div`
 
     .MuiTypography-root {
       max-width: 74px;
+
+      &.no-limit {
+        max-width: unset;
+      }
     }
   }
 

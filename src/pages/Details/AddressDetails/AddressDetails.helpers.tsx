@@ -10,6 +10,7 @@ import { formattedDate } from '@utils/helpers/date/date';
 import { IAddressData, IAddress } from '@utils/types/IAddress';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { getCurrencyName } from '@utils/appInfo';
+import { formatAddress } from '@utils/helpers/format';
 
 import {
   ADDRESS_TRANSACTION_TIMESTAMP_KEY,
@@ -28,7 +29,10 @@ export const DATA_FETCH_LIMIT = 20;
 export const DATA_OFFSET = 0;
 export const DATA_DEFAULT_SORT = 'DESC';
 
-export const generateLatestTransactions = (transactionsList: Array<IAddressData>): RowsProps[] =>
+export const generateLatestTransactions = (
+  transactionsList: Array<IAddressData>,
+  isMobile: boolean,
+): RowsProps[] =>
   transactionsList.map(({ amount, timestamp, transactionHash }) => ({
     [ADDRESS_TRANSACTION_TIMESTAMP_KEY]: formattedDate(timestamp),
     [ADDRESS_TRANSACTION_HASH_KEY]: (
@@ -36,7 +40,7 @@ export const generateLatestTransactions = (transactionsList: Array<IAddressData>
         <CopyButton copyText={transactionHash} />
         <RouterLink
           route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
-          value={transactionHash}
+          value={isMobile ? formatAddress(transactionHash) : transactionHash}
           textSize="large"
           title={transactionHash}
           className="transaction-hash-link"

@@ -22,6 +22,8 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import * as ROUTES from '@utils/constants/routes';
 import { Link } from '@components/Link/Link.styles';
 import RouterLink from '@components/RouterLink/RouterLink';
+import { formatAddress } from '@utils/helpers/format';
+import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import * as Styles from './Explorer.styles';
 
 const StyledTableCell = withStyles((theme: TAppTheme) => ({
@@ -74,11 +76,17 @@ function LatestBlocks() {
         <Table aria-label="customized table" className="custom-table latest-blocks">
           <TableHead>
             <TableRow className="table__row-header">
-              <StyledTableCell style={{ width: 44 }}>Block</StyledTableCell>
+              <StyledTableCell className="th-block">Block</StyledTableCell>
               <StyledTableCell>Hash</StyledTableCell>
-              <StyledTableCell align="right">TXs</StyledTableCell>
-              <StyledTableCell align="right">Size</StyledTableCell>
-              <StyledTableCell align="right">Timestamp</StyledTableCell>
+              <StyledTableCell align="right" className="th-txs">
+                TXs
+              </StyledTableCell>
+              <StyledTableCell align="right" className="th-size">
+                Size(kB)
+              </StyledTableCell>
+              <StyledTableCell align="right" className="th-timestamp">
+                Timestamp
+              </StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -91,20 +99,18 @@ function LatestBlocks() {
                       value={block.height || ''}
                     />
                   </StyledTableCell>
-                  <StyledTableCell component="th" scope="row" style={{ maxWidth: 150 }}>
+                  <StyledTableCell component="th" scope="row">
                     <Link to={`${ROUTES.BLOCK_DETAILS}/${block.id}`}>
-                      <Typography noWrap title={block.id}>
-                        {block.id}
+                      <Typography noWrap title={block.id} className="no-limit">
+                        {formatAddress(block.id)}
                       </Typography>
                     </Link>
                   </StyledTableCell>
                   <StyledTableCell align="right">{block.transactionCount}</StyledTableCell>
-                  <StyledTableCell align="right" style={{ width: 44 }}>
-                    {block.size.toLocaleString('en')}
+                  <StyledTableCell align="right">
+                    {formatNumber(block.size / 1024, { decimalsLength: 2 })}
                   </StyledTableCell>
-                  <StyledTableCell align="right" style={{ maxWidth: 200 }}>
-                    {formattedDate(block.timestamp)}
-                  </StyledTableCell>
+                  <StyledTableCell align="right">{formattedDate(block.timestamp)}</StyledTableCell>
                 </StyledTableRow>
               ))
             ) : (
