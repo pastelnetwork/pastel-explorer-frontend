@@ -7,3 +7,15 @@ export const TableWrapper = styled(Grid)`
     padding-right: 0;
   }
 `;
+
+export const TitleWrapper = styled('div')`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 21px 0;
+
+  h4 {
+    margin: 0;
+  }
+`;
