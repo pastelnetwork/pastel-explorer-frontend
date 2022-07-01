@@ -8,6 +8,7 @@ import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { IRichlist } from '@utils/types/IRichlists';
 import { useSortData } from '@utils/hooks';
+import { ISummary } from '@utils/types/ISummary';
 import {
   balanceHeaders,
   distributionHeaders,
@@ -21,15 +22,29 @@ const Richlist: React.FC = () => {
     method: 'get',
     url: `${URLS.RICHLIST_URL}`,
   });
+  const fetchSummary = useFetch<ISummary>({ method: 'get', url: URLS.SUMMARY_URL });
+  const [coinSupply, setCoinSupply] = React.useState(0);
+
   const [list, handleClickSort] = useSortData<IRichlist>({ fetchData });
   const richlist = React.useMemo<RowsProps[] | null>(
-    () => (list && list.length ? generateBalanceTable(list) : null),
+    () => (list && list.length ? generateBalanceTable(list, coinSupply) : null),
     [list],
   );
   const wealthDistribution = React.useMemo<RowsProps[] | null>(
     () => (list && list.length ? generateWealthDistributionTable(list) : null),
     [list],
   );
+
+  const handleExchangeRateFetch = () => {
+    fetchSummary.fetchData().then(response => {
+      if (!response) return null;
+      return setCoinSupply(response?.currentStats?.coinSupply || 0);
+    });
+  };
+
+  React.useEffect(() => {
+    handleExchangeRateFetch();
+  }, []);
 
   return (
     <>

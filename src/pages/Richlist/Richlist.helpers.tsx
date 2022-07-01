@@ -31,8 +31,9 @@ export const distributionHeaders: Array<HeaderType> = [
   { id: 3, header: '%' },
 ];
 
-export const generateBalanceTable = (list: Array<IRichlist>) => {
-  return list.map(({ rank, percentage, amount, address }) => {
+export const generateBalanceTable = (list: Array<IRichlist>, coinSupply: number) => {
+  return list.map(({ rank, amount, address }) => {
+    const percentage = (amount * 100) / coinSupply;
     return {
       id: address,
       data: [
