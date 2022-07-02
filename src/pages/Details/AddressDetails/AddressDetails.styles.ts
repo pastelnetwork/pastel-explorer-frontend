@@ -186,4 +186,11 @@ export const TitleWrapper = styled('div')`
   h4 {
     margin: 0;
   }
+
+  button {
+    margin-left: 8px;
+    margin-right: 0;
+    padding: 6px 24px;
+    font-size: 14px;
+  }
 `;
