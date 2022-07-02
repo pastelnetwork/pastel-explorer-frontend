@@ -16,6 +16,7 @@ import * as ROUTES from '@utils/constants/routes';
 import { IAddress } from '@utils/types/IAddress';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { getCurrencyName } from '@utils/appInfo';
+import { formattedDate } from '@utils/helpers/date/date';
 import { eChartLineStyles } from '@pages/HistoricalStatistics/Chart/styles';
 
 import {
@@ -121,7 +122,15 @@ const AddressDetails = () => {
 
   useEffect(() => {
     if (addresses.data.length) {
-      setCsvData(addresses.data);
+      const data: Data = [];
+      addresses.data.forEach(o => {
+        data.push({
+          timestamp: formattedDate(o.timestamp),
+          transactionHash: o.transactionHash,
+          amount: o.amount,
+        });
+      });
+      setCsvData(data);
     }
   }, [addresses]);
 
