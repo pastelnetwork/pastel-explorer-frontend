@@ -2,11 +2,12 @@ import * as React from 'react';
 import { Grid } from '@material-ui/core';
 
 import Table, { RowsProps } from '@components/Table/Table';
-
+import { SocketContext } from '@context/socket';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { IRichlist } from '@utils/types/IRichlists';
 import { useSortData } from '@utils/hooks';
+import { ISummary } from '@utils/types/ISummary';
 import {
   balanceHeaders,
   generateBalanceTable,
@@ -24,20 +25,41 @@ export type WealthDistributionProps = {
 };
 
 const Richlist: React.FC = () => {
+  const socket = React.useContext(SocketContext);
   const { fetchData, isLoading } = useFetch<{ data: Array<IRichlist> }>({
     method: 'get',
     url: `${URLS.RICHLIST_URL}`,
   });
+  const fetchSummary = useFetch<ISummary>({ method: 'get', url: URLS.SUMMARY_URL });
+  const [coinSupply, setCoinSupply] = React.useState(0);
   const [list, handleClickSort] = useSortData<IRichlist>({ fetchData });
   const richlist = React.useMemo<RowsProps[] | null>(
-    () => (list && list.length ? generateBalanceTable(list) : null),
-    [list],
+    () => (list && list.length ? generateBalanceTable(list, coinSupply) : null),
+    [list, coinSupply],
   );
   const wealthDistribution = React.useMemo<WealthDistributionProps[] | null>(
     () => (list && list.length ? generateWealthDistributionData(list) : null),
     [list],
   );
   const wealthDistributionData = wealthDistribution?.sort((a, b) => a.top - b.top);
+
+  const handleExchangeRateFetch = () => {
+    fetchSummary.fetchData().then(response => {
+      if (!response) return null;
+      return setCoinSupply(response?.currentStats?.coinSupply || 0);
+    });
+  };
+
+  React.useEffect(() => {
+    handleExchangeRateFetch();
+    socket.on('getUpdateBlock', () => {
+      handleExchangeRateFetch();
+    });
+    return () => {
+      socket.off('getUpdateBlock');
+    };
+  }, []);
+
   return (
     <Styles.Wrapper>
       <Grid item>
