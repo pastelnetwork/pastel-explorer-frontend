@@ -187,7 +187,7 @@ export const TitleWrapper = styled('div')`
     margin: 0;
   }
 
-  button {
+  a {
     margin-left: 8px;
     margin-right: 0;
     padding: 6px 24px;
