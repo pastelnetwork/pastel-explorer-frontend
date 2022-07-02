@@ -170,3 +170,20 @@ export const Title = styled.div`
   border-radius: 10px 10px 0 0;
   overflow: hidden;
 `;
+
+export const TitleWrapper = styled('div')`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 21px 0;
+  padding: 18px 16px;
+  box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
+  background: ${props => props.theme.card.titleColor};
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+
+  h4 {
+    margin: 0;
+  }
+`;

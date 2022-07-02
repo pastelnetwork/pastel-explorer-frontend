@@ -37,6 +37,7 @@ export interface RowsProps {
 
 interface IInfinityTableComponentProps {
   title?: React.ReactNode;
+  customTitle?: React.ReactNode;
   columns: Array<{
     width: number;
     flexGrow: number;
@@ -107,6 +108,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   className,
   headerBackground,
   isLoading,
+  customTitle,
 }) => {
   const [loading, setLoading] = React.useState(false);
   const isDarkMode = useGetThemeMode();
@@ -149,17 +151,29 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
     loading && setLoading(false);
   }, [rows]);
 
+  const renderTitle = () => {
+    if (customTitle) {
+      return <div className="pl-0 pr-0">{customTitle}</div>;
+    }
+
+    if (!title) {
+      return null;
+    }
+
+    return (
+      <div className="pl-0 pr-0">
+        {!filters ? (
+          <h4 className="table-title">{title}</h4>
+        ) : (
+          <Filters filters={filters} title={title} headerBackground={headerBackground} />
+        )}
+      </div>
+    );
+  };
+
   return (
     <Styles.Card className={className}>
-      {title && (
-        <div className="pl-0 pr-0">
-          {!filters ? (
-            <h4 className="table-title">{title}</h4>
-          ) : (
-            <Filters filters={filters} title={title} headerBackground={headerBackground} />
-          )}
-        </div>
-      )}
+      {renderTitle()}
       <Styles.TableContainer>
         {loading && (
           <Styles.Loader>
