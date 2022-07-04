@@ -764,8 +764,7 @@ type TToolTipParamsProps = {
 };
 
 export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOption {
-  const { theme, dataX, dataY, chartName, minY, maxY } = args;
-
+  const { theme, dataX, dataY, chartName, minY, maxY, darkMode } = args;
   const chartOptions: TChartOption = {
     gigaHashPerSec: {
       backgroundColor: theme?.backgroundColor,
@@ -824,7 +823,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             },
             {
               offset: 1,
-              color: '#fff',
+              color: theme?.backgroundColor || '#fff',
             },
           ]),
         },
@@ -895,7 +894,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         data: dataY,
         lineStyle: {
           width: 3,
-          shadowColor: 'rgba(0,0,0,0.5)',
+          shadowColor: darkMode ? 'rgba(160, 174, 192, 0.5)' : 'rgba(0, 0, 0, 0.5)',
           shadowBlur: 10,
           shadowOffsetY: 12,
         },
@@ -964,7 +963,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             },
             {
               offset: 1,
-              color: '#fff',
+              color: theme?.backgroundColor || '#fff',
             },
           ]),
         },
@@ -1026,7 +1025,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             },
             {
               offset: 1,
-              color: '#fff',
+              color: theme?.backgroundColor || '#fff',
             },
           ]),
         },
@@ -1093,7 +1092,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             },
             {
               offset: 1,
-              color: '#fff',
+              color: theme?.backgroundColor || '#fff',
             },
           ]),
         },
@@ -1162,7 +1161,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             },
             {
               offset: 1,
-              color: '#fff',
+              color: theme?.backgroundColor || '#fff',
             },
           ]),
         },
@@ -1230,7 +1229,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             },
             {
               offset: 1,
-              color: '#fff',
+              color: theme?.backgroundColor || '#fff',
             },
           ]),
         },
@@ -1299,7 +1298,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             },
             {
               offset: 1,
-              color: '#fff',
+              color: theme?.backgroundColor || '#fff',
             },
           ]),
         },
@@ -1364,7 +1363,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             },
             {
               offset: 1,
-              color: '#fff',
+              color: theme?.backgroundColor || '#fff',
             },
           ]),
         },

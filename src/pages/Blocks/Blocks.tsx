@@ -90,7 +90,7 @@ const Blocks = () => {
       .then(response => {
         if (response) {
           setTotalItem(response?.total);
-          return transformTableData(response.data);
+          return transformTableData(response.data, isMobile);
         }
         return [];
       })

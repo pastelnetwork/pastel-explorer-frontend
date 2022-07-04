@@ -157,7 +157,7 @@ const AddressDetails = () => {
             title={getAddressDetailsTitle()}
             sortBy={fetchParams.current.sortBy}
             sortDirection={fetchParams.current.sortDirection}
-            rows={generateLatestTransactions(addresses.data)}
+            rows={generateLatestTransactions(addresses.data, isMobile)}
             loadMoreFrom={DATA_FETCH_LIMIT}
             columns={columns}
             onBottomReach={handleFetchMoreTransactions}

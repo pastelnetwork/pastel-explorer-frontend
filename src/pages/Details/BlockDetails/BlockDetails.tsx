@@ -18,6 +18,7 @@ import { formattedDate } from '@utils/helpers/date/date';
 import * as URLS from '@utils/constants/urls';
 import * as ROUTES from '@utils/constants/routes';
 import { IBlock, IBlockTransaction } from '@utils/types/IBlocks';
+import { formatAddress } from '@utils/helpers/format';
 import { useSortData } from '@utils/hooks';
 import { getCurrencyName } from '@utils/appInfo';
 
@@ -31,6 +32,7 @@ interface ParamTypes {
 const BlockDetails = () => {
   const history = useHistory();
   const { id } = useParams<ParamTypes>();
+  const [isMobile, setMobileView] = React.useState(false);
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [block, setBlock] = React.useState<IBlock | null>();
   const [redirect, setRedirect] = React.useState(false);
@@ -41,6 +43,22 @@ const BlockDetails = () => {
   const [transactions, handleClickSortTransaction] = useSortData<IBlockTransaction>({
     inititalData: block?.transactions || null,
   });
+
+  const handleShowSubMenu = () => {
+    setMobileView(false);
+    if (window.innerWidth < 960) {
+      setMobileView(true);
+    }
+  };
+
+  React.useEffect(() => {
+    handleShowSubMenu();
+
+    window.addEventListener('resize', handleShowSubMenu);
+    return () => {
+      window.removeEventListener('resize', handleShowSubMenu);
+    };
+  }, []);
 
   React.useEffect(() => {
     fetchData().then(response => {
@@ -81,7 +99,7 @@ const BlockDetails = () => {
                 <CopyButton copyText={transaction.id} />
                 <RouterLink
                   route={`${ROUTES.TRANSACTION_DETAILS}/${transaction.id}`}
-                  value={transaction.id}
+                  value={isMobile ? formatAddress(transaction.id) : transaction.id}
                   textSize="large"
                   className="transaction-hash"
                 />
