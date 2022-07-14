@@ -24,7 +24,7 @@ function TransactionFee() {
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { period, sortDirection: 'DESC', func: 'AVG', col: 'fee' },
+        params: { period, sortDirection: 'ASC', func: 'AVG', col: 'fee' },
       });
       if (data) {
         const parseData = transformCharts(data.data);
@@ -39,7 +39,7 @@ function TransactionFee() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Average Transaction Fee">
       {chartData ? (
         <EChartsLineChart
           chartName="transactionfee"
@@ -52,6 +52,7 @@ function TransactionFee() {
           periods={periods[1]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
+          setHeaderBackground
         />
       ) : (
         <Skeleton animation="wave" variant="rect" height={386} />

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Skeleton } from '@material-ui/lab';
+import { CircularProgress } from '@material-ui/core';
 
 import { transformChartData } from '@utils/helpers/statisticsLib';
 import { EChartsLineChart } from '@pages/HistoricalStatistics/Chart/EChartsLineChart';
@@ -11,7 +11,7 @@ import { useBackgroundChart } from '@utils/hooks';
 import { info } from '@utils/constants/statistics';
 import { TLineChartData, IHashRateResponse } from '@utils/types/IStatistics';
 
-const CHART_HEIGHT = 386;
+import * as Styles from '../Statistics.styles';
 
 const BLOCK_ELEMENTS_COUNT = 8;
 
@@ -25,7 +25,11 @@ const StatisticsBlocks: React.FC = () => {
     [],
   );
   if (!chartData || isLoading) {
-    return <Skeleton animation="wave" variant="rect" height={CHART_HEIGHT} />;
+    return (
+      <Styles.Loader>
+        <CircularProgress size={40} />
+      </Styles.Loader>
+    );
   }
   return (
     <div style={{ flex: 1, backgroundColor: currentBgColor }}>
@@ -37,6 +41,7 @@ const StatisticsBlocks: React.FC = () => {
         info={info}
         offset={1}
         handleBgColorChange={handleBgColorChange}
+        isDynamicTitleColor
       />
     </div>
   );

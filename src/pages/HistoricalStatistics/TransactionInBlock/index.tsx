@@ -39,7 +39,7 @@ function TransactionInBlock() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Transactions In Block">
       {chartData ? (
         <EChartsScatterChart
           chartName="transactionsinblock"
@@ -52,6 +52,7 @@ function TransactionInBlock() {
           periods={periods[2]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
+          setHeaderBackground
         />
       ) : (
         <Skeleton animation="wave" variant="rect" height={386} />

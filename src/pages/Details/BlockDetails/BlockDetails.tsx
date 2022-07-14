@@ -1,14 +1,7 @@
 import * as React from 'react';
 import { Redirect, useParams, useHistory } from 'react-router-dom';
 
-import {
-  Grid,
-  IconButton,
-  Tooltip,
-  AccordionSummary,
-  AccordionDetails,
-  Typography,
-} from '@material-ui/core';
+import { Grid, Tooltip, AccordionSummary, AccordionDetails, Typography } from '@material-ui/core';
 import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 
 import RouterLink from '@components/RouterLink/RouterLink';
@@ -25,6 +18,7 @@ import { formattedDate } from '@utils/helpers/date/date';
 import * as URLS from '@utils/constants/urls';
 import * as ROUTES from '@utils/constants/routes';
 import { IBlock, IBlockTransaction } from '@utils/types/IBlocks';
+import { formatAddress } from '@utils/helpers/format';
 import { useSortData } from '@utils/hooks';
 import { getCurrencyName } from '@utils/appInfo';
 
@@ -38,6 +32,7 @@ interface ParamTypes {
 const BlockDetails = () => {
   const history = useHistory();
   const { id } = useParams<ParamTypes>();
+  const [isMobile, setMobileView] = React.useState(false);
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [block, setBlock] = React.useState<IBlock | null>();
   const [redirect, setRedirect] = React.useState(false);
@@ -48,6 +43,22 @@ const BlockDetails = () => {
   const [transactions, handleClickSortTransaction] = useSortData<IBlockTransaction>({
     inititalData: block?.transactions || null,
   });
+
+  const handleShowSubMenu = () => {
+    setMobileView(false);
+    if (window.innerWidth < 960) {
+      setMobileView(true);
+    }
+  };
+
+  React.useEffect(() => {
+    handleShowSubMenu();
+
+    window.addEventListener('resize', handleShowSubMenu);
+    return () => {
+      window.removeEventListener('resize', handleShowSubMenu);
+    };
+  }, []);
 
   React.useEffect(() => {
     fetchData().then(response => {
@@ -66,7 +77,7 @@ const BlockDetails = () => {
         data: [
           { id: 1, value: height },
           { id: 3, value: formatNumber(confirmations) },
-          { id: 4, value: formatNumber(size / 1000, { decimalsLength: 2 }) },
+          { id: 4, value: formatNumber(size / 1024, { decimalsLength: 2 }) },
           { id: 6, value: formattedDate(timestamp) },
         ],
       },
@@ -88,8 +99,9 @@ const BlockDetails = () => {
                 <CopyButton copyText={transaction.id} />
                 <RouterLink
                   route={`${ROUTES.TRANSACTION_DETAILS}/${transaction.id}`}
-                  value={transaction.id}
+                  value={isMobile ? formatAddress(transaction.id) : transaction.id}
                   textSize="large"
+                  className="transaction-hash"
                 />
               </Grid>
             ),
@@ -126,7 +138,9 @@ const BlockDetails = () => {
 
       return (
         <Tooltip title={tooltip} arrow>
-          <IconButton onClick={() => handleBlockChange(hash)}>{icon}</IconButton>
+          <Styles.IconButtonStyle className={type} onClick={() => handleBlockChange(hash)}>
+            {icon}
+          </Styles.IconButtonStyle>
         </Tooltip>
       );
     }
@@ -151,46 +165,50 @@ const BlockDetails = () => {
   }
 
   return block ? (
-    <>
+    <Styles.Wrapper>
       <Header title="Block Details" />
       <Grid container direction="column" spacing={2}>
-        <Grid item>
+        <Styles.GridStyle item>
           <Table
             title={generateTableHeaderWithNavigation(block)}
             headers={blockHeaders}
             rows={generateBlockTable(block)}
             // handleClickSort={handleClickSort}
-          />
-        </Grid>
-        <Grid item>
-          <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography>{isExpanded ? 'Hide Details' : 'Show Details'}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Grid container direction="column">
-                {generateDetailsElement(
-                  'Difficulty',
-                  formatNumber(block.difficulty, { decimalsLength: 2 }),
-                )}
-                {generateDetailsElement('Nonce', block.nonce)}
-                {generateDetailsElement('Merkle Root', block.merkleRoot)}
-                {generateDetailsElement('Previous Block', block.previousBlockHash)}
-                {generateDetailsElement('Next Block', block.nextBlockHash)}
-              </Grid>
-            </AccordionDetails>
-          </Styles.Accordion>
-        </Grid>
-        <Grid item>
+            className="block"
+            blockWrapperClassName="block-wrapper"
+            tableWrapperClassName="block-table-wrapper"
+          >
+            <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>{isExpanded ? 'Click to see less' : 'Click to see more'}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container direction="column">
+                  {generateDetailsElement(
+                    'Difficulty',
+                    formatNumber(block.difficulty, { decimalsLength: 2 }),
+                  )}
+                  {generateDetailsElement('Nonce', block.nonce)}
+                  {generateDetailsElement('Merkle Root', block.merkleRoot)}
+                  {generateDetailsElement('Previous Block', block.previousBlockHash)}
+                  {generateDetailsElement('Next Block', block.nextBlockHash)}
+                </Grid>
+              </AccordionDetails>
+            </Styles.Accordion>
+          </Table>
+        </Styles.GridStyle>
+        <Styles.GridStyle item>
           <Table
             title="Latest Transactions"
             headers={transactionHeaders}
             rows={generateLatestTransactions(transactions)}
             handleClickSort={handleClickSortTransaction}
+            className="transactions"
+            tableWrapperClassName="transactions-table-wrapper"
           />
-        </Grid>
+        </Styles.GridStyle>
       </Grid>
-    </>
+    </Styles.Wrapper>
   ) : null;
 };
 

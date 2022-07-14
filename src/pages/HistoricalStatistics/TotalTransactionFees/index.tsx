@@ -36,7 +36,7 @@ function TotalTransactionFees() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Total Transaction Fees">
       {chartData && (
         <EChartsLineChart
           chartName="averageblocksize"
@@ -49,6 +49,7 @@ function TotalTransactionFees() {
           periods={periods[1]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
+          setHeaderBackground
         />
       )}
     </HistoricalStatisticsLayout>

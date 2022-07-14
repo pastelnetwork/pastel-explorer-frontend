@@ -8,6 +8,7 @@ import * as ROUTES from '@utils/constants/routes';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { formattedDate } from '@utils/helpers/date/date';
 import { ITransaction } from '@utils/types/ITransactions';
+import { formatAddress } from '@utils/helpers/format';
 
 import {
   TIMESTAMP_MOVEMENT_KEY,
@@ -25,7 +26,7 @@ const generateBlockKeyValue = (blockHash: string, blockHeight: string) => {
     return <RouterLink route={`${ROUTES.BLOCK_DETAILS}/${blockHash}`} value={blockHeight} />;
   }
 
-  return <Hourglass />;
+  return <Hourglass className="hourglass" />;
 };
 
 export const transformMovementData = (transactions: Array<ITransaction>) =>
@@ -37,7 +38,7 @@ export const transformMovementData = (transactions: Array<ITransaction>) =>
         <RouterLink
           route={`${ROUTES.TRANSACTION_DETAILS}/${id}`}
           title={id}
-          value={id}
+          value={formatAddress(id)}
           textSize="large"
         />
       </Grid>

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 
-import Header from '@components/Header/Header';
 import InfinityTable, {
   RowsProps,
   SortDirectionsType,
@@ -13,6 +12,7 @@ import { getFilterState } from '@redux/reducers/filterReducer';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { ITransaction } from '@utils/types/ITransactions';
+import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import * as Styles from './Movement.styles';
 
 import { TIMESTAMP_MOVEMENT_KEY, columns } from './Movement.columns';
@@ -37,13 +37,31 @@ const Movement: React.FC = () => {
   });
   const filter = useSelector(getFilterState);
 
+  const [isMobile, setMobileView] = React.useState(false);
+  const [totalItem, setTotalItem] = React.useState<number>(0);
   const [movementList, setMovementList] = React.useState<Array<RowsProps>>([]);
-  const fetchMovementsData = useFetch<{ data: Array<ITransaction> }>({
+  const fetchMovementsData = useFetch<{ data: Array<ITransaction>; total: number }>({
     method: 'get',
     url: URLS.TRANSACTION_URL,
   });
 
-  const handleFetchMovements = (
+  const handleShowSubMenu = () => {
+    setMobileView(false);
+    if (window.innerWidth < 960) {
+      setMobileView(true);
+    }
+  };
+
+  React.useEffect(() => {
+    handleShowSubMenu();
+
+    window.addEventListener('resize', handleShowSubMenu);
+    return () => {
+      window.removeEventListener('resize', handleShowSubMenu);
+    };
+  }, []);
+
+  const handleFetchMovements = async (
     offset: number,
     sortBy: string,
     sortDirection: SortDirectionsType,
@@ -65,7 +83,12 @@ const Movement: React.FC = () => {
     }
     return fetchMovementsData
       .fetchData({ params })
-      .then(response => (response ? transformMovementData(response.data) : []))
+      .then(response => {
+        if (response) {
+          setTotalItem(response?.total);
+        }
+        return response ? transformMovementData(response.data) : [];
+      })
       .then(data =>
         replaceData ? setMovementList(data) : setMovementList(prevState => [...prevState, ...data]),
       );
@@ -114,24 +137,32 @@ const Movement: React.FC = () => {
     }
   }, [filter.dateRange]);
 
+  const getMovementTransactionsTitle = () => (
+    <Styles.TitleWrapper>
+      <Styles.Title>Movement Transactions</Styles.Title>{' '}
+      {totalItem > 0 ? (
+        <Styles.SubTitle>(Total {formatNumber(totalItem)} txs)</Styles.SubTitle>
+      ) : null}
+    </Styles.TitleWrapper>
+  );
+
   return (
-    <>
-      <Header title="Movement Transactions" />
-      <Styles.GridWrapper item>
-        <InfinityTable
-          sortBy={fetchParams.current.sortBy}
-          sortDirection={fetchParams.current.sortDirection}
-          rows={movementList}
-          columns={columns}
-          tableHeight={950}
-          title="   "
-          filters={defaultFilters}
-          onBottomReach={handleFetchMoreMovements}
-          onHeaderClick={handleSort}
-          className="movement-table"
-        />
-      </Styles.GridWrapper>
-    </>
+    <Styles.GridWrapper item>
+      <InfinityTable
+        sortBy={fetchParams.current.sortBy}
+        sortDirection={fetchParams.current.sortDirection}
+        rows={movementList}
+        columns={columns}
+        tableHeight={950}
+        title={getMovementTransactionsTitle()}
+        filters={defaultFilters}
+        onBottomReach={handleFetchMoreMovements}
+        onHeaderClick={handleSort}
+        className="movement-table"
+        headerBackground
+        rowHeight={isMobile ? 180 : 45}
+      />
+    </Styles.GridWrapper>
   );
 };
 

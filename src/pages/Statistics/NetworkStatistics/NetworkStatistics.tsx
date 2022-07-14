@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Grid } from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
+import { CircularProgress, Grid } from '@material-ui/core';
 
 import { TMiningInfo, TLineChartData } from '@utils/types/IStatistics';
 
@@ -11,7 +10,7 @@ import { periods, info } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { EChartsLineChart } from '@pages/HistoricalStatistics/Chart/EChartsLineChart';
 
-const CHART_HEIGHT = 386;
+import * as Styles from '../Statistics.styles';
 
 const NetworkStatistics: React.FC = () => {
   const [period, setPeriod] = useState(periods[2][periods[2].length - 1]);
@@ -29,8 +28,8 @@ const NetworkStatistics: React.FC = () => {
     setPeriod(value);
   };
   return (
-    <div className="network-block">
-      <h4>Network Statistics</h4>
+    <Styles.BlockWrapper>
+      <Styles.BlockTitle>Network Statistics</Styles.BlockTitle>
       <Grid container>
         <Grid item xs={12}>
           {chartData || !isLoading ? (
@@ -46,14 +45,17 @@ const NetworkStatistics: React.FC = () => {
                 periods={periods[2]}
                 handleBgColorChange={handleBgColorChange}
                 handlePeriodFilterChange={handlePeriodFilterChange}
+                isDynamicTitleColor
               />
             </div>
           ) : (
-            <Skeleton animation="wave" variant="rect" height={CHART_HEIGHT} />
+            <Styles.Loader>
+              <CircularProgress size={40} />
+            </Styles.Loader>
           )}
         </Grid>
       </Grid>
-    </div>
+    </Styles.BlockWrapper>
   );
 };
 

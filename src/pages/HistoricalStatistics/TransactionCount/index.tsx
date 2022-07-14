@@ -39,7 +39,7 @@ function StatisticsTransactionsCount() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Transaction Count">
       {chartData ? (
         <EChartsLineChart
           chartName="transactionspersecond"
@@ -52,6 +52,7 @@ function StatisticsTransactionsCount() {
           periods={periods[1]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
+          setHeaderBackground
         />
       ) : (
         <Skeleton animation="wave" variant="rect" height={386} />

@@ -1,5 +1,4 @@
 import styled from 'styled-components/macro';
-import { spacing } from '@material-ui/system';
 
 import themeVariant from '@theme/variants';
 
@@ -11,7 +10,18 @@ import {
   Grid,
 } from '@material-ui/core';
 
-export const Card = styled(MuiCard)(spacing);
+export const Card = styled(MuiCard)`
+  background: transparent;
+  box-shadow: none;
+
+  h4:not(.MuiTypography-h4) {
+    margin: 0;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    padding-left: 16px;
+    background: ${props => props.theme.card.titleColor};
+  }
+`;
 
 export const CardContent = styled(MuiCardContent)`
   @media (min-width: 960px) {
@@ -21,6 +31,18 @@ export const CardContent = styled(MuiCardContent)`
   &:last-child {
     padding-top: 0;
     padding-bottom: ${props => props.theme.spacing(2)}px;
+  }
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    & > .MuiGrid-root {
+      align-items: center;
+    }
+  }
+
+  ${props => props.theme.breakpoints.down(600)} {
+    &:last-child {
+      padding-top: 12px;
+    }
   }
 `;
 

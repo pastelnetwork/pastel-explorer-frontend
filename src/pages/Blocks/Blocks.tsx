@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 
-import Header from '@components/Header/Header';
 import InfinityTable, {
   RowsProps,
   SortDirectionsType,
@@ -13,6 +12,7 @@ import * as URLS from '@utils/constants/urls';
 import { IBlock } from '@utils/types/IBlocks';
 import { blocksFilters } from '@utils/constants/filter';
 import { getFilterState } from '@redux/reducers/filterReducer';
+import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 
 import { TIMESTAMP_BLOCKS_KEY, columns, BLOCK_ID_KEY } from './Blocks.columns';
 import {
@@ -35,12 +35,30 @@ const Blocks = () => {
     sortBy: TIMESTAMP_BLOCKS_KEY,
     sortDirection: DATA_DEFAULT_SORT,
   });
+  const [isMobile, setMobileView] = React.useState(false);
+  const [totalItem, setTotalItem] = React.useState<number>(0);
   const [blockList, setBlocksList] = React.useState<Array<RowsProps>>([]);
   const filter = useSelector(getFilterState);
-  const fetchBlocksData = useFetch<{ data: Array<IBlock> }>({
+  const fetchBlocksData = useFetch<{ data: Array<IBlock>; total: number }>({
     method: 'get',
     url: URLS.BLOCK_URL,
   });
+
+  const handleShowSubMenu = () => {
+    setMobileView(false);
+    if (window.innerWidth < 960) {
+      setMobileView(true);
+    }
+  };
+
+  React.useEffect(() => {
+    handleShowSubMenu();
+
+    window.addEventListener('resize', handleShowSubMenu);
+    return () => {
+      window.removeEventListener('resize', handleShowSubMenu);
+    };
+  }, []);
 
   const handleFetchBlocks = (
     offset: number,
@@ -71,7 +89,8 @@ const Blocks = () => {
       .fetchData({ params })
       .then(response => {
         if (response) {
-          return transformTableData(response.data);
+          setTotalItem(response?.total);
+          return transformTableData(response.data, isMobile);
         }
         return [];
       })
@@ -98,7 +117,7 @@ const Blocks = () => {
 
     return handleFetchBlocks(
       DATA_OFFSET,
-      sortBy,
+      sortBy === 'blockHash' ? 'id' : sortBy,
       fetchParams.current.sortDirection,
       true,
       filterBy,
@@ -122,24 +141,32 @@ const Blocks = () => {
     }
   }, [filter.dateRange]);
 
+  const getMovementTransactionsTitle = () => (
+    <Styles.TitleWrapper>
+      <Styles.Title>Block List</Styles.Title>{' '}
+      {totalItem > 0 ? (
+        <Styles.SubTitle>(Total {formatNumber(totalItem)} blocks)</Styles.SubTitle>
+      ) : null}
+    </Styles.TitleWrapper>
+  );
+
   return (
-    <>
-      <Header title="Block List" />
-      <Styles.TableContainer item>
-        <InfinityTable
-          sortBy={fetchParams.current.sortBy}
-          sortDirection={fetchParams.current.sortDirection}
-          rows={blockList}
-          filters={blocksFilters}
-          title="   "
-          columns={columns}
-          tableHeight={650}
-          onBottomReach={handleFetchMoreBlocks}
-          onHeaderClick={handleSort}
-          className="block-list-table"
-        />
-      </Styles.TableContainer>
-    </>
+    <Styles.TableContainer item>
+      <InfinityTable
+        sortBy={fetchParams.current.sortBy}
+        sortDirection={fetchParams.current.sortDirection}
+        rows={blockList}
+        filters={blocksFilters}
+        title={getMovementTransactionsTitle()}
+        columns={columns}
+        tableHeight={isMobile ? 750 : 650}
+        onBottomReach={handleFetchMoreBlocks}
+        onHeaderClick={handleSort}
+        className="block-list-table"
+        headerBackground
+        rowHeight={isMobile ? 180 : 45}
+      />
+    </Styles.TableContainer>
   );
 };
 

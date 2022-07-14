@@ -23,7 +23,7 @@ function Nettotals() {
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { period, sortDirection: 'DESC' },
+        params: { period, sortDirection: 'ASC' },
       });
       if (data) {
         const parseData = transformNetTotals(data.data);
@@ -37,7 +37,7 @@ function Nettotals() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Network Total">
       {chartData ? (
         <EChartsLineChart
           chartName="networktotals"
@@ -51,6 +51,7 @@ function Nettotals() {
           periods={periods[1]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
+          setHeaderBackground
         />
       ) : (
         <Skeleton animation="wave" variant="rect" height={386} />

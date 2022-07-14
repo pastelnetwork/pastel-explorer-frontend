@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-import { darken } from '@material-ui/core';
+import { Grid, darken } from '@material-ui/core';
 
 import themeVariant from '@theme/variants';
 
@@ -30,5 +30,53 @@ export const ZoomElement = styled.div`
 
   &:hover {
     background-color: ${darken(themeVariant.palette.background.paper, 0.1)};
+  }
+`;
+
+export const BlockWrapper = styled.div`
+  position: relative;
+  box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
+  background: ${props => props.theme.sidebar.menu.background};
+  border-radius: 10px;
+  overflow: hidden;
+`;
+
+export const BlockTitle = styled.h4`
+  margin: 0;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-left: 16px;
+  background: ${props => props.theme.card.titleColor};
+`;
+
+export const GridStyle = styled(Grid)`
+  background: ${props => props.theme.sidebar.menu.background};
+`;
+
+export const Loader = styled.div`
+  position: absolute;
+  top: 50%;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(-50%);
+`;
+
+export const GridBlocksStatisticsRoot = styled(Grid)`
+  padding: 25px 20px;
+  overflow-x: auto;
+  width: 100%;
+  margin: 0;
+
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${props => props.theme.scrollbar};
+    border-radius: 8px;
   }
 `;

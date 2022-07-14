@@ -2,14 +2,18 @@ import { useState, useEffect, useRef, MouseEvent, useCallback } from 'react';
 import ReactECharts from 'echarts-for-react';
 import * as htmlToImage from 'html-to-image';
 import * as echarts from 'echarts';
-import { CSVLink } from 'react-csv';
-import { Data } from 'react-csv/components/CommonPropTypes';
 import { saveAs } from 'file-saver';
+import { useSelector } from 'react-redux';
+import format from 'date-fns/format';
+
+import { Data } from 'react-csv/components/CommonPropTypes';
 import { makeDownloadFileName, PeriodTypes } from '@utils/helpers/statisticsLib';
 import { pricesCSVHeaders, themes } from '@utils/constants/statistics';
 import { TLineChartProps, TThemeColor } from '@utils/constants/types';
-import { useUpdatChartTheme } from '@utils/hooks';
+import { getThemeState } from '@redux/reducers/appThemeReducer';
+
 import { eChartLineStyles } from './styles';
+import * as Styles from './Chart.styles';
 
 export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
   const styles = eChartLineStyles();
@@ -31,17 +35,35 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     yaxisName1 = 'BTC Price',
     handlePeriodFilterChange,
     handleBgColorChange,
+    setHeaderBackground,
+    isDynamicTitleColor,
   } = props;
   const downloadRef = useRef(null);
+  const { darkMode } = useSelector(getThemeState);
   const [csvData, setCsvData] = useState<string | Data>('');
-  const [currentTheme, setCurrentTheme] = useUpdatChartTheme();
+  const [currentTheme, setCurrentTheme] = useState<TThemeColor | null>(null);
   const [eChartRef, setEChartRef] = useState<ReactECharts | null>();
   const [eChartInstance, setEChartInstance] = useState<echarts.ECharts>();
   const [selectedThemeButton, setSelectedThemeButton] = useState(0);
+  const [isSelectedTheme, setSelectedTheme] = useState(false);
   const [minY1, setMinY1] = useState(0);
   const [minY2, setMinY2] = useState(0);
   const [maxY1, setMaxY1] = useState(0);
   const [maxY2, setMaxY2] = useState(0);
+
+  useEffect(() => {
+    if (isSelectedTheme) {
+      setCurrentTheme(currentTheme);
+      handleBgColorChange(currentTheme?.backgroundColor || '');
+    } else if (darkMode) {
+      setCurrentTheme(themes[0]);
+      handleBgColorChange(themes[0].backgroundColor);
+    } else {
+      setCurrentTheme(themes[2]);
+      handleBgColorChange(themes[2].backgroundColor);
+    }
+  }, [darkMode]);
+
   useEffect(() => {
     const chartInstance = eChartRef?.getEchartsInstance();
     setEChartInstance(chartInstance);
@@ -97,6 +119,14 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     xAxis: {
       type: 'category',
       data: dataX,
+      axisLabel: {
+        formatter(value: string) {
+          const date = new Date(value);
+          return selectedPeriodButton !== '24h'
+            ? format(date, 'MM/dd/yyyy')
+            : new Date(value).toLocaleString();
+        },
+      },
     },
     yAxis: [
       {
@@ -182,6 +212,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     setCurrentTheme(theme);
     setSelectedThemeButton(index);
     handleBgColorChange(theme.backgroundColor);
+    setSelectedTheme(true);
     const option = {
       backgroundColor: theme.backgroundColor,
       textStyle: {
@@ -241,14 +272,14 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
 
   const getActivePriodButtonStyle = (index: string): string => {
     if (selectedPeriodButton === index) {
-      return styles.activeButton;
+      return 'active';
     }
     return '';
   };
 
   const getActiveThemeButtonStyle = (index: number): string => {
-    if (selectedThemeButton === index) {
-      return styles.activeThemeButton;
+    if (selectedThemeButton === index && isSelectedTheme) {
+      return 'active';
     }
     return '';
   };
@@ -262,29 +293,30 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     [handlePeriodFilterChange],
   );
   return (
-    <div className={styles.container}>
-      <div className={styles.lineChartHeader}>
-        <div className={styles.lineChartTitle} style={{ color: currentTheme?.color || 'white' }}>
-          {title}
-        </div>
-        <div className={styles.periodSelect}>
-          <span style={{ color: currentTheme?.color }}>Period: </span>
+    <Styles.ChartContainer>
+      <Styles.LineChartHeader className={setHeaderBackground ? 'has-bg' : ''}>
+        {isDynamicTitleColor ? (
+          <Styles.ChartTitle style={{ color: currentTheme?.color }}>{title}</Styles.ChartTitle>
+        ) : (
+          <Styles.ChartTitle>{title}</Styles.ChartTitle>
+        )}
+        <Styles.PeriodSelect>
+          <span>Period: </span>
           {periods.length &&
             periods.map(period => (
-              <button
-                className={`${getActivePriodButtonStyle(period)} 
-                  ${styles.filterButton}`}
+              <Styles.PeriodButton
+                className={getActivePriodButtonStyle(period)}
                 value={period}
                 onClick={onClickPeriod}
                 type="button"
                 key={`button-filter-${period}`}
               >
                 {period}
-              </button>
+              </Styles.PeriodButton>
             ))}
-        </div>
-      </div>
-      <div className={styles.lineChartWrap}>
+        </Styles.PeriodSelect>
+      </Styles.LineChartHeader>
+      <Styles.LineChartWrap>
         <ReactECharts
           notMerge={false}
           lazyUpdate
@@ -294,11 +326,11 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
             setEChartRef(e);
           }}
         />
-      </div>
-      <div className={styles.lineChartFooter}>
+      </Styles.LineChartWrap>
+      <Styles.LineChartFooter>
         <div className={styles.lineChartThemeSelect}>
           {themes.map((theme, index) => (
-            <button
+            <Styles.ThemeButton
               className={`${styles.themeSelectButton} ${getActiveThemeButtonStyle(index)}`}
               onClick={() => handleThemeButtonClick(theme, index)}
               style={{ backgroundColor: `${theme.backgroundColor}` }}
@@ -306,14 +338,14 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
               key={`button-filter-${theme.name}`}
             >
               {` `}
-            </button>
+            </Styles.ThemeButton>
           ))}
         </div>
         <div className={styles.lineChartDownloadButtonBar}>
-          <button className={styles.uploadButton} type="button" onClick={downloadPNG}>
+          <Styles.DonwloadButton type="button" onClick={downloadPNG}>
             Download PNG
-          </button>
-          <CSVLink
+          </Styles.DonwloadButton>
+          <Styles.CSVLinkButton
             data={csvData}
             filename={`${makeDownloadFileName(info.currencyName, chartName)}.csv`}
             headers={pricesCSVHeaders}
@@ -322,9 +354,9 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
             className={styles.uploadButton}
           >
             Download CSV
-          </CSVLink>
+          </Styles.CSVLinkButton>
         </div>
-      </div>
-    </div>
+      </Styles.LineChartFooter>
+    </Styles.ChartContainer>
   );
 };

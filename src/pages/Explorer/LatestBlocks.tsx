@@ -11,6 +11,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import { ArrowForwardIos } from '@material-ui/icons';
 // application
 import { formattedDate } from '@utils/helpers/date/date';
 import { TAppTheme } from '@theme/index';
@@ -20,6 +21,10 @@ import { useBlockLatestBlocks } from '@redux/hooks/blocksHooks';
 import Skeleton from '@material-ui/lab/Skeleton';
 import * as ROUTES from '@utils/constants/routes';
 import { Link } from '@components/Link/Link.styles';
+import RouterLink from '@components/RouterLink/RouterLink';
+import { formatAddress } from '@utils/helpers/format';
+import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
+import * as Styles from './Explorer.styles';
 
 const StyledTableCell = withStyles((theme: TAppTheme) => ({
   head: {
@@ -58,40 +63,54 @@ function LatestBlocks() {
   }, []);
 
   return (
-    <div>
-      <h4>Latest Blocks (Live)</h4>
-      <TableContainer component={Paper}>
-        <Table aria-label="customized table">
+    <Styles.BlockWrapper className="mt-24 latest-blocks-wrapper">
+      <Styles.BlockTitle className="latest-blocks">
+        Latest Blocks (Live)
+        <Link to="/blocks" className="view-all">
+          <Typography align="center" className={classes.viewAll}>
+            View all <ArrowForwardIos />
+          </Typography>
+        </Link>
+      </Styles.BlockTitle>
+      <TableContainer component={Paper} className="table-container">
+        <Table aria-label="customized table" className="custom-table latest-blocks">
           <TableHead>
-            <TableRow>
-              <StyledTableCell style={{ width: 44 }}>Block</StyledTableCell>
+            <TableRow className="table__row-header">
+              <StyledTableCell className="th-block">Block</StyledTableCell>
               <StyledTableCell>Hash</StyledTableCell>
-              <StyledTableCell align="right">TXs</StyledTableCell>
-              <StyledTableCell align="right">Size</StyledTableCell>
-              <StyledTableCell align="right">Timestamp</StyledTableCell>
+              <StyledTableCell align="right" className="th-txs">
+                TXs
+              </StyledTableCell>
+              <StyledTableCell align="right" className="th-size">
+                Size(kB)
+              </StyledTableCell>
+              <StyledTableCell align="right" className="th-timestamp">
+                Timestamp
+              </StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {latestBlocks && latestBlocks.size ? (
               Array.from(latestBlocks.values()).map(block => (
-                <StyledTableRow key={block.id}>
+                <StyledTableRow key={block.id} className="table__row">
                   <StyledTableCell component="th" scope="row">
-                    {block.height || ''}
+                    <RouterLink
+                      route={`${ROUTES.BLOCK_DETAILS}/${block.height}`}
+                      value={block.height || ''}
+                    />
                   </StyledTableCell>
-                  <StyledTableCell component="th" scope="row" style={{ maxWidth: 150 }}>
+                  <StyledTableCell component="th" scope="row">
                     <Link to={`${ROUTES.BLOCK_DETAILS}/${block.id}`}>
-                      <Typography noWrap title={block.id}>
-                        {block.id}
+                      <Typography noWrap title={block.id} className="no-limit">
+                        {formatAddress(block.id)}
                       </Typography>
                     </Link>
                   </StyledTableCell>
                   <StyledTableCell align="right">{block.transactionCount}</StyledTableCell>
-                  <StyledTableCell align="right" style={{ width: 44 }}>
-                    {block.size.toLocaleString('en')}
+                  <StyledTableCell align="right">
+                    {formatNumber(block.size / 1024, { decimalsLength: 2 })}
                   </StyledTableCell>
-                  <StyledTableCell align="right" style={{ maxWidth: 200 }}>
-                    {formattedDate(block.timestamp)}
-                  </StyledTableCell>
+                  <StyledTableCell align="right">{formattedDate(block.timestamp)}</StyledTableCell>
                 </StyledTableRow>
               ))
             ) : (
@@ -104,12 +123,7 @@ function LatestBlocks() {
           </TableBody>
         </Table>
       </TableContainer>
-      <div>
-        <Link to="/blocks">
-          <Typography align="center" className={classes.viewAll}>{`View all >>`}</Typography>
-        </Link>
-      </div>
-    </div>
+    </Styles.BlockWrapper>
   );
 }
 

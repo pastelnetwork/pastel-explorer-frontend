@@ -79,14 +79,7 @@ export const eChartLineStyles = makeStyles((theme: TAppTheme) => ({
   },
   reactECharts: {
     width: '100%',
-    height: 'calc(100vh - 450px) !important',
-    [theme.breakpoints.down('lg')]: {
-      height: 450,
-      width: 'calc(100vw - 354px)',
-    },
-    [theme.breakpoints.down('md')]: {
-      width: '100%',
-    },
+    height: 'calc(100vh - 300px) !important',
   },
   granularitySelect: {
     display: 'flex',

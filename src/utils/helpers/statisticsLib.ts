@@ -89,10 +89,7 @@ export function getStartPoint(period: PeriodTypes): number {
   return Date.now() - duration * 60 * 60 * 1000;
 }
 
-export function transformDifficultyInfo(
-  difficulties: IStatistic[],
-  // period: PeriodTypes,
-): TLineChartData {
+export function transformDifficultyInfo(difficulties: IStatistic[]): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
 
@@ -103,7 +100,7 @@ export function transformDifficultyInfo(
       const createTime = Number(difficulties[i].timestamp);
       // if (createTime > startDate) {
       dataY.push(Number(difficulties[i].difficulty));
-      dataX.push(new Date(createTime).toLocaleString());
+      dataX.push(format(createTime, 'MM/dd/yyyy'));
       // }
     }
   }
@@ -125,7 +122,7 @@ export function transformPriceInfo(prices: IStatistic[]): TMultiLineChartData {
     const btc = Number(prices[i].btcPrice);
     dataY1.push(usd);
     dataY2.push(btc);
-    dataX.push(new Date(createTime).toLocaleString());
+    dataX.push(format(createTime, 'MM/dd/yyyy'));
     // }
   }
   return { dataX, dataY1, dataY2 };
@@ -154,7 +151,7 @@ export function transformMempoolInfo(mempoolInfo: TMempoolInfo[]): TLineChartDat
       const createTime = Number(mempoolInfo[i].timestamp);
       const bytes = Number(mempoolInfo[i].usage) / 1000;
       dataY.push(bytes);
-      dataX.push(new Date(createTime).toLocaleString());
+      dataX.push(format(createTime, 'MM/dd/yyyy'));
     }
   }
   return { dataX, dataY };
@@ -171,7 +168,7 @@ export function transformNetTotals(nettotals: TNettotalsInfo[]): TMultiLineChart
       const sent = Number(nettotals[i].totalbytessent);
       dataY1.push(recv);
       dataY2.push(sent);
-      dataX.push(new Date(createTime).toLocaleString());
+      dataX.push(format(createTime, 'MM/dd/yyyy'));
     }
   }
   return { dataX, dataY1, dataY2 };

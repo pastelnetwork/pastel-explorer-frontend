@@ -23,6 +23,8 @@ import { ITransaction } from '@utils/types/ITransactions';
 import { TRANSACTION_DETAILS } from '@utils/constants/routes';
 import { Link } from '@components/Link/Link.styles';
 import { getCurrencyName } from '@utils/appInfo';
+import { formatAddress } from '@utils/helpers/format';
+import * as Styles from './Explorer.styles';
 
 const StyledTableCell = withStyles((theme: TAppTheme) => ({
   head: {
@@ -52,30 +54,36 @@ function LatestTransactions() {
   }, []);
 
   return (
-    <div>
-      <h4>Latest Transactions (Live)</h4>
-      <TableContainer component={Paper}>
-        <Table aria-label="customized table">
-          <TableHead>
+    <Styles.BlockWrapper className="mt-24 latest-transactions-wrapper">
+      <Styles.BlockTitle>Latest Transactions (Live)</Styles.BlockTitle>
+      <TableContainer component={Paper} className="table-container">
+        <Table aria-label="customized table" className="custom-table latest-transactions">
+          <TableHead className="table__row-header">
             <TableRow>
-              <StyledTableCell>Block</StyledTableCell>
+              <StyledTableCell className="th-block">Block</StyledTableCell>
               <StyledTableCell>TXID</StyledTableCell>
-              <StyledTableCell align="right">Amount({getCurrencyName()})</StyledTableCell>
-              <StyledTableCell align="right">Recipents</StyledTableCell>
-              <StyledTableCell align="right">Fee</StyledTableCell>
+              <StyledTableCell className="th-amount" align="right">
+                Amount({getCurrencyName()})
+              </StyledTableCell>
+              <StyledTableCell className="th-recipents" align="right">
+                Recipents
+              </StyledTableCell>
+              <StyledTableCell className="th-fee" align="right">
+                Fee
+              </StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {transactions.size > 0 ? (
               Array.from(transactions.values()).map((tx: ITransaction) => (
-                <StyledTableRow key={tx.id}>
+                <StyledTableRow key={tx.id} className="table__row">
                   <StyledTableCell component="th" scope="row">
                     {generateBlockKeyValue(tx.blockHash || '', tx.block.height || '')}
                   </StyledTableCell>
-                  <StyledTableCell component="th" scope="row" style={{ maxWidth: 230 }}>
+                  <StyledTableCell component="th" scope="row">
                     <Link to={`${TRANSACTION_DETAILS}/${tx.id}`}>
-                      <Typography noWrap title={tx.id}>
-                        {tx.id}
+                      <Typography noWrap title={tx.id} className="no-limit">
+                        {formatAddress(tx.id)}
                       </Typography>
                     </Link>
                   </StyledTableCell>
@@ -102,7 +110,7 @@ function LatestTransactions() {
           </TableBody>
         </Table>
       </TableContainer>
-    </div>
+    </Styles.BlockWrapper>
   );
 }
 

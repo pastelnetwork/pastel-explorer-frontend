@@ -2,9 +2,13 @@ import { Tooltip } from '@material-ui/core';
 
 import * as Styles from './Hourglass.styles';
 
-const Hourglass: React.FC = () => (
+interface HourglassProps {
+  className?: string;
+}
+
+const Hourglass: React.FC<HourglassProps> = ({ className }) => (
   <Tooltip title="Transaction is not yet included in any block">
-    <Styles.Image>
+    <Styles.Image className={className}>
       <svg
         fill="currentColor"
         xmlns="http://www.w3.org/2000/svg"

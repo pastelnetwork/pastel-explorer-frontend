@@ -14,6 +14,7 @@ export const columns = [
     label: 'Block',
     dataKey: BLOCK_KEY,
     disableSort: false,
+    className: 'col-block',
   },
   {
     width: 360,
@@ -31,7 +32,7 @@ export const columns = [
     label: 'Recipents',
     dataKey: RECIPIENT_COUNT_KEY,
     disableSort: false,
-    className: 'pl-4px',
+    className: 'col-recipents',
   },
   {
     width: 60,
@@ -40,7 +41,7 @@ export const columns = [
     label: `Amount (${getCurrencyName()})`,
     dataKey: AMOUNT_KEY,
     disableSort: false,
-    className: 'pl-8px',
+    className: 'col-amount',
   },
   {
     width: 150,
@@ -49,6 +50,6 @@ export const columns = [
     label: 'Timestamp',
     dataKey: TIMESTAMP_KEY,
     disableSort: false,
-    className: 'pl-12px',
+    className: 'col-timestamp',
   },
 ];

@@ -13,7 +13,6 @@ import {
 import { CSSProperties } from '@material-ui/styles';
 import { CircularProgress, darken } from '@material-ui/core';
 import { ArrowDropDown, ArrowDropUp } from '@material-ui/icons';
-import { Skeleton } from '@material-ui/lab';
 import { useGetThemeMode } from '@redux/reducers/appThemeReducer';
 import themeVariant from '@theme/variants';
 import { TFilter } from '@utils/types/IFilter';
@@ -37,7 +36,8 @@ export interface RowsProps {
 }
 
 interface IInfinityTableComponentProps {
-  title?: string;
+  title?: React.ReactNode;
+  customTitle?: React.ReactNode;
   columns: Array<{
     width: number;
     flexGrow: number;
@@ -59,13 +59,11 @@ interface IInfinityTableComponentProps {
   // eslint-disable-next-line
   onHeaderClick?: (info: ISortData) => void;
   className?: string;
+  headerBackground?: boolean;
+  isLoading?: boolean;
 }
 
-const noRowsRenderer = () => (
-  <Styles.Loader>
-    <CircularProgress size={40} />
-  </Styles.Loader>
-);
+const noRowsRenderer = () => <Styles.EmptyData />;
 const headerRenderer = ({
   label,
   dataKey,
@@ -108,6 +106,9 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   disableLoading,
   renderAllRows,
   className,
+  headerBackground,
+  isLoading,
+  customTitle,
 }) => {
   const [loading, setLoading] = React.useState(false);
   const isDarkMode = useGetThemeMode();
@@ -120,7 +121,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
     ({ clientHeight, scrollHeight, scrollTop }: ScrollEventData) => {
       if (!onBottomReach || rows.length < loadMoreFrom) return null;
 
-      const bottomReached = clientHeight + scrollTop >= scrollHeight;
+      const bottomReached = clientHeight + scrollTop + 5 >= scrollHeight;
       !loading && bottomReached && setLoading(true);
 
       return onBottomReach(bottomReached);
@@ -150,21 +151,37 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
     loading && setLoading(false);
   }, [rows]);
 
+  const renderTitle = () => {
+    if (customTitle) {
+      return <div className="pl-0 pr-0">{customTitle}</div>;
+    }
+
+    if (!title) {
+      return null;
+    }
+
+    return (
+      <div className="pl-0 pr-0">
+        {!filters ? (
+          <h4 className="table-title">{title}</h4>
+        ) : (
+          <Filters filters={filters} title={title} headerBackground={headerBackground} />
+        )}
+      </div>
+    );
+  };
+
   return (
-    <Styles.Card mb={3} className={className}>
-      {title && (
-        <div className="pl-0 pr-0">
-          {!filters ? <h4>{title}</h4> : <Filters filters={filters} title={title} />}
-        </div>
-      )}
+    <Styles.Card className={className}>
+      {renderTitle()}
       <Styles.TableContainer>
         {loading && (
           <Styles.Loader>
             <CircularProgress size={40} />
           </Styles.Loader>
         )}
-        {rows.length ? (
-          <Styles.TableWrapper>
+        {!isLoading ? (
+          <Styles.TableWrapper className={`${rows.length ? '' : 'empty-table'}`}>
             <AutoSizer disableHeight>
               {({ width }) => (
                 <div style={{ width }}>
@@ -176,7 +193,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
                     rowGetter={({ index }: { index: number }) => rows[index]}
                     rowCount={rows.length}
                     rowStyle={(info: Index) => handleRowStyle(info)}
-                    width={1920}
+                    width={100}
                     sortBy={sortBy}
                     sort={handleSort}
                     sortDirection={sortDirection}
@@ -204,7 +221,11 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
             </AutoSizer>
           </Styles.TableWrapper>
         ) : (
-          <Skeleton animation="wave" variant="rect" height={tableHeight} />
+          <div style={{ height: tableHeight }}>
+            <Styles.Loader>
+              <CircularProgress size={40} />
+            </Styles.Loader>
+          </div>
         )}
       </Styles.TableContainer>
     </Styles.Card>

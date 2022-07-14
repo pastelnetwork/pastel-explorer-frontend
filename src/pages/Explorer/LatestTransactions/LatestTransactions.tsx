@@ -35,6 +35,7 @@ const LatestTransactions: React.FC = () => {
     sortBy: TIMESTAMP_KEY,
     sortDirection: DATA_DEFAULT_SORT,
   });
+  const [isMobile, setMobileView] = React.useState(false);
   const filter = useSelector(getFilterState);
   const [transactionList, setTransactionList] = React.useState<Array<RowsProps>>([]);
   const fetchTransactions = useFetch<{ data: Array<ITransaction> }>({
@@ -103,6 +104,22 @@ const LatestTransactions: React.FC = () => {
     );
   };
 
+  const handleShowSubMenu = () => {
+    setMobileView(false);
+    if (window.innerWidth < 960) {
+      setMobileView(true);
+    }
+  };
+
+  React.useEffect(() => {
+    handleShowSubMenu();
+
+    window.addEventListener('resize', handleShowSubMenu);
+    return () => {
+      window.removeEventListener('resize', handleShowSubMenu);
+    };
+  }, []);
+
   React.useEffect(() => {
     if (filter.dateRange) {
       fetchParams.current.offset = 0;
@@ -131,12 +148,14 @@ const LatestTransactions: React.FC = () => {
         // loadMoreFrom={fetchParams.current.offset + 20}
         rows={transactionList}
         columns={columns}
-        tableHeight={650}
+        tableHeight={isMobile ? 750 : 650}
         filters={defaultFilters}
         title="Latest Transactions"
         onBottomReach={handleFetchMoreTransactions}
         onHeaderClick={handleSort}
         className="latest-transactions-table"
+        headerBackground
+        rowHeight={isMobile ? 225 : 45}
       />
     </Styles.LatestTransactionsWrapper>
   );

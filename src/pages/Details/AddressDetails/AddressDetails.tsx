@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
-
+import { CSVLink } from 'react-csv';
+import { Data } from 'react-csv/components/CommonPropTypes';
 import { Grid } from '@material-ui/core';
 
-import Header from '@components/Header/Header';
 import Table from '@components/Table/Table';
 import InfinityTable, {
   SortDirectionsType,
@@ -15,6 +15,8 @@ import * as ROUTES from '@utils/constants/routes';
 import { IAddress } from '@utils/types/IAddress';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { getCurrencyName } from '@utils/appInfo';
+import { formattedDate } from '@utils/helpers/date/date';
+import { eChartLineStyles } from '@pages/HistoricalStatistics/Chart/styles';
 
 import {
   addressHeaders,
@@ -38,16 +40,26 @@ interface IAddressDataRef {
   sortDirection: SortDirectionsType;
 }
 
+const transactionHistoryCSVHeaders = [
+  { label: 'Hash', key: 'transactionHash' },
+  { label: `Amount (${getCurrencyName()})`, key: 'amount' },
+  { label: 'Timestamp', key: 'timestamp' },
+];
+
 const AddressDetails = () => {
-  const fetchParams = React.useRef<IAddressDataRef>({
+  const styles = eChartLineStyles();
+  const downloadRef = useRef(null);
+  const [isMobile, setMobileView] = useState(false);
+  const fetchParams = useRef<IAddressDataRef>({
     offset: DATA_OFFSET,
     sortBy: ADDRESS_TRANSACTION_TIMESTAMP_KEY,
     sortDirection: DATA_DEFAULT_SORT,
   });
   const { id } = useParams<ParamTypes>();
-  const [addresses, setAddresses] = React.useState<IAddress>(DEFAULT_ADDRESS_DATA);
-  const redirect = React.useRef(false);
-  const { fetchData } = useFetch<IAddress>({
+  const [addresses, setAddresses] = useState<IAddress>(DEFAULT_ADDRESS_DATA);
+  const redirect = useRef(false);
+  const [csvData, setCsvData] = useState<string | Data>('');
+  const { fetchData, isLoading } = useFetch<IAddress>({
     method: 'get',
     url: `${URLS.ADDRESS_URL}/${id}`,
   });
@@ -99,7 +111,7 @@ const AddressDetails = () => {
     return handleFetchAddress(DATA_OFFSET, sortBy, fetchParams.current.sortDirection, true);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     handleFetchAddress(
       DATA_OFFSET,
       fetchParams.current.sortBy,
@@ -108,36 +120,103 @@ const AddressDetails = () => {
     );
   }, [id]);
 
+  useEffect(() => {
+    if (addresses.data.length) {
+      const data: Data = [];
+      addresses.data.forEach(o => {
+        data.push({
+          transactionHash: o.transactionHash,
+          amount: o.amount,
+          timestamp: formattedDate(o.timestamp),
+        });
+      });
+      setCsvData(data);
+    }
+  }, [addresses]);
+
+  const handleShowSubMenu = () => {
+    if (window.innerWidth < 1024) {
+      setMobileView(true);
+    } else {
+      setMobileView(false);
+    }
+  };
+
+  React.useEffect(() => {
+    handleShowSubMenu();
+
+    window.addEventListener('resize', handleShowSubMenu);
+    return () => {
+      window.removeEventListener('resize', handleShowSubMenu);
+    };
+  }, []);
+
   if (redirect.current) {
     return <Redirect to={ROUTES.NOT_FOUND} />;
   }
 
+  const generateAddTitle = () => {
+    return (
+      <Styles.AddressTitleBlock>
+        {getCurrencyName()} address: <span>{id}</span>
+      </Styles.AddressTitleBlock>
+    );
+  };
+
+  const generateTitle = () => {
+    const date = new Date();
+    const fileName = `Transaction_History__${addresses.address}__${date.getFullYear()}_${
+      date.getMonth() + 1
+    }_${date.getDate()}.csv`;
+    return (
+      <Styles.TitleWrapper>
+        <h4>Latest Transactions</h4>
+        <CSVLink
+          data={csvData}
+          filename={fileName}
+          headers={transactionHistoryCSVHeaders}
+          separator=";"
+          ref={downloadRef}
+          className={styles.uploadButton}
+        >
+          Download CSV
+        </CSVLink>
+      </Styles.TitleWrapper>
+    );
+  };
+
   return addresses ? (
-    <>
-      <Header title="Address Details" />
+    <Styles.Wrapper>
       <Grid container direction="column">
         <Grid item>
           <Table
-            title={`${getCurrencyName()} address: ${id}`}
+            title={generateAddTitle()}
             headers={addressHeaders}
             rows={generateAddressSummary(addresses)}
+            tableWrapperClassName="address-table-wrapper"
+            className="address"
+            blockWrapperClassName="address-wrapper"
           />
         </Grid>
         <Styles.TableWrapper item>
           <InfinityTable
-            title="Latest Transactions"
+            title={generateTitle()}
             sortBy={fetchParams.current.sortBy}
             sortDirection={fetchParams.current.sortDirection}
-            rows={generateLatestTransactions(addresses.data)}
+            rows={generateLatestTransactions(addresses.data, isMobile)}
             loadMoreFrom={DATA_FETCH_LIMIT}
             columns={columns}
             onBottomReach={handleFetchMoreTransactions}
             onHeaderClick={handleSort}
             className="latest-transaction-table"
+            headerBackground
+            rowHeight={isMobile ? 135 : 45}
+            tableHeight={isMobile ? 600 : 400}
+            isLoading={isLoading}
           />
         </Styles.TableWrapper>
       </Grid>
-    </>
+    </Styles.Wrapper>
   ) : null;
 };
 

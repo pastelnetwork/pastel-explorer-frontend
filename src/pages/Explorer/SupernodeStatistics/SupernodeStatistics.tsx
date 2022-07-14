@@ -11,6 +11,7 @@ import {
   generateChartData,
   CountryList,
 } from './SupernodeStatistics.helpers';
+import * as ExplorerMapStyles from '../ExplorerMap/ExplorerMap.styles';
 
 interface SupernodeStatisticsProps {
   supernodes: Array<INetworkSupernodes> | null;
@@ -21,6 +22,7 @@ const DISPLAY_COUNTRY_QUANTITY = 5;
 const tableStyles = {
   height: '340px',
   overflow: 'auto',
+  background: 'transparent',
 };
 
 const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ supernodes }) => {
@@ -59,15 +61,25 @@ const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ supernodes })
   }, [supernodes]);
 
   return (
-    <DoughnutChart
-      title="Supernode Statistics"
-      innerTitle="Total"
-      innerSubtitle={countryQuantity}
-      data={
-        countryChartData && generateChartData(countryChartData.headers, countryChartData.quantities)
-      }
-      table={<Table headers={headers} rows={countries} styles={tableStyles} />}
-    />
+    <ExplorerMapStyles.Container>
+      <DoughnutChart
+        title="Supernode Statistics"
+        innerTitle="Total"
+        innerSubtitle={countryQuantity}
+        data={
+          countryChartData &&
+          generateChartData(countryChartData.headers, countryChartData.quantities)
+        }
+        table={
+          <Table
+            headers={headers}
+            rows={countries}
+            blockWrapperClassName="supernode-table-wrapper"
+            styles={tableStyles}
+          />
+        }
+      />
+    </ExplorerMapStyles.Container>
   );
 };
 

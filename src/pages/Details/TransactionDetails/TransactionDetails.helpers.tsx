@@ -13,9 +13,11 @@ import * as Styles from './TransactionDetails.styles';
 const BLOCK_CONFIRMED_NUMBER = 1;
 
 export const transactionHeaders: Array<HeaderType> = [
-  { id: 1, header: 'Confirmations' },
-  { id: 2, header: 'Block Hash' },
-  { id: 3, header: 'Timestamp' },
+  { id: 1, header: 'Block Hash' },
+  { id: 2, header: 'Confirmations' },
+  { id: 4, header: 'Recipients' },
+  { id: 5, header: `Amount (${getCurrencyName()})` },
+  { id: 6, header: 'Timestamp' },
 ];
 
 export const addressHeaders: Array<HeaderType> = [
@@ -24,10 +26,20 @@ export const addressHeaders: Array<HeaderType> = [
   { id: 3, header: 'Amount (USD)', key: 'amount' },
 ];
 
-export const generateTableTitle = (transactionData: ITransactionDetails) => (
-  <Alert severity="info">
+export const generateTableTitle = (
+  transactionData: ITransactionDetails,
+  toggleOpenRawData: () => void,
+) => (
+  <Styles.ViewTransactionRawMuiAlert severity="info">
     <AlertTitle style={{ wordBreak: 'break-word' }}>
-      {getCurrencyName()} TXID: {transactionData.id}
+      {getCurrencyName()} TXID: {transactionData.id}{' '}
+      <span>
+        (
+        <Styles.ViewTransactionRaw type="button" onClick={toggleOpenRawData}>
+          View Transaction Raw Data
+        </Styles.ViewTransactionRaw>
+        )
+      </span>
     </AlertTitle>
     {`This transaction was first broadcast to the ${getCurrencyName()} network on 
       ${formattedDate(transactionData.timestamp)}. 
@@ -45,7 +57,7 @@ export const generateTableTitle = (transactionData: ITransactionDetails) => (
             })} ${getCurrencyName()} was sent.`
           : `an unknown amount of ${getCurrencyName()} was sent (since it’s a shielded transaction).`
       } `}
-  </Alert>
+  </Styles.ViewTransactionRawMuiAlert>
 );
 
 export const generateCoinbaseInfo = (info: number) => (

@@ -1,9 +1,6 @@
 import { memo, FC, useCallback, MouseEvent, useMemo } from 'react';
-import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
+import { Drawer, Button, Tooltip } from '@material-ui/core';
 
-// import FilledInput from '@material-ui/core/FilledInput';
-// import { CloseOutlined } from '@material-ui/icons';
 import { useLocation, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
@@ -14,6 +11,10 @@ import useBooleanState from '@hooks/useBooleanState';
 import { BASE_URL, BASE_URL_TESTNET, BASE_URL_DEVNET } from '@utils/constants/urls';
 import { DEFAULT_CURRENCY, TEST_CURRENCY_NAME } from '@utils/appInfo';
 
+import { ReactComponent as SettingIcon } from '@assets/icons/setting.svg';
+
+import * as Styles from './ChooseCluster.styles';
+
 const useStyles = makeStyles((theme: TAppTheme) => ({
   root: {
     padding: 20,
@@ -21,12 +22,18 @@ const useStyles = makeStyles((theme: TAppTheme) => ({
   list: {
     width: 325,
     padding: '0 20px 20px 20px',
+    position: 'relative',
   },
   close: {
     minWidth: 'auto',
-    paddingLeft: 0,
+    position: 'absolute',
+    top: 5,
+    left: 5,
+    borderRadius: '100%',
+    padding: '6px 14px',
   },
   title: {
+    marginTop: 53,
     fontSize: 20,
     fontWeight: 500,
     textAlign: 'center',
@@ -46,11 +53,10 @@ const useStyles = makeStyles((theme: TAppTheme) => ({
   },
   rootButtonLabel: {
     whiteSpace: 'nowrap',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down(960)]: {
       whiteSpace: 'normal',
       fontSize: 14,
       lineHeight: '14px',
-      padding: 5,
     },
   },
 }));
@@ -124,8 +130,11 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
         onClick={toggle}
         variant="outlined"
         color="primary"
+        className="cluster-button"
       >
-        {currentCluster.name}
+        <Tooltip title="Choose a Cluster">
+          <SettingIcon className="cluster-icon" />
+        </Tooltip>
       </Button>
       <Drawer anchor="right" open={open} onClose={toggle} className={classes.root}>
         <div className={classes.list}>
@@ -134,19 +143,18 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
           </Button>
           <h1 className={classes.title}>Choose a Cluster</h1>
           {data.map(({ id, name, value, api }) => (
-            <Button
+            <Styles.ButtonStyle
               type="button"
               key={id}
               id={api}
               value={value}
               onClick={onChangeCluster}
               variant="outlined"
-              color={currentCluster.value === value ? 'primary' : 'default'}
-              classes={{ root: classes.item, label: classes.itemLabel }}
+              className={currentCluster.value === value ? 'active' : ''}
             >
               <span className={classes.itemTitle}>{name}:</span>
               <span className={classes.itemTitle}>{api}</span>
-            </Button>
+            </Styles.ButtonStyle>
           ))}
         </div>
       </Drawer>

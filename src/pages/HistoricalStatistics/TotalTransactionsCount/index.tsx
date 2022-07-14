@@ -34,7 +34,7 @@ function TotalTransactionCount() {
   }, []);
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor}>
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Total Transaction Count">
       {chartData ? (
         <EChartsLineChart
           chartName="transactionfee"
@@ -44,6 +44,7 @@ function TotalTransactionCount() {
           info={info}
           offset={1}
           handleBgColorChange={handleBgColorChange}
+          setHeaderBackground
         />
       ) : (
         <Skeleton animation="wave" variant="rect" height={386} />
