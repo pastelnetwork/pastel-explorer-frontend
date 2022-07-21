@@ -18,7 +18,11 @@ import InfoDrawer from '@components/InfoDrawer/InfoDrawer';
 import { useSelector, useDispatch } from 'react-redux';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { setAppThemeAction } from '@redux/actions/appThemeAction';
+import { setApiHostingAction } from '@redux/actions/clusterAction';
 import { socket, SocketContext } from '@context/socket';
+import { getBaseURL } from '@utils/helpers/useFetch/useFetch';
+import { DEFAULT_CURRENCY } from '@utils/appInfo';
+import { BASE_URL } from '@utils/constants/urls';
 
 import { ReactComponent as PastelLogo } from '@assets/images/pastel-logo.svg';
 import { themeLight, themeDark } from './theme';
@@ -38,6 +42,20 @@ const App: React.FC = () => {
     dispatch(setAppThemeAction(isDarkModeInit));
     setSucceed(true);
   }, [dispatch]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const url = getBaseURL();
+        await fetch(url);
+      } catch {
+        localStorage.removeItem('persist:root');
+        dispatch(setApiHostingAction(BASE_URL as string, DEFAULT_CURRENCY));
+        window.location.reload();
+      }
+    })();
+  }, []);
+
   const isDarkMode = useSelector(getThemeState).darkMode;
   if (!succeed) {
     return (
