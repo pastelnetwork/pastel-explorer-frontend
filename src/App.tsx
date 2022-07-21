@@ -20,9 +20,8 @@ import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { setAppThemeAction } from '@redux/actions/appThemeAction';
 import { setApiHostingAction } from '@redux/actions/clusterAction';
 import { socket, SocketContext } from '@context/socket';
-import { getBaseURL } from '@utils/helpers/useFetch/useFetch';
 import { DEFAULT_CURRENCY } from '@utils/appInfo';
-import { BASE_URL } from '@utils/constants/urls';
+import { BASE_URL, BASE_URL_TESTNET, BASE_URL_DEVNET } from '@utils/constants/urls';
 
 import { ReactComponent as PastelLogo } from '@assets/images/pastel-logo.svg';
 import { themeLight, themeDark } from './theme';
@@ -44,16 +43,23 @@ const App: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const url = getBaseURL();
-        await fetch(url);
-      } catch {
+    const persist = localStorage.getItem('persist:root');
+    if (persist) {
+      const store = JSON.parse(persist);
+      const tmp = JSON.parse(store.cluster);
+      const url = BASE_URL || BASE_URL_TESTNET || BASE_URL_DEVNET;
+      if (tmp.url) {
+        if (tmp.url !== BASE_URL && tmp.url !== BASE_URL_TESTNET && tmp.url !== BASE_URL_DEVNET) {
+          localStorage.removeItem('persist:root');
+          dispatch(setApiHostingAction(url as string, DEFAULT_CURRENCY));
+          window.location.reload();
+        }
+      } else {
         localStorage.removeItem('persist:root');
-        dispatch(setApiHostingAction(BASE_URL as string, DEFAULT_CURRENCY));
+        dispatch(setApiHostingAction(url as string, DEFAULT_CURRENCY));
         window.location.reload();
       }
-    })();
+    }
   }, []);
 
   const isDarkMode = useSelector(getThemeState).darkMode;

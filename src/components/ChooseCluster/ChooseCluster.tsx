@@ -107,18 +107,13 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
     async (event: MouseEvent<HTMLButtonElement>) => {
       const { value, id } = event.currentTarget;
       const queryParams = new URLSearchParams(search);
-      try {
-        await fetch(id);
-        queryParams.set('cluster', value);
-        if (value === 'mainnet') queryParams.delete('cluster');
-        replace({
-          search: queryParams.toString(),
-        });
-        setApiHosting(id, value === 'mainnet' ? DEFAULT_CURRENCY : TEST_CURRENCY_NAME);
-        window.location.reload();
-      } catch (error) {
-        // noop
-      }
+      queryParams.set('cluster', value);
+      if (value === 'mainnet') queryParams.delete('cluster');
+      replace({
+        search: queryParams.toString(),
+      });
+      setApiHosting(id, value === 'mainnet' ? DEFAULT_CURRENCY : TEST_CURRENCY_NAME);
+      window.location.reload();
     },
     [replace],
   );
