@@ -104,7 +104,7 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
   }, [apiURL]);
 
   const onChangeCluster = useCallback(
-    (event: MouseEvent<HTMLButtonElement>) => {
+    async (event: MouseEvent<HTMLButtonElement>) => {
       const { value, id } = event.currentTarget;
       const queryParams = new URLSearchParams(search);
       queryParams.set('cluster', value);
@@ -142,20 +142,26 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
             ×
           </Button>
           <h1 className={classes.title}>Choose a Cluster</h1>
-          {data.map(({ id, name, value, api }) => (
-            <Styles.ButtonStyle
-              type="button"
-              key={id}
-              id={api}
-              value={value}
-              onClick={onChangeCluster}
-              variant="outlined"
-              className={currentCluster.value === value ? 'active' : ''}
-            >
-              <span className={classes.itemTitle}>{name}:</span>
-              <span className={classes.itemTitle}>{api}</span>
-            </Styles.ButtonStyle>
-          ))}
+          {data.map(({ id, name, value, api }) => {
+            if (!api) {
+              return null;
+            }
+
+            return (
+              <Styles.ButtonStyle
+                type="button"
+                key={id}
+                id={api}
+                value={value}
+                onClick={onChangeCluster}
+                variant="outlined"
+                className={currentCluster.value === value ? 'active' : ''}
+              >
+                <span className={classes.itemTitle}>{name}:</span>
+                <span className={classes.itemTitle}>{api}</span>
+              </Styles.ButtonStyle>
+            );
+          })}
         </div>
       </Drawer>
     </>
