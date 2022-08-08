@@ -1374,6 +1374,144 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         easing: 'cubicOut',
       },
     },
+    circulatingSupply: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#cd6661'],
+      grid: {
+        top: 8,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `${params[0].axisValue}<br />${params[0].marker}${
+            params[0].seriesName
+          }&nbsp;&nbsp;${formatNumber(params[0].data, { decimalsLength: 2 })}`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        max: maxY,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      series: {
+        name: `Coin Supply (${getCurrencyName()}): `,
+        type: 'line',
+        sampling: 'lttb',
+        data: dataY,
+        smooth: true,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#cd6661',
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor || '#fff',
+            },
+          ]),
+        },
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    percentPSLStaked: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#cd6661'],
+      grid: {
+        top: 8,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `${params[0].axisValue}<br />${params[0].marker}${
+            params[0].seriesName
+          }&nbsp;&nbsp;${formatNumber(params[0].data, { decimalsLength: 2 })}`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        max: maxY,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      series: {
+        name: `Coin Supply (${getCurrencyName()}): `,
+        type: 'line',
+        sampling: 'lttb',
+        data: dataY,
+        smooth: true,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#cd6661',
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor || '#fff',
+            },
+          ]),
+        },
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
   };
   return chartOptions[chartName];
 }
