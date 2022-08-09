@@ -1420,7 +1420,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: `Coin Supply (${getCurrencyName()}): `,
+        name: `Circulating Supply: `,
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -1489,7 +1489,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: `Coin Supply (${getCurrencyName()}): `,
+        name: `% of ${getCurrencyName()} Staked: `,
         type: 'line',
         sampling: 'lttb',
         data: dataY,
