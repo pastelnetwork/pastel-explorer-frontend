@@ -14,7 +14,7 @@ export interface SummaryItemProps {
 export const initialSummaryList: Array<SummaryItemProps> = [
   {
     id: 1,
-    name: 'Circulating Supply', // new
+    name: `Circulating Supply (${getCurrencyName()})`,
     value: null,
     previousValue: null,
     key: 'circulatingSupply',
@@ -68,7 +68,7 @@ export const initialSummaryList: Array<SummaryItemProps> = [
   },
   {
     id: 7,
-    name: 'Block Size (avg)',
+    name: 'Average Block Size (Bytes)',
     value: null,
     previousValue: null,
     key: 'avgBlockSizeLast24Hour',
