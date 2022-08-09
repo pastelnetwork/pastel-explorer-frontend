@@ -67,11 +67,11 @@ const Summary: React.FC = () => {
         return {
           ...summaryElement,
           value: formatNumber(currentStats?.[key] || 0, {
-            decimalsLength: summaryElement.decimals,
+            decimalsLength: summaryElement.key === 'percentPSLStaked' ? 8 : summaryElement.decimals,
             divideToAmount: summaryElement.divideToAmount,
           }),
           previousValue: formatNumber(lastDayStats?.[key] || 0, {
-            decimalsLength: summaryElement.decimals,
+            decimalsLength: summaryElement.key === 'percentPSLStaked' ? 8 : summaryElement.decimals,
           }),
           difference: calculateDifference(currentStats?.[key] || 0, lastDayStats?.[key] || 0),
         };
@@ -157,7 +157,7 @@ const Summary: React.FC = () => {
         parseChartData = transformChartData(key);
         dataX = parseChartData?.dataX;
         dataY = parseChartData?.dataY;
-        offset = 0.01;
+        offset = 0.000001;
         break;
       case 'nonZeroAddressesCount':
         parseChartData = transformChartData(key);

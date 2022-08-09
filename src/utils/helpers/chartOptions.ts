@@ -1483,7 +1483,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         formatter: (params: TToolTipParamsProps[]) => {
           return `${params[0].axisValue}<br />${params[0].marker}${
             params[0].seriesName
-          }&nbsp;&nbsp;${formatNumber(params[0].data, { decimalsLength: 2 })}`;
+          }&nbsp;&nbsp;${formatNumber(params[0].data, { decimalsLength: 8 })}`;
         },
       },
       xAxis: {
@@ -1496,6 +1496,8 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         splitLine: {
           show: false,
         },
+        min: minY,
+        max: maxY,
       },
       series: {
         name: `% of ${getCurrencyName()} Staked: `,
