@@ -1483,7 +1483,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         formatter: (params: TToolTipParamsProps[]) => {
           return `${params[0].axisValue}<br />${params[0].marker}${
             params[0].seriesName
-          }&nbsp;&nbsp;${formatNumber(params[0].data, { decimalsLength: 8 })}`;
+          }&nbsp;&nbsp;${formatNumber(params[0].data * 100, { decimalsLength: 6 })}%`;
         },
       },
       xAxis: {

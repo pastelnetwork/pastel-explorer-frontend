@@ -64,15 +64,27 @@ const Summary: React.FC = () => {
     setSummaryList(prev => {
       const items = prev.map(summaryElement => {
         const key = summaryElement.key as keyof ISummaryStats;
+        const currentVal = currentStats?.[key] || 0;
+        const lastDayStatsVal = lastDayStats?.[key] || 0;
         return {
           ...summaryElement,
-          value: formatNumber(currentStats?.[key] || 0, {
-            decimalsLength: summaryElement.key === 'percentPSLStaked' ? 8 : summaryElement.decimals,
-            divideToAmount: summaryElement.divideToAmount,
-          }),
-          previousValue: formatNumber(lastDayStats?.[key] || 0, {
-            decimalsLength: summaryElement.key === 'percentPSLStaked' ? 8 : summaryElement.decimals,
-          }),
+          value: formatNumber(
+            summaryElement.key === 'percentPSLStaked'
+              ? parseFloat(currentVal.toString()) * 100
+              : currentVal,
+            {
+              decimalsLength: summaryElement.decimals,
+              divideToAmount: summaryElement.divideToAmount,
+            },
+          ),
+          previousValue: formatNumber(
+            summaryElement.key === 'percentPSLStaked'
+              ? parseFloat(lastDayStatsVal.toString()) * 100
+              : lastDayStatsVal,
+            {
+              decimalsLength: summaryElement.decimals,
+            },
+          ),
           difference: calculateDifference(currentStats?.[key] || 0, lastDayStats?.[key] || 0),
         };
       });
@@ -214,7 +226,11 @@ const Summary: React.FC = () => {
                 </Styles.Typography>
                 <Styles.Typography variant="h4">
                   <Styles.Values>
-                    {value === null ? <Skeleton animation="wave" variant="text" /> : value}
+                    {value === null ? (
+                      <Skeleton animation="wave" variant="text" />
+                    ) : (
+                      <>{sumKey === 'percentPSLStaked' ? `${value}%` : value}</>
+                    )}
                   </Styles.Values>
                 </Styles.Typography>
               </Styles.ValueWrapper>
