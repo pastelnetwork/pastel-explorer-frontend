@@ -226,11 +226,7 @@ const Summary: React.FC = () => {
                 </Styles.Typography>
                 <Styles.Typography variant="h4">
                   <Styles.Values>
-                    {value === null ? (
-                      <Skeleton animation="wave" variant="text" />
-                    ) : (
-                      <>{sumKey === 'percentPSLStaked' ? `${value}%` : value}</>
-                    )}
+                    {value === null ? <Skeleton animation="wave" variant="text" /> : value}
                   </Styles.Values>
                 </Styles.Typography>
               </Styles.ValueWrapper>
