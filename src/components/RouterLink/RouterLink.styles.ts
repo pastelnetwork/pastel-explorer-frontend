@@ -7,7 +7,7 @@ export const RouterLink = styled(Link)<{ textsize: 'normal' | 'large' }>`
   color: ${props => props.theme.link.main};
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: ${({ textsize }) => (textsize === 'large' ? '1.2rem' : '1rem')};
+  font-size: 16px;
   transition: all 0.5s ease;
 
   &:hover {
