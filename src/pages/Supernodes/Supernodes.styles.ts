@@ -151,6 +151,10 @@ export const Status = styled.div`
     background: ${props => props.theme.supernodes.status.background.enabled};
   }
 
+  &.expired {
+    background: ${props => props.theme.supernodes.status.background.expired};
+  }
+
   ${props => props.theme.breakpoints.down(1024)} {
     max-width: calc(100vw - 165px);
     overflow: hidden;
