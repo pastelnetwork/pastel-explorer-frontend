@@ -1391,7 +1391,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       textStyle: {
         color: theme?.color,
       },
-      color: ['#cd6661'],
+      color: ['#5470c6', '#91cc75', '#fac858'],
       grid: {
         top: 8,
         right: 0,
@@ -1451,7 +1451,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#cd6661',
+              color: '#5470C6',
             },
             {
               offset: 1,
@@ -1470,12 +1470,12 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       textStyle: {
         color: theme?.color,
       },
-      color: ['#cd6661'],
+      color: ['#5470C6'],
       grid: {
-        top: 8,
-        right: 0,
+        top: -50,
+        right: 4,
         bottom: 0,
-        left: 0,
+        left: 4,
         show: false,
       },
       tooltip: {
@@ -1483,7 +1483,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         formatter: (params: TToolTipParamsProps[]) => {
           return `${params[0].axisValue}<br />${params[0].marker}${
             params[0].seriesName
-          }&nbsp;&nbsp;${formatNumber(params[0].data * 100, { decimalsLength: 6 })}`;
+          }&nbsp;&nbsp;${formatNumber(params[0].data * 100, { decimalsLength: 2 })}`;
         },
       },
       xAxis: {
