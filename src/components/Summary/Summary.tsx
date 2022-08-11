@@ -53,7 +53,7 @@ type TChartDataProps = {
 const Summary: React.FC = () => {
   const [summaryList, setSummaryList] = React.useState(initialSummaryList);
   const [summaryChartData, setSummaryChartData] = React.useState<ISummaryChartStats>();
-  const { fetchData } = useFetch<ISummary>({ method: 'get', url: URLS.SUMMARY_URL });
+  const { fetchData } = useFetch<ISummary>({ method: 'get', url: `${URLS.SUMMARY_URL}?limit=576` });
   const socket = React.useContext(SocketContext);
   const classes = useStyles();
   const { pathname } = useLocation();
@@ -169,7 +169,7 @@ const Summary: React.FC = () => {
         parseChartData = transformChartData(key);
         dataX = parseChartData?.dataX;
         dataY = parseChartData?.dataY;
-        offset = 0.000001;
+        offset = 0.015;
         break;
       case 'nonZeroAddressesCount':
         parseChartData = transformChartData(key);
@@ -245,7 +245,7 @@ const Summary: React.FC = () => {
                         : themeVariant.custom.red.error
                     }`}
                   >
-                    Since yesterday
+                    Last 24h
                     <br />
                     <span>
                       {`${difference > 0 ? '+' : ''}`}
