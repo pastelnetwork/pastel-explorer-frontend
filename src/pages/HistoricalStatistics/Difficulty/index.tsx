@@ -48,7 +48,7 @@ function Difficulty() {
           period={period}
           info={info}
           offset={10000}
-          periods={periods[1]}
+          periods={periods[6]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
           setHeaderBackground

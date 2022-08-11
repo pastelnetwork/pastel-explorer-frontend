@@ -56,7 +56,7 @@ export const ChartWrapper = styled(Grid)`
   }
 
   @media (min-width: 1280px) {
-    padding: 40px 20px;
+    padding: 20px;
   }
 
   .chartjs-render-monitor {
@@ -101,4 +101,12 @@ export const GreenText = styled.span`
 
 export const RedText = styled.span`
   color: ${() => themeVariant.custom.red.main};
+`;
+
+export const StakingAPRChart = styled.div`
+  padding: 20px;
+
+  .echarts-for-react {
+    height: 250px !important;
+  }
 `;

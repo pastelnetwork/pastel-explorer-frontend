@@ -49,7 +49,7 @@ function HashRate() {
           info={info}
           offset={10}
           period={period}
-          periods={periods[1]}
+          periods={periods[6]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
           setHeaderBackground

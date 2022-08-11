@@ -60,7 +60,7 @@ const AverageBlockSize = (): JSX.Element => {
           period={period}
           granularity={granularity}
           granularities={granularities[0]}
-          periods={periods[1]}
+          periods={periods[6]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
           handleGranularityFilterChange={handleGranularityFilterChange}

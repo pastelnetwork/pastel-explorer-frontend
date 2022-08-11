@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import ReactECharts from 'echarts-for-react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import { TThemeInitOption, TThemeColor } from '@utils/constants/types';
 import { getSummaryThemeUpdateOption } from '@utils/helpers/chartOptions';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { themes } from '@utils/constants/statistics';
+import * as ROUTES from '@utils/constants/routes';
 
 import * as Styles from './Summary.styles';
 
@@ -21,6 +23,7 @@ type TLineChartProps = {
 export const LineChart = (props: TLineChartProps): JSX.Element | null => {
   const { chartName, dataX, dataY, offset, dataY1, dataY2 } = props;
   const { darkMode } = useSelector(getThemeState);
+  const history = useHistory();
   const [currentTheme, setCurrentTheme] = useState<TThemeColor | null>(null);
   const [minY, setMinY] = useState(0);
   const [maxY, setMaxY] = useState(0);
@@ -73,8 +76,12 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
   };
   const options = getSummaryThemeUpdateOption(params);
 
+  const onChartClick = () => {
+    history.push(ROUTES.STATISTICS_OVERTIME);
+  };
+
   return (
-    <Styles.LineChartWrap>
+    <Styles.LineChartWrap onClick={onChartClick}>
       <ReactECharts notMerge={false} lazyUpdate option={options} />
     </Styles.LineChartWrap>
   );

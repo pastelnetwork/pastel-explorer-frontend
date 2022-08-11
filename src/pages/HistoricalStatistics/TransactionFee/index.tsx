@@ -49,7 +49,7 @@ function TransactionFee() {
           info={info}
           offset={0.05}
           period={period}
-          periods={periods[1]}
+          periods={periods[6]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
           setHeaderBackground

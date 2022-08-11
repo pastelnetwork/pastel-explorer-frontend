@@ -756,11 +756,12 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
   return chartOptions[chartName];
 }
 
-type TToolTipParamsProps = {
+export type TToolTipParamsProps = {
   axisValue: string;
   marker: string;
   seriesName: string;
   data: number;
+  dataIndex: number;
 };
 
 type TRectProps = {

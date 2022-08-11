@@ -48,7 +48,7 @@ function Nettotals() {
           info={info}
           period={period}
           offset={0}
-          periods={periods[1]}
+          periods={periods[6]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
           setHeaderBackground

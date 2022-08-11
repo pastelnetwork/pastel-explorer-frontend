@@ -34,8 +34,10 @@ export type PeriodTypes =
   | '14d'
   | '30d'
   | '60d'
+  | '90d'
   | '180d'
   | '1y'
+  | 'max'
   | 'all';
 export type TGranularity = '1d' | '30d' | '1y' | 'all';
 
@@ -74,6 +76,9 @@ export function getStartPoint(period: PeriodTypes): number {
     case '60d':
       duration = 60 * 24;
       break;
+    case '90d':
+      duration = 90 * 24;
+      break;
     case '180d':
       duration = 180 * 24;
       break;
@@ -81,6 +86,7 @@ export function getStartPoint(period: PeriodTypes): number {
       duration = 360 * 24;
       break;
     case 'all':
+    case 'max':
       return 0;
     default:
       duration = 2;
