@@ -1470,7 +1470,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470C6'],
+      color: ['#cd6661'],
       grid: {
         top: -70,
         right: 4,
