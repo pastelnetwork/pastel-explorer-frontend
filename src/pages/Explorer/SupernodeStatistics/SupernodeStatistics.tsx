@@ -40,8 +40,6 @@ const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ supernodes })
   }, [supernodes]);
 
   const totalSuperNodes = countryChartData?.quantities?.reduce((a, b) => a + b, 0) || 1;
-  const stakingAPRData =
-    countryChartData?.quantities?.map(q => parseFloat((51.84 / q).toFixed(2))) || [];
 
   return (
     <ExplorerMapStyles.Container>
@@ -54,8 +52,6 @@ const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ supernodes })
           generateChartData(countryChartData.headers, countryChartData.quantities)
         }
         totalSuperNodes={totalSuperNodes}
-        stakingAPRData={stakingAPRData}
-        stakingAPRHeader={countryChartData?.headers}
       />
     </ExplorerMapStyles.Container>
   );

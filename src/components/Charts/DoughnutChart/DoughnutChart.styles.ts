@@ -103,10 +103,23 @@ export const RedText = styled.span`
   color: ${() => themeVariant.custom.red.main};
 `;
 
-export const StakingAPRChart = styled.div`
+export const StakingWrapper = styled.div`
+  margin-top: 32%;
   padding: 20px;
+  text-align: center;
+  font-size: 60px;
+  font-weight: 600;
+  line-height: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
-  .echarts-for-react {
-    height: 250px !important;
-  }
+export const StakingTitle = styled.div`
+  margin-top: 15px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1;
 `;
