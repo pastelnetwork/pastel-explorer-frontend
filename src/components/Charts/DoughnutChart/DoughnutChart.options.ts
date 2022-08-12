@@ -1,5 +1,13 @@
 import themeVariant from '@theme/variants';
 
+type TContextProps = {
+  label?: string;
+  formattedValue: string;
+  dataset: {
+    data: number[];
+  };
+};
+
 export const chartColors = [
   themeVariant.palette.primary.main,
   themeVariant.palette.secondary.main,
@@ -20,7 +28,7 @@ export const defaultChartOptions = {
     tooltip: {
       backgroundColor: themeVariant.palette.text.primary,
       callbacks: {
-        label(context: any) {
+        label(context: TContextProps) {
           let label = context.label || '';
 
           if (label) {
