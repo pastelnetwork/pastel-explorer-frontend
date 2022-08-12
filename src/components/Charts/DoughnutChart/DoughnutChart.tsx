@@ -34,12 +34,12 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
             </Styles.DoughnutInner>
             {data && <Doughnut data={data} options={defaultChartOptions} type="doughnut" />}
           </Styles.ChartWrapper>
-          <Grid item xs={12} sm={7}>
+          <Styles.ChartWrapper item xs={12} sm={7}>
             <Styles.StakingWrapper>
-              {(51.84 / totalSuperNodes).toFixed(2)}
+              {totalSuperNodes ? (51.84 / totalSuperNodes).toFixed(2) : '0.00'}
               <Styles.StakingTitle>Staking APR %</Styles.StakingTitle>
             </Styles.StakingWrapper>
-          </Grid>
+          </Styles.ChartWrapper>
         </Grid>
       </Styles.CardContent>
     </Styles.Card>

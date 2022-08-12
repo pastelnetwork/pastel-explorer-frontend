@@ -104,7 +104,6 @@ export const RedText = styled.span`
 `;
 
 export const StakingWrapper = styled.div`
-  margin-top: 32%;
   padding: 20px;
   text-align: center;
   font-size: 60px;
