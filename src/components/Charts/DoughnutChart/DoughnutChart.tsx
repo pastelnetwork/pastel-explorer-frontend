@@ -12,7 +12,7 @@ interface DoughnutChartProps {
   title?: string;
   innerTitle?: string;
   innerSubtitle?: string | number;
-  totalSuperNodes: number;
+  totalSuperNodes?: number;
 }
 
 const DoughnutChart: React.FC<DoughnutChartProps> = ({
@@ -36,7 +36,7 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
           </Styles.ChartWrapper>
           <Styles.ChartWrapper item xs={12} sm={7}>
             <Styles.StakingWrapper>
-              {totalSuperNodes ? (51.84 / totalSuperNodes).toFixed(2) : '0.00'}
+              {totalSuperNodes ? (51.84 / totalSuperNodes).toFixed(2) : '--'}
               <Styles.StakingTitle>Staking APR %</Styles.StakingTitle>
             </Styles.StakingWrapper>
           </Styles.ChartWrapper>
