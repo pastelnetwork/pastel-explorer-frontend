@@ -9,8 +9,9 @@ import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { themes } from '@utils/constants/statistics';
 import { TThemeColor } from '@utils/constants/types';
 import { TToolTipParamsProps } from '@utils/helpers/chartOptions';
+import { countries } from '@utils/constants/countries';
 
-import { defaultChartOptions, chartColor } from './DoughnutChart.options';
+import { defaultChartOptions, chartColors } from './DoughnutChart.options';
 import * as Styles from './DoughnutChart.styles';
 
 interface DoughnutChartProps {
@@ -50,26 +51,32 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
     },
     grid: {
       top: 8,
-      right: 4,
-      bottom: 10,
-      left: 4,
+      right: 0,
+      left: 0,
+      bottom: 0,
       containLabel: true,
     },
     tooltip: {
       trigger: 'axis',
       formatter: (params: TToolTipParamsProps[]) => {
         const value: number = (data?.datasets?.[0]?.data[params[0].dataIndex] as number) || 1;
-        return `${params[0].axisValue}<br />${params[0].marker}Staking APR:&nbsp;&nbsp;${
-          params[0].data
-        }<br/>Quantity:&nbsp;&nbsp;${data?.datasets?.[0]?.data[params[0].dataIndex]}(${(
-          (value * 100) /
-          totalSuperNodes
-        ).toFixed(2)}%)`;
+        const item = countries.find(c => c.code === params[0].axisValue);
+        return `${item?.name || params[0].axisValue}<br />${
+          params[0].marker
+        }Staking APR:&nbsp;&nbsp;${params[0].data}<br/>Quantity:&nbsp;&nbsp;${
+          data?.datasets?.[0]?.data[params[0].dataIndex]
+        }(${((value * 100) / totalSuperNodes).toFixed(2)}%)`;
       },
     },
     xAxis: {
       type: 'category',
-      data: stakingAPRHeader,
+      data: stakingAPRHeader?.map(d => {
+        const item = countries.find(c => c.name === d);
+        if (item) {
+          return item.code;
+        }
+        return d;
+      }),
       show: true,
     },
     yAxis: {
@@ -85,7 +92,7 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
       },
       itemStyle: {
         color(param: TToolTipParamsProps) {
-          return chartColor[param.dataIndex];
+          return chartColors[param.dataIndex];
         },
       },
     },

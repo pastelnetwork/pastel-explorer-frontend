@@ -1,6 +1,6 @@
 import themeVariant from '@theme/variants';
 
-export const chartColor = [
+export const chartColors = [
   themeVariant.palette.primary.main,
   themeVariant.palette.secondary.main,
   themeVariant.custom.green.light,
