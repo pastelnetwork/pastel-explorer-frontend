@@ -7,8 +7,8 @@ import { TThemeInitOption, TThemeColor } from '@utils/constants/types';
 import { getSummaryThemeUpdateOption } from '@utils/helpers/chartOptions';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { themes } from '@utils/constants/statistics';
-import * as ROUTES from '@utils/constants/routes';
 
+import { getRouteForChart } from './Summary.helpers';
 import * as Styles from './Summary.styles';
 
 type TLineChartProps = {
@@ -77,7 +77,7 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
   const options = getSummaryThemeUpdateOption(params);
 
   const onChartClick = () => {
-    history.push(ROUTES.STATISTICS_OVERTIME);
+    history.push(getRouteForChart(chartName));
   };
 
   return (

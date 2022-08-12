@@ -1473,7 +1473,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       color: ['#cd6661'],
       grid: {
-        top: -70,
+        top: 9,
         right: 4,
         bottom: 0,
         left: 4,
@@ -1484,7 +1484,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         formatter: (params: TToolTipParamsProps[]) => {
           return `${params[0].axisValue.split(', ')[0]}<br />${params[0].marker}${
             params[0].seriesName
-          }&nbsp;&nbsp;${formatNumber(params[0].data * 100, { decimalsLength: 2 })}`;
+          }&nbsp;&nbsp;${formatNumber(params[0].data * 1000, { decimalsLength: 2 })}`;
         },
       },
       xAxis: {

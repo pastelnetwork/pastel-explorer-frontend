@@ -169,7 +169,7 @@ const Summary: React.FC = () => {
         parseChartData = transformChartData(key);
         dataX = parseChartData?.dataX;
         dataY = parseChartData?.dataY;
-        offset = 0.04;
+        offset = 0.004;
         break;
       case 'nonZeroAddressesCount':
         parseChartData = transformChartData(key);

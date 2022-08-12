@@ -1,4 +1,5 @@
 import { getCurrencyName } from '@utils/appInfo';
+import * as ROUTES from '@utils/constants/routes';
 
 export interface SummaryItemProps {
   id: number;
@@ -95,4 +96,27 @@ export const calculateDifference = (first: string | number, second: string | num
   if (Number.isNaN(difference)) return '0.00';
 
   return difference.toFixed(2);
+};
+
+export const getRouteForChart = (key: string) => {
+  let url = ROUTES.STATISTICS_OVERTIME;
+
+  switch (key) {
+    case 'difficulty':
+      url = ROUTES.STATISTICS_DIFFICULTY;
+      break;
+    case 'avgBlockSizeLast24Hour':
+      url = ROUTES.STATISTICS_AVERAGE_BLOCK_SIZE;
+      break;
+    case 'avgTransactionPerBlockLast24Hour':
+      url = ROUTES.STATISTICS_AVERAGE_TRANSACTIONS_PER_BLOCK;
+      break;
+    case 'gigaHashPerSec':
+      url = ROUTES.STATISTICS_NETTOTALS;
+      break;
+    default:
+      break;
+  }
+
+  return url;
 };
