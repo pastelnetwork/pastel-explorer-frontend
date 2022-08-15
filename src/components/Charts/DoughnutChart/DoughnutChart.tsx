@@ -27,14 +27,14 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
       {title && <h4>{title}</h4>}
       <Styles.CardContent>
         <Grid container justify="center" alignItems="flex-start">
-          <Styles.ChartWrapper item xs={12} sm={5}>
+          <Styles.ChartWrapper item xs={12} sm={6} md={5}>
             <Styles.DoughnutInner>
               {innerTitle && <Typography variant="h4">{innerTitle}</Typography>}
               {innerSubtitle && <Typography variant="caption">{innerSubtitle}</Typography>}
             </Styles.DoughnutInner>
             {data && <Doughnut data={data} options={defaultChartOptions} type="doughnut" />}
           </Styles.ChartWrapper>
-          <Styles.ChartWrapper item xs={12} sm={7}>
+          <Styles.ChartWrapper item xs={12} sm={6} md={7}>
             <Styles.StakingWrapper>
               {totalSuperNodes ? (51.84 / totalSuperNodes).toFixed(2) : '--'}
               <Styles.StakingTitle>Staking APR %</Styles.StakingTitle>

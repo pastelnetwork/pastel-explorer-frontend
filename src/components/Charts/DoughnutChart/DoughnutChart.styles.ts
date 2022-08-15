@@ -49,14 +49,16 @@ export const CardContent = styled(MuiCardContent)`
 export const ChartWrapper = styled(Grid)`
   height: 160px;
   position: relative;
+  padding: 20px;
 
   @media (min-width: 960px) {
-    padding: 10px 40px;
-    height: 332px;
+    padding: 10px 20px;
+    height: 273px;
   }
 
   @media (min-width: 1280px) {
     padding: 20px;
+    height: 332px;
   }
 
   .chartjs-render-monitor {
