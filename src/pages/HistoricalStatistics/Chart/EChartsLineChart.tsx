@@ -259,7 +259,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
             data={csvData}
             filename={`${makeDownloadFileName(info.currencyName, chartName)}.csv`}
             headers={csvHeaders[chartName]}
-            separator=";"
+            separator=","
             ref={downloadRef}
           >
             Download CSV

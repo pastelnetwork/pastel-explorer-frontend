@@ -175,7 +175,7 @@ const AddressDetails = () => {
           data={csvData}
           filename={fileName}
           headers={transactionHistoryCSVHeaders}
-          separator=";"
+          separator=","
           ref={downloadRef}
           className={styles.uploadButton}
         >
