@@ -28,6 +28,10 @@ export const GET_STATISTICS_AVERAGE_BLOCK_SIZE = 'v1/stats/average-block-size';
 export const GET_STATISTICS_TRANSACTION_PER_SECOND = 'v1/stats/transaction-per-second';
 export const GET_STATISTICS_MINING_CHARTS = 'v1/stats/mining-charts';
 export const GET_STATISTICS_MARKET_PRICE = 'v1/stats/market/chart';
+export const GET_STATISTICS_TOTAL_SUPPLY = 'v1/stats/total-supply';
+export const GET_STATISTICS_CIRCULATING_SUPPLY = 'v1/stats/circulating-supply';
+export const GET_STATISTICS_PERCENT_OF_PSL_STAKED = 'v1/stats/percent-of-psl-staked';
+export const GET_STATISTICS_ACCOUNTS = 'v1/stats/accounts';
 // External URLS
 export const TWITTER_URL = 'https://twitter.com/pastelnetwork';
 export const TELEGRAM_URL = 'https://t.me/PastelNetwork';

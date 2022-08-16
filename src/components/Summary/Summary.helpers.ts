@@ -114,6 +114,18 @@ export const getRouteForChart = (key: string) => {
     case 'gigaHashPerSec':
       url = ROUTES.STATISTICS_NETTOTALS;
       break;
+    case 'circulatingSupply':
+      url = ROUTES.STATISTICS_CIRCULATING_SUPPLY;
+      break;
+    case 'coinSupply':
+      url = ROUTES.STATISTICS_TOTAL_SUPPLY;
+      break;
+    case 'percentPSLStaked':
+      url = ROUTES.STATISTICS_PERCENT_OF_PSL_STAKED;
+      break;
+    case 'nonZeroAddressesCount':
+      url = ROUTES.STATISTICS_ACCOUNTS;
+      break;
     default:
       break;
   }

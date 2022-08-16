@@ -127,6 +127,30 @@ export const statistics = [
     url: routes.STATISTICS_MARKET_CAP_PRICE,
     image: generatePreviewUrl(routes.STATISTICS_MARKET_CAP_PRICE),
   },
+  {
+    id: 'circulatingSupply',
+    title: `Circulating Supply (${getCurrencyName()})`,
+    url: routes.STATISTICS_CIRCULATING_SUPPLY,
+    image: generatePreviewUrl(routes.STATISTICS_CIRCULATING_SUPPLY),
+  },
+  {
+    id: 'totalSupply',
+    title: `Total Supply (${getCurrencyName()})`,
+    url: routes.STATISTICS_TOTAL_SUPPLY,
+    image: generatePreviewUrl(routes.STATISTICS_TOTAL_SUPPLY),
+  },
+  {
+    id: 'percentOfPSLStaked',
+    title: `% of ${getCurrencyName()} Staked`,
+    url: routes.STATISTICS_PERCENT_OF_PSL_STAKED,
+    image: generatePreviewUrl(routes.STATISTICS_PERCENT_OF_PSL_STAKED),
+  },
+  {
+    id: 'accounts',
+    title: 'Accounts',
+    url: routes.STATISTICS_ACCOUNTS,
+    image: generatePreviewUrl(routes.STATISTICS_ACCOUNTS),
+  },
 ];
 
 export const themes = [

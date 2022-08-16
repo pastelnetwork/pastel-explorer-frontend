@@ -135,3 +135,8 @@ export type MarketCoinRespone = {
   market_caps: MarketChartItem[];
   total_volumes: MarketChartItem[];
 };
+
+export type TChartStatisticsResponse = {
+  time: number;
+  value: number;
+};

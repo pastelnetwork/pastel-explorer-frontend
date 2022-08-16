@@ -42,6 +42,10 @@ import TotalTransactionCount from '@pages/HistoricalStatistics/TotalTransactions
 import TotalTransactionPerDay from '@pages/HistoricalStatistics/TotalTransactionsPerDay';
 import MarketVolumePrice from '@pages/HistoricalStatistics/MarketVolumePrice';
 import MarketCapPrice from '@pages/HistoricalStatistics/MarketCapPrice';
+import CirculatingSupply from '@pages/HistoricalStatistics/CirculatingSupply';
+import TotalSupply from '@pages/HistoricalStatistics/TotalSupply';
+import PercentOfPSLStaked from '@pages/HistoricalStatistics/PercentOfPSLStaked';
+import Accounts from '@pages/HistoricalStatistics/Accounts';
 
 import * as ROUTES from '@utils/constants/routes';
 import { getCurrencyName } from '@utils/appInfo';
@@ -330,6 +334,42 @@ const addressDetailsRoutes = {
   children: null,
 };
 
+const circulatingSupplyStatisticsRoutes = {
+  id: 'circulatingSupply',
+  path: ROUTES.STATISTICS_CIRCULATING_SUPPLY,
+  component: CirculatingSupply,
+  icon: null,
+  seoTitle: 'Circulating Supply',
+  children: null,
+};
+
+const totalSupplyStatisticsRoutes = {
+  id: 'totalSupply',
+  path: ROUTES.STATISTICS_TOTAL_SUPPLY,
+  component: TotalSupply,
+  icon: null,
+  seoTitle: 'Total Supply',
+  children: null,
+};
+
+const percentOfPSLStakedStatisticsRoutes = {
+  id: 'percentOfPSLStaked',
+  path: ROUTES.STATISTICS_PERCENT_OF_PSL_STAKED,
+  component: PercentOfPSLStaked,
+  icon: null,
+  seoTitle: '% of PSL Staked',
+  children: null,
+};
+
+const accountsStatisticsRoutes = {
+  id: 'accounts',
+  path: ROUTES.STATISTICS_ACCOUNTS,
+  component: Accounts,
+  icon: null,
+  seoTitle: 'Accounts',
+  children: null,
+};
+
 export const pageRoutes = [
   explorerRoutes,
   movementRoutes,
@@ -360,6 +400,10 @@ export const pageRoutes = [
   totalTransactionsPerDayStatisticsRoutes,
   marketVolumePriceStatisticsRoutes,
   marketCapPriceStatisticsRoutes,
+  circulatingSupplyStatisticsRoutes,
+  totalSupplyStatisticsRoutes,
+  percentOfPSLStakedStatisticsRoutes,
+  accountsStatisticsRoutes,
 ];
 
 export const sidebarRoutes = [

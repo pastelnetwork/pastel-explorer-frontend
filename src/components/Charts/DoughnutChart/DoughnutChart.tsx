@@ -36,8 +36,8 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
           </Styles.ChartWrapper>
           <Styles.ChartWrapper item xs={12} sm={6} md={7}>
             <Styles.StakingWrapper>
-              {totalSuperNodes ? (51.84 / totalSuperNodes).toFixed(2) : '--'}
-              <Styles.StakingTitle>Staking APR %</Styles.StakingTitle>
+              {totalSuperNodes ? `${((51.84 / totalSuperNodes) * 100).toFixed(2)}%` : '--'}
+              <Styles.StakingTitle>Staking APR</Styles.StakingTitle>
             </Styles.StakingWrapper>
           </Styles.ChartWrapper>
         </Grid>

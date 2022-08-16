@@ -6,6 +6,9 @@ export const socket = io(getBaseURL() || '', {
   path: '/socket.io',
   transports: ['websocket', 'polling'],
   secure: true,
+  extraHeaders: {
+    'custom-origin': document.location.origin,
+  },
 });
 
 export const SocketContext = createContext<Socket>(socket);

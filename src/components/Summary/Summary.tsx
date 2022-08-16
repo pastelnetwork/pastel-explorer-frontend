@@ -245,7 +245,7 @@ const Summary: React.FC = () => {
                         : themeVariant.custom.red.error
                     }`}
                   >
-                    Last 24h
+                    {sumKey === 'percentPSLStaked' ? 'Last 30d' : 'Last 24h'}
                     <br />
                     <span>
                       {`${difference > 0 ? '+' : ''}`}

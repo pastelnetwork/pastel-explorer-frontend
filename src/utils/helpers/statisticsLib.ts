@@ -13,6 +13,7 @@ import {
   IHashRateResponse,
   TTransactionsChart,
   TChartResponseItem,
+  TChartStatisticsResponse,
 } from '@utils/types/IStatistics';
 import { IBlock } from '@utils/types/IBlocks';
 import { formattedDate } from '@utils/helpers/date/date';
@@ -369,4 +370,65 @@ export function setTransactionsLive(
     });
   }
   return newTxs;
+}
+
+export function transformStatisticsChart(
+  trans: TChartStatisticsResponse[],
+  period: PeriodTypes,
+): TLineChartData {
+  const dataX: string[] = [];
+  const dataY: number[] = [];
+  for (let i = 0; i < trans.length; i += 1) {
+    const value = Number(trans[i].value);
+    dataY.push(value);
+    dataX.push(
+      period === '24h'
+        ? new Date(trans[i].time).toLocaleString()
+        : format(trans[i].time, 'MM/dd/yyyy'),
+    );
+  }
+  return {
+    dataX,
+    dataY,
+  };
+}
+
+export function transformAccountDataChart(
+  trans: IStatistic[],
+  period: PeriodTypes,
+): TLineChartData {
+  const dataX: string[] = [];
+  const dataY: number[] = [];
+  for (let i = 0; i < trans.length; i += 1) {
+    dataY.push(Number(trans[i].nonZeroAddressesCount));
+    dataX.push(
+      period === '24h'
+        ? new Date(trans[i].timestamp).toLocaleString()
+        : format(trans[i].timestamp, 'MM/dd/yyyy'),
+    );
+  }
+  return {
+    dataX,
+    dataY,
+  };
+}
+
+export function transformTotalSupplyDataChart(
+  trans: IStatistic[],
+  period: PeriodTypes,
+): TLineChartData {
+  const dataX: string[] = [];
+  const dataY: number[] = [];
+  for (let i = 0; i < trans.length; i += 1) {
+    dataY.push(Number(trans[i].coinSupply));
+    dataX.push(
+      period === '24h'
+        ? new Date(trans[i].timestamp).toLocaleString()
+        : format(trans[i].timestamp, 'MM/dd/yyyy'),
+    );
+  }
+  return {
+    dataX,
+    dataY,
+  };
 }
