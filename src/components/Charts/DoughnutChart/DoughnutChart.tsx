@@ -12,31 +12,34 @@ interface DoughnutChartProps {
   title?: string;
   innerTitle?: string;
   innerSubtitle?: string | number;
-  table?: React.ReactNode;
+  totalSuperNodes?: number;
 }
 
 const DoughnutChart: React.FC<DoughnutChartProps> = ({
   data,
   title,
-  table,
   innerTitle,
   innerSubtitle,
+  totalSuperNodes,
 }) => {
   return (
     <Styles.Card>
       {title && <h4>{title}</h4>}
       <Styles.CardContent>
         <Grid container justify="center" alignItems="flex-start">
-          <Styles.ChartWrapper item xs={12} sm={5}>
+          <Styles.ChartWrapper item xs={12} sm={6} md={5}>
             <Styles.DoughnutInner>
               {innerTitle && <Typography variant="h4">{innerTitle}</Typography>}
               {innerSubtitle && <Typography variant="caption">{innerSubtitle}</Typography>}
             </Styles.DoughnutInner>
             {data && <Doughnut data={data} options={defaultChartOptions} type="doughnut" />}
           </Styles.ChartWrapper>
-          <Grid item xs={12} sm={7}>
-            {table}
-          </Grid>
+          <Styles.ChartWrapper item xs={12} sm={6} md={7}>
+            <Styles.StakingWrapper>
+              {totalSuperNodes ? `${((51.84 / totalSuperNodes) * 100).toFixed(2)}%` : '--'}
+              <Styles.StakingTitle>Staking APR</Styles.StakingTitle>
+            </Styles.StakingWrapper>
+          </Styles.ChartWrapper>
         </Grid>
       </Styles.CardContent>
     </Styles.Card>

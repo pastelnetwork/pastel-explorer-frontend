@@ -31,6 +31,9 @@ export const getBaseURL = () => {
 
 export const axiosInstance = Axios.create({
   baseURL: getBaseURL(),
+  headers: {
+    'custom-origin': document.location.origin,
+  },
 });
 
 // Add a response interceptor
@@ -60,6 +63,7 @@ export const useFetch = <FetchedData, Transform = FetchedData>(
     return axiosInstance[method](url, options)
       .then(({ data }) => {
         setLoading(false);
+        dispatch(setResponseError(false));
         if (callback) {
           return callback(data);
         }
@@ -95,6 +99,7 @@ export function useDeferredData<FetchedData, Transform = FetchedData>(
   const memoizedSource = useCallback(async (): Promise<Transform> => {
     return axiosInstance[method](url, { params })
       .then(({ data }) => {
+        dispatch(setResponseError(false));
         if (callback) {
           return callback(data);
         }

@@ -38,8 +38,8 @@ const Richlist: React.FC = () => {
     [list, coinSupply],
   );
   const wealthDistribution = React.useMemo<WealthDistributionProps[] | null>(
-    () => (list && list.length ? generateWealthDistributionData(list) : null),
-    [list],
+    () => (list && list.length ? generateWealthDistributionData(list, coinSupply) : null),
+    [list, coinSupply],
   );
   const wealthDistributionData = wealthDistribution?.sort((a, b) => a.top - b.top);
 

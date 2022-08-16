@@ -16,6 +16,7 @@ export const getLatestBlocks: () => AppThunk<Promise<void>> = (limit = 6) => asy
     const { data } = await transactionApis.getLatestTransactions(limit);
 
     dispatch(setLatestTransactions(data));
+    dispatch(setResponseError(false));
   } catch (error) {
     dispatch(setResponseError(true, error.message));
   }

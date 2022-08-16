@@ -15,6 +15,7 @@ export const getLatestBlocks: () => AppThunk<Promise<void>> = (limit = 6) => asy
     const { data, timestamp } = await blockApis.getLatestBlock(limit);
 
     dispatch(setLatestBlocks({ latestBlocks: data, timestamp }));
+    dispatch(setResponseError(false));
   } catch (error) {
     dispatch(setResponseError(true, error.message));
   }

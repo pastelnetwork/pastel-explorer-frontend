@@ -349,7 +349,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
             data={csvData}
             filename={`${makeDownloadFileName(info.currencyName, chartName)}.csv`}
             headers={pricesCSVHeaders}
-            separator=";"
+            separator=","
             ref={downloadRef}
             className={styles.uploadButton}
           >

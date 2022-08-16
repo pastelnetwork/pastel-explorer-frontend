@@ -3,67 +3,57 @@ import { useEffect, useState } from 'react';
 // third party
 import { Skeleton } from '@material-ui/lab';
 // application
-import { TLineChartData, TAverageBlockSize } from '@utils/types/IStatistics';
-import { TGranularity, PeriodTypes, transformAverageBlockSize } from '@utils/helpers/statisticsLib';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import {
-  BLOCK_CHART_DEFAULT_GRANULARITY,
-  granularities,
-  periods,
-  info,
-} from '@utils/constants/statistics';
+import { PeriodTypes, transformStatisticsChart } from '@utils/helpers/statisticsLib';
+import { periods, info } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
+import { TChartStatisticsResponse, TLineChartData } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import { getCurrencyName } from '@utils/appInfo';
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
-const AverageBlockSize = (): JSX.Element => {
+function PercentOfPSLStaked() {
+  const [chartData, setChartData] = useState<TLineChartData | null>(null);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const [period, setPeriod] = useState<PeriodTypes>(periods[1][0]);
-  const [granularity, setGranularity] = useState<TGranularity>(BLOCK_CHART_DEFAULT_GRANULARITY);
-  const [chartData, setChartData] = useState<TLineChartData | null>(null);
-  const fetchStats = useFetch<{ data: Array<TAverageBlockSize> }>({
+  const fetchStats = useFetch<{ data: Array<TChartStatisticsResponse> }>({
     method: 'get',
-    url: URLS.GET_STATISTICS_AVERAGE_BLOCK_SIZE,
+    url: URLS.GET_STATISTICS_PERCENT_OF_PSL_STAKED,
   });
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { sortDirection: 'DESC', period, granularity },
+        params: { period, sortDirection: 'ASC' },
       });
       if (data) {
-        const parseData = transformAverageBlockSize(data.data);
+        const parseData = transformStatisticsChart(data.data, period);
         setChartData(parseData);
       }
     };
     loadLineChartData();
-  }, [granularity, period]);
-
+  }, [period]);
   const handlePeriodFilterChange = (value: PeriodTypes) => {
     setPeriod(value);
   };
 
-  const handleGranularityFilterChange = (value: TGranularity) => {
-    setGranularity(value);
-  };
-
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Average Block Size">
+    <HistoricalStatisticsLayout
+      currentBgColor={currentBgColor}
+      title={`% of ${getCurrencyName()} Staked`}
+    >
       {chartData ? (
         <EChartsLineChart
-          chartName="averageblocksize"
+          chartName="percentOfPSLStaked"
           dataX={chartData?.dataX}
           dataY={chartData?.dataY}
-          title="Average Block Size (kB)"
+          title={`% of ${getCurrencyName()} Staked`}
           info={info}
-          offset={1}
           period={period}
-          granularity={granularity}
-          granularities={granularities[0]}
+          offset={0.004}
           periods={periods[6]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
-          handleGranularityFilterChange={handleGranularityFilterChange}
           setHeaderBackground
         />
       ) : (
@@ -71,6 +61,6 @@ const AverageBlockSize = (): JSX.Element => {
       )}
     </HistoricalStatisticsLayout>
   );
-};
+}
 
-export default AverageBlockSize;
+export default PercentOfPSLStaked;

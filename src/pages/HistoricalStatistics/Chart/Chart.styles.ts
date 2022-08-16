@@ -67,6 +67,7 @@ export const PeriodButton = styled.button`
   outline: none;
   text-decoration: none;
   transition: all 0.5s ease;
+  text-transform: capitalize;
 
   &:hover,
   &.active {

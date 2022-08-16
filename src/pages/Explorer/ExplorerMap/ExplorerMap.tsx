@@ -17,9 +17,14 @@ interface ExplorerMapProps {
     peers: number;
     supernodes: number;
   };
+  hidePeer?: boolean;
 }
 
-const ExplorerMap: React.FC<ExplorerMapProps> = ({ geoLocationList, nodesLength }) => {
+const ExplorerMap: React.FC<ExplorerMapProps> = ({
+  geoLocationList,
+  nodesLength,
+  hidePeer = false,
+}) => {
   const dispatch = useDispatch();
   const mapOptions = generateMapOptions(geoLocationList);
 
@@ -46,10 +51,12 @@ const ExplorerMap: React.FC<ExplorerMapProps> = ({ geoLocationList, nodesLength 
           <Styles.LegendElement backgroundcolor={themeVariant.map.supernode} />
           <Typography variant="caption">Supernodes ({nodesLength.supernodes})</Typography>
         </Grid>
-        <Grid container alignItems="center">
-          <Styles.LegendElement backgroundcolor={themeVariant.map.peer} />
-          <Typography variant="caption">Peers ({nodesLength.peers})</Typography>
-        </Grid>
+        {!hidePeer ? (
+          <Grid container alignItems="center">
+            <Styles.LegendElement backgroundcolor={themeVariant.map.peer} />
+            <Typography variant="caption">Peers ({nodesLength.peers})</Typography>
+          </Grid>
+        ) : null}
       </Styles.LegendContainer>
     </Styles.Container>
   );

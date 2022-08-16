@@ -49,14 +49,16 @@ export const CardContent = styled(MuiCardContent)`
 export const ChartWrapper = styled(Grid)`
   height: 160px;
   position: relative;
+  padding: 20px;
 
   @media (min-width: 960px) {
-    padding: 10px 40px;
-    height: 332px;
+    padding: 10px 20px;
+    height: 273px;
   }
 
   @media (min-width: 1280px) {
-    padding: 40px 20px;
+    padding: 20px;
+    height: 332px;
   }
 
   .chartjs-render-monitor {
@@ -101,4 +103,24 @@ export const GreenText = styled.span`
 
 export const RedText = styled.span`
   color: ${() => themeVariant.custom.red.main};
+`;
+
+export const StakingWrapper = styled.div`
+  padding: 20px;
+  text-align: center;
+  font-size: 60px;
+  font-weight: 600;
+  line-height: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const StakingTitle = styled.div`
+  margin-top: 15px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1;
 `;
