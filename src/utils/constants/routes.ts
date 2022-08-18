@@ -35,3 +35,7 @@ export const STATISTICS_TOTAL_TRANSACTION_FEES = `${STATISTICS_OVERTIME}/total-t
 export const STATISTICS_TOTAL_TRANSACTIONS_PER_DAY = `${STATISTICS_OVERTIME}/total-transactions-per-day`;
 export const STATISTICS_MARKET_VOLUME_PRICE = `${STATISTICS_OVERTIME}/market-volume-price`;
 export const STATISTICS_MARKET_CAP_PRICE = `${STATISTICS_OVERTIME}/market-cap-price`;
+export const STATISTICS_CIRCULATING_SUPPLY = `${STATISTICS_OVERTIME}/circulating-supply`;
+export const STATISTICS_TOTAL_SUPPLY = `${STATISTICS_OVERTIME}/total-supply`;
+export const STATISTICS_PERCENT_OF_PSL_STAKED = `${STATISTICS_OVERTIME}/percent-of-psl-staked`;
+export const STATISTICS_ACCOUNTS = `${STATISTICS_OVERTIME}/accounts`;

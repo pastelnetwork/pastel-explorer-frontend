@@ -51,7 +51,7 @@ function AverageTransactionsPerBlock() {
           info={info}
           offset={1}
           period={period}
-          periods={periods[1]}
+          periods={periods[6]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
           setHeaderBackground

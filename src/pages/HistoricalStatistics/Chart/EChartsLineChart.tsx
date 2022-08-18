@@ -76,6 +76,9 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
       } else if (chartName === 'difficulty') {
         setMinY(Math.floor(min / offset) * offset);
         setMaxY(Math.ceil(max / offset) * offset);
+      } else if (chartName === 'percentOfPSLStaked') {
+        setMinY(min - offset);
+        setMaxY(max + offset);
       } else {
         setMinY(Math.round(min) - offset);
         setMaxY(Math.floor(max) + offset);
@@ -259,7 +262,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
             data={csvData}
             filename={`${makeDownloadFileName(info.currencyName, chartName)}.csv`}
             headers={csvHeaders[chartName]}
-            separator=";"
+            separator=","
             ref={downloadRef}
           >
             Download CSV

@@ -1,4 +1,5 @@
 import { getCurrencyName } from '@utils/appInfo';
+import * as ROUTES from '@utils/constants/routes';
 
 export interface SummaryItemProps {
   id: number;
@@ -14,25 +15,16 @@ export interface SummaryItemProps {
 export const initialSummaryList: Array<SummaryItemProps> = [
   {
     id: 1,
-    name: 'Network (MH/s)',
+    name: `Circulating Supply (${getCurrencyName()})`,
     value: null,
     previousValue: null,
-    key: 'gigaHashPerSec',
+    key: 'circulatingSupply',
     difference: 0,
     decimals: 2,
   },
   {
     id: 2,
-    name: 'Difficulty',
-    value: null,
-    previousValue: null,
-    key: 'difficulty',
-    difference: 0,
-    decimals: 2,
-  },
-  {
-    id: 3,
-    name: `Coin Supply (${getCurrencyName()})`,
+    name: `Total Supply (${getCurrencyName()})`,
     value: null,
     previousValue: null,
     key: 'coinSupply',
@@ -40,16 +32,16 @@ export const initialSummaryList: Array<SummaryItemProps> = [
     decimals: 2,
   },
   {
-    id: 4,
-    name: `${getCurrencyName()} Price (in USD)`,
+    id: 3,
+    name: `% of ${getCurrencyName()} Staked`,
     value: null,
     previousValue: null,
-    key: 'usdPrice',
+    key: 'percentPSLStaked',
     difference: 0,
-    decimals: 5,
+    decimals: 2,
   },
   {
-    id: 5,
+    id: 4,
     name: 'Accounts',
     value: null,
     previousValue: null,
@@ -58,17 +50,26 @@ export const initialSummaryList: Array<SummaryItemProps> = [
     decimals: 0,
   },
   {
-    id: 6,
-    name: 'Transactions (avg/s)',
+    id: 5,
+    name: 'Network (MH/s)',
     value: null,
     previousValue: null,
-    key: 'avgTransactionsPerSecond',
+    key: 'gigaHashPerSec',
     difference: 0,
-    decimals: 5,
+    decimals: 2,
+  },
+  {
+    id: 6,
+    name: 'Difficulty',
+    value: null,
+    previousValue: null,
+    key: 'difficulty',
+    difference: 0,
+    decimals: 2,
   },
   {
     id: 7,
-    name: 'Block Size (avg)',
+    name: 'Average Block Size (Bytes)',
     value: null,
     previousValue: null,
     key: 'avgBlockSizeLast24Hour',
@@ -84,24 +85,6 @@ export const initialSummaryList: Array<SummaryItemProps> = [
     difference: 0,
     decimals: 2,
   },
-  {
-    id: 9,
-    name: 'Transaction Fee (in USD)',
-    value: null,
-    previousValue: null,
-    key: 'avgTransactionFeeLast24Hour',
-    difference: 0,
-    decimals: 5,
-  },
-  {
-    id: 10,
-    name: 'Mempool Size (kB)',
-    value: null,
-    previousValue: null,
-    key: 'memPoolSize',
-    difference: 0,
-    decimals: 2,
-  },
 ];
 
 export const calculateDifference = (first: string | number, second: string | number) => {
@@ -113,4 +96,39 @@ export const calculateDifference = (first: string | number, second: string | num
   if (Number.isNaN(difference)) return '0.00';
 
   return difference.toFixed(2);
+};
+
+export const getRouteForChart = (key: string) => {
+  let url = ROUTES.STATISTICS_OVERTIME;
+
+  switch (key) {
+    case 'difficulty':
+      url = ROUTES.STATISTICS_DIFFICULTY;
+      break;
+    case 'avgBlockSizeLast24Hour':
+      url = ROUTES.STATISTICS_AVERAGE_BLOCK_SIZE;
+      break;
+    case 'avgTransactionPerBlockLast24Hour':
+      url = ROUTES.STATISTICS_AVERAGE_TRANSACTIONS_PER_BLOCK;
+      break;
+    case 'gigaHashPerSec':
+      url = ROUTES.STATISTICS_NETTOTALS;
+      break;
+    case 'circulatingSupply':
+      url = ROUTES.STATISTICS_CIRCULATING_SUPPLY;
+      break;
+    case 'coinSupply':
+      url = ROUTES.STATISTICS_TOTAL_SUPPLY;
+      break;
+    case 'percentPSLStaked':
+      url = ROUTES.STATISTICS_PERCENT_OF_PSL_STAKED;
+      break;
+    case 'nonZeroAddressesCount':
+      url = ROUTES.STATISTICS_ACCOUNTS;
+      break;
+    default:
+      break;
+  }
+
+  return url;
 };

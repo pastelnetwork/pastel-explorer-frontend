@@ -70,7 +70,7 @@ function PriceOvertime() {
           info={info}
           offset={0.0001}
           period={period}
-          periods={periods[3]}
+          periods={periods[6]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
           setHeaderBackground

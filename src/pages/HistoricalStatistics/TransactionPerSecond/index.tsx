@@ -48,7 +48,7 @@ function TransactionPerSecond() {
           period={period}
           info={info}
           offset={0.05}
-          periods={periods[1]}
+          periods={periods[6]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
           setHeaderBackground

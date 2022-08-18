@@ -3,67 +3,53 @@ import { useEffect, useState } from 'react';
 // third party
 import { Skeleton } from '@material-ui/lab';
 // application
-import { TLineChartData, TAverageBlockSize } from '@utils/types/IStatistics';
-import { TGranularity, PeriodTypes, transformAverageBlockSize } from '@utils/helpers/statisticsLib';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import {
-  BLOCK_CHART_DEFAULT_GRANULARITY,
-  granularities,
-  periods,
-  info,
-} from '@utils/constants/statistics';
+import { PeriodTypes, transformAccountDataChart } from '@utils/helpers/statisticsLib';
+import { periods, info } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
+import { IStatistic, TLineChartData } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
-const AverageBlockSize = (): JSX.Element => {
+function Accounts() {
+  const [chartData, setChartData] = useState<TLineChartData | null>(null);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const [period, setPeriod] = useState<PeriodTypes>(periods[1][0]);
-  const [granularity, setGranularity] = useState<TGranularity>(BLOCK_CHART_DEFAULT_GRANULARITY);
-  const [chartData, setChartData] = useState<TLineChartData | null>(null);
-  const fetchStats = useFetch<{ data: Array<TAverageBlockSize> }>({
+  const fetchStats = useFetch<{ data: Array<IStatistic> }>({
     method: 'get',
-    url: URLS.GET_STATISTICS_AVERAGE_BLOCK_SIZE,
+    url: URLS.GET_STATISTICS_ACCOUNTS,
   });
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { sortDirection: 'DESC', period, granularity },
+        params: { period, sortDirection: 'ASC' },
       });
       if (data) {
-        const parseData = transformAverageBlockSize(data.data);
+        const parseData = transformAccountDataChart(data.data, period);
         setChartData(parseData);
       }
     };
     loadLineChartData();
-  }, [granularity, period]);
-
+  }, [period]);
   const handlePeriodFilterChange = (value: PeriodTypes) => {
     setPeriod(value);
   };
 
-  const handleGranularityFilterChange = (value: TGranularity) => {
-    setGranularity(value);
-  };
-
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Average Block Size">
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Accounts">
       {chartData ? (
         <EChartsLineChart
-          chartName="averageblocksize"
+          chartName="accounts"
           dataX={chartData?.dataX}
           dataY={chartData?.dataY}
-          title="Average Block Size (kB)"
+          title="Accounts"
           info={info}
-          offset={1}
           period={period}
-          granularity={granularity}
-          granularities={granularities[0]}
+          offset={10}
           periods={periods[6]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
-          handleGranularityFilterChange={handleGranularityFilterChange}
           setHeaderBackground
         />
       ) : (
@@ -71,6 +57,6 @@ const AverageBlockSize = (): JSX.Element => {
       )}
     </HistoricalStatisticsLayout>
   );
-};
+}
 
-export default AverageBlockSize;
+export default Accounts;

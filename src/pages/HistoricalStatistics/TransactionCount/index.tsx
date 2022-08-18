@@ -49,7 +49,7 @@ function StatisticsTransactionsCount() {
           period={period}
           info={info}
           offset={1000}
-          periods={periods[1]}
+          periods={periods[6]}
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
           setHeaderBackground

@@ -15,7 +15,6 @@ import {
   ISummaryStats,
   ISummaryChartStats,
   TSummaryChartProps,
-  TSummaryChartPriceProps,
 } from '@utils/types/ISummary';
 import { SocketContext } from '@context/socket';
 import themeVariant from '@theme/variants';
@@ -25,7 +24,6 @@ import { ISocketData } from '@utils/types/ISocketData';
 
 import * as Styles from './Summary.styles';
 import { LineChart } from './LineChart';
-import { MultiLineChart } from './MultiLineChart';
 import { initialSummaryList, calculateDifference } from './Summary.helpers';
 
 const useStyles = makeStyles((_theme: TAppTheme) => ({
@@ -55,7 +53,7 @@ type TChartDataProps = {
 const Summary: React.FC = () => {
   const [summaryList, setSummaryList] = React.useState(initialSummaryList);
   const [summaryChartData, setSummaryChartData] = React.useState<ISummaryChartStats>();
-  const { fetchData } = useFetch<ISummary>({ method: 'get', url: URLS.SUMMARY_URL });
+  const { fetchData } = useFetch<ISummary>({ method: 'get', url: `${URLS.SUMMARY_URL}?limit=576` });
   const socket = React.useContext(SocketContext);
   const classes = useStyles();
   const { pathname } = useLocation();
@@ -66,16 +64,27 @@ const Summary: React.FC = () => {
     setSummaryList(prev => {
       const items = prev.map(summaryElement => {
         const key = summaryElement.key as keyof ISummaryStats;
-
+        const currentVal = currentStats?.[key] || 0;
+        const lastDayStatsVal = lastDayStats?.[key] || 0;
         return {
           ...summaryElement,
-          value: formatNumber(currentStats?.[key] || 0, {
-            decimalsLength: summaryElement.decimals,
-            divideToAmount: summaryElement.divideToAmount,
-          }),
-          previousValue: formatNumber(lastDayStats?.[key] || 0, {
-            decimalsLength: summaryElement.decimals,
-          }),
+          value: formatNumber(
+            summaryElement.key === 'percentPSLStaked'
+              ? parseFloat(currentVal.toString()) * 100
+              : currentVal,
+            {
+              decimalsLength: summaryElement.decimals,
+              divideToAmount: summaryElement.divideToAmount,
+            },
+          ),
+          previousValue: formatNumber(
+            summaryElement.key === 'percentPSLStaked'
+              ? parseFloat(lastDayStatsVal.toString()) * 100
+              : lastDayStatsVal,
+            {
+              decimalsLength: summaryElement.decimals,
+            },
+          ),
           difference: calculateDifference(currentStats?.[key] || 0, lastDayStats?.[key] || 0),
         };
       });
@@ -135,27 +144,6 @@ const Summary: React.FC = () => {
     };
   };
 
-  const transformPriceChartData = (key: string) => {
-    const dataX = [];
-    const dataY1 = [];
-    const dataY2 = [];
-    if (summaryChartData) {
-      const items = summaryChartData[key as keyof ISummaryChartStats] as TSummaryChartPriceProps[];
-      if (items.length) {
-        for (let i = 0; i < items.length; i += 1) {
-          dataX.push(new Date(items[i].time).toLocaleString());
-          dataY1.push(Number(items[i].usdPrice));
-          dataY2.push(Number(items[i].btcPrice));
-        }
-      }
-    }
-    return {
-      dataX,
-      dataY1,
-      dataY2,
-    };
-  };
-
   const generateChartData = (key: string): TChartDataProps => {
     let dataX;
     let dataY;
@@ -165,6 +153,30 @@ const Summary: React.FC = () => {
     let parseChartData;
 
     switch (key) {
+      case 'circulatingSupply':
+        parseChartData = transformChartData(key);
+        dataX = parseChartData?.dataX;
+        dataY = parseChartData?.dataY;
+        offset = 0;
+        break;
+      case 'coinSupply':
+        parseChartData = transformChartData(key);
+        dataX = parseChartData?.dataX;
+        dataY = parseChartData?.dataY;
+        offset = 10;
+        break;
+      case 'percentPSLStaked':
+        parseChartData = transformChartData(key);
+        dataX = parseChartData?.dataX;
+        dataY = parseChartData?.dataY;
+        offset = 0.004;
+        break;
+      case 'nonZeroAddressesCount':
+        parseChartData = transformChartData(key);
+        dataX = parseChartData?.dataX;
+        dataY = parseChartData?.dataY;
+        offset = 1;
+        break;
       case 'gigaHashPerSec':
         parseChartData = transformChartData(key);
         dataX = parseChartData?.dataX;
@@ -177,31 +189,6 @@ const Summary: React.FC = () => {
         dataY = parseChartData?.dataY;
         offset = 10000;
         break;
-      case 'coinSupply':
-        parseChartData = transformChartData(key);
-        dataX = parseChartData?.dataX;
-        dataY = parseChartData?.dataY;
-        offset = 10;
-        break;
-      case 'usdPrice':
-        parseChartData = transformPriceChartData(key);
-        dataX = parseChartData?.dataX;
-        dataY1 = parseChartData?.dataY1;
-        dataY2 = parseChartData?.dataY2;
-        offset = 0.0001;
-        break;
-      case 'nonZeroAddressesCount':
-        parseChartData = transformChartData(key);
-        dataX = parseChartData?.dataX;
-        dataY = parseChartData?.dataY;
-        offset = 1;
-        break;
-      case 'avgTransactionsPerSecond':
-        parseChartData = transformChartData(key);
-        dataX = parseChartData?.dataX;
-        dataY = parseChartData?.dataY;
-        offset = 0;
-        break;
       case 'avgBlockSizeLast24Hour':
         parseChartData = transformChartData(key);
         dataX = parseChartData?.dataX;
@@ -209,18 +196,6 @@ const Summary: React.FC = () => {
         offset = 1;
         break;
       case 'avgTransactionPerBlockLast24Hour':
-        parseChartData = transformChartData(key);
-        dataX = parseChartData?.dataX;
-        dataY = parseChartData?.dataY;
-        offset = 1;
-        break;
-      case 'avgTransactionFeeLast24Hour':
-        parseChartData = transformChartData(key);
-        dataX = parseChartData?.dataX;
-        dataY = parseChartData?.dataY;
-        offset = 0.01;
-        break;
-      case 'memPoolSize':
         parseChartData = transformChartData(key);
         dataX = parseChartData?.dataX;
         dataY = parseChartData?.dataY;
@@ -270,7 +245,7 @@ const Summary: React.FC = () => {
                         : themeVariant.custom.red.error
                     }`}
                   >
-                    Since yesterday
+                    {sumKey === 'percentPSLStaked' ? 'Last 30d' : 'Last 24h'}
                     <br />
                     <span>
                       {`${difference > 0 ? '+' : ''}`}
@@ -313,22 +288,12 @@ const Summary: React.FC = () => {
             </Styles.CardContent>
             {generateChartData(sumKey)?.dataX?.length ? (
               <div>
-                {sumKey !== 'usdPrice' ? (
-                  <LineChart
-                    chartName={sumKey}
-                    dataX={generateChartData(sumKey)?.dataX}
-                    dataY={generateChartData(sumKey)?.dataY}
-                    offset={generateChartData(sumKey)?.offset}
-                  />
-                ) : (
-                  <MultiLineChart
-                    chartName={sumKey}
-                    dataX={generateChartData(sumKey)?.dataX}
-                    dataY1={generateChartData(sumKey)?.dataY1}
-                    dataY2={generateChartData(sumKey)?.dataY2}
-                    offset={generateChartData(sumKey)?.offset}
-                  />
-                )}
+                <LineChart
+                  chartName={sumKey}
+                  dataX={generateChartData(sumKey)?.dataX}
+                  dataY={generateChartData(sumKey)?.dataY}
+                  offset={generateChartData(sumKey)?.offset}
+                />
               </div>
             ) : null}
           </Styles.Card>

@@ -127,6 +127,30 @@ export const statistics = [
     url: routes.STATISTICS_MARKET_CAP_PRICE,
     image: generatePreviewUrl(routes.STATISTICS_MARKET_CAP_PRICE),
   },
+  {
+    id: 'circulatingSupply',
+    title: `Circulating Supply (${getCurrencyName()})`,
+    url: routes.STATISTICS_CIRCULATING_SUPPLY,
+    image: generatePreviewUrl(routes.STATISTICS_CIRCULATING_SUPPLY),
+  },
+  {
+    id: 'totalSupply',
+    title: `Total Supply (${getCurrencyName()})`,
+    url: routes.STATISTICS_TOTAL_SUPPLY,
+    image: generatePreviewUrl(routes.STATISTICS_TOTAL_SUPPLY),
+  },
+  {
+    id: 'percentOfPSLStaked',
+    title: `% of ${getCurrencyName()} Staked`,
+    url: routes.STATISTICS_PERCENT_OF_PSL_STAKED,
+    image: generatePreviewUrl(routes.STATISTICS_PERCENT_OF_PSL_STAKED),
+  },
+  {
+    id: 'accounts',
+    title: 'Accounts',
+    url: routes.STATISTICS_ACCOUNTS,
+    image: generatePreviewUrl(routes.STATISTICS_ACCOUNTS),
+  },
 ];
 
 export const themes = [
@@ -194,6 +218,7 @@ export const periods: PeriodTypes[][] = [
   ['24h', '7d', '14d', '30d', '60d', '180d', '1y', 'all'],
   ['30d', '60d', '180d'],
   ['1h', '1d', '7d', '30d'],
+  ['24h', '7d', '14d', '30d', '90d', '180d', '1y', 'max'],
 ];
 
 export const CHART_THEME_BACKGROUND_DEFAULT_COLOR = '#2D3748';

@@ -10,6 +10,8 @@ export interface ISummaryStats {
   timestamp: number;
   avgTransactionsPerSecond: number;
   nonZeroAddressesCount: number;
+  circulatingSupply: number;
+  percentPSLStaked: number;
 }
 
 export type TSummaryChartProps = {
@@ -34,6 +36,8 @@ export interface ISummaryChartStats {
   avgTransactionPerBlockLast24Hour: TSummaryChartProps[];
   avgTransactionFeeLast24Hour: TSummaryChartProps[];
   memPoolSize: TSummaryChartProps[];
+  circulatingSupply: TSummaryChartProps[];
+  percentPSLStaked: TSummaryChartProps[];
 }
 
 export interface ISummary {

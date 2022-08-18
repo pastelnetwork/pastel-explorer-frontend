@@ -2,6 +2,7 @@ import { HeaderType } from '@components/Table/Table';
 
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { INetworkSupernodes } from '@utils/types/INetwork';
+import { chartColors } from '@components/Charts/DoughnutChart/DoughnutChart.options';
 
 import themeVariant from '@theme/variants';
 
@@ -34,16 +35,7 @@ export const generateChartData = (labels: Array<string>, data: Array<number>) =>
     datasets: [
       {
         data,
-        backgroundColor: [
-          themeVariant.palette.primary.main,
-          themeVariant.palette.secondary.main,
-          themeVariant.custom.green.light,
-          themeVariant.custom.red.light,
-          themeVariant.custom.orange.light,
-          themeVariant.custom.green.dark,
-          themeVariant.custom.red.dark,
-          themeVariant.custom.orange.dark,
-        ],
+        backgroundColor: chartColors,
         borderWidth: 1,
         borderColor: themeVariant.palette.background.paper,
         barThickness: 40,

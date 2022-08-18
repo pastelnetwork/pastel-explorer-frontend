@@ -110,6 +110,7 @@ export const GridWrapper = styled(Grid)`
 `;
 
 export const BlockWrapper = styled.div`
+  margin-top: 24px;
   box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
   background: ${props => props.theme.sidebar.menu.background};
   border-radius: 10px;
@@ -151,6 +152,10 @@ export const Status = styled.div`
     background: ${props => props.theme.supernodes.status.background.enabled};
   }
 
+  &.expired {
+    background: ${props => props.theme.supernodes.status.background.expired};
+  }
+
   ${props => props.theme.breakpoints.down(1024)} {
     max-width: calc(100vw - 165px);
     overflow: hidden;
@@ -171,5 +176,32 @@ export const TitleContainer = styled.div`
 export const FilterBlock = styled.div`
   ${props => props.theme.breakpoints.down('xs')} {
     margin-top: 10px;
+  }
+`;
+
+export const Gird = styled.div`
+  display: flex;
+
+  ${props => props.theme.breakpoints.down(1024)} {
+    flex-wrap: wrap;
+  }
+`;
+
+export const ExplorerMapColumn = styled.div`
+  width: 60%;
+  margin-right: 12px;
+
+  ${props => props.theme.breakpoints.down(1024)} {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 12px;
+  }
+`;
+
+export const SupernodeColumn = styled.div`
+  width: calc(40% - 4px);
+
+  ${props => props.theme.breakpoints.down(1024)} {
+    width: 100%;
   }
 `;

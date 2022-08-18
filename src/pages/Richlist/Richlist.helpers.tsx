@@ -133,6 +133,7 @@ const generateWealthDistributionItem = (
   rowLabel: string,
   className: string,
   top: number,
+  coinSupply: number,
 ) => {
   const rowId = list[0]?.address || '';
 
@@ -140,7 +141,8 @@ const generateWealthDistributionItem = (
     (acc, listElement) => {
       return {
         amount: acc.amount + listElement.amount,
-        percentage: acc.percentage + listElement.percentage,
+        percentage:
+          acc.percentage + parseFloat(((listElement.amount * 100) / coinSupply).toFixed(2)),
       };
     },
     { amount: 0, percentage: 0 },
@@ -178,7 +180,7 @@ const generateWealthDistributionItem = (
   };
 };
 
-export const generateWealthDistributionData = (list: IRichlist[]) => {
+export const generateWealthDistributionData = (list: IRichlist[], coinSupply: number) => {
   const newList = list.sort((a, b) => a.rank - b.rank);
   const dividedLists = LIST_DIVIDERS.map(([firstDivider, lastDivider]) => {
     const currentWealthDistributionList = newList.slice(firstDivider, lastDivider);
@@ -188,6 +190,7 @@ export const generateWealthDistributionData = (list: IRichlist[]) => {
       rowLabel,
       `top-${firstDivider + 1}-${lastDivider}`,
       firstDivider + 1 + lastDivider,
+      coinSupply,
     );
   });
   return dividedLists;

@@ -135,6 +135,7 @@ export const themeLight = createMuiTheme(
         background: {
           enabled: '#00D097',
           newStart: '#FFA21B',
+          expired: '#fe634c',
         },
         color: '#fff',
       },
