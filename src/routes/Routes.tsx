@@ -29,7 +29,7 @@ const childRoutes = (Layout: React.ElementType, routes: Array<RouteType>) =>
             render={(props: RouteComponentProps) => (
               <Layout>
                 <ChildrenGuard>
-                  <Helmet title={seoTitle} />
+                  <Helmet title={element.seoTitle || seoTitle} />
                   <ElementComponent {...props} />
                 </ChildrenGuard>
               </Layout>

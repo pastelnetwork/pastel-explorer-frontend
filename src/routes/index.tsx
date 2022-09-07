@@ -134,11 +134,13 @@ const statisticsRoutes = {
       path: ROUTES.STATISTICS_OVERTIME,
       name: 'Historical Statistics',
       component: StatisticsOvertime,
+      seoTitle: 'Historical Statistics',
     },
     {
       path: ROUTES.CASECASE_AND_SENSE_STATISTICS,
       name: 'Casecase and Sense Statistics',
       component: CasecaseAndSenseStatistics,
+      seoTitle: 'Casecase and Sense Statistics',
     },
   ],
 };

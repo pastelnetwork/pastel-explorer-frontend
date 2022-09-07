@@ -921,9 +921,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             },
           },
           axisLabel: {
-            color: 'auto',
-            distance: 40,
-            fontSize: 20,
+            show: false,
           },
           detail: {
             valueAnimation: true,
@@ -1615,9 +1613,7 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
             },
           },
           axisLabel: {
-            color: 'auto',
-            distance: 40,
-            fontSize: 20,
+            show: false,
           },
           detail: {
             valueAnimation: true,
