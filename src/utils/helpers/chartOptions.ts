@@ -921,12 +921,17 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             },
           },
           axisLabel: {
-            show: false,
+            color: 'auto',
+            distance: 40,
+            fontSize: 10,
           },
           detail: {
             valueAnimation: true,
             color: 'auto',
             fontSize: 50,
+            formatter(value: number) {
+              return `${value * 100}%`;
+            },
           },
           data: [
             {
@@ -1614,12 +1619,17 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
             },
           },
           axisLabel: {
-            show: false,
+            color: 'auto',
+            distance: 40,
+            fontSize: 10,
           },
           detail: {
             valueAnimation: true,
             color: 'auto',
             fontSize: 50,
+            formatter(value: number) {
+              return `${value * 100}%`;
+            },
           },
           data: [
             {
