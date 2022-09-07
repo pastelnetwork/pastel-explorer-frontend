@@ -926,6 +926,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           detail: {
             valueAnimation: true,
             color: 'auto',
+            fontSize: 50,
           },
           data: [
             {
@@ -1618,6 +1619,7 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
           detail: {
             valueAnimation: true,
             color: 'auto',
+            fontSize: 50,
           },
           data: [
             {
