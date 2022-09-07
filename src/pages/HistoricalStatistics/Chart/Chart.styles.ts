@@ -229,3 +229,11 @@ export const ChartTitle = styled.div`
     margin-bottom: 10px;
   }
 `;
+
+export const ChartSubTitle = styled.div`
+  display: block;
+  margin-bottom: 15px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 700;
+`;

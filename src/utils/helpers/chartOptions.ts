@@ -16,7 +16,7 @@ type TTxInBlock = {
 };
 
 export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
-  const { theme, data, dataX, dataY, dataY1, dataY2, chartName, minY, maxY } = args;
+  const { theme, data, dataX, dataY, dataY1, dataY2, chartName, minY, maxY, gaugeValue } = args;
   const chartOptions: TChartOption = {
     difficulty: {
       backgroundColor: theme?.backgroundColor,
@@ -791,13 +791,264 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         easing: 'cubicOut',
       },
     },
+    averageSizeOfNFTStoredOnCascade: {
+      series: [
+        {
+          type: 'gauge',
+          startAngle: 180,
+          endAngle: 0,
+          min: minY,
+          max: maxY,
+          radius: '100%',
+          center: ['50%', '65%'],
+          splitNumber: 12,
+          itemStyle: {
+            color: '#58D9F9',
+            shadowColor: 'rgba(0,138,255,0.45)',
+            shadowBlur: 10,
+            shadowOffsetX: 2,
+            shadowOffsetY: 2,
+          },
+          progress: {
+            show: true,
+            roundCap: true,
+            width: 18,
+          },
+          pointer: {
+            icon:
+              'path://M2090.36389,615.30999 L2090.36389,615.30999 C2091.48372,615.30999 2092.40383,616.194028 2092.44859,617.312956 L2096.90698,728.755929 C2097.05155,732.369577 2094.2393,735.416212 2090.62566,735.56078 C2090.53845,735.564269 2090.45117,735.566014 2090.36389,735.566014 L2090.36389,735.566014 C2086.74736,735.566014 2083.81557,732.63423 2083.81557,729.017692 C2083.81557,728.930412 2083.81732,728.84314 2083.82081,728.755929 L2088.2792,617.312956 C2088.32396,616.194028 2089.24407,615.30999 2090.36389,615.30999 Z',
+            length: '75%',
+            width: 16,
+            offsetCenter: [0, '5%'],
+          },
+          axisLine: {
+            roundCap: true,
+            lineStyle: {
+              width: 18,
+            },
+          },
+          axisTick: {
+            splitNumber: 2,
+            lineStyle: {
+              width: 2,
+              color: '#999',
+            },
+          },
+          splitLine: {
+            length: 12,
+            lineStyle: {
+              width: 3,
+              color: '#999',
+            },
+          },
+          axisLabel: {
+            distance: 30,
+            color: '#999',
+            fontSize: 20,
+            show: false,
+          },
+          title: {
+            show: false,
+          },
+          detail: {
+            borderWidth: 0,
+            lineHeight: 40,
+            height: 40,
+            borderRadius: 8,
+            offsetCenter: [0, '35%'],
+            valueAnimation: true,
+            formatter(value: number) {
+              return `{value|${value.toFixed(0)}}{unit|MB/NFT}`;
+            },
+            rich: {
+              value: {
+                fontSize: 50,
+                fontWeight: 'bolder',
+                color: theme?.color,
+              },
+              unit: {
+                fontSize: 20,
+                color: theme?.color,
+                padding: [0, 0, -20, 10],
+              },
+            },
+          },
+          data: [
+            {
+              value: gaugeValue,
+            },
+          ],
+        },
+      ],
+    },
+    averageRarenessScoreOfNFTsOnSense: {
+      series: [
+        {
+          type: 'gauge',
+          min: minY,
+          max: maxY,
+          radius: '90%',
+          center: ['50%', '58%'],
+          axisLine: {
+            lineStyle: {
+              width: 25,
+              color: [
+                [0.3, '#F4664A'],
+                [0.7, '#FAAD14'],
+                [1, '#30BF78'],
+              ],
+            },
+          },
+          pointer: {
+            itemStyle: {
+              color: 'auto',
+            },
+          },
+          axisTick: {
+            distance: -30,
+            length: 8,
+            lineStyle: {
+              color: '#fff',
+              width: 2,
+            },
+          },
+          splitLine: {
+            distance: -30,
+            length: 30,
+            lineStyle: {
+              color: '#fff',
+              width: 4,
+            },
+          },
+          axisLabel: {
+            color: 'auto',
+            distance: 40,
+            fontSize: 20,
+          },
+          detail: {
+            valueAnimation: true,
+            color: 'auto',
+          },
+          data: [
+            {
+              value: gaugeValue || 0,
+            },
+          ],
+        },
+      ],
+    },
+    totalOfCascadeRequests: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#5470c6', '#91cc75', '#fac858'],
+      grid: {
+        top: 8,
+        right: 8,
+        bottom: 20,
+        left: 50,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `<div style="text-align: left">${params[0].axisValue}</div>${
+            params[0].marker
+          } Total:&nbsp;${formatNumber(params[0].data)} requests`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+      },
+      yAxis: {
+        type: 'value',
+        splitLine: {
+          lineStyle: {
+            color: theme?.splitLineColor,
+          },
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          formatter(value: string) {
+            return convertYAxisLabel(Number(value), maxY);
+          },
+        },
+      },
+      series: {
+        type: 'line',
+        sampling: 'lttb',
+        data: dataY,
+        smooth: false,
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    totalSizeOfDataStored: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#cd6661'],
+      grid: {
+        top: 8,
+        right: 8,
+        bottom: 20,
+        left: 50,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `<div style="text-align: left">${params[0].axisValue}</div>${
+            params[0].marker
+          } Total:&nbsp;${formatNumber(params[0].data)} MB`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+      },
+      yAxis: {
+        type: 'value',
+        splitLine: {
+          lineStyle: {
+            color: theme?.splitLineColor,
+          },
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          formatter(value: string) {
+            return convertYAxisLabel(Number(value), maxY);
+          },
+        },
+      },
+      series: {
+        type: 'bar',
+        sampling: 'lttb',
+        name: 'Cascade Requests - NFTs stored',
+        data: dataY,
+        smooth: true,
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
   };
 
   return chartOptions[chartName];
 }
 
 export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
-  const { theme, dataY, chartName } = args;
+  const { theme, dataY, chartName, gaugeValue, dataX, minY, maxY } = args;
   const defaultOption: EChartsOption = {
     backgroundColor: theme?.backgroundColor,
     textStyle: {
@@ -992,6 +1243,498 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
           },
         },
       ],
+    },
+    accounts: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#5470c6', '#91cc75', '#fac858'],
+      grid: {
+        top: 8,
+        right: 8,
+        bottom: 20,
+        left: 50,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        max: maxY,
+        splitLine: {
+          lineStyle: {
+            color: theme?.splitLineColor,
+          },
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          formatter(value: string) {
+            return convertYAxisLabel(Number(value), maxY);
+          },
+        },
+      },
+      series: {
+        type: 'line',
+        sampling: 'lttb',
+        name: 'Accounts',
+        data: dataY,
+        smooth: true,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#5470C6',
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor || '#fff',
+            },
+          ]),
+        },
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    totalSupply: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#cd6661'],
+      grid: {
+        top: 8,
+        right: 8,
+        bottom: 20,
+        left: 50,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        max: maxY,
+        splitLine: {
+          lineStyle: {
+            color: theme?.splitLineColor,
+          },
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          formatter(value: string) {
+            return convertYAxisLabel(Number(value), maxY);
+          },
+        },
+      },
+      series: {
+        type: 'line',
+        sampling: 'lttb',
+        name: `Total Supply (${getCurrencyName()})`,
+        data: dataY,
+        smooth: true,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#cd6661',
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor ?? '#F4F4F4',
+            },
+          ]),
+        },
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    circulatingSupply: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#5470c6', '#91cc75', '#fac858'],
+      grid: {
+        top: 8,
+        right: 8,
+        bottom: 20,
+        left: 50,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        max: maxY,
+        splitLine: {
+          lineStyle: {
+            color: theme?.splitLineColor,
+          },
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          formatter(value: string) {
+            return convertYAxisLabel(Number(value), maxY);
+          },
+        },
+      },
+      series: {
+        type: 'line',
+        sampling: 'lttb',
+        name: `Circulating Supply (${getCurrencyName()})`,
+        data: dataY,
+        smooth: true,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#5470C6',
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor || '#fff',
+            },
+          ]),
+        },
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    percentOfPSLStaked: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#cd6661'],
+      grid: {
+        top: 8,
+        right: 8,
+        bottom: 20,
+        left: 50,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `${params[0].axisValue.split(', ')[0]}<br />${params[0].marker}${
+            params[0].seriesName
+          }&nbsp;&nbsp;${formatNumber(params[0].data * 100, { decimalsLength: 2 })}`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        max: maxY,
+        splitLine: {
+          lineStyle: {
+            color: theme?.splitLineColor,
+          },
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          formatter(value: string) {
+            return convertYAxisLabel(Number(value), maxY);
+          },
+        },
+      },
+      series: {
+        type: 'bar',
+        sampling: 'lttb',
+        name: `% of ${getCurrencyName()} Staked`,
+        data: dataY,
+        smooth: true,
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    averageSizeOfNFTStoredOnCascade: {
+      series: [
+        {
+          type: 'gauge',
+          startAngle: 180,
+          endAngle: 0,
+          min: minY,
+          max: maxY,
+          radius: '100%',
+          center: ['50%', '65%'],
+          splitNumber: 12,
+          itemStyle: {
+            color: '#58D9F9',
+            shadowColor: 'rgba(0,138,255,0.45)',
+            shadowBlur: 10,
+            shadowOffsetX: 2,
+            shadowOffsetY: 2,
+          },
+          progress: {
+            show: true,
+            roundCap: true,
+            width: 18,
+          },
+          pointer: {
+            icon:
+              'path://M2090.36389,615.30999 L2090.36389,615.30999 C2091.48372,615.30999 2092.40383,616.194028 2092.44859,617.312956 L2096.90698,728.755929 C2097.05155,732.369577 2094.2393,735.416212 2090.62566,735.56078 C2090.53845,735.564269 2090.45117,735.566014 2090.36389,735.566014 L2090.36389,735.566014 C2086.74736,735.566014 2083.81557,732.63423 2083.81557,729.017692 C2083.81557,728.930412 2083.81732,728.84314 2083.82081,728.755929 L2088.2792,617.312956 C2088.32396,616.194028 2089.24407,615.30999 2090.36389,615.30999 Z',
+            length: '75%',
+            width: 16,
+            offsetCenter: [0, '5%'],
+          },
+          axisLine: {
+            roundCap: true,
+            lineStyle: {
+              width: 18,
+            },
+          },
+          axisTick: {
+            splitNumber: 2,
+            lineStyle: {
+              width: 2,
+              color: '#999',
+            },
+          },
+          splitLine: {
+            length: 12,
+            lineStyle: {
+              width: 3,
+              color: '#999',
+            },
+          },
+          axisLabel: {
+            distance: 30,
+            color: '#999',
+            fontSize: 20,
+            show: false,
+          },
+          title: {
+            show: false,
+          },
+          detail: {
+            borderWidth: 0,
+            lineHeight: 40,
+            height: 40,
+            borderRadius: 8,
+            offsetCenter: [0, '35%'],
+            valueAnimation: true,
+            formatter(value: number) {
+              return `{value|${value.toFixed(0)}}{unit|MB/NFT}`;
+            },
+            rich: {
+              value: {
+                fontSize: 50,
+                fontWeight: 'bolder',
+                color: theme?.color,
+              },
+              unit: {
+                fontSize: 20,
+                color: theme?.color,
+                padding: [0, 0, -20, 10],
+              },
+            },
+          },
+          data: [
+            {
+              value: gaugeValue,
+            },
+          ],
+        },
+      ],
+    },
+    averageRarenessScoreOfNFTsOnSense: {
+      series: [
+        {
+          type: 'gauge',
+          min: minY,
+          max: maxY,
+          radius: '90%',
+          center: ['50%', '58%'],
+          axisLine: {
+            lineStyle: {
+              width: 25,
+              color: [
+                [0.3, '#F4664A'],
+                [0.7, '#FAAD14'],
+                [1, '#30BF78'],
+              ],
+            },
+          },
+          pointer: {
+            itemStyle: {
+              color: 'auto',
+            },
+          },
+          axisTick: {
+            distance: -30,
+            length: 8,
+            lineStyle: {
+              color: '#fff',
+              width: 2,
+            },
+          },
+          splitLine: {
+            distance: -30,
+            length: 30,
+            lineStyle: {
+              color: '#fff',
+              width: 4,
+            },
+          },
+          axisLabel: {
+            color: 'auto',
+            distance: 40,
+            fontSize: 20,
+          },
+          detail: {
+            valueAnimation: true,
+            color: 'auto',
+          },
+          data: [
+            {
+              value: gaugeValue || 0,
+            },
+          ],
+        },
+      ],
+    },
+    totalOfCascadeRequests: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#5470c6', '#91cc75', '#fac858'],
+      grid: {
+        top: 8,
+        right: 8,
+        bottom: 20,
+        left: 50,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `<div style="text-align: left">${params[0].axisValue}</div>${
+            params[0].marker
+          } Total:&nbsp;${formatNumber(params[0].data)} requests`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+      },
+      yAxis: {
+        type: 'value',
+        splitLine: {
+          lineStyle: {
+            color: theme?.splitLineColor,
+          },
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          formatter(value: string) {
+            return convertYAxisLabel(Number(value), maxY);
+          },
+        },
+      },
+      series: {
+        type: 'line',
+        sampling: 'lttb',
+        data: dataY,
+        smooth: false,
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    totalSizeOfDataStored: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#cd6661'],
+      grid: {
+        top: 8,
+        right: 8,
+        bottom: 20,
+        left: 50,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `<div style="text-align: left">${params[0].axisValue}</div>${
+            params[0].marker
+          } Total:&nbsp;${formatNumber(params[0].data)} MB`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+      },
+      yAxis: {
+        type: 'value',
+        splitLine: {
+          lineStyle: {
+            color: theme?.splitLineColor,
+          },
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          formatter(value: string) {
+            return convertYAxisLabel(Number(value), maxY);
+          },
+        },
+      },
+      series: {
+        type: 'bar',
+        sampling: 'lttb',
+        name: 'Cascade Requests - NFTs stored',
+        data: dataY,
+        smooth: true,
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
     },
   };
   return chartOptions[chartName];

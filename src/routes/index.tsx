@@ -46,6 +46,7 @@ import CirculatingSupply from '@pages/HistoricalStatistics/CirculatingSupply';
 import TotalSupply from '@pages/HistoricalStatistics/TotalSupply';
 import PercentOfPSLStaked from '@pages/HistoricalStatistics/PercentOfPSLStaked';
 import Accounts from '@pages/HistoricalStatistics/Accounts';
+import CasecaseAndSenseStatistics from '@pages/CasecaseAndSenseStatistics/CasecaseAndSenseStatistics';
 
 import * as ROUTES from '@utils/constants/routes';
 import { getCurrencyName } from '@utils/appInfo';
@@ -134,6 +135,11 @@ const statisticsRoutes = {
       name: 'Historical Statistics',
       component: StatisticsOvertime,
     },
+    {
+      path: ROUTES.CASECASE_AND_SENSE_STATISTICS,
+      name: 'Casecase and Sense Statistics',
+      component: CasecaseAndSenseStatistics,
+    },
   ],
 };
 // Statistics overtime routes
@@ -143,6 +149,16 @@ const statisticsOvertimeRoutes = {
   component: StatisticsOvertime,
   icon: <BarChartIcon />,
   seoTitle: 'Statistics Overtime',
+  children: null,
+  exact: false,
+};
+
+const casecaseAndSenseStatisticsRoutes = {
+  id: 'Casecase and Sense Statistics',
+  path: ROUTES.CASECASE_AND_SENSE_STATISTICS,
+  component: CasecaseAndSenseStatistics,
+  icon: <BarChartIcon />,
+  seoTitle: 'Casecase and Sense Statistics',
   children: null,
   exact: false,
 };
@@ -404,6 +420,7 @@ export const pageRoutes = [
   totalSupplyStatisticsRoutes,
   percentOfPSLStakedStatisticsRoutes,
   accountsStatisticsRoutes,
+  casecaseAndSenseStatisticsRoutes,
 ];
 
 export const sidebarRoutes = [

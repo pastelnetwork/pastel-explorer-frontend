@@ -34,6 +34,10 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     handleBgColorChange,
     setHeaderBackground,
     isDynamicTitleColor,
+    gaugeValue,
+    minGaugeValue = 0,
+    maxGaugeValue = 100,
+    subTitle,
   } = props;
   const { darkMode } = useSelector(getThemeState);
   const styles = eChartLineStyles();
@@ -106,6 +110,9 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
       }
     }
   }, [dataX, dataY]);
+  const isAverageNFTChart =
+    ['averageSizeOfNFTStoredOnCascade', 'averageRarenessScoreOfNFTsOnSense'].indexOf(chartName) !==
+    -1;
   const params: TThemeInitOption = {
     theme: currentTheme,
     dataX,
@@ -113,8 +120,9 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     dataY1,
     dataY2,
     chartName,
-    minY,
-    maxY,
+    minY: isAverageNFTChart ? minGaugeValue : minY,
+    maxY: isAverageNFTChart ? maxGaugeValue : maxY,
+    gaugeValue,
   };
   const options = getThemeInitOption(params);
   const downloadPNG = () => {
@@ -143,8 +151,9 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
       dataX,
       dataY,
       chartName,
-      minY,
-      maxY,
+      minY: isAverageNFTChart ? minGaugeValue : minY,
+      maxY: isAverageNFTChart ? maxGaugeValue : maxY,
+      gaugeValue,
     };
     const option = getThemeUpdateOption(paramsOption);
     eChartInstance?.setOption(option);
@@ -228,6 +237,11 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
         </Styles.ChartFilterWrapper>
       </Styles.LineChartHeader>
       <Styles.LineChartWrap>
+        {subTitle ? (
+          <Styles.ChartSubTitle style={{ color: currentTheme?.color }}>
+            {subTitle}
+          </Styles.ChartSubTitle>
+        ) : null}
         <ReactECharts
           notMerge={false}
           lazyUpdate

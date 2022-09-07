@@ -23,6 +23,9 @@ export type TThemeInitOption = {
   minY: number;
   maxY: number;
   darkMode?: boolean;
+  gaugeValue?: number;
+  minGaugeValue?: number;
+  maxGaugeValue?: number;
 };
 
 export type TLineChartProps = {
@@ -49,6 +52,11 @@ export type TLineChartProps = {
   handlePeriodFilterChange?: (_period: PeriodTypes) => void;
   setHeaderBackground?: boolean;
   isDynamicTitleColor?: boolean;
+  hideLineHeader?: boolean;
+  gaugeValue?: number;
+  minGaugeValue?: number;
+  maxGaugeValue?: number;
+  subTitle?: string;
 };
 
 export type TCsvHeaderType = {
