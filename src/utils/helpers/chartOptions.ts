@@ -1061,7 +1061,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         formatter: (params: TToolTipParamsProps[]) => {
           return `<div style="text-align: left">${params[0].axisValue}</div>${
             params[0].marker
-          } Total:&nbsp;${formatNumber(params[0].data)} artworks`;
+          } Total:&nbsp;${formatNumber(params[0].data)}`;
         },
       },
       xAxis: {
@@ -1820,7 +1820,7 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
         formatter: (params: TToolTipParamsProps[]) => {
           return `<div style="text-align: left">${params[0].axisValue}</div>${
             params[0].marker
-          } Total:&nbsp;${formatNumber(params[0].data)} artworks`;
+          } Total:&nbsp;${formatNumber(params[0].data)}`;
         },
       },
       xAxis: {

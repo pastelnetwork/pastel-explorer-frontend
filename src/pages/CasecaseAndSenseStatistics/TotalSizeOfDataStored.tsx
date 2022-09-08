@@ -1,10 +1,7 @@
 import { useState } from 'react';
 import { Skeleton } from '@material-ui/lab';
 
-// import { TLineChartData, IHashRateResponse } from '@utils/types/IStatistics';
-// import { useDeferredData } from '@utils/helpers/useFetch/useFetch';
-import { PeriodTypes /* , transformChartData */ } from '@utils/helpers/statisticsLib';
-// import * as URLS from '@utils/constants/urls';
+import { PeriodTypes } from '@utils/helpers/statisticsLib';
 import { periods, info } from '@utils/constants/statistics';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { EChartsLineChart } from '@pages/HistoricalStatistics/Chart/EChartsLineChart';
@@ -15,14 +12,6 @@ import * as Styles from './CasecaseAndSenseStatistics.styles';
 const TotalSizeOfDataStored: React.FC = () => {
   const [period, setPeriod] = useState<PeriodTypes>(periods[7][2]);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
-
-  // const { isLoading, data: chartData } = useDeferredData<IHashRateResponse, TLineChartData>(
-  //   { method: 'get', url: `${URLS.VOLUME_TRANSACTION_URL}`, params: { period } },
-  //   transformChartData,
-  //   undefined,
-  //   undefined,
-  //   [period],
-  // );
 
   const chartData = {
     dataX: [
@@ -94,7 +83,7 @@ const TotalSizeOfDataStored: React.FC = () => {
           chartName="totalSizeOfDataStored"
           dataX={chartData?.dataX}
           dataY={chartData?.dataY}
-          title="Size of data stored on Cascade"
+          title="Total data stored on Cascade"
           info={info}
           period={period}
           offset={1}
