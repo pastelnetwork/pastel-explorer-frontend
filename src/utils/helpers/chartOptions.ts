@@ -1049,7 +1049,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       series: {
         type: 'bar',
         sampling: 'lttb',
-        name: 'Cascade Requests - NFTs stored',
         data: dataY,
         smooth: true,
         areaStyle: {
@@ -1114,9 +1113,8 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       series: {
         type: 'line',
         sampling: 'lttb',
-        name: 'Cascade Requests - NFTs stored',
         data: dataY,
-        smooth: true,
+        smooth: false,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
@@ -1836,7 +1834,6 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       series: {
         type: 'bar',
         sampling: 'lttb',
-        name: 'Cascade Requests - NFTs stored',
         data: dataY,
         smooth: true,
         areaStyle: {
@@ -1901,9 +1898,8 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       series: {
         type: 'line',
         sampling: 'lttb',
-        name: 'Cascade Requests - NFTs stored',
         data: dataY,
-        smooth: true,
+        smooth: false,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
