@@ -5,6 +5,7 @@ import TotalSizeOfDataStored from './TotalSizeOfDataStored';
 import AverageSizeOfNFTStoredOnCascade from './AverageSizeOfNFTStoredOnCascade';
 import TotalOfSenseRequests from './TotalOfSenseRequests';
 import AverageRarenessScoreOfNFTsOnSense from './AverageRarenessScoreOfNFTsOnSense';
+import TotalFingerprintsOnSense from './TotalFingerprintsOnSense';
 import * as Styles from './CasecaseAndSenseStatistics.styles';
 
 const CasecaseAndSenseStatistics: React.FC = () => {
@@ -15,6 +16,7 @@ const CasecaseAndSenseStatistics: React.FC = () => {
         <AverageRarenessScoreOfNFTsOnSense />
         <TotalOfCascadeRequests />
         <TotalOfSenseRequests />
+        <TotalFingerprintsOnSense />
         <TotalSizeOfDataStored />
       </Styles.ChartWrapper>
     </Styles.Wrapper>

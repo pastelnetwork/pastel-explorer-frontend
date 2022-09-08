@@ -76,7 +76,6 @@ const TotalSizeOfDataStored: React.FC = () => {
       5187,
       5875,
       2937,
-      10416,
     ],
   };
 
@@ -87,7 +86,7 @@ const TotalSizeOfDataStored: React.FC = () => {
   const total = chartData?.dataY?.reduce((partialSum, a) => partialSum + a, 0) || 0;
 
   return (
-    <Styles.ContentWrapper className="full" style={{ backgroundColor: currentBgColor }}>
+    <Styles.ContentWrapper style={{ backgroundColor: currentBgColor }}>
       {!chartData ? (
         <Skeleton animation="wave" variant="rect" height={386} />
       ) : (
@@ -103,7 +102,7 @@ const TotalSizeOfDataStored: React.FC = () => {
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
           setHeaderBackground
-          subTitle={`Total: ${formatNumber(total)} MB`}
+          subTitle={`Total: ${formatNumber(total)}`}
         />
       )}
     </Styles.ContentWrapper>

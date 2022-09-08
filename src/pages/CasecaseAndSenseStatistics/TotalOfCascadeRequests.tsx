@@ -76,7 +76,6 @@ const TotalOfCascadeRequests: React.FC = () => {
       3662500,
       3518750,
       3587500,
-      3293750,
     ],
   };
 

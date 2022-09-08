@@ -3,7 +3,7 @@ import { Skeleton } from '@material-ui/lab';
 
 // import { TLineChartData, IHashRateResponse } from '@utils/types/IStatistics';
 // import { useDeferredData } from '@utils/helpers/useFetch/useFetch';
-import { PeriodTypes /* transformChartData */ } from '@utils/helpers/statisticsLib';
+import { PeriodTypes /* , transformChartData */ } from '@utils/helpers/statisticsLib';
 // import * as URLS from '@utils/constants/urls';
 import { periods, info } from '@utils/constants/statistics';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
@@ -12,7 +12,7 @@ import { useBackgroundChart } from '@utils/hooks';
 
 import * as Styles from './CasecaseAndSenseStatistics.styles';
 
-const TotalOfSenseRequests: React.FC = () => {
+const TotalFingerprintsOnSense: React.FC = () => {
   const [period, setPeriod] = useState<PeriodTypes>(periods[7][2]);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
 
@@ -52,36 +52,37 @@ const TotalOfSenseRequests: React.FC = () => {
       '09/06/2022',
     ],
     dataY: [
-      57568,
-      66371,
-      65992,
-      70805,
-      95005,
-      95005,
-      65842,
-      110416,
-      62325,
-      65985,
-      65548,
-      42995,
-      25618,
-      35437,
-      36062,
-      35875,
-      36000,
-      4312,
-      113286,
+      6371,
+      5992,
+      4805,
+      7568,
+      5005,
+      5842,
+      2325,
+      5005,
+      13286,
+      5985,
+      5548,
+      5618,
+      5437,
+      2995,
+      6062,
+      6000,
+      3120,
+      5875,
       9145,
-      35187,
-      36625,
-      35187,
-      55875,
+      5187,
+      6625,
+      5187,
+      5875,
+      10416,
     ],
   };
 
   const handlePeriodFilterChange = (per: PeriodTypes) => {
     setPeriod(per);
   };
+
   const total = chartData?.dataY?.reduce((partialSum, a) => partialSum + a, 0) || 0;
 
   return (
@@ -90,10 +91,10 @@ const TotalOfSenseRequests: React.FC = () => {
         <Skeleton animation="wave" variant="rect" height={386} />
       ) : (
         <EChartsLineChart
-          chartName="totalOfCascadeRequests"
+          chartName="totalFingerprintsOnSense"
           dataX={chartData?.dataX}
           dataY={chartData?.dataY}
-          title="Sense Requests - NFTs stored"
+          title="Total fingerprints on Sense"
           info={info}
           period={period}
           offset={1}
@@ -101,11 +102,11 @@ const TotalOfSenseRequests: React.FC = () => {
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
           setHeaderBackground
-          subTitle={`Total: ${formatNumber(total)} requests`}
+          subTitle={`Total: ${formatNumber(total)} MB`}
         />
       )}
     </Styles.ContentWrapper>
   );
 };
 
-export default TotalOfSenseRequests;
+export default TotalFingerprintsOnSense;
