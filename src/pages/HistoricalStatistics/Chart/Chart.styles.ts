@@ -21,6 +21,10 @@ export const DonwloadButton = styled.button`
 
   @media screen and (max-width: 960px) {
     margin-left: 10px;
+
+    &:first-child {
+      margin-left: 0;
+    }
   }
 
   @media screen and (max-width: 375px) {

@@ -109,7 +109,7 @@ export const eChartLineStyles = makeStyles((theme: TAppTheme) => ({
     justifyContent: 'flex-end',
     [theme.breakpoints.down('sm')]: {
       marginTop: 10,
-      justifyContent: 'flex-start',
+      justifyContent: 'center',
     },
   },
   lineChartFooter: {
@@ -129,6 +129,10 @@ export const eChartLineStyles = makeStyles((theme: TAppTheme) => ({
     minWidth: '130px',
     justifyContent: 'space-between',
     alignItems: 'center',
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
   },
   themeSelectButton: {
     width: '30px',
