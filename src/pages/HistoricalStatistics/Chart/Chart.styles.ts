@@ -238,6 +238,6 @@ export const ChartSubTitle = styled.div`
   display: block;
   margin-bottom: 15px;
   text-align: left;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
 `;
