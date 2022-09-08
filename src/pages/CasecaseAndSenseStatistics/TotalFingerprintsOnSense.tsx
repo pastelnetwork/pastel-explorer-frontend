@@ -102,7 +102,7 @@ const TotalFingerprintsOnSense: React.FC = () => {
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
           setHeaderBackground
-          subTitle={`Total: ${formatNumber(total)} MB`}
+          subTitle={`Total: ${formatNumber(total)}`}
         />
       )}
     </Styles.ContentWrapper>
