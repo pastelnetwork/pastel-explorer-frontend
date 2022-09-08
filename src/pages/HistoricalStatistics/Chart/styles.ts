@@ -126,8 +126,8 @@ export const eChartLineStyles = makeStyles((theme: TAppTheme) => ({
   },
   lineChartThemeSelect: {
     display: 'flex',
-    minWidth: '150px',
-    justifyContent: 'space-around',
+    minWidth: '130px',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   themeSelectButton: {

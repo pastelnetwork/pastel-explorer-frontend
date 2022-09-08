@@ -949,9 +949,9 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       color: ['#5470c6', '#91cc75', '#fac858'],
       grid: {
         top: 9,
-        right: 4,
+        right: -13,
         bottom: 0,
-        left: 4,
+        left: -13,
         show: false,
       },
       tooltip: {
@@ -1013,9 +1013,9 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       color: ['#cd6661'],
       grid: {
         top: 9,
-        right: 4,
+        right: -6,
         bottom: 0,
-        left: 4,
+        left: -6,
         show: false,
       },
       tooltip: {
@@ -1077,9 +1077,9 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       color: ['#cd6661'],
       grid: {
         top: 9,
-        right: 4,
+        right: -13,
         bottom: 0,
-        left: 4,
+        left: -13,
         show: false,
       },
       tooltip: {
@@ -1087,7 +1087,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         formatter: (params: TToolTipParamsProps[]) => {
           return `<div style="text-align: left">${params[0].axisValue}</div>${
             params[0].marker
-          } Total:&nbsp;${formatNumber(params[0].data)} MB`;
+          } Total:&nbsp;${formatNumber(params[0].data)} artworks`;
         },
       },
       xAxis: {
@@ -1734,9 +1734,9 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       color: ['#5470c6', '#91cc75', '#fac858'],
       grid: {
         top: 9,
-        right: 4,
+        right: -13,
         bottom: 0,
-        left: 4,
+        left: -13,
         show: false,
       },
       tooltip: {
@@ -1798,9 +1798,9 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       color: ['#cd6661'],
       grid: {
         top: 9,
-        right: 4,
+        right: -6,
         bottom: 0,
-        left: 4,
+        left: -6,
         show: false,
       },
       tooltip: {
@@ -1862,9 +1862,9 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       color: ['#cd6661'],
       grid: {
         top: 9,
-        right: 4,
+        right: -13,
         bottom: 0,
-        left: 4,
+        left: -13,
         show: false,
       },
       tooltip: {
@@ -1872,7 +1872,7 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
         formatter: (params: TToolTipParamsProps[]) => {
           return `<div style="text-align: left">${params[0].axisValue}</div>${
             params[0].marker
-          } Total:&nbsp;${formatNumber(params[0].data)} MB`;
+          } Total:&nbsp;${formatNumber(params[0].data)} artworks`;
         },
       },
       xAxis: {
