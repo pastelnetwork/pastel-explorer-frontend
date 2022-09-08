@@ -5,6 +5,7 @@ import { Skeleton } from '@material-ui/lab';
 // import { useDeferredData } from '@utils/helpers/useFetch/useFetch';
 import { PeriodTypes /* , transformChartData */ } from '@utils/helpers/statisticsLib';
 // import * as URLS from '@utils/constants/urls';
+import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { periods, info } from '@utils/constants/statistics';
 import { EChartsLineChart } from '@pages/HistoricalStatistics/Chart/EChartsLineChart';
 import { useBackgroundChart } from '@utils/hooks';
@@ -82,6 +83,8 @@ const AverageSizeOfNFTStoredOnCascade: React.FC = () => {
     setPeriod(per);
   };
 
+  const total = chartData?.dataY?.reduce((partialSum, a) => partialSum + a, 0) || 0;
+
   return (
     <Styles.ContentWrapper style={{ backgroundColor: currentBgColor }}>
       {!chartData ? (
@@ -99,6 +102,7 @@ const AverageSizeOfNFTStoredOnCascade: React.FC = () => {
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
           setHeaderBackground
+          subTitle={`Total: ${formatNumber(total)} MB`}
         />
       )}
     </Styles.ContentWrapper>
