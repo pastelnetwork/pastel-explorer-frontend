@@ -920,6 +920,70 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
+      color: ['#cd6661'],
+      grid: {
+        top: 9,
+        right: -13,
+        bottom: 0,
+        left: -13,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `<div style="text-align: left">${params[0].axisValue}</div>${
+            params[0].marker
+          } Total:&nbsp;${formatNumber(params[0].data)} requests`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+      },
+      yAxis: {
+        type: 'value',
+        max: maxY,
+        axisLine: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+      },
+      series: {
+        type: 'line',
+        sampling: 'lttb',
+        data: dataY,
+        smooth: false,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#cd6661',
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor ?? '#F4F4F4',
+            },
+          ]),
+        },
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    totalOfSenseRequests: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
       color: ['#5470c6', '#91cc75', '#fac858'],
       grid: {
         top: 9,
@@ -1048,7 +1112,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
-      color: ['#cd6661'],
+      color: ['#5470c6', '#91cc75', '#fac858'],
       grid: {
         top: 9,
         right: -6,
@@ -1679,6 +1743,70 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
+      color: ['#cd6661'],
+      grid: {
+        top: 9,
+        right: -13,
+        bottom: 0,
+        left: -13,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `<div style="text-align: left">${params[0].axisValue}</div>${
+            params[0].marker
+          } Total:&nbsp;${formatNumber(params[0].data)} requests`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+      },
+      yAxis: {
+        type: 'value',
+        max: maxY,
+        axisLine: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+      },
+      series: {
+        type: 'line',
+        sampling: 'lttb',
+        data: dataY,
+        smooth: false,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#cd6661',
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor ?? '#F4F4F4',
+            },
+          ]),
+        },
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    totalOfSenseRequests: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
       color: ['#5470c6', '#91cc75', '#fac858'],
       grid: {
         top: 9,
@@ -1807,7 +1935,7 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
-      color: ['#cd6661'],
+      color: ['#5470c6', '#91cc75', '#fac858'],
       grid: {
         top: 9,
         right: -6,

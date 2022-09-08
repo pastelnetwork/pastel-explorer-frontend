@@ -79,7 +79,7 @@ const TotalOfSenseRequests: React.FC = () => {
         <Skeleton animation="wave" variant="rect" height={386} />
       ) : (
         <EChartsLineChart
-          chartName="totalOfCascadeRequests"
+          chartName="totalOfSenseRequests"
           dataX={chartData?.dataX}
           dataY={chartData?.dataY}
           title="Sense Requests"
