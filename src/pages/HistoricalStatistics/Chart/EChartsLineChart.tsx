@@ -80,7 +80,11 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
       } else if (chartName === 'difficulty') {
         setMinY(Math.floor(min / offset) * offset);
         setMaxY(Math.ceil(max / offset) * offset);
-      } else if (chartName === 'percentOfPSLStaked') {
+      } else if (
+        ['percentOfPSLStaked', 'totalOfCascadeRequests', 'totalSizeOfDataStored'].indexOf(
+          chartName,
+        ) !== -1
+      ) {
         setMinY(min - offset);
         setMaxY(max + offset);
       } else {

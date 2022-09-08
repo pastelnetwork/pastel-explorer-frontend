@@ -948,10 +948,10 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       color: ['#5470c6', '#91cc75', '#fac858'],
       grid: {
-        top: 8,
-        right: 8,
-        bottom: 20,
-        left: 50,
+        top: 9,
+        right: 4,
+        bottom: 0,
+        left: 4,
         show: false,
       },
       tooltip: {
@@ -965,21 +965,22 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       xAxis: {
         type: 'category',
         data: dataX,
+        axisLabel: {
+          show: false,
+        },
       },
       yAxis: {
         type: 'value',
-        splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
-        },
+        min: minY,
+        max: maxY,
         axisLine: {
-          show: true,
+          show: false,
         },
         axisLabel: {
-          formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY);
-          },
+          show: false,
+        },
+        splitLine: {
+          show: false,
         },
       },
       series: {
@@ -1000,10 +1001,10 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       color: ['#cd6661'],
       grid: {
-        top: 8,
-        right: 8,
-        bottom: 20,
-        left: 50,
+        top: 9,
+        right: 4,
+        bottom: 0,
+        left: 4,
         show: false,
       },
       tooltip: {
@@ -1017,21 +1018,22 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       xAxis: {
         type: 'category',
         data: dataX,
+        axisLabel: {
+          show: false,
+        },
       },
       yAxis: {
         type: 'value',
-        splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
-        },
+        min: minY,
+        max: maxY,
         axisLine: {
-          show: true,
+          show: false,
         },
         axisLabel: {
-          formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY);
-          },
+          show: false,
+        },
+        splitLine: {
+          show: false,
         },
       },
       series: {
@@ -1646,10 +1648,10 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       },
       color: ['#5470c6', '#91cc75', '#fac858'],
       grid: {
-        top: 8,
-        right: 8,
-        bottom: 20,
-        left: 50,
+        top: 9,
+        right: 4,
+        bottom: 0,
+        left: 4,
         show: false,
       },
       tooltip: {
@@ -1663,21 +1665,22 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       xAxis: {
         type: 'category',
         data: dataX,
+        axisLabel: {
+          show: false,
+        },
       },
       yAxis: {
         type: 'value',
-        splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
-        },
+        min: minY,
+        max: maxY,
         axisLine: {
-          show: true,
+          show: false,
         },
         axisLabel: {
-          formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY);
-          },
+          show: false,
+        },
+        splitLine: {
+          show: false,
         },
       },
       series: {
@@ -1698,10 +1701,10 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       },
       color: ['#cd6661'],
       grid: {
-        top: 8,
-        right: 8,
-        bottom: 20,
-        left: 50,
+        top: 9,
+        right: 4,
+        bottom: 0,
+        left: 4,
         show: false,
       },
       tooltip: {
@@ -1715,21 +1718,22 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       xAxis: {
         type: 'category',
         data: dataX,
+        axisLabel: {
+          show: false,
+        },
       },
       yAxis: {
         type: 'value',
-        splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
-        },
+        min: minY,
+        max: maxY,
         axisLine: {
           show: true,
         },
         axisLabel: {
-          formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY);
-          },
+          show: false,
+        },
+        splitLine: {
+          show: false,
         },
       },
       series: {
