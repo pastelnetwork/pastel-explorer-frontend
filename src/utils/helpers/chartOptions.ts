@@ -971,7 +971,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         type: 'value',
-        min: minY,
         max: maxY,
         axisLine: {
           show: false,
@@ -1024,7 +1023,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         type: 'value',
-        min: minY,
         max: maxY,
         axisLine: {
           show: false,
@@ -1671,7 +1669,6 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         type: 'value',
-        min: minY,
         max: maxY,
         axisLine: {
           show: false,
@@ -1724,7 +1721,6 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         type: 'value',
-        min: minY,
         max: maxY,
         axisLine: {
           show: true,
