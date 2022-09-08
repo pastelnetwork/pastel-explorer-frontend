@@ -49,7 +49,7 @@ const TotalFingerprintsOnSense: React.FC = () => {
       5842,
       2325,
       5005,
-      13286,
+      10286,
       5985,
       5548,
       5618,
@@ -64,7 +64,7 @@ const TotalFingerprintsOnSense: React.FC = () => {
       6625,
       5187,
       5875,
-      10416,
+      9416,
     ],
   };
 

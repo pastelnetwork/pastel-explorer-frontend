@@ -1051,9 +1051,9 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       color: ['#cd6661'],
       grid: {
         top: 9,
-        right: -13,
+        right: -6,
         bottom: 0,
-        left: -13,
+        left: -6,
         show: false,
       },
       tooltip: {
@@ -1085,7 +1085,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
       },
       series: {
-        type: 'line',
+        type: 'bar',
         sampling: 'lttb',
         data: dataY,
         smooth: false,
@@ -1810,9 +1810,9 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       color: ['#cd6661'],
       grid: {
         top: 9,
-        right: -13,
+        right: -6,
         bottom: 0,
-        left: -13,
+        left: -6,
         show: false,
       },
       tooltip: {
@@ -1844,7 +1844,7 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
         },
       },
       series: {
-        type: 'line',
+        type: 'bar',
         sampling: 'lttb',
         data: dataY,
         smooth: false,
