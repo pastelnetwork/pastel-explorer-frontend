@@ -809,7 +809,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         formatter: (params: TToolTipParamsProps[]) => {
           return `<div style="text-align: left">${params[0].axisValue}</div>${
             params[0].marker
-          } Average size of NFT stored:&nbsp;${formatNumber(params[0].data)} MB`;
+          } Average size of NFT stored:&nbsp;${formatNumber(params[0].data)} MB/NFT`;
         },
       },
       xAxis: {
@@ -1568,7 +1568,7 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
         formatter: (params: TToolTipParamsProps[]) => {
           return `<div style="text-align: left">${params[0].axisValue}</div>${
             params[0].marker
-          } Average size of NFT stored:&nbsp;${formatNumber(params[0].data)} MB`;
+          } Average size of NFT stored:&nbsp;${formatNumber(params[0].data)} MB/NFT`;
         },
       },
       xAxis: {
