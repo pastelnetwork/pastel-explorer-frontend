@@ -12,8 +12,8 @@ const CasecaseAndSenseStatistics: React.FC = () => {
   return (
     <Styles.Wrapper>
       <Styles.ChartWrapper>
-        <AverageSizeOfNFTStoredOnCascade />
         <AverageRarenessScoreOfNFTsOnSense />
+        <AverageSizeOfNFTStoredOnCascade />
         <TotalOfCascadeRequests />
         <TotalOfSenseRequests />
         <TotalFingerprintsOnSense />

@@ -24,8 +24,58 @@ const AverageSizeOfNFTStoredOnCascade: React.FC = () => {
   // );
 
   const chartData = {
-    value: 120,
-    maxValue: 250,
+    dataX: [
+      '08/08/2022',
+      '08/09/2022',
+      '08/10/2022',
+      '08/11/2022',
+      '08/12/2022',
+      '08/13/2022',
+      '08/14/2022',
+      '08/15/2022',
+      '08/16/2022',
+      '08/23/2022',
+      '08/24/2022',
+      '08/25/2022',
+      '08/26/2022',
+      '08/27/2022',
+      '08/28/2022',
+      '08/29/2022',
+      '08/30/2022',
+      '08/31/2022',
+      '09/01/2022',
+      '09/02/2022',
+      '09/03/2022',
+      '09/04/2022',
+      '09/05/2022',
+      '09/06/2022',
+    ],
+    dataY: [
+      6371,
+      5992,
+      4805,
+      7568,
+      5005,
+      5842,
+      2325,
+      5005,
+      13286,
+      5985,
+      5548,
+      5618,
+      5437,
+      2995,
+      6062,
+      6000,
+      3120,
+      5875,
+      9145,
+      5187,
+      6625,
+      5187,
+      5875,
+      10416,
+    ],
   };
 
   const handlePeriodFilterChange = (per: PeriodTypes) => {
@@ -40,6 +90,8 @@ const AverageSizeOfNFTStoredOnCascade: React.FC = () => {
         <EChartsLineChart
           chartName="averageSizeOfNFTStoredOnCascade"
           title="Average size of NFT stored on Cascade"
+          dataX={chartData?.dataX}
+          dataY={chartData?.dataY}
           info={info}
           period={period}
           offset={1}
@@ -47,8 +99,6 @@ const AverageSizeOfNFTStoredOnCascade: React.FC = () => {
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
           setHeaderBackground
-          gaugeValue={chartData.value}
-          maxGaugeValue={chartData.maxValue}
         />
       )}
     </Styles.ContentWrapper>

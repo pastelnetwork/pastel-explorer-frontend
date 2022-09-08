@@ -114,9 +114,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
       }
     }
   }, [dataX, dataY]);
-  const isAverageNFTChart =
-    ['averageSizeOfNFTStoredOnCascade', 'averageRarenessScoreOfNFTsOnSense'].indexOf(chartName) !==
-    -1;
+  const isAverageNFTChart = ['averageRarenessScoreOfNFTsOnSense'].indexOf(chartName) !== -1;
   const params: TThemeInitOption = {
     theme: currentTheme,
     dataX,
