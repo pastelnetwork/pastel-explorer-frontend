@@ -2051,6 +2051,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             },
           ]),
         },
+        showSymbol: false,
       },
       stateAnimation: {
         duration: 300,
@@ -2110,6 +2111,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           type: 'line',
           data: dataY1,
           color: '#2f2a03',
+          showSymbol: false,
         },
       ],
       stateAnimation: {
@@ -2144,6 +2146,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         axisLabel: {
           show: false,
         },
+        boundaryGap: false,
       },
       yAxis: {
         type: 'value',
@@ -2175,6 +2178,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             },
           ]),
         },
+        showSymbol: false,
       },
       stateAnimation: {
         duration: 300,
@@ -2239,6 +2243,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             },
           ]),
         },
+        showSymbol: false,
       },
       stateAnimation: {
         duration: 300,
@@ -2367,6 +2372,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             },
           ]),
         },
+        showSymbol: false,
       },
       stateAnimation: {
         duration: 300,
