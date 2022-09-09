@@ -440,3 +440,14 @@ export const transformAnalyticsChartData = ({
 }: TAnalyticsChartResponse): TAnalyticsChartData => {
   return { ...data };
 };
+
+export const generatePeriodToDropdownOptions = (periods: PeriodTypes[]) => {
+  const results = [];
+  for (let i = 0; i < periods.length; i += 1) {
+    results.push({
+      name: `Last ${periods[i]}`,
+      value: periods[i],
+    });
+  }
+  return results;
+};

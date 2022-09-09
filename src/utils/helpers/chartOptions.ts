@@ -16,7 +16,7 @@ type TTxInBlock = {
 };
 
 export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
-  const { theme, data, dataX, dataY, dataY1, dataY2, chartName, minY, maxY, gaugeValue } = args;
+  const { theme, data, dataX, dataY, dataY1, dataY2, chartName, minY, maxY } = args;
   const chartOptions: TChartOption = {
     difficulty: {
       backgroundColor: theme?.backgroundColor,
@@ -791,393 +791,13 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         easing: 'cubicOut',
       },
     },
-    averageSizeOfNFTStoredOnCascade: {
-      backgroundColor: theme?.backgroundColor,
-      textStyle: {
-        color: theme?.color,
-      },
-      color: ['#cd6661'],
-      grid: {
-        top: 9,
-        right: -13,
-        bottom: 0,
-        left: -13,
-        show: false,
-      },
-      tooltip: {
-        trigger: 'axis',
-        formatter: (params: TToolTipParamsProps[]) => {
-          return `<div style="text-align: left">${params[0].axisValue}</div>${
-            params[0].marker
-          } Average size of NFT stored:&nbsp;${formatNumber(params[0].data)} MB/NFT`;
-        },
-      },
-      xAxis: {
-        type: 'category',
-        data: dataX,
-        axisLabel: {
-          show: false,
-        },
-      },
-      yAxis: {
-        type: 'value',
-        max: maxY,
-        axisLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-      },
-      series: {
-        type: 'line',
-        sampling: 'lttb',
-        data: dataY,
-        smooth: false,
-        areaStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: '#cd6661',
-            },
-            {
-              offset: 1,
-              color: theme?.backgroundColor ?? '#F4F4F4',
-            },
-          ]),
-        },
-      },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
-    },
-    averageRarenessScoreOfNFTsOnSense: {
-      series: [
-        {
-          type: 'gauge',
-          min: minY,
-          max: maxY,
-          radius: '90%',
-          center: ['50%', '58%'],
-          axisLine: {
-            lineStyle: {
-              width: 25,
-              color: [
-                [0.3, '#F4664A'],
-                [0.7, '#FAAD14'],
-                [1, '#30BF78'],
-              ],
-            },
-          },
-          pointer: {
-            itemStyle: {
-              color: 'auto',
-            },
-          },
-          axisTick: {
-            distance: -30,
-            length: 8,
-            lineStyle: {
-              color: '#fff',
-              width: 2,
-            },
-          },
-          splitLine: {
-            distance: -30,
-            length: 30,
-            lineStyle: {
-              color: '#fff',
-              width: 4,
-            },
-          },
-          axisLabel: {
-            color: 'auto',
-            distance: 40,
-            fontSize: 10,
-          },
-          detail: {
-            valueAnimation: true,
-            color: 'auto',
-            fontSize: 50,
-            formatter(value: number) {
-              return `${value * 100}%`;
-            },
-          },
-          data: [
-            {
-              value: gaugeValue || 0,
-            },
-          ],
-        },
-      ],
-    },
-    totalOfCascadeRequests: {
-      backgroundColor: theme?.backgroundColor,
-      textStyle: {
-        color: theme?.color,
-      },
-      color: ['#cd6661'],
-      grid: {
-        top: 9,
-        right: -13,
-        bottom: 0,
-        left: -13,
-        show: false,
-      },
-      tooltip: {
-        trigger: 'axis',
-        formatter: (params: TToolTipParamsProps[]) => {
-          return `<div style="text-align: left">${params[0].axisValue}</div>${
-            params[0].marker
-          } Total:&nbsp;${formatNumber(params[0].data)} requests`;
-        },
-      },
-      xAxis: {
-        type: 'category',
-        data: dataX,
-        axisLabel: {
-          show: false,
-        },
-      },
-      yAxis: {
-        type: 'value',
-        max: maxY,
-        axisLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-      },
-      series: {
-        type: 'line',
-        sampling: 'lttb',
-        data: dataY,
-        smooth: false,
-        areaStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: '#cd6661',
-            },
-            {
-              offset: 1,
-              color: theme?.backgroundColor ?? '#F4F4F4',
-            },
-          ]),
-        },
-      },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
-    },
-    totalOfSenseRequests: {
-      backgroundColor: theme?.backgroundColor,
-      textStyle: {
-        color: theme?.color,
-      },
-      color: ['#5470c6', '#91cc75', '#fac858'],
-      grid: {
-        top: 9,
-        right: -13,
-        bottom: 0,
-        left: -13,
-        show: false,
-      },
-      tooltip: {
-        trigger: 'axis',
-        formatter: (params: TToolTipParamsProps[]) => {
-          return `<div style="text-align: left">${params[0].axisValue}</div>${
-            params[0].marker
-          } Total:&nbsp;${formatNumber(params[0].data)} requests`;
-        },
-      },
-      xAxis: {
-        type: 'category',
-        data: dataX,
-        axisLabel: {
-          show: false,
-        },
-      },
-      yAxis: {
-        type: 'value',
-        max: maxY,
-        axisLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-      },
-      series: {
-        type: 'line',
-        sampling: 'lttb',
-        data: dataY,
-        smooth: false,
-        areaStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: '#5470C6',
-            },
-            {
-              offset: 1,
-              color: theme?.backgroundColor || '#fff',
-            },
-          ]),
-        },
-      },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
-    },
-    totalSizeOfDataStored: {
-      backgroundColor: theme?.backgroundColor,
-      textStyle: {
-        color: theme?.color,
-      },
-      color: ['#cd6661'],
-      grid: {
-        top: 9,
-        right: -6,
-        bottom: 0,
-        left: -6,
-        show: false,
-      },
-      tooltip: {
-        trigger: 'axis',
-        formatter: (params: TToolTipParamsProps[]) => {
-          return `<div style="text-align: left">${params[0].axisValue}</div>${
-            params[0].marker
-          } Total:&nbsp;${formatNumber(params[0].data)} MB`;
-        },
-      },
-      xAxis: {
-        type: 'category',
-        data: dataX,
-        axisLabel: {
-          show: false,
-        },
-      },
-      yAxis: {
-        type: 'value',
-        max: maxY,
-        axisLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-      },
-      series: {
-        type: 'bar',
-        sampling: 'lttb',
-        data: dataY,
-        smooth: true,
-        areaStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: '#5470C6',
-            },
-            {
-              offset: 1,
-              color: theme?.backgroundColor || '#fff',
-            },
-          ]),
-        },
-      },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
-    },
-    totalFingerprintsOnSense: {
-      backgroundColor: theme?.backgroundColor,
-      textStyle: {
-        color: theme?.color,
-      },
-      color: ['#5470c6', '#91cc75', '#fac858'],
-      grid: {
-        top: 9,
-        right: -6,
-        bottom: 0,
-        left: -6,
-        show: false,
-      },
-      tooltip: {
-        trigger: 'axis',
-        formatter: (params: TToolTipParamsProps[]) => {
-          return `<div style="text-align: left">${params[0].axisValue}</div>${
-            params[0].marker
-          } Total:&nbsp;${formatNumber(params[0].data)}`;
-        },
-      },
-      xAxis: {
-        type: 'category',
-        data: dataX,
-        axisLabel: {
-          show: false,
-        },
-      },
-      yAxis: {
-        type: 'value',
-        max: maxY,
-        axisLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-      },
-      series: {
-        type: 'bar',
-        sampling: 'lttb',
-        data: dataY,
-        smooth: false,
-        areaStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: '#cd6661',
-            },
-            {
-              offset: 1,
-              color: theme?.backgroundColor ?? '#F4F4F4',
-            },
-          ]),
-        },
-      },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
-    },
   };
 
   return chartOptions[chartName];
 }
 
 export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
-  const { theme, dataY, chartName, gaugeValue, dataX, minY, maxY } = args;
+  const { theme, dataY, chartName, dataX, minY, maxY } = args;
   const defaultOption: EChartsOption = {
     backgroundColor: theme?.backgroundColor,
     textStyle: {
@@ -1614,386 +1234,6 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
         easing: 'cubicOut',
       },
     },
-    averageSizeOfNFTStoredOnCascade: {
-      backgroundColor: theme?.backgroundColor,
-      textStyle: {
-        color: theme?.color,
-      },
-      color: ['#cd6661'],
-      grid: {
-        top: 9,
-        right: -13,
-        bottom: 0,
-        left: -13,
-        show: false,
-      },
-      tooltip: {
-        trigger: 'axis',
-        formatter: (params: TToolTipParamsProps[]) => {
-          return `<div style="text-align: left">${params[0].axisValue}</div>${
-            params[0].marker
-          } Average size of NFT stored:&nbsp;${formatNumber(params[0].data)} MB/NFT`;
-        },
-      },
-      xAxis: {
-        type: 'category',
-        data: dataX,
-        axisLabel: {
-          show: false,
-        },
-      },
-      yAxis: {
-        type: 'value',
-        max: maxY,
-        axisLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-      },
-      series: {
-        type: 'line',
-        sampling: 'lttb',
-        data: dataY,
-        smooth: false,
-        areaStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: '#cd6661',
-            },
-            {
-              offset: 1,
-              color: theme?.backgroundColor ?? '#F4F4F4',
-            },
-          ]),
-        },
-      },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
-    },
-    averageRarenessScoreOfNFTsOnSense: {
-      series: [
-        {
-          type: 'gauge',
-          min: minY,
-          max: maxY,
-          radius: '90%',
-          center: ['50%', '58%'],
-          axisLine: {
-            lineStyle: {
-              width: 25,
-              color: [
-                [0.3, '#F4664A'],
-                [0.7, '#FAAD14'],
-                [1, '#30BF78'],
-              ],
-            },
-          },
-          pointer: {
-            itemStyle: {
-              color: 'auto',
-            },
-          },
-          axisTick: {
-            distance: -30,
-            length: 8,
-            lineStyle: {
-              color: '#fff',
-              width: 2,
-            },
-          },
-          splitLine: {
-            distance: -30,
-            length: 30,
-            lineStyle: {
-              color: '#fff',
-              width: 4,
-            },
-          },
-          axisLabel: {
-            color: 'auto',
-            distance: 40,
-            fontSize: 10,
-          },
-          detail: {
-            valueAnimation: true,
-            color: 'auto',
-            fontSize: 50,
-            formatter(value: number) {
-              return `${value * 100}%`;
-            },
-          },
-          data: [
-            {
-              value: gaugeValue || 0,
-            },
-          ],
-        },
-      ],
-    },
-    totalOfCascadeRequests: {
-      backgroundColor: theme?.backgroundColor,
-      textStyle: {
-        color: theme?.color,
-      },
-      color: ['#cd6661'],
-      grid: {
-        top: 9,
-        right: -13,
-        bottom: 0,
-        left: -13,
-        show: false,
-      },
-      tooltip: {
-        trigger: 'axis',
-        formatter: (params: TToolTipParamsProps[]) => {
-          return `<div style="text-align: left">${params[0].axisValue}</div>${
-            params[0].marker
-          } Total:&nbsp;${formatNumber(params[0].data)} requests`;
-        },
-      },
-      xAxis: {
-        type: 'category',
-        data: dataX,
-        axisLabel: {
-          show: false,
-        },
-      },
-      yAxis: {
-        type: 'value',
-        max: maxY,
-        axisLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-      },
-      series: {
-        type: 'line',
-        sampling: 'lttb',
-        data: dataY,
-        smooth: false,
-        areaStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: '#cd6661',
-            },
-            {
-              offset: 1,
-              color: theme?.backgroundColor ?? '#F4F4F4',
-            },
-          ]),
-        },
-      },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
-    },
-    totalOfSenseRequests: {
-      backgroundColor: theme?.backgroundColor,
-      textStyle: {
-        color: theme?.color,
-      },
-      color: ['#5470c6', '#91cc75', '#fac858'],
-      grid: {
-        top: 9,
-        right: -13,
-        bottom: 0,
-        left: -13,
-        show: false,
-      },
-      tooltip: {
-        trigger: 'axis',
-        formatter: (params: TToolTipParamsProps[]) => {
-          return `<div style="text-align: left">${params[0].axisValue}</div>${
-            params[0].marker
-          } Total:&nbsp;${formatNumber(params[0].data)} requests`;
-        },
-      },
-      xAxis: {
-        type: 'category',
-        data: dataX,
-        axisLabel: {
-          show: false,
-        },
-      },
-      yAxis: {
-        type: 'value',
-        max: maxY,
-        axisLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-      },
-      series: {
-        type: 'line',
-        sampling: 'lttb',
-        data: dataY,
-        smooth: false,
-        areaStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: '#5470C6',
-            },
-            {
-              offset: 1,
-              color: theme?.backgroundColor || '#fff',
-            },
-          ]),
-        },
-      },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
-    },
-    totalSizeOfDataStored: {
-      backgroundColor: theme?.backgroundColor,
-      textStyle: {
-        color: theme?.color,
-      },
-      color: ['#cd6661'],
-      grid: {
-        top: 9,
-        right: -6,
-        bottom: 0,
-        left: -6,
-        show: false,
-      },
-      tooltip: {
-        trigger: 'axis',
-        formatter: (params: TToolTipParamsProps[]) => {
-          return `<div style="text-align: left">${params[0].axisValue}</div>${
-            params[0].marker
-          } Total:&nbsp;${formatNumber(params[0].data)} MB`;
-        },
-      },
-      xAxis: {
-        type: 'category',
-        data: dataX,
-        axisLabel: {
-          show: false,
-        },
-      },
-      yAxis: {
-        type: 'value',
-        max: maxY,
-        axisLine: {
-          show: true,
-        },
-        axisLabel: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-      },
-      series: {
-        type: 'bar',
-        sampling: 'lttb',
-        data: dataY,
-        smooth: true,
-        areaStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: '#5470C6',
-            },
-            {
-              offset: 1,
-              color: theme?.backgroundColor || '#fff',
-            },
-          ]),
-        },
-      },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
-    },
-    totalFingerprintsOnSense: {
-      backgroundColor: theme?.backgroundColor,
-      textStyle: {
-        color: theme?.color,
-      },
-      color: ['#5470c6', '#91cc75', '#fac858'],
-      grid: {
-        top: 9,
-        right: -6,
-        bottom: 0,
-        left: -6,
-        show: false,
-      },
-      tooltip: {
-        trigger: 'axis',
-        formatter: (params: TToolTipParamsProps[]) => {
-          return `<div style="text-align: left">${params[0].axisValue}</div>${
-            params[0].marker
-          } Total:&nbsp;${formatNumber(params[0].data)}`;
-        },
-      },
-      xAxis: {
-        type: 'category',
-        data: dataX,
-        axisLabel: {
-          show: false,
-        },
-      },
-      yAxis: {
-        type: 'value',
-        max: maxY,
-        axisLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-      },
-      series: {
-        type: 'bar',
-        sampling: 'lttb',
-        data: dataY,
-        smooth: false,
-        areaStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: '#cd6661',
-            },
-            {
-              offset: 1,
-              color: theme?.backgroundColor ?? '#F4F4F4',
-            },
-          ]),
-        },
-      },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
-    },
   };
   return chartOptions[chartName];
 }
@@ -2019,7 +1259,7 @@ type TSizeProps = {
 };
 
 export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOption {
-  const { theme, dataX, dataY, chartName, minY, maxY, darkMode } = args;
+  const { theme, dataX, dataY, dataY1, chartName, minY, maxY, darkMode } = args;
   const chartOptions: TChartOption = {
     gigaHashPerSec: {
       backgroundColor: theme?.backgroundColor,
@@ -2746,6 +1986,387 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         name: `% of ${getCurrencyName()} Staked: `,
         type: 'bar',
         data: dataY,
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    averageSizeOfNFTStoredOnCascade: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#cd6661'],
+      grid: {
+        top: 9,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `<div style="text-align: left">${params[0].axisValue}</div>${
+            params[0].marker
+          } Average size of NFT stored:&nbsp;${formatNumber(params[0].data)} MB/NFT`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        max: maxY,
+        axisLine: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+      },
+      series: {
+        type: 'line',
+        sampling: 'lttb',
+        data: dataY,
+        smooth: false,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#cd6661',
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor ?? '#F4F4F4',
+            },
+          ]),
+        },
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    averageRarenessScoreOfNFTsOnSense: {
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          crossStyle: {
+            color: '#999',
+          },
+        },
+      },
+      grid: {
+        top: 9,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        show: false,
+      },
+      xAxis: [
+        {
+          type: 'category',
+          data: dataX,
+          axisLabel: {
+            show: false,
+          },
+        },
+      ],
+      yAxis: [
+        {
+          type: 'value',
+          max: maxY,
+          axisLine: {
+            show: false,
+          },
+          axisLabel: {
+            show: false,
+          },
+          splitLine: {
+            show: false,
+          },
+        },
+      ],
+      series: [
+        {
+          name: 'Highest rareness score',
+          type: 'bar',
+          data: dataY,
+          color: '#5470C6',
+        },
+        {
+          name: 'Average rareness score',
+          type: 'line',
+          data: dataY1,
+          color: '#cd6661',
+        },
+      ],
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    totalOfCascadeRequests: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#cd6661'],
+      grid: {
+        top: 9,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `<div style="text-align: left">${params[0].axisValue}</div>${
+            params[0].marker
+          } Total:&nbsp;${formatNumber(params[0].data)} requests`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+      },
+      yAxis: {
+        type: 'value',
+        max: maxY,
+        axisLine: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+      },
+      series: {
+        type: 'line',
+        sampling: 'lttb',
+        data: dataY,
+        smooth: false,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#cd6661',
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor ?? '#F4F4F4',
+            },
+          ]),
+        },
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    totalOfSenseRequests: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#5470c6', '#91cc75', '#fac858'],
+      grid: {
+        top: 9,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `<div style="text-align: left">${params[0].axisValue}</div>${
+            params[0].marker
+          } Total:&nbsp;${formatNumber(params[0].data)} requests`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+      },
+      yAxis: {
+        type: 'value',
+        max: maxY,
+        axisLine: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+      },
+      series: {
+        type: 'line',
+        sampling: 'lttb',
+        data: dataY,
+        smooth: false,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#5470C6',
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor || '#fff',
+            },
+          ]),
+        },
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    totalSizeOfDataStored: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#cd6661'],
+      grid: {
+        top: 9,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `<div style="text-align: left">${params[0].axisValue}</div>${
+            params[0].marker
+          } Total:&nbsp;${formatNumber(params[0].data)} MB`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+      },
+      yAxis: {
+        type: 'value',
+        max: maxY,
+        axisLine: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+      },
+      series: {
+        type: 'bar',
+        sampling: 'lttb',
+        data: dataY,
+        smooth: true,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#5470C6',
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor || '#fff',
+            },
+          ]),
+        },
+      },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    totalFingerprintsOnSense: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#5470c6', '#91cc75', '#fac858'],
+      grid: {
+        top: 9,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `<div style="text-align: left">${params[0].axisValue}</div>${
+            params[0].marker
+          } Total:&nbsp;${formatNumber(params[0].data)}`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+      },
+      yAxis: {
+        type: 'value',
+        max: maxY,
+        axisLine: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+      },
+      series: {
+        type: 'bar',
+        sampling: 'lttb',
+        data: dataY,
+        smooth: false,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#cd6661',
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor ?? '#F4F4F4',
+            },
+          ]),
+        },
       },
       stateAnimation: {
         duration: 300,

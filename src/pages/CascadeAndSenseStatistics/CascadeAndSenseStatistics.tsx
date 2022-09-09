@@ -6,21 +6,21 @@ import AverageSizeOfNFTStoredOnCascade from './AverageSizeOfNFTStoredOnCascade';
 import TotalOfSenseRequests from './TotalOfSenseRequests';
 import AverageRarenessScoreOfNFTsOnSense from './AverageRarenessScoreOfNFTsOnSense';
 import TotalFingerprintsOnSense from './TotalFingerprintsOnSense';
-import * as Styles from './CasecaseAndSenseStatistics.styles';
+import * as Styles from './CascadeAndSenseStatistics.styles';
 
-const CasecaseAndSenseStatistics: React.FC = () => {
+const CascadeAndSenseStatistics: React.FC = () => {
   return (
     <Styles.Wrapper>
       <Styles.ChartWrapper>
         <AverageRarenessScoreOfNFTsOnSense />
-        <AverageSizeOfNFTStoredOnCascade />
         <TotalOfSenseRequests />
-        <TotalOfCascadeRequests />
         <TotalFingerprintsOnSense />
+        <AverageSizeOfNFTStoredOnCascade />
+        <TotalOfCascadeRequests />
         <TotalSizeOfDataStored />
       </Styles.ChartWrapper>
     </Styles.Wrapper>
   );
 };
 
-export default CasecaseAndSenseStatistics;
+export default CascadeAndSenseStatistics;

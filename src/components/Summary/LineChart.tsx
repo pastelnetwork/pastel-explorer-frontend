@@ -18,6 +18,7 @@ type TLineChartProps = {
   dataY1?: number[];
   dataY2?: number[];
   offset: number;
+  disableClick?: boolean;
 };
 
 export const LineChart = (props: TLineChartProps): JSX.Element | null => {
@@ -46,7 +47,11 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
       } else if (chartName === 'difficulty') {
         setMinY(Math.floor(min / offset) * offset);
         setMaxY(Math.ceil(max / offset) * offset);
-      } else if (chartName === 'percentPSLStaked') {
+      } else if (
+        ['percentPSLStaked', 'totalOfCascadeRequests', 'totalSizeOfDataStored'].indexOf(
+          chartName,
+        ) !== -1
+      ) {
         setMinY(min - offset);
         setMaxY(max + offset);
       } else if (
@@ -77,7 +82,9 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
   const options = getSummaryThemeUpdateOption(params);
 
   const onChartClick = () => {
-    history.push(getRouteForChart(chartName));
+    if (!props.disableClick) {
+      history.push(getRouteForChart(chartName));
+    }
   };
 
   return (
@@ -92,4 +99,5 @@ LineChart.defaultProps = {
   dataY: undefined,
   dataY1: undefined,
   dataY2: undefined,
+  disableClick: false,
 };
