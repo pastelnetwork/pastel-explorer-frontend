@@ -2109,7 +2109,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           name: 'Average rareness score',
           type: 'line',
           data: dataY1,
-          color: '#cd6661',
+          color: '#2f2a03',
         },
       ],
       stateAnimation: {
