@@ -43,7 +43,7 @@ const AverageRarenessScoreOfNFTsOnSense: React.FC = () => {
             Average rareness score on Sense
           </SummaryStyles.Typography>
           <SummaryStyles.Typography variant="h4">
-            <SummaryStyles.Values>{formatNumber(total)} MB</SummaryStyles.Values>
+            <SummaryStyles.Values>{formatNumber(total)}</SummaryStyles.Values>
           </SummaryStyles.Typography>
         </SummaryStyles.ValueWrapper>
         <SummaryStyles.PercentageWrapper>
