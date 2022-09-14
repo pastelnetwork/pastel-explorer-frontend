@@ -2,9 +2,13 @@
 import { makeStyles } from '@material-ui/styles';
 
 import { TAppTheme } from '@theme/index';
-import TransactionStatistics from './TransactionStatistics/TransactionStatistics';
+import * as StatisticsStyles from '@pages/CascadeAndSenseStatistics/CascadeAndSenseStatistics.styles';
+
 import NetworkStatistics from './NetworkStatistics/NetworkStatistics';
 import BlockStatistics from './BlockStatistics/BlockStatistics';
+import BlockSizes from './BlockStatistics/BlockSizes';
+import VolumeTransactions from './TransactionStatistics/VolumeTransactions';
+import IncomingTransactions from './TransactionStatistics/IncomingTransactions';
 import * as Styles from './Statistics.styles';
 
 const useStyles = makeStyles((theme: TAppTheme) => ({
@@ -22,10 +26,16 @@ const Statistics = () => {
     <Styles.StatisticsContainer>
       <BlockStatistics />
       <div className={classes.blockSpace} />
-      <Styles.ChartWrapper>
-        <NetworkStatistics />
-        <TransactionStatistics />
-      </Styles.ChartWrapper>
+      <Styles.BlockWrapper>
+        <StatisticsStyles.Wrapper>
+          <Styles.ChartWrapper>
+            <BlockSizes />
+            <NetworkStatistics />
+            <VolumeTransactions />
+            <IncomingTransactions />
+          </Styles.ChartWrapper>
+        </StatisticsStyles.Wrapper>
+      </Styles.BlockWrapper>
     </Styles.StatisticsContainer>
   );
 };

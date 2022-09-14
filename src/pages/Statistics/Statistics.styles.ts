@@ -36,7 +36,6 @@ export const ZoomElement = styled.div`
 export const BlockWrapper = styled.div`
   position: relative;
   box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
-  background: ${props => props.theme.sidebar.menu.background};
   border-radius: 10px;
   overflow: hidden;
 `;
@@ -82,62 +81,27 @@ export const GridBlocksStatisticsRoot = styled(Grid)`
 `;
 
 export const ChartWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 33% 66%;
-  gap: 16px;
+  display: flex;
+  flex-wrap: wrap;
 
-  ${props => props.theme.breakpoints.down('md')} {
-    .line-chart-footer {
-      flex-direction: column;
+  .cascade-sense-card {
+    width: calc(50% - 8px);
+    margin-right: 16px;
+    margin-bottom: 16px;
 
-      & > div {
-        &:last-child {
-          margin-top: 10px;
-        }
-      }
+    &:nth-child(3) {
+      margin-right: 16px;
     }
 
-    .line-chart-header {
-      min-height: 97px;
-      flex-direction: column;
-
-      & > div {
-        &:last-child {
-          margin-top: 10px;
-        }
-      }
-    }
-  }
-
-  ${props => props.theme.breakpoints.down('sm')} {
-    display: block;
-
-    & > div {
-      &:last-child {
-        margin-top: 16px;
-      }
+    &:nth-child(2),
+    &:nth-child(4) {
+      margin-right: 0;
     }
 
-    .line-chart-footer {
-      flex-direction: row;
-    }
-
-    .line-chart-header {
-      min-height: auto;
-      flex-direction: row;
-
-      & > div {
-        &:last-child {
-          margin-top: 0;
-        }
-      }
-    }
-  }
-
-  ${props => props.theme.breakpoints.down('xs')} {
-    .line-chart-header {
-      margin-top: 0;
-      flex-direction: column;
+    ${props => props.theme.breakpoints.down('xs')} {
+      width: 100%;
+      margin-right: 0;
+      margin-left: 0;
     }
   }
 `;

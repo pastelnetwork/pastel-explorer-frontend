@@ -48,9 +48,14 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
         setMinY(Math.floor(min / offset) * offset);
         setMaxY(Math.ceil(max / offset) * offset);
       } else if (
-        ['percentPSLStaked', 'totalOfCascadeRequests', 'totalSizeOfDataStored'].indexOf(
-          chartName,
-        ) !== -1
+        [
+          'percentPSLStaked',
+          'totalOfCascadeRequests',
+          'totalSizeOfDataStored',
+          'blockSizesStatistics',
+          'networkStatistics',
+          'incomingTransactions',
+        ].indexOf(chartName) !== -1
       ) {
         setMinY(min - offset);
         setMaxY(max + offset);
