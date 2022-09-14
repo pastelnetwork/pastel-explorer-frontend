@@ -115,7 +115,7 @@ const BlockSizes: React.FC = () => {
       </SummaryStyles.CardContent>
       <div>
         {!chartData || isLoading ? (
-          <Skeleton animation="wave" variant="rect" height={386} />
+          <Skeleton animation="wave" variant="rect" height={170} />
         ) : (
           <LineChart
             chartName="blockSizesStatistics"
