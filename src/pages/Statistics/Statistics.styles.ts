@@ -38,6 +38,10 @@ export const BlockWrapper = styled.div`
   box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
   border-radius: 10px;
   overflow: hidden;
+
+  &.no-shadow {
+    box-shadow: none;
+  }
 `;
 
 export const BlockTitle = styled.h4`

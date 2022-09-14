@@ -26,7 +26,7 @@ const Statistics = () => {
     <Styles.StatisticsContainer>
       <BlockStatistics />
       <div className={classes.blockSpace} />
-      <Styles.BlockWrapper>
+      <Styles.BlockWrapper className="no-shadow">
         <StatisticsStyles.Wrapper>
           <Styles.ChartWrapper>
             <BlockSizes />
