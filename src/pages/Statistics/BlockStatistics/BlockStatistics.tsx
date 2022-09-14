@@ -195,7 +195,7 @@ const StatisticsBlocks: React.FC = () => {
             {chartData || !isLoading ? (
               <div style={{ flex: 1, backgroundColor: currentBgColor }}>
                 <EChartsLineChart
-                  chartName="hashrate"
+                  chartName="blockSizesStatistics"
                   dataX={chartData?.labels}
                   dataY={chartData?.data}
                   title="Block sizes (kB)"

@@ -22,9 +22,10 @@ const Statistics = () => {
     <Styles.StatisticsContainer>
       <BlockStatistics />
       <div className={classes.blockSpace} />
-      <NetworkStatistics />
-      <div className={classes.blockSpace} />
-      <TransactionStatistics />
+      <Styles.ChartWrapper>
+        <NetworkStatistics />
+        <TransactionStatistics />
+      </Styles.ChartWrapper>
     </Styles.StatisticsContainer>
   );
 };

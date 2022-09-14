@@ -34,7 +34,7 @@ const StatisticsBlocks: React.FC = () => {
   return (
     <div style={{ flex: 1, backgroundColor: currentBgColor }}>
       <EChartsLineChart
-        chartName="transactionfee"
+        chartName="incomingTransactions"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
         title="Incoming transactions"

@@ -38,7 +38,7 @@ const NetworkStatistics: React.FC = () => {
   return (
     <div style={{ flex: 1, backgroundColor: currentBgColor }}>
       <EChartsLineChart
-        chartName="averageblocksize"
+        chartName="networkStatistics"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
         title={`Volume of transactions (${getCurrencyName()})`}

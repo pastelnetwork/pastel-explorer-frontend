@@ -80,3 +80,83 @@ export const GridBlocksStatisticsRoot = styled(Grid)`
     border-radius: 8px;
   }
 `;
+
+export const ChartWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 33% 66%;
+  gap: 16px;
+
+  ${props => props.theme.breakpoints.down('md')} {
+    .line-chart-footer {
+      flex-direction: column;
+
+      & > div {
+        &:last-child {
+          margin-top: 10px;
+        }
+      }
+    }
+
+    .line-chart-header {
+      min-height: 97px;
+      flex-direction: column;
+
+      & > div {
+        &:last-child {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    display: block;
+
+    & > div {
+      &:last-child {
+        margin-top: 16px;
+      }
+    }
+
+    .line-chart-footer {
+      flex-direction: row;
+    }
+
+    .line-chart-header {
+      min-height: auto;
+      flex-direction: row;
+
+      & > div {
+        &:last-child {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+
+  ${props => props.theme.breakpoints.down('xs')} {
+    .line-chart-header {
+      margin-top: 0;
+      flex-direction: column;
+    }
+  }
+`;
+
+export const TransactionsStatisticsWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 16px;
+
+  & > div {
+    box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
+    border-radius: 10px;
+  }
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    display: block;
+
+    & > div {
+      border-radius: 0;
+    }
+  }
+`;

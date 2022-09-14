@@ -35,7 +35,7 @@ const NetworkStatistics: React.FC = () => {
           {chartData || !isLoading ? (
             <div style={{ flex: 1, backgroundColor: currentBgColor }}>
               <EChartsLineChart
-                chartName="averageblocksize"
+                chartName="networkStatistics"
                 dataX={chartData?.dataX}
                 dataY={chartData?.dataY}
                 title="Hashrate MH/s"

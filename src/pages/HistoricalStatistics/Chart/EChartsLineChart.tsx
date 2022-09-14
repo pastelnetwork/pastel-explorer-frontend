@@ -187,7 +187,9 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
 
   return (
     <Styles.ChartContainer>
-      <Styles.LineChartHeader className={setHeaderBackground ? 'has-bg' : ''}>
+      <Styles.LineChartHeader
+        className={`line-chart-header ${setHeaderBackground ? 'has-bg' : ''}`}
+      >
         {isDynamicTitleColor ? (
           <Styles.ChartTitle style={{ color: currentTheme?.color }}>{title}</Styles.ChartTitle>
         ) : (
@@ -254,7 +256,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
           }}
         />
       </Styles.LineChartWrap>
-      <Styles.LineChartFooter>
+      <Styles.LineChartFooter className="line-chart-footer">
         <div className={styles.lineChartThemeSelect}>
           {themes.map((theme, index) => (
             <Styles.ThemeButton
