@@ -911,6 +911,18 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           type: 'line',
           smooth: true,
           showSymbol: false,
+          areaStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: '#5470C6',
+              },
+              {
+                offset: 1,
+                color: theme?.backgroundColor || '#fff',
+              },
+            ]),
+          },
         },
       ],
       stateAnimation: {
