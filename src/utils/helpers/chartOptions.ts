@@ -893,6 +893,8 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         type: 'value',
+        min: minY,
+        max: maxY,
         splitLine: {
           show: false,
         },
@@ -1527,6 +1529,8 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         type: 'value',
+        min: minY,
+        max: maxY,
         splitLine: {
           show: false,
         },
