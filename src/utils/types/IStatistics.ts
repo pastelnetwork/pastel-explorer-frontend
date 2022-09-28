@@ -140,3 +140,15 @@ export type TChartStatisticsResponse = {
   time: number;
   value: number;
 };
+
+export type TAnalyticsChartResponse = {
+  data: {
+    maxValue: number;
+    value: number;
+  };
+};
+
+export type TAnalyticsChartData = {
+  maxValue: number;
+  value: number;
+};

@@ -21,6 +21,10 @@ export const DonwloadButton = styled.button`
 
   @media screen and (max-width: 960px) {
     margin-left: 10px;
+
+    &:first-child {
+      margin-left: 0;
+    }
   }
 
   @media screen and (max-width: 375px) {
@@ -228,4 +232,12 @@ export const ChartTitle = styled.div`
   ${props => props.theme.breakpoints.down('xs')} {
     margin-bottom: 10px;
   }
+`;
+
+export const ChartSubTitle = styled.div`
+  display: block;
+  margin-bottom: 15px;
+  text-align: left;
+  font-size: 18px;
+  font-weight: 700;
 `;

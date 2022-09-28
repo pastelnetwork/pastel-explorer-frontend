@@ -1,22 +1,18 @@
 import * as React from 'react';
-import { CircularProgress } from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
 
 import { transformChartData } from '@utils/helpers/statisticsLib';
-import { EChartsLineChart } from '@pages/HistoricalStatistics/Chart/EChartsLineChart';
-
+import { LineChart } from '@components/Summary/LineChart';
 import * as URLS from '@utils/constants/urls';
 import { useDeferredData } from '@utils/helpers/useFetch/useFetch';
-import { useBackgroundChart } from '@utils/hooks';
-
-import { info } from '@utils/constants/statistics';
 import { TLineChartData, IHashRateResponse } from '@utils/types/IStatistics';
 
-import * as Styles from '../Statistics.styles';
+import * as SummaryStyles from '@components/Summary/Summary.styles';
+import * as Styles from '@pages/CascadeAndSenseStatistics/CascadeAndSenseStatistics.styles';
 
 const BLOCK_ELEMENTS_COUNT = 8;
 
 const StatisticsBlocks: React.FC = () => {
-  const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const { isLoading, data: chartData } = useDeferredData<IHashRateResponse, TLineChartData>(
     { method: 'get', url: URLS.INCOMING_TRANSACTION_URL, params: { limit: BLOCK_ELEMENTS_COUNT } },
     transformChartData,
@@ -24,26 +20,31 @@ const StatisticsBlocks: React.FC = () => {
     undefined,
     [],
   );
-  if (!chartData || isLoading) {
-    return (
-      <Styles.Loader>
-        <CircularProgress size={40} />
-      </Styles.Loader>
-    );
-  }
+
   return (
-    <div style={{ flex: 1, backgroundColor: currentBgColor }}>
-      <EChartsLineChart
-        chartName="transactionfee"
-        dataX={chartData?.dataX}
-        dataY={chartData?.dataY}
-        title="Incoming transactions"
-        info={info}
-        offset={1}
-        handleBgColorChange={handleBgColorChange}
-        isDynamicTitleColor
-      />
-    </div>
+    <SummaryStyles.Card className="cascade-sense-card">
+      <SummaryStyles.CardContent>
+        <SummaryStyles.ValueWrapper>
+          <SummaryStyles.Typography variant="h6">Incoming transactions</SummaryStyles.Typography>
+        </SummaryStyles.ValueWrapper>
+        <SummaryStyles.PercentageWrapper>
+          <Styles.Percentage>&nbsp;</Styles.Percentage>
+        </SummaryStyles.PercentageWrapper>
+      </SummaryStyles.CardContent>
+      <div>
+        {!chartData || isLoading ? (
+          <Skeleton animation="wave" variant="rect" height={170} />
+        ) : (
+          <LineChart
+            chartName="incomingTransactions"
+            dataX={chartData?.dataX}
+            dataY={chartData?.dataY}
+            offset={1}
+            disableClick
+          />
+        )}
+      </div>
+    </SummaryStyles.Card>
   );
 };
 

@@ -80,6 +80,9 @@ export const eChartLineStyles = makeStyles((theme: TAppTheme) => ({
   reactECharts: {
     width: '100%',
     height: 'calc(100vh - 300px) !important',
+    [theme.breakpoints.down('sm')]: {
+      height: 'auto !important',
+    },
   },
   granularitySelect: {
     display: 'flex',
@@ -106,7 +109,7 @@ export const eChartLineStyles = makeStyles((theme: TAppTheme) => ({
     justifyContent: 'flex-end',
     [theme.breakpoints.down('sm')]: {
       marginTop: 10,
-      justifyContent: 'flex-start',
+      justifyContent: 'center',
     },
   },
   lineChartFooter: {
@@ -123,9 +126,13 @@ export const eChartLineStyles = makeStyles((theme: TAppTheme) => ({
   },
   lineChartThemeSelect: {
     display: 'flex',
-    minWidth: '150px',
-    justifyContent: 'space-around',
+    minWidth: '130px',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
   },
   themeSelectButton: {
     width: '30px',

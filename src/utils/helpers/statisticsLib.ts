@@ -14,6 +14,8 @@ import {
   TTransactionsChart,
   TChartResponseItem,
   TChartStatisticsResponse,
+  TAnalyticsChartResponse,
+  TAnalyticsChartData,
 } from '@utils/types/IStatistics';
 import { IBlock } from '@utils/types/IBlocks';
 import { formattedDate } from '@utils/helpers/date/date';
@@ -432,3 +434,20 @@ export function transformTotalSupplyDataChart(
     dataY,
   };
 }
+
+export const transformAnalyticsChartData = ({
+  data,
+}: TAnalyticsChartResponse): TAnalyticsChartData => {
+  return { ...data };
+};
+
+export const generatePeriodToDropdownOptions = (periods: PeriodTypes[]) => {
+  const results = [];
+  for (let i = 0; i < periods.length; i += 1) {
+    results.push({
+      name: `Last ${periods[i]}`,
+      value: periods[i],
+    });
+  }
+  return results;
+};

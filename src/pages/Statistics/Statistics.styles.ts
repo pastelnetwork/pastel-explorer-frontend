@@ -36,9 +36,12 @@ export const ZoomElement = styled.div`
 export const BlockWrapper = styled.div`
   position: relative;
   box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
-  background: ${props => props.theme.sidebar.menu.background};
   border-radius: 10px;
   overflow: hidden;
+
+  &.no-shadow {
+    box-shadow: none;
+  }
 `;
 
 export const BlockTitle = styled.h4`
@@ -78,5 +81,50 @@ export const GridBlocksStatisticsRoot = styled(Grid)`
   &::-webkit-scrollbar-thumb {
     background: ${props => props.theme.scrollbar};
     border-radius: 8px;
+  }
+`;
+
+export const ChartWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+
+  .cascade-sense-card {
+    width: calc(50% - 8px);
+    margin-right: 16px;
+    margin-bottom: 16px;
+
+    &:nth-child(3) {
+      margin-right: 16px;
+    }
+
+    &:nth-child(2),
+    &:nth-child(4) {
+      margin-right: 0;
+    }
+
+    ${props => props.theme.breakpoints.down('xs')} {
+      width: 100%;
+      margin-right: 0;
+      margin-left: 0;
+    }
+  }
+`;
+
+export const TransactionsStatisticsWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 16px;
+
+  & > div {
+    box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
+    border-radius: 10px;
+  }
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    display: block;
+
+    & > div {
+      border-radius: 0;
+    }
   }
 `;

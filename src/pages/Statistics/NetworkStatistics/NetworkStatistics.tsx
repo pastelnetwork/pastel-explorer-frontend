@@ -1,20 +1,23 @@
-import { useState } from 'react';
-import { CircularProgress, Grid } from '@material-ui/core';
+import { useState, ChangeEvent } from 'react';
+import { Skeleton } from '@material-ui/lab';
 
 import { TMiningInfo, TLineChartData } from '@utils/types/IStatistics';
-
-import { PeriodTypes, transformHashrateInfo } from '@utils/helpers/statisticsLib';
+import {
+  PeriodTypes,
+  transformHashrateInfo,
+  generatePeriodToDropdownOptions,
+} from '@utils/helpers/statisticsLib';
 import * as URLS from '@utils/constants/urls';
 import { useDeferredData } from '@utils/helpers/useFetch/useFetch';
-import { periods, info } from '@utils/constants/statistics';
-import { useBackgroundChart } from '@utils/hooks';
-import { EChartsLineChart } from '@pages/HistoricalStatistics/Chart/EChartsLineChart';
+import { periods } from '@utils/constants/statistics';
+import { LineChart } from '@components/Summary/LineChart';
+import { Dropdown } from '@components/Dropdown/Dropdown';
 
-import * as Styles from '../Statistics.styles';
+import * as SummaryStyles from '@components/Summary/Summary.styles';
+import * as Styles from '@pages/CascadeAndSenseStatistics/CascadeAndSenseStatistics.styles';
 
 const NetworkStatistics: React.FC = () => {
   const [period, setPeriod] = useState(periods[2][periods[2].length - 1]);
-  const [currentBgColor, handleBgColorChange] = useBackgroundChart();
 
   const { isLoading, data: chartData } = useDeferredData<{ data: TMiningInfo[] }, TLineChartData>(
     { method: 'get', url: `${URLS.GET_STATISTICS_HASHRATE}?period=${period}` },
@@ -24,38 +27,47 @@ const NetworkStatistics: React.FC = () => {
     [period],
   );
 
-  const handlePeriodFilterChange = (value: PeriodTypes) => {
-    setPeriod(value);
+  const handleDropdownChange = (
+    event: ChangeEvent<{
+      value: unknown;
+    }>,
+  ) => {
+    if (event.target.value) {
+      setPeriod(event.target.value as PeriodTypes);
+    }
   };
+
   return (
-    <Styles.BlockWrapper>
-      <Styles.BlockTitle>Network Statistics</Styles.BlockTitle>
-      <Grid container>
-        <Grid item xs={12}>
-          {chartData || !isLoading ? (
-            <div style={{ flex: 1, backgroundColor: currentBgColor }}>
-              <EChartsLineChart
-                chartName="averageblocksize"
-                dataX={chartData?.dataX}
-                dataY={chartData?.dataY}
-                title="Hashrate MH/s"
-                period={period}
-                info={info}
-                offset={1}
-                periods={periods[2]}
-                handleBgColorChange={handleBgColorChange}
-                handlePeriodFilterChange={handlePeriodFilterChange}
-                isDynamicTitleColor
-              />
-            </div>
-          ) : (
-            <Styles.Loader>
-              <CircularProgress size={40} />
-            </Styles.Loader>
-          )}
-        </Grid>
-      </Grid>
-    </Styles.BlockWrapper>
+    <SummaryStyles.Card className="cascade-sense-card">
+      <SummaryStyles.CardContent>
+        <SummaryStyles.ValueWrapper>
+          <SummaryStyles.Typography variant="h6">Hashrate MH/s</SummaryStyles.Typography>
+        </SummaryStyles.ValueWrapper>
+        <SummaryStyles.PercentageWrapper>
+          <Styles.Percentage>
+            <Dropdown
+              value={period}
+              onChange={handleDropdownChange}
+              options={generatePeriodToDropdownOptions(periods[2])}
+              classNameWrapper="cascade-sense-statistics"
+            />
+          </Styles.Percentage>
+        </SummaryStyles.PercentageWrapper>
+      </SummaryStyles.CardContent>
+      <div>
+        {!chartData || isLoading ? (
+          <Skeleton animation="wave" variant="rect" height={170} />
+        ) : (
+          <LineChart
+            chartName="networkStatistics"
+            dataX={chartData?.dataX}
+            dataY={chartData?.dataY}
+            offset={1}
+            disableClick
+          />
+        )}
+      </div>
+    </SummaryStyles.Card>
   );
 };
 
