@@ -34,6 +34,10 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     handleBgColorChange,
     setHeaderBackground,
     isDynamicTitleColor,
+    gaugeValue,
+    minGaugeValue = 0,
+    maxGaugeValue = 100,
+    subTitle,
   } = props;
   const { darkMode } = useSelector(getThemeState);
   const styles = eChartLineStyles();
@@ -76,7 +80,11 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
       } else if (chartName === 'difficulty') {
         setMinY(Math.floor(min / offset) * offset);
         setMaxY(Math.ceil(max / offset) * offset);
-      } else if (chartName === 'percentOfPSLStaked') {
+      } else if (
+        ['percentOfPSLStaked', 'totalOfCascadeRequests', 'totalSizeOfDataStored'].indexOf(
+          chartName,
+        ) !== -1
+      ) {
         setMinY(min - offset);
         setMaxY(max + offset);
       } else {
@@ -106,6 +114,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
       }
     }
   }, [dataX, dataY]);
+  const isAverageNFTChart = ['averageRarenessScoreOfNFTsOnSense'].indexOf(chartName) !== -1;
   const params: TThemeInitOption = {
     theme: currentTheme,
     dataX,
@@ -113,8 +122,9 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     dataY1,
     dataY2,
     chartName,
-    minY,
-    maxY,
+    minY: isAverageNFTChart ? minGaugeValue : minY,
+    maxY: isAverageNFTChart ? maxGaugeValue : maxY,
+    gaugeValue,
   };
   const options = getThemeInitOption(params);
   const downloadPNG = () => {
@@ -143,8 +153,9 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
       dataX,
       dataY,
       chartName,
-      minY,
-      maxY,
+      minY: isAverageNFTChart ? minGaugeValue : minY,
+      maxY: isAverageNFTChart ? maxGaugeValue : maxY,
+      gaugeValue,
     };
     const option = getThemeUpdateOption(paramsOption);
     eChartInstance?.setOption(option);
@@ -176,7 +187,9 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
 
   return (
     <Styles.ChartContainer>
-      <Styles.LineChartHeader className={setHeaderBackground ? 'has-bg' : ''}>
+      <Styles.LineChartHeader
+        className={`line-chart-header ${setHeaderBackground ? 'has-bg' : ''}`}
+      >
         {isDynamicTitleColor ? (
           <Styles.ChartTitle style={{ color: currentTheme?.color }}>{title}</Styles.ChartTitle>
         ) : (
@@ -228,6 +241,11 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
         </Styles.ChartFilterWrapper>
       </Styles.LineChartHeader>
       <Styles.LineChartWrap>
+        {subTitle ? (
+          <Styles.ChartSubTitle style={{ color: currentTheme?.color }}>
+            {subTitle}
+          </Styles.ChartSubTitle>
+        ) : null}
         <ReactECharts
           notMerge={false}
           lazyUpdate
@@ -238,7 +256,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
           }}
         />
       </Styles.LineChartWrap>
-      <Styles.LineChartFooter>
+      <Styles.LineChartFooter className="line-chart-footer">
         <div className={styles.lineChartThemeSelect}>
           {themes.map((theme, index) => (
             <Styles.ThemeButton

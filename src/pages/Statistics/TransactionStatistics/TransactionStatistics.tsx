@@ -9,13 +9,11 @@ const TransactionStatistics: React.FC = () => {
   return (
     <Styles.BlockWrapper>
       <Styles.BlockTitle>Transactions Statistics</Styles.BlockTitle>
-      <Grid container>
-        <Grid item xs={12}>
+      <Grid>
+        <Styles.TransactionsStatisticsWrapper>
           <VolumeTransactions />
-        </Grid>
-        <Grid item xs={12}>
           <IncomingTransactions />
-        </Grid>
+        </Styles.TransactionsStatisticsWrapper>
       </Grid>
     </Styles.BlockWrapper>
   );

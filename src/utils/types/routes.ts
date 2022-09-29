@@ -23,4 +23,5 @@ export type RouteChildType = {
   icon?: JSX.Element;
   badge?: string | number;
   guard?: any;
+  seoTitle?: string;
 };

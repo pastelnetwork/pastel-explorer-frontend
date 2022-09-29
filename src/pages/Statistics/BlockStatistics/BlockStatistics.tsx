@@ -1,23 +1,18 @@
 import * as React from 'react';
 // third party
 import { useHistory } from 'react-router-dom';
-import { format, fromUnixTime } from 'date-fns';
 
 import { Grid, darken, CircularProgress } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { TAppTheme } from '@theme/index';
 // application
-import { EChartsLineChart } from '@pages/HistoricalStatistics/Chart/EChartsLineChart';
 import { BlockUnconfirmed } from '@utils/types/ITransactions';
 
 import * as ROUTES from '@utils/constants/routes';
 import * as URLS from '@utils/constants/urls';
-import { useFetch, useDeferredData } from '@utils/helpers/useFetch/useFetch';
+import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { IBlock } from '@utils/types/IBlocks';
-import { useBackgroundChart } from '@utils/hooks';
-import { PeriodTypes } from '@utils/helpers/statisticsLib';
 
-import { periods, info } from '@utils/constants/statistics';
 import { SocketContext } from '@context/socket';
 
 import BlockVisualization from './BlockVisualization/BlockVisualization';
@@ -46,18 +41,11 @@ const useStyles = makeStyles((_theme: TAppTheme) => ({
   },
 }));
 
-interface ChartProps {
-  labels: Array<string>;
-  data: Array<number>;
-}
-
 const StatisticsBlocks: React.FC = () => {
   const history = useHistory();
   const classes = useStyles();
   const [blockElements, setBlockElements] = React.useState<Array<ITransformBlocksData>>([]);
-  const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const [blocksUnconfirmed, setBlocksUnconfirmed] = React.useState<BlockUnconfirmed[] | null>(null);
-  const [period, setPeriod] = React.useState(periods[5][0]);
   const fetchUnconfirmedTxs = useFetch<{ data: BlockUnconfirmed[] }>({
     method: 'get',
     url: URLS.GET_UNCONFIRMED_TRANSACTIONS,
@@ -68,30 +56,6 @@ const StatisticsBlocks: React.FC = () => {
     method: 'get',
     url: URLS.BLOCK_URL,
   });
-
-  const generateChartData = (blocks: Array<IBlock>) => {
-    const groupedBlocks = blocks.reduce(
-      (acc: ChartProps, { size, timestamp }) => {
-        const time = format(fromUnixTime(timestamp), 'HH:mm');
-
-        acc.labels.push(time);
-        acc.data.push(size / 1024);
-
-        return acc;
-      },
-      { labels: [], data: [] },
-    );
-
-    return groupedBlocks;
-  };
-
-  const { isLoading, data: chartData } = useDeferredData<{ data: Array<IBlock> }, ChartProps>(
-    { method: 'get', url: `${URLS.BLOCK_URL}?period=${period}` },
-    ({ data }) => generateChartData(data),
-    undefined,
-    undefined,
-    [period, blockElements],
-  );
 
   const handleBlocksData = () => {
     Promise.all([
@@ -143,10 +107,6 @@ const StatisticsBlocks: React.FC = () => {
     return null;
   };
 
-  const handlePeriodFilterChange = (value: PeriodTypes) => {
-    setPeriod(value);
-  };
-
   return (
     <>
       <Styles.BlockWrapper>
@@ -191,29 +151,6 @@ const StatisticsBlocks: React.FC = () => {
               <CircularProgress size={40} />
             </Styles.Loader>
           )}
-          <Grid item xs={12} lg={12}>
-            {chartData || !isLoading ? (
-              <div style={{ flex: 1, backgroundColor: currentBgColor }}>
-                <EChartsLineChart
-                  chartName="hashrate"
-                  dataX={chartData?.labels}
-                  dataY={chartData?.data}
-                  title="Block sizes (kB)"
-                  info={info}
-                  offset={1}
-                  handleBgColorChange={handleBgColorChange}
-                  period={period}
-                  periods={periods[5]}
-                  handlePeriodFilterChange={handlePeriodFilterChange}
-                  isDynamicTitleColor
-                />
-              </div>
-            ) : (
-              <Styles.Loader>
-                <CircularProgress size={40} />
-              </Styles.Loader>
-            )}
-          </Grid>
         </Styles.GridStyle>
       </Styles.BlockWrapper>
     </>

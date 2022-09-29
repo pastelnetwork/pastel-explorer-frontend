@@ -76,6 +76,7 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
   if (
     (window.location.pathname === ROUTES.STATISTICS ||
       window.location.pathname === ROUTES.STATISTICS_OVERTIME ||
+      window.location.pathname === ROUTES.CASCADE_AND_SENSE_STATISTICS ||
       window.location.pathname.includes(ROUTES.STATISTICS_OVERTIME)) &&
     category?.path === ROUTES.STATISTICS_PARENT
   ) {
