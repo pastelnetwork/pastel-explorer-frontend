@@ -812,6 +812,8 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       axisLine: {
         show: true,
       },
+      min: minY,
+      max: maxY,
     },
     series: [
       {
@@ -843,6 +845,8 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
         axisLine: {
           show: true,
         },
+        min: minY,
+        max: maxY,
       },
       series: [
         {
@@ -866,6 +870,8 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
         axisLine: {
           show: true,
         },
+        min: minY,
+        max: maxY,
       },
       series: [
         {
@@ -892,6 +898,8 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
         axisLine: {
           show: true,
         },
+        min: minY,
+        max: maxY,
       },
       legend: {
         textStyle: {
@@ -914,6 +922,8 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
           show: true,
         },
       },
+      min: minY,
+      max: maxY,
     },
     transactionspersecond: {
       backgroundColor: theme?.backgroundColor,
@@ -938,6 +948,8 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
         axisLine: {
           show: true,
         },
+        min: minY,
+        max: maxY,
       },
       series: [
         {
@@ -977,6 +989,8 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
         axisLine: {
           show: true,
         },
+        min: minY,
+        max: maxY,
       },
       series: [
         {
