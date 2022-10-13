@@ -232,7 +232,7 @@ const averageBlockSizeStatisticsRoutes = {
   id: 'averageBlockSize',
   path: ROUTES.STATISTICS_AVERAGE_BLOCK_SIZE,
   component: AverageBlockSize,
-  seoTitle: 'Average Block Size',
+  seoTitle: 'Cumulative Overall Average Block Size',
   children: null,
   exact: false,
 };

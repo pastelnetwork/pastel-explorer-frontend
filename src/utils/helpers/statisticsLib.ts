@@ -200,7 +200,7 @@ export function transformAverageBlockSize(blockSizes: TAverageBlockSize[]): TLin
   const dataX: string[] = [];
   const dataY: number[] = [];
   for (let i = 0; i < blockSizes.length; i += 1) {
-    const size = Number(blockSizes[i].size) / 1000;
+    const size = Number(blockSizes[i].size);
     dataY.push(size);
     dataX.push(blockSizes[i].time);
   }

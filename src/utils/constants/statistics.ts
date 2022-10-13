@@ -33,7 +33,7 @@ export const statistics = [
   },
   {
     id: 'averageBlockSize',
-    title: 'Average Block Size',
+    title: 'Cumulative Overall Average Block Size',
     url: routes.STATISTICS_AVERAGE_BLOCK_SIZE,
     image: generatePreviewUrl(routes.STATISTICS_AVERAGE_BLOCK_SIZE),
   },
