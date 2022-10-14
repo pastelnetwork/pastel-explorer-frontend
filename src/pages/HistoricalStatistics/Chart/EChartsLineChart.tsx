@@ -38,6 +38,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     minGaugeValue = 0,
     maxGaugeValue = 100,
     subTitle,
+    customHtml,
   } = props;
   const { darkMode } = useSelector(getThemeState);
   const styles = eChartLineStyles();
@@ -219,6 +220,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
               })}
             </Styles.GranularitySelect>
           )}
+          {customHtml}
           {periods && periods.length ? (
             <Styles.PeriodSelect>
               <span>Period: </span>

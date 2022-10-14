@@ -6,6 +6,7 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { getCurrencyName } from '@utils/appInfo';
 import { TThemeInitOption } from '@utils/constants/types';
 import { convertYAxisLabel } from '@utils/helpers/statisticsLib';
+import { TChartParams } from '@utils/types/IStatistics';
 
 type TChartOption = {
   [index: string]: EChartsOption;
@@ -87,11 +88,21 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         top: 8,
         right: 8,
         bottom: 20,
-        left: 50,
+        left: 90,
         show: false,
       },
       tooltip: {
         trigger: 'axis',
+        formatter(params: TChartParams[]) {
+          return `
+            <div class="tooltip-wrapper">
+              <div class="tooltip-date">${params[0].axisValue}</div>
+              <div class="tooltip-value">${params[0].marker} ${(params[0].value / 1000000).toFixed(
+            2,
+          )}m MH/s</div>
+            </div>
+          `;
+        },
       },
       xAxis: {
         type: 'category',
@@ -111,7 +122,8 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY);
+            const val = Number.parseFloat(value);
+            return `${(val / 1000000).toFixed(2)}m MH/s`;
           },
         },
       },

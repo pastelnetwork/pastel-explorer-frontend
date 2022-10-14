@@ -1,3 +1,4 @@
+// import * as echarts from 'echarts';
 import format from 'date-fns/format';
 import fromUnixTime from 'date-fns/fromUnixTime';
 import {
@@ -16,6 +17,9 @@ import {
   TChartStatisticsResponse,
   TAnalyticsChartResponse,
   TAnalyticsChartData,
+  THashrate,
+  TSolpsData,
+  THashrateChartData,
 } from '@utils/types/IStatistics';
 import { IBlock } from '@utils/types/IBlocks';
 import { formattedDate } from '@utils/helpers/date/date';
@@ -451,3 +455,28 @@ export const generatePeriodToDropdownOptions = (periods: PeriodTypes[]) => {
   }
   return results;
 };
+
+export function transformHashRateCharts(data: THashrate[]): THashrateChartData {
+  const dataX: string[] = [];
+  const networksolps: TSolpsData = {
+    solps5: [],
+    solps10: [],
+    solps25: [],
+    solps50: [],
+    solps100: [],
+    solps500: [],
+    solps1000: [],
+  };
+
+  data.forEach(item => {
+    dataX.push(new Date(item.timestamp).toLocaleString());
+    networksolps.solps5.push(item.networksolps5);
+    networksolps.solps10.push(item.networksolps10);
+    networksolps.solps25.push(item.networksolps25);
+    networksolps.solps50.push(item.networksolps50);
+    networksolps.solps100.push(item.networksolps100);
+    networksolps.solps500.push(item.networksolps500);
+    networksolps.solps1000.push(item.networksolps1000);
+  });
+  return { dataX, networksolps };
+}
