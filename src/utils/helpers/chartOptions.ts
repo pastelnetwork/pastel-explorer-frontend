@@ -413,6 +413,12 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       tooltip: {
         trigger: 'axis',
+        formatter(params: TChartParams[]) {
+          return `<div>
+            <div>${generateTooltipLabel(new Date(params[0].axisValue), period)}</div>
+            <div>${params[0].marker} ${params[0].value.toFixed(5)} MB</div>
+          </div>`;
+        },
       },
       xAxis: {
         type: 'category',
