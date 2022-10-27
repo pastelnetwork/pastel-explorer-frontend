@@ -28,7 +28,7 @@ function PriceOvertime() {
         params: { sortDirection: 'DESC', period },
       });
       if (data) {
-        const parseData = transformPriceInfo(data.data);
+        const parseData = transformPriceInfo(data.data, period);
         setTransformLineChartData(parseData);
       }
     };
@@ -40,7 +40,7 @@ function PriceOvertime() {
 
   return (
     <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Price">
-      {transformLineChartData ? (
+      {transformLineChartData && !fetchStats.isLoading ? (
         <EChartsMultiLineChart
           chartName="prices"
           dataX={transformLineChartData?.dataX}

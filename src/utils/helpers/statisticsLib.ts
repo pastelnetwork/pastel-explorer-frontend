@@ -46,7 +46,9 @@ export type PeriodTypes =
   | '1y'
   | 'max'
   | 'all';
-export type TGranularity = '1d' | '30d' | '1y' | 'all';
+export type TGranularity = '1d' | '30d' | '1y' | 'all' | 'none';
+
+export const periodShowTime = ['24h', '7d', '14d'];
 
 export const makeDownloadFileName = (currencyName: string | number, title: string): string => {
   let imageTitle = '';
@@ -102,26 +104,29 @@ export function getStartPoint(period: PeriodTypes): number {
   return Date.now() - duration * 60 * 60 * 1000;
 }
 
-export function transformDifficultyInfo(difficulties: IStatistic[]): TLineChartData {
+export function transformDifficultyInfo(
+  difficulties: IStatistic[],
+  period: PeriodTypes,
+): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
-
-  // const startDate = getStartPoint(period);
 
   for (let i = 0; i < difficulties.length; i += 1) {
     if (difficulties[i].timestamp !== null) {
       const createTime = Number(difficulties[i].timestamp);
-      // if (createTime > startDate) {
       dataY.push(Number(difficulties[i].difficulty));
-      dataX.push(format(createTime, 'MM/dd/yyyy'));
-      // }
+      const date =
+        periodShowTime.indexOf(period) !== -1
+          ? format(createTime, 'MM/dd/yyyy hh:00 aa')
+          : format(createTime, 'MM/dd/yyyy');
+      dataX.push(date);
     }
   }
 
   return { dataX, dataY };
 }
 
-export function transformPriceInfo(prices: IStatistic[]): TMultiLineChartData {
+export function transformPriceInfo(prices: IStatistic[], period: PeriodTypes): TMultiLineChartData {
   const dataX: string[] = [];
   const dataY1: number[] = [];
   const dataY2: number[] = [];
@@ -135,7 +140,11 @@ export function transformPriceInfo(prices: IStatistic[]): TMultiLineChartData {
     const btc = Number(prices[i].btcPrice);
     dataY1.push(usd);
     dataY2.push(btc);
-    dataX.push(format(createTime, 'MM/dd/yyyy'));
+    dataX.push(
+      periodShowTime.indexOf(period) !== -1
+        ? new Date(createTime).toLocaleString()
+        : format(createTime, 'MM/dd/yyyy'),
+    );
     // }
   }
   return { dataX, dataY1, dataY2 };
@@ -156,7 +165,10 @@ export function transformHashrateInfo(hashrateInfo: TMiningInfo[]): TLineChartDa
   return { dataX, dataY };
 }
 
-export function transformMempoolInfo(mempoolInfo: TMempoolInfo[]): TLineChartData {
+export function transformMempoolInfo(
+  mempoolInfo: TMempoolInfo[],
+  period: PeriodTypes,
+): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
   for (let i = 0; i < mempoolInfo.length; i += 1) {
@@ -164,13 +176,20 @@ export function transformMempoolInfo(mempoolInfo: TMempoolInfo[]): TLineChartDat
       const createTime = Number(mempoolInfo[i].timestamp);
       const bytes = Number(mempoolInfo[i].usage) / 1000;
       dataY.push(bytes);
-      dataX.push(format(createTime, 'MM/dd/yyyy'));
+      dataX.push(
+        periodShowTime.indexOf(period) !== -1
+          ? new Date(createTime).toLocaleString()
+          : format(createTime, 'MM/dd/yyyy'),
+      );
     }
   }
   return { dataX, dataY };
 }
 
-export function transformNetTotals(nettotals: TNettotalsInfo[]): TMultiLineChartData {
+export function transformNetTotals(
+  nettotals: TNettotalsInfo[],
+  period: PeriodTypes,
+): TMultiLineChartData {
   const dataX: string[] = [];
   const dataY1: number[] = [];
   const dataY2: number[] = [];
@@ -181,7 +200,11 @@ export function transformNetTotals(nettotals: TNettotalsInfo[]): TMultiLineChart
       const sent = Number(nettotals[i].totalbytessent);
       dataY1.push(recv);
       dataY2.push(sent);
-      dataX.push(format(createTime, 'MM/dd/yyyy'));
+      dataX.push(
+        periodShowTime.indexOf(period) !== -1
+          ? new Date(createTime).toLocaleString()
+          : format(createTime, 'MM/dd/yyyy'),
+      );
     }
   }
   return { dataX, dataY1, dataY2 };
@@ -204,20 +227,27 @@ export function transformAverageBlockSize(blockSizes: TAverageBlockSize[]): TLin
   const dataX: string[] = [];
   const dataY: number[] = [];
   for (let i = 0; i < blockSizes.length; i += 1) {
-    const size = Number(blockSizes[i].size);
+    const size = Number(blockSizes[i].size) / 10e6;
     dataY.push(size);
     dataX.push(blockSizes[i].time);
   }
   return { dataX, dataY };
 }
 
-export function transformTransactionPerSecond(trans: TTransactionPerSecond[]): TLineChartData {
+export function transformTransactionPerSecond(
+  trans: TTransactionPerSecond[],
+  period: PeriodTypes,
+): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
   for (let i = 0; i < trans.length; i += 1) {
     const size = Number(trans[i].size) / (24 * 3600);
     dataY.push(size);
-    dataX.push(trans[i].time);
+    dataX.push(
+      periodShowTime.indexOf(period) !== -1
+        ? new Date(trans[i].time).toLocaleString()
+        : format(Number(trans[i].time), 'MM/dd/yyyy'),
+    );
   }
   return {
     dataX,
@@ -271,6 +301,37 @@ export function transformTotalData(data: TTransactionsChart[], range = 10e6): TL
   return { dataX, dataY };
 }
 
+export function transformBlockchainSizeData(
+  data: TTransactionsChart[],
+  period: PeriodTypes,
+  totalPrevDay: number,
+  range = 10e6,
+): TLineChartData {
+  const dataX: string[] = [];
+  const dataY: number[] = [];
+  if (data.length) {
+    dataX.push(
+      periodShowTime.indexOf(period) !== -1
+        ? new Date(parseInt(data[0].label, 10)).toLocaleString()
+        : format(Number(parseInt(data[0].label, 10)), 'MM/dd/yyyy'),
+    );
+    dataY.push(+((data[0].value + totalPrevDay) / range).toFixed(2));
+  }
+  if (data.length > 1) {
+    for (let i = 1; i < data.length; i += 1) {
+      const { value, label } = data[i];
+      dataX.push(
+        periodShowTime.indexOf(period) !== -1
+          ? new Date(parseInt(label, 10)).toLocaleString()
+          : format(Number(parseInt(label, 10)), 'MM/dd/yyyy'),
+      );
+      dataY.push(+(dataY[i - 1] + +(value / range).toFixed(2)).toFixed(2));
+    }
+  }
+
+  return { dataX, dataY };
+}
+
 export function transformTotalTransactionCount(data: TChartResponseItem[]) {
   const dataX: string[] = [];
   const dataY: number[] = [];
@@ -290,15 +351,22 @@ export function transformTotalTransactionCount(data: TChartResponseItem[]) {
   };
 }
 
-export function convertYAxisLabel(value: number, maxY: number): number | string {
+export function convertYAxisLabel(
+  value: number,
+  maxY: number,
+  fractionDigits = 1,
+): number | string {
+  if (value === 0) {
+    return value;
+  }
   if (maxY > 1000000000) {
-    return `${(value / 1000000000).toFixed(1)} B`;
+    return `${(value / 1000000000).toFixed(fractionDigits)} B`;
   }
   if (maxY > 1000000) {
-    return `${(value / 1000000).toFixed(1)} M`;
+    return `${(value / 1000000).toFixed(fractionDigits)} M`;
   }
   if (maxY > 1000) {
-    return `${(value / 1000).toFixed(1)} K`;
+    return `${(value / 1000).toFixed(fractionDigits)} K`;
   }
   return value;
 }
@@ -388,7 +456,7 @@ export function transformStatisticsChart(
     const value = Number(trans[i].value);
     dataY.push(value);
     dataX.push(
-      period === '24h'
+      periodShowTime.indexOf(period) !== -1
         ? new Date(trans[i].time).toLocaleString()
         : format(trans[i].time, 'MM/dd/yyyy'),
     );
@@ -408,7 +476,7 @@ export function transformAccountDataChart(
   for (let i = 0; i < trans.length; i += 1) {
     dataY.push(Number(trans[i].nonZeroAddressesCount));
     dataX.push(
-      period === '24h'
+      periodShowTime.indexOf(period) !== -1
         ? new Date(trans[i].timestamp).toLocaleString()
         : format(trans[i].timestamp, 'MM/dd/yyyy'),
     );
@@ -428,7 +496,7 @@ export function transformTotalSupplyDataChart(
   for (let i = 0; i < trans.length; i += 1) {
     dataY.push(Number(trans[i].coinSupply));
     dataX.push(
-      period === '24h'
+      periodShowTime.indexOf(period) !== -1
         ? new Date(trans[i].timestamp).toLocaleString()
         : format(trans[i].timestamp, 'MM/dd/yyyy'),
     );

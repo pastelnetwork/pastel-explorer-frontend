@@ -27,7 +27,7 @@ function MempoolSize() {
         params: { period, sortDirection: 'DESC' },
       });
       if (data) {
-        const parseData = transformMempoolInfo(data.data);
+        const parseData = transformMempoolInfo(data.data, period);
         setChartData(parseData);
       }
     };
@@ -40,7 +40,7 @@ function MempoolSize() {
 
   return (
     <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Mempool Size">
-      {chartData ? (
+      {chartData && !fetchStats.isLoading ? (
         <EChartsLineChart
           chartName="mempoolsize"
           dataX={chartData?.dataX}

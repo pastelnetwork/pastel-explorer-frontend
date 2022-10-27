@@ -1,7 +1,5 @@
 // react
 import { useEffect, useState, ChangeEvent } from 'react';
-// third party
-import { Skeleton } from '@material-ui/lab';
 // application
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
@@ -103,26 +101,21 @@ function HashRate() {
 
   return (
     <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Hashrate">
-      {chartData ? (
-        <Styles.Wrapper>
-          <EChartsLineChart
-            chartName="hashrate"
-            dataX={chartData?.dataX}
-            dataY={chartData?.networksolps?.[`solps${numberOfBlocks}` as keyof TSolpsData]}
-            title="Hashrate(MH/s)"
-            info={info}
-            offset={10}
-            period={period}
-            periods={periods[6]}
-            handleBgColorChange={handleBgColorChange}
-            handlePeriodFilterChange={handlePeriodFilterChange}
-            setHeaderBackground
-            customHtml={renderNumberOfBlocks()}
-          />
-        </Styles.Wrapper>
-      ) : (
-        <Skeleton animation="wave" variant="rect" height={386} />
-      )}
+      <EChartsLineChart
+        chartName="hashrate"
+        dataX={chartData?.dataX}
+        dataY={chartData?.networksolps?.[`solps${numberOfBlocks}` as keyof TSolpsData]}
+        title="Hashrate(MH/s)"
+        info={info}
+        offset={10}
+        period={period}
+        periods={periods[6]}
+        handleBgColorChange={handleBgColorChange}
+        handlePeriodFilterChange={handlePeriodFilterChange}
+        setHeaderBackground
+        customHtml={renderNumberOfBlocks()}
+        isLoading={fetchStats.isLoading}
+      />
     </HistoricalStatisticsLayout>
   );
 }

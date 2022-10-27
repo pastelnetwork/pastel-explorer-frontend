@@ -4,6 +4,7 @@ import ReactECharts from 'echarts-for-react';
 import { saveAs } from 'file-saver';
 import * as htmlToImage from 'html-to-image';
 import { useSelector } from 'react-redux';
+import { Skeleton } from '@material-ui/lab';
 
 import { Data } from 'react-csv/components/CommonPropTypes';
 import { makeDownloadFileName } from '@utils/helpers/statisticsLib';
@@ -39,6 +40,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     maxGaugeValue = 100,
     subTitle,
     customHtml,
+    isLoading = false,
   } = props;
   const { darkMode } = useSelector(getThemeState);
   const styles = eChartLineStyles();
@@ -126,6 +128,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     minY: isAverageNFTChart ? minGaugeValue : minY,
     maxY: isAverageNFTChart ? maxGaugeValue : maxY,
     gaugeValue,
+    period: selectedPeriodButton,
   };
   const options = getThemeInitOption(params);
   const downloadPNG = () => {
@@ -189,7 +192,9 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
   return (
     <Styles.ChartContainer>
       <Styles.LineChartHeader
-        className={`line-chart-header ${setHeaderBackground ? 'has-bg' : ''}`}
+        className={`line-chart-header ${setHeaderBackground ? 'has-bg' : ''} ${
+          isLoading ? 'no-mb' : ''
+        }`}
       >
         {isDynamicTitleColor ? (
           <Styles.ChartTitle style={{ color: currentTheme?.color }}>{title}</Styles.ChartTitle>
@@ -242,21 +247,25 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
           ) : null}
         </Styles.ChartFilterWrapper>
       </Styles.LineChartHeader>
-      <Styles.LineChartWrap>
+      <Styles.LineChartWrap className={isLoading ? 'no-spacing' : ''}>
         {subTitle ? (
           <Styles.ChartSubTitle style={{ color: currentTheme?.color }}>
             {subTitle}
           </Styles.ChartSubTitle>
         ) : null}
-        <ReactECharts
-          notMerge={false}
-          lazyUpdate
-          option={options}
-          className={styles.reactECharts}
-          ref={e => {
-            setEChartRef(e);
-          }}
-        />
+        {isLoading || !dataX?.length ? (
+          <Skeleton animation="wave" variant="rect" height={386} />
+        ) : (
+          <ReactECharts
+            notMerge={false}
+            lazyUpdate
+            option={options}
+            className={styles.reactECharts}
+            ref={e => {
+              setEChartRef(e);
+            }}
+          />
+        )}
       </Styles.LineChartWrap>
       <Styles.LineChartFooter className="line-chart-footer">
         <div className={styles.lineChartThemeSelect}>

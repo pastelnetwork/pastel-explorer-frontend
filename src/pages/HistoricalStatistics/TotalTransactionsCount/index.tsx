@@ -35,9 +35,9 @@ function TotalTransactionCount() {
 
   return (
     <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Total Transaction Count">
-      {chartData ? (
+      {chartData && !fetchStats.isLoading ? (
         <EChartsLineChart
-          chartName="transactionfee"
+          chartName="totalTransactionCount"
           dataX={chartData?.dataX}
           dataY={chartData?.dataY}
           title="Total Transaction Count"

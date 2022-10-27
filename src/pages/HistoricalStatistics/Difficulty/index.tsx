@@ -1,7 +1,5 @@
 // react
 import { useEffect, useState } from 'react';
-// third party
-import { Skeleton } from '@material-ui/lab';
 // application
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
@@ -26,7 +24,7 @@ function Difficulty() {
         params: { sortDirection: 'DESC', period },
       });
       if (data) {
-        const parseData = transformDifficultyInfo(data.data);
+        const parseData = transformDifficultyInfo(data.data, period);
         setChartData(parseData);
       }
     };
@@ -39,23 +37,20 @@ function Difficulty() {
 
   return (
     <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Difficulty">
-      {chartData ? (
-        <EChartsLineChart
-          chartName="difficulty"
-          dataX={chartData?.dataX}
-          dataY={chartData?.dataY}
-          title="Network Difficulty"
-          period={period}
-          info={info}
-          offset={10000}
-          periods={periods[6]}
-          handleBgColorChange={handleBgColorChange}
-          handlePeriodFilterChange={handlePeriodFilterChange}
-          setHeaderBackground
-        />
-      ) : (
-        <Skeleton animation="wave" variant="rect" height={386} />
-      )}
+      <EChartsLineChart
+        chartName="difficulty"
+        dataX={chartData?.dataX}
+        dataY={chartData?.dataY}
+        title="Network Difficulty"
+        period={period}
+        info={info}
+        offset={100000}
+        periods={periods[6]}
+        handleBgColorChange={handleBgColorChange}
+        handlePeriodFilterChange={handlePeriodFilterChange}
+        setHeaderBackground
+        isLoading={fetchStats.isLoading}
+      />
     </HistoricalStatisticsLayout>
   );
 }
