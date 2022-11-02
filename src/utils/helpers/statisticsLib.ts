@@ -360,13 +360,13 @@ export function convertYAxisLabel(
     return value;
   }
   if (maxY > 1000000000) {
-    return `${(value / 1000000000).toFixed(fractionDigits)} B`;
+    return `${(value / 1000000000).toFixed(fractionDigits)}B`;
   }
   if (maxY > 1000000) {
-    return `${(value / 1000000).toFixed(fractionDigits)} M`;
+    return `${(value / 1000000).toFixed(fractionDigits)}M`;
   }
   if (maxY > 1000) {
-    return `${(value / 1000).toFixed(fractionDigits)} K`;
+    return `${(value / 1000).toFixed(fractionDigits)}K`;
   }
   return value;
 }

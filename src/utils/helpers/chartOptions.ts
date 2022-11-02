@@ -7,11 +7,7 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { getCurrencyName } from '@utils/appInfo';
 import { TThemeInitOption } from '@utils/constants/types';
 import { periods } from '@utils/constants/statistics';
-import {
-  convertYAxisLabel,
-  convertYAxisLabelWithoutUnit,
-  PeriodTypes,
-} from '@utils/helpers/statisticsLib';
+import { convertYAxisLabel, PeriodTypes } from '@utils/helpers/statisticsLib';
 import { TChartParams } from '@utils/types/IStatistics';
 
 type TChartOption = {
@@ -101,7 +97,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         type: 'value',
-        minInterval: 1000000,
+        minInterval: period === '24h' ? 100000 : 1000000,
         splitLine: {
           show: false,
         },
@@ -133,7 +129,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         top: 8,
         right: 8,
         bottom: 20,
-        left: 60,
+        left: 35,
         show: false,
       },
       tooltip: {
@@ -192,7 +188,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabelWithoutUnit(Number(value), maxY, 0);
+            return convertYAxisLabel(Number(value), maxY, 0);
           },
         },
       },
@@ -270,7 +266,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         axisLabel: {
           formatter(value: string) {
             const val = Number.parseFloat(value);
-            return `${val / 1000000} M`;
+            return `${formatNumber(val / 1000000)}M`;
           },
         },
         axisLine: {
@@ -369,12 +365,12 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         axisLabel: {
           formatter(value: string) {
             if (maxY > 1000000) {
-              return `${Math.round(Number(value) / 1000000)} M`;
+              return `${Math.round(Number(value) / 1000000)}M`;
             }
             if (maxY > 1000) {
-              return `${Math.round(Number(value) / 1000)} K`;
+              return `${Math.round(Number(value) / 1000)}K`;
             }
-            return `${Number(value)} k`;
+            return `${Number(value)}k`;
           },
         },
       },
@@ -697,16 +693,12 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       yAxis: {
         type: 'value',
         min: minY,
+        minInterval: 1,
         splitLine: {
           show: false,
         },
         axisLine: {
           show: true,
-        },
-        axisLabel: {
-          formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY);
-          },
         },
       },
       series: {
