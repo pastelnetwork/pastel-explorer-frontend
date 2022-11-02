@@ -128,7 +128,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         top: 8,
         right: 8,
         bottom: 20,
-        left: 50,
+        left: 60,
         show: false,
       },
       tooltip: {
