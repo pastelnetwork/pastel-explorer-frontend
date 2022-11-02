@@ -123,6 +123,10 @@ export const LineChartWrap = styled.div`
   height: auto;
   margin-bottom: 20px;
   padding: 0 20px;
+
+  &.no-spacing {
+    padding: 0;
+  }
 `;
 
 export const LineChartFooter = styled.div`
@@ -164,11 +168,14 @@ export const LineChartHeader = styled.div`
     border-top-right-radius: 10px;
     color: ${props => props.theme.palette.text.primary};
   }
+
+  &.no-mb {
+    margin-bottom: 0;
+  }
 `;
 
 export const GranularitySelect = styled.div`
   display: flex;
-  min-width: 200px;
   align-items: center;
   margin-right: 15px;
 

@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { LabelKeyObject } from 'react-csv/components/CommonPropTypes';
 import { PeriodTypes, TGranularity } from '@utils/helpers/statisticsLib';
 import { TStatisticsInfo } from '@utils/types/IStatistics';
@@ -26,6 +27,7 @@ export type TThemeInitOption = {
   gaugeValue?: number;
   minGaugeValue?: number;
   maxGaugeValue?: number;
+  period?: PeriodTypes;
 };
 
 export type TLineChartProps = {
@@ -57,6 +59,8 @@ export type TLineChartProps = {
   minGaugeValue?: number;
   maxGaugeValue?: number;
   subTitle?: string;
+  customHtml?: ReactNode;
+  isLoading?: boolean;
 };
 
 export type TCsvHeaderType = {

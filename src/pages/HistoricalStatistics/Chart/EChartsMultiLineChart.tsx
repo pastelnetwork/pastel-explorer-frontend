@@ -4,12 +4,12 @@ import * as htmlToImage from 'html-to-image';
 import * as echarts from 'echarts';
 import { saveAs } from 'file-saver';
 import { useSelector } from 'react-redux';
-import format from 'date-fns/format';
 
 import { Data } from 'react-csv/components/CommonPropTypes';
 import { makeDownloadFileName, PeriodTypes } from '@utils/helpers/statisticsLib';
 import { pricesCSVHeaders, themes } from '@utils/constants/statistics';
 import { TLineChartProps, TThemeColor } from '@utils/constants/types';
+import { generateXAxisLabel } from '@utils/helpers/chartOptions';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 
 import { eChartLineStyles } from './styles';
@@ -48,8 +48,6 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
   const [isSelectedTheme, setSelectedTheme] = useState(false);
   const [minY1, setMinY1] = useState(0);
   const [minY2, setMinY2] = useState(0);
-  const [maxY1, setMaxY1] = useState(0);
-  const [maxY2, setMaxY2] = useState(0);
 
   useEffect(() => {
     if (isSelectedTheme) {
@@ -72,14 +70,10 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
   useEffect(() => {
     if (dataY1?.length && dataY2?.length) {
       const min = Math.min(...dataY1);
-      const max = Math.max(...dataY1);
       const min1 = Math.min(...dataY2);
-      const max1 = Math.max(...dataY2);
       if (chartName === 'prices') {
         setMinY1(min - offset);
-        setMaxY1(max + offset);
         setMinY2(min1);
-        setMaxY2(max1);
         if (dataX) {
           const data: Data = [];
           dataY1.forEach((o, index) => {
@@ -108,7 +102,6 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
       type: 'continuous',
       seriesIndex: 0,
       min: minY1,
-      max: maxY1,
     },
     tooltip: {
       trigger: 'axis',
@@ -122,9 +115,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
       axisLabel: {
         formatter(value: string) {
           const date = new Date(value);
-          return selectedPeriodButton !== '24h'
-            ? format(date, 'MM/dd/yyyy')
-            : new Date(value).toLocaleString();
+          return generateXAxisLabel(date, selectedPeriodButton);
         },
       },
     },
@@ -134,11 +125,8 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
         name: yaxisName,
         position: 'left',
         min: minY1,
-        max: maxY1,
         splitLine: {
-          lineStyle: {
-            color: currentTheme?.splitLineColor,
-          },
+          show: false,
         },
         axisLine: {
           show: true,
@@ -155,7 +143,6 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
         name: yaxisName1,
         position: 'right',
         min: minY2,
-        max: maxY2,
         splitLine: {
           show: false,
         },
@@ -187,10 +174,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
         data: dataY2,
       },
     ],
-    stateAnimation: {
-      duration: 300,
-      easing: 'cubicOut',
-    },
+    animation: false,
   };
 
   const downloadPNG = () => {

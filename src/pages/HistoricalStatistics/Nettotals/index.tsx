@@ -26,7 +26,7 @@ function Nettotals() {
         params: { period, sortDirection: 'ASC' },
       });
       if (data) {
-        const parseData = transformNetTotals(data.data);
+        const parseData = transformNetTotals(data.data, period);
         setChartData(parseData);
       }
     };
@@ -38,7 +38,7 @@ function Nettotals() {
 
   return (
     <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Network Total">
-      {chartData ? (
+      {chartData && !fetchStats.isLoading ? (
         <EChartsLineChart
           chartName="networktotals"
           dataX={chartData?.dataX}

@@ -26,7 +26,7 @@ function TransactionPerSecond() {
         params: { sortDirection: 'DESC', period },
       });
       if (data) {
-        const parseData = transformTransactionPerSecond(data.data);
+        const parseData = transformTransactionPerSecond(data.data, period);
         setChartData(parseData);
       }
     };
@@ -39,7 +39,7 @@ function TransactionPerSecond() {
 
   return (
     <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Transaction Per Second">
-      {chartData ? (
+      {chartData && !fetchStats.isLoading ? (
         <EChartsLineChart
           chartName="transactionspersecond"
           dataX={chartData?.dataX}

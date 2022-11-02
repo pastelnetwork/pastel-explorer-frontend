@@ -1,7 +1,5 @@
 // react
 import { useEffect, useState } from 'react';
-// third party
-import { Skeleton } from '@material-ui/lab';
 // application
 import { TLineChartData, TAverageBlockSize } from '@utils/types/IStatistics';
 import { TGranularity, PeriodTypes, transformAverageBlockSize } from '@utils/helpers/statisticsLib';
@@ -26,6 +24,7 @@ const AverageBlockSize = (): JSX.Element => {
     method: 'get',
     url: URLS.GET_STATISTICS_AVERAGE_BLOCK_SIZE,
   });
+
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
@@ -40,6 +39,11 @@ const AverageBlockSize = (): JSX.Element => {
   }, [granularity, period]);
 
   const handlePeriodFilterChange = (value: PeriodTypes) => {
+    if (value === periods[6][0] || value === periods[6][1] || value === periods[6][2]) {
+      setGranularity('none');
+    } else {
+      setGranularity(granularities[0][0]);
+    }
     setPeriod(value);
   };
 
@@ -47,28 +51,41 @@ const AverageBlockSize = (): JSX.Element => {
     setGranularity(value);
   };
 
+  const getGranularitiesOptions = () => {
+    if (period === periods[6][0]) {
+      return undefined;
+    }
+    if (period === periods[6][1] || period === periods[6][2]) {
+      return granularities[1];
+    }
+    if (period === periods[6][3] || period === periods[6][4] || period === periods[6][5]) {
+      return granularities[2];
+    }
+    return granularities[0];
+  };
+
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Average Block Size">
-      {chartData ? (
-        <EChartsLineChart
-          chartName="averageblocksize"
-          dataX={chartData?.dataX}
-          dataY={chartData?.dataY}
-          title="Average Block Size (kB)"
-          info={info}
-          offset={1}
-          period={period}
-          granularity={granularity}
-          granularities={granularities[0]}
-          periods={periods[6]}
-          handleBgColorChange={handleBgColorChange}
-          handlePeriodFilterChange={handlePeriodFilterChange}
-          handleGranularityFilterChange={handleGranularityFilterChange}
-          setHeaderBackground
-        />
-      ) : (
-        <Skeleton animation="wave" variant="rect" height={386} />
-      )}
+    <HistoricalStatisticsLayout
+      currentBgColor={currentBgColor}
+      title="Cumulative Overall Average Block Size (MB)"
+    >
+      <EChartsLineChart
+        chartName="averageblocksize"
+        dataX={chartData?.dataX}
+        dataY={chartData?.dataY}
+        title="Cumulative Overall Average Block Size (MB)"
+        info={info}
+        offset={0.0001}
+        period={period}
+        granularity={granularity}
+        granularities={getGranularitiesOptions()}
+        periods={periods[6]}
+        handleBgColorChange={handleBgColorChange}
+        handlePeriodFilterChange={handlePeriodFilterChange}
+        handleGranularityFilterChange={handleGranularityFilterChange}
+        setHeaderBackground
+        isLoading={fetchStats.isLoading}
+      />
     </HistoricalStatisticsLayout>
   );
 };

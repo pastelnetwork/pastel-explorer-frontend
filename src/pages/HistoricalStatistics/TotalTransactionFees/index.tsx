@@ -37,9 +37,9 @@ function TotalTransactionFees() {
 
   return (
     <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Total Transaction Fees">
-      {chartData && (
+      {chartData && !fetchStats.isLoading && (
         <EChartsLineChart
-          chartName="averageblocksize"
+          chartName="totalTransactionFees"
           dataX={chartData?.dataX}
           dataY={chartData?.dataY}
           title="Total transaction fees"

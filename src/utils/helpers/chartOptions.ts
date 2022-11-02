@@ -1,11 +1,14 @@
 import * as echarts from 'echarts';
 import { EChartsOption } from 'echarts-for-react';
+import format from 'date-fns/format';
 
 // aplication
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { getCurrencyName } from '@utils/appInfo';
 import { TThemeInitOption } from '@utils/constants/types';
-import { convertYAxisLabel } from '@utils/helpers/statisticsLib';
+import { periods } from '@utils/constants/statistics';
+import { convertYAxisLabel, PeriodTypes } from '@utils/helpers/statisticsLib';
+import { TChartParams } from '@utils/types/IStatistics';
 
 type TChartOption = {
   [index: string]: EChartsOption;
@@ -15,8 +18,31 @@ type TTxInBlock = {
   value: string[][];
 };
 
+export const generateXAxisLabel = (value: Date, period?: PeriodTypes) => {
+  if (!value) {
+    return '';
+  }
+
+  if (!period) {
+    return value;
+  }
+
+  return period === '24h' ? format(value, 'hh:00 aa') : format(value, 'MM/dd/yyyy');
+};
+
+export const generateTooltipLabel = (value: Date, period?: PeriodTypes) => {
+  if (!period) {
+    return value;
+  }
+
+  return periods[8].indexOf(period) !== -1
+    ? format(value, 'MM/dd/yyyy hh:00 aa')
+    : format(value, 'MM/dd/yyyy');
+};
+
 export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
-  const { theme, data, dataX, dataY, dataY1, dataY2, chartName, minY, maxY } = args;
+  const { theme, data, dataX, dataY, dataY1, dataY2, chartName, minY, maxY, period } = args;
+  let firstDay = '';
   const chartOptions: TChartOption = {
     difficulty: {
       backgroundColor: theme?.backgroundColor,
@@ -25,7 +51,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       grid: {
         top: 8,
-        right: 8,
+        right: 12,
         bottom: 20,
         left: 50,
         show: false,
@@ -43,15 +69,36 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       xAxis: {
         type: 'category',
         data: dataX,
+        boundaryGap: false,
+        axisLabel: {
+          formatter(value: string) {
+            if (period && periods[9].indexOf(period) !== -1) {
+              const date = format(new Date(value), 'MM/dd/yyyy');
+              if (firstDay !== date) {
+                firstDay = date;
+                return generateXAxisLabel(new Date(value), period);
+              }
+
+              return null;
+            }
+            return value ? generateXAxisLabel(new Date(value), period) : null;
+          },
+          interval:
+            period && periods[9].indexOf(period) !== -1 && dataX?.length && dataX?.length > 48
+              ? 22
+              : 'auto',
+        },
+        splitLine: {
+          interval:
+            period && periods[9].indexOf(period) !== -1 && dataX?.length && dataX?.length > 48
+              ? 22
+              : 'auto',
+        },
       },
       yAxis: {
         type: 'value',
-        min: minY,
-        max: maxY,
         splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
+          show: false,
         },
         axisLine: {
           show: true,
@@ -67,16 +114,10 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         showSymbol: false,
         data: dataY,
         lineStyle: {
-          width: 3,
-          shadowColor: 'rgba(0,0,0,0.5)',
-          shadowBlur: 10,
-          shadowOffsetY: 12,
+          width: 2,
         },
       },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
+      animation: false,
     },
     hashrate: {
       backgroundColor: theme?.backgroundColor,
@@ -92,19 +133,54 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       tooltip: {
         trigger: 'axis',
+        formatter(params: TChartParams[]) {
+          return `
+            <div class="tooltip-wrapper">
+              <div class="tooltip-date">${generateTooltipLabel(
+                new Date(params[0].axisValue),
+                period,
+              )}</div>
+              <div class="tooltip-value">${params[0].marker} ${formatNumber(
+            params[0].value,
+          )} MH/s</div>
+            </div>
+          `;
+        },
       },
       xAxis: {
         type: 'category',
         data: dataX,
+        boundaryGap: false,
+        axisLabel: {
+          formatter(value: string) {
+            if (dataX?.length && dataX?.length > 4 && period && periods[9].indexOf(period) !== -1) {
+              const date = format(new Date(value), 'MM/dd/yyyy');
+              if (firstDay !== date) {
+                firstDay = date;
+                return generateXAxisLabel(new Date(value), period);
+              }
+
+              return null;
+            }
+            return value ? generateXAxisLabel(new Date(value), period) : null;
+          },
+          interval:
+            period && periods[9].indexOf(period) !== -1 && dataX?.length && dataX?.length > 48
+              ? 22
+              : 'auto',
+        },
+        splitLine: {
+          interval:
+            period && periods[9].indexOf(period) !== -1 && dataX?.length && dataX?.length > 48
+              ? 22
+              : 'auto',
+        },
       },
       yAxis: {
         type: 'value',
-        min: minY,
-        max: maxY,
+        min: 50000000,
         splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
+          show: false,
         },
         axisLine: {
           show: true,
@@ -122,7 +198,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         symbol: false,
         showSymbol: false,
         lineStyle: {
-          width: 3,
+          width: 2,
           color: '#ff5500',
         },
         areaStyle: {
@@ -133,16 +209,13 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             },
             {
               offset: 1,
-              color: '#000',
+              color: theme?.backgroundColor || '#fff',
             },
           ]),
         },
         data: dataY,
       },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
+      animation: false,
     },
     networktotals: {
       backgroundColor: theme?.backgroundColor,
@@ -178,13 +251,16 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         type: 'category',
         boundaryGap: false,
         data: dataX,
+        axisLabel: {
+          formatter(value: string) {
+            return generateXAxisLabel(new Date(value), period);
+          },
+        },
       },
       yAxis: {
         type: 'value',
         splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
+          show: false,
         },
         axisLabel: {
           formatter(value: string) {
@@ -250,10 +326,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           data: dataY2,
         },
       ],
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
+      animation: false,
     },
     mempoolsize: {
       backgroundColor: theme?.backgroundColor,
@@ -273,15 +346,17 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       xAxis: {
         type: 'category',
         data: dataX,
+        axisLabel: {
+          formatter(value: string) {
+            return generateXAxisLabel(new Date(value), period);
+          },
+        },
       },
       yAxis: {
         type: 'value',
         min: minY,
-        max: maxY,
         splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
+          show: false,
         },
         axisLine: {
           show: true,
@@ -306,6 +381,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         smooth: true,
         symbol: false,
+        showSymbol: false,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
@@ -320,12 +396,82 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         data: dataY,
       },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
+      animation: false,
     },
     averageblocksize: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#5470c6', '#91cc75', '#fac858'],
+      grid: {
+        top: 8,
+        right: 8,
+        bottom: 20,
+        left: 60,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        formatter(params: TChartParams[]) {
+          return `<div>
+            <div>${generateTooltipLabel(new Date(params[0].axisValue), period)}</div>
+            <div>${params[0].marker} ${params[0].value.toFixed(5)} MB</div>
+          </div>`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        boundaryGap: false,
+        axisLabel: {
+          formatter(value: string) {
+            if (period && periods[9].indexOf(period) !== -1) {
+              const date = format(new Date(value), 'MM/dd/yyyy');
+              if (firstDay !== date) {
+                firstDay = date;
+                return generateXAxisLabel(new Date(value), period);
+              }
+
+              return null;
+            }
+            return value ? generateXAxisLabel(new Date(value), period) : null;
+          },
+          interval:
+            period && periods[9].indexOf(period) !== -1 && dataX?.length && dataX?.length > 48
+              ? 22
+              : 'auto',
+        },
+        splitLine: {
+          interval:
+            period && periods[9].indexOf(period) !== -1 && dataX?.length && dataX?.length > 48
+              ? 22
+              : 'auto',
+        },
+      },
+      yAxis: {
+        type: 'value',
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          formatter(value: string) {
+            return convertYAxisLabel(Number(value), maxY);
+          },
+        },
+      },
+      series: {
+        type: 'line',
+        smooth: true,
+        showSymbol: false,
+        data: dataY,
+      },
+      animation: false,
+    },
+    totalTransactionFees: {
       backgroundColor: theme?.backgroundColor,
       textStyle: {
         color: theme?.color,
@@ -344,15 +490,18 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       xAxis: {
         type: 'category',
         data: dataX,
+        axisLabel: {
+          formatter(value: string) {
+            return generateXAxisLabel(new Date(value), period);
+          },
+        },
       },
       yAxis: {
         type: 'value',
         min: minY,
-        max: maxY,
+        // max: maxY,
         splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
+          show: false,
         },
         axisLine: {
           show: true,
@@ -369,12 +518,70 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         showSymbol: false,
         data: dataY,
       },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
+      animation: false,
     },
     transactionfee: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#cd6661'],
+      grid: {
+        top: 8,
+        right: 8,
+        bottom: 20,
+        left: 50,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          formatter(value: string) {
+            return generateXAxisLabel(new Date(value), period);
+          },
+        },
+      },
+      yAxis: {
+        type: 'value',
+        min: 0,
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          formatter(value: string) {
+            return convertYAxisLabel(Number(value), maxY);
+          },
+        },
+      },
+      series: {
+        type: 'line',
+        sampling: 'lttb',
+        data: dataY,
+        smooth: true,
+        showSymbol: false,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#cd6661',
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor ?? '#F4F4F4',
+            },
+          ]),
+        },
+      },
+      animation: false,
+    },
+    totalTransactionCount: {
       backgroundColor: theme?.backgroundColor,
       textStyle: {
         color: theme?.color,
@@ -397,11 +604,8 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       yAxis: {
         type: 'value',
         min: 0,
-        max: maxY,
         splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
+          show: false,
         },
         axisLine: {
           show: true,
@@ -417,6 +621,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         sampling: 'lttb',
         data: dataY,
         smooth: true,
+        showSymbol: false,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
@@ -430,10 +635,83 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           ]),
         },
       },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
+      animation: false,
+    },
+    blockchainSize: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
       },
+      color: ['#cd6661'],
+      grid: {
+        top: 8,
+        right: 8,
+        bottom: 20,
+        left: 36,
+        show: false,
+        containerLabel: true,
+      },
+      tooltip: {
+        trigger: 'axis',
+        formatter(params: TChartParams[]) {
+          return `<div>
+            <div>${generateTooltipLabel(new Date(params[0].axisValue), period)}</div>
+            <div>${params[0].marker} ${params[0].value.toFixed(2)} MB</div>
+          </div>`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        boundaryGap: false,
+        axisLabel: {
+          formatter(value: string) {
+            if (period && periods[9].indexOf(period) !== -1) {
+              const date = format(new Date(value), 'MM/dd/yyyy');
+              if (firstDay !== date) {
+                firstDay = date;
+                return generateXAxisLabel(new Date(value), period);
+              }
+
+              return null;
+            }
+            return value ? generateXAxisLabel(new Date(value), period) : null;
+          },
+          interval:
+            period && periods[9].indexOf(period) !== -1 && dataX?.length && dataX?.length > 48
+              ? 22
+              : 'auto',
+        },
+        splitLine: {
+          interval:
+            period && periods[9].indexOf(period) !== -1 && dataX?.length && dataX?.length > 48
+              ? 22
+              : 'auto',
+        },
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          formatter(value: string) {
+            return convertYAxisLabel(Number(value), maxY);
+          },
+        },
+      },
+      series: {
+        type: 'line',
+        sampling: 'lttb',
+        data: dataY,
+        smooth: true,
+        showSymbol: false,
+      },
+      animation: false,
     },
     transactionspersecond: {
       backgroundColor: theme?.backgroundColor,
@@ -454,15 +732,16 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       xAxis: {
         type: 'category',
         data: dataX,
+        axisLabel: {
+          formatter(value: string) {
+            return generateXAxisLabel(new Date(value), period);
+          },
+        },
       },
       yAxis: {
         type: 'value',
-        min: 0,
-        max: maxY,
         splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
+          show: false,
         },
         axisLine: {
           show: true,
@@ -477,11 +756,9 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         type: 'line',
         data: dataY,
         areaStyle: {},
+        showSymbol: false,
       },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
+      animation: false,
     },
     transactionsinblock: {
       backgroundColor: theme?.backgroundColor,
@@ -503,11 +780,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         {
           type: 'value',
           scale: true,
-          axisLabel: {
-            formatter: '{value}',
-          },
           splitLine: {
-            show: false,
             lineStyle: {
               color: theme?.splitLineColor,
             },
@@ -523,9 +796,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           },
           splitLine: {
             show: false,
-            lineStyle: {
-              color: theme?.splitLineColor,
-            },
           },
           min: minY,
           max: maxY,
@@ -547,8 +817,10 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             },
           },
           data,
+          showSymbol: false,
         },
       ],
+      animation: false,
     },
     accounts: {
       backgroundColor: theme?.backgroundColor,
@@ -569,23 +841,20 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       xAxis: {
         type: 'category',
         data: dataX,
+        axisLabel: {
+          formatter(value: string) {
+            return generateXAxisLabel(new Date(value), period);
+          },
+        },
       },
       yAxis: {
         type: 'value',
         min: minY,
-        max: maxY,
         splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
+          show: false,
         },
         axisLine: {
           show: true,
-        },
-        axisLabel: {
-          formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY);
-          },
         },
       },
       series: {
@@ -594,6 +863,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         name: 'Accounts',
         data: dataY,
         smooth: true,
+        showSymbol: false,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
@@ -607,10 +877,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           ]),
         },
       },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
+      animation: false,
     },
     totalSupply: {
       backgroundColor: theme?.backgroundColor,
@@ -631,22 +898,25 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       xAxis: {
         type: 'category',
         data: dataX,
+        axisLabel: {
+          formatter(value: string) {
+            return generateXAxisLabel(new Date(value), period);
+          },
+        },
       },
       yAxis: {
         type: 'value',
         min: minY,
         max: maxY,
         splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
+          show: false,
         },
         axisLine: {
           show: true,
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY);
+            return convertYAxisLabel(Number(value), maxY, 3);
           },
         },
       },
@@ -656,6 +926,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         name: `Total Supply (${getCurrencyName()})`,
         data: dataY,
         smooth: true,
+        showSymbol: false,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
@@ -669,10 +940,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           ]),
         },
       },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
+      animation: false,
     },
     circulatingSupply: {
       backgroundColor: theme?.backgroundColor,
@@ -693,22 +961,24 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       xAxis: {
         type: 'category',
         data: dataX,
+        axisLabel: {
+          formatter(value: string) {
+            return generateXAxisLabel(new Date(value), period);
+          },
+        },
       },
       yAxis: {
         type: 'value',
         min: minY,
-        max: maxY,
         splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
+          show: false,
         },
         axisLine: {
           show: true,
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY);
+            return convertYAxisLabel(Number(value), maxY, 3);
           },
         },
       },
@@ -718,6 +988,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         name: `Circulating Supply (${getCurrencyName()})`,
         data: dataY,
         smooth: true,
+        showSymbol: false,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
@@ -731,10 +1002,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           ]),
         },
       },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
+      animation: false,
     },
     percentOfPSLStaked: {
       backgroundColor: theme?.backgroundColor,
@@ -766,9 +1034,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       yAxis: {
         type: 'value',
         splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
+          show: false,
         },
         axisLine: {
           show: true,
@@ -785,11 +1051,9 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         name: `% of ${getCurrencyName()} Staked`,
         data: dataY?.map((d: number) => parseInt((d * 100).toString(), 10)),
         smooth: true,
+        showSymbol: false,
       },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
+      animation: false,
     },
   };
 
@@ -805,9 +1069,7 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
     },
     yAxis: {
       splitLine: {
-        lineStyle: {
-          color: theme?.splitLineColor,
-        },
+        show: false,
       },
       axisLine: {
         show: true,
@@ -820,7 +1082,7 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
         data: dataY,
         smooth: theme?.smooth,
         lineStyle: {
-          width: 3,
+          width: 2,
           shadowColor: 'rgba(0,0,0,0.5)',
           shadowBlur: 10,
           shadowOffsetY: 8,
@@ -836,9 +1098,28 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
+          show: false,
+        },
+        axisLine: {
+          show: true,
+        },
+      },
+      series: [
+        {
+          type: 'line',
+          showSymbol: false,
+          data: dataY,
+        },
+      ],
+    },
+    totalTransactionFees: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      yAxis: {
+        splitLine: {
+          show: false,
         },
         axisLine: {
           show: true,
@@ -859,9 +1140,7 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
+          show: false,
         },
         axisLine: {
           show: true,
@@ -876,7 +1155,82 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
         },
       ],
     },
-    difficulty: defaultOption,
+    totalTransactionCount: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      yAxis: {
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: true,
+        },
+      },
+      series: [
+        {
+          type: 'line',
+          showSymbol: false,
+          data: dataY,
+          smooth: theme?.smooth,
+        },
+      ],
+    },
+    blockchainSize: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      yAxis: {
+        min: minY,
+        max: maxY - 3,
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          formatter(value: string) {
+            return convertYAxisLabel(Number(value), maxY);
+          },
+        },
+      },
+      series: [
+        {
+          type: 'line',
+          showSymbol: false,
+          data: dataY,
+          smooth: theme?.smooth,
+        },
+      ],
+    },
+    difficulty: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      yAxis: {
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: true,
+        },
+      },
+      series: [
+        {
+          type: 'line',
+          showSymbol: false,
+          data: dataY,
+          smooth: theme?.smooth,
+          lineStyle: {
+            width: 2,
+          },
+        },
+      ],
+    },
     hashrate: defaultOption,
     networktotals: {
       backgroundColor: theme?.backgroundColor,
@@ -885,9 +1239,7 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
+          show: false,
         },
         axisLine: {
           show: true,
@@ -906,9 +1258,7 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
+          show: false,
         },
         axisLine: {
           show: true,
@@ -923,17 +1273,11 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       xAxis: {
         splitLine: {
           show: false,
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
         },
       },
       yAxis: {
         splitLine: {
           show: false,
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
         },
         axisLine: {
           show: true,
@@ -946,7 +1290,7 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
           data: dataY,
           smooth: theme?.smooth,
           lineStyle: {
-            width: 3,
+            width: 2,
             shadowColor: 'rgba(0,0,0,0.5)',
             shadowBlur: 10,
             shadowOffsetY: 8,
@@ -970,12 +1314,14 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       yAxis: {
         splitLine: {
           show: false,
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
         },
         axisLine: {
           show: true,
+        },
+        axisLabel: {
+          formatter(value: string) {
+            return convertYAxisLabel(Number(value), maxY);
+          },
         },
       },
       series: [
@@ -985,7 +1331,7 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
           data: dataY,
           smooth: theme?.smooth,
           lineStyle: {
-            width: 3,
+            width: 2,
             shadowColor: 'rgba(0,0,0,0.5)',
             shadowBlur: 10,
             shadowOffsetY: 8,
@@ -1018,9 +1364,7 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
         min: minY,
         max: maxY,
         splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
+          show: false,
         },
         axisLine: {
           show: true,
@@ -1080,16 +1424,14 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
         min: minY,
         max: maxY,
         splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
+          show: false,
         },
         axisLine: {
           show: true,
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY);
+            return convertYAxisLabel(Number(value), maxY, 3);
           },
         },
       },
@@ -1140,18 +1482,15 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
       yAxis: {
         type: 'value',
         min: minY,
-        max: maxY,
         splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
+          show: false,
         },
         axisLine: {
           show: true,
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY);
+            return convertYAxisLabel(Number(value), maxY, 3);
           },
         },
       },
@@ -1209,9 +1548,7 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
         min: minY,
         max: maxY,
         splitLine: {
-          lineStyle: {
-            color: theme?.splitLineColor,
-          },
+          show: false,
         },
         axisLine: {
           show: true,
@@ -1389,7 +1726,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         showSymbol: false,
         data: dataY,
         lineStyle: {
-          width: 3,
+          width: 2,
           shadowColor: darkMode ? 'rgba(160, 174, 192, 0.5)' : 'rgba(0, 0, 0, 0.5)',
           shadowBlur: 10,
           shadowOffsetY: 12,
@@ -2447,7 +2784,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           smooth: true,
           showSymbol: false,
           lineStyle: {
-            width: 3,
+            width: 2,
             color: '#ff5500',
           },
           areaStyle: {
