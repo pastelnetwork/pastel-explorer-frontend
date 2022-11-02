@@ -7,7 +7,11 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { getCurrencyName } from '@utils/appInfo';
 import { TThemeInitOption } from '@utils/constants/types';
 import { periods } from '@utils/constants/statistics';
-import { convertYAxisLabel, PeriodTypes } from '@utils/helpers/statisticsLib';
+import {
+  convertYAxisLabel,
+  convertYAxisLabelWithoutUnit,
+  PeriodTypes,
+} from '@utils/helpers/statisticsLib';
 import { TChartParams } from '@utils/types/IStatistics';
 
 type TChartOption = {
@@ -97,6 +101,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         type: 'value',
+        minInterval: 1000000,
         splitLine: {
           show: false,
         },
@@ -105,7 +110,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY);
+            return convertYAxisLabel(Number(value), maxY, 0);
           },
         },
       },
@@ -178,7 +183,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         type: 'value',
-        min: 50000000,
+        minInterval: 1000000000,
         splitLine: {
           show: false,
         },
@@ -187,7 +192,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY);
+            return convertYAxisLabelWithoutUnit(Number(value), maxY, 0);
           },
         },
       },

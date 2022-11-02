@@ -548,3 +548,23 @@ export function transformHashRateCharts(data: THashrate[]): THashrateChartData {
   });
   return { dataX, networksolps };
 }
+
+export function convertYAxisLabelWithoutUnit(
+  value: number,
+  maxY: number,
+  fractionDigits = 1,
+): number | string {
+  if (value === 0) {
+    return value;
+  }
+  if (maxY > 1000000000) {
+    return `${(value / 1000000000).toFixed(fractionDigits)}`;
+  }
+  if (maxY > 1000000) {
+    return `${(value / 1000000).toFixed(fractionDigits)}`;
+  }
+  if (maxY > 1000) {
+    return `${(value / 1000).toFixed(fractionDigits)}`;
+  }
+  return value;
+}
