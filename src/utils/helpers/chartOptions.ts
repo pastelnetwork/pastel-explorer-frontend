@@ -452,6 +452,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         type: 'value',
+        min: minY,
         splitLine: {
           show: false,
         },
