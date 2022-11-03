@@ -97,7 +97,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         type: 'value',
-        minInterval: period === '24h' ? 100000 : 1000000,
+        minInterval: period === '24h' && maxY < 1000000 ? 100000 : 1000000,
         splitLine: {
           show: false,
         },
@@ -129,7 +129,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         top: 8,
         right: 8,
         bottom: 20,
-        left: 35,
+        left: 60,
         show: false,
       },
       tooltip: {
