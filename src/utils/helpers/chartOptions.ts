@@ -179,7 +179,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         type: 'value',
-        minInterval: 1000000000,
+        minInterval: 1000000,
         splitLine: {
           show: false,
         },
