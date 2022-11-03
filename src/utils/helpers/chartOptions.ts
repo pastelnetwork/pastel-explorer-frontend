@@ -97,6 +97,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         type: 'value',
+        minInterval: period === '24h' && maxY < 1000000 ? 100000 : 1000000,
         splitLine: {
           show: false,
         },
@@ -105,7 +106,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY);
+            return convertYAxisLabel(Number(value), maxY, 0);
           },
         },
       },
@@ -128,7 +129,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         top: 8,
         right: 8,
         bottom: 20,
-        left: 50,
+        left: 60,
         show: false,
       },
       tooltip: {
@@ -178,7 +179,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         type: 'value',
-        min: 50000000,
+        minInterval: maxY > 1000000 ? 1000000 : 10000,
         splitLine: {
           show: false,
         },
@@ -187,7 +188,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY);
+            return convertYAxisLabel(Number(value), maxY, 0);
           },
         },
       },
@@ -265,7 +266,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         axisLabel: {
           formatter(value: string) {
             const val = Number.parseFloat(value);
-            return `${val / 1000000} M`;
+            return `${formatNumber(val / 1000000)}M`;
           },
         },
         axisLine: {
@@ -364,12 +365,12 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         axisLabel: {
           formatter(value: string) {
             if (maxY > 1000000) {
-              return `${Math.round(Number(value) / 1000000)} M`;
+              return `${Math.round(Number(value) / 1000000)}M`;
             }
             if (maxY > 1000) {
-              return `${Math.round(Number(value) / 1000)} K`;
+              return `${Math.round(Number(value) / 1000)}K`;
             }
-            return `${Number(value)} k`;
+            return `${Number(value)}k`;
           },
         },
       },
@@ -451,6 +452,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         type: 'value',
+        min: minY,
         splitLine: {
           show: false,
         },
@@ -692,16 +694,12 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       yAxis: {
         type: 'value',
         min: minY,
+        minInterval: 1,
         splitLine: {
           show: false,
         },
         axisLine: {
           show: true,
-        },
-        axisLabel: {
-          formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY);
-          },
         },
       },
       series: {

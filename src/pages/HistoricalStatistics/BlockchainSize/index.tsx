@@ -45,7 +45,7 @@ function BlockchainSize() {
         title="Blockchain Size (Mb)"
         info={info}
         period={period}
-        offset={0}
+        offset={1}
         periods={periods[6]}
         handleBgColorChange={handleBgColorChange}
         handlePeriodFilterChange={handlePeriodFilterChange}

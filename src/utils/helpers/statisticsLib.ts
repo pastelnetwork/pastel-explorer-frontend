@@ -360,13 +360,13 @@ export function convertYAxisLabel(
     return value;
   }
   if (maxY > 1000000000) {
-    return `${(value / 1000000000).toFixed(fractionDigits)} B`;
+    return `${(value / 1000000000).toFixed(fractionDigits)}B`;
   }
   if (maxY > 1000000) {
-    return `${(value / 1000000).toFixed(fractionDigits)} M`;
+    return `${(value / 1000000).toFixed(fractionDigits)}M`;
   }
   if (maxY > 1000) {
-    return `${(value / 1000).toFixed(fractionDigits)} K`;
+    return `${(value / 1000).toFixed(fractionDigits)}K`;
   }
   return value;
 }
@@ -547,4 +547,24 @@ export function transformHashRateCharts(data: THashrate[]): THashrateChartData {
     networksolps.solps1000.push(item.networksolps1000);
   });
   return { dataX, networksolps };
+}
+
+export function convertYAxisLabelWithoutUnit(
+  value: number,
+  maxY: number,
+  fractionDigits = 1,
+): number | string {
+  if (value === 0) {
+    return value;
+  }
+  if (maxY > 1000000000) {
+    return `${(value / 1000000000).toFixed(fractionDigits)}`;
+  }
+  if (maxY > 1000000) {
+    return `${(value / 1000000).toFixed(fractionDigits)}`;
+  }
+  if (maxY > 1000) {
+    return `${(value / 1000).toFixed(fractionDigits)}`;
+  }
+  return value;
 }
