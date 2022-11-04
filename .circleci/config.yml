@@ -71,8 +71,8 @@ workflows:
           context: explorer-frontend-staging
           filters:
             branches:
-              ignore:
-                - production
+              only:
+                - staging
       - build:
           name: build-production
           context: pastel-frontend-stage
@@ -88,7 +88,7 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - staging
       - deploy-production:
           name: deploy-production
           requires:

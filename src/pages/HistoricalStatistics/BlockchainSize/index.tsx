@@ -1,11 +1,9 @@
 // react
 import { useEffect, useState } from 'react';
-// third party
-import { Skeleton } from '@material-ui/lab';
 // application
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { PeriodTypes, transformTotalData } from '@utils/helpers/statisticsLib';
+import { PeriodTypes, transformBlockchainSizeData } from '@utils/helpers/statisticsLib';
 import { periods, info } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { TLineChartData, TTransactionsChart } from '@utils/types/IStatistics';
@@ -17,17 +15,17 @@ function BlockchainSize() {
   const [chartData, setChartData] = useState<TLineChartData | null>(null);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const [period, setPeriod] = useState<PeriodTypes>(periods[1][0]);
-  const fetchStats = useFetch<{ data: Array<TTransactionsChart> }>({
+  const fetchStats = useFetch<{ data: Array<TTransactionsChart>; totalPrevDay: number }>({
     method: 'get',
     url: URLS.GET_BLOCKS_CHARTS,
   });
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { period, sortDirection: 'DESC', func: 'SUM', col: 'size' },
+        params: { period, sortDirection: 'DESC', func: 'SUM', col: 'size', name: 'blockchainSize' },
       });
       if (data) {
-        const parseData = transformTotalData(data.data);
+        const parseData = transformBlockchainSizeData(data.data, period, data.totalPrevDay);
         setChartData(parseData);
       }
     };
@@ -40,23 +38,20 @@ function BlockchainSize() {
 
   return (
     <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Blockchain Size">
-      {chartData ? (
-        <EChartsLineChart
-          chartName="transactionfee"
-          dataX={chartData?.dataX}
-          dataY={chartData?.dataY}
-          title="Blockchain Size (Mb)"
-          info={info}
-          period={period}
-          offset={1}
-          periods={periods[6]}
-          handleBgColorChange={handleBgColorChange}
-          handlePeriodFilterChange={handlePeriodFilterChange}
-          setHeaderBackground
-        />
-      ) : (
-        <Skeleton animation="wave" variant="rect" height={386} />
-      )}
+      <EChartsLineChart
+        chartName="blockchainSize"
+        dataX={chartData?.dataX}
+        dataY={chartData?.dataY}
+        title="Blockchain Size (Mb)"
+        info={info}
+        period={period}
+        offset={1}
+        periods={periods[6]}
+        handleBgColorChange={handleBgColorChange}
+        handlePeriodFilterChange={handlePeriodFilterChange}
+        setHeaderBackground
+        isLoading={fetchStats.isLoading}
+      />
     </HistoricalStatisticsLayout>
   );
 }

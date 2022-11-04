@@ -152,3 +152,41 @@ export type TAnalyticsChartData = {
   maxValue: number;
   value: number;
 };
+
+export type THashrate = {
+  id: string;
+  networksolps5: number;
+  networksolps10: number;
+  networksolps25: number;
+  networksolps50: number;
+  networksolps100: number;
+  networksolps500: number;
+  networksolps1000: number;
+  timestamp: number;
+};
+
+export type TSolpsData = {
+  solps5: number[];
+  solps10: number[];
+  solps25: number[];
+  solps50: number[];
+  solps100: number[];
+  solps500: number[];
+  solps1000: number[];
+};
+
+export type THashrateChartData = {
+  dataX: string[];
+  networksolps: TSolpsData;
+};
+
+export type TChartParams = {
+  data: number;
+  dataIndex: number;
+  axisValue: string;
+  axisValueLabel: string;
+  marker: string;
+  name: string;
+  value: number;
+  seriesName: string;
+};
