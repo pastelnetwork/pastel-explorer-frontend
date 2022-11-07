@@ -50,17 +50,31 @@ const generateAxisLabelInterval = (
       return 1;
     case '14d':
       return 2;
+    case '30d':
+      if (granularity === 'none') {
+        return Math.ceil(total / 12);
+      }
+      return 'auto';
     case '90d':
+      if (granularity === 'none') {
+        return Math.ceil(total / 12);
+      }
       if (granularity === '30d') {
         return 'auto';
       }
       return 10;
     case '180d':
+      if (granularity === 'none') {
+        return Math.ceil(total / 12);
+      }
       if (granularity === '30d') {
         return 'auto';
       }
       return 12;
     case '1y':
+      if (granularity === 'none') {
+        return Math.ceil(total / 12);
+      }
       if (granularity === '30d' || granularity === '1y') {
         return 'auto';
       }
