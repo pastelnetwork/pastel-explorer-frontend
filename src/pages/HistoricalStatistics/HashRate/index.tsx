@@ -92,7 +92,7 @@ function HashRate() {
           value={numberOfBlocks}
           onChange={handleDropdownChange}
           options={options}
-          label="Number of blocks:"
+          label="Number of blocks used in trailing average:"
           classNameWrapper="number-of-blocks"
         />
       </Styles.DropdownWrapper>

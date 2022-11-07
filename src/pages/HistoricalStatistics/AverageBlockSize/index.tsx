@@ -48,7 +48,7 @@ const AverageBlockSize = (): JSX.Element => {
   };
 
   const handleGranularityFilterChange = (value: TGranularity) => {
-    setGranularity(value);
+    setGranularity(value === granularity ? 'none' : value);
   };
 
   const getGranularitiesOptions = () => {

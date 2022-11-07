@@ -82,7 +82,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
         setMaxY(Math.ceil(max));
       } else if (chartName === 'difficulty') {
         setMinY(Math.floor(min / offset) * offset);
-        setMaxY(Math.ceil(max / offset) * offset);
+        setMaxY(Math.floor(max / offset) * offset);
       } else if (
         ['percentOfPSLStaked', 'totalOfCascadeRequests', 'totalSizeOfDataStored'].indexOf(
           chartName,
@@ -90,6 +90,9 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
       ) {
         setMinY(min - offset);
         setMaxY(max + offset);
+      } else if (chartName === 'blockchainSize') {
+        setMinY(Math.floor(min) - offset);
+        setMaxY(Math.floor(max) + offset);
       } else {
         setMinY(Math.round(min) - offset);
         setMaxY(Math.floor(max) + offset);
