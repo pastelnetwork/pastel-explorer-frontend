@@ -51,7 +51,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       grid: {
         top: 8,
-        right: 12,
+        right: 40,
         bottom: 20,
         left: 50,
         show: false,
@@ -127,7 +127,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       grid: {
         top: 8,
-        right: 8,
+        right: 40,
         bottom: 20,
         left: 60,
         show: false,
@@ -179,7 +179,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         type: 'value',
-        minInterval: maxY > 1000000 ? 1000000 : 10000,
+        minInterval: maxY > 1000000000 ? 1000000000 : 100000000,
         splitLine: {
           show: false,
         },
@@ -407,7 +407,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       color: ['#5470c6', '#91cc75', '#fac858'],
       grid: {
         top: 8,
-        right: 8,
+        right: 40,
         bottom: 20,
         left: 60,
         show: false,
@@ -440,7 +440,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           },
           interval:
             period && periods[9].indexOf(period) !== -1 && dataX?.length && dataX?.length > 48
-              ? 22
+              ? 24
               : 'auto',
         },
         splitLine: {
@@ -647,7 +647,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       color: ['#cd6661'],
       grid: {
         top: 8,
-        right: 8,
+        right: 40,
         bottom: 20,
         left: 36,
         show: false,
@@ -681,7 +681,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           },
           interval:
             period && periods[9].indexOf(period) !== -1 && dataX?.length && dataX?.length > 48
-              ? 22
+              ? 24
               : 'auto',
         },
         splitLine: {
@@ -694,7 +694,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       yAxis: {
         type: 'value',
         min: minY,
-        minInterval: 1,
+        minInterval: period === '24h' ? 0.2 : 1,
         splitLine: {
           show: false,
         },
