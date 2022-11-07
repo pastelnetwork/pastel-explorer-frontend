@@ -132,6 +132,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     maxY: isAverageNFTChart ? maxGaugeValue : maxY,
     gaugeValue,
     period: selectedPeriodButton,
+    granularity: selectedGranularityButton,
   };
   const options = getThemeInitOption(params);
   const downloadPNG = () => {
@@ -163,6 +164,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
       minY: isAverageNFTChart ? minGaugeValue : minY,
       maxY: isAverageNFTChart ? maxGaugeValue : maxY,
       gaugeValue,
+      granularity: selectedGranularityButton,
     };
     const option = getThemeUpdateOption(paramsOption);
     eChartInstance?.setOption(option);

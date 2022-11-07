@@ -7,7 +7,7 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { getCurrencyName } from '@utils/appInfo';
 import { TThemeInitOption } from '@utils/constants/types';
 import { periods } from '@utils/constants/statistics';
-import { convertYAxisLabel, PeriodTypes } from '@utils/helpers/statisticsLib';
+import { convertYAxisLabel, PeriodTypes, TGranularity } from '@utils/helpers/statisticsLib';
 import { TChartParams } from '@utils/types/IStatistics';
 
 type TChartOption = {
@@ -40,8 +40,56 @@ export const generateTooltipLabel = (value: Date, period?: PeriodTypes) => {
     : format(value, 'MM/dd/yyyy');
 };
 
+const generateAxisLabelInterval = (
+  period: PeriodTypes,
+  total: number,
+  granularity: TGranularity,
+) => {
+  switch (period) {
+    case '7d':
+      return 1;
+    case '14d':
+      return 2;
+    case '90d':
+      if (granularity === '30d') {
+        return 'auto';
+      }
+      return 10;
+    case '180d':
+      if (granularity === '30d') {
+        return 'auto';
+      }
+      return 12;
+    case '1y':
+      if (granularity === '30d' || granularity === '1y') {
+        return 'auto';
+      }
+      return 26;
+    case 'all':
+    case 'max':
+      if (granularity === '30d' || granularity === '1y') {
+        return 'auto';
+      }
+      return Math.ceil(total / 12);
+    default:
+      return 1;
+  }
+};
+
 export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
-  const { theme, data, dataX, dataY, dataY1, dataY2, chartName, minY, maxY, period } = args;
+  const {
+    theme,
+    data,
+    dataX,
+    dataY,
+    dataY1,
+    dataY2,
+    chartName,
+    minY,
+    maxY,
+    period,
+    granularity,
+  } = args;
   let firstDay = '';
   const chartOptions: TChartOption = {
     difficulty: {
@@ -438,16 +486,11 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             }
             return value ? generateXAxisLabel(new Date(value), period) : null;
           },
-          interval:
-            period && periods[9].indexOf(period) !== -1 && dataX?.length && dataX?.length > 48
-              ? 24
-              : 'auto',
-        },
-        splitLine: {
-          interval:
-            period && periods[9].indexOf(period) !== -1 && dataX?.length && dataX?.length > 48
-              ? 22
-              : 'auto',
+          showMinLabel: true,
+          showMaxLabel: true,
+          interval: period
+            ? generateAxisLabelInterval(period, dataX?.length || 1, granularity || 'none')
+            : 'auto',
         },
       },
       yAxis: {
