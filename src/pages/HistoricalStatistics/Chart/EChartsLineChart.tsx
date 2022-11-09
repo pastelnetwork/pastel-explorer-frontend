@@ -92,8 +92,8 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
         setMaxY(max + offset);
       } else if (chartName === 'blockchainSize') {
         if (selectedPeriodButton === '24h') {
-          setMinY(min - offset);
-          setMaxY(max + offset);
+          setMinY(parseFloat((min - offset).toFixed(1)));
+          setMaxY(parseFloat((max + offset).toFixed(1)));
         } else {
           setMinY(Math.floor(min) - offset);
           setMaxY(Math.floor(max) + offset);
