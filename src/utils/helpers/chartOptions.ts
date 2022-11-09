@@ -700,7 +700,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         top: 8,
         right: 40,
         bottom: 20,
-        left: 36,
+        left: 50,
         show: false,
         containerLabel: true,
       },
