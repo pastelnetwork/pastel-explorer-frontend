@@ -743,7 +743,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       yAxis: {
         type: 'value',
         min: minY,
-        minInterval: period === '24h' ? 0.2 : 1,
+        minInterval: period === '24h' ? 0.1 : 1,
         splitLine: {
           show: false,
         },
