@@ -111,6 +111,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
+      color: ['#cd6661'],
       grid: {
         top: 8,
         right: 40,
@@ -178,6 +179,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         data: dataY,
         lineStyle: {
           width: 2,
+          color: '#cd6661',
         },
       },
       animation: false,
