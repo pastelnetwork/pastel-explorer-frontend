@@ -235,7 +235,6 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
           type: 'line',
           showSymbol: false,
           data: dataY1,
-          smooth: theme.smooth,
           lineStyle: {
             width: 3,
             shadowColor: 'rgba(0,0,0,0.5)',

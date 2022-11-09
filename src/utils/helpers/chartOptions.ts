@@ -257,7 +257,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       series: {
         type: 'line',
         sampling: 'lttb',
-        smooth: true,
         symbol: false,
         showSymbol: false,
         lineStyle: {
@@ -339,7 +338,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         {
           name: 'Traffic receive',
           type: 'line',
-          smooth: true,
           lineStyle: {
             width: 0,
           },
@@ -365,7 +363,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         {
           name: 'Traffic sent',
           type: 'line',
-          smooth: true,
           lineStyle: {
             width: 0,
           },
@@ -442,7 +439,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         lineStyle: {
           color: '#176987',
         },
-        smooth: true,
         symbol: false,
         showSymbol: false,
         areaStyle: {
@@ -524,7 +520,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       series: {
         type: 'line',
-        smooth: true,
         showSymbol: false,
         data: dataY,
       },
@@ -573,7 +568,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       series: {
         type: 'line',
-        smooth: true,
         showSymbol: false,
         data: dataY,
       },
@@ -623,7 +617,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         type: 'line',
         sampling: 'lttb',
         data: dataY,
-        smooth: true,
         showSymbol: false,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -679,7 +672,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         type: 'line',
         sampling: 'lttb',
         data: dataY,
-        smooth: true,
         showSymbol: false,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -763,7 +755,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         type: 'line',
         sampling: 'lttb',
         data: dataY,
-        smooth: true,
         showSymbol: false,
       },
       animation: false,
@@ -917,7 +908,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         sampling: 'lttb',
         name: 'Accounts',
         data: dataY,
-        smooth: true,
         showSymbol: false,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -980,7 +970,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         sampling: 'lttb',
         name: `Total Supply (${getCurrencyName()})`,
         data: dataY,
-        smooth: true,
         showSymbol: false,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -1042,7 +1031,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         sampling: 'lttb',
         name: `Circulating Supply (${getCurrencyName()})`,
         data: dataY,
-        smooth: true,
         showSymbol: false,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -1105,7 +1093,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         sampling: 'lttb',
         name: `% of ${getCurrencyName()} Staked`,
         data: dataY?.map((d: number) => parseInt((d * 100).toString(), 10)),
-        smooth: true,
         showSymbol: false,
       },
       animation: false,
@@ -1135,7 +1122,6 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
         type: 'line',
         showSymbol: false,
         data: dataY,
-        smooth: theme?.smooth,
         lineStyle: {
           width: 2,
           shadowColor: 'rgba(0,0,0,0.5)',
@@ -1206,7 +1192,6 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
           type: 'line',
           showSymbol: false,
           data: dataY,
-          smooth: theme?.smooth,
         },
       ],
     },
@@ -1228,7 +1213,6 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
           type: 'line',
           showSymbol: false,
           data: dataY,
-          smooth: theme?.smooth,
         },
       ],
     },
@@ -1257,7 +1241,6 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
           type: 'line',
           showSymbol: false,
           data: dataY,
-          smooth: theme?.smooth,
         },
       ],
     },
@@ -1279,7 +1262,6 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
           type: 'line',
           showSymbol: false,
           data: dataY,
-          smooth: theme?.smooth,
           lineStyle: {
             width: 2,
           },
@@ -1343,7 +1325,6 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
           type: 'line',
           showSymbol: false,
           data: dataY,
-          smooth: theme?.smooth,
           lineStyle: {
             width: 2,
             shadowColor: 'rgba(0,0,0,0.5)',
@@ -1384,7 +1365,6 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
           type: 'line',
           showSymbol: false,
           data: dataY,
-          smooth: theme?.smooth,
           lineStyle: {
             width: 2,
             shadowColor: 'rgba(0,0,0,0.5)',
@@ -1435,7 +1415,6 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
         sampling: 'lttb',
         name: 'Accounts',
         data: dataY,
-        smooth: true,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
@@ -1495,7 +1474,6 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
         sampling: 'lttb',
         name: `Total Supply (${getCurrencyName()})`,
         data: dataY,
-        smooth: true,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
@@ -1554,7 +1532,6 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
         sampling: 'lttb',
         name: `Circulating Supply (${getCurrencyName()})`,
         data: dataY,
-        smooth: true,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
@@ -1619,7 +1596,6 @@ export function getThemeUpdateOption(args: TThemeInitOption): EChartsOption {
         sampling: 'lttb',
         name: `% of ${getCurrencyName()} Staked`,
         data: dataY,
-        smooth: true,
       },
       stateAnimation: {
         duration: 300,
@@ -1842,7 +1818,6 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         type: 'line',
         sampling: 'lttb',
         data: dataY,
-        smooth: true,
         showSymbol: false,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -2043,7 +2018,6 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         type: 'line',
         sampling: 'lttb',
         data: dataY,
-        smooth: true,
         showSymbol: false,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -2112,7 +2086,6 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         type: 'line',
         sampling: 'lttb',
         data: dataY,
-        smooth: true,
         showSymbol: false,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -2182,7 +2155,6 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         type: 'line',
         sampling: 'lttb',
         data: dataY,
-        smooth: true,
         showSymbol: false,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -2247,7 +2219,6 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         lineStyle: {
           color: '#176987',
         },
-        smooth: true,
         symbol: false,
         showSymbol: false,
         areaStyle: {
@@ -2329,7 +2300,6 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         type: 'line',
         sampling: 'lttb',
         data: dataY,
-        smooth: true,
         showSymbol: false,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -2450,7 +2420,6 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         type: 'line',
         sampling: 'lttb',
         data: dataY,
-        smooth: false,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
@@ -2577,7 +2546,6 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         type: 'line',
         sampling: 'lttb',
         data: dataY,
-        smooth: false,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
@@ -2642,7 +2610,6 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         type: 'line',
         sampling: 'lttb',
         data: dataY,
-        smooth: false,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
@@ -2707,7 +2674,6 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         type: 'bar',
         sampling: 'lttb',
         data: dataY,
-        smooth: true,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
@@ -2771,7 +2737,6 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         type: 'bar',
         sampling: 'lttb',
         data: dataY,
-        smooth: false,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
@@ -2836,7 +2801,6 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         {
           data: dataY,
           type: 'line',
-          smooth: true,
           showSymbol: false,
           lineStyle: {
             width: 2,
@@ -2909,7 +2873,6 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         {
           data: dataY,
           type: 'line',
-          smooth: true,
           showSymbol: false,
           areaStyle: {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -2977,7 +2940,6 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         type: 'line',
         sampling: 'lttb',
         data: dataY,
-        smooth: true,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
