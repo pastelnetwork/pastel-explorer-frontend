@@ -62,6 +62,7 @@ export type TLineChartProps = {
   subTitle?: string;
   customHtml?: ReactNode;
   isLoading?: boolean;
+  seriesName1Type?: string;
 };
 
 export type TCsvHeaderType = {

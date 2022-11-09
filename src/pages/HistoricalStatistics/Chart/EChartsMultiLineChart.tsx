@@ -37,6 +37,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     handleBgColorChange,
     setHeaderBackground,
     isDynamicTitleColor,
+    seriesName1Type = 'bar',
   } = props;
   const downloadRef = useRef(null);
   const { darkMode } = useSelector(getThemeState);
@@ -97,18 +98,13 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
       left: 60,
       show: false,
     },
-    visualMap: {
-      show: false,
-      type: 'continuous',
-      seriesIndex: 0,
-      min: minY1,
-    },
     tooltip: {
       trigger: 'axis',
       axisPointer: {
         type: 'cross',
       },
     },
+    color: ['#cd6661', '#5470C6'],
     xAxis: {
       type: 'category',
       data: dataX,
@@ -152,7 +148,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
         axisLabel: {
           formatter(value: string) {
             const val = Number.parseFloat(value);
-            return !fixedNum1 ? Math.round(val) : `$${val.toFixed(fixedNum1)}`;
+            return !fixedNum1 ? Math.round(val) : val.toFixed(fixedNum1);
           },
         },
       },
@@ -166,11 +162,9 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
       },
       {
         name: seriesName1,
-        type: 'bar',
+        type: seriesName1Type,
         yAxisIndex: 1,
         showSymbol: false,
-        color: '#5470C6',
-        barWidth: 5,
         data: dataY2,
       },
     ],
@@ -202,6 +196,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
       textStyle: {
         color: theme.color,
       },
+      color: ['#cd6661', '#5470C6'],
       yAxis: [
         {
           type: 'value',
@@ -235,16 +230,9 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
           type: 'line',
           showSymbol: false,
           data: dataY1,
-          smooth: theme.smooth,
-          lineStyle: {
-            width: 3,
-            shadowColor: 'rgba(0,0,0,0.5)',
-            shadowBlur: 10,
-            shadowOffsetY: 8,
-          },
         },
         {
-          type: 'bar',
+          type: seriesName1Type,
           yAxisIndex: 1,
           showSymbol: false,
           data: dataY2,
