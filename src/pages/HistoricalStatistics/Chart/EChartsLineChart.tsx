@@ -82,7 +82,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
         setMaxY(Math.ceil(max));
       } else if (chartName === 'difficulty') {
         setMinY(Math.floor(min / offset) * offset);
-        setMaxY(Math.ceil(max / offset) * offset);
+        setMaxY(Math.floor(max / offset) * offset);
       } else if (
         ['percentOfPSLStaked', 'totalOfCascadeRequests', 'totalSizeOfDataStored'].indexOf(
           chartName,
@@ -90,6 +90,14 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
       ) {
         setMinY(min - offset);
         setMaxY(max + offset);
+      } else if (chartName === 'blockchainSize') {
+        if (selectedPeriodButton === '24h') {
+          setMinY(parseFloat((min - offset).toFixed(1)));
+          setMaxY(parseFloat((max + offset).toFixed(1)));
+        } else {
+          setMinY(Math.floor(min) - offset);
+          setMaxY(Math.floor(max) + offset);
+        }
       } else {
         setMinY(Math.round(min) - offset);
         setMaxY(Math.floor(max) + offset);
@@ -129,6 +137,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     maxY: isAverageNFTChart ? maxGaugeValue : maxY,
     gaugeValue,
     period: selectedPeriodButton,
+    granularity: selectedGranularityButton,
   };
   const options = getThemeInitOption(params);
   const downloadPNG = () => {
@@ -160,6 +169,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
       minY: isAverageNFTChart ? minGaugeValue : minY,
       maxY: isAverageNFTChart ? maxGaugeValue : maxY,
       gaugeValue,
+      granularity: selectedGranularityButton,
     };
     const option = getThemeUpdateOption(paramsOption);
     eChartInstance?.setOption(option);

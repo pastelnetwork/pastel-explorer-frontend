@@ -54,6 +54,7 @@ function PriceOvertime() {
           handleBgColorChange={handleBgColorChange}
           handlePeriodFilterChange={handlePeriodFilterChange}
           setHeaderBackground
+          seriesName1Type="line"
         />
       ) : (
         <Skeleton animation="wave" variant="rect" height={386} />
