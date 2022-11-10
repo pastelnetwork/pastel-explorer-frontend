@@ -41,7 +41,7 @@ const NetworkStatistics: React.FC = () => {
     <SummaryStyles.Card className="cascade-sense-card">
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
-          <SummaryStyles.Typography variant="h6">Hashrate MH/s</SummaryStyles.Typography>
+          <SummaryStyles.Typography variant="h6">Hashrate(MSol/S)</SummaryStyles.Typography>
         </SummaryStyles.ValueWrapper>
         <SummaryStyles.PercentageWrapper>
           <Styles.Percentage>
