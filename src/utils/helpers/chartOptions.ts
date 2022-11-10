@@ -207,7 +207,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
               )}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(
             params[0].value,
-          )} MH/s</div>
+          )} MSol/S</div>
             </div>
           `;
         },
