@@ -92,7 +92,11 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
         chartName === 'hashrate' ||
         chartName === 'difficulty'
       ) {
-        const result = generateMinMaxChartData(min, max, selectedPeriodButton);
+        const result = generateMinMaxChartData(min, max, 0, 5, selectedPeriodButton);
+        setMinY(result.min);
+        setMaxY(result.max);
+      } else if (chartName === 'averageblocksize') {
+        const result = generateMinMaxChartData(min, max, offset, 5, selectedPeriodButton, 4);
         setMinY(result.min);
         setMaxY(result.max);
       } else {

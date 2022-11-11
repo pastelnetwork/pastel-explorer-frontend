@@ -75,7 +75,7 @@ const AverageBlockSize = (): JSX.Element => {
         dataY={chartData?.dataY}
         title="Cumulative Overall Average Block Size (MB)"
         info={info}
-        offset={0.00001}
+        offset={10000}
         period={period}
         granularity={granularity}
         granularities={getGranularitiesOptions()}

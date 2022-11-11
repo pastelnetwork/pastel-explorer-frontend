@@ -10,7 +10,6 @@ import { periods } from '@utils/constants/statistics';
 import {
   convertYAxisLabel,
   PeriodTypes,
-  TGranularity,
   generateXAxisInterval,
 } from '@utils/helpers/statisticsLib';
 import { TChartParams } from '@utils/types/IStatistics';
@@ -43,59 +42,6 @@ export const generateTooltipLabel = (value: Date, period?: PeriodTypes) => {
   return periods[8].indexOf(period) !== -1
     ? format(value, 'MM/dd/yyyy hh:00 aa')
     : format(value, 'MM/dd/yyyy');
-};
-
-const generateAxisLabelInterval = (
-  period: PeriodTypes,
-  total: number,
-  granularity: TGranularity,
-) => {
-  switch (period) {
-    case '7d':
-      return 1;
-    case '14d':
-      return 2;
-    case '30d':
-      if (granularity === 'none') {
-        return Math.ceil(total / 12);
-      }
-      if (granularity === '30d') {
-        return 'auto';
-      }
-      return 'auto';
-    case '90d':
-      if (granularity === 'none') {
-        return Math.ceil(total / 12);
-      }
-      if (granularity === '30d') {
-        return 'auto';
-      }
-      return 10;
-    case '180d':
-      if (granularity === 'none') {
-        return Math.ceil(total / 12);
-      }
-      if (granularity === '30d') {
-        return 'auto';
-      }
-      return 12;
-    case '1y':
-      if (granularity === 'none') {
-        return Math.ceil(total / 12);
-      }
-      if (granularity === '30d' || granularity === '1y') {
-        return 'auto';
-      }
-      return 26;
-    case 'all':
-    case 'max':
-      if (granularity === '30d' || granularity === '1y') {
-        return 'auto';
-      }
-      return Math.ceil(total / 12);
-    default:
-      return 1;
-  }
 };
 
 export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
@@ -488,16 +434,15 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             }
             return value ? generateXAxisLabel(new Date(value), period) : null;
           },
-          showMinLabel: true,
           showMaxLabel: true,
-          interval: period
-            ? generateAxisLabelInterval(period, dataX?.length || 1, granularity || 'none')
-            : 'auto',
+          interval: generateXAxisInterval(granularity || '1d', period, dataX),
         },
       },
       yAxis: {
         type: 'value',
         min: minY,
+        max: maxY,
+        interval: (maxY - minY) / 5,
         splitLine: {
           show: false,
         },
@@ -506,7 +451,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY);
+            return convertYAxisLabel(Number(value), maxY, 4);
           },
         },
       },
