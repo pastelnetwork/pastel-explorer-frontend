@@ -115,10 +115,10 @@ export type TNettotalsInfo = {
 };
 
 export type TAverageBlockSize = {
-  time: string;
+  time: number;
   size: number;
-  maxTime: string;
-  minTime: string;
+  maxTime: number;
+  minTime: number;
 };
 
 export type TTransactionPerSecond = TAverageBlockSize;
