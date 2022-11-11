@@ -231,9 +231,9 @@ export function transformAverageBlockSize(blockSizes: TAverageBlockSize[]): TLin
     const size = Number(blockSizes[i].size) / 10e6;
     dataY.push(size);
     if (i !== 0) {
-      dataX.push(blockSizes[i].time);
+      dataX.push(format(blockSizes[i].time * 1000, 'MM/dd/yyyy HH:mm'));
     } else {
-      dataX.push(blockSizes[i]?.minTime || blockSizes[i].time);
+      dataX.push(format(blockSizes[i].minTime * 1000, 'MM/dd/yyyy HH:mm'));
     }
   }
   return { dataX, dataY };
