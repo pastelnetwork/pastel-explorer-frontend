@@ -90,7 +90,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
       ) {
         setMinY(min - offset);
         setMaxY(max + offset);
-      } else if (chartName === 'blockchainSize') {
+      } else if (chartName === 'blockchainSize' || chartName === 'hashrate') {
         const result = generateMinMaxChartData(min, max, selectedPeriodButton);
         setMinY(result.min);
         setMaxY(result.max);

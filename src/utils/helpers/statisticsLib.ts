@@ -593,7 +593,7 @@ export const generateXAxisInterval = (
     case '7d':
       return Math.floor(dataX.length / 7);
     case '14d':
-      return Math.floor(dataX.length / 14);
+      return Math.floor(dataX.length / 10);
     case '30d':
       return Math.floor(dataX.length / 20);
     case '90d':
