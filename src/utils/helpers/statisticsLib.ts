@@ -20,6 +20,7 @@ import {
   THashrate,
   TSolpsData,
   THashrateChartData,
+  TMinMaxChartData,
 } from '@utils/types/IStatistics';
 import { IBlock } from '@utils/types/IBlocks';
 import { formattedDate } from '@utils/helpers/date/date';
@@ -572,3 +573,81 @@ export function convertYAxisLabelWithoutUnit(
   }
   return value;
 }
+
+export const generateXAxisInterval = (
+  granularity: TGranularity,
+  period?: PeriodTypes,
+  dataX?: string[],
+): number | string => {
+  if (!dataX || !dataX?.length || !period) {
+    return 'auto';
+  }
+
+  if (granularity === '30d' || granularity === '1y') {
+    return dataX.length;
+  }
+
+  switch (period) {
+    case '24h':
+      return Math.floor(dataX.length / 24);
+    case '7d':
+      return Math.floor(dataX.length / 7);
+    case '14d':
+      return Math.floor(dataX.length / 14);
+    case '30d':
+      return Math.floor(dataX.length / 20);
+    case '90d':
+    case '180d':
+      return Math.floor(dataX.length / 15);
+    default:
+      return Math.floor(dataX.length / 14);
+  }
+};
+
+export const generateMinMaxChartData = (
+  min: number,
+  max: number,
+  period?: PeriodTypes,
+): TMinMaxChartData => {
+  let result = {
+    min: 0,
+    max: 0,
+  };
+  if (period === '24h') {
+    result = {
+      min: Math.floor(min),
+      max: Math.ceil(max),
+    };
+  } else {
+    let minVal = Math.floor(min - Math.floor(min) * 0.02);
+    if (minVal % 5 !== 0) {
+      const minRange = minVal / 5;
+      const tmpMin = minVal;
+      for (let i = 1; i <= minRange; i += 1) {
+        minVal = tmpMin - i;
+        if (minVal % 5 === 0) {
+          break;
+        }
+      }
+    }
+    const maxTmp = Math.ceil(max);
+    const range = parseInt((maxTmp - minVal).toString(), 10);
+    let valRange = range;
+    if (range % 5 !== 0) {
+      const x = Math.ceil(range / 5);
+      for (let i = 1; i <= x; i += 1) {
+        valRange = range + i;
+        if (valRange % 5 === 0) {
+          break;
+        }
+      }
+    }
+    const maxVal = minVal + valRange;
+    result = {
+      min: minVal,
+      max: maxVal,
+    };
+  }
+
+  return result;
+};

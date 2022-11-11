@@ -7,7 +7,12 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { getCurrencyName } from '@utils/appInfo';
 import { TThemeInitOption } from '@utils/constants/types';
 import { periods } from '@utils/constants/statistics';
-import { convertYAxisLabel, PeriodTypes, TGranularity } from '@utils/helpers/statisticsLib';
+import {
+  convertYAxisLabel,
+  PeriodTypes,
+  TGranularity,
+  generateXAxisInterval,
+} from '@utils/helpers/statisticsLib';
 import { TChartParams } from '@utils/types/IStatistics';
 
 type TChartOption = {
@@ -53,6 +58,9 @@ const generateAxisLabelInterval = (
     case '30d':
       if (granularity === 'none') {
         return Math.ceil(total / 12);
+      }
+      if (granularity === '30d') {
+        return 'auto';
       }
       return 'auto';
     case '90d':
@@ -105,6 +113,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
     granularity,
   } = args;
   let firstDay = '';
+
   const chartOptions: TChartOption = {
     difficulty: {
       backgroundColor: theme?.backgroundColor,
@@ -730,22 +739,15 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             }
             return value ? generateXAxisLabel(new Date(value), period) : null;
           },
-          interval:
-            period && periods[9].indexOf(period) !== -1 && dataX?.length && dataX?.length > 48
-              ? 24
-              : 'auto',
-        },
-        splitLine: {
-          interval:
-            period && periods[9].indexOf(period) !== -1 && dataX?.length && dataX?.length > 48
-              ? 22
-              : 'auto',
+          showMaxLabel: true,
+          interval: generateXAxisInterval('1d', period, dataX),
         },
       },
       yAxis: {
         type: 'value',
         min: minY,
-        minInterval: period === '24h' ? 0.1 : 1,
+        max: maxY,
+        interval: (maxY - minY) / 5,
         splitLine: {
           show: false,
         },

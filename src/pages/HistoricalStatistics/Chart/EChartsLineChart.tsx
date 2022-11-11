@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
 
 import { Data } from 'react-csv/components/CommonPropTypes';
-import { makeDownloadFileName } from '@utils/helpers/statisticsLib';
+import { makeDownloadFileName, generateMinMaxChartData } from '@utils/helpers/statisticsLib';
 import { csvHeaders, themes } from '@utils/constants/statistics';
 import { TLineChartProps, TThemeInitOption, TThemeColor } from '@utils/constants/types';
 import { getThemeInitOption, getThemeUpdateOption } from '@utils/helpers/chartOptions';
@@ -91,13 +91,9 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
         setMinY(min - offset);
         setMaxY(max + offset);
       } else if (chartName === 'blockchainSize') {
-        if (selectedPeriodButton === '24h') {
-          setMinY(parseFloat((min - offset).toFixed(1)));
-          setMaxY(parseFloat((max + offset).toFixed(1)));
-        } else {
-          setMinY(Math.floor(min) - offset);
-          setMaxY(Math.floor(max) + offset);
-        }
+        const result = generateMinMaxChartData(min, max, selectedPeriodButton);
+        setMinY(result.min);
+        setMaxY(result.max);
       } else {
         setMinY(Math.round(min) - offset);
         setMaxY(Math.floor(max) + offset);
