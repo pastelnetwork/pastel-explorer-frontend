@@ -192,3 +192,8 @@ export type TChartParams = {
   value: number;
   seriesName: string;
 };
+
+export type TMinMaxChartData = {
+  min: number;
+  max: number;
+};

@@ -20,6 +20,7 @@ import {
   THashrate,
   TSolpsData,
   THashrateChartData,
+  TMinMaxChartData,
 } from '@utils/types/IStatistics';
 import { IBlock } from '@utils/types/IBlocks';
 import { formattedDate } from '@utils/helpers/date/date';
@@ -372,6 +373,9 @@ export function convertYAxisLabel(
   if (maxY > 1000) {
     return `${(value / 1000).toFixed(fractionDigits)}K`;
   }
+  if (value > 0 && value < 1) {
+    return value.toFixed(fractionDigits);
+  }
   return value;
 }
 
@@ -572,3 +576,91 @@ export function convertYAxisLabelWithoutUnit(
   }
   return value;
 }
+
+export const generateXAxisInterval = (
+  granularity: TGranularity,
+  period?: PeriodTypes,
+  dataX?: string[],
+): number | string => {
+  if (!dataX || !dataX?.length || !period) {
+    return 'auto';
+  }
+  switch (period) {
+    case '24h':
+      return Math.floor(dataX.length / 24);
+    case '7d':
+      if (granularity === '1d' && dataX.length === 8) {
+        return 'auto';
+      }
+      return Math.floor(dataX.length / 7);
+    case '14d':
+      return Math.floor(dataX.length / 10);
+    case '30d':
+      if (granularity === 'none') {
+        return 45;
+      }
+      return Math.floor(dataX.length / 22);
+    case '90d':
+    case '180d':
+      return Math.floor(dataX.length / 15);
+    default:
+      return Math.floor(dataX.length / 14);
+  }
+};
+
+export const generateMinMaxChartData = (
+  min: number,
+  max: number,
+  offset: number,
+  step: number,
+  period?: PeriodTypes,
+  decimalsLength?: number,
+): TMinMaxChartData => {
+  let result = {
+    min: 0,
+    max: 0,
+  };
+  let inputMin = min;
+  let inputMax = max;
+  if (decimalsLength && offset) {
+    inputMin = parseFloat(min.toFixed(decimalsLength)) * offset;
+    inputMax = parseFloat(max.toFixed(decimalsLength)) * offset;
+  }
+  if (period === '24h' && !decimalsLength) {
+    result = {
+      min: Math.floor(min),
+      max: Math.ceil(max),
+    };
+  } else {
+    let minVal = Math.floor(inputMin - Math.floor(inputMin) * 0.02);
+    if (minVal % step !== 0) {
+      const minRange = minVal / step;
+      const tmpMin = minVal;
+      for (let i = 1; i <= minRange; i += 1) {
+        minVal = tmpMin - i;
+        if (minVal % step === 0) {
+          break;
+        }
+      }
+    }
+    const maxTmp = Math.ceil(inputMax);
+    const range = parseInt((maxTmp - minVal).toString(), 10);
+    let valRange = range;
+    if (range % step !== 0) {
+      const x = Math.ceil(range / step);
+      for (let i = 1; i <= x; i += 1) {
+        valRange = range + i;
+        if (valRange % step === 0) {
+          break;
+        }
+      }
+    }
+    const maxVal = minVal + valRange;
+    result = {
+      min: decimalsLength ? minVal / offset : minVal,
+      max: decimalsLength ? maxVal / offset : maxVal,
+    };
+  }
+
+  return result;
+};
