@@ -128,13 +128,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         left: 50,
         show: false,
       },
-      visualMap: {
-        show: false,
-        type: 'continuous',
-        seriesIndex: 0,
-        min: minY,
-        max: maxY,
-      },
       tooltip: {
         trigger: 'axis',
       },
@@ -155,21 +148,15 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             }
             return value ? generateXAxisLabel(new Date(value), period) : null;
           },
-          interval:
-            period && periods[9].indexOf(period) !== -1 && dataX?.length && dataX?.length > 48
-              ? 22
-              : 'auto',
-        },
-        splitLine: {
-          interval:
-            period && periods[9].indexOf(period) !== -1 && dataX?.length && dataX?.length > 48
-              ? 22
-              : 'auto',
+          showMaxLabel: true,
+          interval: generateXAxisInterval('1d', period, dataX),
         },
       },
       yAxis: {
         type: 'value',
-        minInterval: period === '24h' && maxY < 1000000 ? 100000 : 1000000,
+        min: minY,
+        max: maxY,
+        interval: (maxY - minY) / 5,
         splitLine: {
           show: false,
         },
@@ -178,7 +165,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY, 0);
+            return convertYAxisLabel(Number(value), maxY, 1);
           },
         },
       },

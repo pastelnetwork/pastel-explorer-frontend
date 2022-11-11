@@ -80,9 +80,6 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
       if (chartName === 'mempoolsize') {
         setMinY(Math.floor(min));
         setMaxY(Math.ceil(max));
-      } else if (chartName === 'difficulty') {
-        setMinY(Math.floor(min / offset) * offset);
-        setMaxY(Math.floor(max / offset) * offset);
       } else if (
         ['percentOfPSLStaked', 'totalOfCascadeRequests', 'totalSizeOfDataStored'].indexOf(
           chartName,
@@ -90,7 +87,11 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
       ) {
         setMinY(min - offset);
         setMaxY(max + offset);
-      } else if (chartName === 'blockchainSize' || chartName === 'hashrate') {
+      } else if (
+        chartName === 'blockchainSize' ||
+        chartName === 'hashrate' ||
+        chartName === 'difficulty'
+      ) {
         const result = generateMinMaxChartData(min, max, selectedPeriodButton);
         setMinY(result.min);
         setMaxY(result.max);
