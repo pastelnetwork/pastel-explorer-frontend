@@ -188,7 +188,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY, 0);
+            return convertYAxisLabel(Number(value), maxY);
           },
         },
       },
