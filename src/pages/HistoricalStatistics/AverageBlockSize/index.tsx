@@ -28,7 +28,7 @@ const AverageBlockSize = (): JSX.Element => {
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { sortDirection: 'DESC', period, granularity },
+        params: { sortDirection: 'DESC', period, granularity, format: 'true' },
       });
       if (data) {
         const parseData = transformAverageBlockSize(data.data);
