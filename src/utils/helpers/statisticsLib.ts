@@ -68,6 +68,16 @@ export const makeDownloadFileName = (currencyName: string | number, title: strin
   return `${currencyName}_${imageTitle}_${dateTime}`;
 };
 
+const checkAndValidateData = (timestamp: number) => {
+  const nowHour = format(new Date(), 'HH');
+  const targetHour = format(timestamp, 'HH');
+  if (nowHour !== targetHour) {
+    return new Date().toLocaleString();
+  }
+
+  return null;
+};
+
 export function getStartPoint(period: PeriodTypes): number {
   let duration = 1;
   switch (period) {
@@ -121,6 +131,11 @@ export function transformDifficultyInfo(
           ? format(createTime, 'MM/dd/yyyy hh:00 aa')
           : format(createTime, 'MM/dd/yyyy');
       dataX.push(date);
+
+      if (period === '24h' && i === difficulties.length - 1 && checkAndValidateData(createTime)) {
+        dataX.push(format(Date.now(), 'MM/dd/yyyy hh:00 aa') || '');
+        dataY.push(0);
+      }
     }
   }
 
@@ -224,7 +239,10 @@ export function transformBlocks(blocks: IBlock[]): TScatterChartData {
   return { data, dataX };
 }
 
-export function transformAverageBlockSize(blockSizes: TAverageBlockSize[]): TLineChartData {
+export function transformAverageBlockSize(
+  blockSizes: TAverageBlockSize[],
+  period: PeriodTypes,
+): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
   for (let i = 0; i < blockSizes.length; i += 1) {
@@ -234,6 +252,15 @@ export function transformAverageBlockSize(blockSizes: TAverageBlockSize[]): TLin
       dataX.push(format(blockSizes[i].time * 1000, 'MM/dd/yyyy HH:mm'));
     } else {
       dataX.push(format(blockSizes[i].minTime * 1000, 'MM/dd/yyyy HH:mm'));
+    }
+
+    if (
+      period === '24h' &&
+      i === blockSizes.length - 1 &&
+      checkAndValidateData(blockSizes[i].time * 1000)
+    ) {
+      dataX.push(format(Date.now(), 'MM/dd/yyyy HH:mm'));
+      dataY.push(0);
     }
   }
   return { dataX, dataY };
@@ -331,6 +358,11 @@ export function transformBlockchainSizeData(
           : format(Number(parseInt(label, 10)), 'MM/dd/yyyy'),
       );
       dataY.push(+(dataY[i - 1] + +(value / range).toFixed(2)).toFixed(2));
+
+      if (period === '24h' && i === data.length - 1 && checkAndValidateData(parseInt(label, 10))) {
+        dataX.push(new Date().toLocaleString());
+        dataY.push(+(dataY[i - 1] + 0).toFixed(2));
+      }
     }
   }
 
@@ -532,7 +564,10 @@ export const generatePeriodToDropdownOptions = (periods: PeriodTypes[]) => {
   return results;
 };
 
-export function transformHashRateCharts(data: THashrate[]): THashrateChartData {
+export function transformHashRateCharts(
+  data: THashrate[],
+  period: PeriodTypes,
+): THashrateChartData {
   const dataX: string[] = [];
   const networksolps: TSolpsData = {
     solps5: [],
@@ -544,7 +579,7 @@ export function transformHashRateCharts(data: THashrate[]): THashrateChartData {
     solps1000: [],
   };
 
-  data.forEach(item => {
+  data.forEach((item, index) => {
     dataX.push(new Date(item.timestamp).toLocaleString());
     networksolps.solps5.push(item.networksolps5);
     networksolps.solps10.push(item.networksolps10);
@@ -553,6 +588,16 @@ export function transformHashRateCharts(data: THashrate[]): THashrateChartData {
     networksolps.solps100.push(item.networksolps100);
     networksolps.solps500.push(item.networksolps500);
     networksolps.solps1000.push(item.networksolps1000);
+    if (period === '24h' && index === data.length - 1 && checkAndValidateData(item.timestamp)) {
+      dataX.push(checkAndValidateData(item.timestamp)?.toString() || '');
+      networksolps.solps5.push(0);
+      networksolps.solps10.push(0);
+      networksolps.solps25.push(0);
+      networksolps.solps50.push(0);
+      networksolps.solps100.push(0);
+      networksolps.solps500.push(0);
+      networksolps.solps1000.push(0);
+    }
   });
   return { dataX, networksolps };
 }

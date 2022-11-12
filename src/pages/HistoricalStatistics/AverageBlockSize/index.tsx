@@ -31,7 +31,7 @@ const AverageBlockSize = (): JSX.Element => {
         params: { sortDirection: 'DESC', period, granularity, format: 'true' },
       });
       if (data) {
-        const parseData = transformAverageBlockSize(data.data);
+        const parseData = transformAverageBlockSize(data.data, period);
         setChartData(parseData);
       }
     };
@@ -67,7 +67,7 @@ const AverageBlockSize = (): JSX.Element => {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title="Cumulative Overall Average Block Size (MB)"
+      title="Cumulative Overall Average Block Size"
     >
       <EChartsLineChart
         chartName="averageblocksize"
