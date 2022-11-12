@@ -62,7 +62,7 @@ function HashRate() {
         params: { period },
       });
       if (data) {
-        const parseData = transformHashRateCharts(data.data);
+        const parseData = transformHashRateCharts(data.data, period);
         setChartData(parseData);
       }
     };
