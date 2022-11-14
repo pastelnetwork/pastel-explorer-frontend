@@ -248,10 +248,10 @@ export function transformAverageBlockSize(
   for (let i = 0; i < blockSizes.length; i += 1) {
     const size = Number(blockSizes[i].size) / 10e6;
     dataY.push(size);
-    if (i !== 0) {
-      dataX.push(format(blockSizes[i].time * 1000, 'MM/dd/yyyy HH:mm'));
-    } else {
+    if (i !== blockSizes.length - 1) {
       dataX.push(format(blockSizes[i].minTime * 1000, 'MM/dd/yyyy HH:mm'));
+    } else {
+      dataX.push(format(blockSizes[i].maxTime * 1000, 'MM/dd/yyyy HH:mm'));
     }
 
     if (
@@ -634,15 +634,15 @@ export const generateXAxisInterval = (
     case '24h':
       return Math.floor(dataX.length / 24);
     case '7d':
-      if (granularity === '1d' && dataX.length === 8) {
+      if (dataX.length <= 8) {
         return 'auto';
       }
       return Math.floor(dataX.length / 7);
     case '14d':
       return Math.floor(dataX.length / 10);
     case '30d':
-      if (granularity === 'none') {
-        return 45;
+      if (dataX.length !== 31) {
+        return Math.floor(dataX.length / 15);
       }
       return Math.floor(dataX.length / 22);
     case '90d':
