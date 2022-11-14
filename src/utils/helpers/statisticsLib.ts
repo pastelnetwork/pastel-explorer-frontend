@@ -644,7 +644,7 @@ export const generateXAxisInterval = (
       if (dataX.length !== 31) {
         return Math.floor(dataX.length / 15);
       }
-      return Math.floor(dataX.length / 22);
+      return 1;
     case '90d':
     case '180d':
       return Math.floor(dataX.length / 15);
