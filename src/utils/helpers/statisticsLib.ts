@@ -248,10 +248,10 @@ export function transformAverageBlockSize(
   for (let i = 0; i < blockSizes.length; i += 1) {
     const size = Number(blockSizes[i].size) / 10e6;
     dataY.push(size);
-    if (i !== 0) {
-      dataX.push(format(blockSizes[i].time * 1000, 'MM/dd/yyyy HH:mm'));
-    } else {
+    if (i !== blockSizes.length - 1) {
       dataX.push(format(blockSizes[i].minTime * 1000, 'MM/dd/yyyy HH:mm'));
+    } else {
+      dataX.push(format(blockSizes[i].maxTime * 1000, 'MM/dd/yyyy HH:mm'));
     }
 
     if (
