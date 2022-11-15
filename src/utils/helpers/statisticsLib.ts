@@ -20,6 +20,7 @@ import {
   THashrate,
   TSolpsData,
   THashrateChartData,
+  TMinMaxChartData,
 } from '@utils/types/IStatistics';
 import { IBlock } from '@utils/types/IBlocks';
 import { formattedDate } from '@utils/helpers/date/date';
@@ -65,6 +66,16 @@ export const makeDownloadFileName = (currencyName: string | number, title: strin
   }_${date.getDate()}_${date.getFullYear()}__${date.getHours()}_${date.getMinutes()}`;
 
   return `${currencyName}_${imageTitle}_${dateTime}`;
+};
+
+const checkValidateData = (timestamp: number) => {
+  const nowHour = format(new Date(), 'MM/dd/yyyy HH');
+  const targetHour = format(timestamp, 'MM/dd/yyyy HH');
+  if (nowHour !== targetHour) {
+    return new Date().toLocaleString();
+  }
+
+  return null;
 };
 
 export function getStartPoint(period: PeriodTypes): number {
@@ -113,14 +124,13 @@ export function transformDifficultyInfo(
 
   for (let i = 0; i < difficulties.length; i += 1) {
     if (difficulties[i].timestamp !== null) {
-      const createTime = Number(difficulties[i].timestamp);
       dataY.push(Number(difficulties[i].difficulty));
-      const date =
-        periodShowTime.indexOf(period) !== -1
-          ? format(createTime, 'MM/dd/yyyy hh:00 aa')
-          : format(createTime, 'MM/dd/yyyy');
-      dataX.push(date);
+      dataX.push(format(Number(difficulties[i].timestamp), 'MM/dd/yyyy hh:mm aa'));
     }
+  }
+  if (period === '24h' && checkValidateData(difficulties[difficulties.length - 1].timestamp)) {
+    dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
+    dataY.push(difficulties[difficulties.length - 1].difficulty);
   }
 
   return { dataX, dataY };
@@ -223,13 +233,24 @@ export function transformBlocks(blocks: IBlock[]): TScatterChartData {
   return { data, dataX };
 }
 
-export function transformAverageBlockSize(blockSizes: TAverageBlockSize[]): TLineChartData {
+export function transformAverageBlockSize(
+  blockSizes: TAverageBlockSize[],
+  period: PeriodTypes,
+): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
   for (let i = 0; i < blockSizes.length; i += 1) {
     const size = Number(blockSizes[i].size) / 10e6;
     dataY.push(size);
-    dataX.push(blockSizes[i].time);
+    if (i !== blockSizes.length - 1) {
+      dataX.push(format(blockSizes[i].minTime * 1000, 'MM/dd/yyyy HH:mm'));
+    } else {
+      dataX.push(format(blockSizes[i].maxTime * 1000, 'MM/dd/yyyy HH:mm'));
+    }
+  }
+  if (period === '24h' && checkValidateData(blockSizes[blockSizes.length - 1].time * 1000)) {
+    dataX.push(format(Date.now(), 'MM/dd/yyyy HH:mm'));
+    dataY.push(0);
   }
   return { dataX, dataY };
 }
@@ -304,31 +325,26 @@ export function transformTotalData(data: TTransactionsChart[], range = 10e6): TL
 export function transformBlockchainSizeData(
   data: TTransactionsChart[],
   period: PeriodTypes,
-  totalPrevDay: number,
+  startValue: number,
+  endValue: number,
   range = 10e6,
 ): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
-  if (data.length) {
-    dataX.push(
-      periodShowTime.indexOf(period) !== -1
-        ? new Date(parseInt(data[0].label, 10)).toLocaleString()
-        : format(Number(parseInt(data[0].label, 10)), 'MM/dd/yyyy'),
-    );
-    dataY.push(+((data[0].value + totalPrevDay) / range).toFixed(2));
-  }
-  if (data.length > 1) {
-    for (let i = 1; i < data.length; i += 1) {
-      const { value, label } = data[i];
-      dataX.push(
-        periodShowTime.indexOf(period) !== -1
-          ? new Date(parseInt(label, 10)).toLocaleString()
-          : format(Number(parseInt(label, 10)), 'MM/dd/yyyy'),
-      );
-      dataY.push(+(dataY[i - 1] + +(value / range).toFixed(2)).toFixed(2));
+  let preValue = startValue;
+  for (let i = 0; i < data.length; i += 1) {
+    let value = data[i].value + preValue;
+    if (i === data.length - 1) {
+      value = endValue;
     }
+    dataX.push(new Date(parseInt(data[i].label, 10)).toLocaleString());
+    dataY.push(parseFloat((value / range).toFixed(2)));
+    preValue += data[i].value;
   }
-
+  if (period === '24h' && checkValidateData(parseInt(data[data.length - 1].label, 10))) {
+    dataX.push(new Date().toLocaleString());
+    dataY.push(dataY[dataY.length - 1]);
+  }
   return { dataX, dataY };
 }
 
@@ -367,6 +383,9 @@ export function convertYAxisLabel(
   }
   if (maxY > 1000) {
     return `${(value / 1000).toFixed(fractionDigits)}K`;
+  }
+  if (value > 0 && value < 1) {
+    return value.toFixed(fractionDigits);
   }
   return value;
 }
@@ -524,7 +543,10 @@ export const generatePeriodToDropdownOptions = (periods: PeriodTypes[]) => {
   return results;
 };
 
-export function transformHashRateCharts(data: THashrate[]): THashrateChartData {
+export function transformHashRateCharts(
+  data: THashrate[],
+  period: PeriodTypes,
+): THashrateChartData {
   const dataX: string[] = [];
   const networksolps: TSolpsData = {
     solps5: [],
@@ -546,6 +568,16 @@ export function transformHashRateCharts(data: THashrate[]): THashrateChartData {
     networksolps.solps500.push(item.networksolps500);
     networksolps.solps1000.push(item.networksolps1000);
   });
+  if (period === '24h' && checkValidateData(data[data.length - 1].timestamp)) {
+    dataX.push(new Date(data[data.length - 1].timestamp).toLocaleString());
+    networksolps.solps5.push(0);
+    networksolps.solps10.push(0);
+    networksolps.solps25.push(0);
+    networksolps.solps50.push(0);
+    networksolps.solps100.push(0);
+    networksolps.solps500.push(0);
+    networksolps.solps1000.push(0);
+  }
   return { dataX, networksolps };
 }
 
@@ -568,3 +600,107 @@ export function convertYAxisLabelWithoutUnit(
   }
   return value;
 }
+
+export const generateXAxisInterval = (
+  granularity: TGranularity,
+  period?: PeriodTypes,
+  dataX?: string[],
+  width?: number,
+): number | string => {
+  if (!dataX || !dataX?.length || !period || !width) {
+    return 'auto';
+  }
+
+  if (width > 960 && width < 1200) {
+    return Math.floor(dataX.length / 10);
+  }
+
+  if (width <= 960) {
+    return Math.floor(dataX.length / 3);
+  }
+
+  switch (period) {
+    case '24h':
+      return Math.floor(dataX.length / 12);
+    case '7d':
+      if (dataX.length <= 8) {
+        return 'auto';
+      }
+      return Math.floor(dataX.length / 7);
+    case '14d':
+      return Math.floor(dataX.length / 10);
+    case '30d':
+      if (dataX.length !== 31) {
+        return Math.floor(dataX.length / 15);
+      }
+      return 1;
+    case '90d':
+    case '180d':
+      return Math.floor(dataX.length / 15);
+    default:
+      return Math.floor(dataX.length / 14);
+  }
+};
+
+export const generateMinMaxChartData = (
+  min: number,
+  max: number,
+  offset: number,
+  step: number,
+  period?: PeriodTypes,
+  decimalsLength?: number,
+): TMinMaxChartData => {
+  let result = {
+    min: 0,
+    max: 0,
+  };
+  let inputMin = min;
+  let inputMax = max;
+  if (decimalsLength && offset) {
+    inputMin = parseFloat(min.toFixed(decimalsLength)) * offset;
+    inputMax = parseFloat(max.toFixed(decimalsLength)) * offset;
+  }
+  if (period === '24h' && !decimalsLength) {
+    result = {
+      min: Math.floor(min),
+      max: Math.ceil(max),
+    };
+  } else {
+    let minVal = Math.floor(inputMin - Math.floor(inputMin) * 0.02);
+    if (minVal % step !== 0) {
+      const minRange = minVal / step;
+      const tmpMin = minVal;
+      for (let i = 1; i <= minRange; i += 1) {
+        minVal = tmpMin - i;
+        if (minVal % step === 0) {
+          break;
+        }
+      }
+    }
+    const maxTmp = Math.ceil(inputMax);
+    const range = parseInt((maxTmp - minVal).toString(), 10);
+    let valRange = range;
+    if (range % step !== 0) {
+      const x = Math.ceil(range / step);
+      for (let i = 1; i <= x; i += 1) {
+        valRange = range + i;
+        if (valRange % step === 0) {
+          break;
+        }
+      }
+    }
+    const maxVal = minVal + valRange;
+    result = {
+      min: decimalsLength ? minVal / offset : minVal,
+      max: decimalsLength ? maxVal / offset : maxVal,
+    };
+  }
+
+  return result;
+};
+
+export const getMinMax = (arr: number[]) =>
+  arr.reduce(([min, max], val) => [Math.min(min, val), Math.max(max, val)], [
+    Number.POSITIVE_INFINITY,
+    Number.NEGATIVE_INFINITY,
+  ]);

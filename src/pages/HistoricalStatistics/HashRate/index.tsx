@@ -62,7 +62,7 @@ function HashRate() {
         params: { period },
       });
       if (data) {
-        const parseData = transformHashRateCharts(data.data);
+        const parseData = transformHashRateCharts(data.data, period);
         setChartData(parseData);
       }
     };
@@ -92,7 +92,7 @@ function HashRate() {
           value={numberOfBlocks}
           onChange={handleDropdownChange}
           options={options}
-          label="Number of blocks:"
+          label="Number of blocks used in trailing average:"
           classNameWrapper="number-of-blocks"
         />
       </Styles.DropdownWrapper>
@@ -105,7 +105,7 @@ function HashRate() {
         chartName="hashrate"
         dataX={chartData?.dataX}
         dataY={chartData?.networksolps?.[`solps${numberOfBlocks}` as keyof TSolpsData]}
-        title="Hashrate(MH/s)"
+        title="Hashrate(MSol/S)"
         info={info}
         offset={10}
         period={period}

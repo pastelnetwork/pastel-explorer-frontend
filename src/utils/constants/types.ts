@@ -28,6 +28,9 @@ export type TThemeInitOption = {
   minGaugeValue?: number;
   maxGaugeValue?: number;
   period?: PeriodTypes;
+  granularity?: TGranularity;
+  height?: number;
+  width?: number;
 };
 
 export type TLineChartProps = {
@@ -61,6 +64,7 @@ export type TLineChartProps = {
   subTitle?: string;
   customHtml?: ReactNode;
   isLoading?: boolean;
+  seriesName1Type?: string;
 };
 
 export type TCsvHeaderType = {

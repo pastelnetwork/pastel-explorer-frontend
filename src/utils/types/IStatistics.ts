@@ -115,8 +115,10 @@ export type TNettotalsInfo = {
 };
 
 export type TAverageBlockSize = {
-  time: string;
+  time: number;
   size: number;
+  maxTime: number;
+  minTime: number;
 };
 
 export type TTransactionPerSecond = TAverageBlockSize;
@@ -189,4 +191,9 @@ export type TChartParams = {
   name: string;
   value: number;
   seriesName: string;
+};
+
+export type TMinMaxChartData = {
+  min: number;
+  max: number;
 };

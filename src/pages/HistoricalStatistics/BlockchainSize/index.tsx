@@ -15,7 +15,11 @@ function BlockchainSize() {
   const [chartData, setChartData] = useState<TLineChartData | null>(null);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const [period, setPeriod] = useState<PeriodTypes>(periods[1][0]);
-  const fetchStats = useFetch<{ data: Array<TTransactionsChart>; totalPrevDay: number }>({
+  const fetchStats = useFetch<{
+    data: Array<TTransactionsChart>;
+    startValue: number;
+    endValue: number;
+  }>({
     method: 'get',
     url: URLS.GET_BLOCKS_CHARTS,
   });
@@ -25,7 +29,12 @@ function BlockchainSize() {
         params: { period, sortDirection: 'DESC', func: 'SUM', col: 'size', name: 'blockchainSize' },
       });
       if (data) {
-        const parseData = transformBlockchainSizeData(data.data, period, data.totalPrevDay);
+        const parseData = transformBlockchainSizeData(
+          data.data,
+          period,
+          data.startValue,
+          data.endValue,
+        );
         setChartData(parseData);
       }
     };
@@ -45,7 +54,7 @@ function BlockchainSize() {
         title="Blockchain Size (Mb)"
         info={info}
         period={period}
-        offset={1}
+        offset={0}
         periods={periods[6]}
         handleBgColorChange={handleBgColorChange}
         handlePeriodFilterChange={handlePeriodFilterChange}
