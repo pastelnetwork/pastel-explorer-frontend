@@ -39,11 +39,7 @@ const AverageBlockSize = (): JSX.Element => {
   }, [granularity, period]);
 
   const handlePeriodFilterChange = (value: PeriodTypes) => {
-    if (value === periods[6][0] || value === periods[6][1] || value === periods[6][2]) {
-      setGranularity('none');
-    } else {
-      setGranularity(granularities[0][0]);
-    }
+    setGranularity('none');
     setPeriod(value);
   };
 

@@ -12,6 +12,7 @@ import { csvHeaders, themes } from '@utils/constants/statistics';
 import { TLineChartProps, TThemeInitOption, TThemeColor } from '@utils/constants/types';
 import { getThemeInitOption, getThemeUpdateOption } from '@utils/helpers/chartOptions';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
+import useWindowDimensions from '@hooks/useWindowDimensions';
 
 import { eChartLineStyles } from './styles';
 import * as Styles from './Chart.styles';
@@ -42,6 +43,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     customHtml,
     isLoading = false,
   } = props;
+  const { height, width } = useWindowDimensions();
   const { darkMode } = useSelector(getThemeState);
   const styles = eChartLineStyles();
   const downloadRef = useRef(null);
@@ -139,6 +141,8 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     gaugeValue,
     period: selectedPeriodButton,
     granularity: selectedGranularityButton,
+    height,
+    width,
   };
   const options = getThemeInitOption(params);
   const downloadPNG = () => {
@@ -171,6 +175,8 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
       maxY: isAverageNFTChart ? maxGaugeValue : maxY,
       gaugeValue,
       granularity: selectedGranularityButton,
+      height,
+      width,
     };
     const option = getThemeUpdateOption(paramsOption);
     eChartInstance?.setOption(option);

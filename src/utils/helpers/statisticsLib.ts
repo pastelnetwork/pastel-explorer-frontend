@@ -126,11 +126,7 @@ export function transformDifficultyInfo(
     if (difficulties[i].timestamp !== null) {
       const createTime = Number(difficulties[i].timestamp);
       dataY.push(Number(difficulties[i].difficulty));
-      const date =
-        periodShowTime.indexOf(period) !== -1
-          ? format(createTime, 'MM/dd/yyyy hh:00 aa')
-          : format(createTime, 'MM/dd/yyyy');
-      dataX.push(date);
+      dataX.push(format(createTime, 'MM/dd/yyyy hh:00 aa'));
 
       if (period === '24h' && i === difficulties.length - 1 && checkAndValidateData(createTime)) {
         dataX.push(format(Date.now(), 'MM/dd/yyyy hh:00 aa') || '');
@@ -342,21 +338,13 @@ export function transformBlockchainSizeData(
   const dataX: string[] = [];
   const dataY: number[] = [];
   if (data.length) {
-    dataX.push(
-      periodShowTime.indexOf(period) !== -1
-        ? new Date(parseInt(data[0].label, 10)).toLocaleString()
-        : format(Number(parseInt(data[0].label, 10)), 'MM/dd/yyyy'),
-    );
+    dataX.push(new Date(parseInt(data[0].label, 10)).toLocaleString());
     dataY.push(+((data[0].value + totalPrevDay) / range).toFixed(2));
   }
   if (data.length > 1) {
     for (let i = 1; i < data.length; i += 1) {
       const { value, label } = data[i];
-      dataX.push(
-        periodShowTime.indexOf(period) !== -1
-          ? new Date(parseInt(label, 10)).toLocaleString()
-          : format(Number(parseInt(label, 10)), 'MM/dd/yyyy'),
-      );
+      dataX.push(new Date(parseInt(label, 10)).toLocaleString());
       dataY.push(+(dataY[i - 1] + +(value / range).toFixed(2)).toFixed(2));
 
       if (period === '24h' && i === data.length - 1 && checkAndValidateData(parseInt(label, 10))) {
@@ -626,10 +614,16 @@ export const generateXAxisInterval = (
   granularity: TGranularity,
   period?: PeriodTypes,
   dataX?: string[],
+  width?: number,
 ): number | string => {
-  if (!dataX || !dataX?.length || !period) {
+  if (!dataX || !dataX?.length || !period || !width) {
     return 'auto';
   }
+
+  if (width < 960) {
+    return Math.floor(dataX.length / 3);
+  }
+
   switch (period) {
     case '24h':
       return Math.floor(dataX.length / 24);
