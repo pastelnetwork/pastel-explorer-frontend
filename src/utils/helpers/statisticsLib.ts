@@ -620,7 +620,11 @@ export const generateXAxisInterval = (
     return 'auto';
   }
 
-  if (width < 960) {
+  if (width > 960 && width < 1200) {
+    return Math.floor(dataX.length / 10);
+  }
+
+  if (width <= 960) {
     return Math.floor(dataX.length / 3);
   }
 
