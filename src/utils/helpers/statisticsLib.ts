@@ -124,14 +124,13 @@ export function transformDifficultyInfo(
 
   for (let i = 0; i < difficulties.length; i += 1) {
     if (difficulties[i].timestamp !== null) {
-      const createTime = Number(difficulties[i].timestamp);
       dataY.push(Number(difficulties[i].difficulty));
-      dataX.push(format(createTime, 'MM/dd/yyyy hh:00 aa'));
+      dataX.push(format(Number(difficulties[i].timestamp), 'MM/dd/yyyy hh:mm aa'));
     }
   }
   if (period === '24h' && checkValidateData(difficulties[difficulties.length - 1].timestamp)) {
-    dataX.push(format(Date.now(), 'MM/dd/yyyy hh:00 aa') || '');
-    dataY.push(0);
+    dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
+    dataY.push(difficulties[difficulties.length - 1].difficulty);
   }
 
   return { dataX, dataY };

@@ -129,10 +129,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         type: 'line',
         showSymbol: false,
         data: dataY,
-        lineStyle: {
-          width: 2,
-          color: '#cd6661',
-        },
       },
       animation: false,
     },
