@@ -129,6 +129,11 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         type: 'line',
         showSymbol: false,
         data: dataY,
+        emphasis: {
+          lineStyle: {
+            width: 2,
+          },
+        },
       },
       animation: false,
     },
@@ -137,6 +142,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
+      color: ['#5470c6', '#91cc75', '#fac858'],
       grid: {
         top: 8,
         right: 40,
@@ -214,15 +220,11 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         sampling: 'lttb',
         symbol: false,
         showSymbol: false,
-        lineStyle: {
-          width: 2,
-          color: '#ff5500',
-        },
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: 'rgba(255, 85, 0, 0.5)',
+              color: '#5470C6',
             },
             {
               offset: 1,
@@ -231,6 +233,11 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           ]),
         },
         data: dataY,
+        emphasis: {
+          lineStyle: {
+            width: 2,
+          },
+        },
       },
       animation: false,
     },
@@ -487,6 +494,11 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         type: 'line',
         showSymbol: false,
         data: dataY,
+        emphasis: {
+          lineStyle: {
+            width: 2,
+          },
+        },
       },
       animation: false,
     },
@@ -725,6 +737,11 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         sampling: 'lttb',
         data: dataY,
         showSymbol: false,
+        emphasis: {
+          lineStyle: {
+            width: 2,
+          },
+        },
       },
       animation: false,
     },
