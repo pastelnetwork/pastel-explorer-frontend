@@ -11,6 +11,7 @@ import {
   convertYAxisLabel,
   PeriodTypes,
   generateXAxisInterval,
+  TGranularity,
 } from '@utils/helpers/statisticsLib';
 import { TChartParams } from '@utils/types/IStatistics';
 
@@ -34,14 +35,11 @@ export const generateXAxisLabel = (value: Date, period?: PeriodTypes) => {
   return period === '24h' ? format(value, 'hh:00 aa') : format(value, 'MM/dd/yyyy');
 };
 
-export const generateTooltipLabel = (value: Date, period?: PeriodTypes) => {
-  if (!period) {
-    return value;
+export const generateTooltipLabel = (value: Date, granularity: TGranularity | undefined) => {
+  if (granularity && granularity !== 'none') {
+    return format(value, 'MM/dd/yyyy');
   }
-
-  return periods[8].indexOf(period) !== -1
-    ? format(value, 'MM/dd/yyyy hh:00 aa')
-    : format(value, 'MM/dd/yyyy');
+  return format(value, 'MM/dd/yyyy hh:00 aa');
 };
 
 export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
@@ -57,6 +55,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
     maxY,
     period,
     granularity,
+    width,
   } = args;
   let firstDay = '';
 
@@ -95,7 +94,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             return value ? generateXAxisLabel(new Date(value), period) : null;
           },
           showMaxLabel: true,
-          interval: generateXAxisInterval('1d', period, dataX),
+          interval: generateXAxisInterval('1d', period, dataX, width),
         },
       },
       yAxis: {
@@ -145,7 +144,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             <div class="tooltip-wrapper">
               <div class="tooltip-date">${generateTooltipLabel(
                 new Date(params[0].axisValue),
-                period,
+                granularity,
               )}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(
             params[0].value,
@@ -172,7 +171,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             return value ? generateXAxisLabel(new Date(value), period) : null;
           },
           showMaxLabel: true,
-          interval: generateXAxisInterval('1d', period, dataX),
+          interval: generateXAxisInterval('1d', period, dataX, width),
         },
       },
       yAxis: {
@@ -412,7 +411,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         trigger: 'axis',
         formatter(params: TChartParams[]) {
           return `<div>
-            <div>${generateTooltipLabel(new Date(params[0].axisValue), period)}</div>
+            <div>${generateTooltipLabel(new Date(params[0].axisValue), granularity)}</div>
             <div>${params[0].marker} ${params[0].value.toFixed(5)} MB</div>
           </div>`;
         },
@@ -435,7 +434,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             return value ? generateXAxisLabel(new Date(value), period) : null;
           },
           showMaxLabel: true,
-          interval: generateXAxisInterval(granularity || '1d', period, dataX),
+          interval: generateXAxisInterval(granularity || '1d', period, dataX, width),
         },
       },
       yAxis: {
@@ -643,7 +642,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         trigger: 'axis',
         formatter(params: TChartParams[]) {
           return `<div>
-            <div>${generateTooltipLabel(new Date(params[0].axisValue), period)}</div>
+            <div>${generateTooltipLabel(new Date(params[0].axisValue), granularity)}</div>
             <div>${params[0].marker} ${params[0].value.toFixed(2)} MB</div>
           </div>`;
         },
@@ -666,7 +665,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             return value ? generateXAxisLabel(new Date(value), period) : null;
           },
           showMaxLabel: true,
-          interval: generateXAxisInterval('1d', period, dataX),
+          interval: generateXAxisInterval('1d', period, dataX, width),
         },
       },
       yAxis: {
