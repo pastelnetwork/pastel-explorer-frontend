@@ -28,10 +28,10 @@ const AverageBlockSize = (): JSX.Element => {
   useEffect(() => {
     const loadLineChartData = async () => {
       const data = await fetchStats.fetchData({
-        params: { sortDirection: 'DESC', period, granularity },
+        params: { sortDirection: 'DESC', period, granularity, format: 'true' },
       });
       if (data) {
-        const parseData = transformAverageBlockSize(data.data);
+        const parseData = transformAverageBlockSize(data.data, period);
         setChartData(parseData);
       }
     };
@@ -39,11 +39,7 @@ const AverageBlockSize = (): JSX.Element => {
   }, [granularity, period]);
 
   const handlePeriodFilterChange = (value: PeriodTypes) => {
-    if (value === periods[6][0] || value === periods[6][1] || value === periods[6][2]) {
-      setGranularity('none');
-    } else {
-      setGranularity(granularities[0][0]);
-    }
+    setGranularity('none');
     setPeriod(value);
   };
 
@@ -67,7 +63,7 @@ const AverageBlockSize = (): JSX.Element => {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title="Cumulative Overall Average Block Size (MB)"
+      title="Cumulative Overall Average Block Size"
     >
       <EChartsLineChart
         chartName="averageblocksize"
@@ -75,7 +71,7 @@ const AverageBlockSize = (): JSX.Element => {
         dataY={chartData?.dataY}
         title="Cumulative Overall Average Block Size (MB)"
         info={info}
-        offset={0.00001}
+        offset={10000}
         period={period}
         granularity={granularity}
         granularities={getGranularitiesOptions()}

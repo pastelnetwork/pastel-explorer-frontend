@@ -7,11 +7,16 @@ import { useSelector } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
 
 import { Data } from 'react-csv/components/CommonPropTypes';
-import { makeDownloadFileName } from '@utils/helpers/statisticsLib';
+import {
+  makeDownloadFileName,
+  generateMinMaxChartData,
+  getMinMax,
+} from '@utils/helpers/statisticsLib';
 import { csvHeaders, themes } from '@utils/constants/statistics';
 import { TLineChartProps, TThemeInitOption, TThemeColor } from '@utils/constants/types';
 import { getThemeInitOption, getThemeUpdateOption } from '@utils/helpers/chartOptions';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
+import useWindowDimensions from '@hooks/useWindowDimensions';
 
 import { eChartLineStyles } from './styles';
 import * as Styles from './Chart.styles';
@@ -42,6 +47,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     customHtml,
     isLoading = false,
   } = props;
+  const { height, width } = useWindowDimensions();
   const { darkMode } = useSelector(getThemeState);
   const styles = eChartLineStyles();
   const downloadRef = useRef(null);
@@ -75,14 +81,12 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
 
   useEffect(() => {
     if (dataY?.length) {
-      const min = Math.min(...dataY);
-      const max = Math.max(...dataY);
+      const arr = getMinMax(dataY);
+      const min = arr[0];
+      const max = arr[1];
       if (chartName === 'mempoolsize') {
         setMinY(Math.floor(min));
         setMaxY(Math.ceil(max));
-      } else if (chartName === 'difficulty') {
-        setMinY(Math.floor(min / offset) * offset);
-        setMaxY(Math.floor(max / offset) * offset);
       } else if (
         ['percentOfPSLStaked', 'totalOfCascadeRequests', 'totalSizeOfDataStored'].indexOf(
           chartName,
@@ -90,14 +94,18 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
       ) {
         setMinY(min - offset);
         setMaxY(max + offset);
-      } else if (chartName === 'blockchainSize') {
-        if (selectedPeriodButton === '24h') {
-          setMinY(parseFloat((min - offset).toFixed(1)));
-          setMaxY(parseFloat((max + offset).toFixed(1)));
-        } else {
-          setMinY(Math.floor(min) - offset);
-          setMaxY(Math.floor(max) + offset);
-        }
+      } else if (
+        chartName === 'blockchainSize' ||
+        chartName === 'hashrate' ||
+        chartName === 'difficulty'
+      ) {
+        const result = generateMinMaxChartData(min, max, 0, 5, selectedPeriodButton);
+        setMinY(result.min);
+        setMaxY(result.max);
+      } else if (chartName === 'averageblocksize') {
+        const result = generateMinMaxChartData(min, max, offset, 5, selectedPeriodButton, 5);
+        setMinY(result.min);
+        setMaxY(result.max);
       } else {
         setMinY(Math.round(min) - offset);
         setMaxY(Math.floor(max) + offset);
@@ -138,6 +146,8 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     gaugeValue,
     period: selectedPeriodButton,
     granularity: selectedGranularityButton,
+    height,
+    width,
   };
   const options = getThemeInitOption(params);
   const downloadPNG = () => {
@@ -170,6 +180,8 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
       maxY: isAverageNFTChart ? maxGaugeValue : maxY,
       gaugeValue,
       granularity: selectedGranularityButton,
+      height,
+      width,
     };
     const option = getThemeUpdateOption(paramsOption);
     eChartInstance?.setOption(option);

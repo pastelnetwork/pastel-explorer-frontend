@@ -29,6 +29,8 @@ export type TThemeInitOption = {
   maxGaugeValue?: number;
   period?: PeriodTypes;
   granularity?: TGranularity;
+  height?: number;
+  width?: number;
 };
 
 export type TLineChartProps = {

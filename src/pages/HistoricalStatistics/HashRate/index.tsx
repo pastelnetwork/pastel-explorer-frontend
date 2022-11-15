@@ -62,7 +62,7 @@ function HashRate() {
         params: { period },
       });
       if (data) {
-        const parseData = transformHashRateCharts(data.data);
+        const parseData = transformHashRateCharts(data.data, period);
         setChartData(parseData);
       }
     };
@@ -105,7 +105,7 @@ function HashRate() {
         chartName="hashrate"
         dataX={chartData?.dataX}
         dataY={chartData?.networksolps?.[`solps${numberOfBlocks}` as keyof TSolpsData]}
-        title="Hashrate(MH/s)"
+        title="Hashrate(MSol/S)"
         info={info}
         offset={10}
         period={period}

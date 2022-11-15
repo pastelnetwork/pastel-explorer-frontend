@@ -21,7 +21,12 @@ import { setAppThemeAction } from '@redux/actions/appThemeAction';
 import { setApiHostingAction } from '@redux/actions/clusterAction';
 import { socket, SocketContext } from '@context/socket';
 import { DEFAULT_CURRENCY } from '@utils/appInfo';
-import { BASE_URL, BASE_URL_TESTNET, BASE_URL_DEVNET } from '@utils/constants/urls';
+import {
+  BASE_URL,
+  BASE_URL_TESTNET,
+  BASE_URL_DEVNET,
+  DEFAULT_API_URL,
+} from '@utils/constants/urls';
 
 import { ReactComponent as PastelLogo } from '@assets/images/pastel-logo.svg';
 import { themeLight, themeDark } from './theme';
@@ -44,10 +49,10 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const persist = localStorage.getItem('persist:root');
+    const url = DEFAULT_API_URL || BASE_URL || BASE_URL_TESTNET || BASE_URL_DEVNET;
     if (persist) {
       const store = JSON.parse(persist);
       const tmp = JSON.parse(store.cluster);
-      const url = BASE_URL || BASE_URL_TESTNET || BASE_URL_DEVNET;
       if (tmp.url) {
         if (tmp.url !== BASE_URL && tmp.url !== BASE_URL_TESTNET && tmp.url !== BASE_URL_DEVNET) {
           localStorage.removeItem('persist:root');
@@ -59,6 +64,8 @@ const App: React.FC = () => {
         dispatch(setApiHostingAction(url as string, DEFAULT_CURRENCY));
         window.location.reload();
       }
+    } else {
+      dispatch(setApiHostingAction(url as string, DEFAULT_CURRENCY));
     }
   }, []);
 

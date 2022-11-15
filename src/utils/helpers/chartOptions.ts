@@ -7,7 +7,12 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { getCurrencyName } from '@utils/appInfo';
 import { TThemeInitOption } from '@utils/constants/types';
 import { periods } from '@utils/constants/statistics';
-import { convertYAxisLabel, PeriodTypes, TGranularity } from '@utils/helpers/statisticsLib';
+import {
+  convertYAxisLabel,
+  PeriodTypes,
+  generateXAxisInterval,
+  TGranularity,
+} from '@utils/helpers/statisticsLib';
 import { TChartParams } from '@utils/types/IStatistics';
 
 type TChartOption = {
@@ -30,64 +35,11 @@ export const generateXAxisLabel = (value: Date, period?: PeriodTypes) => {
   return period === '24h' ? format(value, 'hh:00 aa') : format(value, 'MM/dd/yyyy');
 };
 
-export const generateTooltipLabel = (value: Date, period?: PeriodTypes) => {
-  if (!period) {
-    return value;
+export const generateTooltipLabel = (value: Date, granularity: TGranularity | undefined) => {
+  if (granularity && granularity !== 'none') {
+    return format(value, 'MM/dd/yyyy');
   }
-
-  return periods[8].indexOf(period) !== -1
-    ? format(value, 'MM/dd/yyyy hh:00 aa')
-    : format(value, 'MM/dd/yyyy');
-};
-
-const generateAxisLabelInterval = (
-  period: PeriodTypes,
-  total: number,
-  granularity: TGranularity,
-) => {
-  switch (period) {
-    case '7d':
-      return 1;
-    case '14d':
-      return 2;
-    case '30d':
-      if (granularity === 'none') {
-        return Math.ceil(total / 12);
-      }
-      return 'auto';
-    case '90d':
-      if (granularity === 'none') {
-        return Math.ceil(total / 12);
-      }
-      if (granularity === '30d') {
-        return 'auto';
-      }
-      return 10;
-    case '180d':
-      if (granularity === 'none') {
-        return Math.ceil(total / 12);
-      }
-      if (granularity === '30d') {
-        return 'auto';
-      }
-      return 12;
-    case '1y':
-      if (granularity === 'none') {
-        return Math.ceil(total / 12);
-      }
-      if (granularity === '30d' || granularity === '1y') {
-        return 'auto';
-      }
-      return 26;
-    case 'all':
-    case 'max':
-      if (granularity === '30d' || granularity === '1y') {
-        return 'auto';
-      }
-      return Math.ceil(total / 12);
-    default:
-      return 1;
-  }
+  return format(value, 'MM/dd/yyyy hh:mm aa');
 };
 
 export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
@@ -103,8 +55,10 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
     maxY,
     period,
     granularity,
+    width,
   } = args;
   let firstDay = '';
+
   const chartOptions: TChartOption = {
     difficulty: {
       backgroundColor: theme?.backgroundColor,
@@ -115,17 +69,21 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       grid: {
         top: 8,
         right: 40,
-        bottom: 20,
+        bottom: 70,
         left: 50,
         show: false,
       },
-      visualMap: {
-        show: false,
-        type: 'continuous',
-        seriesIndex: 0,
-        min: minY,
-        max: maxY,
-      },
+      dataZoom: [
+        {
+          type: 'inside',
+          start: 0,
+          end: 100,
+        },
+        {
+          start: 0,
+          end: 100,
+        },
+      ],
       tooltip: {
         trigger: 'axis',
       },
@@ -146,21 +104,15 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             }
             return value ? generateXAxisLabel(new Date(value), period) : null;
           },
-          interval:
-            period && periods[9].indexOf(period) !== -1 && dataX?.length && dataX?.length > 48
-              ? 22
-              : 'auto',
-        },
-        splitLine: {
-          interval:
-            period && periods[9].indexOf(period) !== -1 && dataX?.length && dataX?.length > 48
-              ? 22
-              : 'auto',
+          showMaxLabel: true,
+          interval: generateXAxisInterval('1d', period, dataX, width),
         },
       },
       yAxis: {
         type: 'value',
-        minInterval: period === '24h' && maxY < 1000000 ? 100000 : 1000000,
+        min: minY,
+        max: maxY,
+        interval: (maxY - minY) / 5,
         splitLine: {
           show: false,
         },
@@ -169,7 +121,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY, 0);
+            return convertYAxisLabel(Number(value), maxY, 1);
           },
         },
       },
@@ -177,9 +129,10 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         type: 'line',
         showSymbol: false,
         data: dataY,
-        lineStyle: {
-          width: 2,
-          color: '#cd6661',
+        emphasis: {
+          lineStyle: {
+            width: 2,
+          },
         },
       },
       animation: false,
@@ -189,13 +142,25 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
+      color: ['#5470c6', '#91cc75', '#fac858'],
       grid: {
         top: 8,
         right: 40,
-        bottom: 20,
+        bottom: 70,
         left: 60,
         show: false,
       },
+      dataZoom: [
+        {
+          type: 'inside',
+          start: 0,
+          end: 100,
+        },
+        {
+          start: 0,
+          end: 100,
+        },
+      ],
       tooltip: {
         trigger: 'axis',
         formatter(params: TChartParams[]) {
@@ -203,11 +168,11 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             <div class="tooltip-wrapper">
               <div class="tooltip-date">${generateTooltipLabel(
                 new Date(params[0].axisValue),
-                period,
+                granularity,
               )}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(
             params[0].value,
-          )} MH/s</div>
+          )} MSol/S</div>
             </div>
           `;
         },
@@ -229,21 +194,15 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             }
             return value ? generateXAxisLabel(new Date(value), period) : null;
           },
-          interval:
-            period && periods[9].indexOf(period) !== -1 && dataX?.length && dataX?.length > 48
-              ? 22
-              : 'auto',
-        },
-        splitLine: {
-          interval:
-            period && periods[9].indexOf(period) !== -1 && dataX?.length && dataX?.length > 48
-              ? 22
-              : 'auto',
+          showMaxLabel: true,
+          interval: generateXAxisInterval('1d', period, dataX, width),
         },
       },
       yAxis: {
         type: 'value',
-        minInterval: maxY > 1000000000 ? 1000000000 : 100000000,
+        min: minY,
+        max: maxY,
+        interval: (maxY - minY) / 5,
         splitLine: {
           show: false,
         },
@@ -252,7 +211,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY, 0);
+            return convertYAxisLabel(Number(value), maxY);
           },
         },
       },
@@ -261,15 +220,11 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         sampling: 'lttb',
         symbol: false,
         showSymbol: false,
-        lineStyle: {
-          width: 2,
-          color: '#ff5500',
-        },
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: 'rgba(255, 85, 0, 0.5)',
+              color: '#5470C6',
             },
             {
               offset: 1,
@@ -278,6 +233,11 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           ]),
         },
         data: dataY,
+        emphasis: {
+          lineStyle: {
+            width: 2,
+          },
+        },
       },
       animation: false,
     },
@@ -468,15 +428,26 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       grid: {
         top: 8,
         right: 40,
-        bottom: 20,
+        bottom: 70,
         left: 60,
         show: false,
       },
+      dataZoom: [
+        {
+          type: 'inside',
+          start: 0,
+          end: 100,
+        },
+        {
+          start: 0,
+          end: 100,
+        },
+      ],
       tooltip: {
         trigger: 'axis',
         formatter(params: TChartParams[]) {
           return `<div>
-            <div>${generateTooltipLabel(new Date(params[0].axisValue), period)}</div>
+            <div>${generateTooltipLabel(new Date(params[0].axisValue), granularity)}</div>
             <div>${params[0].marker} ${params[0].value.toFixed(5)} MB</div>
           </div>`;
         },
@@ -498,16 +469,15 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             }
             return value ? generateXAxisLabel(new Date(value), period) : null;
           },
-          showMinLabel: true,
           showMaxLabel: true,
-          interval: period
-            ? generateAxisLabelInterval(period, dataX?.length || 1, granularity || 'none')
-            : 'auto',
+          interval: generateXAxisInterval(granularity || '1d', period, dataX, width),
         },
       },
       yAxis: {
         type: 'value',
         min: minY,
+        max: maxY,
+        interval: (maxY - minY) / 5,
         splitLine: {
           show: false,
         },
@@ -516,7 +486,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY);
+            return convertYAxisLabel(Number(value), maxY, 4);
           },
         },
       },
@@ -524,6 +494,11 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         type: 'line',
         showSymbol: false,
         data: dataY,
+        emphasis: {
+          lineStyle: {
+            width: 2,
+          },
+        },
       },
       animation: false,
     },
@@ -699,16 +674,27 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       grid: {
         top: 8,
         right: 40,
-        bottom: 20,
+        bottom: 70,
         left: 50,
         show: false,
         containerLabel: true,
       },
+      dataZoom: [
+        {
+          type: 'inside',
+          start: 0,
+          end: 100,
+        },
+        {
+          start: 0,
+          end: 100,
+        },
+      ],
       tooltip: {
         trigger: 'axis',
         formatter(params: TChartParams[]) {
           return `<div>
-            <div>${generateTooltipLabel(new Date(params[0].axisValue), period)}</div>
+            <div>${generateTooltipLabel(new Date(params[0].axisValue), granularity)}</div>
             <div>${params[0].marker} ${params[0].value.toFixed(2)} MB</div>
           </div>`;
         },
@@ -730,22 +716,15 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             }
             return value ? generateXAxisLabel(new Date(value), period) : null;
           },
-          interval:
-            period && periods[9].indexOf(period) !== -1 && dataX?.length && dataX?.length > 48
-              ? 24
-              : 'auto',
-        },
-        splitLine: {
-          interval:
-            period && periods[9].indexOf(period) !== -1 && dataX?.length && dataX?.length > 48
-              ? 22
-              : 'auto',
+          showMaxLabel: true,
+          interval: generateXAxisInterval('1d', period, dataX, width),
         },
       },
       yAxis: {
         type: 'value',
         min: minY,
-        minInterval: period === '24h' ? 0.1 : 1,
+        max: maxY,
+        interval: (maxY - minY) / 5,
         splitLine: {
           show: false,
         },
@@ -758,6 +737,11 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         sampling: 'lttb',
         data: dataY,
         showSymbol: false,
+        emphasis: {
+          lineStyle: {
+            width: 2,
+          },
+        },
       },
       animation: false,
     },
