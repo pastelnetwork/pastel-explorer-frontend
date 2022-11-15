@@ -68,9 +68,9 @@ export const makeDownloadFileName = (currencyName: string | number, title: strin
   return `${currencyName}_${imageTitle}_${dateTime}`;
 };
 
-const checkAndValidateData = (timestamp: number) => {
-  const nowHour = format(new Date(), 'HH');
-  const targetHour = format(timestamp, 'HH');
+const checkValidateData = (timestamp: number) => {
+  const nowHour = format(new Date(), 'MM/dd/yyyy HH');
+  const targetHour = format(timestamp, 'MM/dd/yyyy HH');
   if (nowHour !== targetHour) {
     return new Date().toLocaleString();
   }
@@ -127,12 +127,11 @@ export function transformDifficultyInfo(
       const createTime = Number(difficulties[i].timestamp);
       dataY.push(Number(difficulties[i].difficulty));
       dataX.push(format(createTime, 'MM/dd/yyyy hh:00 aa'));
-
-      if (period === '24h' && i === difficulties.length - 1 && checkAndValidateData(createTime)) {
-        dataX.push(format(Date.now(), 'MM/dd/yyyy hh:00 aa') || '');
-        dataY.push(0);
-      }
     }
+  }
+  if (period === '24h' && checkValidateData(difficulties[difficulties.length - 1].timestamp)) {
+    dataX.push(format(Date.now(), 'MM/dd/yyyy hh:00 aa') || '');
+    dataY.push(0);
   }
 
   return { dataX, dataY };
@@ -249,15 +248,10 @@ export function transformAverageBlockSize(
     } else {
       dataX.push(format(blockSizes[i].maxTime * 1000, 'MM/dd/yyyy HH:mm'));
     }
-
-    if (
-      period === '24h' &&
-      i === blockSizes.length - 1 &&
-      checkAndValidateData(blockSizes[i].time * 1000)
-    ) {
-      dataX.push(format(Date.now(), 'MM/dd/yyyy HH:mm'));
-      dataY.push(0);
-    }
+  }
+  if (period === '24h' && checkValidateData(blockSizes[blockSizes.length - 1].time * 1000)) {
+    dataX.push(format(Date.now(), 'MM/dd/yyyy HH:mm'));
+    dataY.push(0);
   }
   return { dataX, dataY };
 }
@@ -332,28 +326,26 @@ export function transformTotalData(data: TTransactionsChart[], range = 10e6): TL
 export function transformBlockchainSizeData(
   data: TTransactionsChart[],
   period: PeriodTypes,
-  totalPrevDay: number,
+  startValue: number,
+  endValue: number,
   range = 10e6,
 ): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
-  if (data.length) {
-    dataX.push(new Date(parseInt(data[0].label, 10)).toLocaleString());
-    dataY.push(+((data[0].value + totalPrevDay) / range).toFixed(2));
-  }
-  if (data.length > 1) {
-    for (let i = 1; i < data.length; i += 1) {
-      const { value, label } = data[i];
-      dataX.push(new Date(parseInt(label, 10)).toLocaleString());
-      dataY.push(+(dataY[i - 1] + +(value / range).toFixed(2)).toFixed(2));
-
-      if (period === '24h' && i === data.length - 1 && checkAndValidateData(parseInt(label, 10))) {
-        dataX.push(new Date().toLocaleString());
-        dataY.push(+(dataY[i - 1] + 0).toFixed(2));
-      }
+  let preValue = startValue;
+  for (let i = 0; i < data.length; i += 1) {
+    let value = data[i].value + preValue;
+    if (i === data.length - 1) {
+      value = endValue;
     }
+    dataX.push(new Date(parseInt(data[i].label, 10)).toLocaleString());
+    dataY.push(parseFloat((value / range).toFixed(2)));
+    preValue += data[i].value;
   }
-
+  if (period === '24h' && checkValidateData(parseInt(data[data.length - 1].label, 10))) {
+    dataX.push(new Date().toLocaleString());
+    dataY.push(dataY[dataY.length - 1]);
+  }
   return { dataX, dataY };
 }
 
@@ -567,7 +559,7 @@ export function transformHashRateCharts(
     solps1000: [],
   };
 
-  data.forEach((item, index) => {
+  data.forEach(item => {
     dataX.push(new Date(item.timestamp).toLocaleString());
     networksolps.solps5.push(item.networksolps5);
     networksolps.solps10.push(item.networksolps10);
@@ -576,17 +568,17 @@ export function transformHashRateCharts(
     networksolps.solps100.push(item.networksolps100);
     networksolps.solps500.push(item.networksolps500);
     networksolps.solps1000.push(item.networksolps1000);
-    if (period === '24h' && index === data.length - 1 && checkAndValidateData(item.timestamp)) {
-      dataX.push(checkAndValidateData(item.timestamp)?.toString() || '');
-      networksolps.solps5.push(0);
-      networksolps.solps10.push(0);
-      networksolps.solps25.push(0);
-      networksolps.solps50.push(0);
-      networksolps.solps100.push(0);
-      networksolps.solps500.push(0);
-      networksolps.solps1000.push(0);
-    }
   });
+  if (period === '24h' && checkValidateData(data[data.length - 1].timestamp)) {
+    dataX.push(new Date(data[data.length - 1].timestamp).toLocaleString());
+    networksolps.solps5.push(0);
+    networksolps.solps10.push(0);
+    networksolps.solps25.push(0);
+    networksolps.solps50.push(0);
+    networksolps.solps100.push(0);
+    networksolps.solps500.push(0);
+    networksolps.solps1000.push(0);
+  }
   return { dataX, networksolps };
 }
 
@@ -630,7 +622,7 @@ export const generateXAxisInterval = (
 
   switch (period) {
     case '24h':
-      return Math.floor(dataX.length / 24);
+      return Math.floor(dataX.length / 12);
     case '7d':
       if (dataX.length <= 8) {
         return 'auto';
@@ -707,3 +699,9 @@ export const generateMinMaxChartData = (
 
   return result;
 };
+
+export const getMinMax = (arr: number[]) =>
+  arr.reduce(([min, max], val) => [Math.min(min, val), Math.max(max, val)], [
+    Number.POSITIVE_INFINITY,
+    Number.NEGATIVE_INFINITY,
+  ]);

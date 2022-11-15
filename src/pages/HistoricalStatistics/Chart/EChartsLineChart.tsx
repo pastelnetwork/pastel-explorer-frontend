@@ -7,7 +7,11 @@ import { useSelector } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
 
 import { Data } from 'react-csv/components/CommonPropTypes';
-import { makeDownloadFileName, generateMinMaxChartData } from '@utils/helpers/statisticsLib';
+import {
+  makeDownloadFileName,
+  generateMinMaxChartData,
+  getMinMax,
+} from '@utils/helpers/statisticsLib';
 import { csvHeaders, themes } from '@utils/constants/statistics';
 import { TLineChartProps, TThemeInitOption, TThemeColor } from '@utils/constants/types';
 import { getThemeInitOption, getThemeUpdateOption } from '@utils/helpers/chartOptions';
@@ -77,8 +81,9 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
 
   useEffect(() => {
     if (dataY?.length) {
-      const min = Math.min(...dataY);
-      const max = Math.max(...dataY);
+      const arr = getMinMax(dataY);
+      const min = arr[0];
+      const max = arr[1];
       if (chartName === 'mempoolsize') {
         setMinY(Math.floor(min));
         setMaxY(Math.ceil(max));
