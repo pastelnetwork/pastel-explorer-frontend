@@ -612,7 +612,7 @@ export const generateXAxisInterval = (
   }
 
   if (width > 960 && width < 1200) {
-    return Math.floor(dataX.length / 10);
+    return Math.floor(dataX.length / 5);
   }
 
   if (width <= 960) {
@@ -621,7 +621,7 @@ export const generateXAxisInterval = (
 
   switch (period) {
     case '24h':
-      return Math.floor(dataX.length / 12);
+      return Math.floor(dataX.length / 5);
     case '7d':
       if (dataX.length <= 8) {
         return 'auto';
