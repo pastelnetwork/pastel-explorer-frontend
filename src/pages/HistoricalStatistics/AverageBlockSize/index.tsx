@@ -1,7 +1,8 @@
 // react
 import { useEffect, useState } from 'react';
+import LRU from 'lru-cache';
 // application
-import { TLineChartData, TAverageBlockSize } from '@utils/types/IStatistics';
+import { TLineChartData, TAverageBlockSize, TCacheValue } from '@utils/types/IStatistics';
 import { TGranularity, PeriodTypes, transformAverageBlockSize } from '@utils/helpers/statisticsLib';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
@@ -10,32 +11,64 @@ import {
   granularities,
   periods,
   info,
+  LRU_OPTIONS,
+  cacheList,
 } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
+
+const cache = new LRU(LRU_OPTIONS);
 
 const AverageBlockSize = (): JSX.Element => {
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const [period, setPeriod] = useState<PeriodTypes>(periods[1][0]);
   const [granularity, setGranularity] = useState<TGranularity>(BLOCK_CHART_DEFAULT_GRANULARITY);
   const [chartData, setChartData] = useState<TLineChartData | null>(null);
+  const [isLoading, setLoading] = useState(false);
+
   const fetchStats = useFetch<{ data: Array<TAverageBlockSize> }>({
     method: 'get',
     url: URLS.GET_STATISTICS_AVERAGE_BLOCK_SIZE,
   });
 
   useEffect(() => {
+    let isSubscribed = true;
     const loadLineChartData = async () => {
+      let currentCache = (cache.get(cacheList.averageBlockSize) as TCacheValue) || {};
+      if (!currentCache[`${period}-${granularity}`]) {
+        setLoading(true);
+      } else {
+        setChartData(currentCache[`${period}-${granularity}`] as TLineChartData);
+      }
       const data = await fetchStats.fetchData({
         params: { sortDirection: 'DESC', period, granularity, format: 'true' },
       });
       if (data) {
         const parseData = transformAverageBlockSize(data.data, period);
-        setChartData(parseData);
+        if (
+          currentCache[`${period}-${granularity}`] &&
+          JSON.stringify(parseData) !== JSON.stringify(currentCache[`${period}-${granularity}`])
+        ) {
+          setLoading(true);
+        }
+        if (isSubscribed) {
+          setChartData(parseData);
+        }
+        if (!currentCache[`${period}-${granularity}`]) {
+          currentCache = {
+            ...currentCache,
+            [`${period}-${granularity}`]: parseData,
+          };
+        }
+        cache.set(cacheList.averageBlockSize, currentCache);
       }
+      setLoading(false);
     };
     loadLineChartData();
+    return () => {
+      isSubscribed = false;
+    };
   }, [granularity, period]);
 
   const handlePeriodFilterChange = (value: PeriodTypes) => {
@@ -80,7 +113,7 @@ const AverageBlockSize = (): JSX.Element => {
         handlePeriodFilterChange={handlePeriodFilterChange}
         handleGranularityFilterChange={handleGranularityFilterChange}
         setHeaderBackground
-        isLoading={fetchStats.isLoading}
+        isLoading={isLoading}
       />
     </HistoricalStatisticsLayout>
   );
