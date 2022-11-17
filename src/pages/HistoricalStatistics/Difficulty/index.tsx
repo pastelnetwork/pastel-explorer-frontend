@@ -8,6 +8,7 @@ import { PeriodTypes, transformDifficultyInfo } from '@utils/helpers/statisticsL
 import { periods, info, LRU_OPTIONS, cacheList } from '@utils/constants/statistics';
 import { IStatistic, TLineChartData, TCacheValue } from '@utils/types/IStatistics';
 import { useBackgroundChart } from '@utils/hooks';
+import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
@@ -26,7 +27,10 @@ function Difficulty() {
   useEffect(() => {
     let isSubscribed = true;
     const loadLineChartData = async () => {
-      let currentCache = (cache.get(cacheList.difficulty) as TCacheValue) || {};
+      let currentCache =
+        (cache.get(cacheList.difficulty) as TCacheValue) ||
+        readCacheValue(cacheList.difficulty) ||
+        {};
       if (!currentCache[period]) {
         setLoading(true);
       } else {
@@ -52,6 +56,13 @@ function Difficulty() {
             [period]: parseData,
           };
         }
+        setCacheValue(
+          cacheList.difficulty,
+          JSON.stringify({
+            currentCache,
+            lastDate: data.data[data.data.length - 1].timestamp,
+          }),
+        );
         cache.set(cacheList.difficulty, currentCache);
       }
       setLoading(false);
