@@ -243,3 +243,15 @@ export const info: TStatisticsInfo = {
 };
 
 export const granularities: TGranularity[][] = [['1d', '30d', '1y'], ['1d'], ['1d', '30d']];
+
+export const LRU_OPTIONS = {
+  max: 100,
+  ttl: 300000,
+};
+
+export const cacheList = {
+  hashRate: 'explorerHashRate',
+  blockchainSize: 'explorerBlockchainSize',
+  averageBlockSize: 'explorerAverageBlockSize',
+  difficulty: 'explorerDifficulty',
+};
