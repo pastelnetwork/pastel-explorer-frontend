@@ -7,6 +7,7 @@ import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { PeriodTypes, transformBlockchainSizeData } from '@utils/helpers/statisticsLib';
 import { periods, info, LRU_OPTIONS, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
+import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import { TLineChartData, TTransactionsChart, TCacheValue } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
 
@@ -32,7 +33,10 @@ function BlockchainSize() {
   useEffect(() => {
     let isSubscribed = true;
     const loadLineChartData = async () => {
-      let currentCache = (cache.get(cacheList.blockchainSize) as TCacheValue) || {};
+      let currentCache =
+        (cache.get(cacheList.blockchainSize) as TCacheValue) ||
+        readCacheValue(cacheList.blockchainSize) ||
+        {};
       if (!currentCache[period]) {
         setLoading(true);
       } else {
@@ -64,6 +68,13 @@ function BlockchainSize() {
             [period]: parseData,
           };
         }
+        setCacheValue(
+          cacheList.blockchainSize,
+          JSON.stringify({
+            currentCache,
+            lastDate: data.data[data.data.length - 1].label,
+          }),
+        );
         cache.set(cacheList.blockchainSize, currentCache);
       }
       setLoading(false);

@@ -15,6 +15,7 @@ import {
   cacheList,
 } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
+import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
@@ -35,7 +36,10 @@ const AverageBlockSize = (): JSX.Element => {
   useEffect(() => {
     let isSubscribed = true;
     const loadLineChartData = async () => {
-      let currentCache = (cache.get(cacheList.averageBlockSize) as TCacheValue) || {};
+      let currentCache =
+        (cache.get(cacheList.averageBlockSize) as TCacheValue) ||
+        readCacheValue(cacheList.averageBlockSize) ||
+        {};
       if (!currentCache[`${period}-${granularity}`]) {
         setLoading(true);
       } else {
@@ -61,6 +65,13 @@ const AverageBlockSize = (): JSX.Element => {
             [`${period}-${granularity}`]: parseData,
           };
         }
+        setCacheValue(
+          cacheList.averageBlockSize,
+          JSON.stringify({
+            currentCache,
+            lastDate: data.data[data.data.length - 1].time * 1000,
+          }),
+        );
         cache.set(cacheList.averageBlockSize, currentCache);
       }
       setLoading(false);

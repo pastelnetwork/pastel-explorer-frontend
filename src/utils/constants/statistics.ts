@@ -250,8 +250,8 @@ export const LRU_OPTIONS = {
 };
 
 export const cacheList = {
-  hashRate: 'hashRate',
-  blockchainSize: 'blockchainSize',
-  averageBlockSize: 'averageBlockSize',
-  difficulty: 'Difficulty',
+  hashRate: 'explorerHashRate',
+  blockchainSize: 'explorerBlockchainSize',
+  averageBlockSize: 'explorerAverageBlockSize',
+  difficulty: 'explorerDifficulty',
 };
