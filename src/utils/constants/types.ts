@@ -65,6 +65,7 @@ export type TLineChartProps = {
   customHtml?: ReactNode;
   isLoading?: boolean;
   seriesName1Type?: string;
+  color?: string[];
 };
 
 export type TCsvHeaderType = {

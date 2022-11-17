@@ -50,6 +50,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     isDynamicTitleColor,
     seriesName1Type = 'bar',
     isLoading,
+    color = ['#cd6661', '#5470C6'],
   } = props;
   const downloadRef = useRef(null);
   const { width } = useWindowDimensions();
@@ -163,7 +164,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
         `;
       },
     },
-    color: ['#cd6661', '#5470C6'],
+    color,
     dataZoom: [
       {
         type: 'inside',

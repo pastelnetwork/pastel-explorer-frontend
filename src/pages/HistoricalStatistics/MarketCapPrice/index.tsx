@@ -100,6 +100,7 @@ function PriceOvertime() {
         handlePeriodFilterChange={handlePeriodFilterChange}
         setHeaderBackground
         isLoading={isLoading}
+        color={['#000', '#5470C6']}
       />
     </HistoricalStatisticsLayout>
   );
