@@ -69,7 +69,7 @@ const AverageBlockSize = (): JSX.Element => {
           cacheList.averageBlockSize,
           JSON.stringify({
             currentCache,
-            lastDate: data.data[data.data.length - 1].time * 1000,
+            lastDate: Date.now(),
           }),
         );
         cache.set(cacheList.averageBlockSize, currentCache);

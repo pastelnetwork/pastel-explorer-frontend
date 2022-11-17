@@ -72,7 +72,7 @@ function BlockchainSize() {
           cacheList.blockchainSize,
           JSON.stringify({
             currentCache,
-            lastDate: data.data[data.data.length - 1].label,
+            lastDate: Date.now(),
           }),
         );
         cache.set(cacheList.blockchainSize, currentCache);

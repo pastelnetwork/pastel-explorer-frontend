@@ -60,7 +60,7 @@ function Difficulty() {
           cacheList.difficulty,
           JSON.stringify({
             currentCache,
-            lastDate: data.data[data.data.length - 1].timestamp,
+            lastDate: Date.now(),
           }),
         );
         cache.set(cacheList.difficulty, currentCache);
