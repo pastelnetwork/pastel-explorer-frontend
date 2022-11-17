@@ -1,3 +1,4 @@
+import LZUTF8 from 'lzutf8';
 import differenceInHours from 'date-fns/differenceInHours';
 
 const initialValue = {};
@@ -8,7 +9,13 @@ export const readCacheValue = (key: string) => {
   }
   try {
     const item = window.localStorage.getItem(key);
-    const result = item ? JSON.parse(JSON.parse(item)) : initialValue;
+    const result = item
+      ? JSON.parse(
+          LZUTF8.decompress(JSON.parse(item), {
+            inputEncoding: 'Base64',
+          }),
+        )
+      : initialValue;
     if (differenceInHours(Date.now(), result.lastDate) > 4) {
       return initialValue;
     }
@@ -26,7 +33,10 @@ export const setCacheValue = (key: string, value: string) => {
   }
   try {
     // Save to local storage
-    window.localStorage.setItem(key, JSON.stringify(value));
+    const content = LZUTF8.compress(value, {
+      outputEncoding: 'Base64',
+    });
+    window.localStorage.setItem(key, JSON.stringify(content));
   } catch (error) {
     console.warn(`Error setting localStorage key “${key}”:`, error);
   }

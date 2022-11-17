@@ -254,4 +254,9 @@ export const cacheList = {
   blockchainSize: 'explorerBlockchainSize',
   averageBlockSize: 'explorerAverageBlockSize',
   difficulty: 'explorerDifficulty',
+  mempoolSize: 'explorerMempoolSize',
+  networkTotal: 'explorerNetworkTotal',
+  priceOvertime: 'explorerPriceOvertime',
+  marketVolumePrice: 'explorerMarketVolumePrice',
+  marketCapPrice: 'explorerMarketCapPrice',
 };

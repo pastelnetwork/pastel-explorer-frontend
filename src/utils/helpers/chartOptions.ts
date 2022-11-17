@@ -58,7 +58,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
     width,
   } = args;
   let firstDay = '';
-
   const chartOptions: TChartOption = {
     difficulty: {
       backgroundColor: theme?.backgroundColor,
@@ -245,21 +244,32 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
-      color: ['#80FFA5', '#37A2FF'],
+      color: ['#cd6661', '#37A2FF'],
       grid: {
-        top: 8,
-        right: 8,
-        bottom: 20,
-        left: 80,
+        top: 30,
+        right: 40,
+        bottom: 70,
+        left: 60,
         show: false,
       },
       tooltip: {
         trigger: 'axis',
-        axisPointer: {
-          type: 'cross',
-          label: {
-            backgroundColor: '#6a7985',
-          },
+        formatter(params: TChartParams[]) {
+          let html = '';
+          params.forEach(item => {
+            html += `
+              <div class="tooltip-item">
+                <div class="item-label">${item.marker} ${item.seriesName}:</div>
+                <div class="item-value">${formatNumber(item.value)}</div>
+              </div>
+            `;
+          });
+          return `
+            <div class="tooltip-container">
+              <div class="tooltip-data-date">${params[0].name}</div>
+              <div>${html}</div>
+            </div>
+          `;
         },
       },
       legend: {
@@ -270,14 +280,36 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           color: theme?.color,
         },
       },
+      dataZoom: [
+        {
+          type: 'inside',
+          start: 0,
+          end: 100,
+        },
+        {
+          start: 0,
+          end: 100,
+        },
+      ],
       xAxis: {
         type: 'category',
         boundaryGap: false,
         data: dataX,
         axisLabel: {
           formatter(value: string) {
-            return generateXAxisLabel(new Date(value), period);
+            if (dataX?.length && dataX?.length > 4 && period && periods[9].indexOf(period) !== -1) {
+              const date = format(new Date(value), 'MM/dd/yyyy');
+              if (firstDay !== date) {
+                firstDay = date;
+                return generateXAxisLabel(new Date(value), period);
+              }
+
+              return null;
+            }
+            return value ? generateXAxisLabel(new Date(value), period) : null;
           },
+          showMaxLabel: true,
+          interval: generateXAxisInterval('1d', period, dataX, width),
         },
       },
       yAxis: {
@@ -287,8 +319,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            const val = Number.parseFloat(value);
-            return `${formatNumber(val / 1000000)}M`;
+            return convertYAxisLabel(Number(value), maxY, 0);
           },
         },
         axisLine: {
@@ -300,51 +331,27 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           name: 'Traffic receive',
           type: 'line',
           lineStyle: {
-            width: 0,
+            width: 2,
           },
           showSymbol: false,
-          areaStyle: {
-            opacity: 0.8,
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              {
-                offset: 0,
-                color: '#80ffa5',
-              },
-              {
-                offset: 1,
-                color: '#00BFEC',
-              },
-            ]),
-          },
           emphasis: {
             focus: 'series',
           },
           data: dataY1,
+          zlevel: 2,
         },
         {
           name: 'Traffic sent',
           type: 'line',
           lineStyle: {
-            width: 0,
+            width: 2,
           },
           showSymbol: false,
-          areaStyle: {
-            opacity: 0.8,
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              {
-                offset: 0,
-                color: '#37a2ff',
-              },
-              {
-                offset: 1,
-                color: '#7415db',
-              },
-            ]),
-          },
           emphasis: {
             focus: 'series',
           },
           data: dataY2,
+          zlevel: 1,
         },
       ],
       animation: false,
@@ -356,14 +363,38 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       grid: {
         top: 8,
-        right: 8,
-        bottom: 20,
-        left: 50,
+        right: 40,
+        bottom: 70,
+        left: 60,
         show: false,
       },
       tooltip: {
         trigger: 'axis',
+        formatter(params: TChartParams[]) {
+          return `
+            <div class="tooltip-wrapper">
+              <div class="tooltip-date">${generateTooltipLabel(
+                new Date(params[0].axisValue),
+                granularity,
+              )}</div>
+              <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
+            decimalsLength: 2,
+          })} kB</div>
+            </div>
+          `;
+        },
       },
+      dataZoom: [
+        {
+          type: 'inside',
+          start: 0,
+          end: 100,
+        },
+        {
+          start: 0,
+          end: 100,
+        },
+      ],
       xAxis: {
         type: 'category',
         data: dataX,
@@ -371,11 +402,15 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           formatter(value: string) {
             return generateXAxisLabel(new Date(value), period);
           },
+          showMaxLabel: true,
+          interval: generateXAxisInterval('1d', period, dataX, width),
         },
       },
       yAxis: {
         type: 'value',
         min: minY,
+        max: maxY,
+        interval: (maxY - minY) / 5,
         splitLine: {
           show: false,
         },
@@ -384,37 +419,23 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            if (maxY > 1000000) {
-              return `${Math.round(Number(value) / 1000000)}M`;
-            }
-            if (maxY > 1000) {
-              return `${Math.round(Number(value) / 1000)}K`;
-            }
-            return `${Number(value)}k`;
+            return convertYAxisLabel(Number(value), maxY, 1);
           },
         },
       },
       series: {
         type: 'line',
-        sampling: 'lttb',
         lineStyle: {
           color: '#176987',
         },
         symbol: false,
         showSymbol: false,
-        areaStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: '#1A4369',
-            },
-            {
-              offset: 1,
-              color: '#1A272A4D',
-            },
-          ]),
-        },
         data: dataY,
+        emphasis: {
+          lineStyle: {
+            width: 2,
+          },
+        },
       },
       animation: false,
     },

@@ -21,6 +21,7 @@ import {
   TSolpsData,
   THashrateChartData,
   TMinMaxChartData,
+  MarketCoinRespone,
 } from '@utils/types/IStatistics';
 import { IBlock } from '@utils/types/IBlocks';
 import { formattedDate } from '@utils/helpers/date/date';
@@ -69,6 +70,9 @@ export const makeDownloadFileName = (currencyName: string | number, title: strin
 };
 
 const checkValidateData = (timestamp: number) => {
+  if (!timestamp) {
+    return null;
+  }
   const nowHour = format(new Date(), 'MM/dd/yyyy HH');
   const targetHour = format(timestamp, 'MM/dd/yyyy HH');
   if (nowHour !== targetHour) {
@@ -141,21 +145,67 @@ export function transformPriceInfo(prices: IStatistic[], period: PeriodTypes): T
   const dataY1: number[] = [];
   const dataY2: number[] = [];
 
-  // const startDate = getStartPoint(period);
-
   for (let i = 0; i < prices.length; i += 1) {
-    const createTime = Number(prices[i].timestamp);
-    // if (createTime > startDate) {
     const usd = Number(prices[i].usdPrice);
     const btc = Number(prices[i].btcPrice);
     dataY1.push(usd);
     dataY2.push(btc);
-    dataX.push(
-      periodShowTime.indexOf(period) !== -1
-        ? new Date(createTime).toLocaleString()
-        : format(createTime, 'MM/dd/yyyy'),
-    );
-    // }
+    dataX.push(new Date(Number(prices[i].timestamp)).toLocaleString());
+  }
+  if (period === '24h' && checkValidateData(prices[prices.length - 1]?.timestamp)) {
+    dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
+    dataY1.push(Number(prices[prices.length - 1].usdPrice));
+    dataY2.push(Number(prices[prices.length - 1].btcPrice));
+  }
+  return { dataX, dataY1, dataY2 };
+}
+
+export function transformMarketVolumePriceInfo(
+  data: MarketCoinRespone,
+  period: PeriodTypes,
+): TMultiLineChartData {
+  const dataX: string[] = [];
+  const dataY1: number[] = [];
+  const dataY2: number[] = [];
+
+  const { prices, total_volumes } = data;
+
+  for (let i = 0; i < prices.length; i += 1) {
+    const [x, y1] = prices[i];
+    const [, y2] = total_volumes[i];
+    dataX.push(new Date(Number(x)).toLocaleString());
+    dataY1.push(+y1.toFixed(8));
+    dataY2.push(Math.round(y2));
+  }
+  if (period === '24h' && checkValidateData(prices[prices.length - 1][0])) {
+    dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
+    dataY1.push(Number(dataY1[dataY1.length - 1]));
+    dataY2.push(Number(dataY2[dataY2.length - 1]));
+  }
+  return { dataX, dataY1, dataY2 };
+}
+
+export function transformMarketCapPriceInfo(
+  data: MarketCoinRespone,
+  period: PeriodTypes,
+): TMultiLineChartData {
+  const dataX: string[] = [];
+  const dataY1: number[] = [];
+  const dataY2: number[] = [];
+
+  const { prices, market_caps } = data;
+
+  for (let i = 0; i < prices.length; i += 1) {
+    const [x, y1] = prices[i];
+    const [, y2] = market_caps[i];
+    dataX.push(new Date(Number(x)).toLocaleString());
+    dataY1.push(+y1.toFixed(8));
+    dataY2.push(Math.round(y2));
+  }
+  if (period === '24h' && checkValidateData(prices[prices.length - 1][0])) {
+    dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
+    dataY1.push(Number(dataY1[dataY1.length - 1]));
+    dataY2.push(Number(dataY2[dataY2.length - 1]));
   }
   return { dataX, dataY1, dataY2 };
 }
@@ -183,15 +233,14 @@ export function transformMempoolInfo(
   const dataY: number[] = [];
   for (let i = 0; i < mempoolInfo.length; i += 1) {
     if (mempoolInfo[i].usage !== null && mempoolInfo[i].timestamp !== 0) {
-      const createTime = Number(mempoolInfo[i].timestamp);
       const bytes = Number(mempoolInfo[i].usage) / 1000;
       dataY.push(bytes);
-      dataX.push(
-        periodShowTime.indexOf(period) !== -1
-          ? new Date(createTime).toLocaleString()
-          : format(createTime, 'MM/dd/yyyy'),
-      );
+      dataX.push(new Date(Number(mempoolInfo[i].timestamp)).toLocaleString());
     }
+  }
+  if (period === '24h' && checkValidateData(mempoolInfo[mempoolInfo.length - 1].timestamp)) {
+    dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
+    dataY.push(Number(mempoolInfo[mempoolInfo.length - 1].usage) / 1000);
   }
   return { dataX, dataY };
 }
@@ -205,17 +254,17 @@ export function transformNetTotals(
   const dataY2: number[] = [];
   for (let i = 0; i < nettotals.length; i += 1) {
     if (nettotals[i].timemillis !== null) {
-      const createTime = Number(nettotals[i].timemillis);
       const recv = Number(nettotals[i].totalbytesrecv);
       const sent = Number(nettotals[i].totalbytessent);
       dataY1.push(recv);
       dataY2.push(sent);
-      dataX.push(
-        periodShowTime.indexOf(period) !== -1
-          ? new Date(createTime).toLocaleString()
-          : format(createTime, 'MM/dd/yyyy'),
-      );
+      dataX.push(new Date(Number(nettotals[i].timemillis)).toLocaleString());
     }
+  }
+  if (period === '24h' && checkValidateData(nettotals[nettotals.length - 1]?.timemillis)) {
+    dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
+    dataY1.push(Number(nettotals[nettotals.length - 1].totalbytesrecv));
+    dataY2.push(Number(nettotals[nettotals.length - 1].totalbytessent));
   }
   return { dataX, dataY1, dataY2 };
 }
@@ -704,3 +753,11 @@ export const getMinMax = (arr: number[]) =>
     Number.POSITIVE_INFINITY,
     Number.NEGATIVE_INFINITY,
   ]);
+
+export const toPlainString = (num: number) => {
+  return `${+num}`.replace(/(-?)(\d*)\.?(\d*)e([+-]\d+)/, (a, b, c, d, e) => {
+    return e < 0
+      ? `${b}0.${Array(1 - e - c.length).join('0')}${c}${d}`
+      : b + c + d + Array(e - d.length + 1).join('0');
+  });
+};

@@ -84,10 +84,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
       const arr = getMinMax(dataY);
       const min = arr[0];
       const max = arr[1];
-      if (chartName === 'mempoolsize') {
-        setMinY(Math.floor(min));
-        setMaxY(Math.ceil(max));
-      } else if (
+      if (
         ['percentOfPSLStaked', 'totalOfCascadeRequests', 'totalSizeOfDataStored'].indexOf(
           chartName,
         ) !== -1
@@ -97,6 +94,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
       } else if (
         chartName === 'blockchainSize' ||
         chartName === 'hashrate' ||
+        chartName === 'mempoolsize' ||
         chartName === 'difficulty'
       ) {
         const result = generateMinMaxChartData(min, max, 0, 5, selectedPeriodButton);
@@ -121,6 +119,22 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
         setCsvData(data);
       }
     } else if (dataY1?.length && dataY2?.length) {
+      if (chartName === 'networktotals') {
+        if (dataY1?.length && dataY2?.length) {
+          const networkTotalArr = getMinMax([...dataY1, ...dataY2]);
+          const networkTotalMin = networkTotalArr[0];
+          const networkTotalMax = networkTotalArr[1];
+          const result = generateMinMaxChartData(
+            networkTotalMin,
+            networkTotalMax,
+            0,
+            5,
+            selectedPeriodButton,
+          );
+          setMinY(result.min);
+          setMaxY(result.max);
+        }
+      }
       if (dataX) {
         const data: Data = [];
         dataY1.forEach((yAxis, index) => {
