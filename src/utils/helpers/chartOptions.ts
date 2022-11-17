@@ -217,7 +217,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       series: {
         type: 'line',
-        sampling: 'lttb',
         symbol: false,
         showSymbol: false,
         areaStyle: {
@@ -734,7 +733,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       series: {
         type: 'line',
-        sampling: 'lttb',
         data: dataY,
         showSymbol: false,
         emphasis: {

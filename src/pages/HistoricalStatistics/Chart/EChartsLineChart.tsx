@@ -276,7 +276,10 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
           </Styles.ChartSubTitle>
         ) : null}
         {isLoading || !dataX?.length ? (
-          <Skeleton animation="wave" variant="rect" height={386} />
+          <Styles.LoadingWrapper>
+            <Skeleton animation="wave" variant="rect" height={386} />
+            <Styles.LoadingText>Loading data...</Styles.LoadingText>
+          </Styles.LoadingWrapper>
         ) : (
           <ReactECharts
             notMerge={false}
