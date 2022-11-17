@@ -248,3 +248,19 @@ export const ChartSubTitle = styled.div`
   font-size: 18px;
   font-weight: 700;
 `;
+
+export const LoadingWrapper = styled.div`
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+`;
+
+export const LoadingText = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  font-size: 20px;
+  transform: translate(-50%, -50%);
+`;

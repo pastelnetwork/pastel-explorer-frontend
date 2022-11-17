@@ -197,3 +197,7 @@ export type TMinMaxChartData = {
   min: number;
   max: number;
 };
+
+export type TCacheValue = {
+  [key: string]: THashrateChartData | TLineChartData;
+};
