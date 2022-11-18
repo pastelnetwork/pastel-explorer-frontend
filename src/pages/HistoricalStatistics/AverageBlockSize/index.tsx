@@ -65,7 +65,7 @@ const AverageBlockSize = (): JSX.Element => {
         }
         const newParseData = getChartData(
           parseData,
-          currentCache[period]?.parseData as TLineChartData,
+          currentCache[`${period}-${granularity}`]?.parseData as TLineChartData,
           period,
         );
         if (isSubscribed) {
