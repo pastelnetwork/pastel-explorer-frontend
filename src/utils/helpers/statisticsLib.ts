@@ -376,11 +376,12 @@ export function transformBlockchainSizeData(
   period: PeriodTypes,
   startValue: number,
   endValue: number,
+  startValueCache: number,
   range = 10e6,
 ): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
-  let preValue = startValue;
+  let preValue = startValueCache ? startValueCache * range : startValue;
   for (let i = 0; i < data.length; i += 1) {
     let value = data[i].value + preValue;
     if (i === data.length - 1) {
