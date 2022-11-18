@@ -60,11 +60,13 @@ function BlockchainSize() {
         },
       });
       if (data) {
+        const cacheParseData = currentCache[period]?.parseData as TLineChartData;
         const parseData = transformBlockchainSizeData(
           data.data,
           period,
           data.startValue,
           data.endValue,
+          cacheParseData?.dataY[cacheParseData?.dataY?.length - 1] || 0,
         );
         if (
           currentCache[period] &&
