@@ -61,7 +61,7 @@ function Nettotals() {
           period,
         );
         if (isSubscribed) {
-          setChartData(parseData);
+          setChartData(newParseData);
         }
         if (!currentCache[period]) {
           currentCache = {
