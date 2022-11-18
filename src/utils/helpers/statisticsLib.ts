@@ -762,7 +762,6 @@ export const toPlainString = (num: number) => {
   });
 };
 
-
 const getPeriodData = (period: PeriodTypes, date: string) => {
   const periodData = {
     '24h': 1,
