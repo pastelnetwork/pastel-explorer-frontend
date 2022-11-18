@@ -4,7 +4,11 @@ import LRU from 'lru-cache';
 // application
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { PeriodTypes, transformHashRateCharts } from '@utils/helpers/statisticsLib';
+import {
+  PeriodTypes,
+  transformHashRateCharts,
+  getHashRateChartData,
+} from '@utils/helpers/statisticsLib';
 import { periods, info, LRU_OPTIONS, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
@@ -64,15 +68,17 @@ function HashRate() {
   useEffect(() => {
     let isSubscribed = true;
     const loadLineChartData = async () => {
+      let timestamp = '';
       let currentCache =
         (cache.get(cacheList.hashRate) as TCacheValue) || readCacheValue(cacheList.hashRate) || {};
       if (!currentCache[period]) {
         setLoading(true);
       } else {
-        setChartData(currentCache[period] as THashrateChartData);
+        setChartData(currentCache[period].parseData as THashrateChartData);
+        timestamp = currentCache[period]?.lastDate?.toString() || '';
       }
       const data = await fetchStats.fetchData({
-        params: { period },
+        params: { period, timestamp },
       });
       if (data) {
         const parseData = transformHashRateCharts(data.data, period);
@@ -82,13 +88,21 @@ function HashRate() {
         ) {
           setLoading(true);
         }
+        const newParseData = getHashRateChartData(
+          parseData,
+          currentCache[period]?.parseData as THashrateChartData,
+          period,
+        );
         if (isSubscribed) {
-          setChartData(parseData);
+          setChartData(newParseData);
         }
         if (!currentCache[period]) {
           currentCache = {
             ...currentCache,
-            [period]: parseData,
+            [period]: {
+              parseData: newParseData,
+              lastDate: data.data[data.data.length - 1].timestamp,
+            },
           };
         }
         setCacheValue(

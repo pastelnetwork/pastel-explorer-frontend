@@ -4,7 +4,11 @@ import LRU from 'lru-cache';
 // application
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { PeriodTypes, transformNetTotals } from '@utils/helpers/statisticsLib';
+import {
+  PeriodTypes,
+  transformNetTotals,
+  getMultiLineChartData,
+} from '@utils/helpers/statisticsLib';
 import { periods, info, LRU_OPTIONS, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
@@ -28,6 +32,7 @@ function Nettotals() {
   useEffect(() => {
     let isSubscribed = true;
     const loadLineChartData = async () => {
+      let timestamp = '';
       let currentCache =
         (cache.get(cacheList.networkTotal) as TCacheValue) ||
         readCacheValue(cacheList.networkTotal) ||
@@ -35,11 +40,12 @@ function Nettotals() {
       if (!currentCache[period]) {
         setLoading(true);
       } else {
-        setChartData(currentCache[period] as TMultiLineChartData);
+        setChartData(currentCache[period].parseData as TMultiLineChartData);
+        timestamp = currentCache[period]?.lastDate?.toString() || '';
       }
 
       const data = await fetchStats.fetchData({
-        params: { period, sortDirection: 'ASC' },
+        params: { period, sortDirection: 'ASC', timestamp },
       });
       if (data) {
         const parseData = transformNetTotals(data.data, period);
@@ -49,13 +55,21 @@ function Nettotals() {
         ) {
           setLoading(true);
         }
+        const newParseData = getMultiLineChartData(
+          parseData,
+          currentCache[period]?.parseData as TMultiLineChartData,
+          period,
+        );
         if (isSubscribed) {
           setChartData(parseData);
         }
         if (!currentCache[period]) {
           currentCache = {
             ...currentCache,
-            [period]: parseData,
+            [period]: {
+              parseData: newParseData,
+              lastDate: Number(data.data[data.data.length - 1].timestamp),
+            },
           };
         }
         setCacheValue(

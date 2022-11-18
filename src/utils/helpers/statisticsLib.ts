@@ -1,6 +1,6 @@
-// import * as echarts from 'echarts';
 import format from 'date-fns/format';
 import fromUnixTime from 'date-fns/fromUnixTime';
+import subDays from 'date-fns/subDays';
 import {
   TMultiLineChartData,
   TMiningInfo,
@@ -760,4 +760,139 @@ export const toPlainString = (num: number) => {
       ? `${b}0.${Array(1 - e - c.length).join('0')}${c}${d}`
       : b + c + d + Array(e - d.length + 1).join('0');
   });
+};
+
+
+const getPeriodData = (period: PeriodTypes, date: string) => {
+  const periodData = {
+    '24h': 1,
+    '7d': 7,
+    '14d': 14,
+    '30d': 30,
+    '60d': 60,
+    '90d': 90,
+    '180d': 180,
+    '1y': 365,
+  };
+  return subDays(new Date(date), periodData[period as keyof typeof periodData]).valueOf();
+};
+
+export const getChartData = (
+  parseData: TLineChartData,
+  currentData: TLineChartData,
+  period: PeriodTypes,
+) => {
+  if (!currentData || !currentData.dataX.length) {
+    return parseData;
+  }
+  if (!parseData || !parseData.dataX.length) {
+    return currentData;
+  }
+  const newDataX = [...currentData.dataX, ...parseData.dataX];
+  const newDataY = [...currentData.dataY, ...parseData.dataY];
+  let target = 0;
+  if (period !== 'all' && period !== 'max') {
+    target = getPeriodData(period, parseData.dataX[parseData.dataX.length - 1]);
+  }
+  const dataX: string[] = [];
+  const dataY: number[] = [];
+  newDataX.forEach((item, index) => {
+    const timestamp = new Date(item).valueOf();
+    if (timestamp >= target && !dataX.includes(item)) {
+      dataX.push(item);
+      dataY.push(newDataY[index]);
+    }
+  });
+  return {
+    dataX,
+    dataY,
+  };
+};
+
+export const getHashRateChartData = (
+  parseData: THashrateChartData,
+  currentData: THashrateChartData,
+  period: PeriodTypes,
+) => {
+  if (!currentData || !currentData.dataX.length) {
+    return parseData;
+  }
+  if (!parseData || !parseData.dataX.length) {
+    return currentData;
+  }
+  const networksolps: TSolpsData = {
+    solps5: [],
+    solps10: [],
+    solps25: [],
+    solps50: [],
+    solps100: [],
+    solps500: [],
+    solps1000: [],
+  };
+  const newDataX = [...currentData.dataX, ...parseData.dataX];
+  const newSolps5 = [...currentData.networksolps.solps5, ...parseData.networksolps.solps5];
+  const newSolps10 = [...currentData.networksolps.solps10, ...parseData.networksolps.solps10];
+  const newSolps25 = [...currentData.networksolps.solps25, ...parseData.networksolps.solps25];
+  const newSolps50 = [...currentData.networksolps.solps50, ...parseData.networksolps.solps50];
+  const newSolps100 = [...currentData.networksolps.solps100, ...parseData.networksolps.solps100];
+  const newSolps500 = [...currentData.networksolps.solps500, ...parseData.networksolps.solps500];
+  const newSolps1000 = [...currentData.networksolps.solps1000, ...parseData.networksolps.solps1000];
+  let target = 0;
+  if (period !== 'all' && period !== 'max') {
+    target = getPeriodData(period, parseData.dataX[parseData.dataX.length - 1]);
+  }
+  const dataX: string[] = [];
+  newDataX.forEach((item, index) => {
+    const timestamp = new Date(item).valueOf();
+    if (timestamp >= target && !dataX.includes(item)) {
+      dataX.push(item);
+      networksolps.solps5.push(newSolps5[index]);
+      networksolps.solps10.push(newSolps10[index]);
+      networksolps.solps25.push(newSolps25[index]);
+      networksolps.solps50.push(newSolps50[index]);
+      networksolps.solps100.push(newSolps100[index]);
+      networksolps.solps500.push(newSolps500[index]);
+      networksolps.solps1000.push(newSolps1000[index]);
+    }
+  });
+  return {
+    dataX,
+    networksolps,
+  };
+};
+
+export const getMultiLineChartData = (
+  parseData: TMultiLineChartData,
+  currentData: TMultiLineChartData,
+  period: PeriodTypes,
+) => {
+  if (!currentData || !currentData.dataX.length) {
+    return parseData;
+  }
+  if (!parseData || !parseData.dataX.length) {
+    return currentData;
+  }
+  const newDataX = [...currentData.dataX, ...parseData.dataX];
+  const newDataY1 = [...currentData.dataY1, ...parseData.dataY1];
+  const newDataY2 = [...currentData.dataY2, ...parseData.dataY2];
+  let target = 0;
+  if (period !== 'all' && period !== 'max') {
+    target = getPeriodData(period, parseData.dataX[parseData.dataX.length - 1]);
+  }
+  const dataX: string[] = [];
+  const dataY1: number[] = [];
+  const dataY2: number[] = [];
+  newDataX.forEach((item, index) => {
+    const timestamp = new Date(item).valueOf();
+    if (timestamp >= target && !dataX.includes(item)) {
+      dataX.push(item);
+      dataY1.push(newDataY1[index]);
+      dataY2.push(newDataY2[index]);
+    }
+  });
+  return {
+    dataX,
+    dataY1,
+    dataY2,
+  };
 };
