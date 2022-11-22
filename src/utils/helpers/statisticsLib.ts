@@ -358,16 +358,17 @@ export function transformCharts(data: TChartResponseItem[], range = 1): TLineCha
 export function transformTotalData(data: TTransactionsChart[], range = 10e6): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
-  dataX.push(data[0].label);
-  dataY.push(+(data[0].value / range).toFixed(2));
-  if (data.length > 1) {
-    for (let i = 1; i < data.length; i += 1) {
-      const { value, label } = data[i];
-      dataX.push(label);
-      dataY.push(+(dataY[i - 1] + +(value / range).toFixed(2)).toFixed(2));
+  if (data.length) {
+    dataX.push(data[0].label);
+    dataY.push(+(data[0].value / range).toFixed(2));
+    if (data.length > 1) {
+      for (let i = 1; i < data.length; i += 1) {
+        const { value, label } = data[i];
+        dataX.push(label);
+        dataY.push(+(dataY[i - 1] + +(value / range).toFixed(2)).toFixed(2));
+      }
     }
   }
-
   return { dataX, dataY };
 }
 
@@ -401,13 +402,15 @@ export function transformBlockchainSizeData(
 export function transformTotalTransactionCount(data: TChartResponseItem[], startValue = 0) {
   const dataX: string[] = [];
   const dataY: number[] = [];
-  dataX.push(new Date(Number(data[0].label) * 1000).toLocaleString());
-  dataY.push(data[0].value + startValue);
-  for (let i = 1; i < data.length; i += 1) {
-    const { value, label } = data[i];
-    const newValue = dataY[i - 1] + value;
-    dataY.push(newValue);
-    dataX.push(new Date(Number(label) * 1000).toLocaleString());
+  if (data.length) {
+    dataX.push(new Date(Number(data[0].label) * 1000).toLocaleString());
+    dataY.push(data[0].value + startValue);
+    for (let i = 1; i < data.length; i += 1) {
+      const { value, label } = data[i];
+      const newValue = dataY[i - 1] + value;
+      dataY.push(newValue);
+      dataX.push(new Date(Number(label) * 1000).toLocaleString());
+    }
   }
   return {
     dataX,

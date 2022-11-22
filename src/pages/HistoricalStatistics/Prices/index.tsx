@@ -78,7 +78,6 @@ function PriceOvertime() {
             currentCache,
             lastDate: Date.now(),
           }),
-          Date.now(),
         );
         cache.set(cacheList.priceOvertime, currentCache);
       }

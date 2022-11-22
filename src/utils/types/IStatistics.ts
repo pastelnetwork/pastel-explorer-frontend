@@ -205,8 +205,3 @@ export type TCacheValue = {
     lastDate: number;
   };
 };
-
-export type THistoricalStatisticsCache = {
-  chart: string;
-  lastDate: number;
-};

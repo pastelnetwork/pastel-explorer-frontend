@@ -72,7 +72,6 @@ function Difficulty() {
             currentCache,
             lastDate: Date.now(),
           }),
-          Date.now(),
         );
         cache.set(cacheList.difficulty, currentCache);
       }

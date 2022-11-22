@@ -1,11 +1,23 @@
 import LZUTF8 from 'lzutf8';
 import differenceInHours from 'date-fns/differenceInHours';
 
-import { THistoricalStatisticsCache } from '@utils/types/IStatistics';
+import { DEFAULT_API_URL } from '@utils/constants/urls';
 
 const initialValue = {};
 const HISTORICAL_STATISTICS_LOCAL_STORAGE = 'explorerHistoricalStatistics';
+const CLUSTER_URL_LOCAL_STORAGE = 'explorerClusterUrl';
 const LIMIT = 5;
+
+const getCurrentCluster = () => {
+  const persist = window.localStorage.getItem('persist:root');
+  let url = DEFAULT_API_URL || '';
+  if (persist) {
+    const store = JSON.parse(persist);
+    const cluster = JSON.parse(store.cluster);
+    url = cluster.url;
+  }
+  return url;
+};
 
 export const readCacheValue = (key: string, isMicroseconds = false) => {
   if (typeof window === 'undefined') {
@@ -33,37 +45,39 @@ export const readCacheValue = (key: string, isMicroseconds = false) => {
   }
 };
 
-export const setCacheValue = (key: string, value: string, lastDate: number) => {
+export const setCacheValue = (key: string, value: string) => {
   if (typeof window === 'undefined') {
     console.warn(`Tried setting localStorage key “${key}” even though environment is not a client`);
   }
   try {
-    const items = window.localStorage.getItem(HISTORICAL_STATISTICS_LOCAL_STORAGE);
+    let items: string[] = [];
+    const localHS = window.localStorage.getItem(HISTORICAL_STATISTICS_LOCAL_STORAGE);
     const content = LZUTF8.compress(value, {
       outputEncoding: 'Base64',
     });
-    let currentCache: THistoricalStatisticsCache[] = [];
-    if (items) {
-      currentCache = JSON.parse(items);
-      const item = currentCache.find(i => i.chart === key);
-      if (item) {
-        currentCache = currentCache.filter(i => i.chart !== key);
-      }
-      if (currentCache.length === LIMIT) {
-        const removeItem = currentCache.slice(0, 1);
-        const newCache = currentCache.slice(1, currentCache.length);
-        if (removeItem.length) {
-          window.localStorage.removeItem(removeItem[0].chart);
+    const clusterUrl = getCurrentCluster();
+    if (localHS) {
+      items = JSON.parse(localHS);
+      if (items?.length) {
+        const clusterUrlLocalStorage = window.localStorage.getItem(CLUSTER_URL_LOCAL_STORAGE);
+        if (clusterUrlLocalStorage && clusterUrl !== clusterUrlLocalStorage) {
+          for (let i = 0; i < items.length; i += 1) {
+            window.localStorage.removeItem(items[i]);
+          }
+          items = [];
+        } else {
+          items = items.filter(i => i !== key);
+          for (let i = 0; i < items.length - LIMIT; i += 1) {
+            window.localStorage.removeItem(items[i]);
+          }
+          items.splice(0, items.length - LIMIT);
         }
-        currentCache = newCache;
       }
     }
-    currentCache.push({
-      chart: key,
-      lastDate,
-    });
-    window.localStorage.setItem(HISTORICAL_STATISTICS_LOCAL_STORAGE, JSON.stringify(currentCache));
+    items.push(key);
+    window.localStorage.setItem(HISTORICAL_STATISTICS_LOCAL_STORAGE, JSON.stringify(items));
     window.localStorage.setItem(key, JSON.stringify(content));
+    window.localStorage.setItem(CLUSTER_URL_LOCAL_STORAGE, clusterUrl);
   } catch (error) {
     console.warn(`Error setting localStorage key “${key}”:`, error);
   }

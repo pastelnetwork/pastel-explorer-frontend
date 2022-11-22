@@ -78,7 +78,6 @@ function Nettotals() {
             currentCache,
             lastDate: Date.now(),
           }),
-          Date.now(),
         );
         cache.set(cacheList.networkTotal, currentCache);
       }
