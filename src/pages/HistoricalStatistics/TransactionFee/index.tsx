@@ -44,7 +44,7 @@ function TransactionFee() {
         params: { period, sortDirection: 'ASC', func: 'AVG', col: 'fee', timestamp },
       });
       if (data) {
-        const parseData = transformLineChartData(data.data, period, true);
+        const parseData = transformLineChartData(data.data, period, true, 1, 0);
         if (
           currentCache[period] &&
           JSON.stringify(parseData) !== JSON.stringify(currentCache[period])
@@ -98,7 +98,7 @@ function TransactionFee() {
         dataY={chartData?.dataY}
         title="Average Transaction Fee (USD)"
         info={info}
-        offset={0.05}
+        offset={0}
         period={period}
         periods={periods[6]}
         handleBgColorChange={handleBgColorChange}
