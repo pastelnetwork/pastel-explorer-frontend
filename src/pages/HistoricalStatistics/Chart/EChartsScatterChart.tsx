@@ -178,7 +178,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
           ))}
         </Styles.PeriodSelect>
       </Styles.LineChartHeader>
-      <Styles.LineChartWrap>
+      <Styles.LineChartWrap className={isLoading ? 'no-spacing' : ''}>
         {isLoading || !dataX?.length ? (
           <Styles.LoadingWrapper>
             <Skeleton animation="wave" variant="rect" height={386} />
