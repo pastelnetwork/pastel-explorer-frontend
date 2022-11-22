@@ -4,7 +4,7 @@ import LRU from 'lru-cache';
 // application
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { PeriodTypes, transformDifficultyInfo } from '@utils/helpers/statisticsLib';
+import { PeriodTypes, transformDifficultyInfo, getChartData } from '@utils/helpers/statisticsLib';
 import { periods, info, LRU_OPTIONS, cacheList } from '@utils/constants/statistics';
 import { IStatistic, TLineChartData, TCacheValue } from '@utils/types/IStatistics';
 import { useBackgroundChart } from '@utils/hooks';
@@ -27,6 +27,7 @@ function Difficulty() {
   useEffect(() => {
     let isSubscribed = true;
     const loadLineChartData = async () => {
+      let timestamp = '';
       let currentCache =
         (cache.get(cacheList.difficulty) as TCacheValue) ||
         readCacheValue(cacheList.difficulty) ||
@@ -34,10 +35,11 @@ function Difficulty() {
       if (!currentCache[period]) {
         setLoading(true);
       } else {
-        setChartData(currentCache[period] as TLineChartData);
+        setChartData(currentCache[period].parseData as TLineChartData);
+        timestamp = currentCache[period]?.lastDate?.toString() || '';
       }
       const data = await fetchStats.fetchData({
-        params: { sortDirection: 'DESC', period },
+        params: { sortDirection: 'DESC', period, timestamp },
       });
       if (data) {
         const parseData = transformDifficultyInfo(data.data, period);
@@ -47,21 +49,30 @@ function Difficulty() {
         ) {
           setLoading(true);
         }
+        const newParseData = getChartData(
+          parseData,
+          currentCache[period]?.parseData as TLineChartData,
+          period,
+        );
         if (isSubscribed) {
-          setChartData(parseData);
+          setChartData(newParseData);
         }
-        if (!currentCache[period]) {
-          currentCache = {
-            ...currentCache,
-            [period]: parseData,
-          };
-        }
+        currentCache = {
+          ...currentCache,
+          [period]: {
+            parseData: newParseData,
+            lastDate: data.data.length
+              ? data.data[data.data.length - 1]?.timestamp
+              : currentCache[period]?.lastDate,
+          },
+        };
         setCacheValue(
           cacheList.difficulty,
           JSON.stringify({
             currentCache,
             lastDate: Date.now(),
           }),
+          Date.now(),
         );
         cache.set(cacheList.difficulty, currentCache);
       }

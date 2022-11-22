@@ -4,13 +4,25 @@ import * as htmlToImage from 'html-to-image';
 import * as echarts from 'echarts';
 import { saveAs } from 'file-saver';
 import { useSelector } from 'react-redux';
+import { Skeleton } from '@material-ui/lab';
 
 import { Data } from 'react-csv/components/CommonPropTypes';
-import { makeDownloadFileName, PeriodTypes } from '@utils/helpers/statisticsLib';
+import {
+  makeDownloadFileName,
+  PeriodTypes,
+  generateXAxisInterval,
+  getMinMax,
+  generateMinMaxChartData,
+  toPlainString,
+  convertYAxisLabel,
+} from '@utils/helpers/statisticsLib';
 import { pricesCSVHeaders, themes } from '@utils/constants/statistics';
 import { TLineChartProps, TThemeColor } from '@utils/constants/types';
 import { generateXAxisLabel } from '@utils/helpers/chartOptions';
+import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
+import { TChartParams } from '@utils/types/IStatistics';
+import useWindowDimensions from '@hooks/useWindowDimensions';
 
 import { eChartLineStyles } from './styles';
 import * as Styles from './Chart.styles';
@@ -25,7 +37,6 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     info,
     fixedNum = 5,
     fixedNum1 = 10,
-    offset,
     period: selectedPeriodButton,
     periods = [],
     title,
@@ -38,8 +49,11 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     setHeaderBackground,
     isDynamicTitleColor,
     seriesName1Type = 'bar',
+    isLoading,
+    color = ['#cd6661', '#5470C6'],
   } = props;
   const downloadRef = useRef(null);
+  const { width } = useWindowDimensions();
   const { darkMode } = useSelector(getThemeState);
   const [csvData, setCsvData] = useState<string | Data>('');
   const [currentTheme, setCurrentTheme] = useState<TThemeColor | null>(null);
@@ -48,7 +62,9 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
   const [selectedThemeButton, setSelectedThemeButton] = useState(0);
   const [isSelectedTheme, setSelectedTheme] = useState(false);
   const [minY1, setMinY1] = useState(0);
+  const [maxY1, setMaxY1] = useState(0);
   const [minY2, setMinY2] = useState(0);
+  const [maxY2, setMaxY2] = useState(0);
 
   useEffect(() => {
     if (isSelectedTheme) {
@@ -70,22 +86,45 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
 
   useEffect(() => {
     if (dataY1?.length && dataY2?.length) {
-      const min = Math.min(...dataY1);
-      const min1 = Math.min(...dataY2);
+      const arr1 = getMinMax(dataY1);
+      const min1 = arr1[0];
+      const max1 = arr1[1];
+      const arr2 = getMinMax(dataY2);
+      const min2 = arr2[0];
+      const max2 = arr2[1];
+
       if (chartName === 'prices') {
-        setMinY1(min - offset);
-        setMinY2(min1);
-        if (dataX) {
-          const data: Data = [];
-          dataY1.forEach((o, index) => {
-            data.push({
-              usd: o,
-              btc: dataY2[index],
-              time: dataX[index],
-            });
+        const result1 = generateMinMaxChartData(min1, max1, 10000, 5, selectedPeriodButton, 5);
+        setMinY1(result1.min);
+        setMaxY1(result1.max);
+        const result2 = generateMinMaxChartData(
+          min2,
+          max2,
+          100000000000,
+          5,
+          selectedPeriodButton,
+          10,
+        );
+        setMinY2(result2.min);
+        setMaxY2(result2.max);
+      } else if (chartName === 'marketVolumePrice' || chartName === 'marketCapPrice') {
+        const result1 = generateMinMaxChartData(min1, max1, 10000, 5, selectedPeriodButton, 5);
+        setMinY1(result1.min);
+        setMaxY1(result1.max);
+        const result2 = generateMinMaxChartData(min2, max2, 0, 5, selectedPeriodButton);
+        setMinY2(result2.min);
+        setMaxY2(result2.max);
+      }
+      if (dataX) {
+        const data: Data = [];
+        dataY1.forEach((o, index) => {
+          data.push({
+            usd: o,
+            btc: dataY2[index],
+            time: dataX[index],
           });
-          setCsvData(data);
-        }
+        });
+        setCsvData(data);
       }
     }
   }, [dataY1, dataY2]);
@@ -94,7 +133,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     grid: {
       top: 50,
       right: 100,
-      bottom: 40,
+      bottom: 70,
       left: 60,
       show: false,
     },
@@ -103,8 +142,40 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
       axisPointer: {
         type: 'cross',
       },
+      formatter(params: TChartParams[]) {
+        let html = '';
+        params.forEach(item => {
+          let val = !fixedNum ? `${formatNumber(item.value)}` : toPlainString(item.value);
+          if (item.seriesIndex === 1) {
+            val = !fixedNum1 ? `${formatNumber(item.value)}` : toPlainString(item.value);
+          }
+          html += `
+            <div class="tooltip-item">
+              <div class="item-label auto">${item.marker} ${item.seriesName}</div>
+              <div class="item-value">${val}</div>
+            </div>
+          `;
+        });
+        return `
+          <div class="tooltip-container">
+            <div class="tooltip-data-date">${params[0].name}</div>
+            <div>${html}</div>
+          </div>
+        `;
+      },
     },
-    color: ['#cd6661', '#5470C6'],
+    color,
+    dataZoom: [
+      {
+        type: 'inside',
+        start: 0,
+        end: 100,
+      },
+      {
+        start: 0,
+        end: 100,
+      },
+    ],
     xAxis: {
       type: 'category',
       data: dataX,
@@ -113,6 +184,8 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
           const date = new Date(value);
           return generateXAxisLabel(date, selectedPeriodButton);
         },
+        showMaxLabel: true,
+        interval: generateXAxisInterval('1d', selectedPeriodButton, dataX, width),
       },
     },
     yAxis: [
@@ -121,6 +194,8 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
         name: yaxisName,
         position: 'left',
         min: minY1,
+        max: maxY1,
+        interval: (maxY1 - minY1) / 5,
         splitLine: {
           show: false,
         },
@@ -130,7 +205,9 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
         axisLabel: {
           formatter(value: string) {
             const val = Number.parseFloat(value);
-            return !fixedNum ? Math.round(val) : `$${val.toFixed(fixedNum)}`;
+            return !fixedNum
+              ? convertYAxisLabel(Number(value), maxY1)
+              : `$${val.toFixed(fixedNum)}`;
           },
         },
       },
@@ -139,6 +216,8 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
         name: yaxisName1,
         position: 'right',
         min: minY2,
+        max: maxY2,
+        interval: (maxY2 - minY2) / 5,
         splitLine: {
           show: false,
         },
@@ -148,7 +227,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
         axisLabel: {
           formatter(value: string) {
             const val = Number.parseFloat(value);
-            return !fixedNum1 ? Math.round(val) : val.toFixed(fixedNum1);
+            return !fixedNum1 ? convertYAxisLabel(Number(value), maxY2) : val.toFixed(fixedNum1);
           },
         },
       },
@@ -159,6 +238,11 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
         type: 'line',
         showSymbol: false,
         data: dataY1,
+        emphasis: {
+          lineStyle: {
+            width: 2,
+          },
+        },
       },
       {
         name: seriesName1,
@@ -166,6 +250,11 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
         yAxisIndex: 1,
         showSymbol: false,
         data: dataY2,
+        emphasis: {
+          lineStyle: {
+            width: 2,
+          },
+        },
       },
     ],
     animation: false,
@@ -266,7 +355,9 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
   );
   return (
     <Styles.ChartContainer>
-      <Styles.LineChartHeader className={setHeaderBackground ? 'has-bg' : ''}>
+      <Styles.LineChartHeader
+        className={`${setHeaderBackground ? 'has-bg' : ''} ${isLoading ? 'no-mb' : ''}`}
+      >
         {isDynamicTitleColor ? (
           <Styles.ChartTitle style={{ color: currentTheme?.color }}>{title}</Styles.ChartTitle>
         ) : (
@@ -288,16 +379,23 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
             ))}
         </Styles.PeriodSelect>
       </Styles.LineChartHeader>
-      <Styles.LineChartWrap>
-        <ReactECharts
-          notMerge={false}
-          lazyUpdate
-          option={options}
-          className={styles.reactECharts}
-          ref={e => {
-            setEChartRef(e);
-          }}
-        />
+      <Styles.LineChartWrap className={isLoading ? 'no-spacing' : ''}>
+        {isLoading || !dataX?.length ? (
+          <Styles.LoadingWrapper>
+            <Skeleton animation="wave" variant="rect" height={386} />
+            <Styles.LoadingText>Loading data...</Styles.LoadingText>
+          </Styles.LoadingWrapper>
+        ) : (
+          <ReactECharts
+            notMerge={false}
+            lazyUpdate
+            option={options}
+            className={styles.reactECharts}
+            ref={e => {
+              setEChartRef(e);
+            }}
+          />
+        )}
       </Styles.LineChartWrap>
       <Styles.LineChartFooter>
         <div className={styles.lineChartThemeSelect}>

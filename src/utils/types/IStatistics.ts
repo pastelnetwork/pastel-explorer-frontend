@@ -191,6 +191,7 @@ export type TChartParams = {
   name: string;
   value: number;
   seriesName: string;
+  seriesIndex: number;
 };
 
 export type TMinMaxChartData = {
@@ -199,5 +200,13 @@ export type TMinMaxChartData = {
 };
 
 export type TCacheValue = {
-  [key: string]: THashrateChartData | TLineChartData;
+  [key: string]: {
+    parseData: THashrateChartData | TLineChartData | TMultiLineChartData | TScatterChartData;
+    lastDate: number;
+  };
+};
+
+export type THistoricalStatisticsCache = {
+  chart: string;
+  lastDate: number;
 };

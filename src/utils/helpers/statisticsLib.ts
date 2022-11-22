@@ -1,6 +1,6 @@
-// import * as echarts from 'echarts';
 import format from 'date-fns/format';
 import fromUnixTime from 'date-fns/fromUnixTime';
+import subDays from 'date-fns/subDays';
 import {
   TMultiLineChartData,
   TMiningInfo,
@@ -21,6 +21,7 @@ import {
   TSolpsData,
   THashrateChartData,
   TMinMaxChartData,
+  MarketCoinRespone,
 } from '@utils/types/IStatistics';
 import { IBlock } from '@utils/types/IBlocks';
 import { formattedDate } from '@utils/helpers/date/date';
@@ -69,6 +70,9 @@ export const makeDownloadFileName = (currencyName: string | number, title: strin
 };
 
 const checkValidateData = (timestamp: number) => {
+  if (!timestamp) {
+    return null;
+  }
   const nowHour = format(new Date(), 'MM/dd/yyyy HH');
   const targetHour = format(timestamp, 'MM/dd/yyyy HH');
   if (nowHour !== targetHour) {
@@ -128,7 +132,7 @@ export function transformDifficultyInfo(
       dataX.push(format(Number(difficulties[i].timestamp), 'MM/dd/yyyy hh:mm aa'));
     }
   }
-  if (period === '24h' && checkValidateData(difficulties[difficulties.length - 1].timestamp)) {
+  if (period === '24h' && checkValidateData(difficulties[difficulties.length - 1]?.timestamp)) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
     dataY.push(difficulties[difficulties.length - 1].difficulty);
   }
@@ -141,21 +145,67 @@ export function transformPriceInfo(prices: IStatistic[], period: PeriodTypes): T
   const dataY1: number[] = [];
   const dataY2: number[] = [];
 
-  // const startDate = getStartPoint(period);
-
   for (let i = 0; i < prices.length; i += 1) {
-    const createTime = Number(prices[i].timestamp);
-    // if (createTime > startDate) {
     const usd = Number(prices[i].usdPrice);
     const btc = Number(prices[i].btcPrice);
     dataY1.push(usd);
     dataY2.push(btc);
-    dataX.push(
-      periodShowTime.indexOf(period) !== -1
-        ? new Date(createTime).toLocaleString()
-        : format(createTime, 'MM/dd/yyyy'),
-    );
-    // }
+    dataX.push(new Date(Number(prices[i].timestamp)).toLocaleString());
+  }
+  if (period === '24h' && checkValidateData(prices[prices.length - 1]?.timestamp)) {
+    dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
+    dataY1.push(Number(prices[prices.length - 1].usdPrice));
+    dataY2.push(Number(prices[prices.length - 1].btcPrice));
+  }
+  return { dataX, dataY1, dataY2 };
+}
+
+export function transformMarketVolumePriceInfo(
+  data: MarketCoinRespone,
+  period: PeriodTypes,
+): TMultiLineChartData {
+  const dataX: string[] = [];
+  const dataY1: number[] = [];
+  const dataY2: number[] = [];
+
+  const { prices, total_volumes } = data;
+
+  for (let i = 0; i < prices.length; i += 1) {
+    const [x, y1] = prices[i];
+    const [, y2] = total_volumes[i];
+    dataX.push(new Date(Number(x)).toLocaleString());
+    dataY1.push(+y1.toFixed(8));
+    dataY2.push(Math.round(y2));
+  }
+  if (period === '24h' && checkValidateData(prices[prices.length - 1][0])) {
+    dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
+    dataY1.push(Number(dataY1[dataY1.length - 1]));
+    dataY2.push(Number(dataY2[dataY2.length - 1]));
+  }
+  return { dataX, dataY1, dataY2 };
+}
+
+export function transformMarketCapPriceInfo(
+  data: MarketCoinRespone,
+  period: PeriodTypes,
+): TMultiLineChartData {
+  const dataX: string[] = [];
+  const dataY1: number[] = [];
+  const dataY2: number[] = [];
+
+  const { prices, market_caps } = data;
+
+  for (let i = 0; i < prices.length; i += 1) {
+    const [x, y1] = prices[i];
+    const [, y2] = market_caps[i];
+    dataX.push(new Date(Number(x)).toLocaleString());
+    dataY1.push(+y1.toFixed(8));
+    dataY2.push(Math.round(y2));
+  }
+  if (period === '24h' && checkValidateData(prices[prices.length - 1][0])) {
+    dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
+    dataY1.push(Number(dataY1[dataY1.length - 1]));
+    dataY2.push(Number(dataY2[dataY2.length - 1]));
   }
   return { dataX, dataY1, dataY2 };
 }
@@ -183,15 +233,14 @@ export function transformMempoolInfo(
   const dataY: number[] = [];
   for (let i = 0; i < mempoolInfo.length; i += 1) {
     if (mempoolInfo[i].usage !== null && mempoolInfo[i].timestamp !== 0) {
-      const createTime = Number(mempoolInfo[i].timestamp);
       const bytes = Number(mempoolInfo[i].usage) / 1000;
       dataY.push(bytes);
-      dataX.push(
-        periodShowTime.indexOf(period) !== -1
-          ? new Date(createTime).toLocaleString()
-          : format(createTime, 'MM/dd/yyyy'),
-      );
+      dataX.push(new Date(Number(mempoolInfo[i].timestamp)).toLocaleString());
     }
+  }
+  if (period === '24h' && checkValidateData(mempoolInfo[mempoolInfo.length - 1]?.timestamp)) {
+    dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
+    dataY.push(Number(mempoolInfo[mempoolInfo.length - 1].usage) / 1000);
   }
   return { dataX, dataY };
 }
@@ -205,17 +254,17 @@ export function transformNetTotals(
   const dataY2: number[] = [];
   for (let i = 0; i < nettotals.length; i += 1) {
     if (nettotals[i].timemillis !== null) {
-      const createTime = Number(nettotals[i].timemillis);
       const recv = Number(nettotals[i].totalbytesrecv);
       const sent = Number(nettotals[i].totalbytessent);
       dataY1.push(recv);
       dataY2.push(sent);
-      dataX.push(
-        periodShowTime.indexOf(period) !== -1
-          ? new Date(createTime).toLocaleString()
-          : format(createTime, 'MM/dd/yyyy'),
-      );
+      dataX.push(new Date(Number(nettotals[i].timemillis)).toLocaleString());
     }
+  }
+  if (period === '24h' && checkValidateData(nettotals[nettotals.length - 1]?.timemillis)) {
+    dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
+    dataY1.push(Number(nettotals[nettotals.length - 1].totalbytesrecv));
+    dataY2.push(Number(nettotals[nettotals.length - 1].totalbytessent));
   }
   return { dataX, dataY1, dataY2 };
 }
@@ -248,7 +297,7 @@ export function transformAverageBlockSize(
       dataX.push(format(blockSizes[i].maxTime * 1000, 'MM/dd/yyyy HH:mm'));
     }
   }
-  if (period === '24h' && checkValidateData(blockSizes[blockSizes.length - 1].time * 1000)) {
+  if (period === '24h' && checkValidateData(blockSizes[blockSizes.length - 1]?.time * 1000)) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy HH:mm'));
     dataY.push(0);
   }
@@ -264,11 +313,11 @@ export function transformTransactionPerSecond(
   for (let i = 0; i < trans.length; i += 1) {
     const size = Number(trans[i].size) / (24 * 3600);
     dataY.push(size);
-    dataX.push(
-      periodShowTime.indexOf(period) !== -1
-        ? new Date(trans[i].time).toLocaleString()
-        : format(Number(trans[i].time), 'MM/dd/yyyy'),
-    );
+    dataX.push(new Date(trans[i].time).toLocaleString());
+  }
+  if (period === '24h' && (!trans.length || checkValidateData(trans[trans.length - 1]?.time))) {
+    dataX.push(new Date().toLocaleString());
+    dataY.push(dataY[dataY.length - 1]);
   }
   return {
     dataX,
@@ -327,11 +376,12 @@ export function transformBlockchainSizeData(
   period: PeriodTypes,
   startValue: number,
   endValue: number,
+  startValueCache: number,
   range = 10e6,
 ): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
-  let preValue = startValue;
+  let preValue = startValueCache ? startValueCache * range : startValue;
   for (let i = 0; i < data.length; i += 1) {
     let value = data[i].value + preValue;
     if (i === data.length - 1) {
@@ -341,25 +391,23 @@ export function transformBlockchainSizeData(
     dataY.push(parseFloat((value / range).toFixed(2)));
     preValue += data[i].value;
   }
-  if (period === '24h' && checkValidateData(parseInt(data[data.length - 1].label, 10))) {
+  if (period === '24h' && checkValidateData(parseInt(data[data.length - 1]?.label, 10))) {
     dataX.push(new Date().toLocaleString());
     dataY.push(dataY[dataY.length - 1]);
   }
   return { dataX, dataY };
 }
 
-export function transformTotalTransactionCount(data: TChartResponseItem[]) {
+export function transformTotalTransactionCount(data: TChartResponseItem[], startValue = 0) {
   const dataX: string[] = [];
   const dataY: number[] = [];
-  dataX.push(data[0].label);
-  dataY.push(data[0].value);
-  if (data.length > 1) {
-    for (let i = 1; i < data.length; i += 1) {
-      const { value, label } = data[i];
-      const newValue = dataY[i - 1] + value;
-      dataY.push(newValue);
-      dataX.push(label);
-    }
+  dataX.push(new Date(Number(data[0].label) * 1000).toLocaleString());
+  dataY.push(data[0].value + startValue);
+  for (let i = 1; i < data.length; i += 1) {
+    const { value, label } = data[i];
+    const newValue = dataY[i - 1] + value;
+    dataY.push(newValue);
+    dataX.push(new Date(Number(label) * 1000).toLocaleString());
   }
   return {
     dataX,
@@ -376,13 +424,16 @@ export function convertYAxisLabel(
     return value;
   }
   if (maxY > 1000000000) {
-    return `${(value / 1000000000).toFixed(fractionDigits)}B`;
+    const newValue = (value / 1000000000).toFixed(fractionDigits);
+    return parseFloat(newValue) > 0 ? `${newValue}B` : 0;
   }
   if (maxY > 1000000) {
-    return `${(value / 1000000).toFixed(fractionDigits)}M`;
+    const newValue = (value / 1000000).toFixed(fractionDigits);
+    return parseFloat(newValue) > 0 ? `${newValue}M` : 0;
   }
   if (maxY > 1000) {
-    return `${(value / 1000).toFixed(fractionDigits)}K`;
+    const newValue = (value / 1000).toFixed(fractionDigits);
+    return parseFloat(newValue) > 0 ? `${newValue}K` : 0;
   }
   if (value > 0 && value < 1) {
     return value.toFixed(fractionDigits);
@@ -474,11 +525,11 @@ export function transformStatisticsChart(
   for (let i = 0; i < trans.length; i += 1) {
     const value = Number(trans[i].value);
     dataY.push(value);
-    dataX.push(
-      periodShowTime.indexOf(period) !== -1
-        ? new Date(trans[i].time).toLocaleString()
-        : format(trans[i].time, 'MM/dd/yyyy'),
-    );
+    dataX.push(new Date(trans[i].time).toLocaleString());
+  }
+  if (period === '24h' && checkValidateData(trans[trans.length - 1]?.time)) {
+    dataX.push(new Date().toLocaleString());
+    dataY.push(dataY[dataY.length - 1]);
   }
   return {
     dataX,
@@ -494,11 +545,11 @@ export function transformAccountDataChart(
   const dataY: number[] = [];
   for (let i = 0; i < trans.length; i += 1) {
     dataY.push(Number(trans[i].nonZeroAddressesCount));
-    dataX.push(
-      periodShowTime.indexOf(period) !== -1
-        ? new Date(trans[i].timestamp).toLocaleString()
-        : format(trans[i].timestamp, 'MM/dd/yyyy'),
-    );
+    dataX.push(new Date(trans[i].timestamp).toLocaleString());
+  }
+  if (period === '24h' && checkValidateData(trans[trans.length - 1]?.timestamp)) {
+    dataX.push(new Date().toLocaleString());
+    dataY.push(dataY[dataY.length - 1]);
   }
   return {
     dataX,
@@ -514,11 +565,11 @@ export function transformTotalSupplyDataChart(
   const dataY: number[] = [];
   for (let i = 0; i < trans.length; i += 1) {
     dataY.push(Number(trans[i].coinSupply));
-    dataX.push(
-      periodShowTime.indexOf(period) !== -1
-        ? new Date(trans[i].timestamp).toLocaleString()
-        : format(trans[i].timestamp, 'MM/dd/yyyy'),
-    );
+    dataX.push(new Date(trans[i].timestamp).toLocaleString());
+  }
+  if (period === '24h' && checkValidateData(trans[trans.length - 1]?.timestamp)) {
+    dataX.push(new Date().toLocaleString());
+    dataY.push(dataY[dataY.length - 1]);
   }
   return {
     dataX,
@@ -568,8 +619,8 @@ export function transformHashRateCharts(
     networksolps.solps500.push(item.networksolps500);
     networksolps.solps1000.push(item.networksolps1000);
   });
-  if (period === '24h' && checkValidateData(data[data.length - 1].timestamp)) {
-    dataX.push(new Date(data[data.length - 1].timestamp).toLocaleString());
+  if (period === '24h' && checkValidateData(data[data.length - 1]?.timestamp)) {
+    dataX.push(new Date().toLocaleString());
     networksolps.solps5.push(0);
     networksolps.solps10.push(0);
     networksolps.solps25.push(0);
@@ -704,3 +755,204 @@ export const getMinMax = (arr: number[]) =>
     Number.POSITIVE_INFINITY,
     Number.NEGATIVE_INFINITY,
   ]);
+
+export const toPlainString = (num: number) => {
+  return `${+num}`.replace(/(-?)(\d*)\.?(\d*)e([+-]\d+)/, (a, b, c, d, e) => {
+    return e < 0
+      ? `${b}0.${Array(1 - e - c.length).join('0')}${c}${d}`
+      : b + c + d + Array(e - d.length + 1).join('0');
+  });
+};
+
+const getPeriodData = (period: PeriodTypes, date: string) => {
+  const periodData = {
+    '24h': 1,
+    '7d': 7,
+    '14d': 14,
+    '30d': 30,
+    '60d': 60,
+    '90d': 90,
+    '180d': 180,
+    '1y': 365,
+  };
+  return subDays(new Date(date), periodData[period as keyof typeof periodData]).valueOf();
+};
+
+export const getChartData = (
+  parseData: TLineChartData,
+  currentData: TLineChartData,
+  period: PeriodTypes,
+) => {
+  if (!currentData || !currentData.dataX.length) {
+    return parseData;
+  }
+  if (!parseData || !parseData.dataX.length) {
+    return currentData;
+  }
+  const newDataX = [...currentData.dataX, ...parseData.dataX];
+  const newDataY = [...currentData.dataY, ...parseData.dataY];
+  let target = 0;
+  if (period !== 'all' && period !== 'max') {
+    target = getPeriodData(period, parseData.dataX[parseData.dataX.length - 1]);
+  }
+  const dataX: string[] = [];
+  const dataY: number[] = [];
+  newDataX.forEach((item, index) => {
+    const timestamp = new Date(item).valueOf();
+    if (timestamp >= target && !dataX.includes(item)) {
+      dataX.push(item);
+      dataY.push(newDataY[index]);
+    }
+  });
+  return {
+    dataX,
+    dataY,
+  };
+};
+
+export const getHashRateChartData = (
+  parseData: THashrateChartData,
+  currentData: THashrateChartData,
+  period: PeriodTypes,
+) => {
+  if (!currentData || !currentData.dataX.length) {
+    return parseData;
+  }
+  if (!parseData || !parseData.dataX.length) {
+    return currentData;
+  }
+  const networksolps: TSolpsData = {
+    solps5: [],
+    solps10: [],
+    solps25: [],
+    solps50: [],
+    solps100: [],
+    solps500: [],
+    solps1000: [],
+  };
+  const newDataX = [...currentData.dataX, ...parseData.dataX];
+  const newSolps5 = [...currentData.networksolps.solps5, ...parseData.networksolps.solps5];
+  const newSolps10 = [...currentData.networksolps.solps10, ...parseData.networksolps.solps10];
+  const newSolps25 = [...currentData.networksolps.solps25, ...parseData.networksolps.solps25];
+  const newSolps50 = [...currentData.networksolps.solps50, ...parseData.networksolps.solps50];
+  const newSolps100 = [...currentData.networksolps.solps100, ...parseData.networksolps.solps100];
+  const newSolps500 = [...currentData.networksolps.solps500, ...parseData.networksolps.solps500];
+  const newSolps1000 = [...currentData.networksolps.solps1000, ...parseData.networksolps.solps1000];
+  let target = 0;
+  if (period !== 'all' && period !== 'max') {
+    target = getPeriodData(period, parseData.dataX[parseData.dataX.length - 1]);
+  }
+  const dataX: string[] = [];
+  newDataX.forEach((item, index) => {
+    const timestamp = new Date(item).valueOf();
+    if (timestamp >= target && !dataX.includes(item)) {
+      dataX.push(item);
+      networksolps.solps5.push(newSolps5[index]);
+      networksolps.solps10.push(newSolps10[index]);
+      networksolps.solps25.push(newSolps25[index]);
+      networksolps.solps50.push(newSolps50[index]);
+      networksolps.solps100.push(newSolps100[index]);
+      networksolps.solps500.push(newSolps500[index]);
+      networksolps.solps1000.push(newSolps1000[index]);
+    }
+  });
+  return {
+    dataX,
+    networksolps,
+  };
+};
+
+export const getMultiLineChartData = (
+  parseData: TMultiLineChartData,
+  currentData: TMultiLineChartData,
+  period: PeriodTypes,
+) => {
+  if (!currentData || !currentData.dataX.length) {
+    return parseData;
+  }
+  if (!parseData || !parseData.dataX.length) {
+    return currentData;
+  }
+  const newDataX = [...currentData.dataX, ...parseData.dataX];
+  const newDataY1 = [...currentData.dataY1, ...parseData.dataY1];
+  const newDataY2 = [...currentData.dataY2, ...parseData.dataY2];
+  let target = 0;
+  if (period !== 'all' && period !== 'max') {
+    target = getPeriodData(period, parseData.dataX[parseData.dataX.length - 1]);
+  }
+  const dataX: string[] = [];
+  const dataY1: number[] = [];
+  const dataY2: number[] = [];
+  newDataX.forEach((item, index) => {
+    const timestamp = new Date(item).valueOf();
+    if (timestamp >= target && !dataX.includes(item)) {
+      dataX.push(item);
+      dataY1.push(newDataY1[index]);
+      dataY2.push(newDataY2[index]);
+    }
+  });
+  return {
+    dataX,
+    dataY1,
+    dataY2,
+  };
+};
+
+export function transformLineChartData(
+  data: TChartResponseItem[],
+  period: PeriodTypes,
+  isMicroseconds = true,
+  range = 1,
+): TLineChartData {
+  const dataX: string[] = [];
+  const dataY: number[] = [];
+  data.forEach(({ value, label }) => {
+    dataX.push(new Date(isMicroseconds ? Number(label) * 1000 : label).toLocaleString());
+    dataY.push(+(value / range).toFixed(2));
+  });
+  if (
+    period === '24h' &&
+    data.length &&
+    checkValidateData(
+      isMicroseconds
+        ? Number(data[data.length - 1]?.label) * 1000
+        : Number(data[data.length - 1]?.label),
+    )
+  ) {
+    dataX.push(new Date().toLocaleString());
+    dataY.push(dataY[dataY.length - 1]);
+  }
+  return { dataX, dataY };
+}
+
+export const getScatterChartData = (
+  parseData: TScatterChartData,
+  currentData: TScatterChartData,
+  period: PeriodTypes,
+) => {
+  if (!currentData || !currentData.dataX.length) {
+    return parseData;
+  }
+  if (!parseData || !parseData.dataX.length) {
+    return currentData;
+  }
+  const newDataX = [...currentData.dataX, ...parseData.dataX];
+  const newData = [...currentData.data, ...parseData.data];
+  let target = 0;
+  if (period !== 'all' && period !== 'max') {
+    target = getPeriodData(period, parseData.dataX[parseData.dataX.length - 1]);
+  }
+  const dataX: string[] = [];
+  const data: number[][] = [];
+  newDataX.forEach((item, index) => {
+    const timestamp = new Date(item).valueOf();
+    if (timestamp >= target && !dataX.includes(item)) {
+      dataX.push(item);
+      data.push(newData[index]);
+    }
+  });
+  return {
+    dataX,
+    data,
+  };
+};
