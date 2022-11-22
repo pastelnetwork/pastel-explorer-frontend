@@ -24,6 +24,12 @@ export const readCacheValue = (key: string, isMicroseconds = false) => {
     return initialValue;
   }
   try {
+    const clusterUrl = getCurrentCluster();
+    const clusterUrlLocalStorage = window.localStorage.getItem(CLUSTER_URL_LOCAL_STORAGE);
+    if (clusterUrlLocalStorage && clusterUrl !== clusterUrlLocalStorage) {
+      return initialValue;
+    }
+
     const item = window.localStorage.getItem(key);
     const result = item
       ? JSON.parse(
