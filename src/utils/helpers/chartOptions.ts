@@ -1241,7 +1241,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         top: 8,
         right: 40,
         bottom: 70,
-        left: 40,
+        left: 42,
         show: false,
       },
       tooltip: {
@@ -1289,6 +1289,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             formatter(value: string) {
               return convertYAxisLabel(Number(value), maxY, 1);
             },
+            margin: 12,
           },
         },
       ],
