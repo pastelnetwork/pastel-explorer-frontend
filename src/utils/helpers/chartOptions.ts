@@ -1342,11 +1342,15 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           formatter(value: string) {
             return generateXAxisLabel(new Date(value), period);
           },
+          showMaxLabel: true,
+          interval: generateXAxisInterval('1d', period, dataX, width),
         },
       },
       yAxis: {
         type: 'value',
         min: minY,
+        max: maxY,
+        interval: (maxY - minY) / 5,
         splitLine: {
           show: false,
         },
@@ -1418,10 +1422,10 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         boundaryGap: false,
         axisLabel: {
           formatter(value: string) {
-            return value ? generateXAxisLabel(new Date(value), 'max') : null;
+            return generateXAxisLabel(new Date(value), period);
           },
           showMaxLabel: true,
-          interval: generateXAxisInterval('1d', 'max', dataX, width),
+          interval: generateXAxisInterval('1d', period, dataX, width),
         },
       },
       yAxis: {
