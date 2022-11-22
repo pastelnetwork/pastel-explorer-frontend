@@ -668,11 +668,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         splitLine: {
           show: false,
         },
-        axisLabel: {
-          formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY, 2);
-          },
-        },
         axisLine: {
           show: true,
         },
