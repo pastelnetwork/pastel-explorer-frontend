@@ -74,7 +74,6 @@ function TransactionFee() {
             currentCache,
             lastDate: Date.now(),
           }),
-          Date.now(),
         );
         cache.set(cacheList.transactionFee, currentCache);
       }

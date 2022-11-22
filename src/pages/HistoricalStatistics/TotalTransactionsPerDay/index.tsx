@@ -72,7 +72,6 @@ function TransactionPerSecond() {
             currentCache,
             lastDate: Date.now(),
           }),
-          Date.now(),
         );
         cache.set(cacheList.totalTransactionsPerDay, currentCache);
       }

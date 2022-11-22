@@ -32,7 +32,6 @@ export const generateXAxisLabel = (value: Date, period?: PeriodTypes) => {
   if (!period) {
     return value;
   }
-
   return period === '24h' ? format(value, 'hh:00 aa') : format(value, 'MM/dd/yyyy');
 };
 

@@ -75,7 +75,6 @@ function MempoolSize() {
             currentCache,
             lastDate: Date.now(),
           }),
-          Date.now(),
         );
         cache.set(cacheList.mempoolSize, currentCache);
       }

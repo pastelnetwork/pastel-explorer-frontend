@@ -111,7 +111,6 @@ function HashRate() {
             currentCache,
             lastDate: Date.now(),
           }),
-          Date.now(),
         );
         cache.set(cacheList.hashRate, currentCache);
       }

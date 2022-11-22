@@ -77,7 +77,6 @@ function TotalSupply() {
             currentCache,
             lastDate: Date.now(),
           }),
-          Date.now(),
         );
         cache.set(cacheList.totalTransactionsCount, currentCache);
       }

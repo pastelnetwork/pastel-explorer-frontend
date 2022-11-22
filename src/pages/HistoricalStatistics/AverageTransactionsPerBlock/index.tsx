@@ -78,7 +78,6 @@ function AverageTransactionsPerBlock() {
             currentCache,
             lastDate: Date.now(),
           }),
-          Date.now(),
         );
         cache.set(cacheList.averageTransactionPerBlock, currentCache);
       }

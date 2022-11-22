@@ -73,7 +73,6 @@ function CirculatingSupply() {
             currentCache,
             lastDate: Date.now(),
           }),
-          Date.now(),
         );
         cache.set(cacheList.circulatingSupply, currentCache);
       }

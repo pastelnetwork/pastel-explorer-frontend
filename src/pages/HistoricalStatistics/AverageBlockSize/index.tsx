@@ -86,7 +86,6 @@ const AverageBlockSize = (): JSX.Element => {
             currentCache,
             lastDate: Date.now(),
           }),
-          Date.now(),
         );
         cache.set(cacheList.averageBlockSize, currentCache);
       }

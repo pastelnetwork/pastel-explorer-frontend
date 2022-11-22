@@ -97,7 +97,6 @@ function BlockchainSize() {
             currentCache,
             lastDate: Date.now(),
           }),
-          Date.now(),
         );
         cache.set(cacheList.blockchainSize, currentCache);
       }

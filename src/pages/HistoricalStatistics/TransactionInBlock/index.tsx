@@ -73,7 +73,6 @@ function TransactionInBlock() {
             currentCache,
             lastDate: Date.now(),
           }),
-          Date.now(),
         );
         cache.set(cacheList.transactionInBlock, currentCache);
       }
