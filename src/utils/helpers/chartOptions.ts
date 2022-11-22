@@ -621,11 +621,11 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         formatter(params: TChartParams[]) {
           return `
             <div class="tooltip-item-wrapper">
-              <div class="tooltip-date">${generateTooltipLabel(
+              <div class="item-label">${generateTooltipLabel(
                 new Date(params[0].axisValue),
                 granularity,
               )}</div>
-              <div class="tooltip-value">${params[0].marker} ${params[0].value}</div>
+              <div class="item-value">${params[0].marker} ${params[0].value}</div>
             </div>
           `;
         },
