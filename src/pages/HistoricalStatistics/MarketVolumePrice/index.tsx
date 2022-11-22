@@ -6,7 +6,7 @@ import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import {
   PeriodTypes,
-  transformMarketCapPriceInfo,
+  transformMarketVolumePriceInfo,
   getMultiLineChartData,
 } from '@utils/helpers/statisticsLib';
 import { periods, info, LRU_OPTIONS, cacheList } from '@utils/constants/statistics';
@@ -47,7 +47,7 @@ function PriceOvertime() {
         params: { period, timestamp },
       });
       if (data) {
-        const parseData = transformMarketCapPriceInfo(data.data, period);
+        const parseData = transformMarketVolumePriceInfo(data.data, period);
         if (
           currentCache[period] &&
           JSON.stringify(parseData) !== JSON.stringify(currentCache[period])
@@ -91,19 +91,19 @@ function PriceOvertime() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Market Price and Cap">
+    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Market Price and Volume">
       <EChartsMultiLineChart
-        chartName="marketCapPrice"
+        chartName="marketVolumePrice"
         dataX={transformLineChartData?.dataX}
         dataY1={transformLineChartData?.dataY1}
         dataY2={transformLineChartData?.dataY2}
         yaxisName="USD Price"
-        yaxisName1="Market Cap"
+        yaxisName1="Volume"
         seriesName="Price"
-        seriesName1="Market Cap"
+        seriesName1="Vol"
         fixedNum={5}
         fixedNum1={0}
-        title="Price - Cap"
+        title="Price - Volume"
         info={info}
         offset={0.0001}
         period={period}
@@ -112,7 +112,7 @@ function PriceOvertime() {
         handlePeriodFilterChange={handlePeriodFilterChange}
         setHeaderBackground
         isLoading={isLoading}
-        color={['#000', '#5470C6']}
+        seriesName1Type="line"
       />
     </HistoricalStatisticsLayout>
   );
