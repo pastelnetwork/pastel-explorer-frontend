@@ -96,21 +96,22 @@ function HashRate() {
         if (isSubscribed) {
           setChartData(newParseData);
         }
-        if (!currentCache[period]) {
-          currentCache = {
-            ...currentCache,
-            [period]: {
-              parseData: newParseData,
-              lastDate: data.data[data.data.length - 1].timestamp,
-            },
-          };
-        }
+        currentCache = {
+          ...currentCache,
+          [period]: {
+            parseData: newParseData,
+            lastDate: data.data.length
+              ? data.data[data.data.length - 1]?.timestamp
+              : currentCache[period]?.lastDate,
+          },
+        };
         setCacheValue(
           cacheList.hashRate,
           JSON.stringify({
             currentCache,
             lastDate: Date.now(),
           }),
+          Date.now(),
         );
         cache.set(cacheList.hashRate, currentCache);
       }

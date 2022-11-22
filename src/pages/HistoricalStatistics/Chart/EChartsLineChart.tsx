@@ -95,13 +95,27 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
         chartName === 'blockchainSize' ||
         chartName === 'hashrate' ||
         chartName === 'mempoolsize' ||
+        chartName === 'transactionCount' ||
+        chartName === 'totalTransactionCount' ||
+        chartName === 'averageTransactionsPerBlock' ||
+        chartName === 'accounts' ||
+        chartName === 'circulatingSupply' ||
+        chartName === 'totalSupply' ||
         chartName === 'difficulty'
       ) {
         const result = generateMinMaxChartData(min, max, 0, 5, selectedPeriodButton);
         setMinY(result.min);
         setMaxY(result.max);
-      } else if (chartName === 'averageblocksize') {
+      } else if (
+        chartName === 'averageblocksize' ||
+        chartName === 'transactionfee' ||
+        chartName === 'transactionspersecond'
+      ) {
         const result = generateMinMaxChartData(min, max, offset, 5, selectedPeriodButton, 5);
+        setMinY(result.min);
+        setMaxY(result.max);
+      } else if (chartName === 'totalTransactionFees') {
+        const result = generateMinMaxChartData(min, max, offset, 5, selectedPeriodButton, 2);
         setMinY(result.min);
         setMaxY(result.max);
       } else {
@@ -224,7 +238,6 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     }
     return '';
   };
-
   return (
     <Styles.ChartContainer>
       <Styles.LineChartHeader

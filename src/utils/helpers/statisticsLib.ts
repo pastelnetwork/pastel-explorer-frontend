@@ -132,7 +132,7 @@ export function transformDifficultyInfo(
       dataX.push(format(Number(difficulties[i].timestamp), 'MM/dd/yyyy hh:mm aa'));
     }
   }
-  if (period === '24h' && checkValidateData(difficulties[difficulties.length - 1].timestamp)) {
+  if (period === '24h' && checkValidateData(difficulties[difficulties.length - 1]?.timestamp)) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
     dataY.push(difficulties[difficulties.length - 1].difficulty);
   }
@@ -238,7 +238,7 @@ export function transformMempoolInfo(
       dataX.push(new Date(Number(mempoolInfo[i].timestamp)).toLocaleString());
     }
   }
-  if (period === '24h' && checkValidateData(mempoolInfo[mempoolInfo.length - 1].timestamp)) {
+  if (period === '24h' && checkValidateData(mempoolInfo[mempoolInfo.length - 1]?.timestamp)) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
     dataY.push(Number(mempoolInfo[mempoolInfo.length - 1].usage) / 1000);
   }
@@ -297,7 +297,7 @@ export function transformAverageBlockSize(
       dataX.push(format(blockSizes[i].maxTime * 1000, 'MM/dd/yyyy HH:mm'));
     }
   }
-  if (period === '24h' && checkValidateData(blockSizes[blockSizes.length - 1].time * 1000)) {
+  if (period === '24h' && checkValidateData(blockSizes[blockSizes.length - 1]?.time * 1000)) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy HH:mm'));
     dataY.push(0);
   }
@@ -313,11 +313,11 @@ export function transformTransactionPerSecond(
   for (let i = 0; i < trans.length; i += 1) {
     const size = Number(trans[i].size) / (24 * 3600);
     dataY.push(size);
-    dataX.push(
-      periodShowTime.indexOf(period) !== -1
-        ? new Date(trans[i].time).toLocaleString()
-        : format(Number(trans[i].time), 'MM/dd/yyyy'),
-    );
+    dataX.push(new Date(trans[i].time).toLocaleString());
+  }
+  if (period === '24h' && (!trans.length || checkValidateData(trans[trans.length - 1]?.time))) {
+    dataX.push(new Date().toLocaleString());
+    dataY.push(dataY[dataY.length - 1]);
   }
   return {
     dataX,
@@ -391,25 +391,23 @@ export function transformBlockchainSizeData(
     dataY.push(parseFloat((value / range).toFixed(2)));
     preValue += data[i].value;
   }
-  if (period === '24h' && checkValidateData(parseInt(data[data.length - 1].label, 10))) {
+  if (period === '24h' && checkValidateData(parseInt(data[data.length - 1]?.label, 10))) {
     dataX.push(new Date().toLocaleString());
     dataY.push(dataY[dataY.length - 1]);
   }
   return { dataX, dataY };
 }
 
-export function transformTotalTransactionCount(data: TChartResponseItem[]) {
+export function transformTotalTransactionCount(data: TChartResponseItem[], startValue = 0) {
   const dataX: string[] = [];
   const dataY: number[] = [];
-  dataX.push(data[0].label);
-  dataY.push(data[0].value);
-  if (data.length > 1) {
-    for (let i = 1; i < data.length; i += 1) {
-      const { value, label } = data[i];
-      const newValue = dataY[i - 1] + value;
-      dataY.push(newValue);
-      dataX.push(label);
-    }
+  dataX.push(new Date(Number(data[0].label) * 1000).toLocaleString());
+  dataY.push(data[0].value + startValue);
+  for (let i = 1; i < data.length; i += 1) {
+    const { value, label } = data[i];
+    const newValue = dataY[i - 1] + value;
+    dataY.push(newValue);
+    dataX.push(new Date(Number(label) * 1000).toLocaleString());
   }
   return {
     dataX,
@@ -426,13 +424,16 @@ export function convertYAxisLabel(
     return value;
   }
   if (maxY > 1000000000) {
-    return `${(value / 1000000000).toFixed(fractionDigits)}B`;
+    const newValue = (value / 1000000000).toFixed(fractionDigits);
+    return parseFloat(newValue) > 0 ? `${newValue}B` : 0;
   }
   if (maxY > 1000000) {
-    return `${(value / 1000000).toFixed(fractionDigits)}M`;
+    const newValue = (value / 1000000).toFixed(fractionDigits);
+    return parseFloat(newValue) > 0 ? `${newValue}M` : 0;
   }
   if (maxY > 1000) {
-    return `${(value / 1000).toFixed(fractionDigits)}K`;
+    const newValue = (value / 1000).toFixed(fractionDigits);
+    return parseFloat(newValue) > 0 ? `${newValue}K` : 0;
   }
   if (value > 0 && value < 1) {
     return value.toFixed(fractionDigits);
@@ -524,11 +525,11 @@ export function transformStatisticsChart(
   for (let i = 0; i < trans.length; i += 1) {
     const value = Number(trans[i].value);
     dataY.push(value);
-    dataX.push(
-      periodShowTime.indexOf(period) !== -1
-        ? new Date(trans[i].time).toLocaleString()
-        : format(trans[i].time, 'MM/dd/yyyy'),
-    );
+    dataX.push(new Date(trans[i].time).toLocaleString());
+  }
+  if (period === '24h' && checkValidateData(trans[trans.length - 1]?.time)) {
+    dataX.push(new Date().toLocaleString());
+    dataY.push(dataY[dataY.length - 1]);
   }
   return {
     dataX,
@@ -544,11 +545,11 @@ export function transformAccountDataChart(
   const dataY: number[] = [];
   for (let i = 0; i < trans.length; i += 1) {
     dataY.push(Number(trans[i].nonZeroAddressesCount));
-    dataX.push(
-      periodShowTime.indexOf(period) !== -1
-        ? new Date(trans[i].timestamp).toLocaleString()
-        : format(trans[i].timestamp, 'MM/dd/yyyy'),
-    );
+    dataX.push(new Date(trans[i].timestamp).toLocaleString());
+  }
+  if (period === '24h' && checkValidateData(trans[trans.length - 1]?.timestamp)) {
+    dataX.push(new Date().toLocaleString());
+    dataY.push(dataY[dataY.length - 1]);
   }
   return {
     dataX,
@@ -564,11 +565,11 @@ export function transformTotalSupplyDataChart(
   const dataY: number[] = [];
   for (let i = 0; i < trans.length; i += 1) {
     dataY.push(Number(trans[i].coinSupply));
-    dataX.push(
-      periodShowTime.indexOf(period) !== -1
-        ? new Date(trans[i].timestamp).toLocaleString()
-        : format(trans[i].timestamp, 'MM/dd/yyyy'),
-    );
+    dataX.push(new Date(trans[i].timestamp).toLocaleString());
+  }
+  if (period === '24h' && checkValidateData(trans[trans.length - 1]?.timestamp)) {
+    dataX.push(new Date().toLocaleString());
+    dataY.push(dataY[dataY.length - 1]);
   }
   return {
     dataX,
@@ -618,8 +619,8 @@ export function transformHashRateCharts(
     networksolps.solps500.push(item.networksolps500);
     networksolps.solps1000.push(item.networksolps1000);
   });
-  if (period === '24h' && checkValidateData(data[data.length - 1].timestamp)) {
-    dataX.push(new Date(data[data.length - 1].timestamp).toLocaleString());
+  if (period === '24h' && checkValidateData(data[data.length - 1]?.timestamp)) {
+    dataX.push(new Date().toLocaleString());
     networksolps.solps5.push(0);
     networksolps.solps10.push(0);
     networksolps.solps25.push(0);
@@ -894,5 +895,64 @@ export const getMultiLineChartData = (
     dataX,
     dataY1,
     dataY2,
+  };
+};
+
+export function transformLineChartData(
+  data: TChartResponseItem[],
+  period: PeriodTypes,
+  isMicroseconds = true,
+  range = 1,
+): TLineChartData {
+  const dataX: string[] = [];
+  const dataY: number[] = [];
+  data.forEach(({ value, label }) => {
+    dataX.push(new Date(isMicroseconds ? Number(label) * 1000 : label).toLocaleString());
+    dataY.push(+(value / range).toFixed(2));
+  });
+  if (
+    period === '24h' &&
+    data.length &&
+    checkValidateData(
+      isMicroseconds
+        ? Number(data[data.length - 1]?.label) * 1000
+        : Number(data[data.length - 1]?.label),
+    )
+  ) {
+    dataX.push(new Date().toLocaleString());
+    dataY.push(dataY[dataY.length - 1]);
+  }
+  return { dataX, dataY };
+}
+
+export const getScatterChartData = (
+  parseData: TScatterChartData,
+  currentData: TScatterChartData,
+  period: PeriodTypes,
+) => {
+  if (!currentData || !currentData.dataX.length) {
+    return parseData;
+  }
+  if (!parseData || !parseData.dataX.length) {
+    return currentData;
+  }
+  const newDataX = [...currentData.dataX, ...parseData.dataX];
+  const newData = [...currentData.data, ...parseData.data];
+  let target = 0;
+  if (period !== 'all' && period !== 'max') {
+    target = getPeriodData(period, parseData.dataX[parseData.dataX.length - 1]);
+  }
+  const dataX: string[] = [];
+  const data: number[][] = [];
+  newDataX.forEach((item, index) => {
+    const timestamp = new Date(item).valueOf();
+    if (timestamp >= target && !dataX.includes(item)) {
+      dataX.push(item);
+      data.push(newData[index]);
+    }
+  });
+  return {
+    dataX,
+    data,
   };
 };

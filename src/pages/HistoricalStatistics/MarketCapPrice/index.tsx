@@ -62,21 +62,22 @@ function PriceOvertime() {
         if (isSubscribed) {
           setTransformLineChartData(newParseData);
         }
-        if (!currentCache[period]) {
-          currentCache = {
-            ...currentCache,
-            [period]: {
-              parseData,
-              lastDate: Number(data.data.prices[data.data.prices.length - 1][0]),
-            },
-          };
-        }
+        currentCache = {
+          ...currentCache,
+          [period]: {
+            parseData,
+            lastDate: data.data.prices.length
+              ? Number(data.data.prices[data.data.prices.length - 1][0])
+              : currentCache[period]?.lastDate,
+          },
+        };
         setCacheValue(
           cacheList.marketCapPrice,
           JSON.stringify({
             currentCache,
             lastDate: Date.now(),
           }),
+          Date.now(),
         );
         cache.set(cacheList.marketCapPrice, currentCache);
       }

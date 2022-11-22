@@ -139,6 +139,11 @@ export const ChartContainer = styled.div`
   .tooltip-data-date {
     text-align: left;
   }
+  .tooltip-item-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 export const LineChartWrap = styled.div`

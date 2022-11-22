@@ -74,8 +74,8 @@ export type TCsvHeaderType = {
 
 export type TScatterChartProps = {
   chartName: string;
-  data: number[][];
-  dataX: string[];
+  data?: number[][];
+  dataX?: string[];
   title?: string;
   period?: PeriodTypes;
   info: TStatisticsInfo;
@@ -86,4 +86,5 @@ export type TScatterChartProps = {
   handleGranularityFilterChange?: (_granularity: TGranularity) => void;
   setHeaderBackground?: boolean;
   isDynamicTitleColor?: boolean;
+  isLoading?: boolean;
 };

@@ -71,21 +71,22 @@ const AverageBlockSize = (): JSX.Element => {
         if (isSubscribed) {
           setChartData(newParseData);
         }
-        if (!currentCache[`${period}-${granularity}`]) {
-          currentCache = {
-            ...currentCache,
-            [`${period}-${granularity}`]: {
-              parseData: newParseData,
-              lastDate: data.data[data.data.length - 1].time,
-            },
-          };
-        }
+        currentCache = {
+          ...currentCache,
+          [`${period}-${granularity}`]: {
+            parseData: newParseData,
+            lastDate: data.data.length
+              ? data.data[data.data.length - 1]?.time
+              : currentCache[period]?.lastDate,
+          },
+        };
         setCacheValue(
           cacheList.averageBlockSize,
           JSON.stringify({
             currentCache,
             lastDate: Date.now(),
           }),
+          Date.now(),
         );
         cache.set(cacheList.averageBlockSize, currentCache);
       }

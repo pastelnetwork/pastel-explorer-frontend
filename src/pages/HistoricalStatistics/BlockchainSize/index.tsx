@@ -82,21 +82,22 @@ function BlockchainSize() {
         if (isSubscribed) {
           setChartData(newParseData);
         }
-        if (!currentCache[period]) {
-          currentCache = {
-            ...currentCache,
-            [period]: {
-              parseData: newParseData,
-              lastDate: Number(data.data[data.data.length - 1].label),
-            },
-          };
-        }
+        currentCache = {
+          ...currentCache,
+          [period]: {
+            parseData: newParseData,
+            lastDate: data.data.length
+              ? Number(data.data[data.data.length - 1]?.label)
+              : currentCache[period]?.lastDate,
+          },
+        };
         setCacheValue(
           cacheList.blockchainSize,
           JSON.stringify({
             currentCache,
             lastDate: Date.now(),
           }),
+          Date.now(),
         );
         cache.set(cacheList.blockchainSize, currentCache);
       }
