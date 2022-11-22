@@ -97,7 +97,7 @@ function TransactionFee() {
         dataY={chartData?.dataY}
         title="Average Transaction Fee (USD)"
         info={info}
-        offset={0}
+        offset={10000}
         period={period}
         periods={periods[6]}
         handleBgColorChange={handleBgColorChange}

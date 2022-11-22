@@ -312,10 +312,12 @@ export function transformTransactionPerSecond(
   const dataY: number[] = [];
   for (let i = 0; i < trans.length; i += 1) {
     const size = Number(trans[i].size) / (24 * 3600);
-    dataY.push(size);
-    dataX.push(new Date(trans[i].time).toLocaleString());
+    if (size) {
+      dataY.push(size);
+      dataX.push(new Date(trans[i].time).toLocaleString());
+    }
   }
-  if (period === '24h' && (!trans.length || checkValidateData(trans[trans.length - 1]?.time))) {
+  if (period === '24h' && trans.length && checkValidateData(trans[trans.length - 1]?.time)) {
     dataX.push(new Date().toLocaleString());
     dataY.push(dataY[dataY.length - 1]);
   }

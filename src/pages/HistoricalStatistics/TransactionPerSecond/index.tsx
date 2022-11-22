@@ -101,7 +101,7 @@ function TransactionPerSecond() {
         title="Transactions Per Second"
         period={period}
         info={info}
-        offset={10000}
+        offset={100000}
         periods={periods[6]}
         handleBgColorChange={handleBgColorChange}
         handlePeriodFilterChange={handlePeriodFilterChange}

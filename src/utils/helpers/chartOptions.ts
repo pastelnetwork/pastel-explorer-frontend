@@ -621,11 +621,11 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         formatter(params: TChartParams[]) {
           return `
             <div class="tooltip-item-wrapper">
-              <div class="tooltip-date">${generateTooltipLabel(
+              <div class="item-label">${generateTooltipLabel(
                 new Date(params[0].axisValue),
                 granularity,
               )}</div>
-              <div class="tooltip-value">${params[0].marker} ${params[0].value}</div>
+              <div class="item-value">${params[0].marker} ${params[0].value}</div>
             </div>
           `;
         },
@@ -664,11 +664,19 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         type: 'value',
+        min: minY,
+        max: maxY,
+        interval: (maxY - minY) / 5,
         splitLine: {
           show: false,
         },
         axisLine: {
           show: true,
+        },
+        axisLabel: {
+          formatter(value: string) {
+            return convertYAxisLabel(Number(value), maxY, 4);
+          },
         },
       },
       series: {
