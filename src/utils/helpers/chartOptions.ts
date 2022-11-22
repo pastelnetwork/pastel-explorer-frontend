@@ -372,12 +372,12 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         trigger: 'axis',
         formatter(params: TChartParams[]) {
           return `
-            <div class="tooltip-wrapper">
-              <div class="tooltip-date">${generateTooltipLabel(
+            <div class="tooltip-item-wrapper">
+              <div class="item-label">${generateTooltipLabel(
                 new Date(params[0].axisValue),
                 granularity,
               )}</div>
-              <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
+              <div class="item-value">${params[0].marker} ${formatNumber(params[0].value, {
             decimalsLength: 2,
           })} kB</div>
             </div>
