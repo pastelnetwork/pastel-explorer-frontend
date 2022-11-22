@@ -115,7 +115,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
         setMinY(result.min);
         setMaxY(result.max);
       } else if (chartName === 'transactionfee') {
-        const result = generateMinMaxChartData(min, max, offset, 5, selectedPeriodButton);
+        const result = generateMinMaxChartData(min, max, offset, 5, selectedPeriodButton, 5);
         setMinY(result.min);
         setMaxY(result.max);
       } else {
