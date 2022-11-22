@@ -17,6 +17,7 @@ import {
 } from '@utils/helpers/statisticsLib';
 import { getThemeInitOption, getThemeUpdateOption } from '@utils/helpers/chartOptions';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
+import useWindowDimensions from '@hooks/useWindowDimensions';
 
 import { eChartLineStyles } from './styles';
 import * as Styles from './Chart.styles';
@@ -36,6 +37,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
     isDynamicTitleColor,
     isLoading = false,
   } = props;
+  const { height, width } = useWindowDimensions();
   const styles = eChartLineStyles();
   const { darkMode } = useSelector(getThemeState);
   const downloadRef = useRef(null);
@@ -96,6 +98,10 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
     chartName,
     minY,
     maxY,
+    height,
+    width,
+    dataX,
+    period: selectedPeriodButton,
   };
   const options = getThemeInitOption(params);
   const downloadPNG = () => {

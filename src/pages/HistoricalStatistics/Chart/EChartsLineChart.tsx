@@ -106,16 +106,16 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
         const result = generateMinMaxChartData(min, max, 0, 5, selectedPeriodButton);
         setMinY(result.min);
         setMaxY(result.max);
-      } else if (
-        chartName === 'averageblocksize' ||
-        chartName === 'transactionfee' ||
-        chartName === 'transactionspersecond'
-      ) {
+      } else if (chartName === 'averageblocksize' || chartName === 'transactionspersecond') {
         const result = generateMinMaxChartData(min, max, offset, 5, selectedPeriodButton, 5);
         setMinY(result.min);
         setMaxY(result.max);
       } else if (chartName === 'totalTransactionFees') {
         const result = generateMinMaxChartData(min, max, offset, 5, selectedPeriodButton, 2);
+        setMinY(result.min);
+        setMaxY(result.max);
+      } else if (chartName === 'transactionfee') {
+        const result = generateMinMaxChartData(min, max, offset, 5, selectedPeriodButton);
         setMinY(result.min);
         setMaxY(result.max);
       } else {

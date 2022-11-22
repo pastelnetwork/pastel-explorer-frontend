@@ -11,6 +11,7 @@ import {
   convertYAxisLabel,
   PeriodTypes,
   generateXAxisInterval,
+  generateXAxisIntervalForScatterChart,
   TGranularity,
 } from '@utils/helpers/statisticsLib';
 import { TChartParams } from '@utils/types/IStatistics';
@@ -613,7 +614,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         top: 30,
         right: 40,
         bottom: 70,
-        left: 50,
+        left: 60,
         show: false,
       },
       tooltip: {
@@ -625,7 +626,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
                 new Date(params[0].axisValue),
                 granularity,
               )}</div>
-              <div class="tooltip-value">${params[0].marker} ${params[0].value.toFixed(2)}</div>
+              <div class="tooltip-value">${params[0].marker} ${params[0].value}</div>
             </div>
           `;
         },
@@ -1245,13 +1246,28 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         trigger: 'axis',
         showDelay: 0,
       },
+      dataZoom: [
+        {
+          type: 'inside',
+          start: 0,
+          end: 100,
+        },
+        {
+          start: 0,
+          end: 100,
+        },
+      ],
       xAxis: [
         {
-          type: 'value',
+          type: 'category',
           scale: true,
+          boundaryGap: false,
           axisLabel: {
             showMaxLabel: true,
-            interval: generateXAxisInterval('1d', period, dataX, width),
+            interval: generateXAxisIntervalForScatterChart(period, dataX, width),
+            formatter: (value: number) => {
+              return formatNumber(value);
+            },
           },
         },
       ],

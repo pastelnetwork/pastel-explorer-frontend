@@ -903,12 +903,17 @@ export function transformLineChartData(
   period: PeriodTypes,
   isMicroseconds = true,
   range = 1,
+  decimalsLength = 2,
 ): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
   data.forEach(({ value, label }) => {
     dataX.push(new Date(isMicroseconds ? Number(label) * 1000 : label).toLocaleString());
-    dataY.push(+(value / range).toFixed(2));
+    if (decimalsLength) {
+      dataY.push(+(value / range).toFixed(decimalsLength));
+    } else {
+      dataY.push(+(value / range));
+    }
   });
   if (
     period === '24h' &&
@@ -955,4 +960,24 @@ export const getScatterChartData = (
     dataX,
     data,
   };
+};
+
+export const generateXAxisIntervalForScatterChart = (
+  period?: PeriodTypes,
+  dataX?: string[],
+  width?: number,
+): number | string => {
+  if (!dataX || !dataX?.length || !period || !width) {
+    return 'auto';
+  }
+
+  if (width > 960 && width < 1200) {
+    return Math.floor(dataX.length / 5);
+  }
+
+  if (width <= 960) {
+    return Math.floor(dataX.length / 3);
+  }
+
+  return Math.floor(dataX.length / 14);
 };
