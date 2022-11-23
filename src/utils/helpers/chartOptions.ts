@@ -120,7 +120,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY, 1);
+            return convertYAxisLabel(Number(value), maxY, 2);
           },
         },
       },
@@ -210,7 +210,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY);
+            return convertYAxisLabel(Number(value), maxY, 2);
           },
         },
       },
@@ -319,7 +319,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY, 0);
+            return convertYAxisLabel(Number(value), maxY, 2);
           },
         },
         axisLine: {
@@ -419,7 +419,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY, 1);
+            return convertYAxisLabel(Number(value), maxY, 2);
           },
         },
       },
@@ -868,7 +868,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY, 0);
+            return convertYAxisLabel(Number(value), maxY, 2);
           },
         },
         axisLine: {
@@ -1139,7 +1139,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY, 0);
+            return convertYAxisLabel(Number(value), maxY, 2);
           },
         },
       },
@@ -1364,6 +1364,11 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         min: minY,
         max: maxY,
         interval: (maxY - minY) / 5,
+        axisLabel: {
+          formatter(value: string) {
+            return convertYAxisLabel(Number(value), maxY, 2);
+          },
+        },
         splitLine: {
           show: false,
         },

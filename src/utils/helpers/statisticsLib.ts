@@ -475,22 +475,22 @@ export function transformTotalTransactionCount(
 export function convertYAxisLabel(
   value: number,
   maxY: number,
-  fractionDigits = 1,
+  fractionDigits = 2,
 ): number | string {
   if (value === 0) {
     return value;
   }
   if (maxY > 1000000000) {
     const newValue = (value / 1000000000).toFixed(fractionDigits);
-    return parseFloat(newValue) > 0 ? `${newValue}B` : 0;
+    return parseFloat(newValue) > 0 ? `${parseFloat(newValue)}B` : 0;
   }
   if (maxY > 1000000) {
     const newValue = (value / 1000000).toFixed(fractionDigits);
-    return parseFloat(newValue) > 0 ? `${newValue}M` : 0;
+    return parseFloat(newValue) > 0 ? `${parseFloat(newValue)}M` : 0;
   }
   if (maxY > 1000) {
     const newValue = (value / 1000).toFixed(fractionDigits);
-    return parseFloat(newValue) > 0 ? `${newValue}K` : 0;
+    return parseFloat(newValue) > 0 ? `${parseFloat(newValue)}K` : 0;
   }
   if (value > 0 && value < 1) {
     return value.toFixed(fractionDigits);

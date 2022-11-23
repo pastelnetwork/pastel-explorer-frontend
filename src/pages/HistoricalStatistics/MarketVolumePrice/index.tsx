@@ -102,7 +102,7 @@ function PriceOvertime() {
         seriesName="Price"
         seriesName1="Vol"
         fixedNum={5}
-        fixedNum1={2}
+        fixedNum1={3}
         title="Price - Volume"
         info={info}
         offset={0.0001}
