@@ -116,6 +116,34 @@ export const ChartContainer = styled.div`
   ${props => props.theme.breakpoints.down('sm')} {
     padding: 0;
   }
+
+  .tooltip-item {
+    display: flex;
+  }
+
+  .item-label {
+    min-width: 120px;
+    margin-right: 8px;
+    text-align: left;
+
+    &.auto {
+      min-width: unset;
+    }
+  }
+
+  .item-value {
+    font-weight: bold;
+    text-align: right;
+  }
+
+  .tooltip-data-date {
+    text-align: left;
+  }
+  .tooltip-item-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 export const LineChartWrap = styled.div`

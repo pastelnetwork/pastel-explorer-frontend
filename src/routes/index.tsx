@@ -166,10 +166,10 @@ const cascadeAndSenseStatisticsRoutes = {
 };
 
 const difficultyStatisticsRoutes = {
-  id: 'Difficulty Overtime',
+  id: 'Network Difficulty',
   path: ROUTES.STATISTICS_DIFFICULTY,
   component: DifficultyStatistics,
-  seoTitle: 'Difficulty Overtime',
+  seoTitle: 'Network Difficulty',
   children: null,
   exact: false,
 };
@@ -214,7 +214,7 @@ const nettotalsStatisticsRoutes = {
   id: 'Nettotals',
   path: ROUTES.STATISTICS_NETTOTALS,
   component: Nettotals,
-  seoTitle: 'Nettotals',
+  seoTitle: 'Network Total',
   children: null,
   exact: false,
 };

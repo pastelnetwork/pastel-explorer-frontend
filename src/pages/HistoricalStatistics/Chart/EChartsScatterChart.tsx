@@ -4,14 +4,20 @@ import ReactECharts from 'echarts-for-react';
 import { saveAs } from 'file-saver';
 import * as htmlToImage from 'html-to-image';
 import { useSelector } from 'react-redux';
+import { Skeleton } from '@material-ui/lab';
 
 import { Data } from 'react-csv/components/CommonPropTypes';
 import { csvHeaders, themes } from '@utils/constants/statistics';
 // import { PrevButton } from '../PrevButton';
 import { TScatterChartProps, TThemeColor, TThemeInitOption } from '@utils/constants/types';
-import { makeDownloadFileName } from '@utils/helpers/statisticsLib';
+import {
+  makeDownloadFileName,
+  generateMinMaxChartData,
+  getMinMax,
+} from '@utils/helpers/statisticsLib';
 import { getThemeInitOption, getThemeUpdateOption } from '@utils/helpers/chartOptions';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
+import useWindowDimensions from '@hooks/useWindowDimensions';
 
 import { eChartLineStyles } from './styles';
 import * as Styles from './Chart.styles';
@@ -23,14 +29,15 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
     dataX,
     title,
     info,
-    offset,
     period: selectedPeriodButton,
     periods,
     handlePeriodFilterChange,
     handleBgColorChange,
     setHeaderBackground,
     isDynamicTitleColor,
+    isLoading = false,
   } = props;
+  const { height, width } = useWindowDimensions();
   const styles = eChartLineStyles();
   const { darkMode } = useSelector(getThemeState);
   const downloadRef = useRef(null);
@@ -62,15 +69,17 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
   }, [eChartRef]);
 
   useEffect(() => {
-    if (data?.length) {
+    if (data?.length && dataX?.length) {
       const dataY = data.reduce((yAxis, item) => {
         yAxis.push(item[1]);
         return yAxis;
       }, []);
-      const min = Math.min(...dataY);
-      const max = Math.max(...dataY);
-      setMinY(min - offset);
-      setMaxY(max + offset);
+      const arr = getMinMax(dataY);
+      const min = arr[0];
+      const max = arr[1];
+      const result = generateMinMaxChartData(min, max, 0, 5, selectedPeriodButton);
+      setMinY(result.min);
+      setMaxY(result.max);
       const dataCsv: Data = [];
       data.forEach((row, index) => {
         dataCsv.push({
@@ -89,6 +98,10 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
     chartName,
     minY,
     maxY,
+    height,
+    width,
+    dataX,
+    period: selectedPeriodButton,
   };
   const options = getThemeInitOption(params);
   const downloadPNG = () => {
@@ -139,7 +152,9 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
 
   return (
     <Styles.ChartContainer>
-      <Styles.LineChartHeader className={setHeaderBackground ? 'has-bg' : ''}>
+      <Styles.LineChartHeader
+        className={`${setHeaderBackground ? 'has-bg' : ''} ${isLoading ? 'no-mb' : ''}`}
+      >
         {isDynamicTitleColor ? (
           <Styles.ChartTitle style={{ color: currentTheme?.color }}>{title}</Styles.ChartTitle>
         ) : (
@@ -163,14 +178,21 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
           ))}
         </Styles.PeriodSelect>
       </Styles.LineChartHeader>
-      <Styles.LineChartWrap>
-        <ReactECharts
-          notMerge={false}
-          lazyUpdate
-          option={options}
-          className={styles.reactECharts}
-          ref={e => setEChartRef(e)}
-        />
+      <Styles.LineChartWrap className={isLoading ? 'no-spacing' : ''}>
+        {isLoading || !dataX?.length ? (
+          <Styles.LoadingWrapper>
+            <Skeleton animation="wave" variant="rect" height={386} />
+            <Styles.LoadingText>Loading data...</Styles.LoadingText>
+          </Styles.LoadingWrapper>
+        ) : (
+          <ReactECharts
+            notMerge={false}
+            lazyUpdate
+            option={options}
+            className={styles.reactECharts}
+            ref={e => setEChartRef(e)}
+          />
+        )}
       </Styles.LineChartWrap>
       <Styles.LineChartFooter>
         <div className={styles.lineChartThemeSelect}>
