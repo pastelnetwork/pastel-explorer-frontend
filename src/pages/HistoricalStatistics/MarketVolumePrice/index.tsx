@@ -34,8 +34,8 @@ function PriceOvertime() {
     const loadLineChartData = async () => {
       let isAddNewNode = true;
       let currentCache =
-        (cache.get(cacheList.marketCapPrice) as TCacheValue) ||
-        readCacheValue(cacheList.marketCapPrice) ||
+        (cache.get(cacheList.marketVolumePrice) as TCacheValue) ||
+        readCacheValue(cacheList.marketVolumePrice) ||
         {};
       if (!currentCache[period]) {
         setLoading(true);
@@ -70,13 +70,13 @@ function PriceOvertime() {
           },
         };
         setCacheValue(
-          cacheList.marketCapPrice,
+          cacheList.marketVolumePrice,
           JSON.stringify({
             currentCache,
             lastDate: Date.now(),
           }),
         );
-        cache.set(cacheList.marketCapPrice, currentCache);
+        cache.set(cacheList.marketVolumePrice, currentCache);
       }
       setLoading(false);
     };
