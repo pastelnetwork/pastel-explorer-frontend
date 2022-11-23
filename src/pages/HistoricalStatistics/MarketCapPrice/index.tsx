@@ -104,7 +104,7 @@ function PriceOvertime() {
         seriesName="Price"
         seriesName1="Market Cap"
         fixedNum={5}
-        fixedNum1={2}
+        fixedNum1={3}
         title="Price - Cap"
         info={info}
         offset={0.0001}
