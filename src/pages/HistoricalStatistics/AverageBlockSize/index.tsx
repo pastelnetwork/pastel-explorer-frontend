@@ -7,7 +7,7 @@ import {
   TGranularity,
   PeriodTypes,
   transformAverageBlockSize,
-  getChartData,
+  mergeChartData,
 } from '@utils/helpers/statisticsLib';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
@@ -63,7 +63,7 @@ const AverageBlockSize = (): JSX.Element => {
         ) {
           setLoading(true);
         }
-        const newParseData = getChartData(
+        const newParseData = mergeChartData(
           parseData,
           currentCache[`${period}-${granularity}`]?.parseData as TLineChartData,
           period,

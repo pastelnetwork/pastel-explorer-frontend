@@ -7,7 +7,7 @@ import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import {
   PeriodTypes,
   transformHashRateCharts,
-  getHashRateChartData,
+  mergeHashRateChartData,
 } from '@utils/helpers/statisticsLib';
 import { periods, info, LRU_OPTIONS, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
@@ -88,7 +88,7 @@ function HashRate() {
         ) {
           setLoading(true);
         }
-        const newParseData = getHashRateChartData(
+        const newParseData = mergeHashRateChartData(
           parseData,
           currentCache[period]?.parseData as THashrateChartData,
           period,
