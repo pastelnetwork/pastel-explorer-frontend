@@ -1388,6 +1388,17 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       ],
       tooltip: {
         trigger: 'axis',
+        formatter(params: TChartParams[]) {
+          return `
+            <div class="tooltip-item-wrapper">
+              <div class="item-label">${generateTooltipLabel(
+                new Date(params[0].axisValue),
+                granularity,
+              )}</div>
+              <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value)}</div>
+            </div>
+          `;
+        },
       },
       xAxis: {
         type: 'category',
