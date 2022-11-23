@@ -1371,10 +1371,21 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       grid: {
         top: 8,
         right: 40,
-        bottom: 20,
+        bottom: 70,
         left: 50,
         show: false,
       },
+      dataZoom: [
+        {
+          type: 'inside',
+          start: 0,
+          end: 100,
+        },
+        {
+          start: 0,
+          end: 100,
+        },
+      ],
       tooltip: {
         trigger: 'axis',
       },
@@ -1618,10 +1629,21 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       grid: {
         top: 8,
         right: 20,
-        bottom: 20,
+        bottom: 70,
         left: 50,
         show: false,
       },
+      dataZoom: [
+        {
+          type: 'inside',
+          start: 0,
+          end: 100,
+        },
+        {
+          start: 0,
+          end: 100,
+        },
+      ],
       tooltip: {
         trigger: 'axis',
         formatter: (params: TToolTipParamsProps[]) => {
