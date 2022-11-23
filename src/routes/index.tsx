@@ -166,10 +166,10 @@ const cascadeAndSenseStatisticsRoutes = {
 };
 
 const difficultyStatisticsRoutes = {
-  id: 'Difficulty Overtime',
+  id: 'Network Difficulty',
   path: ROUTES.STATISTICS_DIFFICULTY,
   component: DifficultyStatistics,
-  seoTitle: 'Difficulty Overtime',
+  seoTitle: 'Network Difficulty',
   children: null,
   exact: false,
 };
