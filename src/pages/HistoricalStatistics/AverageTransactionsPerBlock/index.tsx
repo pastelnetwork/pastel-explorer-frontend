@@ -45,6 +45,7 @@ function AverageTransactionsPerBlock() {
           func: 'AVG',
           col: 'transactionCount',
           timestamp,
+          granularity: 'none',
         },
       });
       if (data) {

@@ -69,7 +69,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         top: 8,
         right: 40,
         bottom: 70,
-        left: 50,
+        left: 70,
         show: false,
       },
       dataZoom: [
@@ -85,6 +85,19 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       ],
       tooltip: {
         trigger: 'axis',
+        formatter(params: TChartParams[]) {
+          return `
+            <div class="tooltip-item-wrapper">
+              <div class="item-label">${generateTooltipLabel(
+                new Date(params[0].axisValue),
+                granularity,
+              )}</div>
+              <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
+            decimalsLength: 5,
+          })} MSol/S</div>
+            </div>
+          `;
+        },
       },
       xAxis: {
         type: 'category',
@@ -146,7 +159,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         top: 8,
         right: 40,
         bottom: 70,
-        left: 60,
+        left: 70,
         show: false,
       },
       dataZoom: [
@@ -164,8 +177,8 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         trigger: 'axis',
         formatter(params: TChartParams[]) {
           return `
-            <div class="tooltip-wrapper">
-              <div class="tooltip-date">${generateTooltipLabel(
+            <div class="tooltip-item-wrapper">
+              <div class="item-label">${generateTooltipLabel(
                 new Date(params[0].axisValue),
                 granularity,
               )}</div>
@@ -466,10 +479,17 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       tooltip: {
         trigger: 'axis',
         formatter(params: TChartParams[]) {
-          return `<div>
-            <div>${generateTooltipLabel(new Date(params[0].axisValue), granularity)}</div>
-            <div>${params[0].marker} ${params[0].value.toFixed(5)} MB</div>
-          </div>`;
+          return `
+            <div class="tooltip-item-wrapper">
+              <div class="item-label">${generateTooltipLabel(
+                new Date(params[0].axisValue),
+                granularity,
+              )}</div>
+              <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
+            decimalsLength: 5,
+          })} MB</div>
+            </div>
+          `;
         },
       },
       xAxis: {
@@ -927,10 +947,17 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       tooltip: {
         trigger: 'axis',
         formatter(params: TChartParams[]) {
-          return `<div>
-            <div>${generateTooltipLabel(new Date(params[0].axisValue), granularity)}</div>
-            <div>${params[0].marker} ${params[0].value.toFixed(2)} MB</div>
-          </div>`;
+          return `
+            <div class="tooltip-item-wrapper">
+              <div class="item-label">${generateTooltipLabel(
+                new Date(params[0].axisValue),
+                granularity,
+              )}</div>
+              <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
+            decimalsLength: 2,
+          })} MB</div>
+            </div>
+          `;
         },
       },
       xAxis: {
