@@ -7,7 +7,7 @@ import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import {
   PeriodTypes,
   transformBlockchainSizeData,
-  getChartData,
+  mergeChartData,
 } from '@utils/helpers/statisticsLib';
 import { periods, info, LRU_OPTIONS, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
@@ -76,7 +76,7 @@ function BlockchainSize() {
         ) {
           setLoading(true);
         }
-        const newParseData = getChartData(
+        const newParseData = mergeChartData(
           parseData,
           currentCache[period]?.parseData as TLineChartData,
           period,

@@ -7,7 +7,7 @@ import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import {
   PeriodTypes,
   transformTotalTransactionCount,
-  getChartData,
+  mergeChartData,
 } from '@utils/helpers/statisticsLib';
 import { periods, info, LRU_OPTIONS, cacheList } from '@utils/constants/statistics';
 import { TTransactionsChart, TLineChartData, TCacheValue } from '@utils/types/IStatistics';
@@ -73,7 +73,7 @@ function TotalTransactionCount() {
         ) {
           setLoading(true);
         }
-        const newParseData = getChartData(
+        const newParseData = mergeChartData(
           parseData,
           currentCache[period]?.parseData as TLineChartData,
           period,

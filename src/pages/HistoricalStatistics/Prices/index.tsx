@@ -7,7 +7,7 @@ import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import {
   PeriodTypes,
   transformPriceInfo,
-  getMultiLineChartData,
+  mergeMultiLineChartData,
 } from '@utils/helpers/statisticsLib';
 import { periods, info, LRU_OPTIONS, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
@@ -55,7 +55,7 @@ function PriceOvertime() {
         ) {
           setLoading(true);
         }
-        const newParseData = getMultiLineChartData(
+        const newParseData = mergeMultiLineChartData(
           parseData,
           currentCache[period]?.parseData as TMultiLineChartData,
           period,

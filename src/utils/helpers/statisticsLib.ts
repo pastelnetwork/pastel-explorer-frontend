@@ -871,58 +871,6 @@ export const getChartData = (
   };
 };
 
-export const getHashRateChartData = (
-  parseData: THashrateChartData,
-  currentData: THashrateChartData,
-  period: PeriodTypes,
-) => {
-  if (!currentData || !currentData.dataX.length) {
-    return parseData;
-  }
-  if (!parseData || !parseData.dataX.length) {
-    return currentData;
-  }
-  const networksolps: TSolpsData = {
-    solps5: [],
-    solps10: [],
-    solps25: [],
-    solps50: [],
-    solps100: [],
-    solps500: [],
-    solps1000: [],
-  };
-  const newDataX = [...currentData.dataX, ...parseData.dataX];
-  const newSolps5 = [...currentData.networksolps.solps5, ...parseData.networksolps.solps5];
-  const newSolps10 = [...currentData.networksolps.solps10, ...parseData.networksolps.solps10];
-  const newSolps25 = [...currentData.networksolps.solps25, ...parseData.networksolps.solps25];
-  const newSolps50 = [...currentData.networksolps.solps50, ...parseData.networksolps.solps50];
-  const newSolps100 = [...currentData.networksolps.solps100, ...parseData.networksolps.solps100];
-  const newSolps500 = [...currentData.networksolps.solps500, ...parseData.networksolps.solps500];
-  const newSolps1000 = [...currentData.networksolps.solps1000, ...parseData.networksolps.solps1000];
-  let target = 0;
-  if (period !== 'all' && period !== 'max') {
-    target = getPeriodData(period, parseData.dataX[parseData.dataX.length - 1]);
-  }
-  const dataX: string[] = [];
-  newDataX.forEach((item, index) => {
-    const timestamp = new Date(item).valueOf();
-    if (timestamp >= target && !dataX.includes(new Date(item).toLocaleString())) {
-      dataX.push(item);
-      networksolps.solps5.push(newSolps5[index]);
-      networksolps.solps10.push(newSolps10[index]);
-      networksolps.solps25.push(newSolps25[index]);
-      networksolps.solps50.push(newSolps50[index]);
-      networksolps.solps100.push(newSolps100[index]);
-      networksolps.solps500.push(newSolps500[index]);
-      networksolps.solps1000.push(newSolps1000[index]);
-    }
-  });
-  return {
-    dataX,
-    networksolps,
-  };
-};
-
 export const getMultiLineChartData = (
   parseData: TMultiLineChartData,
   currentData: TMultiLineChartData,
@@ -1043,4 +991,158 @@ export const generateXAxisIntervalForScatterChart = (
   }
 
   return Math.floor(dataX.length / 14);
+};
+
+export const mergeChartData = (
+  parseData: TLineChartData,
+  currentData: TLineChartData,
+  period: PeriodTypes,
+) => {
+  if (!currentData || !currentData.dataX.length) {
+    return parseData;
+  }
+  if (!parseData || !parseData.dataX.length) {
+    return currentData;
+  }
+  const newDataX = [
+    ...currentData.dataX.splice(0, currentData.dataX.length - 1),
+    ...parseData.dataX,
+  ];
+  const newDataY = [
+    ...currentData.dataY.splice(0, currentData.dataY.length - 1),
+    ...parseData.dataY,
+  ];
+  let startIndex = 0;
+  if (period !== 'all' && period !== 'max') {
+    const target = getPeriodData(period, parseData.dataX[parseData.dataX.length - 1]);
+    for (let i = 0; i < newDataX.length; i += 1) {
+      const timestamp = new Date(newDataX[i]).valueOf();
+      if (timestamp >= target) {
+        startIndex = i;
+        break;
+      }
+    }
+  }
+
+  return {
+    dataX: newDataX.splice(startIndex, newDataX.length),
+    dataY: newDataY.splice(startIndex, newDataY.length),
+  };
+};
+
+export const mergeMultiLineChartData = (
+  parseData: TMultiLineChartData,
+  currentData: TMultiLineChartData,
+  period: PeriodTypes,
+) => {
+  if (!currentData || !currentData.dataX.length) {
+    return parseData;
+  }
+  if (!parseData || !parseData.dataX.length) {
+    return currentData;
+  }
+  const newDataX = [
+    ...currentData.dataX.splice(0, currentData.dataX.length - 1),
+    ...parseData.dataX,
+  ];
+  const newDataY1 = [
+    ...currentData.dataY1.splice(0, currentData.dataY1.length - 1),
+    ...parseData.dataY1,
+  ];
+  const newDataY2 = [
+    ...currentData.dataY2.splice(0, currentData.dataY2.length - 1),
+    ...parseData.dataY2,
+  ];
+  let startIndex = 0;
+  if (period !== 'all' && period !== 'max') {
+    const target = getPeriodData(period, parseData.dataX[parseData.dataX.length - 1]);
+    for (let i = 0; i < newDataX.length; i += 1) {
+      const timestamp = new Date(newDataX[i]).valueOf();
+      if (timestamp >= target) {
+        startIndex = i;
+        break;
+      }
+    }
+  }
+
+  return {
+    dataX: newDataX.splice(startIndex, newDataX.length),
+    dataY1: newDataY1.splice(startIndex, newDataY1.length),
+    dataY2: newDataY2.splice(startIndex, newDataY2.length),
+  };
+};
+
+export const mergeHashRateChartData = (
+  parseData: THashrateChartData,
+  currentData: THashrateChartData,
+  period: PeriodTypes,
+) => {
+  if (!currentData || !currentData.dataX.length) {
+    return parseData;
+  }
+  if (!parseData || !parseData.dataX.length) {
+    return currentData;
+  }
+  const newDataX = [
+    ...currentData.dataX.splice(0, currentData.dataX.length - 1),
+    ...parseData.dataX,
+  ];
+  const networksolps: TSolpsData = {
+    solps5: [
+      ...currentData.networksolps.solps5.splice(0, currentData.networksolps.solps5.length - 1),
+      ...parseData.networksolps.solps5,
+    ],
+    solps10: [
+      ...currentData.networksolps.solps10.splice(0, currentData.networksolps.solps10.length - 1),
+      ...parseData.networksolps.solps10,
+    ],
+    solps25: [
+      ...currentData.networksolps.solps25.splice(0, currentData.networksolps.solps25.length - 1),
+      ...parseData.networksolps.solps25,
+    ],
+    solps50: [
+      ...currentData.networksolps.solps50.splice(0, currentData.networksolps.solps50.length - 1),
+      ...parseData.networksolps.solps50,
+    ],
+    solps100: [
+      ...currentData.networksolps.solps100.splice(0, currentData.networksolps.solps100.length - 1),
+      ...parseData.networksolps.solps100,
+    ],
+    solps500: [
+      ...currentData.networksolps.solps500.splice(0, currentData.networksolps.solps500.length - 1),
+      ...parseData.networksolps.solps5,
+    ],
+    solps1000: [
+      ...currentData.networksolps.solps1000.splice(
+        0,
+        currentData.networksolps.solps1000.length - 1,
+      ),
+      ...parseData.networksolps.solps1000,
+    ],
+  };
+
+  let startIndex = 0;
+  if (period !== 'all' && period !== 'max') {
+    const target = getPeriodData(period, parseData.dataX[parseData.dataX.length - 1]);
+    for (let i = 0; i < newDataX.length; i += 1) {
+      const timestamp = new Date(newDataX[i]).valueOf();
+      if (timestamp >= target) {
+        startIndex = i;
+        break;
+      }
+    }
+  }
+
+  return {
+    dataX: newDataX.splice(startIndex, newDataX.length),
+    networksolps: {
+      solps5: networksolps.solps5.splice(startIndex, networksolps.solps5.length),
+      solps10: networksolps.solps10.splice(startIndex, networksolps.solps10.length),
+      solps25: networksolps.solps25.splice(startIndex, networksolps.solps25.length),
+      solps50: networksolps.solps50.splice(startIndex, networksolps.solps50.length),
+      solps100: networksolps.solps100.splice(startIndex, networksolps.solps100.length),
+      solps500: networksolps.solps500.splice(startIndex, networksolps.solps500.length),
+      solps1000: networksolps.solps5.splice(startIndex, networksolps.solps1000.length),
+    },
+  };
 };
