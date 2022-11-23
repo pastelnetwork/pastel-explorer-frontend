@@ -45,7 +45,7 @@ function MempoolSize() {
         params: { period, sortDirection: 'DESC', timestamp },
       });
       if (data) {
-        const parseData = transformMempoolInfo(data.data, period);
+        const parseData = transformMempoolInfo(data.data, period, timestamp);
         if (
           currentCache[period] &&
           JSON.stringify(parseData) !== JSON.stringify(currentCache[period])

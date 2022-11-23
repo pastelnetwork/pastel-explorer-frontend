@@ -226,8 +226,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
         },
         axisLabel: {
           formatter(value: string) {
-            const val = Number.parseFloat(value);
-            return !fixedNum1 ? convertYAxisLabel(Number(value), maxY2) : val.toFixed(fixedNum1);
+            return convertYAxisLabel(Number(value), maxY2, fixedNum1);
           },
         },
       },

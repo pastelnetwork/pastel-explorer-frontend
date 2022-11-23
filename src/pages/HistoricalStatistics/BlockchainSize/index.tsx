@@ -67,6 +67,8 @@ function BlockchainSize() {
           data.startValue,
           data.endValue,
           cacheParseData?.dataY[cacheParseData?.dataY?.length - 1] || 0,
+          10e6,
+          timestamp,
         );
         if (
           currentCache[period] &&

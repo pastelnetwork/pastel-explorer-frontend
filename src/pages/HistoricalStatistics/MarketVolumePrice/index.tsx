@@ -32,7 +32,7 @@ function PriceOvertime() {
   useEffect(() => {
     let isSubscribed = true;
     const loadLineChartData = async () => {
-      let timestamp = '';
+      let isAddNewNode = true;
       let currentCache =
         (cache.get(cacheList.marketCapPrice) as TCacheValue) ||
         readCacheValue(cacheList.marketCapPrice) ||
@@ -41,13 +41,13 @@ function PriceOvertime() {
         setLoading(true);
       } else {
         setTransformLineChartData(currentCache[period].parseData as TMultiLineChartData);
-        timestamp = currentCache[period]?.lastDate?.toString() || '';
+        isAddNewNode = false;
       }
       const data = await fetchStats.fetchData({
-        params: { period, timestamp },
+        params: { period },
       });
       if (data) {
-        const parseData = transformMarketVolumePriceInfo(data.data, period);
+        const parseData = transformMarketVolumePriceInfo(data.data, period, isAddNewNode);
         if (
           currentCache[period] &&
           JSON.stringify(parseData) !== JSON.stringify(currentCache[period])
@@ -102,7 +102,7 @@ function PriceOvertime() {
         seriesName="Price"
         seriesName1="Vol"
         fixedNum={5}
-        fixedNum1={0}
+        fixedNum1={2}
         title="Price - Volume"
         info={info}
         offset={0.0001}
@@ -112,7 +112,7 @@ function PriceOvertime() {
         handlePeriodFilterChange={handlePeriodFilterChange}
         setHeaderBackground
         isLoading={isLoading}
-        seriesName1Type="line"
+        color={['#000', '#5470C6']}
       />
     </HistoricalStatisticsLayout>
   );

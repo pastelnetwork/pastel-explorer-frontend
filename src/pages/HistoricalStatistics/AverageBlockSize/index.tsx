@@ -56,7 +56,7 @@ const AverageBlockSize = (): JSX.Element => {
         params: { sortDirection: 'DESC', period, granularity, format: 'true', timestamp },
       });
       if (data) {
-        const parseData = transformAverageBlockSize(data.data, period);
+        const parseData = transformAverageBlockSize(data.data, period, timestamp);
         if (
           currentCache[`${period}-${granularity}`] &&
           JSON.stringify(parseData) !== JSON.stringify(currentCache[`${period}-${granularity}`])

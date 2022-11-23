@@ -214,7 +214,7 @@ const nettotalsStatisticsRoutes = {
   id: 'Nettotals',
   path: ROUTES.STATISTICS_NETTOTALS,
   component: Nettotals,
-  seoTitle: 'Nettotals',
+  seoTitle: 'Network Total',
   children: null,
   exact: false,
 };

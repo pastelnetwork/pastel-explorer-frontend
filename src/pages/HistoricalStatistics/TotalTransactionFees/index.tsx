@@ -23,8 +23,11 @@ function TotalTransactionFees() {
   const [period, setPeriod] = useState<PeriodTypes>(periods[1][0]);
   const [chartData, setChartData] = useState<TLineChartData | null>(null);
   const [isLoading, setLoading] = useState(false);
-
-  const fetchStats = useFetch<{ data: Array<TTransactionsChart> }>({
+  const fetchStats = useFetch<{
+    data: Array<TTransactionsChart>;
+    startValue: number;
+    endValue: number;
+  }>({
     method: 'get',
     url: URLS.GET_TRANSACTIONS_CHARTS,
   });
@@ -43,12 +46,24 @@ function TotalTransactionFees() {
         timestamp = currentCache[period]?.lastDate?.toString() || '';
       }
       const data = await fetchStats.fetchData({
-        params: { sortDirection: 'DESC', period, func: 'SUM', col: 'fee', timestamp },
+        params: {
+          sortDirection: 'DESC',
+          period,
+          func: 'SUM',
+          col: 'fee',
+          timestamp,
+        },
       });
       if (data) {
-        const cacheData = currentCache[period]?.parseData as TLineChartData;
-        const startValue = cacheData ? cacheData.dataY[cacheData.dataY.length - 1] : 0;
-        const parseData = transformTotalTransactionCount(data.data, startValue);
+        const cacheParseData = currentCache[period]?.parseData as TLineChartData;
+        const parseData = transformTotalTransactionCount(
+          data.data,
+          period,
+          data.startValue,
+          data.endValue,
+          cacheParseData?.dataY[cacheParseData?.dataY?.length - 1] || 0,
+          timestamp,
+        );
         if (
           currentCache[period] &&
           JSON.stringify(parseData) !== JSON.stringify(currentCache[period])

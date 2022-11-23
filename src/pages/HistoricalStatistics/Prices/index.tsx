@@ -48,7 +48,7 @@ function PriceOvertime() {
         params: { sortDirection: 'DESC', period, timestamp },
       });
       if (data) {
-        const parseData = transformPriceInfo(data.data, period);
+        const parseData = transformPriceInfo(data.data, period, timestamp);
         if (
           currentCache[period] &&
           JSON.stringify(parseData) !== JSON.stringify(currentCache[period])

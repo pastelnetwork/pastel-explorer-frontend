@@ -47,7 +47,7 @@ function TotalSupply() {
         params: { period, sortDirection: 'ASC', timestamp },
       });
       if (data) {
-        const parseData = transformTotalSupplyDataChart(data.data, period);
+        const parseData = transformTotalSupplyDataChart(data.data, period, timestamp);
         if (
           currentCache[period] &&
           JSON.stringify(parseData) !== JSON.stringify(currentCache[period])

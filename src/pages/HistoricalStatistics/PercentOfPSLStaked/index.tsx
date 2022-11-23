@@ -43,7 +43,7 @@ function PercentOfPSLStaked() {
         params: { period, sortDirection: 'ASC', timestamp },
       });
       if (data) {
-        const parseData = transformStatisticsChart(data.data, period);
+        const parseData = transformStatisticsChart(data.data, period, timestamp);
         if (
           currentCache[period] &&
           JSON.stringify(parseData) !== JSON.stringify(currentCache[period])
