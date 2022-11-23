@@ -42,7 +42,7 @@ function Difficulty() {
         params: { sortDirection: 'DESC', period, timestamp },
       });
       if (data) {
-        const parseData = transformDifficultyInfo(data.data, period);
+        const parseData = transformDifficultyInfo(data.data, period, timestamp);
         if (
           currentCache[period] &&
           JSON.stringify(parseData) !== JSON.stringify(currentCache[period])

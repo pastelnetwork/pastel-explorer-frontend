@@ -41,10 +41,17 @@ function TransactionFee() {
         timestamp = currentCache[period]?.lastDate?.toString() || '';
       }
       const data = await fetchStats.fetchData({
-        params: { period, sortDirection: 'ASC', func: 'AVG', col: 'fee', timestamp },
+        params: {
+          period,
+          sortDirection: 'ASC',
+          func: 'AVG',
+          col: 'fee',
+          timestamp,
+          startValue: 'false',
+        },
       });
       if (data) {
-        const parseData = transformLineChartData(data.data, period, true, 1, 0);
+        const parseData = transformLineChartData(data.data, period, true, 1, 0, timestamp);
         if (
           currentCache[period] &&
           JSON.stringify(parseData) !== JSON.stringify(currentCache[period])

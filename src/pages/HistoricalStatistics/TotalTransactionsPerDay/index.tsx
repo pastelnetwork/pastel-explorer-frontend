@@ -39,10 +39,18 @@ function TransactionPerSecond() {
         timestamp = currentCache[period]?.lastDate?.toString() || '';
       }
       const data = await fetchStats.fetchData({
-        params: { sortDirection: 'DESC', period, func: 'COUNT', col: 'id', timestamp },
+        params: {
+          sortDirection: 'DESC',
+          period,
+          func: 'COUNT',
+          col: 'id',
+          timestamp,
+          groupBy: period !== '24h' ? 'daily' : 'hourly',
+          startValue: 'false',
+        },
       });
       if (data) {
-        const parseData = transformLineChartData(data.data, period, true);
+        const parseData = transformLineChartData(data.data, period, true, 1, 2, timestamp);
         if (
           currentCache[period] &&
           JSON.stringify(parseData) !== JSON.stringify(currentCache[period])

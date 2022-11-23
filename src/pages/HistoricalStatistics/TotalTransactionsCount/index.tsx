@@ -4,8 +4,12 @@ import LRU from 'lru-cache';
 // application
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { transformTotalTransactionCount, getChartData } from '@utils/helpers/statisticsLib';
-import { info, LRU_OPTIONS, cacheList } from '@utils/constants/statistics';
+import {
+  PeriodTypes,
+  transformTotalTransactionCount,
+  getChartData,
+} from '@utils/helpers/statisticsLib';
+import { periods, info, LRU_OPTIONS, cacheList } from '@utils/constants/statistics';
 import { TTransactionsChart, TLineChartData, TCacheValue } from '@utils/types/IStatistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
@@ -15,17 +19,21 @@ import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
 const cache = new LRU(LRU_OPTIONS);
 
-const period = 'all';
-
 function TotalTransactionCount() {
   const [chartData, setChartData] = useState<TLineChartData | null>(null);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
+  const [period, setPeriod] = useState<PeriodTypes>(periods[1][0]);
   const [isLoading, setLoading] = useState(false);
 
-  const fetchStats = useFetch<{ data: Array<TTransactionsChart> }>({
+  const fetchStats = useFetch<{
+    data: Array<TTransactionsChart>;
+    startValue: number;
+    endValue: number;
+  }>({
     method: 'get',
     url: URLS.GET_TRANSACTIONS_CHARTS,
   });
+
   useEffect(() => {
     let isSubscribed = true;
     const loadLineChartData = async () => {
@@ -41,12 +49,24 @@ function TotalTransactionCount() {
         timestamp = currentCache[period]?.lastDate?.toString() || '';
       }
       const data = await fetchStats.fetchData({
-        params: { sortDirection: 'DESC', period, func: 'COUNT', col: 'id', timestamp },
+        params: {
+          sortDirection: 'DESC',
+          period,
+          func: 'COUNT',
+          col: 'id',
+          timestamp,
+        },
       });
       if (data) {
-        const cacheData = currentCache[period]?.parseData as TLineChartData;
-        const startValue = cacheData ? cacheData.dataY[cacheData.dataY.length - 1] : 0;
-        const parseData = transformTotalTransactionCount(data.data, startValue);
+        const cacheParseData = currentCache[period]?.parseData as TLineChartData;
+        const parseData = transformTotalTransactionCount(
+          data.data,
+          period,
+          data.startValue,
+          data.endValue,
+          cacheParseData?.dataY[cacheParseData?.dataY?.length - 1] || 0,
+          timestamp,
+        );
         if (
           currentCache[period] &&
           JSON.stringify(parseData) !== JSON.stringify(currentCache[period])
@@ -85,7 +105,11 @@ function TotalTransactionCount() {
     return () => {
       isSubscribed = false;
     };
-  }, []);
+  }, [period]);
+
+  const handlePeriodFilterChange = (value: PeriodTypes) => {
+    setPeriod(value);
+  };
 
   return (
     <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Total Transaction Count">
@@ -96,7 +120,10 @@ function TotalTransactionCount() {
         title="Total Transaction Count"
         info={info}
         offset={1}
+        period={period}
+        periods={periods[6]}
         handleBgColorChange={handleBgColorChange}
+        handlePeriodFilterChange={handlePeriodFilterChange}
         setHeaderBackground
         isLoading={isLoading}
       />

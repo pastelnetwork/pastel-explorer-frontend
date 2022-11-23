@@ -40,10 +40,17 @@ function StatisticsTransactionsCount() {
         timestamp = currentCache[period]?.lastDate?.toString() || '';
       }
       const data = await fetchStats.fetchData({
-        params: { sortDirection: 'DESC', period, func: 'COUNT', col: 'id', timestamp },
+        params: {
+          sortDirection: 'DESC',
+          period,
+          func: 'COUNT',
+          col: 'id',
+          timestamp,
+          startValue: 'false',
+        },
       });
       if (data) {
-        const parseData = transformLineChartData(data.data, period);
+        const parseData = transformLineChartData(data.data, period, true, 1, 2, timestamp);
         if (
           currentCache[period] &&
           JSON.stringify(parseData) !== JSON.stringify(currentCache[period])

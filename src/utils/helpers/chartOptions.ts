@@ -695,6 +695,11 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             },
           ]),
         },
+        emphasis: {
+          lineStyle: {
+            width: 2,
+          },
+        },
       },
       animation: false,
     },
@@ -805,7 +810,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         top: 8,
         right: 40,
         bottom: 70,
-        left: 50,
+        left: 60,
         show: false,
       },
       dataZoom: [
@@ -839,10 +844,18 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         boundaryGap: false,
         axisLabel: {
           formatter(value: string) {
-            return value ? generateXAxisLabel(new Date(value), 'max') : null;
+            if (period && periods[9].indexOf(period) !== -1) {
+              const date = format(new Date(value), 'MM/dd/yyyy');
+              if (firstDay !== date) {
+                firstDay = date;
+                return generateXAxisLabel(new Date(value), period);
+              }
+              return null;
+            }
+            return value ? generateXAxisLabel(new Date(value), period) : null;
           },
           showMaxLabel: true,
-          interval: generateXAxisInterval('1d', 'max', dataX, width),
+          interval: generateXAxisInterval('1d', period, dataX, width),
         },
       },
       yAxis: {
@@ -1327,7 +1340,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       color: ['#5470c6', '#91cc75', '#fac858'],
       grid: {
         top: 8,
-        right: 8,
+        right: 40,
         bottom: 20,
         left: 50,
         show: false,
@@ -1577,11 +1590,20 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       tooltip: {
         trigger: 'axis',
         formatter: (params: TToolTipParamsProps[]) => {
-          return `${params[0].axisValue.split(', ')[0]}<br />${params[0].marker}${
-            params[0].seriesName
-          }&nbsp;&nbsp;${formatNumber(dataY?.length ? dataY[params[0].dataIndex] * 100 : 0, {
-            decimalsLength: 2,
-          })}`;
+          return `
+            <div class="tooltip-item-wrapper">
+              <div class="item-label">${generateTooltipLabel(
+                new Date(params[0].axisValue),
+                period !== '24h' ? '1d' : 'none',
+              )}</div>
+              <div class="item-value">${params[0].marker} ${formatNumber(
+            dataY?.length ? dataY[params[0].dataIndex] * 100 : 0,
+            {
+              decimalsLength: 2,
+            },
+          )}</div>
+            </div>
+          `;
         },
       },
       xAxis: {
@@ -1589,16 +1611,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         data: dataX,
         axisLabel: {
           formatter(value: string) {
-            if (period && periods[9].indexOf(period) !== -1) {
-              const date = format(new Date(value), 'MM/dd/yyyy');
-              if (firstDay !== date) {
-                firstDay = date;
-                return generateXAxisLabel(new Date(value), period);
-              }
-
-              return null;
-            }
-            return value ? generateXAxisLabel(new Date(value), period) : null;
+            return generateXAxisLabel(new Date(value), period);
           },
           showMaxLabel: true,
           interval: generateXAxisInterval('1d', period, dataX, width),

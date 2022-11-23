@@ -48,7 +48,7 @@ function AverageTransactionsPerBlock() {
         },
       });
       if (data) {
-        const parseData = transformLineChartData(data.data, period, false);
+        const parseData = transformLineChartData(data.data, period, false, 1, 2, timestamp);
         if (
           currentCache[period] &&
           JSON.stringify(parseData) !== JSON.stringify(currentCache[period])

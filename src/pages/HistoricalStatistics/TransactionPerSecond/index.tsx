@@ -47,7 +47,7 @@ function TransactionPerSecond() {
         params: { sortDirection: 'DESC', period, timestamp },
       });
       if (data) {
-        const parseData = transformTransactionPerSecond(data.data, period);
+        const parseData = transformTransactionPerSecond(data.data, period, timestamp);
         if (
           currentCache[period] &&
           JSON.stringify(parseData) !== JSON.stringify(currentCache[period])

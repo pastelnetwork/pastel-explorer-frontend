@@ -122,6 +122,7 @@ export function getStartPoint(period: PeriodTypes): number {
 export function transformDifficultyInfo(
   difficulties: IStatistic[],
   period: PeriodTypes,
+  timestamp: string,
 ): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
@@ -132,7 +133,11 @@ export function transformDifficultyInfo(
       dataX.push(format(Number(difficulties[i].timestamp), 'MM/dd/yyyy hh:mm aa'));
     }
   }
-  if (period === '24h' && checkValidateData(difficulties[difficulties.length - 1]?.timestamp)) {
+  if (
+    period === '24h' &&
+    !timestamp &&
+    checkValidateData(difficulties[difficulties.length - 1]?.timestamp)
+  ) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
     dataY.push(difficulties[difficulties.length - 1].difficulty);
   }
@@ -140,7 +145,11 @@ export function transformDifficultyInfo(
   return { dataX, dataY };
 }
 
-export function transformPriceInfo(prices: IStatistic[], period: PeriodTypes): TMultiLineChartData {
+export function transformPriceInfo(
+  prices: IStatistic[],
+  period: PeriodTypes,
+  timestamp: string,
+): TMultiLineChartData {
   const dataX: string[] = [];
   const dataY1: number[] = [];
   const dataY2: number[] = [];
@@ -152,7 +161,7 @@ export function transformPriceInfo(prices: IStatistic[], period: PeriodTypes): T
     dataY2.push(btc);
     dataX.push(new Date(Number(prices[i].timestamp)).toLocaleString());
   }
-  if (period === '24h' && checkValidateData(prices[prices.length - 1]?.timestamp)) {
+  if (period === '24h' && !timestamp && checkValidateData(prices[prices.length - 1]?.timestamp)) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
     dataY1.push(Number(prices[prices.length - 1].usdPrice));
     dataY2.push(Number(prices[prices.length - 1].btcPrice));
@@ -163,6 +172,7 @@ export function transformPriceInfo(prices: IStatistic[], period: PeriodTypes): T
 export function transformMarketVolumePriceInfo(
   data: MarketCoinRespone,
   period: PeriodTypes,
+  isAddNewNode: boolean,
 ): TMultiLineChartData {
   const dataX: string[] = [];
   const dataY1: number[] = [];
@@ -177,7 +187,7 @@ export function transformMarketVolumePriceInfo(
     dataY1.push(+y1.toFixed(8));
     dataY2.push(Math.round(y2));
   }
-  if (period === '24h' && checkValidateData(prices[prices.length - 1][0])) {
+  if (period === '24h' && isAddNewNode && checkValidateData(prices[prices.length - 1][0])) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
     dataY1.push(Number(dataY1[dataY1.length - 1]));
     dataY2.push(Number(dataY2[dataY2.length - 1]));
@@ -188,6 +198,7 @@ export function transformMarketVolumePriceInfo(
 export function transformMarketCapPriceInfo(
   data: MarketCoinRespone,
   period: PeriodTypes,
+  isAddNewNode: boolean,
 ): TMultiLineChartData {
   const dataX: string[] = [];
   const dataY1: number[] = [];
@@ -202,7 +213,7 @@ export function transformMarketCapPriceInfo(
     dataY1.push(+y1.toFixed(8));
     dataY2.push(Math.round(y2));
   }
-  if (period === '24h' && checkValidateData(prices[prices.length - 1][0])) {
+  if (period === '24h' && isAddNewNode && checkValidateData(prices[prices.length - 1][0])) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
     dataY1.push(Number(dataY1[dataY1.length - 1]));
     dataY2.push(Number(dataY2[dataY2.length - 1]));
@@ -228,6 +239,7 @@ export function transformHashrateInfo(hashrateInfo: TMiningInfo[]): TLineChartDa
 export function transformMempoolInfo(
   mempoolInfo: TMempoolInfo[],
   period: PeriodTypes,
+  timestamp: string,
 ): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
@@ -238,7 +250,11 @@ export function transformMempoolInfo(
       dataX.push(new Date(Number(mempoolInfo[i].timestamp)).toLocaleString());
     }
   }
-  if (period === '24h' && checkValidateData(mempoolInfo[mempoolInfo.length - 1]?.timestamp)) {
+  if (
+    period === '24h' &&
+    !timestamp &&
+    checkValidateData(mempoolInfo[mempoolInfo.length - 1]?.timestamp)
+  ) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
     dataY.push(Number(mempoolInfo[mempoolInfo.length - 1].usage) / 1000);
   }
@@ -248,6 +264,7 @@ export function transformMempoolInfo(
 export function transformNetTotals(
   nettotals: TNettotalsInfo[],
   period: PeriodTypes,
+  timestamp: string,
 ): TMultiLineChartData {
   const dataX: string[] = [];
   const dataY1: number[] = [];
@@ -261,7 +278,11 @@ export function transformNetTotals(
       dataX.push(new Date(Number(nettotals[i].timemillis)).toLocaleString());
     }
   }
-  if (period === '24h' && checkValidateData(nettotals[nettotals.length - 1]?.timemillis)) {
+  if (
+    period === '24h' &&
+    !timestamp &&
+    checkValidateData(nettotals[nettotals.length - 1]?.timemillis)
+  ) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
     dataY1.push(Number(nettotals[nettotals.length - 1].totalbytesrecv));
     dataY2.push(Number(nettotals[nettotals.length - 1].totalbytessent));
@@ -285,6 +306,7 @@ export function transformBlocks(blocks: IBlock[]): TScatterChartData {
 export function transformAverageBlockSize(
   blockSizes: TAverageBlockSize[],
   period: PeriodTypes,
+  timestamp: string,
 ): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
@@ -297,7 +319,11 @@ export function transformAverageBlockSize(
       dataX.push(format(blockSizes[i].maxTime * 1000, 'MM/dd/yyyy HH:mm'));
     }
   }
-  if (period === '24h' && checkValidateData(blockSizes[blockSizes.length - 1]?.time * 1000)) {
+  if (
+    period === '24h' &&
+    !timestamp &&
+    checkValidateData(blockSizes[blockSizes.length - 1]?.time * 1000)
+  ) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy HH:mm'));
     dataY.push(0);
   }
@@ -307,6 +333,7 @@ export function transformAverageBlockSize(
 export function transformTransactionPerSecond(
   trans: TTransactionPerSecond[],
   period: PeriodTypes,
+  timestamp: string,
 ): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
@@ -317,7 +344,12 @@ export function transformTransactionPerSecond(
       dataX.push(new Date(trans[i].time).toLocaleString());
     }
   }
-  if (period === '24h' && trans.length && checkValidateData(trans[trans.length - 1]?.time)) {
+  if (
+    period === '24h' &&
+    !timestamp &&
+    trans.length &&
+    checkValidateData(trans[trans.length - 1]?.time)
+  ) {
     dataX.push(new Date().toLocaleString());
     dataY.push(dataY[dataY.length - 1]);
   }
@@ -381,6 +413,7 @@ export function transformBlockchainSizeData(
   endValue: number,
   startValueCache: number,
   range = 10e6,
+  timestamp?: string,
 ): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
@@ -394,25 +427,44 @@ export function transformBlockchainSizeData(
     dataY.push(parseFloat((value / range).toFixed(2)));
     preValue += data[i].value;
   }
-  if (period === '24h' && checkValidateData(parseInt(data[data.length - 1]?.label, 10))) {
+  if (
+    period === '24h' &&
+    timestamp &&
+    checkValidateData(parseInt(data[data.length - 1]?.label, 10))
+  ) {
     dataX.push(new Date().toLocaleString());
     dataY.push(dataY[dataY.length - 1]);
   }
   return { dataX, dataY };
 }
 
-export function transformTotalTransactionCount(data: TChartResponseItem[], startValue = 0) {
+export function transformTotalTransactionCount(
+  data: TChartResponseItem[],
+  period: PeriodTypes,
+  startValue: number,
+  endValue: number,
+  startValueCache: number,
+  timestamp: string,
+) {
   const dataX: string[] = [];
   const dataY: number[] = [];
-  if (data.length) {
-    dataX.push(new Date(Number(data[0].label) * 1000).toLocaleString());
-    dataY.push(data[0].value + startValue);
-    for (let i = 1; i < data.length; i += 1) {
-      const { value, label } = data[i];
-      const newValue = dataY[i - 1] + value;
-      dataY.push(newValue);
-      dataX.push(new Date(Number(label) * 1000).toLocaleString());
+  let preValue = startValueCache || startValue;
+  for (let i = 0; i < data.length; i += 1) {
+    let value = data[i].value + preValue;
+    if (i === data.length - 1) {
+      value = endValue;
     }
+    dataX.push(new Date(parseInt(data[i].label, 10) * 1000).toLocaleString());
+    dataY.push(parseFloat(value.toFixed(2)));
+    preValue += data[i].value;
+  }
+  if (
+    period === '24h' &&
+    !timestamp &&
+    checkValidateData(parseInt(data[data.length - 1]?.label, 10) * 1000)
+  ) {
+    dataX.push(new Date().toLocaleString());
+    dataY.push(dataY[dataY.length - 1]);
   }
   return {
     dataX,
@@ -524,6 +576,7 @@ export function setTransactionsLive(
 export function transformStatisticsChart(
   trans: TChartStatisticsResponse[],
   period: PeriodTypes,
+  timestamp: string,
 ): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
@@ -532,7 +585,7 @@ export function transformStatisticsChart(
     dataY.push(value);
     dataX.push(new Date(trans[i].time).toLocaleString());
   }
-  if (period === '24h' && checkValidateData(trans[trans.length - 1]?.time)) {
+  if (period === '24h' && !timestamp && checkValidateData(trans[trans.length - 1]?.time)) {
     dataX.push(new Date().toLocaleString());
     dataY.push(dataY[dataY.length - 1]);
   }
@@ -545,6 +598,7 @@ export function transformStatisticsChart(
 export function transformAccountDataChart(
   trans: IStatistic[],
   period: PeriodTypes,
+  timestamp: string,
 ): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
@@ -552,7 +606,7 @@ export function transformAccountDataChart(
     dataY.push(Number(trans[i].nonZeroAddressesCount));
     dataX.push(new Date(trans[i].timestamp).toLocaleString());
   }
-  if (period === '24h' && checkValidateData(trans[trans.length - 1]?.timestamp)) {
+  if (period === '24h' && !timestamp && checkValidateData(trans[trans.length - 1]?.timestamp)) {
     dataX.push(new Date().toLocaleString());
     dataY.push(dataY[dataY.length - 1]);
   }
@@ -565,6 +619,7 @@ export function transformAccountDataChart(
 export function transformTotalSupplyDataChart(
   trans: IStatistic[],
   period: PeriodTypes,
+  timestamp: string,
 ): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
@@ -572,7 +627,7 @@ export function transformTotalSupplyDataChart(
     dataY.push(Number(trans[i].coinSupply));
     dataX.push(new Date(trans[i].timestamp).toLocaleString());
   }
-  if (period === '24h' && checkValidateData(trans[trans.length - 1]?.timestamp)) {
+  if (period === '24h' && !timestamp && checkValidateData(trans[trans.length - 1]?.timestamp)) {
     dataX.push(new Date().toLocaleString());
     dataY.push(dataY[dataY.length - 1]);
   }
@@ -602,6 +657,7 @@ export const generatePeriodToDropdownOptions = (periods: PeriodTypes[]) => {
 export function transformHashRateCharts(
   data: THashrate[],
   period: PeriodTypes,
+  timestamp: string,
 ): THashrateChartData {
   const dataX: string[] = [];
   const networksolps: TSolpsData = {
@@ -624,7 +680,7 @@ export function transformHashRateCharts(
     networksolps.solps500.push(item.networksolps500);
     networksolps.solps1000.push(item.networksolps1000);
   });
-  if (period === '24h' && checkValidateData(data[data.length - 1]?.timestamp)) {
+  if (period === '24h' && !timestamp && checkValidateData(data[data.length - 1]?.timestamp)) {
     dataX.push(new Date().toLocaleString());
     networksolps.solps5.push(0);
     networksolps.solps10.push(0);
@@ -804,7 +860,7 @@ export const getChartData = (
   const dataY: number[] = [];
   newDataX.forEach((item, index) => {
     const timestamp = new Date(item).valueOf();
-    if (timestamp >= target && !dataX.includes(item)) {
+    if (timestamp >= target && !dataX.includes(new Date(item).toLocaleString())) {
       dataX.push(item);
       dataY.push(newDataY[index]);
     }
@@ -850,7 +906,7 @@ export const getHashRateChartData = (
   const dataX: string[] = [];
   newDataX.forEach((item, index) => {
     const timestamp = new Date(item).valueOf();
-    if (timestamp >= target && !dataX.includes(item)) {
+    if (timestamp >= target && !dataX.includes(new Date(item).toLocaleString())) {
       dataX.push(item);
       networksolps.solps5.push(newSolps5[index]);
       networksolps.solps10.push(newSolps10[index]);
@@ -890,12 +946,13 @@ export const getMultiLineChartData = (
   const dataY2: number[] = [];
   newDataX.forEach((item, index) => {
     const timestamp = new Date(item).valueOf();
-    if (timestamp >= target && !dataX.includes(item)) {
+    if (timestamp >= target && !dataX.includes(new Date(item).toLocaleString())) {
       dataX.push(item);
       dataY1.push(newDataY1[index]);
       dataY2.push(newDataY2[index]);
     }
   });
+
   return {
     dataX,
     dataY1,
@@ -909,6 +966,7 @@ export function transformLineChartData(
   isMicroseconds = true,
   range = 1,
   decimalsLength = 2,
+  timestamp?: string,
 ): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
@@ -922,7 +980,7 @@ export function transformLineChartData(
   });
   if (
     period === '24h' &&
-    data.length &&
+    !timestamp &&
     checkValidateData(
       isMicroseconds
         ? Number(data[data.length - 1]?.label) * 1000

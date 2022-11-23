@@ -48,7 +48,7 @@ function Nettotals() {
         params: { period, sortDirection: 'ASC', timestamp },
       });
       if (data) {
-        const parseData = transformNetTotals(data.data, period);
+        const parseData = transformNetTotals(data.data, period, timestamp);
         if (
           currentCache[period] &&
           JSON.stringify(parseData) !== JSON.stringify(currentCache[period])
