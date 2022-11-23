@@ -4,11 +4,7 @@ import LRU from 'lru-cache';
 // application
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import {
-  PeriodTypes,
-  transformMarketCapPriceInfo,
-  getMultiLineChartData,
-} from '@utils/helpers/statisticsLib';
+import { PeriodTypes, transformMarketCapPriceInfo } from '@utils/helpers/statisticsLib';
 import { periods, info, LRU_OPTIONS, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
@@ -54,13 +50,8 @@ function PriceOvertime() {
         ) {
           setLoading(true);
         }
-        const newParseData = getMultiLineChartData(
-          parseData,
-          currentCache[period]?.parseData as TMultiLineChartData,
-          period,
-        );
         if (isSubscribed) {
-          setTransformLineChartData(newParseData);
+          setTransformLineChartData(parseData);
         }
         currentCache = {
           ...currentCache,
