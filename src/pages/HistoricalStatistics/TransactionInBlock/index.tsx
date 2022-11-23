@@ -56,7 +56,7 @@ function TransactionInBlock() {
           period,
         );
         if (isSubscribed) {
-          setChartData(parseData);
+          setChartData(newParseData);
         }
         currentCache = {
           ...currentCache,

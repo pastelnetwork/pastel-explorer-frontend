@@ -1,6 +1,7 @@
 import format from 'date-fns/format';
 import fromUnixTime from 'date-fns/fromUnixTime';
 import subDays from 'date-fns/subDays';
+import subHours from 'date-fns/subHours';
 import {
   TMultiLineChartData,
   TMiningInfo,
@@ -15,8 +16,6 @@ import {
   TTransactionsChart,
   TChartResponseItem,
   TChartStatisticsResponse,
-  TAnalyticsChartResponse,
-  TAnalyticsChartData,
   THashrate,
   TSolpsData,
   THashrateChartData,
@@ -81,43 +80,6 @@ const checkValidateData = (timestamp: number) => {
 
   return null;
 };
-
-export function getStartPoint(period: PeriodTypes): number {
-  let duration = 1;
-  switch (period) {
-    case '2h':
-      duration = 2;
-      break;
-    case '2d':
-      duration = 2 * 24;
-      break;
-    case '4d':
-      duration = 4 * 24;
-      break;
-    case '30d':
-      duration = 30 * 24;
-      break;
-    case '60d':
-      duration = 60 * 24;
-      break;
-    case '90d':
-      duration = 90 * 24;
-      break;
-    case '180d':
-      duration = 180 * 24;
-      break;
-    case '1y':
-      duration = 360 * 24;
-      break;
-    case 'all':
-    case 'max':
-      return 0;
-    default:
-      duration = 2;
-      return 0;
-  }
-  return Date.now() - duration * 60 * 60 * 1000;
-}
 
 export function transformDifficultyInfo(
   difficulties: IStatistic[],
@@ -379,33 +341,6 @@ export const transformChartData = (
   return { dataX, dataY };
 };
 
-export function transformCharts(data: TChartResponseItem[], range = 1): TLineChartData {
-  const dataX: string[] = [];
-  const dataY: number[] = [];
-  data.forEach(({ value, label }) => {
-    dataX.push(label);
-    dataY.push(+(value / range).toFixed(2));
-  });
-  return { dataX, dataY };
-}
-
-export function transformTotalData(data: TTransactionsChart[], range = 10e6): TLineChartData {
-  const dataX: string[] = [];
-  const dataY: number[] = [];
-  if (data.length) {
-    dataX.push(data[0].label);
-    dataY.push(+(data[0].value / range).toFixed(2));
-    if (data.length > 1) {
-      for (let i = 1; i < data.length; i += 1) {
-        const { value, label } = data[i];
-        dataX.push(label);
-        dataY.push(+(dataY[i - 1] + +(value / range).toFixed(2)).toFixed(2));
-      }
-    }
-  }
-  return { dataX, dataY };
-}
-
 export function transformBlockchainSizeData(
   data: TTransactionsChart[],
   period: PeriodTypes,
@@ -637,12 +572,6 @@ export function transformTotalSupplyDataChart(
   };
 }
 
-export const transformAnalyticsChartData = ({
-  data,
-}: TAnalyticsChartResponse): TAnalyticsChartData => {
-  return { ...data };
-};
-
 export const generatePeriodToDropdownOptions = (periods: PeriodTypes[]) => {
   const results = [];
   for (let i = 0; i < periods.length; i += 1) {
@@ -691,26 +620,6 @@ export function transformHashRateCharts(
     networksolps.solps1000.push(0);
   }
   return { dataX, networksolps };
-}
-
-export function convertYAxisLabelWithoutUnit(
-  value: number,
-  maxY: number,
-  fractionDigits = 1,
-): number | string {
-  if (value === 0) {
-    return value;
-  }
-  if (maxY > 1000000000) {
-    return `${(value / 1000000000).toFixed(fractionDigits)}`;
-  }
-  if (maxY > 1000000) {
-    return `${(value / 1000000).toFixed(fractionDigits)}`;
-  }
-  if (maxY > 1000) {
-    return `${(value / 1000).toFixed(fractionDigits)}`;
-  }
-  return value;
 }
 
 export const generateXAxisInterval = (
@@ -825,7 +734,20 @@ export const toPlainString = (num: number) => {
   });
 };
 
-const getPeriodData = (period: PeriodTypes, date: string) => {
+const getPeriodData = (period: PeriodTypes, date: string, isHour = false) => {
+  if (isHour) {
+    const periodHourData = {
+      '1h': 1,
+      '3h': 3,
+      '6h': 6,
+      '12h': 12,
+    };
+    return subHours(
+      new Date(date),
+      periodHourData[period as keyof typeof periodHourData],
+    ).valueOf();
+  }
+
   const periodData = {
     '24h': 1,
     '7d': 7,
@@ -837,75 +759,6 @@ const getPeriodData = (period: PeriodTypes, date: string) => {
     '1y': 365,
   };
   return subDays(new Date(date), periodData[period as keyof typeof periodData]).valueOf();
-};
-
-export const getChartData = (
-  parseData: TLineChartData,
-  currentData: TLineChartData,
-  period: PeriodTypes,
-) => {
-  if (!currentData || !currentData.dataX.length) {
-    return parseData;
-  }
-  if (!parseData || !parseData.dataX.length) {
-    return currentData;
-  }
-  const newDataX = [...currentData.dataX, ...parseData.dataX];
-  const newDataY = [...currentData.dataY, ...parseData.dataY];
-  let target = 0;
-  if (period !== 'all' && period !== 'max') {
-    target = getPeriodData(period, parseData.dataX[parseData.dataX.length - 1]);
-  }
-  const dataX: string[] = [];
-  const dataY: number[] = [];
-  newDataX.forEach((item, index) => {
-    const timestamp = new Date(item).valueOf();
-    if (timestamp >= target && !dataX.includes(new Date(item).toLocaleString())) {
-      dataX.push(item);
-      dataY.push(newDataY[index]);
-    }
-  });
-  return {
-    dataX,
-    dataY,
-  };
-};
-
-export const getMultiLineChartData = (
-  parseData: TMultiLineChartData,
-  currentData: TMultiLineChartData,
-  period: PeriodTypes,
-) => {
-  if (!currentData || !currentData.dataX.length) {
-    return parseData;
-  }
-  if (!parseData || !parseData.dataX.length) {
-    return currentData;
-  }
-  const newDataX = [...currentData.dataX, ...parseData.dataX];
-  const newDataY1 = [...currentData.dataY1, ...parseData.dataY1];
-  const newDataY2 = [...currentData.dataY2, ...parseData.dataY2];
-  let target = 0;
-  if (period !== 'all' && period !== 'max') {
-    target = getPeriodData(period, parseData.dataX[parseData.dataX.length - 1]);
-  }
-  const dataX: string[] = [];
-  const dataY1: number[] = [];
-  const dataY2: number[] = [];
-  newDataX.forEach((item, index) => {
-    const timestamp = new Date(item).valueOf();
-    if (timestamp >= target && !dataX.includes(new Date(item).toLocaleString())) {
-      dataX.push(item);
-      dataY1.push(newDataY1[index]);
-      dataY2.push(newDataY2[index]);
-    }
-  });
-
-  return {
-    dataX,
-    dataY1,
-    dataY2,
-  };
 };
 
 export function transformLineChartData(
@@ -952,24 +805,26 @@ export const getScatterChartData = (
   if (!parseData || !parseData.dataX.length) {
     return currentData;
   }
-  const newDataX = [...currentData.dataX, ...parseData.dataX];
-  const newData = [...currentData.data, ...parseData.data];
-  let target = 0;
+  const newDataX = [
+    ...currentData.dataX.splice(0, currentData.dataX.length - 1),
+    ...parseData.dataX,
+  ];
+  const newData = currentData.data.splice(0, currentData.data.length - 1).concat(parseData.data);
+  let startIndex = 0;
   if (period !== 'all' && period !== 'max') {
-    target = getPeriodData(period, parseData.dataX[parseData.dataX.length - 1]);
-  }
-  const dataX: string[] = [];
-  const data: number[][] = [];
-  newDataX.forEach((item, index) => {
-    const timestamp = new Date(item).valueOf();
-    if (timestamp >= target && !dataX.includes(item)) {
-      dataX.push(item);
-      data.push(newData[index]);
+    const target = getPeriodData(period, parseData.dataX[parseData.dataX.length - 1], true);
+    for (let i = 0; i < newDataX.length; i += 1) {
+      const timestamp = new Date(newDataX[i]).valueOf();
+      if (timestamp >= target) {
+        startIndex = i;
+        break;
+      }
     }
-  });
+  }
+  const dataX = newDataX.splice(startIndex, newDataX.length);
   return {
     dataX,
-    data,
+    data: newData.splice(startIndex, newData.length),
   };
 };
 
