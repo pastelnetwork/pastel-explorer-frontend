@@ -784,6 +784,9 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         type: 'value',
+        min: minY,
+        max: maxY,
+        interval: (maxY - minY) / 5,
         splitLine: {
           show: false,
         },
@@ -1125,7 +1128,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           <div class="tooltip-item-wrapper">
             <div class="item-label">${generateTooltipLabel(
               new Date(params[0].axisValue),
-              granularity,
+              period === '24h' ? 'none' : '1d',
             )}</div>
             <div class="item-value">${params[0].marker} ${params[0].value}</div>
           </div>
