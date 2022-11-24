@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import Axios, { AxiosError } from 'axios';
 import { useDispatch } from 'react-redux';
-import { BASE_URL } from '@utils/constants/urls';
+import { DEFAULT_API_URL } from '@utils/constants/urls';
 
 import { setResponseError } from '@redux/actions/responseErrorsActions';
 
@@ -23,9 +23,9 @@ export const getBaseURL = () => {
       const tmp = JSON.parse(store.cluster);
       return tmp.url;
     }
-    return BASE_URL;
+    return DEFAULT_API_URL;
   } catch {
-    return BASE_URL;
+    return DEFAULT_API_URL;
   }
 };
 

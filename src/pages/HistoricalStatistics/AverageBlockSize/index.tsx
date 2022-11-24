@@ -3,7 +3,12 @@ import { useEffect, useState } from 'react';
 import LRU from 'lru-cache';
 // application
 import { TLineChartData, TAverageBlockSize, TCacheValue } from '@utils/types/IStatistics';
-import { TGranularity, PeriodTypes, transformAverageBlockSize } from '@utils/helpers/statisticsLib';
+import {
+  TGranularity,
+  PeriodTypes,
+  transformAverageBlockSize,
+  mergeChartData,
+} from '@utils/helpers/statisticsLib';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import {
@@ -36,6 +41,7 @@ const AverageBlockSize = (): JSX.Element => {
   useEffect(() => {
     let isSubscribed = true;
     const loadLineChartData = async () => {
+      let timestamp = '';
       let currentCache =
         (cache.get(cacheList.averageBlockSize) as TCacheValue) ||
         readCacheValue(cacheList.averageBlockSize) ||
@@ -43,28 +49,37 @@ const AverageBlockSize = (): JSX.Element => {
       if (!currentCache[`${period}-${granularity}`]) {
         setLoading(true);
       } else {
-        setChartData(currentCache[`${period}-${granularity}`] as TLineChartData);
+        setChartData(currentCache[`${period}-${granularity}`].parseData as TLineChartData);
+        timestamp = currentCache[`${period}-${granularity}`]?.lastDate?.toString() || '';
       }
       const data = await fetchStats.fetchData({
-        params: { sortDirection: 'DESC', period, granularity, format: 'true' },
+        params: { sortDirection: 'DESC', period, granularity, format: 'true', timestamp },
       });
       if (data) {
-        const parseData = transformAverageBlockSize(data.data, period);
+        const parseData = transformAverageBlockSize(data.data, period, timestamp);
         if (
           currentCache[`${period}-${granularity}`] &&
           JSON.stringify(parseData) !== JSON.stringify(currentCache[`${period}-${granularity}`])
         ) {
           setLoading(true);
         }
+        const newParseData = mergeChartData(
+          parseData,
+          currentCache[`${period}-${granularity}`]?.parseData as TLineChartData,
+          period,
+        );
         if (isSubscribed) {
-          setChartData(parseData);
+          setChartData(newParseData);
         }
-        if (!currentCache[`${period}-${granularity}`]) {
-          currentCache = {
-            ...currentCache,
-            [`${period}-${granularity}`]: parseData,
-          };
-        }
+        currentCache = {
+          ...currentCache,
+          [`${period}-${granularity}`]: {
+            parseData: newParseData,
+            lastDate: data.data.length
+              ? data.data[data.data.length - 1]?.time
+              : currentCache[period]?.lastDate,
+          },
+        };
         setCacheValue(
           cacheList.averageBlockSize,
           JSON.stringify({

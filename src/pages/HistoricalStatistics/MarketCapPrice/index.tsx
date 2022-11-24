@@ -1,20 +1,24 @@
 // react
 import { useEffect, useState } from 'react';
-// third party
-import { Skeleton } from '@material-ui/lab';
+import LRU from 'lru-cache';
 // application
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { PeriodTypes } from '@utils/helpers/statisticsLib';
-import { periods, info } from '@utils/constants/statistics';
+import { PeriodTypes, transformMarketCapPriceInfo } from '@utils/helpers/statisticsLib';
+import { periods, info, LRU_OPTIONS, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
-import { MarketCoinRespone, TMultiLineChartData } from '@utils/types/IStatistics';
+import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
+import { MarketCoinRespone, TMultiLineChartData, TCacheValue } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
 import { EChartsMultiLineChart } from '../Chart/EChartsMultiLineChart';
+
+const cache = new LRU(LRU_OPTIONS);
 
 function PriceOvertime() {
   const [period, setPeriod] = useState<PeriodTypes>(periods[3][0]);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
+  const [isLoading, setLoading] = useState(false);
+
   const fetchStats = useFetch<{ data: MarketCoinRespone }>({
     method: 'get',
     url: URLS.GET_STATISTICS_MARKET_PRICE,
@@ -22,27 +26,57 @@ function PriceOvertime() {
   const [transformLineChartData, setTransformLineChartData] = useState<TMultiLineChartData>();
 
   useEffect(() => {
+    let isSubscribed = true;
     const loadLineChartData = async () => {
+      let isAddNewNode = true;
+      let currentCache =
+        (cache.get(cacheList.marketCapPrice) as TCacheValue) ||
+        readCacheValue(cacheList.marketCapPrice) ||
+        {};
+      if (!currentCache[period]) {
+        setLoading(true);
+      } else {
+        setTransformLineChartData(currentCache[period].parseData as TMultiLineChartData);
+        isAddNewNode = false;
+      }
       const data = await fetchStats.fetchData({
         params: { period },
       });
       if (data) {
-        const { prices, market_caps } = data.data;
-
-        const dataX = [];
-        const dataY1 = [];
-        const dataY2 = [];
-        for (let i = 0; i < prices.length; i += 1) {
-          const [x, y1] = prices[i];
-          const [, y2] = market_caps[i];
-          dataX.push(new Date(x).toLocaleString());
-          dataY1.push(+y1.toFixed(8));
-          dataY2.push(Math.round(y2));
+        const parseData = transformMarketCapPriceInfo(data.data, period, isAddNewNode);
+        if (
+          currentCache[period] &&
+          JSON.stringify(parseData) !== JSON.stringify(currentCache[period])
+        ) {
+          setLoading(true);
         }
-        setTransformLineChartData({ dataX, dataY1, dataY2 });
+        if (isSubscribed) {
+          setTransformLineChartData(parseData);
+        }
+        currentCache = {
+          ...currentCache,
+          [period]: {
+            parseData,
+            lastDate: data.data.prices.length
+              ? Number(data.data.prices[data.data.prices.length - 1][0])
+              : currentCache[period]?.lastDate,
+          },
+        };
+        setCacheValue(
+          cacheList.marketCapPrice,
+          JSON.stringify({
+            currentCache,
+            lastDate: Date.now(),
+          }),
+        );
+        cache.set(cacheList.marketCapPrice, currentCache);
       }
+      setLoading(false);
     };
     loadLineChartData();
+    return () => {
+      isSubscribed = false;
+    };
   }, [period]);
 
   const handlePeriodFilterChange = (per: PeriodTypes) => {
@@ -51,30 +85,28 @@ function PriceOvertime() {
 
   return (
     <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Market Price and Cap">
-      {transformLineChartData ? (
-        <EChartsMultiLineChart
-          chartName="prices"
-          dataX={transformLineChartData?.dataX}
-          dataY1={transformLineChartData?.dataY1}
-          dataY2={transformLineChartData?.dataY2}
-          yaxisName="USD Price"
-          yaxisName1="Market Cap"
-          seriesName="Price"
-          seriesName1="Market Cap"
-          fixedNum={5}
-          fixedNum1={0}
-          title="Price - Cap"
-          info={info}
-          offset={0.0001}
-          period={period}
-          periods={periods[6]}
-          handleBgColorChange={handleBgColorChange}
-          handlePeriodFilterChange={handlePeriodFilterChange}
-          setHeaderBackground
-        />
-      ) : (
-        <Skeleton animation="wave" variant="rect" height={386} />
-      )}
+      <EChartsMultiLineChart
+        chartName="marketCapPrice"
+        dataX={transformLineChartData?.dataX}
+        dataY1={transformLineChartData?.dataY1}
+        dataY2={transformLineChartData?.dataY2}
+        yaxisName="USD Price"
+        yaxisName1="Market Cap"
+        seriesName="Price"
+        seriesName1="Market Cap"
+        fixedNum={5}
+        fixedNum1={3}
+        title="Price - Cap"
+        info={info}
+        offset={0.0001}
+        period={period}
+        periods={periods[6]}
+        handleBgColorChange={handleBgColorChange}
+        handlePeriodFilterChange={handlePeriodFilterChange}
+        setHeaderBackground
+        isLoading={isLoading}
+        color={['#000', '#5470C6']}
+      />
     </HistoricalStatisticsLayout>
   );
 }

@@ -4,7 +4,11 @@ import LRU from 'lru-cache';
 // application
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { PeriodTypes, transformBlockchainSizeData } from '@utils/helpers/statisticsLib';
+import {
+  PeriodTypes,
+  transformBlockchainSizeData,
+  mergeChartData,
+} from '@utils/helpers/statisticsLib';
 import { periods, info, LRU_OPTIONS, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
@@ -33,6 +37,7 @@ function BlockchainSize() {
   useEffect(() => {
     let isSubscribed = true;
     const loadLineChartData = async () => {
+      let timestamp = '';
       let currentCache =
         (cache.get(cacheList.blockchainSize) as TCacheValue) ||
         readCacheValue(cacheList.blockchainSize) ||
@@ -40,18 +45,30 @@ function BlockchainSize() {
       if (!currentCache[period]) {
         setLoading(true);
       } else {
-        setChartData(currentCache[period] as TLineChartData);
+        setChartData(currentCache[period].parseData as TLineChartData);
+        timestamp = currentCache[period]?.lastDate?.toString() || '';
       }
 
       const data = await fetchStats.fetchData({
-        params: { period, sortDirection: 'DESC', func: 'SUM', col: 'size', name: 'blockchainSize' },
+        params: {
+          period,
+          sortDirection: 'DESC',
+          func: 'SUM',
+          col: 'size',
+          name: 'blockchainSize',
+          timestamp,
+        },
       });
       if (data) {
+        const cacheParseData = currentCache[period]?.parseData as TLineChartData;
         const parseData = transformBlockchainSizeData(
           data.data,
           period,
           data.startValue,
           data.endValue,
+          cacheParseData?.dataY[cacheParseData?.dataY?.length - 1] || 0,
+          10e6,
+          timestamp,
         );
         if (
           currentCache[period] &&
@@ -59,15 +76,23 @@ function BlockchainSize() {
         ) {
           setLoading(true);
         }
+        const newParseData = mergeChartData(
+          parseData,
+          currentCache[period]?.parseData as TLineChartData,
+          period,
+        );
         if (isSubscribed) {
-          setChartData(parseData);
+          setChartData(newParseData);
         }
-        if (!currentCache[period]) {
-          currentCache = {
-            ...currentCache,
-            [period]: parseData,
-          };
-        }
+        currentCache = {
+          ...currentCache,
+          [period]: {
+            parseData: newParseData,
+            lastDate: data.data.length
+              ? Number(data.data[data.data.length - 1]?.label)
+              : currentCache[period]?.lastDate,
+          },
+        };
         setCacheValue(
           cacheList.blockchainSize,
           JSON.stringify({
