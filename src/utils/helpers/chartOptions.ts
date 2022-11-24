@@ -1701,7 +1701,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         },
         axisLabel: {
           formatter(value: string) {
-            return getYAxisLabel(Number(value), minY, maxY);
+            return convertYAxisLabel(Number(value), maxY);
           },
         },
       },
