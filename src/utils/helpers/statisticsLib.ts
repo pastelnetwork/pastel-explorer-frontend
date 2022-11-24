@@ -1001,3 +1001,43 @@ export const mergeHashRateChartData = (
     },
   };
 };
+
+const getFractionDigits = (min: number, max: number, range = 6) => {
+  const val = (max - min) / range;
+  let fractionDigits = 0;
+  if (val < 1) {
+    const str = toPlainString(val).replace('.', '');
+    for (let i = 0; i < str.length; i += 1) {
+      if (str[i] !== '0') {
+        break;
+      }
+      fractionDigits = i + 1;
+    }
+  }
+  return fractionDigits;
+};
+
+export const getYAxisLabel = (value: number, min: number, max: number, range = 6) => {
+  if (value === 0) {
+    return 0;
+  }
+  if (max > 1000000000) {
+    const fractionDigits = getFractionDigits(min / 1000000000, max / 1000000000, range);
+    const newValue = (value / 1000000000).toFixed(fractionDigits);
+    return parseFloat(newValue) !== 0 ? `${newValue}B` : 0;
+  }
+  if (max > 1000000) {
+    const fractionDigits = getFractionDigits(min / 1000000, max / 1000000, range);
+    const newValue = (value / 1000000).toFixed(fractionDigits);
+    return parseFloat(newValue) !== 0 ? `${newValue}M` : 0;
+  }
+  if (max > 1000) {
+    const fractionDigits = getFractionDigits(min / 1000, max / 1000, range);
+    const newValue = (value / 1000).toFixed(fractionDigits);
+    return parseFloat(newValue) !== 0 ? `${newValue}K` : 0;
+  }
+
+  const fractionDigits = getFractionDigits(min, max, range);
+  const newValue = value.toFixed(fractionDigits);
+  return parseFloat(newValue) !== 0 ? newValue : 0;
+};
