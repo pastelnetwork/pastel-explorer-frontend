@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useParams, Redirect } from 'react-router-dom';
-
-import { Grid } from '@material-ui/core';
+import { CircularProgress, Grid } from '@material-ui/core';
 
 import Header from '@components/Header/Header';
 import RouterLink from '@components/RouterLink/RouterLink';
@@ -13,7 +12,13 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import * as ROUTES from '@utils/constants/routes';
 import * as URLS from '@utils/constants/urls';
 import { formattedDate } from '@utils/helpers/date/date';
-import { TransactionEvent, DirectionType, ITransactionDetails } from '@utils/types/ITransactions';
+import {
+  TransactionEvent,
+  DirectionType,
+  ITransactionDetails,
+  ITicket,
+  TTicketType,
+} from '@utils/types/ITransactions';
 import { ISummary } from '@utils/types/ISummary';
 import { useSortData } from '@utils/hooks';
 
@@ -26,6 +31,7 @@ import {
   generateCoinbaseInfo,
 } from './TransactionDetails.helpers';
 import TransactionRawData from './TransactionRawData';
+import TicketDetail from './TicketDetail';
 
 interface ParamTypes {
   id: string;
@@ -34,6 +40,7 @@ interface ParamTypes {
 const TransactionDetails = () => {
   const { id } = useParams<ParamTypes>();
   const [transaction, setTransaction] = React.useState<ITransactionDetails | null>(null);
+  const [ticket, setTicket] = React.useState<ITicket | null>(null);
   const [exchangeRate, setExchangeRate] = React.useState(0);
   const [redirect, setRedirect] = React.useState(false);
   const [openRawDataModal, setOpenRawDataModal] = React.useState(false);
@@ -54,6 +61,7 @@ const TransactionDetails = () => {
         setRedirect(true);
       } else {
         setTransaction(response.data);
+        setTicket(response.data?.ticket || null);
       }
     });
   };
@@ -147,6 +155,37 @@ const TransactionDetails = () => {
     return <Redirect to={ROUTES.NOT_FOUND} />;
   }
 
+  const getTicketTitle = (type: TTicketType) => {
+    switch (type) {
+      case 'pastelid':
+        return 'Pastel ID Registration Ticket';
+      case 'username-change':
+        return 'User Name Change Ticket';
+      case 'nft-reg':
+        return 'NFT Registration Ticket';
+      case 'nft-act':
+        return 'NFT Activation Ticket';
+      case 'nft-collection-reg':
+        return 'NFT Collection Registration Ticket';
+      case 'nft-collection-act':
+        return 'NFT Collection Activation Ticket';
+      case 'nft-royalty':
+        return 'NFT Royalty Ticket';
+      case 'action-reg':
+        return 'Action Registration Ticket';
+      case 'action-act':
+        return 'Action Activation Ticket';
+      case 'offer':
+        return 'Offer Ticket';
+      case 'accept':
+        return 'Accept Ticket';
+      case 'transfer':
+        return 'Transfer Ticket';
+      default:
+        return '';
+    }
+  };
+
   return transaction ? (
     <Styles.Wrapper>
       <Header title="Transaction Details" />
@@ -169,6 +208,15 @@ const TransactionDetails = () => {
             title="Overview"
           />
         </Styles.GridStyle>
+        {ticket ? (
+          <Styles.GridStyle item>
+            <TicketDetail
+              title={getTicketTitle(ticket.type as TTicketType)}
+              type={ticket.type as TTicketType}
+              ticket={ticket.data}
+            />
+          </Styles.GridStyle>
+        ) : null}
         <Styles.GridStyle item>
           {transaction.isNonStandard ? (
             generateNonStandardTransactionInfo()
@@ -204,7 +252,13 @@ const TransactionDetails = () => {
         </Styles.GridStyle>
       </Grid>
     </Styles.Wrapper>
-  ) : null;
+  ) : (
+    <Styles.LoadingWrapper>
+      <Styles.Loader>
+        <CircularProgress size={40} />
+      </Styles.Loader>
+    </Styles.LoadingWrapper>
+  );
 };
 
 export default TransactionDetails;

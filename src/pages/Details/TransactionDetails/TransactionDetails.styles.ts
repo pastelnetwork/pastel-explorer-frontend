@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Alert as MuiAlert } from '@material-ui/lab';
 import { Grid, Toolbar } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
 import { getCurrencyName } from '@utils/appInfo';
 
@@ -188,6 +189,10 @@ export const GridStyle = styled(Grid)`
       padding-right: 6px;
     }
   }
+
+  .mb-10 {
+    margin-bottom: 10px;
+  }
 `;
 
 export const ViewTransactionRawMuiAlert = styled(MuiAlert)`
@@ -238,4 +243,34 @@ export const RightColumn = styled.div`
   ${props => props.theme.breakpoints.down('lg')} {
     width: 100%;
   }
+`;
+
+export const ContentWrapper = styled.div`
+  padding: 9px 16px;
+`;
+
+export const TicketTitle = styled(Typography)`
+  margin: 10px 0;
+  font-weight: 600;
+`;
+
+export const TicketContent = styled(Typography)`
+  margin: 10px 0;
+`;
+
+export const Loader = styled.div`
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const LoadingWrapper = styled.div`
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 62vh;
 `;
