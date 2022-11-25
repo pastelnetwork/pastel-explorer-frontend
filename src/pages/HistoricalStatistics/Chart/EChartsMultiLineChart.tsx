@@ -14,7 +14,7 @@ import {
   getMinMax,
   generateMinMaxChartData,
   toPlainString,
-  convertYAxisLabel,
+  getYAxisLabel,
 } from '@utils/helpers/statisticsLib';
 import { pricesCSVHeaders, themes } from '@utils/constants/statistics';
 import { TLineChartProps, TThemeColor } from '@utils/constants/types';
@@ -206,7 +206,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
           formatter(value: string) {
             const val = Number.parseFloat(value);
             return !fixedNum
-              ? convertYAxisLabel(Number(value), maxY1)
+              ? getYAxisLabel(Number(value), minY1, maxY1)
               : `$${val.toFixed(fixedNum)}`;
           },
         },
@@ -226,7 +226,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
         },
         axisLabel: {
           formatter(value: string) {
-            return convertYAxisLabel(Number(value), maxY2, fixedNum1);
+            return getYAxisLabel(Number(value), minY2, maxY2);
           },
         },
       },
