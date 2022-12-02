@@ -66,6 +66,9 @@ export type TLineChartProps = {
   isLoading?: boolean;
   seriesName1Type?: string;
   color?: string[];
+  showLegend?: boolean;
+  symbol?: string;
+  symbol1?: string;
 };
 
 export type TCsvHeaderType = {

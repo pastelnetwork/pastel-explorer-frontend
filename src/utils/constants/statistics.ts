@@ -45,7 +45,7 @@ export const statistics = [
   },
   {
     id: 'pslPrice',
-    title: 'Price',
+    title: `${getCurrencyName()} Price ($USD and BTC)`,
     url: routes.STATISTICS_PSLPRICE,
     image: generatePreviewUrl(routes.STATISTICS_PSLPRICE),
   },
@@ -117,13 +117,13 @@ export const statistics = [
   },
   {
     id: 'marketPriceVolume',
-    title: 'Market Price and Volume',
+    title: 'Market Price and Volume ($USD)',
     url: routes.STATISTICS_MARKET_VOLUME_PRICE,
     image: generatePreviewUrl(routes.STATISTICS_MARKET_VOLUME_PRICE),
   },
   {
     id: 'marketCapVolume',
-    title: 'Market Price and Cap',
+    title: 'Market Price and Circ. Cap ($USD)',
     url: routes.STATISTICS_MARKET_CAP_PRICE,
     image: generatePreviewUrl(routes.STATISTICS_MARKET_CAP_PRICE),
   },

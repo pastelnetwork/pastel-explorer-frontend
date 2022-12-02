@@ -40,8 +40,8 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     period: selectedPeriodButton,
     periods = [],
     title,
-    seriesName = 'USD Price: ',
-    seriesName1 = 'BTC Price: ',
+    seriesName = 'USD Price',
+    seriesName1 = 'BTC Price',
     yaxisName = 'USD Price',
     yaxisName1 = 'BTC Price',
     handlePeriodFilterChange,
@@ -51,6 +51,9 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     seriesName1Type = 'bar',
     isLoading,
     color = ['#cd6661', '#5470C6'],
+    showLegend = false,
+    symbol = '',
+    symbol1 = '',
   } = props;
   const downloadRef = useRef(null);
   const { width } = useWindowDimensions();
@@ -128,10 +131,9 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
       }
     }
   }, [dataY1, dataY2]);
-
   const options = {
     grid: {
-      top: 50,
+      top: showLegend ? 70 : 50,
       right: 100,
       bottom: 70,
       left: 60,
@@ -145,13 +147,25 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
       formatter(params: TChartParams[]) {
         let html = '';
         params.forEach(item => {
-          let val = !fixedNum ? `${formatNumber(item.value)}` : toPlainString(item.value);
+          let val = !fixedNum
+            ? `${symbol}${formatNumber(item.value)}`
+            : `${symbol}${toPlainString(item.value)}`;
           if (item.seriesIndex === 1) {
-            val = !fixedNum1 ? `${formatNumber(item.value)}` : toPlainString(item.value);
+            if (chartName === 'marketVolumePrice') {
+              val = `${symbol1}${formatNumber(item.value, { decimalsLength: fixedNum1 })}`;
+            } else if (chartName === 'marketCapPrice') {
+              val = `${symbol1}${formatNumber(item.value / 1000000, {
+                decimalsLength: fixedNum1,
+              })}M`;
+            } else {
+              val = !fixedNum1
+                ? `${symbol1}${formatNumber(item.value)}`
+                : `${symbol1}${toPlainString(item.value)}`;
+            }
           }
           html += `
             <div class="tooltip-item">
-              <div class="item-label auto">${item.marker} ${item.seriesName}</div>
+              <div class="item-label auto">${item.marker} ${item.seriesName}: </div>
               <div class="item-value">${val}</div>
             </div>
           `;
@@ -163,6 +177,15 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
           </div>
         `;
       },
+    },
+    legend: {
+      top: 10,
+      right: 10,
+      data: [seriesName, seriesName1],
+      textStyle: {
+        color: currentTheme?.color,
+      },
+      show: showLegend,
     },
     color,
     dataZoom: [
@@ -258,7 +281,6 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     ],
     animation: false,
   };
-
   const downloadPNG = () => {
     if (eChartRef?.ele) {
       htmlToImage
