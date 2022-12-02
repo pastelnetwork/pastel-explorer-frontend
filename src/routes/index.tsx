@@ -305,7 +305,7 @@ const marketVolumePriceStatisticsRoutes = {
   path: ROUTES.STATISTICS_MARKET_VOLUME_PRICE,
   component: MarketVolumePrice,
   icon: null,
-  seoTitle: 'Market Volume and Price',
+  seoTitle: 'Market Price and Volume ($USD)',
   children: null,
 };
 
@@ -314,7 +314,7 @@ const marketCapPriceStatisticsRoutes = {
   path: ROUTES.STATISTICS_MARKET_CAP_PRICE,
   component: MarketCapPrice,
   icon: null,
-  seoTitle: 'Market Cap and Price',
+  seoTitle: 'Market Price and Circ. Cap ($USD)',
   children: null,
 };
 

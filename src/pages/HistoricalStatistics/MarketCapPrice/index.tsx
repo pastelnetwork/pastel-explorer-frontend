@@ -84,19 +84,22 @@ function PriceOvertime() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Market Price and Cap">
+    <HistoricalStatisticsLayout
+      currentBgColor={currentBgColor}
+      title="Market Price and Circ. Cap ($USD)"
+    >
       <EChartsMultiLineChart
         chartName="marketCapPrice"
         dataX={transformLineChartData?.dataX}
         dataY1={transformLineChartData?.dataY1}
         dataY2={transformLineChartData?.dataY2}
-        yaxisName="USD Price"
-        yaxisName1="Market Cap"
+        yaxisName="Price ($USD)"
+        yaxisName1="Circ. Cap ($USD)"
         seriesName="Price"
         seriesName1="Market Cap"
         fixedNum={5}
-        fixedNum1={3}
-        title="Price - Cap"
+        fixedNum1={2}
+        title="Market Price and Circ. Cap ($USD)"
         info={info}
         offset={0.0001}
         period={period}
@@ -106,6 +109,8 @@ function PriceOvertime() {
         setHeaderBackground
         isLoading={isLoading}
         color={['#000', '#5470C6']}
+        symbol="$"
+        symbol1="$"
       />
     </HistoricalStatisticsLayout>
   );
