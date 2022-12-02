@@ -481,13 +481,27 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       tooltip: {
         trigger: 'axis',
         formatter(params: TChartParams[]) {
+          let label = 'Average per hour: ';
+          switch (granularity) {
+            case '1d':
+              label = 'Average per day: ';
+              break;
+            case '30d':
+              label = 'Average per month: ';
+              break;
+            case '1y':
+              label = 'Average per year: ';
+              break;
+            default:
+              break;
+          }
           return `
             <div class="tooltip-item-wrapper">
               <div class="item-label">${generateTooltipLabel(
                 new Date(params[0].axisValue),
                 granularity,
               )}</div>
-              <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
+              <div class="tooltip-value">${params[0].marker} ${label}${formatNumber(params[0].value, {
             decimalsLength: 5,
           })} MB</div>
             </div>
