@@ -501,9 +501,12 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
                 new Date(params[0].axisValue),
                 granularity,
               )}</div>
-              <div class="tooltip-value">${params[0].marker} ${label}${formatNumber(params[0].value, {
-            decimalsLength: 5,
-          })} MB</div>
+              <div class="tooltip-value">${params[0].marker} ${label}${formatNumber(
+            params[0].value,
+            {
+              decimalsLength: 5,
+            },
+          )} MB</div>
             </div>
           `;
         },
