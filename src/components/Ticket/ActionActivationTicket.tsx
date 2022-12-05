@@ -19,14 +19,14 @@ const ActionActivationTicket: React.FC<IActionActivationTicketProps> = ({ ticket
     <Box>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Called at</Styles.TicketTitle>
+          <Styles.TicketTitle>Called at:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent>
             <RouterLink
-              route={`#/${ticket.ticket.called_at}`}
-              value={ticket.ticket.called_at}
-              title={ticket.ticket.called_at.toString()}
+              route={`#/${ticket.called_at}`}
+              value={ticket.called_at}
+              title={ticket.called_at.toString()}
               className="address-link"
             />
           </Styles.TicketContent>
@@ -34,31 +34,31 @@ const ActionActivationTicket: React.FC<IActionActivationTicketProps> = ({ ticket
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Version</Styles.TicketTitle>
+          <Styles.TicketTitle>Version:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.version}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.version}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Pastel ID</Styles.TicketTitle>
+          <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.pastelID}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.pastelID}</Styles.TicketContent>
         </Grid>
       </Grid>
-      <Signatures signature={ticket.ticket.signature} />
+      <Signatures signature={ticket.signature} />
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Reg txid</Styles.TicketTitle>
+          <Styles.TicketTitle>Reg txid:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent>
             <RouterLink
-              route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.ticket.reg_txid}`}
-              value={ticket.ticket.reg_txid}
-              title={ticket.ticket.reg_txid}
+              route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.reg_txid}`}
+              value={ticket.reg_txid}
+              title={ticket.reg_txid}
               className="address-link"
             />
           </Styles.TicketContent>
@@ -66,11 +66,11 @@ const ActionActivationTicket: React.FC<IActionActivationTicketProps> = ({ ticket
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Storage fee</Styles.TicketTitle>
+          <Styles.TicketTitle>Storage fee:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent>
-            {formatNumber(ticket.ticket.storage_fee)} {getCurrencyName()}
+            {formatNumber(ticket.storage_fee)} {getCurrencyName()}
           </Styles.TicketContent>
         </Grid>
       </Grid>

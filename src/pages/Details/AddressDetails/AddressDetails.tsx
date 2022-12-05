@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { CSVLink } from 'react-csv';
 import { Data } from 'react-csv/components/CommonPropTypes';
-import { Grid } from '@material-ui/core';
+import { CircularProgress, Grid } from '@material-ui/core';
 
 import Table from '@components/Table/Table';
 import InfinityTable, {
@@ -17,6 +17,7 @@ import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { getCurrencyName } from '@utils/appInfo';
 import { formattedDate } from '@utils/helpers/date/date';
 import { eChartLineStyles } from '@pages/HistoricalStatistics/Chart/styles';
+import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 
 import {
   addressHeaders,
@@ -217,7 +218,13 @@ const AddressDetails = () => {
         </Styles.TableWrapper>
       </Grid>
     </Styles.Wrapper>
-  ) : null;
+  ) : (
+    <TransactionStyles.LoadingWrapper>
+      <TransactionStyles.Loader>
+        <CircularProgress size={40} />
+      </TransactionStyles.Loader>
+    </TransactionStyles.LoadingWrapper>
+  );
 };
 
 export default AddressDetails;

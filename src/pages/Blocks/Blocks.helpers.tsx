@@ -11,6 +11,7 @@ import {
   BLOCK_ID_KEY,
   BLOCK_HASH,
   TRANSACTIONS_QTY_KEY,
+  TOTAL_TICKETS,
   TIMESTAMP_BLOCKS_KEY,
 } from './Blocks.columns';
 import * as Styles from './Blocks.styles';
@@ -20,7 +21,7 @@ export const DATA_OFFSET = 0;
 export const DATA_DEFAULT_SORT = 'DESC';
 
 export const transformTableData = (transactions: Array<IBlock>, isMobile: boolean) =>
-  transactions.map(({ id, timestamp, transactionCount, height }) => ({
+  transactions.map(({ id, timestamp, transactionCount, height, totalTickets }) => ({
     id,
     [BLOCK_ID_KEY]: (
       <Styles.BlockHeight>
@@ -42,5 +43,13 @@ export const transformTableData = (transactions: Array<IBlock>, isMobile: boolea
       />
     ),
     [TRANSACTIONS_QTY_KEY]: transactionCount,
+    [TOTAL_TICKETS]: (
+      <RouterLink
+        className="hash-link"
+        route={`${ROUTES.BLOCK_DETAILS}/${id}`}
+        value={totalTickets}
+        title={totalTickets.toString()}
+      />
+    ),
     [TIMESTAMP_BLOCKS_KEY]: formattedDate(timestamp, { dayName: false }),
   }));

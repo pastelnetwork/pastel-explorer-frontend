@@ -19,6 +19,7 @@ export interface IBlock {
   timestamp: number;
   transactionCount: number;
   transactions: Array<IBlockTransaction>;
+  totalTickets: number;
 }
 
 export interface IRawBlock {
@@ -38,4 +39,5 @@ export interface IRawBlock {
   time: number;
   transactions: Array<IBlockTransaction>;
   tx: string[];
+  totalTickets: number;
 }

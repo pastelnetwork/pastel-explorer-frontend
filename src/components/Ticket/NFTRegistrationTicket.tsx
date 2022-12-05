@@ -1,6 +1,10 @@
+import { useState } from 'react';
 import { decode } from 'js-base64';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import { INftRegistrationTicket, INftTicket } from '@utils/types/ITransactions';
@@ -20,12 +24,17 @@ interface INFTTicketProps {
 }
 
 const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  if (!nftTicket) {
+    return null;
+  }
   const nft = JSON.parse(decode(nftTicket)) as INftTicket;
+
   return (
     <Box>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>NFT Ticket Version</Styles.TicketTitle>
+          <Styles.TicketTitle>NFT Ticket Version:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent>{nft.nft_ticket_version}</Styles.TicketContent>
@@ -33,22 +42,15 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Author</Styles.TicketTitle>
+          <Styles.TicketTitle>Author:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>
-            <RouterLink
-              route={`#/${nft.author}`}
-              value={nft.author}
-              title={nft.author}
-              className="address-link"
-            />
-          </Styles.TicketContent>
+          <Styles.TicketContent>{nft.author}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Block number</Styles.TicketTitle>
+          <Styles.TicketTitle>Block number:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent>
@@ -63,7 +65,7 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Block hash</Styles.TicketTitle>
+          <Styles.TicketTitle>Block hash:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent>
@@ -78,7 +80,7 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Copies</Styles.TicketTitle>
+          <Styles.TicketTitle>Copies:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent>{nft.copies}</Styles.TicketContent>
@@ -86,7 +88,7 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Royalty</Styles.TicketTitle>
+          <Styles.TicketTitle>Royalty:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent>{nft.royalty}</Styles.TicketContent>
@@ -94,7 +96,7 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Green</Styles.TicketTitle>
+          <Styles.TicketTitle>Green:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent>{nft.green.toString()}</Styles.TicketContent>
@@ -102,30 +104,48 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>NFT collection txid</Styles.TicketTitle>
+          <Styles.TicketTitle>NFT collection txid:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent>{nft.nft_collection_txid}</Styles.TicketContent>
         </Grid>
       </Grid>
-      <AppTicket appTicket={nft.app_ticket} />
+      <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
+        <AccordionSummary>
+          <Grid container spacing={3}>
+            <Grid item xs={2}>
+              <Styles.TicketTitle>App ticket:</Styles.TicketTitle>
+            </Grid>
+            <Grid item xs={9}>
+              <Styles.TicketContent className="expand-more">
+                {isExpanded ? 'Click to see less' : 'Click to see detail'} <ExpandMoreIcon />
+              </Styles.TicketContent>
+            </Grid>
+          </Grid>
+        </AccordionSummary>
+        <AccordionDetails>
+          <AppTicket appTicket={nft.app_ticket} />
+        </AccordionDetails>
+      </Styles.Accordion>
     </Box>
   );
 };
 
 const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({ ticket }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
     <Box>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Creator height</Styles.TicketTitle>
+          <Styles.TicketTitle>Creator height:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent>
             <RouterLink
-              route={`${ROUTES.BLOCK_DETAILS}/${ticket.ticket.creator_height}`}
-              value={ticket.ticket.creator_height}
-              title={ticket.ticket.creator_height.toString()}
+              route={`${ROUTES.BLOCK_DETAILS}/${ticket.creator_height}`}
+              value={ticket.creator_height}
+              title={ticket.creator_height.toString()}
               className="address-link"
             />
           </Styles.TicketContent>
@@ -133,87 +153,88 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({ ticket }
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Version</Styles.TicketTitle>
+          <Styles.TicketTitle>Version:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.version}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.version}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Key</Styles.TicketTitle>
+          <Styles.TicketTitle>Key:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.key}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.key}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Label</Styles.TicketTitle>
+          <Styles.TicketTitle>Label:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.label}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.label}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Total copies</Styles.TicketTitle>
+          <Styles.TicketTitle>Total copies:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.total_copies}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.total_copies}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Royalty</Styles.TicketTitle>
+          <Styles.TicketTitle>Royalty:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.royalty}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.royalty}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Royalty address</Styles.TicketTitle>
+          <Styles.TicketTitle>Royalty address:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.royalty_address}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.royalty_address}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Green</Styles.TicketTitle>
+          <Styles.TicketTitle>Green:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.green.toString()}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.green.toString()}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Storage fee</Styles.TicketTitle>
+          <Styles.TicketTitle>Storage fee:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent>
-            {ticket.ticket.storage_fee} {getCurrencyName()}
+            {ticket.storage_fee} {getCurrencyName()}
           </Styles.TicketContent>
         </Grid>
       </Grid>
-      <Signatures signatures={ticket.ticket.signatures} />
-      <div style={{ display: 'none' }}>
-        <NFTTicket nftTicket={ticket.ticket.nft_ticket} />
-      </div>
-      <Grid container spacing={3}>
-        <Grid item xs={2}>
-          <Styles.TicketTitle>NFT Ticket</Styles.TicketTitle>
-        </Grid>
-        <Grid item xs={9}>
-          <RouterLink
-            route="#"
-            value="Click to see detail"
-            title="Click to see detail"
-            className="address-link"
-          />
-        </Grid>
-      </Grid>
+      <Signatures signatures={ticket.signatures} />
+      <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
+        <AccordionSummary>
+          <Grid container spacing={3}>
+            <Grid item xs={2}>
+              <Styles.TicketTitle>NFT Ticket:</Styles.TicketTitle>
+            </Grid>
+            <Grid item xs={9}>
+              <Styles.TicketContent className="expand-more">
+                {isExpanded ? 'Click to see less' : 'Click to see detail'} <ExpandMoreIcon />
+              </Styles.TicketContent>
+            </Grid>
+          </Grid>
+        </AccordionSummary>
+        <AccordionDetails>
+          <NFTTicket nftTicket={ticket.nft_ticket} />
+        </AccordionDetails>
+      </Styles.Accordion>
     </Box>
   );
 };

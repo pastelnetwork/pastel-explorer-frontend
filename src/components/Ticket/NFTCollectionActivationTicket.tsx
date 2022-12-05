@@ -21,14 +21,14 @@ const NFTCollectionActivationTicket: React.FC<INFTCollectionActivationTicketProp
     <Box>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Creator height</Styles.TicketTitle>
+          <Styles.TicketTitle>Creator height:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent>
             <RouterLink
-              route={`#/${ticket.ticket.creator_height}`}
-              value={ticket.ticket.creator_height}
-              title={ticket.ticket.creator_height.toString()}
+              route={`#/${ticket.creator_height}`}
+              value={ticket.creator_height}
+              title={ticket.creator_height.toString()}
               className="address-link"
             />
           </Styles.TicketContent>
@@ -36,31 +36,31 @@ const NFTCollectionActivationTicket: React.FC<INFTCollectionActivationTicketProp
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Version</Styles.TicketTitle>
+          <Styles.TicketTitle>Version:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.version}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.version}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Pastel ID</Styles.TicketTitle>
+          <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.pastelID}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.pastelID}</Styles.TicketContent>
         </Grid>
       </Grid>
-      <Signatures signature={ticket.ticket.signature} />
+      <Signatures signature={ticket.signature} />
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Reg txid</Styles.TicketTitle>
+          <Styles.TicketTitle>Reg txid:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent>
             <RouterLink
-              route={`#/${ticket.ticket.reg_txid}`}
-              value={ticket.ticket.reg_txid}
-              title={ticket.ticket.reg_txid}
+              route={`#/${ticket.reg_txid}`}
+              value={ticket.reg_txid}
+              title={ticket.reg_txid}
               className="address-link"
             />
           </Styles.TicketContent>
@@ -68,11 +68,11 @@ const NFTCollectionActivationTicket: React.FC<INFTCollectionActivationTicketProp
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Storage fee</Styles.TicketTitle>
+          <Styles.TicketTitle>Storage fee:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent>
-            {formatNumber(ticket.ticket.storage_fee)} {getCurrencyName()}
+            {formatNumber(ticket.storage_fee)} {getCurrencyName()}
           </Styles.TicketContent>
         </Grid>
       </Grid>

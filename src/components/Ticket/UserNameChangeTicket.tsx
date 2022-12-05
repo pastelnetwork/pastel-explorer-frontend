@@ -17,36 +17,36 @@ const UserNameChangeTicket: React.FC<IUserNameChangeTicketProps> = ({ ticket }) 
     <Box>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Username</Styles.TicketTitle>
+          <Styles.TicketTitle>Username:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.username}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.username}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Version</Styles.TicketTitle>
+          <Styles.TicketTitle>Version:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.version}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.version}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Pastel ID</Styles.TicketTitle>
+          <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.pastelID}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.pastelID}</Styles.TicketContent>
         </Grid>
       </Grid>
-      <Signatures signature={ticket.ticket.signature} />
+      <Signatures signature={ticket.signature} />
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Fee</Styles.TicketTitle>
+          <Styles.TicketTitle>Fee:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent>
-            {formatNumber(ticket.ticket.fee)} {getCurrencyName()}
+            {formatNumber(ticket.fee)} {getCurrencyName()}
           </Styles.TicketContent>
         </Grid>
       </Grid>

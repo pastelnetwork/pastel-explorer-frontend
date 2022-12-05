@@ -17,39 +17,39 @@ const NFTRoyaltyTicket: React.FC<INFTRoyaltyTicketProps> = ({ ticket }) => {
     <Box>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Version</Styles.TicketTitle>
+          <Styles.TicketTitle>Version:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.version}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.version}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Pastel ID</Styles.TicketTitle>
+          <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.pastelID}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.pastelID}</Styles.TicketContent>
         </Grid>
       </Grid>
-      <Signatures signature={ticket.ticket.signature} />
+      <Signatures signature={ticket.signature} />
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>New PastelID</Styles.TicketTitle>
+          <Styles.TicketTitle>New PastelID:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.new_pastelID}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.new_pastelID}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>NFT txid</Styles.TicketTitle>
+          <Styles.TicketTitle>NFT txid:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent>
             <RouterLink
-              route={`#/${ticket.ticket.nft_txid}`}
-              value={ticket.ticket.nft_txid}
-              title={ticket.ticket.nft_txid}
+              route={`#/${ticket.nft_txid}`}
+              value={ticket.nft_txid}
+              title={ticket.nft_txid}
               className="address-link"
             />
           </Styles.TicketContent>

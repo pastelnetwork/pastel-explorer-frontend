@@ -19,31 +19,31 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket }) => {
     <Box>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Version</Styles.TicketTitle>
+          <Styles.TicketTitle>Version:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.version}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.version}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Pastel ID</Styles.TicketTitle>
+          <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.pastelID}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.pastelID}</Styles.TicketContent>
         </Grid>
       </Grid>
-      <Signatures signature={ticket.ticket.signature} />
+      <Signatures signature={ticket.signature} />
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Item txid</Styles.TicketTitle>
+          <Styles.TicketTitle>Item txid:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent>
             <RouterLink
-              route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.ticket.item_txid}`}
-              value={ticket.ticket.item_txid}
-              title={ticket.ticket.item_txid}
+              route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.item_txid}`}
+              value={ticket.item_txid}
+              title={ticket.item_txid}
               className="address-link"
             />
           </Styles.TicketContent>
@@ -51,32 +51,32 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket }) => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Copy number</Styles.TicketTitle>
+          <Styles.TicketTitle>Copy number:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.copy_number}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.copy_number}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Asked price</Styles.TicketTitle>
+          <Styles.TicketTitle>Asked price:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent>
-            {formatNumber(ticket.ticket.asked_price)} {getCurrencyName()}
+            {formatNumber(ticket.asked_price)} {getCurrencyName()}
           </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Valid after</Styles.TicketTitle>
+          <Styles.TicketTitle>Valid after:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent>
             <RouterLink
-              route={`${ROUTES.BLOCK_DETAILS}/${ticket.ticket.valid_after}`}
-              value={ticket.ticket.valid_after}
-              title={ticket.ticket.valid_after.toString()}
+              route={`${ROUTES.BLOCK_DETAILS}/${ticket.valid_after}`}
+              value={ticket.valid_after}
+              title={ticket.valid_after.toString()}
               className="address-link"
             />
           </Styles.TicketContent>
@@ -84,14 +84,14 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket }) => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Valid before</Styles.TicketTitle>
+          <Styles.TicketTitle>Valid before:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent>
             <RouterLink
-              route={`${ROUTES.BLOCK_DETAILS}/${ticket.ticket.valid_before}`}
-              value={ticket.ticket.valid_before}
-              title={ticket.ticket.valid_before.toString()}
+              route={`${ROUTES.BLOCK_DETAILS}/${ticket.valid_before}`}
+              value={ticket.valid_before}
+              title={ticket.valid_before.toString()}
               className="address-link"
             />
           </Styles.TicketContent>
@@ -99,10 +99,10 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket }) => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Locked recipient</Styles.TicketTitle>
+          <Styles.TicketTitle>Locked recipient:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.locked_recipient}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.locked_recipient}</Styles.TicketContent>
         </Grid>
       </Grid>
     </Box>

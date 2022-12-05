@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 
@@ -14,43 +15,45 @@ interface IPastelIDRegistrationTicketProps {
 }
 
 const PastelIDRegistrationTicket: React.FC<IPastelIDRegistrationTicketProps> = ({ ticket }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
     <Box>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>ID Type</Styles.TicketTitle>
+          <Styles.TicketTitle>ID Type:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.id_type}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.id_type}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Version</Styles.TicketTitle>
+          <Styles.TicketTitle>Version:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.version}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.version}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Pastel ID</Styles.TicketTitle>
+          <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>{ticket.ticket.pastelID}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.pastelID}</Styles.TicketContent>
         </Grid>
       </Grid>
-      <Signatures signature={ticket.ticket.signature} />
+      <Signatures signature={ticket.signature} />
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Address</Styles.TicketTitle>
+          <Styles.TicketTitle>Address:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent>
             <RouterLink
-              route={`${ROUTES.ADDRESS_DETAILS}/${ticket.ticket.address}`}
-              value={ticket.ticket.address}
-              title={ticket.ticket.address}
+              route={`${ROUTES.ADDRESS_DETAILS}/${ticket.address}`}
+              value={ticket.address}
+              title={ticket.address}
               className="address-link"
             />
           </Styles.TicketContent>
@@ -58,28 +61,23 @@ const PastelIDRegistrationTicket: React.FC<IPastelIDRegistrationTicketProps> = (
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>PQ key</Styles.TicketTitle>
+          <Styles.TicketTitle>PQ key:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
           <Styles.TicketContent className="break-all view-more">
-            {ticket.ticket.pq_key.substring(0, 200)}...
-            <RouterLink
-              route="#"
-              value="Click to see more"
-              title="Click to see more"
-              className="address-link"
-            />
+            {!isExpanded ? `${ticket.pq_key.substring(0, 200)}...` : ticket.pq_key}
+            <Styles.ButtonLink onClick={() => setIsExpanded(!isExpanded)}>
+              {!isExpanded ? 'Click to see more' : 'Click to see less'}
+            </Styles.ButtonLink>
           </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={2}>
-          <Styles.TicketTitle>Timestamp</Styles.TicketTitle>
+          <Styles.TicketTitle>Timestamp:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={9}>
-          <Styles.TicketContent>
-            {formattedDate(Number(ticket.ticket.timeStamp))}
-          </Styles.TicketContent>
+          <Styles.TicketContent>{formattedDate(Number(ticket.timeStamp))}</Styles.TicketContent>
         </Grid>
       </Grid>
     </Box>

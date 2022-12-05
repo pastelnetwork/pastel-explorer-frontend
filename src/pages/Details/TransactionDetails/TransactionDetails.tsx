@@ -40,7 +40,7 @@ interface ParamTypes {
 const TransactionDetails = () => {
   const { id } = useParams<ParamTypes>();
   const [transaction, setTransaction] = React.useState<ITransactionDetails | null>(null);
-  const [ticket, setTicket] = React.useState<ITicket | null>(null);
+  const [tickets, setTickets] = React.useState<ITicket[]>([]);
   const [exchangeRate, setExchangeRate] = React.useState(0);
   const [redirect, setRedirect] = React.useState(false);
   const [openRawDataModal, setOpenRawDataModal] = React.useState(false);
@@ -61,7 +61,9 @@ const TransactionDetails = () => {
         setRedirect(true);
       } else {
         setTransaction(response.data);
-        setTicket(response.data?.ticket || null);
+        if (response.data?.tickets) {
+          setTickets(response.data?.tickets);
+        }
       }
     });
   };
@@ -208,15 +210,17 @@ const TransactionDetails = () => {
             title="Overview"
           />
         </Styles.GridStyle>
-        {ticket ? (
-          <Styles.GridStyle item>
-            <TicketDetail
-              title={getTicketTitle(ticket.type as TTicketType)}
-              type={ticket.type as TTicketType}
-              ticket={ticket.data}
-            />
-          </Styles.GridStyle>
-        ) : null}
+        {tickets.length
+          ? tickets.map(ticket => (
+              <Styles.GridStyle item key={ticket.type}>
+                <TicketDetail
+                  title={getTicketTitle(ticket.type as TTicketType)}
+                  type={ticket.type as TTicketType}
+                  ticket={ticket.data}
+                />
+              </Styles.GridStyle>
+            ))
+          : null}
         <Styles.GridStyle item>
           {transaction.isNonStandard ? (
             generateNonStandardTransactionInfo()

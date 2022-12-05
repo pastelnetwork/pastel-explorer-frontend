@@ -1,7 +1,14 @@
 import * as React from 'react';
 import { Redirect, useParams, useHistory } from 'react-router-dom';
 
-import { Grid, Tooltip, AccordionSummary, AccordionDetails, Typography } from '@material-ui/core';
+import {
+  CircularProgress,
+  Grid,
+  Tooltip,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
+} from '@material-ui/core';
 import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 
 import RouterLink from '@components/RouterLink/RouterLink';
@@ -21,6 +28,7 @@ import { IBlock, IBlockTransaction } from '@utils/types/IBlocks';
 import { formatAddress } from '@utils/helpers/format';
 import { useSortData } from '@utils/hooks';
 import { getCurrencyName } from '@utils/appInfo';
+import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 
 import { blockHeaders, transactionHeaders, generateDetailsElement } from './BlockDetails.helpers';
 import * as Styles from './BlockDetails.styles';
@@ -209,7 +217,13 @@ const BlockDetails = () => {
         </Styles.GridStyle>
       </Grid>
     </Styles.Wrapper>
-  ) : null;
+  ) : (
+    <TransactionStyles.LoadingWrapper>
+      <TransactionStyles.Loader>
+        <CircularProgress size={40} />
+      </TransactionStyles.Loader>
+    </TransactionStyles.LoadingWrapper>
+  );
 };
 
 export default BlockDetails;
