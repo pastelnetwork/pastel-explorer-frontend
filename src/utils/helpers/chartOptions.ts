@@ -95,7 +95,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
               )}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
             decimalsLength: 5,
-          })} MSol/S</div>
+          })}</div>
             </div>
           `;
         },
@@ -184,7 +184,8 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
                 granularity,
               )}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(
-            params[0].value,
+            params[0].value / 1000000,
+            { decimalsLength: 2 },
           )} MSol/S</div>
             </div>
           `;
@@ -274,7 +275,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             html += `
               <div class="tooltip-item">
                 <div class="item-label">${item.marker} ${item.seriesName}:</div>
-                <div class="item-value">${formatNumber(item.value)}</div>
+                <div class="item-value">${formatNumber(item.value)} bytes</div>
               </div>
             `;
           });
@@ -289,7 +290,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       legend: {
         top: 10,
         right: 10,
-        data: ['Traffic receive', 'Traffic sent'],
+        data: ['Traffic received', 'Traffic sent'],
         textStyle: {
           color: theme?.color,
         },
@@ -342,7 +343,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       series: [
         {
-          name: 'Traffic receive',
+          name: 'Traffic received',
           type: 'line',
           lineStyle: {
             width: 2,
@@ -480,15 +481,32 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       tooltip: {
         trigger: 'axis',
         formatter(params: TChartParams[]) {
+          let label = 'Average per hour: ';
+          switch (granularity) {
+            case '1d':
+              label = 'Average per day: ';
+              break;
+            case '30d':
+              label = 'Average per month: ';
+              break;
+            case '1y':
+              label = 'Average per year: ';
+              break;
+            default:
+              break;
+          }
           return `
             <div class="tooltip-item-wrapper">
               <div class="item-label">${generateTooltipLabel(
                 new Date(params[0].axisValue),
                 granularity,
               )}</div>
-              <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
-            decimalsLength: 5,
-          })} MB</div>
+              <div class="tooltip-value">${params[0].marker} ${label}${formatNumber(
+            params[0].value,
+            {
+              decimalsLength: 5,
+            },
+          )} MB</div>
             </div>
           `;
         },
