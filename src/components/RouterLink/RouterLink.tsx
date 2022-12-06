@@ -10,6 +10,29 @@ interface RouterLinkProps {
   className?: string;
 }
 
+interface IExternalLinkProps {
+  href: string;
+  value: string;
+  styles?: Partial<CSSProperties>;
+  className?: string;
+  target?: string;
+  rel?: string;
+}
+
+export const ExternalLink: React.FC<IExternalLinkProps> = ({
+  href,
+  value,
+  className,
+  target = '_self',
+  rel,
+}) => {
+  return (
+    <Styles.ExternalLink href={href} className={className} target={target} rel={rel}>
+      {value}
+    </Styles.ExternalLink>
+  );
+};
+
 const RouterLink: React.FC<RouterLinkProps> = ({
   route,
   value,

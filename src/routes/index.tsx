@@ -47,6 +47,7 @@ import TotalSupply from '@pages/HistoricalStatistics/TotalSupply';
 import PercentOfPSLStaked from '@pages/HistoricalStatistics/PercentOfPSLStaked';
 import Accounts from '@pages/HistoricalStatistics/Accounts';
 import CascadeAndSenseStatistics from '@pages/CascadeAndSenseStatistics/CascadeAndSenseStatistics';
+import ImageDetails from '@pages/ImageDetails/ImageDetails';
 
 import * as ROUTES from '@utils/constants/routes';
 import { getCurrencyName } from '@utils/appInfo';
@@ -388,6 +389,14 @@ const accountsStatisticsRoutes = {
   children: null,
 };
 
+const imageDetailsRoutes = {
+  id: 'Image Details',
+  path: `${ROUTES.IMAGE_DETAILS}/:id`,
+  component: ImageDetails,
+  seoTitle: 'Image Details',
+  children: null,
+};
+
 export const pageRoutes = [
   explorerRoutes,
   movementRoutes,
@@ -423,6 +432,7 @@ export const pageRoutes = [
   percentOfPSLStakedStatisticsRoutes,
   accountsStatisticsRoutes,
   cascadeAndSenseStatisticsRoutes,
+  imageDetailsRoutes,
 ];
 
 export const sidebarRoutes = [
