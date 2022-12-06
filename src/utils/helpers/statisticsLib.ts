@@ -147,7 +147,7 @@ export function transformMarketVolumePriceInfo(
     const [, y2] = total_volumes[i];
     dataX.push(new Date(Number(x)).toLocaleString());
     dataY1.push(+y1.toFixed(8));
-    dataY2.push(Math.round(y2));
+    dataY2.push(Number(y2.toFixed(2)));
   }
   if (period === '24h' && isAddNewNode && checkValidateData(prices[prices.length - 1][0])) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');

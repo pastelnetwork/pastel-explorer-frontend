@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import LRU from 'lru-cache';
 // application
 import * as URLS from '@utils/constants/urls';
+import { getCurrencyName } from '@utils/appInfo';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import {
   PeriodTypes,
@@ -93,13 +94,16 @@ function PriceOvertime() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Price">
+    <HistoricalStatisticsLayout
+      currentBgColor={currentBgColor}
+      title={`${getCurrencyName()} Price ($USD and BTC)`}
+    >
       <EChartsMultiLineChart
         chartName="prices"
         dataX={transformLineChartData?.dataX}
         dataY1={transformLineChartData?.dataY1}
         dataY2={transformLineChartData?.dataY2}
-        title={`${info.currencyName} Prices`}
+        title={`${getCurrencyName()} Price ($USD and BTC)`}
         info={info}
         offset={0.0001}
         period={period}
@@ -109,6 +113,7 @@ function PriceOvertime() {
         setHeaderBackground
         seriesName1Type="line"
         isLoading={isLoading}
+        showLegend
       />
     </HistoricalStatisticsLayout>
   );
