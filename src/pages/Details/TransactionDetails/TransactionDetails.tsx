@@ -6,6 +6,7 @@ import Header from '@components/Header/Header';
 import RouterLink from '@components/RouterLink/RouterLink';
 import Table, { RowsProps } from '@components/Table/Table';
 import CopyButton from '@components/CopyButton/CopyButton';
+import { getTicketTitle, TicketDetail } from '@components/Ticket';
 
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
@@ -31,7 +32,6 @@ import {
   generateCoinbaseInfo,
 } from './TransactionDetails.helpers';
 import TransactionRawData from './TransactionRawData';
-import TicketDetail from './TicketDetail';
 
 interface ParamTypes {
   id: string;
@@ -157,37 +157,6 @@ const TransactionDetails = () => {
     return <Redirect to={ROUTES.NOT_FOUND} />;
   }
 
-  const getTicketTitle = (type: TTicketType) => {
-    switch (type) {
-      case 'pastelid':
-        return 'Pastel ID Registration Ticket';
-      case 'username-change':
-        return 'User Name Change Ticket';
-      case 'nft-reg':
-        return 'NFT Registration Ticket';
-      case 'nft-act':
-        return 'NFT Activation Ticket';
-      case 'nft-collection-reg':
-        return 'NFT Collection Registration Ticket';
-      case 'nft-collection-act':
-        return 'NFT Collection Activation Ticket';
-      case 'nft-royalty':
-        return 'NFT Royalty Ticket';
-      case 'action-reg':
-        return 'Action Registration Ticket';
-      case 'action-act':
-        return 'Action Activation Ticket';
-      case 'offer':
-        return 'Offer Ticket';
-      case 'accept':
-        return 'Accept Ticket';
-      case 'transfer':
-        return 'Transfer Ticket';
-      default:
-        return '';
-    }
-  };
-
   return transaction ? (
     <Styles.Wrapper>
       <Header title="Transaction Details" />
@@ -216,7 +185,7 @@ const TransactionDetails = () => {
                 <TicketDetail
                   title={getTicketTitle(ticket.type as TTicketType)}
                   type={ticket.type as TTicketType}
-                  ticket={ticket.data}
+                  ticket={ticket.data.ticket}
                 />
               </Styles.GridStyle>
             ))

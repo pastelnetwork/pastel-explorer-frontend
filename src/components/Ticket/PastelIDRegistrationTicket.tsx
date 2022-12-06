@@ -20,35 +20,35 @@ const PastelIDRegistrationTicket: React.FC<IPastelIDRegistrationTicketProps> = (
   return (
     <Box>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>ID Type:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>{ticket.id_type}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Version:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>{ticket.version}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>{ticket.pastelID}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Signatures signature={ticket.signature} />
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Address:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
             <RouterLink
               route={`${ROUTES.ADDRESS_DETAILS}/${ticket.address}`}
@@ -60,10 +60,10 @@ const PastelIDRegistrationTicket: React.FC<IPastelIDRegistrationTicketProps> = (
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>PQ key:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent className="break-all view-more">
             {!isExpanded ? `${ticket.pq_key.substring(0, 200)}...` : ticket.pq_key}
             <Styles.ButtonLink onClick={() => setIsExpanded(!isExpanded)}>
@@ -73,10 +73,10 @@ const PastelIDRegistrationTicket: React.FC<IPastelIDRegistrationTicketProps> = (
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Timestamp:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>{formattedDate(Number(ticket.timeStamp))}</Styles.TicketContent>
         </Grid>
       </Grid>

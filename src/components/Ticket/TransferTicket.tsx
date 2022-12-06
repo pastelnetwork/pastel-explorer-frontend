@@ -16,27 +16,27 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
   return (
     <Box>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Version:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>{ticket.version}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>{ticket.pastelID}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Signatures signature={ticket.signature} />
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Offer txid:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
             <RouterLink
               route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.offer_txid}`}
@@ -48,10 +48,10 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Accept txid:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
             <RouterLink
               route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.accept_txid}`}
@@ -63,10 +63,10 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Item txid:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
             <RouterLink
               route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.item_txid}`}
@@ -78,10 +78,10 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Registration txid:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
             <RouterLink
               route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.registration_txid}`}
@@ -93,10 +93,10 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Copy serial nr:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>{ticket.copy_serial_nr}</Styles.TicketContent>
         </Grid>
       </Grid>

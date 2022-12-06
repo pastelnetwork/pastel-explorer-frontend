@@ -18,42 +18,42 @@ const ActionActivationTicket: React.FC<IActionActivationTicketProps> = ({ ticket
   return (
     <Box>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Called at:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
             <RouterLink
               route={`#/${ticket.called_at}`}
               value={ticket.called_at}
-              title={ticket.called_at.toString()}
+              title={ticket.called_at?.toString()}
               className="address-link"
             />
           </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Version:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>{ticket.version}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>{ticket.pastelID}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Signatures signature={ticket.signature} />
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Reg txid:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
             <RouterLink
               route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.reg_txid}`}
@@ -65,10 +65,10 @@ const ActionActivationTicket: React.FC<IActionActivationTicketProps> = ({ ticket
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Storage fee:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
             {formatNumber(ticket.storage_fee)} {getCurrencyName()}
           </Styles.TicketContent>

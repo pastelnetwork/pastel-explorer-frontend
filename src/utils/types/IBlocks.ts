@@ -1,3 +1,5 @@
+import { ITicket } from './ITransactions';
+
 export interface IBlockTransaction {
   id: string;
   recipientCount: number;
@@ -20,6 +22,7 @@ export interface IBlock {
   transactionCount: number;
   transactions: Array<IBlockTransaction>;
   totalTickets: number;
+  tickets: ITicket[];
 }
 
 export interface IRawBlock {
@@ -40,4 +43,5 @@ export interface IRawBlock {
   transactions: Array<IBlockTransaction>;
   tx: string[];
   totalTickets: number;
+  tickets: ITicket[];
 }

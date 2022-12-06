@@ -29,7 +29,7 @@ import {
   TransferTicket,
 } from '@components/Ticket';
 import * as TableStyles from '@components/Table/Table.styles';
-import * as Styles from './TransactionDetails.styles';
+import * as Styles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 
 interface ITicketDetailProps {
   title: string;

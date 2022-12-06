@@ -18,34 +18,34 @@ const ApiTicket: React.FC<IApiTicketProps> = ({ apiTicket }) => {
   return (
     <Box>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Data hash:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>{data.data_hash}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Dd and fingerprints max:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>{data.dd_and_fingerprints_max}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Dd and fingerprints ic:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>{data.dd_and_fingerprints_ic}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Dd and fingerprints ids:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>{data.dd_and_fingerprints_ids.join(', ')}</Styles.TicketContent>
         </Grid>
       </Grid>

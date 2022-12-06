@@ -33,49 +33,49 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket }) => {
   return (
     <Box>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Action ticket version:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>{nft.action_ticket_version}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Action type:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>{nft.action_type}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Caller:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>{nft.caller}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Block number:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
             <RouterLink
               route={`${ROUTES.BLOCK_DETAILS}/${nft.blocknum}`}
               value={nft.blocknum}
-              title={nft.blocknum.toString()}
+              title={nft.blocknum?.toString()}
               className="address-link"
             />
           </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Block hash:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
             <RouterLink
               route={`${ROUTES.BLOCK_DETAILS}/${nft.block_hash}`}
@@ -89,10 +89,10 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket }) => {
       <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
         <AccordionSummary>
           <Grid container spacing={3}>
-            <Grid item xs={2}>
+            <Grid item xs={4} sm={2}>
               <Styles.TicketTitle>Api ticket:</Styles.TicketTitle>
             </Grid>
-            <Grid item xs={9}>
+            <Grid item xs={8} sm={10}>
               <Styles.TicketContent className="expand-more">
                 {isExpanded ? 'Click to see less' : 'Click to see detail'} <ExpandMoreIcon />
               </Styles.TicketContent>
@@ -113,57 +113,57 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({ ti
   return (
     <Box>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Action type:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>{ticket.action_type}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Version:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>{ticket.version}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Key:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>{ticket.key}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Label:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>{ticket.label}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Called at:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
             <RouterLink
               route={`${ROUTES.BLOCK_DETAILS}/${ticket.called_at}`}
               value={ticket.called_at}
-              title={ticket.called_at.toString()}
+              title={ticket.called_at?.toString()}
               className="address-link"
             />
           </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={4} sm={2}>
           <Styles.TicketTitle>Storage fee:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
             {formatNumber(ticket.storage_fee)} {getCurrencyName()}
           </Styles.TicketContent>
@@ -173,10 +173,10 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({ ti
       <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
         <AccordionSummary>
           <Grid container spacing={3}>
-            <Grid item xs={2}>
+            <Grid item xs={4} sm={2}>
               <Styles.TicketTitle>Action ticket:</Styles.TicketTitle>
             </Grid>
-            <Grid item xs={9}>
+            <Grid item xs={8} sm={10}>
               <Styles.TicketContent className="expand-more">
                 {isExpanded ? 'Click to see less' : 'Click to see detail'} <ExpandMoreIcon />
               </Styles.TicketContent>

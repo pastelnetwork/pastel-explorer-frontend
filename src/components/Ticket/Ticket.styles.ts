@@ -20,6 +20,11 @@ export const TicketContent = styled(Typography)`
       margin-left: 8px;
     }
   }
+
+  @media screen and (max-width: 1024px) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
 
 export const Accordion = styled(MuiAccordion)`
@@ -67,6 +72,10 @@ export const Accordion = styled(MuiAccordion)`
 
   .MuiAccordionDetails-root {
     padding: 0;
+
+    & > .MuiBox-root {
+      width: 100%;
+    }
   }
 `;
 

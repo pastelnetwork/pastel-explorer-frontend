@@ -42,6 +42,7 @@ export const updateBlocksNewest: (_block: IRawBlock) => AppThunk<Promise<void>> 
     transactionCount: block.transactions.length,
     transactions: block.transactions,
     totalTickets: block.totalTickets,
+    tickets: block.tickets,
   });
   let i = 1;
   prevBlocks.forEach((value, key) => {

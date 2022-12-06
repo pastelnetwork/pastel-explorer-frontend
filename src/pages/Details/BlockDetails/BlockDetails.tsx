@@ -15,6 +15,7 @@ import RouterLink from '@components/RouterLink/RouterLink';
 import Header from '@components/Header/Header';
 import Table, { RowsProps } from '@components/Table/Table';
 import CopyButton from '@components/CopyButton/CopyButton';
+import { getTicketTitle, TicketDetail } from '@components/Ticket';
 
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -28,6 +29,7 @@ import { IBlock, IBlockTransaction } from '@utils/types/IBlocks';
 import { formatAddress } from '@utils/helpers/format';
 import { useSortData } from '@utils/hooks';
 import { getCurrencyName } from '@utils/appInfo';
+import { TTicketType } from '@utils/types/ITransactions';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 
 import { blockHeaders, transactionHeaders, generateDetailsElement } from './BlockDetails.helpers';
@@ -214,6 +216,19 @@ const BlockDetails = () => {
             className="transactions"
             tableWrapperClassName="transactions-table-wrapper"
           />
+        </Styles.GridStyle>
+        <Styles.GridStyle item>
+          {block?.tickets.length
+            ? block?.tickets.map(ticket => (
+                <Styles.GridStyle item key={ticket.type}>
+                  <TicketDetail
+                    title={getTicketTitle(ticket.type as TTicketType)}
+                    type={ticket.type as TTicketType}
+                    ticket={ticket.data.ticket}
+                  />
+                </Styles.GridStyle>
+              ))
+            : null}
         </Styles.GridStyle>
       </Grid>
     </Styles.Wrapper>

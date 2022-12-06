@@ -299,20 +299,22 @@ export interface ITransferTicket {
 }
 
 export interface ITicket {
-  data:
-    | IPastelIDRegistrationTicket
-    | IUserNameChangeTicket
-    | INftRegistrationTicket
-    | INftActivationTicket
-    | INftCollectionRegistrationTicket
-    | INftCollectionActivationTicket
-    | INftRoyaltyTicket
-    | IActionRegistrationTicket
-    | IActionTicket
-    | IActionActivationTicket
-    | IOfferTicket
-    | IAcceptTicket
-    | ITransferTicket;
+  data: {
+    ticket:
+      | IPastelIDRegistrationTicket
+      | IUserNameChangeTicket
+      | INftRegistrationTicket
+      | INftActivationTicket
+      | INftCollectionRegistrationTicket
+      | INftCollectionActivationTicket
+      | INftRoyaltyTicket
+      | IActionRegistrationTicket
+      | IActionTicket
+      | IActionActivationTicket
+      | IOfferTicket
+      | IAcceptTicket
+      | ITransferTicket;
+  };
   type: string;
 }
 
