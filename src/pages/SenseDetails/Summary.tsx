@@ -2,7 +2,7 @@ import Box from '@material-ui/core/Box';
 
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
 
-import * as Styles from './ImageDetails.styles';
+import * as Styles from './SenseDetails.styles';
 
 const Summary: React.FC = () => {
   return (
@@ -11,12 +11,8 @@ const Summary: React.FC = () => {
         <TicketStyles.TicketTitle>Is Likely Dupe:</TicketStyles.TicketTitle>
         <TicketStyles.TicketContent>False</TicketStyles.TicketContent>
       </Styles.ContentItem>
-      <Styles.ContentItem>
-        <img
-          src="https://sensedemo.pastel.network/static/img/rare_badge.svg"
-          alt="rare_badge"
-          width="190px"
-        />
+      <Styles.ContentItem className="text-center summary-image">
+        <img src="https://sensedemo.pastel.network/static/img/rare_badge.svg" alt="rare_badge" />
       </Styles.ContentItem>
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>Sense Version:</TicketStyles.TicketTitle>

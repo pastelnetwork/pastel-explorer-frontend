@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 
-import * as Styles from './ImageDetails.styles';
+import * as Styles from './SenseDetails.styles';
 
 const OpenNSFW: React.FC = () => {
   const { darkMode } = useSelector(getThemeState);
@@ -27,6 +27,7 @@ const OpenNSFW: React.FC = () => {
         anchor: {
           show: true,
           size: 20,
+          showAbove: true,
           itemStyle: {
             borderColor: '#666666',
             borderWidth: 1,
@@ -62,19 +63,19 @@ const OpenNSFW: React.FC = () => {
           distance: 30,
           fontSize: 12,
           formatter(value: number) {
-            return value * 100;
+            return value === 0 || value === 1 ? value * 100 : null;
           },
         },
         detail: {
           valueAnimation: true,
           color: darkMode ? '#fff' : '#424242',
-          fontSize: 24,
+          fontSize: 22,
           offsetCenter: [0, '80%'],
           fontWeight: 'normal',
         },
         title: {
           offsetCenter: [0, '-30%'],
-          fontSize: 24,
+          fontSize: 22,
           color: darkMode ? '#fff' : '#424242',
         },
         data: [
@@ -89,7 +90,7 @@ const OpenNSFW: React.FC = () => {
 
   return (
     <Styles.OpenNSFWChartWrapper>
-      <ReactECharts notMerge={false} lazyUpdate option={options} />
+      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '250px' }} />
       <Styles.OpenNSFWChartOverlay />
     </Styles.OpenNSFWChartWrapper>
   );

@@ -3,8 +3,6 @@ import Grid from '@material-ui/core/Grid';
 
 import { decode } from '@utils/helpers/ascii85';
 import { IAppTicket } from '@utils/types/ITransactions';
-// import RouterLink from '@components/RouterLink/RouterLink';
-// import * as ROUTES from '@utils/constants/routes';
 
 import * as Styles from './Ticket.styles';
 
@@ -112,15 +110,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           <Styles.TicketTitle>Data hash:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>
-            {data.data_hash}
-            {/* <RouterLink
-              route={`${ROUTES.IMAGE_DETAILS}/${encodeURIComponent(data.data_hash)}`}
-              value={data.data_hash}
-              title={data.data_hash}
-              className="address-link"
-            /> */}
-          </Styles.TicketContent>
+          <Styles.TicketContent>{data.data_hash}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 
-import * as Styles from './ImageDetails.styles';
+import * as Styles from './SenseDetails.styles';
 
 const RarenessScore: React.FC = () => {
   const { darkMode } = useSelector(getThemeState);
@@ -63,7 +63,10 @@ const RarenessScore: React.FC = () => {
         axisLabel: {
           color: darkMode ? '#ccc' : '#8F8E8E',
           distance: 50,
-          fontSize: 20,
+          fontSize: 14,
+          formatter(value: number) {
+            return (value * 10) % 2 === 0 ? value : null;
+          },
         },
         detail: {
           valueAnimation: true,
@@ -86,7 +89,7 @@ const RarenessScore: React.FC = () => {
 
   return (
     <Styles.ContentItem>
-      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '400px' }} />
+      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '350px' }} />
     </Styles.ContentItem>
   );
 };

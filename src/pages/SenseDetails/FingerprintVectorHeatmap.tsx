@@ -1,52 +1,61 @@
 import ReactECharts from 'echarts-for-react';
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-// import { getThemeState } from '@redux/reducers/appThemeReducer';
-// import { TChartParams } from '@utils/types/IStatistics';
+import { getThemeState } from '@redux/reducers/appThemeReducer';
 
-import * as Styles from './ImageDetails.styles';
+import * as Styles from './SenseDetails.styles';
 import { xData, yData, data } from './mockup';
 
 const FingerprintVectorHeatmap: React.FC = () => {
-  // const { darkMode } = useSelector(getThemeState);
+  const { darkMode } = useSelector(getThemeState);
 
   const options = {
     tooltip: {},
     grid: {
-      right: 140,
+      right: 80,
       left: 40,
     },
     xAxis: {
       type: 'category',
       data: xData,
+      axisLabel: {
+        color: darkMode ? '#fff' : '#2D3748',
+        interval: 4,
+      },
     },
     yAxis: {
       type: 'category',
       data: yData,
+      axisLabel: {
+        color: darkMode ? '#fff' : '#2D3748',
+        interval: 4,
+      },
     },
     visualMap: {
-      type: 'piecewise',
       min: 0,
       max: 1,
       left: 'right',
       top: 'center',
       calculable: true,
       realtime: false,
-      splitNumber: 8,
+      splitNumber: 12,
       inRange: {
         color: [
-          '#313695',
-          '#4575b4',
-          '#74add1',
-          '#abd9e9',
-          '#e0f3f8',
-          '#ffffbf',
-          '#fee090',
-          '#fdae61',
-          '#f46d43',
-          '#d73027',
-          '#a50026',
+          '#0309FF',
+          '#3091FF',
+          '#53B9FF',
+          '#80CCFF',
+          '#C2CCFF',
+          '#FFFDFF',
+          '#FFC0FF',
+          '#FF84EA',
+          '#FF669B',
+          '#FF5757',
+          '#FF0404',
         ],
+      },
+      textStyle: {
+        color: darkMode ? '#fff' : '#2D3748',
       },
     },
     series: [

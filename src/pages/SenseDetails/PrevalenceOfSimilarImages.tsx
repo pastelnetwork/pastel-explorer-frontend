@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { TChartParams } from '@utils/types/IStatistics';
 
-import * as Styles from './ImageDetails.styles';
+import * as Styles from './SenseDetails.styles';
 
 const colors = [
   'rgba(255, 99, 132, 0.2)',
@@ -28,14 +28,20 @@ const PrevalenceOfSimilarImages: React.FC = () => {
   }));
 
   const options = {
+    grid: {
+      top: 10,
+      left: 45,
+      right: 10,
+      bottom: 20,
+    },
     tooltip: {
       trigger: 'axis',
       formatter(params: TChartParams[]) {
         return `
-          <div class="tooltip-wrapper">
+          <div class="tooltip-wrapper max-w-280">
             <div class="tooltip-label">${params[0].axisValue}</div>
             <div class="tooltip-value">
-              ${params[0].marker}% of Top-10 Most Similar Images with Dupe Probability Above: ${params[0].value}
+              ${params[0].marker} % of Top-10 Most<br>SimilarImages with Dupe<br>Probability Above: ${params[0].value}
             </div>
           </div>
         `;
@@ -67,8 +73,8 @@ const PrevalenceOfSimilarImages: React.FC = () => {
   };
 
   return (
-    <Styles.ContentItem>
-      <ReactECharts notMerge={false} lazyUpdate option={options} />
+    <Styles.ContentItem className="py-10">
+      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '300px' }} />
     </Styles.ContentItem>
   );
 };
