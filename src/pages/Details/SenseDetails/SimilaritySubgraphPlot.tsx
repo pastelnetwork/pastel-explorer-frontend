@@ -1,35 +1,39 @@
 import ReactECharts from 'echarts-for-react';
 
+import { TSubgraph } from '@utils/types/ITransactions';
 import { TChartParams } from '@utils/types/IStatistics';
 
 import * as Styles from './SenseDetails.styles';
-import { graphData, fakeInformation } from './mockup';
 
-const RareOnTheInternetResultsGraph: React.FC = () => {
+interface ISimilaritySubgraphPlot {
+  data: TSubgraph;
+}
+
+const SimilaritySubgraphPlot: React.FC<ISimilaritySubgraphPlot> = ({ data }) => {
   const options = {
     animationDurationUpdate: 1500,
     animationEasingUpdate: 'quinticInOut',
     tooltip: {
       trigger: 'item',
       formatter(params: TChartParams) {
-        const item = fakeInformation.find(i => i.id === params.name);
+        const item = data.nodes.find(i => i.id === params.name);
         if (item) {
           return `
             <div class="tooltip-wrapper max-w-280">
-              <div class="tooltip-name">${item.name}</div>
-              <div class="tooltip-url">${item.url}</div>
+              <div class="tooltip-name">${item.fileHash}</div>
+              <div class="tooltip-url">${item.imgLink}</div>
               <div class="tooltip-content-wrapper">
                 <div class="tooltip-item">
-                  <div class="label">Result Ranking:</div>
-                  <div class="value">${item.ranking}</div>
+                  <div class="label">Sense Rareness Score:</div>
+                  <div class="value">${item.rarenessScore}</div>
                 </div>
                 <div class="tooltip-item">
-                  <div class="label">Original Image Resolution:</div>
-                  <div class="value">${item.resolution}</div>
+                  <div class="label">Open NSFW Score:</div>
+                  <div class="value">${item.openNsfwScore}</div>
                 </div>
                 <div class="tooltip-item">
-                  <div class="label">Image Date:</div>
-                  <div class="value">${item.date}</div>
+                  <div class="label">Is Likely Dupe:</div>
+                  <div class="value">${item.isLikelyDupe?.toString()}</div>
                 </div>
               </div>
             </div>
@@ -45,15 +49,14 @@ const RareOnTheInternetResultsGraph: React.FC = () => {
     series: [
       {
         type: 'graph',
-        data: graphData.nodes.map(node => ({
+        data: data.nodes.map(node => ({
           x: node.x,
           y: node.y,
           id: node.id,
-          name: node.label,
-          symbolSize: node.size,
-          symbol: node.symbol,
+          name: node.id,
+          symbol: `image://${node.imgLink}`,
         })),
-        edges: graphData.edges.map(edge => ({
+        edges: data.edges.map(edge => ({
           source: edge.sourceID,
           target: edge.targetID,
         })),
@@ -77,9 +80,9 @@ const RareOnTheInternetResultsGraph: React.FC = () => {
 
   return (
     <Styles.ContentItem>
-      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '500px' }} />
+      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '400px' }} />
     </Styles.ContentItem>
   );
 };
 
-export default RareOnTheInternetResultsGraph;
+export default SimilaritySubgraphPlot;

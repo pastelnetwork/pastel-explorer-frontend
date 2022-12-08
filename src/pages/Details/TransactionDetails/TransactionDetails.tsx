@@ -168,6 +168,7 @@ const TransactionDetails = () => {
           open={openRawDataModal}
           toggleOpen={toggleOpenRawData}
           rawData={transaction.rawData}
+          tickets={tickets}
         />
         <Styles.GridStyle item>
           <Table
@@ -179,17 +180,6 @@ const TransactionDetails = () => {
             title="Overview"
           />
         </Styles.GridStyle>
-        {tickets.length
-          ? tickets.map(ticket => (
-              <Styles.GridStyle item key={ticket.type}>
-                <TicketDetail
-                  title={getTicketTitle(ticket.type as TTicketType)}
-                  type={ticket.type as TTicketType}
-                  ticket={ticket.data.ticket}
-                />
-              </Styles.GridStyle>
-            ))
-          : null}
         <Styles.GridStyle item>
           {transaction.isNonStandard ? (
             generateNonStandardTransactionInfo()
@@ -223,6 +213,17 @@ const TransactionDetails = () => {
             </Styles.GirdWrapper>
           )}
         </Styles.GridStyle>
+        {tickets.length
+          ? tickets.map(ticket => (
+              <Styles.GridStyle item key={ticket.type}>
+                <TicketDetail
+                  title={getTicketTitle(ticket.type as TTicketType)}
+                  type={ticket.type as TTicketType}
+                  ticket={ticket.data.ticket}
+                />
+              </Styles.GridStyle>
+            ))
+          : null}
       </Grid>
     </Styles.Wrapper>
   ) : (

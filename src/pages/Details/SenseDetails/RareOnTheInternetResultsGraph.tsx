@@ -5,7 +5,7 @@ import { TChartParams } from '@utils/types/IStatistics';
 import * as Styles from './SenseDetails.styles';
 import { graphData, fakeInformation } from './mockup';
 
-const SimilaritySubgraphPlot: React.FC = () => {
+const RareOnTheInternetResultsGraph: React.FC = () => {
   const options = {
     animationDurationUpdate: 1500,
     animationEasingUpdate: 'quinticInOut',
@@ -20,16 +20,16 @@ const SimilaritySubgraphPlot: React.FC = () => {
               <div class="tooltip-url">${item.url}</div>
               <div class="tooltip-content-wrapper">
                 <div class="tooltip-item">
-                  <div class="label">Sense Rareness Score:</div>
-                  <div class="value">${item.rarenessScore}</div>
+                  <div class="label">Result Ranking:</div>
+                  <div class="value">${item.ranking}</div>
                 </div>
                 <div class="tooltip-item">
-                  <div class="label">Open NSFW Score:</div>
-                  <div class="value">${item.openNSFWScore}</div>
+                  <div class="label">Original Image Resolution:</div>
+                  <div class="value">${item.resolution}</div>
                 </div>
                 <div class="tooltip-item">
-                  <div class="label">Is Likely Dupe:</div>
-                  <div class="value">${item.isLikelyDupe?.toString()}</div>
+                  <div class="label">Image Date:</div>
+                  <div class="value">${item.date}</div>
                 </div>
               </div>
             </div>
@@ -77,9 +77,9 @@ const SimilaritySubgraphPlot: React.FC = () => {
 
   return (
     <Styles.ContentItem>
-      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '500px' }} />
+      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '400px' }} />
     </Styles.ContentItem>
   );
 };
 
-export default SimilaritySubgraphPlot;
+export default RareOnTheInternetResultsGraph;

@@ -5,7 +5,11 @@ import { getThemeState } from '@redux/reducers/appThemeReducer';
 
 import * as Styles from './SenseDetails.styles';
 
-const OpenNSFW: React.FC = () => {
+interface IOpenNSFWProps {
+  openNSFWScore: number;
+}
+
+const OpenNSFW: React.FC<IOpenNSFWProps> = ({ openNSFWScore }) => {
   const { darkMode } = useSelector(getThemeState);
 
   const options = {
@@ -18,7 +22,7 @@ const OpenNSFW: React.FC = () => {
           lineStyle: {
             width: 20,
             color: [
-              [0.65, darkMode ? '#2D3748' : '#fff'],
+              [0.66, darkMode ? '#2D3748' : '#fff'],
               [0.8, '#FAAD14'],
               [1, '#DC3912'],
             ],
@@ -52,7 +56,7 @@ const OpenNSFW: React.FC = () => {
         },
         splitLine: {
           distance: -20,
-          length: 15,
+          length: 10,
           lineStyle: {
             color: darkMode ? '#5B5A5E' : '#333333',
             width: 3,
@@ -69,18 +73,21 @@ const OpenNSFW: React.FC = () => {
         detail: {
           valueAnimation: true,
           color: darkMode ? '#fff' : '#424242',
-          fontSize: 22,
+          fontSize: 18,
           offsetCenter: [0, '80%'],
           fontWeight: 'normal',
+          formatter(value: number) {
+            return value.toFixed(3);
+          },
         },
         title: {
-          offsetCenter: [0, '-30%'],
-          fontSize: 22,
+          offsetCenter: [0, '-37%'],
+          fontSize: 18,
           color: darkMode ? '#fff' : '#424242',
         },
         data: [
           {
-            value: 0.001,
+            value: openNSFWScore * 100,
             name: 'NSFW',
           },
         ],
@@ -90,8 +97,10 @@ const OpenNSFW: React.FC = () => {
 
   return (
     <Styles.OpenNSFWChartWrapper>
-      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '250px' }} />
-      <Styles.OpenNSFWChartOverlay />
+      <Styles.OpenNSFWContent>
+        <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '200px' }} />
+        <Styles.OpenNSFWChartOverlay />
+      </Styles.OpenNSFWContent>
     </Styles.OpenNSFWChartWrapper>
   );
 };

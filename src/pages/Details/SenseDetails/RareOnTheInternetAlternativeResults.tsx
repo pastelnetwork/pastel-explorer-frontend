@@ -69,7 +69,7 @@ const RareOnTheInternetAlternativeResults: React.FC = () => {
 
   return (
     <Styles.ContentItem>
-      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '500px' }} />
+      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '400px' }} />
     </Styles.ContentItem>
   );
 };

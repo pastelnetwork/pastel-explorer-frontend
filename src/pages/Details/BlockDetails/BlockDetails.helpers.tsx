@@ -2,6 +2,7 @@ import { Grid, Typography } from '@material-ui/core';
 
 import { HeaderType } from '@components/Table/Table';
 import { getCurrencyName } from '@utils/appInfo';
+import { ITicket } from '@utils/types/ITransactions';
 
 import * as Styles from './BlockDetails.styles';
 
@@ -15,7 +16,8 @@ export const blockHeaders: Array<HeaderType> = [
 export const transactionHeaders: Array<HeaderType> = [
   { id: 1, header: 'TXID', key: 'id' },
   { id: 2, header: 'Recipients', key: 'recipientCount' },
-  { id: 3, header: `Amount (${getCurrencyName()})`, key: 'totalAmount' },
+  { id: 3, header: 'Tickets', key: 'totalTickets' },
+  { id: 4, header: `Amount (${getCurrencyName()})`, key: 'totalAmount' },
 ];
 
 export const generateDetailsElement = (name: string, value: string) => (
@@ -28,3 +30,9 @@ export const generateDetailsElement = (name: string, value: string) => (
     </Grid>
   </Styles.DetailsContainer>
 );
+
+export const countTotalTicketsByTxid = (txid: string, tickets: ITicket[]) => {
+  const items = tickets.filter(t => t.transactionHash === txid);
+
+  return items.length;
+};

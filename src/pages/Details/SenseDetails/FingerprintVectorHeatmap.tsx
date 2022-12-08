@@ -12,8 +12,10 @@ const FingerprintVectorHeatmap: React.FC = () => {
   const options = {
     tooltip: {},
     grid: {
-      right: 80,
-      left: 40,
+      right: 60,
+      left: 25,
+      top: 10,
+      bottom: 20,
     },
     xAxis: {
       type: 'category',
@@ -77,7 +79,7 @@ const FingerprintVectorHeatmap: React.FC = () => {
 
   return (
     <Styles.ContentItem>
-      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '500px' }} />
+      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '400px' }} />
     </Styles.ContentItem>
   );
 };

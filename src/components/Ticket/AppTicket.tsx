@@ -3,12 +3,41 @@ import Grid from '@material-ui/core/Grid';
 
 import { decode } from '@utils/helpers/ascii85';
 import { IAppTicket } from '@utils/types/ITransactions';
+import RouterLink from '@components/RouterLink/RouterLink';
+import * as ROUTES from '@utils/constants/routes';
 
 import * as Styles from './Ticket.styles';
 
 interface IAppTicketProps {
   appTicket: string;
 }
+
+interface IFingerprints {
+  data: string[];
+}
+
+const Fingerprints: React.FC<IFingerprints> = ({ data }) => {
+  if (!data.length) {
+    return null;
+  }
+
+  return (
+    <Styles.TicketContent>
+      {data.map((value, index) => (
+        <>
+          <RouterLink
+            key={value}
+            route={`${ROUTES.SENSE_DETAILS}/${value}`}
+            value={value}
+            title={value}
+            className="address-link"
+          />
+          {index < data.length ? ', ' : ''}
+        </>
+      ))}
+    </Styles.TicketContent>
+  );
+};
 
 const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
   if (!appTicket) {
@@ -126,7 +155,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           <Styles.TicketTitle>Dd and fingerprints ic:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{data.dd_and_fingerprints_ic}</Styles.TicketContent>
+          {data.dd_and_fingerprints_ic}
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -142,7 +171,9 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           <Styles.TicketTitle>Dd and fingerprints ids:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{data.dd_and_fingerprints_ids.join(', ')}</Styles.TicketContent>
+          <Styles.TicketContent>
+            <Fingerprints data={data.dd_and_fingerprints_ids} />
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>

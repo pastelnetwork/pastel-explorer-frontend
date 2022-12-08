@@ -44,12 +44,18 @@ export const transformTableData = (transactions: Array<IBlock>, isMobile: boolea
     ),
     [TRANSACTIONS_QTY_KEY]: transactionCount,
     [TOTAL_TICKETS]: (
-      <RouterLink
-        className="hash-link"
-        route={`${ROUTES.BLOCK_DETAILS}/${id}`}
-        value={totalTickets}
-        title={totalTickets.toString()}
-      />
+      <>
+        {totalTickets > 0 ? (
+          <RouterLink
+            className="hash-link"
+            route={`${ROUTES.BLOCK_DETAILS}/${id}`}
+            value={totalTickets}
+            title={totalTickets.toString()}
+          />
+        ) : (
+          <>{totalTickets}</>
+        )}
+      </>
     ),
     [TIMESTAMP_BLOCKS_KEY]: formattedDate(timestamp, { dayName: false }),
   }));

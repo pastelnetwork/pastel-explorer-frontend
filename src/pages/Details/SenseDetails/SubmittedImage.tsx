@@ -6,7 +6,7 @@ import * as Styles from './SenseDetails.styles';
 
 const SubmittedImage: React.FC = () => {
   return (
-    <Box>
+    <Box className="pt-8">
       <Styles.ContentItem>
         <img
           src="http://res.cloudinary.com/pastelnetwork/image/upload/v1/sense_demo/b56b34c6b8b3d87331632ec2ddc5168d54f5ce4f060a617d95d2260f8b0f7099.jpg"
@@ -14,7 +14,7 @@ const SubmittedImage: React.FC = () => {
           className="main-image"
         />
       </Styles.ContentItem>
-      <Styles.ContentItem>
+      <Styles.ContentItem className="mt-25">
         <TicketStyles.TicketTitle>Title:</TicketStyles.TicketTitle>
         <TicketStyles.TicketContent className="break-all">b56b34c6b8</TicketStyles.TicketContent>
       </Styles.ContentItem>

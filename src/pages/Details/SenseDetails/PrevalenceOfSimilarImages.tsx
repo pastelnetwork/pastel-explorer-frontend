@@ -1,36 +1,36 @@
 import ReactECharts from 'echarts-for-react';
 import { useSelector } from 'react-redux';
 
+import { sense_chart_colors } from '@utils/constants/statistics';
+import { TPrevalenceOfSimilarImages } from '@utils/types/ITransactions';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { TChartParams } from '@utils/types/IStatistics';
 
 import * as Styles from './SenseDetails.styles';
 
-const colors = [
-  'rgba(255, 99, 132, 0.2)',
-  'rgba(54, 162, 235, 0.2)',
-  'rgba(255, 206, 86, 0.2)',
-  'rgba(75, 192, 192, 0.2)',
-  'rgba(153, 102, 255, 0.2)',
-  'rgba(255, 159, 64, 0.2)',
-];
+interface IPrevalenceOfSimilarImages {
+  data: TPrevalenceOfSimilarImages;
+}
 
-const mockup = [0.114422835, 0.060403667, 0.78351456, 0.0119043095, 0.029754573];
-
-const CategoryProbabilities: React.FC = () => {
+const PrevalenceOfSimilarImages: React.FC<IPrevalenceOfSimilarImages> = ({ data }) => {
   const { darkMode } = useSelector(getThemeState);
 
-  const seriesData = mockup.map((item, index) => ({
+  const seriesData = [
+    data.dupeProbAbove25pct,
+    data.dupeProbAbove33pct,
+    data.dupeProbAbove50pct,
+  ].map((item, index) => ({
     value: item,
     itemStyle: {
-      color: colors[index],
+      color: sense_chart_colors[index] || sense_chart_colors[0],
     },
   }));
-
+  const min = 0;
+  const max = 0.5;
   const options = {
     grid: {
-      top: 10,
-      left: 45,
+      top: 30,
+      left: 35,
       right: 10,
       bottom: 20,
     },
@@ -38,10 +38,10 @@ const CategoryProbabilities: React.FC = () => {
       trigger: 'axis',
       formatter(params: TChartParams[]) {
         return `
-          <div class="tooltip-wrapper">
+          <div class="tooltip-wrapper max-w-280">
             <div class="tooltip-label">${params[0].axisValue}</div>
             <div class="tooltip-value">
-              ${params[0].marker}NSFW Scores: ${params[0].value}
+              ${params[0].marker} % of Top-10 Most<br>SimilarImages with Dupe<br>Probability Above: ${params[0].value}
             </div>
           </div>
         `;
@@ -49,8 +49,11 @@ const CategoryProbabilities: React.FC = () => {
     },
     xAxis: {
       type: 'category',
-      data: ['drawings', 'hentai', 'neutral', 'porn', 'sexy'],
+      data: ['25%', '33%', '50%'],
       splitLine: {
+        show: false,
+      },
+      axisLine: {
         show: true,
       },
       axisLabel: {
@@ -60,6 +63,11 @@ const CategoryProbabilities: React.FC = () => {
     yAxis: {
       type: 'value',
       splitLine: {
+        show: false,
+      },
+      min,
+      max,
+      axisLine: {
         show: true,
       },
       axisLabel: {
@@ -73,10 +81,10 @@ const CategoryProbabilities: React.FC = () => {
   };
 
   return (
-    <Styles.ContentItem className="py-10">
-      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '300px' }} />
+    <Styles.ContentItem>
+      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '400px' }} />
     </Styles.ContentItem>
   );
 };
 
-export default CategoryProbabilities;
+export default PrevalenceOfSimilarImages;

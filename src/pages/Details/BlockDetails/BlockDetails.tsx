@@ -11,11 +11,10 @@ import {
 } from '@material-ui/core';
 import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 
-import RouterLink from '@components/RouterLink/RouterLink';
+import RouterLink, { ExternalLink } from '@components/RouterLink/RouterLink';
 import Header from '@components/Header/Header';
 import Table, { RowsProps } from '@components/Table/Table';
 import CopyButton from '@components/CopyButton/CopyButton';
-import { getTicketTitle, TicketDetail } from '@components/Ticket';
 
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -29,11 +28,16 @@ import { IBlock, IBlockTransaction } from '@utils/types/IBlocks';
 import { formatAddress } from '@utils/helpers/format';
 import { useSortData } from '@utils/hooks';
 import { getCurrencyName } from '@utils/appInfo';
-import { TTicketType } from '@utils/types/ITransactions';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 
-import { blockHeaders, transactionHeaders, generateDetailsElement } from './BlockDetails.helpers';
+import {
+  blockHeaders,
+  transactionHeaders,
+  generateDetailsElement,
+  countTotalTicketsByTxid,
+} from './BlockDetails.helpers';
 import * as Styles from './BlockDetails.styles';
+import TicketsList from './Tickets';
 
 interface ParamTypes {
   id: string;
@@ -99,6 +103,7 @@ const BlockDetails = () => {
       return [];
     }
     const transactionList = data.map(transaction => {
+      const totalTickets = countTotalTicketsByTxid(transaction.id, block?.tickets || []);
       return {
         id: transaction.id,
         data: [
@@ -119,6 +124,22 @@ const BlockDetails = () => {
           { id: 2, value: transaction.recipientCount },
           {
             id: 3,
+            value: (
+              <>
+                {totalTickets > 0 ? (
+                  <ExternalLink
+                    href={`#${transaction.id}`}
+                    value={totalTickets.toString()}
+                    className="transaction-hash"
+                  />
+                ) : (
+                  <>{totalTickets}</>
+                )}
+              </>
+            ),
+          },
+          {
+            id: 4,
             value: (
               <>
                 {transaction.totalAmount === 0 ? (
@@ -209,7 +230,7 @@ const BlockDetails = () => {
         </Styles.GridStyle>
         <Styles.GridStyle item>
           <Table
-            title="Latest Transactions"
+            title="Transactions"
             headers={transactionHeaders}
             rows={generateLatestTransactions(transactions)}
             handleClickSort={handleClickSortTransaction}
@@ -218,17 +239,7 @@ const BlockDetails = () => {
           />
         </Styles.GridStyle>
         <Styles.GridStyle item>
-          {block?.tickets.length
-            ? block?.tickets.map(ticket => (
-                <Styles.GridStyle item key={ticket.type}>
-                  <TicketDetail
-                    title={getTicketTitle(ticket.type as TTicketType)}
-                    type={ticket.type as TTicketType}
-                    ticket={ticket.data.ticket}
-                  />
-                </Styles.GridStyle>
-              ))
-            : null}
+          <TicketsList data={block?.tickets} />
         </Styles.GridStyle>
       </Grid>
     </Styles.Wrapper>

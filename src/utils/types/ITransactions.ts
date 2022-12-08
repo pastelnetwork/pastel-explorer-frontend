@@ -316,6 +316,7 @@ export interface ITicket {
       | ITransferTicket;
   };
   type: string;
+  transactionHash: string;
 }
 
 export type TTicketType =
@@ -331,3 +332,70 @@ export type TTicketType =
   | 'offer'
   | 'accept'
   | 'transfer';
+
+export type TAlternativeNsfwScores = {
+  labels: string;
+  value: number;
+};
+
+export type TSubgraphNodes = {
+  fileHash: string;
+  imgLink: string;
+  rarenessScore: number;
+  openNsfwScore: number;
+  isLikelyDupe: boolean;
+  x: number;
+  y: number;
+  label: string;
+  id: string;
+};
+
+export type TSubgraphEdges = {
+  sourceID: string;
+  targetID: string;
+};
+
+export type TPastelData = {
+  pastelBlockHashWhenRequestSubmitted: string;
+  pastelBlockHeightWhenRequestSubmitted: number;
+  utcTimestampWhenRequestSubmitted: string;
+  pastelIdOfSubmitter: string;
+  pastelIdOfRegisteringSupernode1: string;
+  pastelIdOfRegisteringSupernode2: string;
+  pastelIdOfRegisteringSupernode3: string;
+  isPastelOpenApiRequest: boolean;
+  openApiSubsetIdString: string;
+};
+
+export type TPrevalenceOfSimilarImages = {
+  dupeProbAbove25pct: number;
+  dupeProbAbove33pct: number;
+  dupeProbAbove50pct: number;
+};
+
+export type TSubgraph = {
+  nodes: TSubgraphNodes[];
+  edges: TSubgraphEdges[];
+};
+
+export type TSense = {
+  isLikelyDupe: boolean;
+  senseVersion: number;
+  openNSFWScore: number;
+  rarenessScore: number;
+  image: {
+    url: string;
+    hash: string;
+    title: string;
+    description: string;
+    isPublic: boolean;
+  };
+  ipfs: {
+    link: string;
+    hash: string;
+  };
+  pastelData: TPastelData;
+  prevalenceOfSimilarImagesData: TPrevalenceOfSimilarImages;
+  alternativeNsfwScores: TAlternativeNsfwScores[];
+  subgraph: TSubgraph;
+};

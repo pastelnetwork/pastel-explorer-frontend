@@ -47,7 +47,7 @@ import TotalSupply from '@pages/HistoricalStatistics/TotalSupply';
 import PercentOfPSLStaked from '@pages/HistoricalStatistics/PercentOfPSLStaked';
 import Accounts from '@pages/HistoricalStatistics/Accounts';
 import CascadeAndSenseStatistics from '@pages/CascadeAndSenseStatistics/CascadeAndSenseStatistics';
-import SenseDetails from '@pages/SenseDetails/SenseDetails';
+import SenseDetails from '@pages/Details/SenseDetails/SenseDetails';
 
 import * as ROUTES from '@utils/constants/routes';
 import { getCurrencyName } from '@utils/appInfo';
