@@ -4,6 +4,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 import { HeaderType } from '@components/Table/Table';
+import CopyButton from '@components/CopyButton/CopyButton';
 
 import { ITransactionDetails } from '@utils/types/ITransactions';
 import { formattedDate } from '@utils/helpers/date/date';
@@ -37,9 +38,12 @@ export const generateTableTitle = (
       {getCurrencyName()} TXID: {transactionData.id}{' '}
       <span>
         (
-        <Styles.ViewTransactionRaw type="button" onClick={toggleOpenRawData}>
-          View Transaction Raw Data
-        </Styles.ViewTransactionRaw>
+        <Styles.RawDataWrapper>
+          <CopyButton copyText={transactionData.rawData} />
+          <Styles.ViewTransactionRaw type="button" onClick={toggleOpenRawData}>
+            View Transaction Raw Data
+          </Styles.ViewTransactionRaw>
+        </Styles.RawDataWrapper>
         )
       </span>
     </AlertTitle>
