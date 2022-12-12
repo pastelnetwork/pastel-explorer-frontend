@@ -31,9 +31,6 @@ export const getBaseURL = () => {
 
 export const axiosInstance = Axios.create({
   baseURL: getBaseURL(),
-  headers: {
-    'custom-origin': document.location.origin,
-  },
 });
 
 // Add a response interceptor
