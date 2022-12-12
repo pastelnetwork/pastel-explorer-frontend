@@ -47,7 +47,6 @@ const StyledTableRow = withStyles((theme: TAppTheme) => ({
   },
 }))(TableRow);
 
-
 const useStyles = makeStyles({
   viewAll: {
     padding: 16,
