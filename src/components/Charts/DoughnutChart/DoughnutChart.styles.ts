@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+import { Link as RouterLink } from 'react-router-dom';
 
 import themeVariant from '@theme/variants';
 
@@ -123,4 +124,9 @@ export const StakingTitle = styled.div`
   font-size: 20px;
   font-weight: 400;
   line-height: 1;
+`;
+
+export const Link = styled(RouterLink)`
+  text-decoration: none;
+  color: ${props => props.theme.palette.text.primary};
 `;

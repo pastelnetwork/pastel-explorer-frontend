@@ -1,7 +1,10 @@
 import { Grid } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
+import Tooltip from '@material-ui/core/Tooltip';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 import { HeaderType } from '@components/Table/Table';
+import CopyButton from '@components/CopyButton/CopyButton';
 
 import { ITransactionDetails } from '@utils/types/ITransactions';
 import { formattedDate } from '@utils/helpers/date/date';
@@ -35,9 +38,12 @@ export const generateTableTitle = (
       {getCurrencyName()} TXID: {transactionData.id}{' '}
       <span>
         (
-        <Styles.ViewTransactionRaw type="button" onClick={toggleOpenRawData}>
-          View Transaction Raw Data
-        </Styles.ViewTransactionRaw>
+        <Styles.RawDataWrapper>
+          <CopyButton copyText={transactionData.rawData} />
+          <Styles.ViewTransactionRaw type="button" onClick={toggleOpenRawData}>
+            View Transaction Raw Data
+          </Styles.ViewTransactionRaw>
+        </Styles.RawDataWrapper>
         )
       </span>
     </AlertTitle>
@@ -61,14 +67,28 @@ export const generateTableTitle = (
 );
 
 export const generateCoinbaseInfo = (info: number) => (
-  <Alert severity="info">
+  <Alert
+    severity="info"
+    icon={
+      <Tooltip title="New coins" arrow>
+        <InfoOutlinedIcon fontSize="small" />
+      </Tooltip>
+    }
+  >
     <AlertTitle>New coins ({formatNumber(info, { decimalsLength: 2 })})</AlertTitle>
   </Alert>
 );
 
 export const generateNonStandardTransactionInfo = () => (
   <Grid item xs={12}>
-    <Styles.Alert severity="info">
+    <Styles.Alert
+      severity="info"
+      icon={
+        <Tooltip title="Shielded Transaction" arrow>
+          <InfoOutlinedIcon fontSize="small" />
+        </Tooltip>
+      }
+    >
       <AlertTitle>Shielded Transaction</AlertTitle>
     </Styles.Alert>
   </Grid>

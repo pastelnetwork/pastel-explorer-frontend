@@ -53,7 +53,10 @@ type TChartDataProps = {
 const Summary: React.FC = () => {
   const [summaryList, setSummaryList] = React.useState(initialSummaryList);
   const [summaryChartData, setSummaryChartData] = React.useState<ISummaryChartStats>();
-  const { fetchData } = useFetch<ISummary>({ method: 'get', url: `${URLS.SUMMARY_URL}?limit=576` });
+  const { fetchData } = useFetch<ISummary>({
+    method: 'get',
+    url: `${URLS.SUMMARY_URL}?limit=576&period=24h`,
+  });
   const socket = React.useContext(SocketContext);
   const classes = useStyles();
   const { pathname } = useLocation();
