@@ -1,5 +1,7 @@
 import { Grid } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
+import Tooltip from '@material-ui/core/Tooltip';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 import { HeaderType } from '@components/Table/Table';
 
@@ -68,7 +70,14 @@ export const generateCoinbaseInfo = (info: number) => (
 
 export const generateNonStandardTransactionInfo = () => (
   <Grid item xs={12}>
-    <Styles.Alert severity="info">
+    <Styles.Alert
+      severity="info"
+      icon={
+        <Tooltip title="Shielded Transaction" arrow>
+          <InfoOutlinedIcon fontSize="small" />
+        </Tooltip>
+      }
+    >
       <AlertTitle>Shielded Transaction</AlertTitle>
     </Styles.Alert>
   </Grid>
