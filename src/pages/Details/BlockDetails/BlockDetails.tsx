@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Redirect, useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 import { Grid, Tooltip, AccordionSummary, AccordionDetails, Typography } from '@material-ui/core';
 import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
@@ -35,7 +35,6 @@ const BlockDetails = () => {
   const [isMobile, setMobileView] = React.useState(false);
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [block, setBlock] = React.useState<IBlock | null>();
-  const [redirect, setRedirect] = React.useState(false);
   const { fetchData } = useFetch<{ data: IBlock }>({
     method: 'get',
     url: `${URLS.BLOCK_URL}/${id}`,
@@ -62,9 +61,7 @@ const BlockDetails = () => {
 
   React.useEffect(() => {
     fetchData().then(response => {
-      if (!response?.data) {
-        setRedirect(true);
-      } else {
+      if (response?.data) {
         setBlock(response.data);
       }
     });
@@ -159,10 +156,6 @@ const BlockDetails = () => {
       </Grid>
     );
   };
-
-  if (redirect) {
-    return <Redirect to={ROUTES.NOT_FOUND} />;
-  }
 
   return block ? (
     <Styles.Wrapper>
