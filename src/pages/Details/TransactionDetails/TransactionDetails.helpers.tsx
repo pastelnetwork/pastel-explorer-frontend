@@ -63,7 +63,14 @@ export const generateTableTitle = (
 );
 
 export const generateCoinbaseInfo = (info: number) => (
-  <Alert severity="info">
+  <Alert
+    severity="info"
+    icon={
+      <Tooltip title="New coins" arrow>
+        <InfoOutlinedIcon fontSize="small" />
+      </Tooltip>
+    }
+  >
     <AlertTitle>New coins ({formatNumber(info, { decimalsLength: 2 })})</AlertTitle>
   </Alert>
 );
