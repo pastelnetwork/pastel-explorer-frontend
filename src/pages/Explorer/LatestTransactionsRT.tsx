@@ -2,7 +2,7 @@
 import { memo, useEffect } from 'react';
 // third party
 import { Tooltip } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -12,6 +12,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Skeleton from '@material-ui/lab/Skeleton';
+import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
 import { useDispatch } from 'react-redux';
 // application
 import { TAppTheme } from '@theme/index';
@@ -46,7 +47,15 @@ const StyledTableRow = withStyles((theme: TAppTheme) => ({
   },
 }))(TableRow);
 
+
+const useStyles = makeStyles({
+  viewAll: {
+    padding: 16,
+  },
+});
+
 function LatestTransactions() {
+  const classes = useStyles();
   const dispatch = useDispatch<AppThunkDispatch>();
   const transactions = useTransactionLatestTransactions();
   useEffect(() => {
@@ -55,7 +64,14 @@ function LatestTransactions() {
 
   return (
     <Styles.BlockWrapper className="mt-24 latest-transactions-wrapper">
-      <Styles.BlockTitle>Latest Transactions (Live)</Styles.BlockTitle>
+      <Styles.BlockTitle className="latest-blocks">
+        Latest Transactions (Live)
+        <Link to="/movement" className="view-all">
+          <Typography align="center" className={classes.viewAll}>
+            View all <ArrowForwardIos />
+          </Typography>
+        </Link>
+      </Styles.BlockTitle>
       <TableContainer component={Paper} className="table-container">
         <Table aria-label="customized table" className="custom-table latest-transactions">
           <TableHead className="table__row-header">
