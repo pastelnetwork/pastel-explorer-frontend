@@ -7,6 +7,7 @@ import { MarkerProps } from '@components/Map/Map';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { INetwork, INetworkSupernodes } from '@utils/types/INetwork';
+import * as ROUTES from '@utils/constants/routes';
 
 import ExplorerMap from './ExplorerMap/ExplorerMap';
 import LatestTransactions from './LatestTransactions/LatestTransactions';
@@ -53,7 +54,7 @@ const Explorer: React.FC = () => {
           <ExplorerMap geoLocationList={geoLocationList} nodesLength={nodesLength} />
         </Styles.ExplorerMapColumn>
         <Styles.SupernodeColumn>
-          <SupernodeStatistics supernodes={supernodeList} />
+          <SupernodeStatistics supernodes={supernodeList} link={ROUTES.SUPERNODES} />
         </Styles.SupernodeColumn>
       </Styles.Gird>
       <Grid container spacing={6}>

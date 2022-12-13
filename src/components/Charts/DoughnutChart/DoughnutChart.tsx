@@ -13,6 +13,7 @@ interface DoughnutChartProps {
   innerTitle?: string;
   innerSubtitle?: string | number;
   totalSuperNodes?: number;
+  link?: string;
 }
 
 const DoughnutChart: React.FC<DoughnutChartProps> = ({
@@ -21,26 +22,32 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
   innerTitle,
   innerSubtitle,
   totalSuperNodes,
+  link = '',
 }) => {
+  const renderChart = () => {
+    return (
+      <Grid container justify="center" alignItems="flex-start">
+        <Styles.ChartWrapper item xs={12} sm={6} md={5}>
+          <Styles.DoughnutInner>
+            {innerTitle && <Typography variant="h4">{innerTitle}</Typography>}
+            {innerSubtitle && <Typography variant="caption">{innerSubtitle}</Typography>}
+          </Styles.DoughnutInner>
+          {data && <Doughnut data={data} options={defaultChartOptions} type="doughnut" />}
+        </Styles.ChartWrapper>
+        <Styles.ChartWrapper item xs={12} sm={6} md={7}>
+          <Styles.StakingWrapper>
+            {totalSuperNodes ? `${((51.84 / totalSuperNodes) * 100).toFixed(2)}%` : '--'}
+            <Styles.StakingTitle>Staking APR</Styles.StakingTitle>
+          </Styles.StakingWrapper>
+        </Styles.ChartWrapper>
+      </Grid>
+    );
+  };
   return (
     <Styles.Card>
       {title && <h4>{title}</h4>}
       <Styles.CardContent>
-        <Grid container justify="center" alignItems="flex-start">
-          <Styles.ChartWrapper item xs={12} sm={6} md={5}>
-            <Styles.DoughnutInner>
-              {innerTitle && <Typography variant="h4">{innerTitle}</Typography>}
-              {innerSubtitle && <Typography variant="caption">{innerSubtitle}</Typography>}
-            </Styles.DoughnutInner>
-            {data && <Doughnut data={data} options={defaultChartOptions} type="doughnut" />}
-          </Styles.ChartWrapper>
-          <Styles.ChartWrapper item xs={12} sm={6} md={7}>
-            <Styles.StakingWrapper>
-              {totalSuperNodes ? `${((51.84 / totalSuperNodes) * 100).toFixed(2)}%` : '--'}
-              <Styles.StakingTitle>Staking APR</Styles.StakingTitle>
-            </Styles.StakingWrapper>
-          </Styles.ChartWrapper>
-        </Grid>
+        {link ? <Styles.Link to={link}>{renderChart()}</Styles.Link> : renderChart()}
       </Styles.CardContent>
     </Styles.Card>
   );
