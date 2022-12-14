@@ -25,7 +25,11 @@ type TTxInBlock = {
   value: string[][];
 };
 
-export const generateXAxisLabel = (value: Date, period?: PeriodTypes) => {
+export const generateXAxisLabel = (
+  value: Date,
+  period?: PeriodTypes,
+  isShowMinutesFor24h?: boolean,
+) => {
   if (!value) {
     return '';
   }
@@ -33,7 +37,9 @@ export const generateXAxisLabel = (value: Date, period?: PeriodTypes) => {
   if (!period) {
     return value;
   }
-  return period === '24h' ? format(value, 'hh:00 aa') : format(value, 'MM/dd/yyyy');
+  return period === '24h'
+    ? format(value, `hh:${isShowMinutesFor24h ? 'mm' : '00'} aa`)
+    : format(value, 'MM/dd/yyyy');
 };
 
 export const generateTooltipLabel = (value: Date, granularity: TGranularity | undefined) => {
@@ -105,17 +111,21 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         data: dataX,
         boundaryGap: false,
         axisLabel: {
-          formatter(value: string) {
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
             if (period && periods[9].indexOf(period) !== -1) {
               const date = format(new Date(value), 'MM/dd/yyyy');
               if (firstDay !== date) {
                 firstDay = date;
-                return generateXAxisLabel(new Date(value), period);
+                return generateXAxisLabel(new Date(value), period, isShowMinutesFor24h);
               }
 
               return null;
             }
-            return value ? generateXAxisLabel(new Date(value), period) : null;
+            return value ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h) : null;
           },
           showMaxLabel: true,
           interval: generateXAxisInterval('1d', period, dataX, width),
@@ -196,17 +206,21 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         data: dataX,
         boundaryGap: false,
         axisLabel: {
-          formatter(value: string) {
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
             if (dataX?.length && dataX?.length > 4 && period && periods[9].indexOf(period) !== -1) {
               const date = format(new Date(value), 'MM/dd/yyyy');
               if (firstDay !== date) {
                 firstDay = date;
-                return generateXAxisLabel(new Date(value), period);
+                return generateXAxisLabel(new Date(value), period, isShowMinutesFor24h);
               }
 
               return null;
             }
-            return value ? generateXAxisLabel(new Date(value), period) : null;
+            return value ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h) : null;
           },
           showMaxLabel: true,
           interval: generateXAxisInterval('1d', period, dataX, width),
@@ -311,17 +325,21 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         boundaryGap: false,
         data: dataX,
         axisLabel: {
-          formatter(value: string) {
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
             if (dataX?.length && dataX?.length > 4 && period && periods[9].indexOf(period) !== -1) {
               const date = format(new Date(value), 'MM/dd/yyyy');
               if (firstDay !== date) {
                 firstDay = date;
-                return generateXAxisLabel(new Date(value), period);
+                return generateXAxisLabel(new Date(value), period, isShowMinutesFor24h);
               }
 
               return null;
             }
-            return value ? generateXAxisLabel(new Date(value), period) : null;
+            return value ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h) : null;
           },
           showMaxLabel: true,
           interval: generateXAxisInterval('1d', period, dataX, width),
@@ -414,8 +432,12 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         type: 'category',
         data: dataX,
         axisLabel: {
-          formatter(value: string) {
-            return generateXAxisLabel(new Date(value), period);
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
+            return generateXAxisLabel(new Date(value), period, isShowMinutesFor24h);
           },
           showMaxLabel: true,
           interval: generateXAxisInterval('1d', period, dataX, width),
@@ -516,17 +538,21 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         data: dataX,
         boundaryGap: false,
         axisLabel: {
-          formatter(value: string) {
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
             if (period && periods[9].indexOf(period) !== -1) {
               const date = format(new Date(value), 'MM/dd/yyyy');
               if (firstDay !== date) {
                 firstDay = date;
-                return generateXAxisLabel(new Date(value), period);
+                return generateXAxisLabel(new Date(value), period, isShowMinutesFor24h);
               }
 
               return null;
             }
-            return value ? generateXAxisLabel(new Date(value), period) : null;
+            return value ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h) : null;
           },
           showMaxLabel: true,
           interval: generateXAxisInterval(granularity || '1d', period, dataX, width),
@@ -606,11 +632,15 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         data: dataX,
         boundaryGap: false,
         axisLabel: {
-          formatter(value: string) {
-            return value ? generateXAxisLabel(new Date(value), period) : null;
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
+            return value ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h) : null;
           },
           showMaxLabel: true,
-          interval: generateXAxisInterval('1d', 'max', dataX, width),
+          interval: generateXAxisInterval('1d', period, dataX, width),
         },
       },
       yAxis: {
@@ -685,17 +715,21 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         data: dataX,
         boundaryGap: false,
         axisLabel: {
-          formatter(value: string) {
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
             if (dataX?.length && dataX?.length > 4 && period && periods[9].indexOf(period) !== -1) {
               const date = format(new Date(value), 'MM/dd/yyyy');
               if (firstDay !== date) {
                 firstDay = date;
-                return generateXAxisLabel(new Date(value), period);
+                return generateXAxisLabel(new Date(value), period, isShowMinutesFor24h);
               }
 
               return null;
             }
-            return value ? generateXAxisLabel(new Date(value), period) : null;
+            return value ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h) : null;
           },
           showMaxLabel: true,
           interval: generateXAxisInterval('1d', period, dataX, width),
@@ -785,17 +819,21 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         data: dataX,
         boundaryGap: false,
         axisLabel: {
-          formatter(value: string) {
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
             if (dataX?.length && dataX?.length > 4 && period && periods[9].indexOf(period) !== -1) {
               const date = format(new Date(value), 'MM/dd/yyyy');
               if (firstDay !== date) {
                 firstDay = date;
-                return generateXAxisLabel(new Date(value), period);
+                return generateXAxisLabel(new Date(value), period, isShowMinutesFor24h);
               }
 
               return null;
             }
-            return value ? generateXAxisLabel(new Date(value), period) : null;
+            return value ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h) : null;
           },
           showMaxLabel: true,
           interval: generateXAxisInterval('1d', period, dataX, width),
@@ -885,16 +923,20 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         data: dataX,
         boundaryGap: false,
         axisLabel: {
-          formatter(value: string) {
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
             if (period && periods[9].indexOf(period) !== -1) {
               const date = format(new Date(value), 'MM/dd/yyyy');
               if (firstDay !== date) {
                 firstDay = date;
-                return generateXAxisLabel(new Date(value), period);
+                return generateXAxisLabel(new Date(value), period, isShowMinutesFor24h);
               }
               return null;
             }
-            return value ? generateXAxisLabel(new Date(value), period) : null;
+            return value ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h) : null;
           },
           showMaxLabel: true,
           interval: generateXAxisInterval('1d', period, dataX, width),
@@ -987,17 +1029,21 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         data: dataX,
         boundaryGap: false,
         axisLabel: {
-          formatter(value: string) {
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
             if (period && periods[9].indexOf(period) !== -1) {
               const date = format(new Date(value), 'MM/dd/yyyy');
               if (firstDay !== date) {
                 firstDay = date;
-                return generateXAxisLabel(new Date(value), period);
+                return generateXAxisLabel(new Date(value), period, isShowMinutesFor24h);
               }
 
               return null;
             }
-            return value ? generateXAxisLabel(new Date(value), period) : null;
+            return value ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h) : null;
           },
           showMaxLabel: true,
           interval: generateXAxisInterval('1d', period, dataX, width),
@@ -1075,17 +1121,21 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         data: dataX,
         boundaryGap: false,
         axisLabel: {
-          formatter(value: string) {
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
             if (period && periods[9].indexOf(period) !== -1) {
               const date = format(new Date(value), 'MM/dd/yyyy');
               if (firstDay !== date) {
                 firstDay = date;
-                return generateXAxisLabel(new Date(value), period);
+                return generateXAxisLabel(new Date(value), period, isShowMinutesFor24h);
               }
 
               return null;
             }
-            return value ? generateXAxisLabel(new Date(value), period) : null;
+            return value ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h) : null;
           },
           showMaxLabel: true,
           interval: generateXAxisInterval('1d', period, dataX, width),
@@ -1164,17 +1214,21 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         data: dataX,
         boundaryGap: false,
         axisLabel: {
-          formatter(value: string) {
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
             if (period && periods[9].indexOf(period) !== -1) {
               const date = format(new Date(value), 'MM/dd/yyyy');
               if (firstDay !== date) {
                 firstDay = date;
-                return generateXAxisLabel(new Date(value), period);
+                return generateXAxisLabel(new Date(value), period, isShowMinutesFor24h);
               }
 
               return null;
             }
-            return value ? generateXAxisLabel(new Date(value), period) : null;
+            return value ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h) : null;
           },
           showMaxLabel: true,
           interval: generateXAxisInterval('1d', period, dataX, width),
@@ -1253,17 +1307,21 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         data: dataX,
         boundaryGap: false,
         axisLabel: {
-          formatter(value: string) {
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
             if (period && periods[9].indexOf(period) !== -1) {
               const date = format(new Date(value), 'MM/dd/yyyy');
               if (firstDay !== date) {
                 firstDay = date;
-                return generateXAxisLabel(new Date(value), period);
+                return generateXAxisLabel(new Date(value), period, isShowMinutesFor24h);
               }
 
               return null;
             }
-            return value ? generateXAxisLabel(new Date(value), period) : null;
+            return value ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h) : null;
           },
           showMaxLabel: true,
           interval: generateXAxisInterval('1d', period, dataX, width),
@@ -1428,8 +1486,12 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         type: 'category',
         data: dataX,
         axisLabel: {
-          formatter(value: string) {
-            return generateXAxisLabel(new Date(value), period);
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
+            return generateXAxisLabel(new Date(value), period, isShowMinutesFor24h);
           },
           showMaxLabel: true,
           interval: generateXAxisInterval('1d', period, dataX, width),
@@ -1515,8 +1577,12 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         data: dataX,
         boundaryGap: false,
         axisLabel: {
-          formatter(value: string) {
-            return generateXAxisLabel(new Date(value), period);
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
+            return generateXAxisLabel(new Date(value), period, isShowMinutesFor24h);
           },
           showMaxLabel: true,
           interval: generateXAxisInterval('1d', period, dataX, width),
@@ -1597,17 +1663,21 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         data: dataX,
         boundaryGap: false,
         axisLabel: {
-          formatter(value: string) {
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
             if (period && periods[9].indexOf(period) !== -1) {
               const date = format(new Date(value), 'MM/dd/yyyy');
               if (firstDay !== date) {
                 firstDay = date;
-                return generateXAxisLabel(new Date(value), period);
+                return generateXAxisLabel(new Date(value), period, isShowMinutesFor24h);
               }
 
               return null;
             }
-            return value ? generateXAxisLabel(new Date(value), period) : null;
+            return value ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h) : null;
           },
           showMaxLabel: true,
           interval: generateXAxisInterval('1d', period, dataX, width),
@@ -1702,8 +1772,12 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         type: 'category',
         data: dataX,
         axisLabel: {
-          formatter(value: string) {
-            return generateXAxisLabel(new Date(value), period);
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
+            return generateXAxisLabel(new Date(value), period, isShowMinutesFor24h);
           },
           showMaxLabel: true,
           interval: generateXAxisInterval('1d', period, dataX, width),
