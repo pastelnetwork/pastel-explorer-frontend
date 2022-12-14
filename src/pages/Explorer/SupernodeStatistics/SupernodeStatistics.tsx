@@ -13,11 +13,12 @@ import * as ExplorerMapStyles from '../ExplorerMap/ExplorerMap.styles';
 
 interface SupernodeStatisticsProps {
   supernodes: Array<INetworkSupernodes> | null;
+  link?: string;
 }
 
 const DISPLAY_COUNTRY_QUANTITY = 5;
 
-const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ supernodes }) => {
+const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ supernodes, link = '' }) => {
   const [countryQuantity, setCountryQuantity] = React.useState(0);
   const [countryChartData, setCountryChartData] = React.useState<CountryList['chartData'] | null>(
     null,
@@ -52,6 +53,7 @@ const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ supernodes })
           generateChartData(countryChartData.headers, countryChartData.quantities)
         }
         totalSuperNodes={totalSuperNodes}
+        link={link}
       />
     </ExplorerMapStyles.Container>
   );

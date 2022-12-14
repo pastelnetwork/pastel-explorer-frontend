@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { CSVLink } from 'react-csv';
 import { Data } from 'react-csv/components/CommonPropTypes';
 import { CircularProgress, Grid } from '@material-ui/core';
@@ -11,7 +11,6 @@ import InfinityTable, {
 } from '@components/InfinityTable/InfinityTable';
 
 import * as URLS from '@utils/constants/urls';
-import * as ROUTES from '@utils/constants/routes';
 import { IAddress } from '@utils/types/IAddress';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { getCurrencyName } from '@utils/appInfo';
@@ -58,7 +57,6 @@ const AddressDetails = () => {
   });
   const { id } = useParams<ParamTypes>();
   const [addresses, setAddresses] = useState<IAddress>(DEFAULT_ADDRESS_DATA);
-  const redirect = useRef(false);
   const [csvData, setCsvData] = useState<string | Data>('');
   const { fetchData, isLoading } = useFetch<IAddress>({
     method: 'get',
@@ -77,7 +75,6 @@ const AddressDetails = () => {
     return fetchData({ params: { offset, limit, sortBy, sortDirection } })
       .then(response => {
         if (!response) {
-          redirect.current = true;
           return DEFAULT_ADDRESS_DATA;
         }
 
@@ -151,10 +148,6 @@ const AddressDetails = () => {
       window.removeEventListener('resize', handleShowSubMenu);
     };
   }, []);
-
-  if (redirect.current) {
-    return <Redirect to={ROUTES.NOT_FOUND} />;
-  }
 
   const generateAddTitle = () => {
     return (
