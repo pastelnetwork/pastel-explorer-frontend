@@ -203,9 +203,17 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
       type: 'category',
       data: dataX,
       axisLabel: {
-        formatter(value: string) {
+        formatter(value: string, index: number) {
+          let isShowMinutesFor24h = false;
+          if (
+            selectedPeriodButton === '24h' &&
+            dataX &&
+            (index === 0 || dataX.length - 1 === index)
+          ) {
+            isShowMinutesFor24h = true;
+          }
           const date = new Date(value);
-          return generateXAxisLabel(date, selectedPeriodButton);
+          return generateXAxisLabel(date, selectedPeriodButton, isShowMinutesFor24h);
         },
         showMaxLabel: true,
         interval: generateXAxisInterval('1d', selectedPeriodButton, dataX, width),
