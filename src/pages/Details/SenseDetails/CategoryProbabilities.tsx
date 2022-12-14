@@ -2,31 +2,38 @@ import ReactECharts from 'echarts-for-react';
 import { useSelector } from 'react-redux';
 
 import { sense_chart_colors } from '@utils/constants/statistics';
-import { TAlternativeNsfwScores } from '@utils/types/ITransactions';
+import { getMinMax } from '@utils/helpers/statisticsLib';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { TChartParams } from '@utils/types/IStatistics';
 
 import * as Styles from './SenseDetails.styles';
 
 interface ICategoryProbabilities {
-  data: TAlternativeNsfwScores[];
+  data: string;
 }
 
 const CategoryProbabilities: React.FC<ICategoryProbabilities> = ({ data }) => {
   const { darkMode } = useSelector(getThemeState);
-
+  if (!data) {
+    return null;
+  }
+  const newData = JSON.parse(data);
+  const values: number[] = Object.values(newData);
+  const keys = Object.keys(newData);
   const xAxisData = [];
   const seriesData = [];
-  for (let i = 0; i < data.length; i += 1) {
-    xAxisData.push(data[i].labels);
+  for (let i = 0; i < keys.length; i += 1) {
+    xAxisData.push(keys[i]);
     seriesData.push({
-      value: data[i].value,
+      value: values[i],
       itemStyle: {
         color: sense_chart_colors[i] || sense_chart_colors[0],
       },
     });
   }
 
+  const min = 0;
+  const max = getMinMax(values)[1] * 1.5;
   const options = {
     grid: {
       top: 30,
@@ -65,12 +72,17 @@ const CategoryProbabilities: React.FC<ICategoryProbabilities> = ({ data }) => {
       splitLine: {
         show: false,
       },
-      max: 1,
+      min,
+      max,
+      interval: (max - min) / 5,
       axisLine: {
         show: true,
       },
       axisLabel: {
         color: darkMode ? '#fff' : '#2D3748',
+        formatter: (value: number) => {
+          return value.toFixed(2);
+        },
       },
     },
     series: {

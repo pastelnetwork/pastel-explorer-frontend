@@ -43,7 +43,7 @@ interface ITicketsList {
 }
 
 const TicketsList: React.FC<ITicketsList> = ({ data }) => {
-  if (!data.length) {
+  if (!data?.length) {
     return null;
   }
 

@@ -1,35 +1,85 @@
 import ReactECharts from 'echarts-for-react';
 
 import { TChartParams } from '@utils/types/IStatistics';
+import { decompress_zstd_compressed_data_func } from '@utils/helpers/encryption';
+import { TCurrentNode, TCurrentNodeEdges } from '@utils/types/ITransactions';
 
 import * as Styles from './SenseDetails.styles';
-import { graphData, fakeInformation } from './mockup';
 
-const RareOnTheInternetResultsGraph: React.FC = () => {
+interface IRareOnTheInternetResultsGraph {
+  data: string;
+}
+
+const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = ({ data }) => {
+  if (!data) {
+    return null;
+  }
+
+  const newData = JSON.parse(data);
+  if (
+    Object.keys(newData).length <= 2 ||
+    newData.rare_on_internet_summary_table_as_json_compressed_b64.length
+  ) {
+    return null;
+  }
+
+  const processRareOnInternetDataFunc = () => {
+    const internetRarenessGraphData = decompress_zstd_compressed_data_func(
+      newData.rare_on_internet_graph_json_compressed_b64,
+    );
+    const keys = Object.keys(internetRarenessGraphData);
+    for (let i = 0; i < keys.length; i += 1) {
+      if (keys[i] === 'nodes') {
+        const keys2 = Object.keys(internetRarenessGraphData[keys[i]]);
+        const values2 = Object.values(internetRarenessGraphData[keys[i]]) as TCurrentNode[];
+        for (let j = 0; j < keys2.length; j += 1) {
+          const current_node: TCurrentNode = values2[j];
+          const current_node_size = 0.9 ** (current_node.search_result_ranking + 1) * 15;
+          current_node.node_size = current_node_size;
+          internetRarenessGraphData.nodes[keys2[j]] = current_node;
+        }
+      }
+    }
+    return {
+      nodes: internetRarenessGraphData.nodes,
+      edges: internetRarenessGraphData.links.map((item: TCurrentNodeEdges) => ({
+        source: item.source.id,
+        target: item.target.id,
+      })),
+    };
+  };
+  let internetRarenessGraphData: TCurrentNode[] = [];
+  let edgesData = [];
+  if (newData.rare_on_internet_summary_table_as_json_compressed_b64.length > 100) {
+    const { nodes, edges } = processRareOnInternetDataFunc();
+    internetRarenessGraphData = nodes;
+    edgesData = edges;
+  }
+
   const options = {
     animationDurationUpdate: 1500,
     animationEasingUpdate: 'quinticInOut',
     tooltip: {
       trigger: 'item',
       formatter(params: TChartParams) {
-        const item = fakeInformation.find(i => i.id === params.name);
+        const item = internetRarenessGraphData.find(i => i.id === parseInt(params.name, 10));
         if (item) {
           return `
             <div class="tooltip-wrapper max-w-280">
-              <div class="tooltip-name">${item.name}</div>
-              <div class="tooltip-url">${item.url}</div>
+              <div class="tooltip-name">${item.title}</div>
+              <div class="tooltip-url">${item.original_url}</div>
               <div class="tooltip-content-wrapper">
                 <div class="tooltip-item">
                   <div class="label">Result Ranking:</div>
-                  <div class="value">${item.ranking}</div>
+                  <div class="value">${item.search_result_ranking}</div>
                 </div>
                 <div class="tooltip-item">
                   <div class="label">Original Image Resolution:</div>
-                  <div class="value">${item.resolution}</div>
+                  <div class="value">${item.resolution_string}</div>
                 </div>
                 <div class="tooltip-item">
                   <div class="label">Image Date:</div>
-                  <div class="value">${item.date}</div>
+                  <div class="value">${item.date_string}</div>
                 </div>
               </div>
             </div>
@@ -45,18 +95,15 @@ const RareOnTheInternetResultsGraph: React.FC = () => {
     series: [
       {
         type: 'graph',
-        data: graphData.nodes.map(node => ({
+        data: internetRarenessGraphData.map(node => ({
           x: node.x,
           y: node.y,
           id: node.id,
-          name: node.label,
-          symbolSize: node.size,
-          symbol: node.symbol,
+          name: node.id,
+          symbolSize: node.node_size,
+          symbol: `image://${node.img_src_string}`,
         })),
-        edges: graphData.edges.map(edge => ({
-          source: edge.sourceID,
-          target: edge.targetID,
-        })),
+        edges: edgesData,
         label: {
           show: false,
         },

@@ -2,31 +2,38 @@ import ReactECharts from 'echarts-for-react';
 import { useSelector } from 'react-redux';
 
 import { sense_chart_colors } from '@utils/constants/statistics';
-import { TPrevalenceOfSimilarImages } from '@utils/types/ITransactions';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { TChartParams } from '@utils/types/IStatistics';
 
 import * as Styles from './SenseDetails.styles';
 
 interface IPrevalenceOfSimilarImages {
-  data: TPrevalenceOfSimilarImages;
+  data: {
+    [key: string]: number;
+  };
 }
 
 const PrevalenceOfSimilarImages: React.FC<IPrevalenceOfSimilarImages> = ({ data }) => {
   const { darkMode } = useSelector(getThemeState);
+  if (!data) {
+    return null;
+  }
+  const values: number[] = Object.values(data);
+  const keys = Object.keys(data);
 
-  const seriesData = [
-    data.dupeProbAbove25pct,
-    data.dupeProbAbove33pct,
-    data.dupeProbAbove50pct,
-  ].map((item, index) => ({
-    value: item,
-    itemStyle: {
-      color: sense_chart_colors[index] || sense_chart_colors[0],
-    },
-  }));
+  const seriesData = [];
+  const xAxisData = [];
+  for (let i = 0; i < data.length; i += 1) {
+    seriesData.push({
+      value: values[i],
+      itemStyle: {
+        color: sense_chart_colors[i] || sense_chart_colors[0],
+      },
+    });
+    xAxisData.push(keys[i]);
+  }
+  const max = Math.max(...seriesData.map(item => item.value)) * 1.5;
   const min = 0;
-  const max = 0.5;
   const options = {
     grid: {
       top: 30,
@@ -49,7 +56,7 @@ const PrevalenceOfSimilarImages: React.FC<IPrevalenceOfSimilarImages> = ({ data 
     },
     xAxis: {
       type: 'category',
-      data: ['25%', '33%', '50%'],
+      data: xAxisData,
       splitLine: {
         show: false,
       },
@@ -67,11 +74,15 @@ const PrevalenceOfSimilarImages: React.FC<IPrevalenceOfSimilarImages> = ({ data 
       },
       min,
       max,
+      interval: (max - min) / 5,
       axisLine: {
         show: true,
       },
       axisLabel: {
         color: darkMode ? '#fff' : '#2D3748',
+        formatter: (value: number) => {
+          return value.toFixed(2);
+        },
       },
     },
     series: {

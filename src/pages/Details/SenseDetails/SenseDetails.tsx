@@ -9,7 +9,7 @@ import * as TableStyles from '@components/Table/Table.styles';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import * as URLS from '@utils/constants/urls';
 import * as ROUTES from '@utils/constants/routes';
-import { TSense } from '@utils/types/ITransactions';
+import { TTSenseRequests } from '@utils/types/ITransactions';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 
 import PastelData from './PastelData';
@@ -23,7 +23,7 @@ import PrevalenceOfSimilarImages from './PrevalenceOfSimilarImages';
 import FingerprintVectorHeatmap from './FingerprintVectorHeatmap';
 import RareOnTheInternetResultsGraph from './RareOnTheInternetResultsGraph';
 import RareOnTheInternetAlternativeResults from './RareOnTheInternetAlternativeResults';
-import SimilaritySubgraphPlot from './SimilaritySubgraphPlot';
+// import SimilaritySubgraphPlot from './SimilaritySubgraphPlot';
 import * as Styles from './SenseDetails.styles';
 
 interface IParamTypes {
@@ -48,8 +48,8 @@ const BlockItemLayout: React.FC<IBlockItemLayout> = ({ title, children, classNam
 const SenseDetails: React.FC = () => {
   const { id } = useParams<IParamTypes>();
   const [redirect, setRedirect] = useState(false);
-  const [sense, setSense] = useState<TSense | null>(null);
-  const fetchSenses = useFetch<{ data: TSense }>({
+  const [sense, setSense] = useState<TTSenseRequests | null>(null);
+  const fetchSenses = useFetch<{ data: TTSenseRequests }>({
     method: 'get',
     url: `${URLS.SENSE_URL}/${id}`,
   });
@@ -79,37 +79,59 @@ const SenseDetails: React.FC = () => {
         <Styles.ImagesWrapper>
           <div className="submit-image-group">
             <BlockItemLayout title="Submitted Image" className="submitted-image">
-              <SubmittedImage />
+              <SubmittedImage
+                imageFileHash={sense.imageFileHash}
+                imageFileCdnUrl={sense.imageFileCdnUrl}
+                imageTitle={sense.imageTitle}
+                imageDescription={sense.imageDescription}
+                isPublic={sense.isPublic}
+              />
             </BlockItemLayout>
             <BlockItemLayout title="IPFS" className="ipfs hidden-tablet">
-              <IPFS link={sense.ipfs.link} hash={sense.ipfs.hash} />
+              <IPFS link={sense.ipfsLink} hash={sense.sha256HashOfSenseResults} />
             </BlockItemLayout>
           </div>
           <Box className="summary-group">
             <BlockItemLayout title="Summary" className="summary hidden-tablet">
-              <Summary isLikelyDupe={sense.isLikelyDupe} senseVersion={sense.senseVersion} />
+              <Summary
+                isLikelyDupe={sense.isLikelyDupe}
+                senseVersion={sense.dupeDetectionSystemVersion}
+              />
             </BlockItemLayout>
             <BlockItemLayout title="Open NSFW" className="open-nsfw hidden-tablet">
-              <OpenNSFW openNSFWScore={sense.openNSFWScore} />
+              <OpenNSFW openNSFWScore={sense.openNsfwScore} />
             </BlockItemLayout>
             <BlockItemLayout title="Rareness Score" className="rareness-score hidden-tablet">
               <RarenessScore rarenessScore={sense.rarenessScore} />
             </BlockItemLayout>
             <BlockItemLayout title="Pastel Data" className="pastel-data">
-              <PastelData data={sense.pastelData} />
+              <PastelData
+                blockHash={sense.blockHash}
+                blockHeight={sense.blockHeight}
+                utcTimestampWhenRequestSubmitted={sense.utcTimestampWhenRequestSubmitted}
+                pastelIdOfSubmitter={sense.pastelIdOfSubmitter}
+                pastelIdOfRegisteringSupernode1={sense.pastelIdOfRegisteringSupernode1}
+                pastelIdOfRegisteringSupernode2={sense.pastelIdOfRegisteringSupernode2}
+                pastelIdOfRegisteringSupernode3={sense.pastelIdOfRegisteringSupernode3}
+                isPastelOpenapiRequest={sense.isPastelOpenapiRequest}
+                openApiSubsetIdString={sense.openApiSubsetIdString}
+              />
             </BlockItemLayout>
           </Box>
           <BlockItemLayout title="Summary" className="summary hidden-desktop">
-            <Summary isLikelyDupe={sense.isLikelyDupe} senseVersion={sense.senseVersion} />
+            <Summary
+              isLikelyDupe={sense.isLikelyDupe}
+              senseVersion={sense.dupeDetectionSystemVersion}
+            />
           </BlockItemLayout>
           <BlockItemLayout title="Open NSFW" className="open-nsfw hidden-desktop">
-            <OpenNSFW openNSFWScore={sense.openNSFWScore} />
+            <OpenNSFW openNSFWScore={sense.openNsfwScore} />
           </BlockItemLayout>
           <BlockItemLayout title="Rareness Score" className="rareness-score hidden-desktop">
             <RarenessScore rarenessScore={sense.rarenessScore} />
           </BlockItemLayout>
           <BlockItemLayout title="IPFS" className="ipfs hidden-desktop">
-            <IPFS link={sense.ipfs.link} hash={sense.ipfs.hash} />
+            <IPFS link={sense.ipfsLink} hash={sense.sha256HashOfSenseResults} />
           </BlockItemLayout>
           <Box className="analytics-group">
             <BlockItemLayout
@@ -125,29 +147,41 @@ const SenseDetails: React.FC = () => {
               title="Fingerprint Vector Heatmap"
               className="fingerprint-vector-heatmap hidden-tablet"
             >
-              <FingerprintVectorHeatmap />
+              <FingerprintVectorHeatmap
+                data={
+                  sense.imageFingerprintOfCandidateImageFile
+                    ? JSON.parse(sense.imageFingerprintOfCandidateImageFile)
+                    : []
+                }
+              />
             </BlockItemLayout>
           </Box>
           <BlockItemLayout
             title="Rare on the Internet Results Graph"
             className="rare-on-the-internet-results-graph"
           >
-            <RareOnTheInternetResultsGraph />
+            <RareOnTheInternetResultsGraph data={sense.internetRareness} />
           </BlockItemLayout>
           <BlockItemLayout
             title="Rare on the Internet, Alternative Results"
             className="rare-on-the-internet-alternative-results"
           >
-            <RareOnTheInternetAlternativeResults />
+            <RareOnTheInternetAlternativeResults data={sense.internetRareness} />
           </BlockItemLayout>
           <BlockItemLayout title="Similarity Subgraph Plot" className="similarity-subgraph-plot">
-            <SimilaritySubgraphPlot data={sense.subgraph} />
+            {/* <SimilaritySubgraphPlot data={sense.subgraph} /> */}
           </BlockItemLayout>
           <BlockItemLayout
             title="Fingerprint Vector Heatmap"
             className="fingerprint-vector-heatmap hidden-desktop"
           >
-            <FingerprintVectorHeatmap />
+            <FingerprintVectorHeatmap
+              data={
+                sense.imageFingerprintOfCandidateImageFile
+                  ? JSON.parse(sense.imageFingerprintOfCandidateImageFile)
+                  : []
+              }
+            />
           </BlockItemLayout>
         </Styles.ImagesWrapper>
       </Grid>

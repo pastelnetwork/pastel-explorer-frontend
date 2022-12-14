@@ -348,6 +348,7 @@ export type TSubgraphNodes = {
   y: number;
   label: string;
   id: string;
+  size: number;
 };
 
 export type TSubgraphEdges = {
@@ -378,6 +379,38 @@ export type TSubgraph = {
   edges: TSubgraphEdges[];
 };
 
+export type TRareOnTheInternetResultsGraphNodes = {
+  fileHash: string;
+  imgLink: string;
+  x: number;
+  y: number;
+  id: string;
+  size: number;
+  ranking: number;
+  resolution: string;
+  date: string;
+};
+
+export type TRareOnTheInternetResultsGraph = {
+  nodes: TRareOnTheInternetResultsGraphNodes[];
+  edges: TSubgraphEdges[];
+};
+
+export type TRareOnTheInternetAlternativeResultsNodes = {
+  fileHash: string;
+  imgLink: string;
+  x: number;
+  y: number;
+  id: string;
+  size: number;
+  description: string;
+};
+
+export type TRareOnTheInternetAlternativeResults = {
+  nodes: TRareOnTheInternetAlternativeResultsNodes[];
+  edges: TSubgraphEdges[];
+};
+
 export type TSense = {
   isLikelyDupe: boolean;
   senseVersion: number;
@@ -395,7 +428,81 @@ export type TSense = {
     hash: string;
   };
   pastelData: TPastelData;
-  prevalenceOfSimilarImagesData: TPrevalenceOfSimilarImages;
+  prevalenceOfSimilarImagesData: TAlternativeNsfwScores[];
   alternativeNsfwScores: TAlternativeNsfwScores[];
   subgraph: TSubgraph;
+  rareOnTheInternetResultsGraph: TRareOnTheInternetResultsGraph;
+  rareOnTheInternetAlternativeResults: TRareOnTheInternetAlternativeResults;
+  fingerprints: number[];
+};
+
+export type TTSenseRequests = {
+  imageFileHash: string;
+  imageFileCdnUrl: string;
+  imageTitle: string;
+  imageDescription: string;
+  isPublic: boolean;
+  transactionHash: string;
+  rawData: string;
+  isLikelyDupe: boolean;
+  dupeDetectionSystemVersion: string;
+  openNsfwScore: number;
+  rarenessScore: number;
+  ipfsLink: string;
+  sha256HashOfSenseResults: string;
+  blockHash: string;
+  blockHeight: number;
+  utcTimestampWhenRequestSubmitted: string;
+  pastelIdOfSubmitter: string;
+  pastelIdOfRegisteringSupernode1: string;
+  pastelIdOfRegisteringSupernode2: string;
+  pastelIdOfRegisteringSupernode3: string;
+  isPastelOpenapiRequest: boolean;
+  openApiSubsetIdString: string;
+  isRareOnInternet: boolean;
+  pctOfTop10MostSimilarWithDupeProbAbove25pct: number;
+  pctOfTop10MostSimilarWithDupeProbAbove33pct: number;
+  pctOfTop10MostSimilarWithDupeProbAbove50pct: number;
+  rarenessScoresTable: string;
+  internetRareness: string;
+  alternativeNsfwScores: string;
+  imageFingerprintOfCandidateImageFile: string;
+  createdDate: number;
+  lastUpdated: number;
+  type: string;
+  prevalenceOfSimilarImagesData: {
+    [key: string]: number;
+  };
+};
+
+export type TCurrentNode = {
+  date_string: string;
+  google_cached_url: string;
+  id: number;
+  image_label: string;
+  img: HTMLImageElement;
+  img_alt_string: string;
+  img_src_string: string;
+  index: number;
+  node_size: number;
+  original_url: string;
+  resolution_string: string;
+  search_result_ranking: number;
+  title: string;
+  vx: number;
+  vy: number;
+  x: number;
+  y: number;
+  image_base64_string: string;
+  src: string;
+  img_src: string;
+  img_alt: string;
+  text_strings_on_page: string;
+};
+
+export type TCurrentNodeEdges = {
+  connection_strength: string;
+  index: number;
+  source: TCurrentNode;
+  target: TCurrentNode;
 };

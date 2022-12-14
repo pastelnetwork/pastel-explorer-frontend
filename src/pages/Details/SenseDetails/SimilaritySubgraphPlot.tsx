@@ -55,6 +55,7 @@ const SimilaritySubgraphPlot: React.FC<ISimilaritySubgraphPlot> = ({ data }) => 
           id: node.id,
           name: node.id,
           symbol: `image://${node.imgLink}`,
+          symbolSize: node.size,
         })),
         edges: data.edges.map(edge => ({
           source: edge.sourceID,
@@ -68,7 +69,6 @@ const SimilaritySubgraphPlot: React.FC<ISimilaritySubgraphPlot> = ({ data }) => 
             show: false,
           },
         },
-        roam: true,
         lineStyle: {
           width: 0.5,
           curveness: 0.3,

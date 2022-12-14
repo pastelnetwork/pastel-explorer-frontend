@@ -8,7 +8,7 @@ import * as Styles from './SenseDetails.styles';
 
 interface ISummaryProps {
   isLikelyDupe: boolean;
-  senseVersion: number;
+  senseVersion: string;
 }
 
 const Summary: React.FC<ISummaryProps> = ({ isLikelyDupe, senseVersion }) => {

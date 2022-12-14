@@ -205,3 +205,15 @@ export type TCacheValue = {
     lastDate: number;
   };
 };
+
+export type THeatmapChartParams = {
+  color: string;
+  componentIndex: number;
+  data: number[];
+  dataIndex: number;
+  name: string;
+  seriesIndex: number;
+  seriesName: string;
+  marker: string;
+  value: number[];
+};

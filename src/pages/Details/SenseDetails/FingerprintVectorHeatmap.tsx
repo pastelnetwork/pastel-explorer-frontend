@@ -2,17 +2,49 @@ import ReactECharts from 'echarts-for-react';
 import { useSelector } from 'react-redux';
 
 import { getThemeState } from '@redux/reducers/appThemeReducer';
+import { THeatmapChartParams } from '@utils/types/IStatistics';
+import {
+  getMinMax,
+  getFractionDigits,
+  transformFingerprintsData,
+} from '@utils/helpers/statisticsLib';
 
 import * as Styles from './SenseDetails.styles';
-import { xData, yData, data } from './mockup';
 
-const FingerprintVectorHeatmap: React.FC = () => {
+interface IFingerprintVectorHeatmap {
+  data: number[];
+}
+
+const FingerprintVectorHeatmap: React.FC<IFingerprintVectorHeatmap> = ({ data }) => {
   const { darkMode } = useSelector(getThemeState);
+  const { xData, yData, seriesData } = transformFingerprintsData(data);
+  const arr = getMinMax(data);
+  const min = arr[0];
+  const max = arr[1];
 
   const options = {
-    tooltip: {},
+    tooltip: {
+      formatter(params: THeatmapChartParams) {
+        return `
+          <div class="tooltip-wrapper">
+            <div class="flex">
+              <div class="tooltip-label">x:</div>
+              <div class="tooltip-value ml-5">${params.data[0]}</div>
+            </div>
+            <div class="flex">
+              <div class="tooltip-label">y:</div>
+              <div class="tooltip-value ml-5">${params.data[1]}</div>
+            </div>
+            <div class="flex">
+              <div class="tooltip-label">z:</div>
+              <div class="tooltip-value ml-5">${params.data[2]}</div>
+            </div>
+          </div>
+        `;
+      },
+    },
     grid: {
-      right: 60,
+      right: 80,
       left: 25,
       top: 10,
       bottom: 20,
@@ -34,13 +66,14 @@ const FingerprintVectorHeatmap: React.FC = () => {
       },
     },
     visualMap: {
-      min: 0,
-      max: 1,
+      min,
+      max,
       left: 'right',
       top: 'center',
       calculable: true,
       realtime: false,
       splitNumber: 12,
+      precision: getFractionDigits(min, max),
       inRange: {
         color: [
           '#0309FF',
@@ -64,7 +97,7 @@ const FingerprintVectorHeatmap: React.FC = () => {
       {
         name: 'Gaussian',
         type: 'heatmap',
-        data,
+        data: seriesData,
         emphasis: {
           itemStyle: {
             borderColor: '#333',
