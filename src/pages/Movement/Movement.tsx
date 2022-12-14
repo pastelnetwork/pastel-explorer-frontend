@@ -139,7 +139,7 @@ const Movement: React.FC = () => {
 
   const getMovementTransactionsTitle = () => (
     <Styles.TitleWrapper>
-      <Styles.Title>Movement Transactions</Styles.Title>{' '}
+      <Styles.Title>Transactions List</Styles.Title>{' '}
       {totalItem > 0 ? (
         <Styles.SubTitle>(Total {formatNumber(totalItem)} txs)</Styles.SubTitle>
       ) : null}

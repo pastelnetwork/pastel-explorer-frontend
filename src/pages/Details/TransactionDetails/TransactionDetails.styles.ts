@@ -239,3 +239,15 @@ export const RightColumn = styled.div`
     width: 100%;
   }
 `;
+
+export const RawDataWrapper = styled.span`
+  .MuiButtonBase-root {
+    margin: 0 5px 0 0;
+    padding: 0;
+
+    .MuiSvgIcon-root {
+      width: 14px;
+      height: 14px;
+    }
+  }
+`;

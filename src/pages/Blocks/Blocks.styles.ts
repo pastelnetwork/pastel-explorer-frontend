@@ -117,6 +117,7 @@ export const Title = styled.span`
 `;
 
 export const SubTitle = styled.span`
+  margin-left: 5px;
   font-size: 16px;
   font-weight: 400;
 
