@@ -65,10 +65,14 @@ const PastelIDRegistrationTicket: React.FC<IPastelIDRegistrationTicketProps> = (
         </Grid>
         <Grid item xs={8} sm={10}>
           <Styles.TicketContent className="break-all view-more">
-            {!isExpanded ? `${ticket.pq_key.substring(0, 200)}...` : ticket.pq_key}
-            <Styles.ButtonLink onClick={() => setIsExpanded(!isExpanded)}>
-              {!isExpanded ? 'Click to see more' : 'Click to see less'}
-            </Styles.ButtonLink>
+            {ticket.pq_key ? (
+              <>
+                {!isExpanded ? `${ticket.pq_key.substring(0, 200)}...` : ticket.pq_key}
+                <Styles.ButtonLink onClick={() => setIsExpanded(!isExpanded)}>
+                  {!isExpanded ? 'Click to see more' : 'Click to see less'}
+                </Styles.ButtonLink>
+              </>
+            ) : null}
           </Styles.TicketContent>
         </Grid>
       </Grid>

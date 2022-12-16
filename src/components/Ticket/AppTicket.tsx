@@ -205,7 +205,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           <Styles.TicketTitle>Rq ids:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{data.rq_ids.join(', ')}</Styles.TicketContent>
+          <Styles.TicketContent>{data.rq_ids ? data.rq_ids.join(', ') : ''}</Styles.TicketContent>
         </Grid>
       </Grid>
     </Box>

@@ -1,8 +1,10 @@
+import { useEffect, useState } from 'react';
 import ReactECharts from 'echarts-for-react';
+import parse from 'html-react-parser';
 
 import { TChartParams } from '@utils/types/IStatistics';
 import { decompress_zstd_compressed_data_func } from '@utils/helpers/encryption';
-import { TCurrentNode, TCurrentNodeEdges } from '@utils/types/ITransactions';
+import { TCurrentNode, TEdges } from '@utils/types/ITransactions';
 
 import * as Styles from './SenseDetails.styles';
 
@@ -10,50 +12,62 @@ interface IRareOnTheInternetResultsGraph {
   data: string;
 }
 
+type TChartData = {
+  nodes: TCurrentNode[];
+  edges: TEdges[];
+};
+
 const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = ({ data }) => {
+  const [chartData, setChartData] = useState<TChartData>({ nodes: [], edges: [] });
+  useEffect(() => {
+    const newData = JSON.parse(data);
+    if (
+      Object.keys(newData).length > 2 &&
+      newData.rare_on_internet_summary_table_as_json_compressed_b64.length > 100
+    ) {
+      const processRareOnInternetDataFunc = () => {
+        const internetRarenessGraphData = decompress_zstd_compressed_data_func(
+          newData.rare_on_internet_graph_json_compressed_b64,
+        );
+        const keys = Object.keys(internetRarenessGraphData);
+        for (let i = 0; i < keys.length; i += 1) {
+          if (keys[i] === 'nodes') {
+            const keys2 = Object.keys(internetRarenessGraphData[keys[i]]);
+            const values2 = Object.values(internetRarenessGraphData[keys[i]]) as TCurrentNode[];
+            for (let j = 0; j < keys2.length; j += 1) {
+              const current_node: TCurrentNode = values2[j];
+              const current_node_size = 0.9 ** (current_node.search_result_ranking + 1) * 15;
+              current_node.node_size = current_node_size;
+              internetRarenessGraphData.nodes[keys2[j]] = current_node;
+            }
+          }
+        }
+        return {
+          nodes: internetRarenessGraphData.nodes,
+          edges: internetRarenessGraphData.links,
+        };
+      };
+      if (newData.rare_on_internet_summary_table_as_json_compressed_b64.length > 100) {
+        const { nodes, edges } = processRareOnInternetDataFunc();
+        setChartData({
+          nodes,
+          edges,
+        });
+      }
+    }
+  }, [data]);
+
   if (!data) {
-    return null;
+    return <Styles.ContentItem className="min-height-400" />;
   }
 
   const newData = JSON.parse(data);
   if (
     Object.keys(newData).length <= 2 ||
-    newData.rare_on_internet_summary_table_as_json_compressed_b64.length
+    newData.rare_on_internet_summary_table_as_json_compressed_b64.length <= 100 ||
+    !chartData.nodes.length
   ) {
-    return null;
-  }
-
-  const processRareOnInternetDataFunc = () => {
-    const internetRarenessGraphData = decompress_zstd_compressed_data_func(
-      newData.rare_on_internet_graph_json_compressed_b64,
-    );
-    const keys = Object.keys(internetRarenessGraphData);
-    for (let i = 0; i < keys.length; i += 1) {
-      if (keys[i] === 'nodes') {
-        const keys2 = Object.keys(internetRarenessGraphData[keys[i]]);
-        const values2 = Object.values(internetRarenessGraphData[keys[i]]) as TCurrentNode[];
-        for (let j = 0; j < keys2.length; j += 1) {
-          const current_node: TCurrentNode = values2[j];
-          const current_node_size = 0.9 ** (current_node.search_result_ranking + 1) * 15;
-          current_node.node_size = current_node_size;
-          internetRarenessGraphData.nodes[keys2[j]] = current_node;
-        }
-      }
-    }
-    return {
-      nodes: internetRarenessGraphData.nodes,
-      edges: internetRarenessGraphData.links.map((item: TCurrentNodeEdges) => ({
-        source: item.source.id,
-        target: item.target.id,
-      })),
-    };
-  };
-  let internetRarenessGraphData: TCurrentNode[] = [];
-  let edgesData = [];
-  if (newData.rare_on_internet_summary_table_as_json_compressed_b64.length > 100) {
-    const { nodes, edges } = processRareOnInternetDataFunc();
-    internetRarenessGraphData = nodes;
-    edgesData = edges;
+    return <Styles.ContentItem className="min-height-400" />;
   }
 
   const options = {
@@ -62,7 +76,7 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
     tooltip: {
       trigger: 'item',
       formatter(params: TChartParams) {
-        const item = internetRarenessGraphData.find(i => i.id === parseInt(params.name, 10));
+        const item = chartData.nodes.find(i => i.id === parseInt(params.name, 10));
         if (item) {
           return `
             <div class="tooltip-wrapper max-w-280">
@@ -75,7 +89,7 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
                 </div>
                 <div class="tooltip-item">
                   <div class="label">Original Image Resolution:</div>
-                  <div class="value">${item.resolution_string}</div>
+                  <div class="value">${parse(item.resolution_string)}</div>
                 </div>
                 <div class="tooltip-item">
                   <div class="label">Image Date:</div>
@@ -95,15 +109,14 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
     series: [
       {
         type: 'graph',
-        data: internetRarenessGraphData.map(node => ({
-          x: node.x,
-          y: node.y,
+        layout: 'force',
+        data: chartData.nodes.map(node => ({
           id: node.id,
           name: node.id,
           symbolSize: node.node_size,
           symbol: `image://${node.img_src_string}`,
         })),
-        edges: edgesData,
+        edges: chartData.edges,
         label: {
           show: false,
         },
@@ -112,11 +125,8 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
             show: false,
           },
         },
-        roam: true,
-        lineStyle: {
-          width: 0.5,
-          curveness: 0.3,
-          opacity: 0.7,
+        force: {
+          repulsion: 100,
         },
       },
     ],

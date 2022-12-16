@@ -86,23 +86,25 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket }) => {
           </Styles.TicketContent>
         </Grid>
       </Grid>
-      <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
-        <AccordionSummary>
-          <Grid container spacing={3}>
-            <Grid item xs={4} sm={2}>
-              <Styles.TicketTitle>Api ticket:</Styles.TicketTitle>
+      {nft.api_ticket ? (
+        <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
+          <AccordionSummary>
+            <Grid container spacing={3}>
+              <Grid item xs={4} sm={2}>
+                <Styles.TicketTitle>Api ticket:</Styles.TicketTitle>
+              </Grid>
+              <Grid item xs={8} sm={10}>
+                <Styles.TicketContent className="expand-more">
+                  {isExpanded ? 'Click to see less' : 'Click to see detail'} <ExpandMoreIcon />
+                </Styles.TicketContent>
+              </Grid>
             </Grid>
-            <Grid item xs={8} sm={10}>
-              <Styles.TicketContent className="expand-more">
-                {isExpanded ? 'Click to see less' : 'Click to see detail'} <ExpandMoreIcon />
-              </Styles.TicketContent>
-            </Grid>
-          </Grid>
-        </AccordionSummary>
-        <AccordionDetails>
-          <ApiTicket apiTicket={nft.api_ticket} />
-        </AccordionDetails>
-      </Styles.Accordion>
+          </AccordionSummary>
+          <AccordionDetails>
+            <ApiTicket apiTicket={nft.api_ticket} />
+          </AccordionDetails>
+        </Styles.Accordion>
+      ) : null}
     </Box>
   );
 };
@@ -170,23 +172,25 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({ ti
         </Grid>
       </Grid>
       <Signatures signatures={ticket.signatures} />
-      <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
-        <AccordionSummary>
-          <Grid container spacing={3}>
-            <Grid item xs={4} sm={2}>
-              <Styles.TicketTitle>Action ticket:</Styles.TicketTitle>
+      {ticket.action_ticket ? (
+        <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
+          <AccordionSummary>
+            <Grid container spacing={3}>
+              <Grid item xs={4} sm={2}>
+                <Styles.TicketTitle>Action ticket:</Styles.TicketTitle>
+              </Grid>
+              <Grid item xs={8} sm={10}>
+                <Styles.TicketContent className="expand-more">
+                  {isExpanded ? 'Click to see less' : 'Click to see detail'} <ExpandMoreIcon />
+                </Styles.TicketContent>
+              </Grid>
             </Grid>
-            <Grid item xs={8} sm={10}>
-              <Styles.TicketContent className="expand-more">
-                {isExpanded ? 'Click to see less' : 'Click to see detail'} <ExpandMoreIcon />
-              </Styles.TicketContent>
-            </Grid>
-          </Grid>
-        </AccordionSummary>
-        <AccordionDetails>
-          <ActionTicket ticket={ticket.action_ticket} />
-        </AccordionDetails>
-      </Styles.Accordion>
+          </AccordionSummary>
+          <AccordionDetails>
+            <ActionTicket ticket={ticket.action_ticket} />
+          </AccordionDetails>
+        </Styles.Accordion>
+      ) : null}
     </Box>
   );
 };

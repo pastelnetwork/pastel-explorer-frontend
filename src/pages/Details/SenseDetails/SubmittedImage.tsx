@@ -9,8 +9,11 @@ interface ISubmittedImage {
   imageFileCdnUrl: string;
   imageTitle: string;
   imageDescription: string;
-  isPublic: boolean;
+  isPublic: number;
 }
+
+const urlDefault =
+  'http://res.cloudinary.com/pastelnetwork/image/upload/v1/sense_demo/83590536bb4b84d155810cca40e9bc741a33a47866d7791c6014ea914617c859.jpg';
 
 const SubmittedImage: React.FC<ISubmittedImage> = ({
   imageFileHash,
@@ -22,21 +25,26 @@ const SubmittedImage: React.FC<ISubmittedImage> = ({
   return (
     <Box className="pt-8">
       <Styles.ContentItem>
-        <img src={imageFileCdnUrl} alt={imageFileHash} className="main-image" />
+        <img src={urlDefault || imageFileCdnUrl} alt={imageFileHash} className="main-image" />
+        [***]
       </Styles.ContentItem>
       <Styles.ContentItem className="mt-25">
         <TicketStyles.TicketTitle>Title:</TicketStyles.TicketTitle>
-        <TicketStyles.TicketContent className="break-all">{imageTitle}</TicketStyles.TicketContent>
+        <TicketStyles.TicketContent className="break-all">
+          {imageTitle}[***]
+        </TicketStyles.TicketContent>
       </Styles.ContentItem>
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>Description:</TicketStyles.TicketTitle>
         <TicketStyles.TicketContent className="break-all">
-          {imageDescription}
+          {imageDescription}[***]
         </TicketStyles.TicketContent>
       </Styles.ContentItem>
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>File Is Public:</TicketStyles.TicketTitle>
-        <TicketStyles.TicketContent className="capitalize">{isPublic}</TicketStyles.TicketContent>
+        <TicketStyles.TicketContent className="capitalize">
+          {isPublic === 1 ? 'True' : 'False'}[***]
+        </TicketStyles.TicketContent>
       </Styles.ContentItem>
     </Box>
   );

@@ -48,6 +48,7 @@ import PercentOfPSLStaked from '@pages/HistoricalStatistics/PercentOfPSLStaked';
 import Accounts from '@pages/HistoricalStatistics/Accounts';
 import CascadeAndSenseStatistics from '@pages/CascadeAndSenseStatistics/CascadeAndSenseStatistics';
 import SenseDetails from '@pages/Details/SenseDetails/SenseDetails';
+import CascadeDetails from '@pages/Details/CascadeDetails/CascadeDetails';
 
 import * as ROUTES from '@utils/constants/routes';
 import { getCurrencyName } from '@utils/appInfo';
@@ -397,6 +398,14 @@ const senseDetailsRoutes = {
   children: null,
 };
 
+const cascadeDetailsRoutes = {
+  id: 'Sense Details',
+  path: `${ROUTES.CASCADE_DETAILS}/:id`,
+  component: CascadeDetails,
+  seoTitle: 'Cascade Details',
+  children: null,
+};
+
 export const pageRoutes = [
   explorerRoutes,
   movementRoutes,
@@ -433,6 +442,7 @@ export const pageRoutes = [
   accountsStatisticsRoutes,
   cascadeAndSenseStatisticsRoutes,
   senseDetailsRoutes,
+  cascadeDetailsRoutes,
 ];
 
 export const sidebarRoutes = [

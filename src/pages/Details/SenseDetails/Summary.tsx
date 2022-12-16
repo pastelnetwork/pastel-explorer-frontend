@@ -7,7 +7,7 @@ import duplicate from '@assets/images/duplicate.svg';
 import * as Styles from './SenseDetails.styles';
 
 interface ISummaryProps {
-  isLikelyDupe: boolean;
+  isLikelyDupe: number;
   senseVersion: string;
 }
 
@@ -17,11 +17,14 @@ const Summary: React.FC<ISummaryProps> = ({ isLikelyDupe, senseVersion }) => {
       <Styles.ContentItem className="flex">
         <TicketStyles.TicketTitle>Is Likely Dupe:</TicketStyles.TicketTitle>
         <TicketStyles.TicketContent className="ml-5 capitalize">
-          {isLikelyDupe?.toString()}
+          {isLikelyDupe === 1 ? 'True' : 'False'}
         </TicketStyles.TicketContent>
       </Styles.ContentItem>
       <Styles.ContentItem className="text-center summary-image py-10">
-        <img src={isLikelyDupe ? duplicate : rareBadge} alt={isLikelyDupe ? 'Dupe!' : 'Rare!'} />
+        <img
+          src={isLikelyDupe === 1 ? duplicate : rareBadge}
+          alt={isLikelyDupe === 1 ? 'Dupe!' : 'Rare!'}
+        />
       </Styles.ContentItem>
       <Styles.ContentItem className="flex">
         <TicketStyles.TicketTitle>Sense Version:</TicketStyles.TicketTitle>

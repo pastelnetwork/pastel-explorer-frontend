@@ -30,7 +30,11 @@ export interface ITransaction {
   size: number;
   fee: number;
   height: number;
-  tickets?: ITicket[];
+  tickets?: string;
+  ticketsTotal?: number;
+  ticketsList?: ITicket[];
+  senseData?: TSenseRequests[];
+  cascades?: TCascadeRequests[];
 }
 
 export interface ITransactionDetails extends ITransaction {
@@ -317,6 +321,7 @@ export interface ITicket {
   };
   type: string;
   transactionHash: string;
+  id: string;
 }
 
 export type TTicketType =
@@ -436,15 +441,15 @@ export type TSense = {
   fingerprints: number[];
 };
 
-export type TTSenseRequests = {
+export type TSenseRequests = {
   imageFileHash: string;
   imageFileCdnUrl: string;
   imageTitle: string;
   imageDescription: string;
-  isPublic: boolean;
+  isPublic: number;
   transactionHash: string;
   rawData: string;
-  isLikelyDupe: boolean;
+  isLikelyDupe: number;
   dupeDetectionSystemVersion: string;
   openNsfwScore: number;
   rarenessScore: number;
@@ -457,9 +462,9 @@ export type TTSenseRequests = {
   pastelIdOfRegisteringSupernode1: string;
   pastelIdOfRegisteringSupernode2: string;
   pastelIdOfRegisteringSupernode3: string;
-  isPastelOpenapiRequest: boolean;
+  isPastelOpenapiRequest: number;
   openApiSubsetIdString: string;
-  isRareOnInternet: boolean;
+  isRareOnInternet: number;
   pctOfTop10MostSimilarWithDupeProbAbove25pct: number;
   pctOfTop10MostSimilarWithDupeProbAbove33pct: number;
   pctOfTop10MostSimilarWithDupeProbAbove50pct: number;
@@ -505,4 +510,22 @@ export type TCurrentNodeEdges = {
   index: number;
   source: TCurrentNode;
   target: TCurrentNode;
+};
+
+export type TCounts = {
+  [key: string]: number;
+};
+
+export type TEdges = {
+  source: number;
+  target: number;
+};
+
+export type TCascadeRequests = {
+  id: string;
+  cascadeId: string;
+  transactionHash: string;
+  rawData: string;
+  createdDate: number;
+  lastUpdated: number;
 };

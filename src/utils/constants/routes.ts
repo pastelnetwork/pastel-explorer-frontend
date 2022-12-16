@@ -41,3 +41,4 @@ export const STATISTICS_PERCENT_OF_PSL_STAKED = `${STATISTICS_OVERTIME}/percent-
 export const STATISTICS_ACCOUNTS = `${STATISTICS_OVERTIME}/accounts`;
 export const CASCADE_AND_SENSE_STATISTICS = '/cascade-and-sense-statistics';
 export const SENSE_DETAILS = '/sense';
+export const CASCADE_DETAILS = '/cascade';

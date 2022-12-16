@@ -52,14 +52,28 @@ export const Wrapper = styled('div')`
   .capitalize {
     text-transform: capitalize;
   }
+
+  .alert-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    word-break: 'break-word';
+  }
 `;
 
 export const ContentWrapper = styled.div`
   padding: 9px 16px;
+
+  &.no-spacing {
+    padding: 0;
+  }
 `;
 
 export const ContentItem = styled.div`
   margin-bottom: 5px;
+
+  &.min-height-400 {
+    min-height: 400px;
+  }
 
   .tooltip-wrapper {
     font-size: 14px;
@@ -153,12 +167,6 @@ export const ImagesWrapper = styled(Box)`
   align-items: flex-start;
   width: 100%;
 
-  .main-image {
-    max-width: 100%;
-    width: 720px;
-    max-height: 434px;
-  }
-
   .summary-image {
     border-top: 1px solid ${props => props.theme.sidebar.menu.default};
     border-bottom: 1px solid ${props => props.theme.sidebar.menu.default};
@@ -169,17 +177,9 @@ export const ImagesWrapper = styled(Box)`
     }
   }
 
-  .submit-image-group {
+  .pastel-data {
     width: calc(40% - 20px);
     margin-right: 20px;
-
-    .submitted-image {
-      width: 100%;
-    }
-
-    .ipfs {
-      width: 100%;
-    }
   }
 
   .summary-group {
@@ -188,11 +188,7 @@ export const ImagesWrapper = styled(Box)`
     align-items: flex-start;
     width: 60%;
 
-    .summary {
-      width: calc(100% / 3 - 15px);
-      margin-right: 20px;
-    }
-
+    .summary,
     .open-nsfw {
       width: calc(100% / 3 - 15px);
       margin-right: 20px;
@@ -201,10 +197,6 @@ export const ImagesWrapper = styled(Box)`
     .rareness-score {
       width: calc(100% / 3 - 15px);
       max-height: 308px;
-    }
-
-    .pastel-data {
-      width: 100%;
     }
   }
 
@@ -216,223 +208,158 @@ export const ImagesWrapper = styled(Box)`
 
     .prevalence-of-similar-images,
     .category-probabilities {
-      width: calc(25% - 20px);
+      width: calc(50% - 10px);
+    }
+
+    .prevalence-of-similar-images {
       margin-right: 20px;
     }
-
-    .fingerprint-vector-heatmap {
-      width: 50%;
-    }
   }
 
-  .rare-on-the-internet-results-graph {
-    width: calc(33% - 20px);
-    margin-right: 20px;
+  .rare-on-the-internet-results-graph,
+  .rare-on-the-internet-alternative-results,
+  .fingerprint-vector-heatmap {
+    width: calc(100% / 3 - 15px);
   }
 
+  .rare-on-the-internet-results-graph,
   .rare-on-the-internet-alternative-results {
-    width: calc(100% / 3 - 20px);
     margin-right: 20px;
   }
 
-  .similarity-subgraph-plot {
-    width: 33.66%;
+  .similar-registered-images {
+    width: 100%;
   }
 
-  .hidden-desktop {
-    display: none;
-  }
-
-  @media screen and (max-width: 1200px) {
-    .hidden-tablet {
-      display: none;
+  @media screen and (max-width: 1100px) {
+    .pastel-data,
+    .summary-group {
+      width: 100%;
     }
 
-    .hidden-desktop {
-      display: block;
+    .summary-group {
+      order: 1;
     }
 
-    .analytics-group {
-      .prevalence-of-similar-images {
-        width: calc(50% - 10px);
-        margin-right: 20px;
-      }
-
-      .category-probabilities {
-        width: calc(50% - 10px);
-        margin-right: 0;
-      }
+    .pastel-data {
+      margin-right: 0;
+      order: 2;
     }
 
-    .rare-on-the-internet-results-graph,
-    .similarity-subgraph-plot {
-      width: calc(50% - 10px);
-      margin-right: 20px;
+    .rare-on-the-internet-results-graph {
+      order: 3;
     }
 
-    .rare-on-the-internet-alternative-results,
+    .rare-on-the-internet-alternative-results {
+      order: 4;
+    }
+
     .fingerprint-vector-heatmap {
-      width: calc(50% - 10px);
-      margin-right: 0;
+      order: 5;
     }
 
-    .summary,
-    .rareness-score,
-    .open-nsfw {
-      width: calc(25% - 15px);
-      min-height: 321px;
-      margin-right: 20px;
-    }
-
-    .ipfs {
-      width: calc(25% - 15px);
-      min-height: 321px;
-      margin-right: 0;
+    .similar-registered-images {
+      order: 6;
     }
   }
 
   @media screen and (max-width: 990px) {
-    .submit-image-group {
+    .rare-on-the-internet-results-graph,
+    .rare-on-the-internet-alternative-results,
+    .fingerprint-vector-heatmap {
       width: 100%;
-      margin-right: 0;
-    }
-
-    .main-image {
-      max-width: 100%;
-      width: 100%;
-      max-height: unset;
-    }
-
-    .summary-group {
-      width: 100%;
-      margin-right: 0;
-      order: 5;
     }
 
     .rare-on-the-internet-results-graph,
-    .similarity-subgraph-plot,
-    .rare-on-the-internet-alternative-results,
-    .fingerprint-vector-heatmap,
-    .ipfs {
-      width: 100%;
-      margin-right: 0;
-    }
-
-    .ipfs {
-      min-height: unset;
-      order: 6;
-    }
-
-    .summary,
-    .rareness-score,
-    .open-nsfw {
-      width: calc(100% / 3 - 15px);
-    }
-
-    .rareness-score {
-      margin-right: 0;
-    }
-
-    .submit-image-group {
-      order: 1;
-    }
-
-    .summary {
-      order: 2;
-    }
-
-    .open-nsfw {
-      order: 3;
-    }
-
-    .rareness-score {
-      order: 4;
-    }
-
-    .analytics-group {
-      order: 7;
-    }
-
-    .rare-on-the-internet-results-graph {
-      order: 8;
-    }
-
     .rare-on-the-internet-alternative-results {
-      order: 9;
-    }
-
-    .similarity-subgraph-plot {
-      order: 10;
-    }
-
-    .fingerprint-vector-heatmap {
-      order: 11;
-    }
-  }
-
-  @media screen and (max-width: 680px) {
-    .summary,
-    .rareness-score,
-    .ipfs,
-    .open-nsfw {
-      width: calc(50% - 10px);
-      min-height: 321px;
-    }
-
-    .rareness-score,
-    .ipfs {
       margin-right: 0;
     }
-
-    .summary {
-      order: 2;
-    }
-
-    .open-nsfw {
-      order: 4;
-    }
-
-    .rareness-score {
-      order: 5;
-    }
-
-    .ipfs {
-      order: 3;
-    }
-
-    .summary-group {
-      order: 6;
-    }
   }
 
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 678px) {
+    .prevalence-of-similar-images,
+    .category-probabilities,
     .summary,
-    .rareness-score,
-    .ipfs,
-    .open-nsfw {
+    .open-nsfw,
+    .rareness-score {
       width: 100%;
-      min-height: unset;
+    }
+
+    .prevalence-of-similar-images,
+    .summary,
+    .open-nsfw {
       margin-right: 0;
     }
+  }
+`;
 
-    .open-nsfw {
-      order: 3;
-    }
+export const RawDataWrapper = styled.span`
+  font-size: 16px;
 
-    .rareness-score {
-      order: 4;
-    }
+  .MuiButtonBase-root {
+    margin: 0 5px 0 0;
+    padding: 0;
 
-    .ipfs {
-      order: 5;
-    }
-
-    .analytics-group {
-      .prevalence-of-similar-images,
-      .category-probabilities {
-        width: 100%;
-        margin-right: 0;
-      }
+    .MuiSvgIcon-root {
+      width: 14px;
+      height: 14px;
     }
   }
+`;
+
+export const ViewTransactionRaw = styled('button')`
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: ${props => props.theme.link.main};
+
+  &:hover {
+    color: ${props => props.theme.link.hover};
+  }
+
+  &:active {
+    color: ${props => props.theme.link.pressed};
+  }
+`;
+
+export const TableWrapper = styled.div`
+  max-width: 100%;
+  overflow-x: auto;
+
+  .table__row-header {
+    th {
+      white-space: nowrap;
+    }
+  }
+
+  .table__row {
+    img {
+      width: 64px;
+      height: 64px;
+    }
+  }
+
+  .white-space-nowrap {
+    white-space: nowrap;
+  }
+`;
+
+export const ProgressBarWrapper = styled.div`
+  width: 100%;
+  height: 14px;
+`;
+
+export const ProgressBarItem = styled.div`
+  height: 14px;
+  background: linear-gradient(to right, #4286f4, #373b44);
+`;
+
+export const TitleWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: ${props => props.theme.card.titleColor};
+  padding-right: 16px;
 `;

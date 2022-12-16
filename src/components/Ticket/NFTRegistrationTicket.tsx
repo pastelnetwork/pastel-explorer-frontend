@@ -110,23 +110,25 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
           <Styles.TicketContent>{nft.nft_collection_txid}</Styles.TicketContent>
         </Grid>
       </Grid>
-      <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
-        <AccordionSummary>
-          <Grid container spacing={3}>
-            <Grid item xs={4} sm={2}>
-              <Styles.TicketTitle>App ticket:</Styles.TicketTitle>
+      {nft.app_ticket ? (
+        <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
+          <AccordionSummary>
+            <Grid container spacing={3}>
+              <Grid item xs={4} sm={2}>
+                <Styles.TicketTitle>App ticket:</Styles.TicketTitle>
+              </Grid>
+              <Grid item xs={8} sm={10}>
+                <Styles.TicketContent className="expand-more">
+                  {isExpanded ? 'Click to see less' : 'Click to see detail'} <ExpandMoreIcon />
+                </Styles.TicketContent>
+              </Grid>
             </Grid>
-            <Grid item xs={8} sm={10}>
-              <Styles.TicketContent className="expand-more">
-                {isExpanded ? 'Click to see less' : 'Click to see detail'} <ExpandMoreIcon />
-              </Styles.TicketContent>
-            </Grid>
-          </Grid>
-        </AccordionSummary>
-        <AccordionDetails>
-          <AppTicket appTicket={nft.app_ticket} />
-        </AccordionDetails>
-      </Styles.Accordion>
+          </AccordionSummary>
+          <AccordionDetails>
+            <AppTicket appTicket={nft.app_ticket} />
+          </AccordionDetails>
+        </Styles.Accordion>
+      ) : null}
     </Box>
   );
 };
@@ -217,23 +219,25 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({ ticket }
         </Grid>
       </Grid>
       <Signatures signatures={ticket.signatures} />
-      <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
-        <AccordionSummary>
-          <Grid container spacing={3}>
-            <Grid item xs={4} sm={2}>
-              <Styles.TicketTitle>NFT Ticket:</Styles.TicketTitle>
+      {ticket.nft_ticket ? (
+        <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
+          <AccordionSummary>
+            <Grid container spacing={3}>
+              <Grid item xs={4} sm={2}>
+                <Styles.TicketTitle>NFT Ticket:</Styles.TicketTitle>
+              </Grid>
+              <Grid item xs={8} sm={10}>
+                <Styles.TicketContent className="expand-more">
+                  {isExpanded ? 'Click to see less' : 'Click to see detail'} <ExpandMoreIcon />
+                </Styles.TicketContent>
+              </Grid>
             </Grid>
-            <Grid item xs={8} sm={10}>
-              <Styles.TicketContent className="expand-more">
-                {isExpanded ? 'Click to see less' : 'Click to see detail'} <ExpandMoreIcon />
-              </Styles.TicketContent>
-            </Grid>
-          </Grid>
-        </AccordionSummary>
-        <AccordionDetails>
-          <NFTTicket nftTicket={ticket.nft_ticket} />
-        </AccordionDetails>
-      </Styles.Accordion>
+          </AccordionSummary>
+          <AccordionDetails>
+            <NFTTicket nftTicket={ticket.nft_ticket} />
+          </AccordionDetails>
+        </Styles.Accordion>
+      ) : null}
     </Box>
   );
 };

@@ -102,7 +102,7 @@ const TicketsList: React.FC<ITicketsList> = ({ data }) => {
           {data.map(ticket => (
             <Styles.GridStyle
               item
-              key={ticket.type}
+              key={ticket.id}
               className="table__row"
               id={ticket.transactionHash}
             >

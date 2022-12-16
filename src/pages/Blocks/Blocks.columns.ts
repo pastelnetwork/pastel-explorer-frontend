@@ -32,7 +32,7 @@ export const columns = [
   {
     width: 40,
     flexGrow: 1,
-    label: 'Total Tickets',
+    label: 'Ticket Quantity',
     dataKey: TOTAL_TICKETS,
     disableSort: false,
     className: 'col-total-tickets',

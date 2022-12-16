@@ -3,9 +3,7 @@ import { Typography, Dialog, AppBar, IconButton, Slide } from '@material-ui/core
 import { TransitionProps } from '@material-ui/core/transitions';
 import CloseIcon from '@material-ui/icons/Close';
 
-import { ITicket } from '@utils/types/ITransactions';
-
-import * as Styles from './TransactionDetails.styles';
+import * as Styles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps,
@@ -14,28 +12,14 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-interface ITransactionRawDataProps {
+interface ICascadeRawDataProps {
   rawData: string;
   open: boolean;
   toggleOpen: () => void;
-  tickets: ITicket[];
 }
 
-const TransactionRawData: React.FC<ITransactionRawDataProps> = ({
-  rawData,
-  open,
-  toggleOpen,
-  tickets,
-}) => {
+const CascadeRawData: React.FC<ICascadeRawDataProps> = ({ rawData, open, toggleOpen }) => {
   const classes = Styles.useStyles();
-
-  const getTickets = () => {
-    return tickets.map(ticket => ({
-      ...ticket.data.ticket,
-      txid: ticket.transactionHash,
-    }));
-  };
-
   return (
     <Dialog fullScreen open={open} onClose={toggleOpen} TransitionComponent={Transition}>
       <AppBar className={classes.appBar}>
@@ -44,19 +28,13 @@ const TransactionRawData: React.FC<ITransactionRawDataProps> = ({
             <CloseIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Transaction Raw Data
+            Cascade Raw Data
           </Typography>
         </Styles.TransactionRawDataToolbar>
       </AppBar>
       {rawData ? (
         <Styles.TransactionRawData>
-          <code>
-            {JSON.stringify(
-              { ...JSON.parse(rawData), tickets: tickets.length ? getTickets() : undefined },
-              null,
-              2,
-            )}
-          </code>
+          <code>{JSON.stringify(JSON.parse(JSON.parse(rawData)), null, 2)}</code>
         </Styles.TransactionRawData>
       ) : (
         'No data'
@@ -65,4 +43,4 @@ const TransactionRawData: React.FC<ITransactionRawDataProps> = ({
   );
 };
 
-export default TransactionRawData;
+export default CascadeRawData;

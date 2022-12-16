@@ -22,12 +22,13 @@ const IPFS: React.FC<IIPFS> = ({ link, hash }) => {
             className="address-link break-all"
             target="_blank"
             rel="noreferrer"
-          />
+          />{' '}
+          [***]
         </TicketStyles.TicketContent>
       </Styles.ContentItem>
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>SHA3-256 Hash of Results:</TicketStyles.TicketTitle>
-        <TicketStyles.TicketContent className="break-all">{hash}</TicketStyles.TicketContent>
+        <TicketStyles.TicketContent className="break-all">{hash}[***]</TicketStyles.TicketContent>
       </Styles.ContentItem>
     </Box>
   );

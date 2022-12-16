@@ -1,10 +1,11 @@
-import { ITicket } from './ITransactions';
+import { ITicket, TSenseRequests, TCascadeRequests } from './ITransactions';
 
 export interface IBlockTransaction {
   id: string;
   recipientCount: number;
   totalAmount: number;
   isNonStandard?: boolean;
+  tickets: string;
 }
 
 export interface IBlock {
@@ -23,6 +24,9 @@ export interface IBlock {
   transactions: Array<IBlockTransaction>;
   totalTickets: number;
   tickets: ITicket[];
+  ticketsList: string;
+  senses: TSenseRequests[];
+  cascades: TCascadeRequests[];
 }
 
 export interface IRawBlock {

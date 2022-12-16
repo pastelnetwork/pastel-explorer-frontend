@@ -272,6 +272,10 @@ export const IconButtonStyle = styled(IconButton)`
 export const GridStyle = styled(Grid)`
   width: 100%;
 
+  &.mb-20 {
+    margin-bottom: 20px;
+  }
+
   .tickets-table {
     .table__row {
       padding: 12px 16px;

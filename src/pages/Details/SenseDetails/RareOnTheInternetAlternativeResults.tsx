@@ -1,4 +1,5 @@
 import ReactECharts from 'echarts-for-react';
+import parse from 'html-react-parser';
 
 import { decompress_zstd_compressed_data_func } from '@utils/helpers/encryption';
 import { TChartParams } from '@utils/types/IStatistics';
@@ -14,14 +15,14 @@ const RareOnTheInternetAlternativeResults: React.FC<IRareOnTheInternetAlternativ
   data,
 }) => {
   if (!data) {
-    return null;
+    return <Styles.ContentItem className="min-height-400" />;
   }
   const newData = JSON.parse(data);
   if (
     Object.keys(newData).length <= 2 ||
-    newData.alternative_rare_on_internet_dict_as_json_compressed_b64.length
+    newData.alternative_rare_on_internet_dict_as_json_compressed_b64.length <= 50
   ) {
-    return null;
+    return <Styles.ContentItem className="min-height-400" />;
   }
 
   const processRareOnInternetAlternativeDataFunc = () => {
@@ -93,7 +94,7 @@ const RareOnTheInternetAlternativeResults: React.FC<IRareOnTheInternetAlternativ
               <div class="tooltip-content-wrapper">
                 <div class="tooltip-item">
                   <div class="label">Relevant Text String in Results:</div>
-                  <div class="description">${item.text_strings_on_page}</div>
+                  <div class="description">${parse(item.text_strings_on_page)}</div>
                 </div>
               </div>
             </div>
@@ -109,9 +110,8 @@ const RareOnTheInternetAlternativeResults: React.FC<IRareOnTheInternetAlternativ
     series: [
       {
         type: 'graph',
+        layout: 'force',
         data: internetRarenessAlternativeGraphData.map(node => ({
-          x: node.x,
-          y: node.y,
           id: node.id,
           name: node.id,
           symbolSize: node.node_size,
@@ -127,14 +127,16 @@ const RareOnTheInternetAlternativeResults: React.FC<IRareOnTheInternetAlternativ
           },
         },
         roam: true,
-        lineStyle: {
-          width: 0.5,
-          curveness: 0.3,
-          opacity: 0.7,
+        force: {
+          repulsion: 100,
         },
       },
     ],
   };
+
+  if (!internetRarenessAlternativeGraphData.length) {
+    return <Styles.ContentItem className="min-height-400" />;
+  }
 
   return (
     <Styles.ContentItem>

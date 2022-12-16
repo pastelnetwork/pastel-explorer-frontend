@@ -93,7 +93,7 @@ const CategoryProbabilities: React.FC<ICategoryProbabilities> = ({ data }) => {
 
   return (
     <Styles.ContentItem>
-      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '400px' }} />
+      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '290px' }} />
     </Styles.ContentItem>
   );
 };

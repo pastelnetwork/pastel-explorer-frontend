@@ -46,7 +46,9 @@ const ApiTicket: React.FC<IApiTicketProps> = ({ apiTicket }) => {
           <Styles.TicketTitle>Dd and fingerprints ids:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{data.dd_and_fingerprints_ids.join(', ')}</Styles.TicketContent>
+          <Styles.TicketContent>
+            {data.dd_and_fingerprints_ids ? data.dd_and_fingerprints_ids.join(', ') : ''}
+          </Styles.TicketContent>
         </Grid>
       </Grid>
     </Box>

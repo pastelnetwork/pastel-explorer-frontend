@@ -20,10 +20,9 @@ const PrevalenceOfSimilarImages: React.FC<IPrevalenceOfSimilarImages> = ({ data 
   }
   const values: number[] = Object.values(data);
   const keys = Object.keys(data);
-
   const seriesData = [];
   const xAxisData = [];
-  for (let i = 0; i < data.length; i += 1) {
+  for (let i = 0; i < values.length; i += 1) {
     seriesData.push({
       value: values[i],
       itemStyle: {
@@ -32,7 +31,7 @@ const PrevalenceOfSimilarImages: React.FC<IPrevalenceOfSimilarImages> = ({ data 
     });
     xAxisData.push(keys[i]);
   }
-  const max = Math.max(...seriesData.map(item => item.value)) * 1.5;
+  const max = Math.max(...seriesData.map(item => item.value)) * 1.5 || 0.1;
   const min = 0;
   const options = {
     grid: {
@@ -93,7 +92,7 @@ const PrevalenceOfSimilarImages: React.FC<IPrevalenceOfSimilarImages> = ({ data 
 
   return (
     <Styles.ContentItem>
-      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '400px' }} />
+      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '290px' }} />
     </Styles.ContentItem>
   );
 };

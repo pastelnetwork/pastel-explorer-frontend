@@ -57,7 +57,9 @@ const NFTcollectionTicket: React.FC<INFTcollectionTicketProps> = ({ nftTicket })
           <Styles.TicketTitle>Permitted users:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{nft.permitted_users.join(', ')}</Styles.TicketContent>
+          <Styles.TicketContent>
+            {nft.permitted_users ? nft.permitted_users.join(', ') : ''}
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -139,7 +141,9 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
           <Styles.TicketTitle>Permitted users:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{ticket.permitted_users.join(', ')}</Styles.TicketContent>
+          <Styles.TicketContent>
+            {ticket.permitted_users ? ticket.permitted_users.join(', ') : ''}
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>

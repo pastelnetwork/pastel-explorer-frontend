@@ -29,13 +29,11 @@ import { formatAddress } from '@utils/helpers/format';
 import { useSortData } from '@utils/hooks';
 import { getCurrencyName } from '@utils/appInfo';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
+import { getTicketsTypeList } from '@pages/Movement/Movement.helpers';
+import SensesList from '@pages/Details/TransactionDetails/SensesList';
+import CascadeList from '@pages/Details/TransactionDetails/CascadeList';
 
-import {
-  blockHeaders,
-  transactionHeaders,
-  generateDetailsElement,
-  countTotalTicketsByTxid,
-} from './BlockDetails.helpers';
+import { blockHeaders, transactionHeaders, generateDetailsElement } from './BlockDetails.helpers';
 import * as Styles from './BlockDetails.styles';
 import TicketsList from './Tickets';
 
@@ -100,7 +98,7 @@ const BlockDetails = () => {
       return [];
     }
     const transactionList = data.map(transaction => {
-      const totalTickets = countTotalTicketsByTxid(transaction.id, block?.tickets || []);
+      const ticketsTypeList = getTicketsTypeList(transaction.tickets || '');
       return {
         id: transaction.id,
         data: [
@@ -122,17 +120,21 @@ const BlockDetails = () => {
           {
             id: 3,
             value: (
-              <>
-                {totalTickets > 0 ? (
-                  <ExternalLink
-                    href={`#${transaction.id}`}
-                    value={totalTickets.toString()}
-                    className="transaction-hash"
-                  />
+              <div className="inline-block">
+                {ticketsTypeList.total > 0 ? (
+                  <div className="inline-block">
+                    <ExternalLink
+                      href={`#${transaction.id}`}
+                      value={ticketsTypeList.total.toString()}
+                      className="transaction-hash"
+                      title={ticketsTypeList.text.join(', ')}
+                      isUseTooltip
+                    />
+                  </div>
                 ) : (
-                  <>{totalTickets}</>
+                  <>0</>
                 )}
-              </>
+              </div>
             ),
           },
           {
@@ -229,11 +231,24 @@ const BlockDetails = () => {
             handleClickSort={handleClickSortTransaction}
             className="transactions"
             tableWrapperClassName="transactions-table-wrapper"
+            blockWrapperClassName="mb-20"
           />
         </Styles.GridStyle>
-        <Styles.GridStyle item>
-          <TicketsList data={block?.tickets} />
-        </Styles.GridStyle>
+        {block?.tickets?.length ? (
+          <Styles.GridStyle item>
+            <TicketsList data={block?.tickets} />
+          </Styles.GridStyle>
+        ) : null}
+        {block?.senses?.length ? (
+          <Styles.GridStyle item className="mb-20">
+            <SensesList data={block?.senses} />
+          </Styles.GridStyle>
+        ) : null}
+        {block?.cascades?.length ? (
+          <Styles.GridStyle item className="mb-20">
+            <CascadeList data={block.cascades} />
+          </Styles.GridStyle>
+        ) : null}
       </Grid>
     </Styles.Wrapper>
   ) : (

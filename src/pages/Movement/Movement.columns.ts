@@ -2,6 +2,7 @@ export const BLOCK_KEY = 'block';
 export const TIMESTAMP_MOVEMENT_KEY = 'timestamp';
 export const TXID_KEY = 'blockHash';
 export const AMOUNT_MOVEMENT_KEY = 'totalAmount';
+export const TICKETS_KEY = 'ticketsTotal';
 
 export const columns = [
   {
@@ -20,6 +21,14 @@ export const columns = [
     dataKey: BLOCK_KEY,
     disableSort: true,
     className: 'col-block',
+  },
+  {
+    width: 40,
+    flexGrow: 1,
+    label: 'Ticket Quantity',
+    dataKey: TICKETS_KEY,
+    disableSort: false,
+    className: 'col-timestamp',
   },
   {
     width: 120,

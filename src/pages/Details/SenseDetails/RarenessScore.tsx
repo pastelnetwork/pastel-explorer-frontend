@@ -84,7 +84,7 @@ const RarenessScore: React.FC<IRarenessScore> = ({ rarenessScore }) => {
         },
         data: [
           {
-            value: rarenessScore,
+            value: rarenessScore || 0,
           },
         ],
       },

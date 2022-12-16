@@ -224,6 +224,10 @@ export const GirdWrapper = styled.div`
   ${props => props.theme.breakpoints.down('lg')} {
     flex-wrap: wrap;
   }
+
+  .addresses-wrapper {
+    margin-bottom: 0;
+  }
 `;
 
 export const LeftColumn = styled.div`

@@ -6,7 +6,7 @@ import Header from '@components/Header/Header';
 import RouterLink from '@components/RouterLink/RouterLink';
 import Table, { RowsProps } from '@components/Table/Table';
 import CopyButton from '@components/CopyButton/CopyButton';
-import { getTicketTitle, TicketDetail } from '@components/Ticket';
+import TicketsList from '@pages/Details/BlockDetails/Tickets';
 
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
@@ -18,7 +18,8 @@ import {
   DirectionType,
   ITransactionDetails,
   ITicket,
-  TTicketType,
+  TSenseRequests,
+  TCascadeRequests,
 } from '@utils/types/ITransactions';
 import { ISummary } from '@utils/types/ISummary';
 import { useSortData } from '@utils/hooks';
@@ -32,6 +33,8 @@ import {
   generateCoinbaseInfo,
 } from './TransactionDetails.helpers';
 import TransactionRawData from './TransactionRawData';
+import SensesList from './SensesList';
+import CascadeList from './CascadeList';
 
 interface ParamTypes {
   id: string;
@@ -41,6 +44,8 @@ const TransactionDetails = () => {
   const { id } = useParams<ParamTypes>();
   const [transaction, setTransaction] = React.useState<ITransactionDetails | null>(null);
   const [tickets, setTickets] = React.useState<ITicket[]>([]);
+  const [senses, setSenses] = React.useState<TSenseRequests[]>([]);
+  const [cascades, setCascades] = React.useState<TCascadeRequests[]>([]);
   const [exchangeRate, setExchangeRate] = React.useState(0);
   const [openRawDataModal, setOpenRawDataModal] = React.useState(false);
   const fetchTransactions = useFetch<{ data: ITransactionDetails }>({
@@ -58,8 +63,14 @@ const TransactionDetails = () => {
     fetchTransactions.fetchData().then(response => {
       if (response?.data) {
         setTransaction(response.data);
-        if (response.data?.tickets) {
-          setTickets(response.data?.tickets);
+        if (response.data?.ticketsList) {
+          setTickets(response.data.ticketsList);
+        }
+        if (response.data?.senseData) {
+          setSenses(response.data.senseData);
+        }
+        if (response.data?.cascades) {
+          setCascades(response.data.cascades);
         }
       }
     });
@@ -188,7 +199,7 @@ const TransactionDetails = () => {
                     handleClickSort={handleClickSort}
                     rows={generateTransactionEvents(transactionEvents, 'Outgoing')}
                     className="input-addresses"
-                    blockWrapperClassName="input-addresses-wrapper"
+                    blockWrapperClassName="input-addresses-wrapper addresses-wrapper"
                     tableWrapperClassName="none-border-radius-top"
                   />
                 )}
@@ -201,22 +212,27 @@ const TransactionDetails = () => {
                   handleClickSort={handleClickSort}
                   className="recipients"
                   tableWrapperClassName="none-border-radius-top"
+                  blockWrapperClassName="addresses-wrapper"
                 />
               </Styles.RightColumn>
             </Styles.GirdWrapper>
           )}
         </Styles.GridStyle>
-        {tickets.length
-          ? tickets.map(ticket => (
-              <Styles.GridStyle item key={ticket.type}>
-                <TicketDetail
-                  title={getTicketTitle(ticket.type as TTicketType)}
-                  type={ticket.type as TTicketType}
-                  ticket={ticket.data.ticket}
-                />
-              </Styles.GridStyle>
-            ))
-          : null}
+        {tickets.length ? (
+          <Styles.GridStyle item>
+            <TicketsList data={tickets} />
+          </Styles.GridStyle>
+        ) : null}
+        {senses.length ? (
+          <Styles.GridStyle item>
+            <SensesList data={senses} />
+          </Styles.GridStyle>
+        ) : null}
+        {cascades.length ? (
+          <Styles.GridStyle item>
+            <CascadeList data={cascades} />
+          </Styles.GridStyle>
+        ) : null}
       </Grid>
     </Styles.Wrapper>
   ) : (

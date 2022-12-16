@@ -2,7 +2,6 @@ import { Grid, Typography } from '@material-ui/core';
 
 import { HeaderType } from '@components/Table/Table';
 import { getCurrencyName } from '@utils/appInfo';
-import { ITicket } from '@utils/types/ITransactions';
 
 import * as Styles from './BlockDetails.styles';
 
@@ -30,9 +29,3 @@ export const generateDetailsElement = (name: string, value: string) => (
     </Grid>
   </Styles.DetailsContainer>
 );
-
-export const countTotalTicketsByTxid = (txid: string, tickets: ITicket[]) => {
-  const items = tickets.filter(t => t.transactionHash === txid);
-
-  return items.length;
-};
