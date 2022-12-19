@@ -70,7 +70,10 @@ export const generateCoinbaseInfo = (info: number) => (
   <Alert
     severity="info"
     icon={
-      <Tooltip title="New coins" arrow>
+      <Tooltip
+        title="New PSL are released through mining rewards, which is the process of confirming Pastel transactions and securing the entire historical record of transactions known as the blockchain. When miners finds a new block, they are rewarded."
+        arrow
+      >
         <InfoOutlinedIcon fontSize="small" />
       </Tooltip>
     }
@@ -84,7 +87,10 @@ export const generateNonStandardTransactionInfo = () => (
     <Styles.Alert
       severity="info"
       icon={
-        <Tooltip title="Shielded Transaction" arrow>
+        <Tooltip
+          title="A shielded transaction is a privacy-preserving tx involving shielded addresses. Shielded addresses use zero-knowledge proofs to allow transaction data to be encrypted by remaining verifiable by network nodes."
+          arrow
+        >
           <InfoOutlinedIcon fontSize="small" />
         </Tooltip>
       }

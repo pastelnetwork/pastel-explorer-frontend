@@ -12,6 +12,7 @@ export interface ISummaryStats {
   nonZeroAddressesCount: number;
   circulatingSupply: number;
   percentPSLStaked: number;
+  totalBurnedPSL: number;
 }
 
 export type TSummaryChartProps = {
