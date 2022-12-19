@@ -4,6 +4,8 @@ import { Skeleton } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/styles';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import Tooltip from '@material-ui/core/Tooltip';
+import Box from '@material-ui/core/Box';
 
 // application
 import { TAppTheme } from '@theme/index';
@@ -16,11 +18,13 @@ import {
   ISummaryChartStats,
   TSummaryChartProps,
 } from '@utils/types/ISummary';
+import { INetwork } from '@utils/types/INetwork';
 import { SocketContext } from '@context/socket';
 import themeVariant from '@theme/variants';
 import { AppThunkDispatch } from '@redux/types';
 import { BlockThunks, TransactionThunks } from '@redux/thunk';
 import { ISocketData } from '@utils/types/ISocketData';
+import { getCurrencyName } from '@utils/appInfo';
 
 import * as Styles from './Summary.styles';
 import { LineChart } from './LineChart';
@@ -52,10 +56,16 @@ type TChartDataProps = {
 
 const Summary: React.FC = () => {
   const [summaryList, setSummaryList] = React.useState(initialSummaryList);
+  const [currentStatsData, setCurrentStatsData] = React.useState<ISummaryStats | null>(null);
   const [summaryChartData, setSummaryChartData] = React.useState<ISummaryChartStats>();
+  const [totalSupernode, setTotalSupernode] = React.useState(0);
   const { fetchData } = useFetch<ISummary>({
     method: 'get',
     url: `${URLS.SUMMARY_URL}?limit=576&period=24h`,
+  });
+  const fetchGeoData = useFetch<INetwork>({
+    method: 'get',
+    url: `${URLS.NETWORK_URL}`,
   });
   const socket = React.useContext(SocketContext);
   const classes = useStyles();
@@ -63,6 +73,7 @@ const Summary: React.FC = () => {
   const dispatch = useDispatch<AppThunkDispatch>();
   const generateSummaryData = React.useCallback((summary: ISummary) => {
     const { currentStats, lastDayStats, chartStats } = summary;
+    setCurrentStatsData(currentStats);
     setSummaryChartData(chartStats);
     setSummaryList(prev => {
       const items = prev.map(summaryElement => {
@@ -123,6 +134,11 @@ const Summary: React.FC = () => {
         }
       },
     );
+    fetchGeoData.fetchData().then(response => {
+      if (response?.masternodes) {
+        setTotalSupernode(response.masternodes.length);
+      }
+    });
     return () => {
       socket.off('getUpdateBlock');
     };
@@ -217,6 +233,47 @@ const Summary: React.FC = () => {
     };
   };
 
+  const renderCardHeaderValue = (sumKey: string, value: string | number | null) => {
+    if (!value) {
+      return <Skeleton animation="wave" variant="text" />;
+    }
+    if (sumKey === 'circulatingSupply' || sumKey === 'coinSupply') {
+      const theNumberOfTotalSupernodes = getCurrencyName() === 'PSL' ? 5000000 : 1000000;
+      const totalLockedInSupernodes = totalSupernode * theNumberOfTotalSupernodes;
+      return (
+        <Tooltip
+          title={
+            <Box>
+              <Box>
+                Total supply:{' '}
+                {formatNumber(currentStatsData?.coinSupply || 0, { decimalsLength: 2 })}
+              </Box>
+              <Box>
+                Less total burned coins:{' '}
+                {formatNumber(currentStatsData?.totalBurnedPSL || 0, { decimalsLength: 2 })}
+              </Box>
+              <Box>Less total locked in supernodes: {formatNumber(totalLockedInSupernodes)}</Box>
+              <Box>
+                Circulating supply:{' '}
+                {formatNumber(
+                  (currentStatsData?.coinSupply || 0) -
+                    (currentStatsData?.totalBurnedPSL || 0) -
+                    totalLockedInSupernodes -
+                    9384556240.23,
+                  { decimalsLength: 2 },
+                )}
+              </Box>
+            </Box>
+          }
+        >
+          <Box>{value}</Box>
+        </Tooltip>
+      );
+    }
+
+    return value;
+  };
+
   return (
     <div className={classes.wrapper}>
       <Styles.Wrapper>
@@ -228,9 +285,7 @@ const Summary: React.FC = () => {
                   {name}
                 </Styles.Typography>
                 <Styles.Typography variant="h4">
-                  <Styles.Values>
-                    {value === null ? <Skeleton animation="wave" variant="text" /> : value}
-                  </Styles.Values>
+                  <Styles.Values>{renderCardHeaderValue(sumKey, value)}</Styles.Values>
                 </Styles.Typography>
               </Styles.ValueWrapper>
               <Styles.PercentageWrapper>
