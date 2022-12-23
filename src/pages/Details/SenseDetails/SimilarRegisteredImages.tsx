@@ -14,7 +14,7 @@ import { decompress_zstd_compressed_data_func } from '@utils/helpers/encryption'
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
 import * as Styles from './SenseDetails.styles';
 
-const StyledTableCell = withStyles((theme: TAppTheme) => ({
+export const StyledTableCell = withStyles((theme: TAppTheme) => ({
   head: {
     backgroundColor: theme.palette.background.default,
     color: theme.palette.text.primary,
@@ -26,7 +26,7 @@ const StyledTableCell = withStyles((theme: TAppTheme) => ({
   },
 }))(TableCell);
 
-const StyledTableRow = withStyles((theme: TAppTheme) => ({
+export const StyledTableRow = withStyles((theme: TAppTheme) => ({
   root: {
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.action.hover,

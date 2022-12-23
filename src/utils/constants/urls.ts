@@ -34,7 +34,7 @@ export const GET_STATISTICS_CIRCULATING_SUPPLY = 'v1/stats/circulating-supply';
 export const GET_STATISTICS_PERCENT_OF_PSL_STAKED = 'v1/stats/percent-of-psl-staked';
 export const GET_STATISTICS_ACCOUNTS = 'v1/stats/accounts';
 export const SENSE_URL = 'v1/transactions/sense';
-export const CASCADE_URL = 'v1/transactions/cascade';
+export const PASTEL_ID_URL = 'v1/transactions/pastelid';
 // External URLS
 export const TWITTER_URL = 'https://twitter.com/pastelnetwork';
 export const TELEGRAM_URL = 'https://t.me/PastelNetwork';

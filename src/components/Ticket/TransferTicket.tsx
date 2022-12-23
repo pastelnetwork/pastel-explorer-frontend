@@ -28,7 +28,14 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
           <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{ticket.pastelID}</Styles.TicketContent>
+          <Styles.TicketContent>
+            <RouterLink
+              route={`${ROUTES.PASTEL_ID_DETAILS}/${ticket.pastelID}`}
+              value={ticket.pastelID}
+              title={ticket.pastelID}
+              className="address-link"
+            />
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Signatures signature={ticket.signature} />
@@ -69,9 +76,9 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
         <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
             <RouterLink
-              route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.item_txid}`}
-              value={ticket.item_txid}
-              title={ticket.item_txid}
+              route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.item_txid || ticket.nft_txid}`}
+              value={ticket.item_txid || ticket.nft_txid}
+              title={ticket.item_txid || ticket.nft_txid}
               className="address-link"
             />
           </Styles.TicketContent>

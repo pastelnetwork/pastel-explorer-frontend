@@ -31,7 +31,6 @@ import { getCurrencyName } from '@utils/appInfo';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 import { getTicketsTypeList } from '@pages/Movement/Movement.helpers';
 import SensesList from '@pages/Details/TransactionDetails/SensesList';
-import CascadeList from '@pages/Details/TransactionDetails/CascadeList';
 
 import { blockHeaders, transactionHeaders, generateDetailsElement } from './BlockDetails.helpers';
 import * as Styles from './BlockDetails.styles';
@@ -127,7 +126,7 @@ const BlockDetails = () => {
                       href={`#${transaction.id}`}
                       value={ticketsTypeList.total.toString()}
                       className="transaction-hash"
-                      title={ticketsTypeList.text.join(', ')}
+                      title={ticketsTypeList.text.join(', <br />')}
                       isUseTooltip
                     />
                   </div>
@@ -231,7 +230,7 @@ const BlockDetails = () => {
             handleClickSort={handleClickSortTransaction}
             className="transactions"
             tableWrapperClassName="transactions-table-wrapper"
-            blockWrapperClassName="mb-20"
+            blockWrapperClassName="mb-12"
           />
         </Styles.GridStyle>
         {block?.tickets?.length ? (
@@ -240,13 +239,8 @@ const BlockDetails = () => {
           </Styles.GridStyle>
         ) : null}
         {block?.senses?.length ? (
-          <Styles.GridStyle item className="mb-20">
+          <Styles.GridStyle item className="mb-12">
             <SensesList data={block?.senses} />
-          </Styles.GridStyle>
-        ) : null}
-        {block?.cascades?.length ? (
-          <Styles.GridStyle item className="mb-20">
-            <CascadeList data={block.cascades} />
           </Styles.GridStyle>
         ) : null}
       </Grid>

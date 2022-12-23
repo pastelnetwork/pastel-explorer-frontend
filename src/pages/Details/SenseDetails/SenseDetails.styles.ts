@@ -4,6 +4,12 @@ import Box from '@material-ui/core/Box';
 export const Wrapper = styled('div')`
   display: block;
 
+  .copy-icon {
+    svg {
+      color: #2d3748 !important;
+    }
+  }
+
   .break-all {
     word-break: break-all;
   }
@@ -70,6 +76,10 @@ export const ContentWrapper = styled.div`
 
 export const ContentItem = styled.div`
   margin-bottom: 5px;
+
+  &.min-height-315 {
+    min-height: 315px;
+  }
 
   &.min-height-400 {
     min-height: 400px;
@@ -180,6 +190,10 @@ export const ImagesWrapper = styled(Box)`
   .pastel-data {
     width: calc(40% - 20px);
     margin-right: 20px;
+
+    &.min-height-725 {
+      min-height: 725px;
+    }
   }
 
   .summary-group {
@@ -244,6 +258,10 @@ export const ImagesWrapper = styled(Box)`
     .pastel-data {
       margin-right: 0;
       order: 2;
+
+      &.min-height-725 {
+        min-height: unset;
+      }
     }
 
     .rare-on-the-internet-results-graph {

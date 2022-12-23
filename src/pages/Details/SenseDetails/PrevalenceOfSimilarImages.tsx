@@ -16,7 +16,7 @@ interface IPrevalenceOfSimilarImages {
 const PrevalenceOfSimilarImages: React.FC<IPrevalenceOfSimilarImages> = ({ data }) => {
   const { darkMode } = useSelector(getThemeState);
   if (!data) {
-    return null;
+    return <Styles.ContentItem className="min-height-315" />;
   }
   const values: number[] = Object.values(data);
   const keys = Object.keys(data);
@@ -92,7 +92,7 @@ const PrevalenceOfSimilarImages: React.FC<IPrevalenceOfSimilarImages> = ({ data 
 
   return (
     <Styles.ContentItem>
-      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '290px' }} />
+      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '315px' }} />
     </Styles.ContentItem>
   );
 };

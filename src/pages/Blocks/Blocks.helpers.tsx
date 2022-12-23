@@ -53,7 +53,7 @@ export const transformTableData = (transactions: Array<IBlock>, isMobile: boolea
               className="hash-link"
               route={`${ROUTES.BLOCK_DETAILS}/${id}`}
               value={ticketsTypeList.total}
-              title={ticketsTypeList.text.join(', ')}
+              title={ticketsTypeList.text.join(', <br />')}
               isUseTooltip
             />
           ) : (

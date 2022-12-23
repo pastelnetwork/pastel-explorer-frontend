@@ -15,7 +15,7 @@ interface ICategoryProbabilities {
 const CategoryProbabilities: React.FC<ICategoryProbabilities> = ({ data }) => {
   const { darkMode } = useSelector(getThemeState);
   if (!data) {
-    return null;
+    return <Styles.ContentItem className="min-height-315" />;
   }
   const newData = JSON.parse(data);
   const values: number[] = Object.values(newData);
@@ -93,7 +93,7 @@ const CategoryProbabilities: React.FC<ICategoryProbabilities> = ({ data }) => {
 
   return (
     <Styles.ContentItem>
-      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '290px' }} />
+      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '315px' }} />
     </Styles.ContentItem>
   );
 };

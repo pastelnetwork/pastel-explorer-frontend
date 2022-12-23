@@ -5,7 +5,7 @@ import RouterLink from '@components/RouterLink/RouterLink';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { INftCollectionActivationTicket } from '@utils/types/ITransactions';
 import { getCurrencyName } from '@utils/appInfo';
-// import * as ROUTES from '@utils/constants/routes';
+import * as ROUTES from '@utils/constants/routes';
 
 import Signatures from './Signatures';
 import * as Styles from './Ticket.styles';
@@ -25,12 +25,16 @@ const NFTCollectionActivationTicket: React.FC<INFTCollectionActivationTicketProp
         </Grid>
         <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
-            <RouterLink
-              route={`#/${ticket.creator_height}`}
-              value={ticket.creator_height}
-              title={ticket.creator_height?.toString()}
-              className="address-link"
-            />
+            {ticket.creator_height ? (
+              <RouterLink
+                route={`${ROUTES.BLOCK_DETAILS}/${ticket.creator_height}`}
+                value={ticket.creator_height}
+                title={ticket.creator_height?.toString()}
+                className="address-link"
+              />
+            ) : (
+              'NA'
+            )}
           </Styles.TicketContent>
         </Grid>
       </Grid>
@@ -47,7 +51,14 @@ const NFTCollectionActivationTicket: React.FC<INFTCollectionActivationTicketProp
           <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{ticket.pastelID}</Styles.TicketContent>
+          <Styles.TicketContent>
+            <RouterLink
+              route={`${ROUTES.PASTEL_ID_DETAILS}/${ticket.pastelID}`}
+              value={ticket.pastelID}
+              title={ticket.pastelID}
+              className="address-link"
+            />
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Signatures signature={ticket.signature} />
@@ -57,12 +68,16 @@ const NFTCollectionActivationTicket: React.FC<INFTCollectionActivationTicketProp
         </Grid>
         <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
-            <RouterLink
-              route={`#/${ticket.reg_txid}`}
-              value={ticket.reg_txid}
-              title={ticket.reg_txid}
-              className="address-link"
-            />
+            {ticket.reg_txid ? (
+              <RouterLink
+                route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.reg_txid}`}
+                value={ticket.reg_txid}
+                title={ticket.reg_txid}
+                className="address-link"
+              />
+            ) : (
+              'NA'
+            )}
           </Styles.TicketContent>
         </Grid>
       </Grid>

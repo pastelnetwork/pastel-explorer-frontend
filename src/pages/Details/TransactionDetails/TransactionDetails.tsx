@@ -19,7 +19,6 @@ import {
   ITransactionDetails,
   ITicket,
   TSenseRequests,
-  TCascadeRequests,
 } from '@utils/types/ITransactions';
 import { ISummary } from '@utils/types/ISummary';
 import { useSortData } from '@utils/hooks';
@@ -34,7 +33,6 @@ import {
 } from './TransactionDetails.helpers';
 import TransactionRawData from './TransactionRawData';
 import SensesList from './SensesList';
-import CascadeList from './CascadeList';
 
 interface ParamTypes {
   id: string;
@@ -45,7 +43,6 @@ const TransactionDetails = () => {
   const [transaction, setTransaction] = React.useState<ITransactionDetails | null>(null);
   const [tickets, setTickets] = React.useState<ITicket[]>([]);
   const [senses, setSenses] = React.useState<TSenseRequests[]>([]);
-  const [cascades, setCascades] = React.useState<TCascadeRequests[]>([]);
   const [exchangeRate, setExchangeRate] = React.useState(0);
   const [openRawDataModal, setOpenRawDataModal] = React.useState(false);
   const fetchTransactions = useFetch<{ data: ITransactionDetails }>({
@@ -68,9 +65,6 @@ const TransactionDetails = () => {
         }
         if (response.data?.senseData) {
           setSenses(response.data.senseData);
-        }
-        if (response.data?.cascades) {
-          setCascades(response.data.cascades);
         }
       }
     });
@@ -164,7 +158,7 @@ const TransactionDetails = () => {
   return transaction ? (
     <Styles.Wrapper>
       <Header title="Transaction Details" />
-      <Grid container direction="column" spacing={2}>
+      <Grid container direction="column">
         <Styles.TransactionDesc item>
           {generateTableTitle(transaction, toggleOpenRawData)}
         </Styles.TransactionDesc>
@@ -226,11 +220,6 @@ const TransactionDetails = () => {
         {senses.length ? (
           <Styles.GridStyle item>
             <SensesList data={senses} />
-          </Styles.GridStyle>
-        ) : null}
-        {cascades.length ? (
-          <Styles.GridStyle item>
-            <CascadeList data={cascades} />
           </Styles.GridStyle>
         ) : null}
       </Grid>

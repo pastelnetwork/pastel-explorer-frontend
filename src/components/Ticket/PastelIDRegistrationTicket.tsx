@@ -16,7 +16,6 @@ interface IPastelIDRegistrationTicketProps {
 
 const PastelIDRegistrationTicket: React.FC<IPastelIDRegistrationTicketProps> = ({ ticket }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-
   return (
     <Box>
       <Grid container spacing={3}>
@@ -40,7 +39,14 @@ const PastelIDRegistrationTicket: React.FC<IPastelIDRegistrationTicketProps> = (
           <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{ticket.pastelID}</Styles.TicketContent>
+          <Styles.TicketContent>
+            <RouterLink
+              route={`${ROUTES.PASTEL_ID_DETAILS}/${ticket.pastelID}`}
+              value={ticket.pastelID}
+              title={ticket.pastelID}
+              className="address-link"
+            />
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Signatures signature={ticket.signature} />
@@ -72,7 +78,9 @@ const PastelIDRegistrationTicket: React.FC<IPastelIDRegistrationTicketProps> = (
                   {!isExpanded ? 'Click to see more' : 'Click to see less'}
                 </Styles.ButtonLink>
               </>
-            ) : null}
+            ) : (
+              'NA'
+            )}
           </Styles.TicketContent>
         </Grid>
       </Grid>

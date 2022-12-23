@@ -96,7 +96,7 @@ const TicketsList: React.FC<ITicketsList> = ({ data }) => {
 
   return (
     <Styles.GridStyle item>
-      <TableStyles.BlockWrapper className="mb-20">
+      <TableStyles.BlockWrapper className="mb-12">
         <TableStyles.BlockTitle>Tickets</TableStyles.BlockTitle>
         <Box className="custom-table tickets-table">
           {data.map(ticket => (

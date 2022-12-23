@@ -1,5 +1,8 @@
 import Box from '@material-ui/core/Box';
 
+import RouterLink from '@components/RouterLink/RouterLink';
+import * as ROUTES from '@utils/constants/routes';
+
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
 
 import * as Styles from './SenseDetails.styles';
@@ -41,7 +44,14 @@ const PastelData: React.FC<IPastelData> = ({
         <TicketStyles.TicketTitle>
           Pastel Block Height When Request Submitted
         </TicketStyles.TicketTitle>
-        <TicketStyles.TicketContent>{blockHeight}</TicketStyles.TicketContent>
+        <TicketStyles.TicketContent>
+          <RouterLink
+            route={`${ROUTES.TRANSACTION_DETAILS}/${blockHeight}`}
+            value={blockHeight}
+            title={blockHeight.toString()}
+            className="address-link"
+          />
+        </TicketStyles.TicketContent>
       </Styles.ContentItem>
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>UTC Timestamp When Request Submitted</TicketStyles.TicketTitle>
@@ -81,7 +91,7 @@ const PastelData: React.FC<IPastelData> = ({
       </Styles.ContentItem>
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>OpenAPI Subset String</TicketStyles.TicketTitle>
-        <TicketStyles.TicketContent>{openApiSubsetIdString}&nbsp;</TicketStyles.TicketContent>
+        <TicketStyles.TicketContent>{openApiSubsetIdString || 'NA'}</TicketStyles.TicketContent>
       </Styles.ContentItem>
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>PastelID of Submitter</TicketStyles.TicketTitle>

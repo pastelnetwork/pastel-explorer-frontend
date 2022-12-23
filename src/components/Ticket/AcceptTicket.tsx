@@ -30,7 +30,14 @@ const AcceptTicket: React.FC<IAcceptTicketProps> = ({ ticket }) => {
           <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{ticket.pastelID}</Styles.TicketContent>
+          <Styles.TicketContent>
+            <RouterLink
+              route={`${ROUTES.PASTEL_ID_DETAILS}/${ticket.pastelID}`}
+              value={ticket.pastelID}
+              title={ticket.pastelID}
+              className="address-link"
+            />
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Signatures signature={ticket.signature} />
@@ -40,12 +47,16 @@ const AcceptTicket: React.FC<IAcceptTicketProps> = ({ ticket }) => {
         </Grid>
         <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
-            <RouterLink
-              route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.offer_txid}`}
-              value={ticket.offer_txid}
-              title={ticket.offer_txid}
-              className="address-link"
-            />
+            {ticket.offer_txid ? (
+              <RouterLink
+                route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.offer_txid}`}
+                value={ticket.offer_txid}
+                title={ticket.offer_txid}
+                className="address-link"
+              />
+            ) : (
+              'NA'
+            )}
           </Styles.TicketContent>
         </Grid>
       </Grid>

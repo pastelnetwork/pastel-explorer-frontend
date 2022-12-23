@@ -1801,7 +1801,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         type: 'bar',
         sampling: 'lttb',
         name: `% of ${getCurrencyName()} Staked`,
-        data: dataY?.map((d: number) => parseInt((d * 100).toString(), 10)),
+        data: dataY?.map((d: number) => parseFloat((d * 100).toString())),
         showSymbol: false,
       },
       animation: false,
@@ -2733,7 +2733,6 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       xAxis: {
         type: 'category',
-        boundaryGap: false,
         data: dataX,
         axisLabel: {
           show: false,
@@ -2752,11 +2751,12 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           show: false,
         },
         show: false,
+        max: maxY,
       },
       series: {
         name: `% of ${getCurrencyName()} Staked: `,
         type: 'bar',
-        data: dataY?.map((d: number) => parseInt((d * 100).toString(), 10)),
+        data: dataY?.map((d: number) => parseFloat((d * 100).toString())),
       },
       stateAnimation: {
         duration: 300,

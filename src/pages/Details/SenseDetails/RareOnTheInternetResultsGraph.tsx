@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import ReactECharts from 'echarts-for-react';
 import parse from 'html-react-parser';
 
@@ -12,71 +11,48 @@ interface IRareOnTheInternetResultsGraph {
   data: string;
 }
 
-type TChartData = {
-  nodes: TCurrentNode[];
-  edges: TEdges[];
-};
-
 const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = ({ data }) => {
-  const [chartData, setChartData] = useState<TChartData>({ nodes: [], edges: [] });
-  useEffect(() => {
-    const newData = JSON.parse(data);
-    if (
-      Object.keys(newData).length > 2 &&
-      newData.rare_on_internet_summary_table_as_json_compressed_b64.length > 100
-    ) {
-      const processRareOnInternetDataFunc = () => {
-        const internetRarenessGraphData = decompress_zstd_compressed_data_func(
-          newData.rare_on_internet_graph_json_compressed_b64,
-        );
-        const keys = Object.keys(internetRarenessGraphData);
-        for (let i = 0; i < keys.length; i += 1) {
-          if (keys[i] === 'nodes') {
-            const keys2 = Object.keys(internetRarenessGraphData[keys[i]]);
-            const values2 = Object.values(internetRarenessGraphData[keys[i]]) as TCurrentNode[];
-            for (let j = 0; j < keys2.length; j += 1) {
-              const current_node: TCurrentNode = values2[j];
-              const current_node_size = 0.9 ** (current_node.search_result_ranking + 1) * 15;
-              current_node.node_size = current_node_size;
-              internetRarenessGraphData.nodes[keys2[j]] = current_node;
-            }
-          }
-        }
-        return {
-          nodes: internetRarenessGraphData.nodes,
-          edges: internetRarenessGraphData.links,
-        };
-      };
-      if (newData.rare_on_internet_summary_table_as_json_compressed_b64.length > 100) {
-        const { nodes, edges } = processRareOnInternetDataFunc();
-        setChartData({
-          nodes,
-          edges,
-        });
-      }
-    }
-  }, [data]);
-
   if (!data) {
     return <Styles.ContentItem className="min-height-400" />;
   }
-
   const newData = JSON.parse(data);
   if (
     Object.keys(newData).length <= 2 ||
-    newData.rare_on_internet_summary_table_as_json_compressed_b64.length <= 100 ||
-    !chartData.nodes.length
+    newData.rare_on_internet_summary_table_as_json_compressed_b64.length <= 100
   ) {
     return <Styles.ContentItem className="min-height-400" />;
   }
 
+  const processRareOnInternetDataFunc = () => {
+    const internetRarenessGraphData = decompress_zstd_compressed_data_func(
+      newData.rare_on_internet_graph_json_compressed_b64,
+    );
+    const keys = Object.keys(internetRarenessGraphData);
+    for (let i = 0; i < keys.length; i += 1) {
+      if (keys[i] === 'nodes') {
+        const keys2 = Object.keys(internetRarenessGraphData[keys[i]]);
+        const values2 = Object.values(internetRarenessGraphData[keys[i]]) as TCurrentNode[];
+        for (let j = 0; j < keys2.length; j += 1) {
+          const current_node: TCurrentNode = values2[j];
+          const current_node_size = 0.9 ** (current_node.search_result_ranking + 1) * 15;
+          current_node.node_size = current_node_size;
+          internetRarenessGraphData.nodes[keys2[j]] = current_node;
+        }
+      }
+    }
+    return {
+      nodes: internetRarenessGraphData.nodes as TCurrentNode[],
+      edges: internetRarenessGraphData.links as TEdges[],
+    };
+  };
+  const { nodes, edges } = processRareOnInternetDataFunc();
   const options = {
     animationDurationUpdate: 1500,
     animationEasingUpdate: 'quinticInOut',
     tooltip: {
       trigger: 'item',
       formatter(params: TChartParams) {
-        const item = chartData.nodes.find(i => i.id === parseInt(params.name, 10));
+        const item = nodes.find(i => i.id === parseInt(params.name, 10));
         if (item) {
           return `
             <div class="tooltip-wrapper max-w-280">
@@ -110,23 +86,26 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
       {
         type: 'graph',
         layout: 'force',
-        data: chartData.nodes.map(node => ({
+        animation: false,
+        data: nodes.map(node => ({
           id: node.id,
           name: node.id,
           symbolSize: node.node_size,
           symbol: `image://${node.img_src_string}`,
         })),
-        edges: chartData.edges,
+        edges,
         label: {
           show: false,
         },
+        roam: true,
         emphasis: {
           label: {
             show: false,
           },
         },
         force: {
-          repulsion: 100,
+          repulsion: 3000,
+          edgeLength: 100,
         },
       },
     ],

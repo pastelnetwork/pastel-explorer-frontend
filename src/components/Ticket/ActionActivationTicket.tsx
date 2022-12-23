@@ -23,12 +23,16 @@ const ActionActivationTicket: React.FC<IActionActivationTicketProps> = ({ ticket
         </Grid>
         <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
-            <RouterLink
-              route={`#/${ticket.called_at}`}
-              value={ticket.called_at}
-              title={ticket.called_at?.toString()}
-              className="address-link"
-            />
+            {ticket.called_at ? (
+              <RouterLink
+                route={`${ROUTES.BLOCK_DETAILS}/${ticket.called_at}`}
+                value={ticket.called_at}
+                title={ticket.called_at?.toString()}
+                className="address-link"
+              />
+            ) : (
+              'NA'
+            )}
           </Styles.TicketContent>
         </Grid>
       </Grid>
@@ -45,7 +49,14 @@ const ActionActivationTicket: React.FC<IActionActivationTicketProps> = ({ ticket
           <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{ticket.pastelID}</Styles.TicketContent>
+          <Styles.TicketContent>
+            <RouterLink
+              route={`${ROUTES.BLOCK_DETAILS}/${ticket.pastelID}`}
+              value={ticket.pastelID}
+              title={ticket.pastelID}
+              className="address-link"
+            />
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Signatures signature={ticket.signature} />
@@ -55,12 +66,16 @@ const ActionActivationTicket: React.FC<IActionActivationTicketProps> = ({ ticket
         </Grid>
         <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
-            <RouterLink
-              route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.reg_txid}`}
-              value={ticket.reg_txid}
-              title={ticket.reg_txid}
-              className="address-link"
-            />
+            {ticket.reg_txid ? (
+              <RouterLink
+                route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.reg_txid}`}
+                value={ticket.reg_txid}
+                title={ticket.reg_txid}
+                className="address-link"
+              />
+            ) : (
+              'NA'
+            )}
           </Styles.TicketContent>
         </Grid>
       </Grid>

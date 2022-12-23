@@ -644,12 +644,11 @@ export const generateXAxisInterval = (
     case '24h':
       return Math.floor(dataX.length / 5);
     case '7d':
+    case '14d':
       if (dataX.length <= 8) {
         return 'auto';
       }
       return Math.floor(dataX.length / 7);
-    case '14d':
-      return Math.floor(dataX.length / 10);
     case '30d':
       if (dataX.length !== 31) {
         return Math.floor(dataX.length / 15);

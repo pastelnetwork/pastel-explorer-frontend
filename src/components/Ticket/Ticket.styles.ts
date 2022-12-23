@@ -21,6 +21,12 @@ export const TicketContent = styled(Typography)`
     }
   }
 
+  &.read-more {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   @media screen and (max-width: 1024px) {
     overflow: hidden;
     text-overflow: ellipsis;

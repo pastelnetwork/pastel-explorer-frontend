@@ -34,7 +34,6 @@ export interface ITransaction {
   ticketsTotal?: number;
   ticketsList?: ITicket[];
   senseData?: TSenseRequests[];
-  cascades?: TCascadeRequests[];
 }
 
 export interface ITransactionDetails extends ITransaction {
@@ -273,6 +272,7 @@ export interface IOfferTicket {
   version: number;
   pastelID: string;
   item_txid: string;
+  nft_txid: string;
   copy_number: number;
   asked_price: number;
   valid_after: number;
@@ -297,6 +297,7 @@ export interface ITransferTicket {
   offer_txid: string;
   accept_txid: string;
   item_txid: string;
+  nft_txid: string;
   registration_txid: string;
   copy_serial_nr: string;
   signature: string;
@@ -519,13 +520,4 @@ export type TCounts = {
 export type TEdges = {
   source: number;
   target: number;
-};
-
-export type TCascadeRequests = {
-  id: string;
-  cascadeId: string;
-  transactionHash: string;
-  rawData: string;
-  createdDate: number;
-  lastUpdated: number;
 };

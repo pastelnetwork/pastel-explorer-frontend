@@ -81,7 +81,7 @@ export const transformTransactionsData = (transactions: Array<ITransaction>) =>
                 route={`${ROUTES.TRANSACTION_DETAILS}/${id}`}
                 value={ticketsTypeList.total}
                 textSize="large"
-                title={ticketsTypeList.text.join(', ')}
+                title={ticketsTypeList.text.join(', <br />')}
                 isUseTooltip
               />
             ) : (

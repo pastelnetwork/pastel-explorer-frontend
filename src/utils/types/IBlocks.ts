@@ -1,4 +1,4 @@
-import { ITicket, TSenseRequests, TCascadeRequests } from './ITransactions';
+import { ITicket, TSenseRequests } from './ITransactions';
 
 export interface IBlockTransaction {
   id: string;
@@ -26,7 +26,6 @@ export interface IBlock {
   tickets: ITicket[];
   ticketsList: string;
   senses: TSenseRequests[];
-  cascades: TCascadeRequests[];
 }
 
 export interface IRawBlock {

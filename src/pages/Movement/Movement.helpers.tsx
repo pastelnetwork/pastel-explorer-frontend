@@ -17,6 +17,7 @@ import {
   AMOUNT_MOVEMENT_KEY,
   BLOCK_KEY,
   TICKETS_KEY,
+  RECIPIENT_COUNT_KEY,
 } from './Movement.columns';
 
 export const DATA_FETCH_LIMIT = 20;
@@ -56,48 +57,51 @@ const generateBlockKeyValue = (blockHash: string, blockHeight: string) => {
 };
 
 export const transformMovementData = (transactions: Array<ITransaction>) =>
-  transactions.map(({ id, timestamp, totalAmount, block, blockHash, isNonStandard, tickets }) => {
-    const ticketsTypeList = getTicketsTypeList(tickets || '');
-    return {
-      id,
-      [TXID_KEY]: (
-        <Grid container alignItems="center" wrap="nowrap">
-          <CopyButton copyText={id} />
-          <RouterLink
-            route={`${ROUTES.TRANSACTION_DETAILS}/${id}`}
-            title={id}
-            value={formatAddress(id)}
-            textSize="large"
-          />
-        </Grid>
-      ),
-      [BLOCK_KEY]: generateBlockKeyValue(blockHash, block.height),
-      [AMOUNT_MOVEMENT_KEY]: (
-        <>
-          {isNonStandard ? (
-            <Tooltip title="Because the transaction is shielded, the amount sent is unknown.">
-              <span>Unknown</span>
-            </Tooltip>
-          ) : (
-            formatNumber(totalAmount, { decimalsLength: 2 })
-          )}
-        </>
-      ),
-      [TICKETS_KEY]: (
-        <div className="inline-block">
-          {ticketsTypeList.total > 0 ? (
+  transactions.map(
+    ({ id, timestamp, totalAmount, block, blockHash, isNonStandard, tickets, recipientCount }) => {
+      const ticketsTypeList = getTicketsTypeList(tickets || '');
+      return {
+        id,
+        [TXID_KEY]: (
+          <Grid container alignItems="center" wrap="nowrap">
+            <CopyButton copyText={id} />
             <RouterLink
               route={`${ROUTES.TRANSACTION_DETAILS}/${id}`}
-              value={ticketsTypeList.total}
+              title={id}
+              value={formatAddress(id)}
               textSize="large"
-              title={ticketsTypeList.text.join(', ')}
-              isUseTooltip
             />
-          ) : (
-            0
-          )}
-        </div>
-      ),
-      [TIMESTAMP_MOVEMENT_KEY]: formattedDate(timestamp, { dayName: false }),
-    };
-  });
+          </Grid>
+        ),
+        [BLOCK_KEY]: generateBlockKeyValue(blockHash, block.height),
+        [RECIPIENT_COUNT_KEY]: recipientCount,
+        [AMOUNT_MOVEMENT_KEY]: (
+          <>
+            {isNonStandard ? (
+              <Tooltip title="Because the transaction is shielded, the amount sent is unknown.">
+                <span>Unknown</span>
+              </Tooltip>
+            ) : (
+              formatNumber(totalAmount, { decimalsLength: 2 })
+            )}
+          </>
+        ),
+        [TICKETS_KEY]: (
+          <div className="inline-block">
+            {ticketsTypeList.total > 0 ? (
+              <RouterLink
+                route={`${ROUTES.TRANSACTION_DETAILS}/${id}`}
+                value={ticketsTypeList.total}
+                textSize="large"
+                title={ticketsTypeList.text.join(', <br />')}
+                isUseTooltip
+              />
+            ) : (
+              0
+            )}
+          </div>
+        ),
+        [TIMESTAMP_MOVEMENT_KEY]: formattedDate(timestamp, { dayName: false }),
+      };
+    },
+  );

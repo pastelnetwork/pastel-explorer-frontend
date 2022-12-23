@@ -40,7 +40,7 @@ interface IBlockItemLayout {
   customTitle?: React.ReactNode;
 }
 
-const BlockItemLayout: React.FC<IBlockItemLayout> = ({
+export const BlockItemLayout: React.FC<IBlockItemLayout> = ({
   title,
   children,
   className = '',
@@ -92,7 +92,7 @@ const SenseDetails: React.FC = () => {
     handleTransactionFetch();
   }, [id]);
 
-  const toggleOpenRawData = () => setOpenRawDataModal(prevState => !prevState);
+  const toggleOpenRawData = () => setOpenRawDataModal(!openRawDataModal);
 
   const getRawData = () => {
     if (!sense?.rawData) {
@@ -153,41 +153,44 @@ const SenseDetails: React.FC = () => {
           </TransactionStyles.ViewTransactionRawMuiAlert>
         </TransactionStyles.TransactionDesc>
         <Styles.ImagesWrapper>
-          <BlockItemLayout title="Pastel Data" className="pastel-data">
+          <BlockItemLayout
+            title="Pastel Data"
+            className={`pastel-data ${!sense?.pastelIdOfSubmitter ? 'min-height-725' : ''}`}
+          >
             <PastelData
-              blockHash={sense.blockHash}
-              blockHeight={sense.blockHeight}
-              utcTimestampWhenRequestSubmitted={sense.utcTimestampWhenRequestSubmitted}
-              pastelIdOfSubmitter={sense.pastelIdOfSubmitter}
-              pastelIdOfRegisteringSupernode1={sense.pastelIdOfRegisteringSupernode1}
-              pastelIdOfRegisteringSupernode2={sense.pastelIdOfRegisteringSupernode2}
-              pastelIdOfRegisteringSupernode3={sense.pastelIdOfRegisteringSupernode3}
-              isPastelOpenapiRequest={sense.isPastelOpenapiRequest}
-              openApiSubsetIdString={sense.openApiSubsetIdString}
+              blockHash={sense?.blockHash}
+              blockHeight={sense?.blockHeight}
+              utcTimestampWhenRequestSubmitted={sense?.utcTimestampWhenRequestSubmitted}
+              pastelIdOfSubmitter={sense?.pastelIdOfSubmitter}
+              pastelIdOfRegisteringSupernode1={sense?.pastelIdOfRegisteringSupernode1}
+              pastelIdOfRegisteringSupernode2={sense?.pastelIdOfRegisteringSupernode2}
+              pastelIdOfRegisteringSupernode3={sense?.pastelIdOfRegisteringSupernode3}
+              isPastelOpenapiRequest={sense?.isPastelOpenapiRequest}
+              openApiSubsetIdString={sense?.openApiSubsetIdString}
             />
           </BlockItemLayout>
           <Box className="summary-group">
             <BlockItemLayout title="Summary" className="summary">
               <Summary
-                isLikelyDupe={sense.isLikelyDupe}
-                senseVersion={sense.dupeDetectionSystemVersion}
+                isLikelyDupe={sense?.isLikelyDupe}
+                senseVersion={sense?.dupeDetectionSystemVersion}
               />
             </BlockItemLayout>
             <BlockItemLayout title="Open NSFW" className="open-nsfw">
-              <OpenNSFW openNSFWScore={sense.openNsfwScore} />
+              <OpenNSFW openNSFWScore={sense?.openNsfwScore} />
             </BlockItemLayout>
             <BlockItemLayout title="Rareness Score" className="rareness-score">
-              <RarenessScore rarenessScore={sense.rarenessScore} />
+              <RarenessScore rarenessScore={sense?.rarenessScore} />
             </BlockItemLayout>
             <Box className="analytics-group">
               <BlockItemLayout
                 title="Prevalence of Similar Images"
                 className="prevalence-of-similar-images"
               >
-                <PrevalenceOfSimilarImages data={sense.prevalenceOfSimilarImagesData} />
+                <PrevalenceOfSimilarImages data={sense?.prevalenceOfSimilarImagesData} />
               </BlockItemLayout>
               <BlockItemLayout title="Category Probabilities" className="category-probabilities">
-                <CategoryProbabilities data={sense.alternativeNsfwScores} />
+                <CategoryProbabilities data={sense?.alternativeNsfwScores} />
               </BlockItemLayout>
             </Box>
           </Box>
@@ -195,13 +198,13 @@ const SenseDetails: React.FC = () => {
             title="Rare on the Internet Results Graph"
             className="rare-on-the-internet-results-graph"
           >
-            <RareOnTheInternetResultsGraph data={sense.internetRareness} />
+            <RareOnTheInternetResultsGraph data={sense?.internetRareness} />
           </BlockItemLayout>
           <BlockItemLayout
             title="Rare on the Internet, Alternative Results"
             className="rare-on-the-internet-alternative-results"
           >
-            <RareOnTheInternetAlternativeResults data={sense.internetRareness} />
+            <RareOnTheInternetAlternativeResults data={sense?.internetRareness} />
           </BlockItemLayout>
           <BlockItemLayout
             title="Fingerprint Vector Heatmap"
@@ -209,8 +212,8 @@ const SenseDetails: React.FC = () => {
           >
             <FingerprintVectorHeatmap
               data={
-                sense.imageFingerprintOfCandidateImageFile
-                  ? JSON.parse(sense.imageFingerprintOfCandidateImageFile)
+                sense?.imageFingerprintOfCandidateImageFile
+                  ? JSON.parse(sense?.imageFingerprintOfCandidateImageFile)
                   : []
               }
             />
@@ -236,7 +239,7 @@ const SenseDetails: React.FC = () => {
             className="similar-registered-images"
             childrenClassName="no-spacing"
           >
-            <SimilarRegisteredImages rarenessScoresTable={sense.rarenessScoresTable} />
+            <SimilarRegisteredImages rarenessScoresTable={sense?.rarenessScoresTable} />
           </BlockItemLayout>
         </Styles.ImagesWrapper>
       </Grid>

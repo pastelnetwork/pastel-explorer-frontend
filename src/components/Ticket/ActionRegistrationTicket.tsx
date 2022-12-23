@@ -22,9 +22,10 @@ interface IActionRegistrationTicketProps {
 
 interface IActionTicketProps {
   ticket: string;
+  actionType: string;
 }
 
-const ActionTicket: React.FC<IActionTicketProps> = ({ ticket }) => {
+const ActionTicket: React.FC<IActionTicketProps> = ({ ticket, actionType }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   if (!ticket) {
     return null;
@@ -53,7 +54,14 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket }) => {
           <Styles.TicketTitle>Caller:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{nft.caller}</Styles.TicketContent>
+          <Styles.TicketContent>
+            <RouterLink
+              route={`${ROUTES.PASTEL_ID_DETAILS}/${nft.caller}`}
+              value={nft.caller}
+              title={nft.caller}
+              className="address-link"
+            />
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -62,12 +70,16 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket }) => {
         </Grid>
         <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
-            <RouterLink
-              route={`${ROUTES.BLOCK_DETAILS}/${nft.blocknum}`}
-              value={nft.blocknum}
-              title={nft.blocknum?.toString()}
-              className="address-link"
-            />
+            {nft.blocknum ? (
+              <RouterLink
+                route={`${ROUTES.BLOCK_DETAILS}/${nft.blocknum}`}
+                value={nft.blocknum}
+                title={nft.blocknum?.toString()}
+                className="address-link"
+              />
+            ) : (
+              'NA'
+            )}
           </Styles.TicketContent>
         </Grid>
       </Grid>
@@ -77,12 +89,16 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket }) => {
         </Grid>
         <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
-            <RouterLink
-              route={`${ROUTES.BLOCK_DETAILS}/${nft.block_hash}`}
-              value={nft.block_hash}
-              title={nft.block_hash}
-              className="address-link"
-            />
+            {nft.block_hash ? (
+              <RouterLink
+                route={`${ROUTES.BLOCK_DETAILS}/${nft.block_hash}`}
+                value={nft.block_hash}
+                title={nft.block_hash}
+                className="address-link"
+              />
+            ) : (
+              'NA'
+            )}
           </Styles.TicketContent>
         </Grid>
       </Grid>
@@ -101,7 +117,7 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket }) => {
             </Grid>
           </AccordionSummary>
           <AccordionDetails>
-            <ApiTicket apiTicket={nft.api_ticket} />
+            <ApiTicket apiTicket={nft.api_ticket} actionType={actionType} />
           </AccordionDetails>
         </Styles.Accordion>
       ) : null}
@@ -135,7 +151,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({ ti
           <Styles.TicketTitle>Key:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{ticket.key}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.key || 'NA'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -143,7 +159,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({ ti
           <Styles.TicketTitle>Label:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{ticket.label}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.label || 'NA'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -152,12 +168,16 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({ ti
         </Grid>
         <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
-            <RouterLink
-              route={`${ROUTES.BLOCK_DETAILS}/${ticket.called_at}`}
-              value={ticket.called_at}
-              title={ticket.called_at?.toString()}
-              className="address-link"
-            />
+            {ticket.called_at ? (
+              <RouterLink
+                route={`${ROUTES.BLOCK_DETAILS}/${ticket.called_at}`}
+                value={ticket.called_at}
+                title={ticket.called_at?.toString()}
+                className="address-link"
+              />
+            ) : (
+              'NA'
+            )}
           </Styles.TicketContent>
         </Grid>
       </Grid>
@@ -187,7 +207,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({ ti
             </Grid>
           </AccordionSummary>
           <AccordionDetails>
-            <ActionTicket ticket={ticket.action_ticket} />
+            <ActionTicket ticket={ticket.action_ticket} actionType={ticket.action_type} />
           </AccordionDetails>
         </Styles.Accordion>
       ) : null}

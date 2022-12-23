@@ -6,7 +6,7 @@ import RouterLink from '@components/RouterLink/RouterLink';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { INftCollectionRegistrationTicket, INftCollectionTicket } from '@utils/types/ITransactions';
 import { getCurrencyName } from '@utils/appInfo';
-// import * as ROUTES from '@utils/constants/routes';
+import * as ROUTES from '@utils/constants/routes';
 
 import Signatures from './Signatures';
 import AppTicket from './AppTicket';
@@ -41,7 +41,7 @@ const NFTcollectionTicket: React.FC<INFTcollectionTicketProps> = ({ nftTicket })
           <Styles.TicketTitle>NFT collection name:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{nft.nft_collection_name}</Styles.TicketContent>
+          <Styles.TicketContent>{nft.nft_collection_name || 'NA'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -49,7 +49,14 @@ const NFTcollectionTicket: React.FC<INFTcollectionTicketProps> = ({ nftTicket })
           <Styles.TicketTitle>Creator:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{nft.creator}</Styles.TicketContent>
+          <Styles.TicketContent>
+            <RouterLink
+              route={`${ROUTES.PASTEL_ID_DETAILS}/${nft.creator}`}
+              value={nft.creator}
+              title={nft.creator}
+              className="address-link"
+            />
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -58,7 +65,7 @@ const NFTcollectionTicket: React.FC<INFTcollectionTicketProps> = ({ nftTicket })
         </Grid>
         <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
-            {nft.permitted_users ? nft.permitted_users.join(', ') : ''}
+            {nft.permitted_users ? nft.permitted_users.join(', ') : 'NA'}
           </Styles.TicketContent>
         </Grid>
       </Grid>
@@ -67,7 +74,18 @@ const NFTcollectionTicket: React.FC<INFTcollectionTicketProps> = ({ nftTicket })
           <Styles.TicketTitle>Blocknum:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{nft.blocknum}</Styles.TicketContent>
+          <Styles.TicketContent>
+            {nft.blocknum ? (
+              <RouterLink
+                route={`${ROUTES.BLOCK_DETAILS}/${nft.blocknum}`}
+                value={nft.blocknum}
+                title={nft.blocknum?.toString()}
+                className="address-link"
+              />
+            ) : (
+              'NA'
+            )}
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -75,7 +93,18 @@ const NFTcollectionTicket: React.FC<INFTcollectionTicketProps> = ({ nftTicket })
           <Styles.TicketTitle>Block hash:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{nft.block_hash}</Styles.TicketContent>
+          <Styles.TicketContent>
+            {nft.block_hash ? (
+              <RouterLink
+                route={`${ROUTES.BLOCK_DETAILS}/${nft.block_hash}`}
+                value={nft.block_hash}
+                title={nft.block_hash?.toString()}
+                className="address-link"
+              />
+            ) : (
+              'NA'
+            )}
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -142,7 +171,7 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
         </Grid>
         <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
-            {ticket.permitted_users ? ticket.permitted_users.join(', ') : ''}
+            {ticket.permitted_users ? ticket.permitted_users.join(', ') : 'NA'}
           </Styles.TicketContent>
         </Grid>
       </Grid>
@@ -151,7 +180,7 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
           <Styles.TicketTitle>Key:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{ticket.key}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.key || 'NA'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -159,7 +188,7 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
           <Styles.TicketTitle>Label:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{ticket.label}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket.label || 'NA'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -168,12 +197,16 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
         </Grid>
         <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
-            <RouterLink
-              route={`#/${ticket.creator_height}`}
-              value={ticket.creator_height}
-              title={ticket.creator_height?.toString()}
-              className="address-link"
-            />
+            {ticket.creator_height ? (
+              <RouterLink
+                route={`${ROUTES.BLOCK_DETAILS}/${ticket.creator_height}`}
+                value={ticket.creator_height}
+                title={ticket.creator_height?.toString()}
+                className="address-link"
+              />
+            ) : (
+              'NA'
+            )}
           </Styles.TicketContent>
         </Grid>
       </Grid>
@@ -183,12 +216,16 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
         </Grid>
         <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
-            <RouterLink
-              route={`#/${ticket.closing_height}`}
-              value={ticket.closing_height}
-              title={ticket.closing_height?.toString()}
-              className="address-link"
-            />
+            {ticket.closing_height ? (
+              <RouterLink
+                route={`${ROUTES.BLOCK_DETAILS}/${ticket.closing_height}`}
+                value={ticket.closing_height}
+                title={ticket.closing_height?.toString()}
+                className="address-link"
+              />
+            ) : (
+              'NA'
+            )}
           </Styles.TicketContent>
         </Grid>
       </Grid>
@@ -222,12 +259,16 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
         </Grid>
         <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
-            <RouterLink
-              route={`#/${ticket.royalty_address}`}
-              value={ticket.royalty_address}
-              title={ticket.royalty_address?.toString()}
-              className="address-link"
-            />
+            {ticket.royalty_address ? (
+              <RouterLink
+                route={`${ROUTES.ADDRESS_DETAILS}/${ticket.royalty_address}`}
+                value={ticket.royalty_address}
+                title={ticket.royalty_address?.toString()}
+                className="address-link"
+              />
+            ) : (
+              'NA'
+            )}
           </Styles.TicketContent>
         </Grid>
       </Grid>

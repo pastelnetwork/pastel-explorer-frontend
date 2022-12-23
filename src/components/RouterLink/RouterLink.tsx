@@ -1,5 +1,6 @@
 import { CSSProperties } from '@material-ui/styles';
 import Tooltip from '@material-ui/core/Tooltip';
+import parse from 'html-react-parser';
 
 import * as Styles from './RouterLink.styles';
 
@@ -35,7 +36,7 @@ export const ExternalLink: React.FC<IExternalLinkProps> = ({
 }) => {
   if (isUseTooltip) {
     return (
-      <Tooltip title={title}>
+      <Tooltip title={parse(title)}>
         <Styles.ExternalLink href={href} className={className} target={target} rel={rel}>
           {value}
         </Styles.ExternalLink>
@@ -61,7 +62,7 @@ const RouterLink: React.FC<RouterLinkProps> = ({
 }) => {
   if (isUseTooltip && title) {
     return (
-      <Tooltip title={title} arrow>
+      <Tooltip title={parse(title)} arrow>
         <Styles.RouterLink to={`${route}`} className={className} textsize={textSize} style={styles}>
           {value}
         </Styles.RouterLink>

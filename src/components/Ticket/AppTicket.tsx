@@ -3,41 +3,12 @@ import Grid from '@material-ui/core/Grid';
 
 import { decode } from '@utils/helpers/ascii85';
 import { IAppTicket } from '@utils/types/ITransactions';
-import RouterLink from '@components/RouterLink/RouterLink';
-import * as ROUTES from '@utils/constants/routes';
 
 import * as Styles from './Ticket.styles';
 
 interface IAppTicketProps {
   appTicket: string;
 }
-
-interface IFingerprints {
-  data: string[];
-}
-
-const Fingerprints: React.FC<IFingerprints> = ({ data }) => {
-  if (!data.length) {
-    return null;
-  }
-
-  return (
-    <Styles.TicketContent>
-      {data.map((value, index) => (
-        <>
-          <RouterLink
-            key={value}
-            route={`${ROUTES.SENSE_DETAILS}/${value}`}
-            value={value}
-            title={value}
-            className="address-link"
-          />
-          {index < data.length ? ', ' : ''}
-        </>
-      ))}
-    </Styles.TicketContent>
-  );
-};
 
 const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
   if (!appTicket) {
@@ -51,7 +22,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           <Styles.TicketTitle>Creator name:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{data.creator_name}</Styles.TicketContent>
+          <Styles.TicketContent>{data.creator_name || 'NA'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -59,7 +30,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           <Styles.TicketTitle>Creator website:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{data.creator_website}</Styles.TicketContent>
+          <Styles.TicketContent>{data.creator_website || 'NA'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -67,7 +38,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           <Styles.TicketTitle>Creator written statement:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{data.creator_written_statement}</Styles.TicketContent>
+          <Styles.TicketContent>{data.creator_written_statement || 'NA'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -75,7 +46,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           <Styles.TicketTitle>NFT creation video youtube url:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{data.nft_creation_video_youtube_url}</Styles.TicketContent>
+          <Styles.TicketContent>{data.nft_creation_video_youtube_url || 'NA'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -83,7 +54,9 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           <Styles.TicketTitle>NFT keyword set:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{data.nft_keyword_set.replaceAll(',', ', ')}</Styles.TicketContent>
+          <Styles.TicketContent>
+            {data.nft_keyword_set ? data.nft_keyword_set.replaceAll(',', ', ') : 'NA'}
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -91,7 +64,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           <Styles.TicketTitle>NFT series name:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{data.nft_series_name}</Styles.TicketContent>
+          <Styles.TicketContent>{data.nft_series_name || 'NA'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -99,7 +72,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           <Styles.TicketTitle>NFT title:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{data.nft_title}</Styles.TicketContent>
+          <Styles.TicketContent>{data.nft_title || 'NA'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -107,7 +80,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           <Styles.TicketTitle>NFT type:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{data.nft_type}</Styles.TicketContent>
+          <Styles.TicketContent>{data.nft_type || 'NA'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -115,7 +88,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           <Styles.TicketTitle>Preview hash:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{data.preview_hash}</Styles.TicketContent>
+          <Styles.TicketContent>{data.preview_hash || 'NA'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -123,7 +96,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           <Styles.TicketTitle>Thumbnail1 hash:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{data.thumbnail1_hash}</Styles.TicketContent>
+          <Styles.TicketContent>{data.thumbnail1_hash || 'NA'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -131,7 +104,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           <Styles.TicketTitle>Thumbnail2 hash:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{data.thumbnail2_hash}</Styles.TicketContent>
+          <Styles.TicketContent>{data.thumbnail2_hash || 'NA'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -139,7 +112,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           <Styles.TicketTitle>Data hash:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{data.data_hash}</Styles.TicketContent>
+          <Styles.TicketContent>{data.data_hash || 'NA'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -172,7 +145,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
         <Grid item xs={8} sm={10}>
           <Styles.TicketContent>
-            <Fingerprints data={data.dd_and_fingerprints_ids} />
+            {data.dd_and_fingerprints_ids ? data.dd_and_fingerprints_ids.join(', ') : 'NA'}
           </Styles.TicketContent>
         </Grid>
       </Grid>
@@ -205,7 +178,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           <Styles.TicketTitle>Rq ids:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{data.rq_ids ? data.rq_ids.join(', ') : ''}</Styles.TicketContent>
+          <Styles.TicketContent>{data.rq_ids ? data.rq_ids.join(', ') : 'NA'}</Styles.TicketContent>
         </Grid>
       </Grid>
     </Box>

@@ -226,7 +226,7 @@ export const GirdWrapper = styled.div`
   }
 
   .addresses-wrapper {
-    margin-bottom: 0;
+    margin-bottom: -8px;
   }
 `;
 

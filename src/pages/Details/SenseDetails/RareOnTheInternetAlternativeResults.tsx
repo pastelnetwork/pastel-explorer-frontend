@@ -71,7 +71,7 @@ const RareOnTheInternetAlternativeResults: React.FC<IRareOnTheInternetAlternativ
 
   let internetRarenessAlternativeGraphData: TCurrentNode[] = [];
   let edgesData = [];
-  if (newData.rare_on_internet_summary_table_as_json_compressed_b64.length > 100) {
+  if (newData.alternative_rare_on_internet_dict_as_json_compressed_b64.length > 50) {
     const { nodes, edges } = processRareOnInternetAlternativeDataFunc();
     internetRarenessAlternativeGraphData = nodes;
     edgesData = edges;
@@ -128,7 +128,8 @@ const RareOnTheInternetAlternativeResults: React.FC<IRareOnTheInternetAlternativ
         },
         roam: true,
         force: {
-          repulsion: 100,
+          repulsion: 3000,
+          edgeLength: 100,
         },
       },
     ],

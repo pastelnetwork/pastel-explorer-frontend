@@ -4,6 +4,8 @@ import Box from '@material-ui/core/Box';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { IUserNameChangeTicket } from '@utils/types/ITransactions';
 import { getCurrencyName } from '@utils/appInfo';
+import RouterLink from '@components/RouterLink/RouterLink';
+import * as ROUTES from '@utils/constants/routes';
 
 import Signatures from './Signatures';
 import * as Styles from './Ticket.styles';
@@ -36,7 +38,14 @@ const UserNameChangeTicket: React.FC<IUserNameChangeTicketProps> = ({ ticket }) 
           <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{ticket.pastelID}</Styles.TicketContent>
+          <Styles.TicketContent>
+            <RouterLink
+              route={`${ROUTES.PASTEL_ID_DETAILS}/${ticket.pastelID}`}
+              value={ticket.pastelID}
+              title={ticket.pastelID}
+              className="address-link"
+            />
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Signatures signature={ticket.signature} />

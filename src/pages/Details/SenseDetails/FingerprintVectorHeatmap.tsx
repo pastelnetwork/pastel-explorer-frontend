@@ -17,6 +17,10 @@ interface IFingerprintVectorHeatmap {
 
 const FingerprintVectorHeatmap: React.FC<IFingerprintVectorHeatmap> = ({ data }) => {
   const { darkMode } = useSelector(getThemeState);
+  if (!data.length) {
+    return <Styles.ContentItem className="min-height-400" />;
+  }
+
   const { xData, yData, seriesData } = transformFingerprintsData(data);
   const arr = getMinMax(data);
   const min = arr[0];

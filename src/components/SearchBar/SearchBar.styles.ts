@@ -20,7 +20,7 @@ export const ToolbarStyle = styled(Toolbar)`
 `;
 
 export const GridStyle = styled(Grid)`
-  max-width: 415px;
+  max-width: 535px;
 
   &.search-popup {
     display: none;
@@ -89,6 +89,7 @@ export const AppBar = styled(MuiAppBar)`
     padding-left: 0 !important;
     color: ${props => props.theme.sidebar.menu.default};
     background: ${props => props.theme.sidebar.menu.background};
+    font-size: 14px;
     line-height: 18px;
     overflow: hidden;
     transform: translate(14px, 9px) scale(1);
