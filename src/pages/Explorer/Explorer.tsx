@@ -10,7 +10,6 @@ import { INetwork, INetworkSupernodes } from '@utils/types/INetwork';
 import * as ROUTES from '@utils/constants/routes';
 
 import ExplorerMap from './ExplorerMap/ExplorerMap';
-import LatestTransactions from './LatestTransactions/LatestTransactions';
 import SupernodeStatistics from './SupernodeStatistics/SupernodeStatistics';
 import { transformGeoLocationConnections, groupGeoLocationConnections } from './Explorer.helpers';
 import LatestTransactionsRT from './LatestTransactionsRT';
@@ -64,9 +63,6 @@ const Explorer: React.FC = () => {
         <Styles.GirdStyle item xs={12} md={6} className="right">
           <LatestTransactionsRT />
         </Styles.GirdStyle>
-      </Grid>
-      <Grid item>
-        <LatestTransactions />
       </Grid>
     </Styles.ExplorerWrapper>
   );

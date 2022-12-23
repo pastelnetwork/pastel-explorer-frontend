@@ -33,3 +33,27 @@ export const GridStyle = styled(Grid)`
     }
   }
 `;
+
+export const BlockTitle = styled.h4`
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+`;
+
+export const SubTitle = styled.span`
+  font-size: 16px;
+  font-weight: 400;
+`;
+
+export const BlockWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 12px 16px;
+  background: ${props => props.theme.card.titleColor};
+`;
+
+export const FilterBlock = styled.div`
+  display: block;
+`;

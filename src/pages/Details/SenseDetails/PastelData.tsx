@@ -37,7 +37,12 @@ const PastelData: React.FC<IPastelData> = ({
           Pastel Block Hash When Request Submitted:
         </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent className="break-all">
-          {blockHash}&nbsp;
+          <RouterLink
+            route={`${ROUTES.BLOCK_DETAILS}/${blockHash}`}
+            value={blockHash}
+            title={blockHash}
+            className="address-link"
+          />
         </TicketStyles.TicketContent>
       </Styles.ContentItem>
       <Styles.ContentItem>
@@ -46,7 +51,7 @@ const PastelData: React.FC<IPastelData> = ({
         </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent>
           <RouterLink
-            route={`${ROUTES.TRANSACTION_DETAILS}/${blockHeight}`}
+            route={`${ROUTES.BLOCK_DETAILS}/${blockHeight}`}
             value={blockHeight}
             title={blockHeight.toString()}
             className="address-link"
@@ -62,7 +67,13 @@ const PastelData: React.FC<IPastelData> = ({
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>PastelID of Submitter</TicketStyles.TicketTitle>
         <TicketStyles.TicketContent className="break-all">
-          {pastelIdOfSubmitter}&nbsp;
+          <RouterLink
+            route={`${ROUTES.PASTEL_ID_DETAILS}/${pastelIdOfSubmitter}`}
+            value={pastelIdOfSubmitter}
+            title={pastelIdOfSubmitter}
+            className="address-link"
+          />
+          &nbsp;
         </TicketStyles.TicketContent>
       </Styles.ContentItem>
       <Styles.ContentItem>
@@ -92,12 +103,6 @@ const PastelData: React.FC<IPastelData> = ({
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>OpenAPI Subset String</TicketStyles.TicketTitle>
         <TicketStyles.TicketContent>{openApiSubsetIdString || 'NA'}</TicketStyles.TicketContent>
-      </Styles.ContentItem>
-      <Styles.ContentItem>
-        <TicketStyles.TicketTitle>PastelID of Submitter</TicketStyles.TicketTitle>
-        <TicketStyles.TicketContent className="break-all">
-          {pastelIdOfSubmitter}&nbsp;
-        </TicketStyles.TicketContent>
       </Styles.ContentItem>
     </Box>
   );

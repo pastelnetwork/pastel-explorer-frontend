@@ -244,25 +244,29 @@ const Summary: React.FC = () => {
         <Tooltip
           title={
             <Box>
-              <Box>
-                Total supply:{' '}
-                {formatNumber(currentStatsData?.coinSupply || 0, { decimalsLength: 2 })}
-              </Box>
+              {sumKey !== 'coinSupply' ? (
+                <Box>
+                  Total supply:{' '}
+                  {formatNumber(currentStatsData?.coinSupply || 0, { decimalsLength: 2 })}
+                </Box>
+              ) : null}
               <Box>
                 Less total burned coins:{' '}
                 {formatNumber(currentStatsData?.totalBurnedPSL || 0, { decimalsLength: 2 })}
               </Box>
               <Box>Less total locked in supernodes: {formatNumber(totalLockedInSupernodes)}</Box>
-              <Box>
-                Circulating supply:{' '}
-                {formatNumber(
-                  (currentStatsData?.coinSupply || 0) -
-                    (currentStatsData?.totalBurnedPSL || 0) -
-                    totalLockedInSupernodes -
-                    9384556240.23,
-                  { decimalsLength: 2 },
-                )}
-              </Box>
+              {sumKey !== 'circulatingSupply' ? (
+                <Box>
+                  Circulating supply:{' '}
+                  {formatNumber(
+                    (currentStatsData?.coinSupply || 0) -
+                      (currentStatsData?.totalBurnedPSL || 0) -
+                      totalLockedInSupernodes -
+                      9384556240.23,
+                    { decimalsLength: 2 },
+                  )}
+                </Box>
+              ) : null}
             </Box>
           }
         >

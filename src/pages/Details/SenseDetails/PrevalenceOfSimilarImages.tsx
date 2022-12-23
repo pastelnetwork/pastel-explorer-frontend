@@ -92,7 +92,7 @@ const PrevalenceOfSimilarImages: React.FC<IPrevalenceOfSimilarImages> = ({ data 
 
   return (
     <Styles.ContentItem>
-      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '315px' }} />
+      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '240px' }} />
     </Styles.ContentItem>
   );
 };

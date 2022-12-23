@@ -13,6 +13,8 @@ import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import * as URLS from '@utils/constants/urls';
 import { TSenseRequests } from '@utils/types/ITransactions';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
+import RouterLink from '@components/RouterLink/RouterLink';
+import * as ROUTES from '@utils/constants/routes';
 
 import * as ChartStyles from '@pages/HistoricalStatistics/Chart/Chart.styles';
 import PastelData from './PastelData';
@@ -149,6 +151,15 @@ const SenseDetails: React.FC = () => {
                 </Styles.RawDataWrapper>
                 )
               </span>
+            </AlertTitle>
+            <AlertTitle className="alert-title">
+              Ticket Detail:{' '}
+              <RouterLink
+                route={`${ROUTES.TRANSACTION_DETAILS}/${sense.transactionHash}`}
+                value={sense.transactionHash}
+                title={sense.transactionHash.toString()}
+                className="address-link"
+              />
             </AlertTitle>
           </TransactionStyles.ViewTransactionRawMuiAlert>
         </TransactionStyles.TransactionDesc>
