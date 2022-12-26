@@ -322,6 +322,7 @@ export interface ITicket {
   };
   type: string;
   transactionHash: string;
+  imageFileHash?: string;
   id: string;
 }
 

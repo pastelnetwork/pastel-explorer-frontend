@@ -74,6 +74,7 @@ const TicketsList: React.FC<ITicketsList> = ({
       | IOfferTicket
       | IAcceptTicket
       | ITransferTicket,
+    imageHash: string,
   ) => {
     switch (type) {
       case 'username-change':
@@ -91,7 +92,12 @@ const TicketsList: React.FC<ITicketsList> = ({
       case 'nft-royalty':
         return <NFTRoyaltyTicket ticket={ticket as INftRoyaltyTicket} />;
       case 'action-reg':
-        return <ActionRegistrationTicket ticket={ticket as IActionRegistrationTicket} />;
+        return (
+          <ActionRegistrationTicket
+            ticket={ticket as IActionRegistrationTicket}
+            imageHash={imageHash}
+          />
+        );
       case 'action-act':
         return <ActionActivationTicket ticket={ticket as IActionActivationTicket} />;
       case 'offer':
@@ -169,7 +175,7 @@ const TicketsList: React.FC<ITicketsList> = ({
                   </TicketStyles.TicketContent>
                 </Grid>
               </Grid>
-              {renderContent(ticket.type, ticket.data.ticket)}
+              {renderContent(ticket.type, ticket.data.ticket, ticket.imageFileHash)}
             </BlockDetailsStyles.GridStyle>
           ))}
           {!data.length ? (

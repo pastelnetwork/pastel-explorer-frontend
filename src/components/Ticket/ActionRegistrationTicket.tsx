@@ -18,6 +18,7 @@ import * as Styles from './Ticket.styles';
 
 interface IActionRegistrationTicketProps {
   ticket: IActionRegistrationTicket;
+  imageHash?: string;
 }
 
 interface IActionTicketProps {
@@ -125,7 +126,10 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket, actionType }) => {
   );
 };
 
-const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({ ticket }) => {
+const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
+  ticket,
+  imageHash,
+}) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -135,7 +139,21 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({ ti
           <Styles.TicketTitle>Action type:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>{ticket.action_type}</Styles.TicketContent>
+          <Styles.TicketContent>
+            {ticket.action_type}{' '}
+            {imageHash ? (
+              <>
+                (
+                <RouterLink
+                  route={`${ROUTES.SENSE_DETAILS}/${imageHash}`}
+                  value="View sense details"
+                  title={imageHash}
+                  className="address-link"
+                />
+                )
+              </>
+            ) : null}
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
