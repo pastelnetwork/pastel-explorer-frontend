@@ -36,6 +36,7 @@
     "@material-ui/pickers": "3.3.10",
     "@material-ui/styles": "4.11.4",
     "@material-ui/system": "4.11.3",
+    "@types/react-router-dom": "^5.3.3",
     "axios": "0.21.2",
     "chart.js": "3.2.1",
     "css-vendor": "2.0.8",
