@@ -175,7 +175,7 @@ const TicketsList: React.FC<ITicketsList> = ({
                   </TicketStyles.TicketContent>
                 </Grid>
               </Grid>
-              {renderContent(ticket.type, ticket.data.ticket, ticket.imageFileHash)}
+              {renderContent(ticket.type, ticket.data.ticket, ticket?.imageFileHash || '')}
             </BlockDetailsStyles.GridStyle>
           ))}
           {!data.length ? (
