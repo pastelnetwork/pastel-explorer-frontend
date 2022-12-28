@@ -4,5 +4,7 @@ export interface ISearchResponse {
     blocksHeights: Array<string | number>;
     blocksIds: Array<string>;
     transactions: Array<string>;
+    senses: Array<string>;
+    pastelIds: Array<string>;
   };
 }

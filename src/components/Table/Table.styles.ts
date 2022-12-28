@@ -86,6 +86,18 @@ export const BlockWrapper = styled.div`
       }
     }
   }
+
+  &.mb-12 {
+    margin-bottom: 12px;
+  }
+
+  &.mb-20 {
+    margin-bottom: 20px;
+  }
+
+  &.mb-0 {
+    margin-bottom: 0;
+  }
 `;
 
 export const BlockTitle = styled.h4`

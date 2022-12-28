@@ -1,10 +1,17 @@
 import * as React from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
-import { Grid, Tooltip, AccordionSummary, AccordionDetails, Typography } from '@material-ui/core';
+import {
+  CircularProgress,
+  Grid,
+  Tooltip,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
+} from '@material-ui/core';
 import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 
-import RouterLink from '@components/RouterLink/RouterLink';
+import RouterLink, { ExternalLink } from '@components/RouterLink/RouterLink';
 import Header from '@components/Header/Header';
 import Table, { RowsProps } from '@components/Table/Table';
 import CopyButton from '@components/CopyButton/CopyButton';
@@ -21,9 +28,13 @@ import { IBlock, IBlockTransaction } from '@utils/types/IBlocks';
 import { formatAddress } from '@utils/helpers/format';
 import { useSortData } from '@utils/hooks';
 import { getCurrencyName } from '@utils/appInfo';
+import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
+import { getTicketsTypeList } from '@pages/Movement/Movement.helpers';
+import SensesList from '@pages/Details/TransactionDetails/SensesList';
 
 import { blockHeaders, transactionHeaders, generateDetailsElement } from './BlockDetails.helpers';
 import * as Styles from './BlockDetails.styles';
+import TicketsList from './Tickets';
 
 interface ParamTypes {
   id: string;
@@ -86,6 +97,7 @@ const BlockDetails = () => {
       return [];
     }
     const transactionList = data.map(transaction => {
+      const ticketsTypeList = getTicketsTypeList(transaction.tickets || '');
       return {
         id: transaction.id,
         data: [
@@ -106,6 +118,26 @@ const BlockDetails = () => {
           { id: 2, value: transaction.recipientCount },
           {
             id: 3,
+            value: (
+              <div className="inline-block">
+                {ticketsTypeList.total > 0 ? (
+                  <div className="inline-block">
+                    <ExternalLink
+                      href={`#${transaction.id}`}
+                      value={ticketsTypeList.total.toString()}
+                      className="transaction-hash"
+                      title={ticketsTypeList.text.join(', <br />')}
+                      isUseTooltip
+                    />
+                  </div>
+                ) : (
+                  <>0</>
+                )}
+              </div>
+            ),
+          },
+          {
+            id: 4,
             value: (
               <>
                 {transaction.totalAmount === 0 ? (
@@ -192,17 +224,34 @@ const BlockDetails = () => {
         </Styles.GridStyle>
         <Styles.GridStyle item>
           <Table
-            title="Latest Transactions"
+            title="Transactions"
             headers={transactionHeaders}
             rows={generateLatestTransactions(transactions)}
             handleClickSort={handleClickSortTransaction}
             className="transactions"
             tableWrapperClassName="transactions-table-wrapper"
+            blockWrapperClassName="mb-12"
           />
         </Styles.GridStyle>
+        {block?.tickets?.length ? (
+          <Styles.GridStyle item>
+            <TicketsList data={block?.tickets} />
+          </Styles.GridStyle>
+        ) : null}
+        {block?.senses?.length ? (
+          <Styles.GridStyle item className="mb-12">
+            <SensesList data={block?.senses} />
+          </Styles.GridStyle>
+        ) : null}
       </Grid>
     </Styles.Wrapper>
-  ) : null;
+  ) : (
+    <TransactionStyles.LoadingWrapper>
+      <TransactionStyles.Loader>
+        <CircularProgress size={40} />
+      </TransactionStyles.Loader>
+    </TransactionStyles.LoadingWrapper>
+  );
 };
 
 export default BlockDetails;

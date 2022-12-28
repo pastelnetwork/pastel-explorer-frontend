@@ -20,7 +20,7 @@ export const ToolbarStyle = styled(Toolbar)`
 `;
 
 export const GridStyle = styled(Grid)`
-  max-width: 415px;
+  max-width: 535px;
 
   &.search-popup {
     display: none;
@@ -63,6 +63,10 @@ export const GridStyle = styled(Grid)`
       }
     }
   }
+
+  .MuiInputBase-input {
+    font-size: 13px;
+  }
 `;
 
 export const AppBar = styled(MuiAppBar)`
@@ -89,6 +93,7 @@ export const AppBar = styled(MuiAppBar)`
     padding-left: 0 !important;
     color: ${props => props.theme.sidebar.menu.default};
     background: ${props => props.theme.sidebar.menu.background};
+    font-size: 13px;
     line-height: 18px;
     overflow: hidden;
     transform: translate(14px, 9px) scale(1);
@@ -178,6 +183,21 @@ export const AutocompleteWrapper = styled(Grid)`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .MuiAutocomplete-hasClearIcon {
+    &:focus,
+    &:hover {
+      .MuiInputBase-input {
+        padding-right: 34px !important;
+      }
+    }
+  }
+
+  .MuiInputBase-input {
+    &:focus {
+      padding-right: 34px !important;
+    }
   }
 `;
 
