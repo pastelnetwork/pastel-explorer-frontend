@@ -559,7 +559,7 @@ export function transformTotalSupplyDataChart(
   const dataX: string[] = [];
   const dataY: number[] = [];
   for (let i = 0; i < trans.length; i += 1) {
-    dataY.push(Number(trans[i].coinSupply));
+    dataY.push(Number(trans[i].coinSupply) - trans[i].totalBurnedPSL);
     dataX.push(new Date(trans[i].timestamp).toLocaleString());
   }
   if (period === '24h' && !timestamp && checkValidateData(trans[trans.length - 1]?.timestamp)) {

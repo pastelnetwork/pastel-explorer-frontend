@@ -14,6 +14,7 @@ export interface IStatistic {
   marketCapInUSD: number;
   transactions: number;
   timestamp: number;
+  totalBurnedPSL: number;
 }
 export interface IDifficulty {
   id: string;

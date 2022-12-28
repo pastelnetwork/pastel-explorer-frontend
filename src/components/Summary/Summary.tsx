@@ -244,29 +244,27 @@ const Summary: React.FC = () => {
         <Tooltip
           title={
             <Box>
-              {sumKey !== 'coinSupply' ? (
-                <Box>
-                  Total supply:{' '}
-                  {formatNumber(currentStatsData?.coinSupply || 0, { decimalsLength: 2 })}
-                </Box>
-              ) : null}
-              <Box>
-                Less total burned coins:{' '}
-                {formatNumber(currentStatsData?.totalBurnedPSL || 0, { decimalsLength: 2 })}
-              </Box>
-              <Box>Less total locked in supernodes: {formatNumber(totalLockedInSupernodes)}</Box>
-              {sumKey !== 'circulatingSupply' ? (
-                <Box>
-                  Circulating supply:{' '}
-                  {formatNumber(
-                    (currentStatsData?.coinSupply || 0) -
-                      (currentStatsData?.totalBurnedPSL || 0) -
-                      totalLockedInSupernodes -
-                      9384556240.23,
-                    { decimalsLength: 2 },
-                  )}
-                </Box>
-              ) : null}
+              {sumKey === 'coinSupply' ? (
+                <>
+                  <Box>
+                    Coins Created:{' '}
+                    {formatNumber(currentStatsData?.circulatingSupply || 0, { decimalsLength: 2 })}
+                  </Box>
+                  <Box>
+                    Less PSL Burnt:{' '}
+                    {formatNumber(currentStatsData?.totalBurnedPSL || 0, { decimalsLength: 2 })}
+                  </Box>
+                </>
+              ) : (
+                <>
+                  <Box>
+                    Total Supply:{' '}
+                    {formatNumber(currentStatsData?.coinSupply || 0, { decimalsLength: 2 })}
+                  </Box>
+                  <Box>Less PSL Staked by SuperNodes: {formatNumber(totalLockedInSupernodes)}</Box>
+                  <Box>Less PSL Locked by Foundation: {formatNumber(9384556240.23)}</Box>
+                </>
+              )}
             </Box>
           }
         >
