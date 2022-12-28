@@ -3150,6 +3150,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       textStyle: {
         color: theme?.color,
       },
+      color: ['#cd6661'],
       grid: {
         top: 9,
         right: 0,
@@ -3176,6 +3177,8 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       yAxis: {
         type: 'value',
+        min: minY,
+        max: maxY,
         splitLine: {
           show: false,
         },
@@ -3191,21 +3194,16 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           data: dataY,
           type: 'line',
           showSymbol: false,
+          emphasis: {
+            lineStyle: {
+              width: 2,
+            },
+          },
           lineStyle: {
             width: 2,
-            color: '#ff5500',
-          },
-          areaStyle: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              {
-                offset: 0,
-                color: 'rgba(255, 85, 0, 0.5)',
-              },
-              {
-                offset: 1,
-                color: theme?.backgroundColor || '#fff',
-              },
-            ]),
+            shadowColor: darkMode ? 'rgba(160, 174, 192, 0.5)' : 'rgba(0, 0, 0, 0.5)',
+            shadowBlur: 10,
+            shadowOffsetY: 12,
           },
         },
       ],
@@ -3333,7 +3331,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#5470C6',
+              color: '#cd6661',
             },
             {
               offset: 1,

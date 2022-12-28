@@ -191,7 +191,7 @@ export function transformHashrateInfo(hashrateInfo: TMiningInfo[]): TLineChartDa
     if (hashrateInfo[i].timestamp !== null) {
       const createTime = Number(hashrateInfo[i].timestamp);
       dataY.push(+(Number(hashrateInfo[i].networksolps) / 10e3).toFixed(2));
-      dataX.push(new Date(createTime).toLocaleString());
+      dataX.push(format(createTime, 'HH:mm'));
     }
   }
 

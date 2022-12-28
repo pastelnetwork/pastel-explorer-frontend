@@ -17,11 +17,11 @@ import * as SummaryStyles from '@components/Summary/Summary.styles';
 import * as Styles from '@pages/CascadeAndSenseStatistics/CascadeAndSenseStatistics.styles';
 
 const NetworkStatistics: React.FC = () => {
-  const [period, setPeriod] = useState(periods[2][periods[2].length - 1]);
+  const [period, setPeriod] = useState(periods[2][0]);
 
   const { isLoading, data: chartData } = useDeferredData<{ data: TMiningInfo[] }, TLineChartData>(
     { method: 'get', url: `${URLS.GET_STATISTICS_HASHRATE}?period=${period}` },
-    ({ data }) => transformHashrateInfo(data),
+    ({ data }) => transformHashrateInfo(data.sort((a, b) => a.timestamp - b.timestamp)),
     undefined,
     undefined,
     [period],

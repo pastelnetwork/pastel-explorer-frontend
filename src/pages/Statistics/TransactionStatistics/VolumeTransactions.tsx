@@ -18,10 +18,10 @@ import * as SummaryStyles from '@components/Summary/Summary.styles';
 import * as Styles from '@pages/CascadeAndSenseStatistics/CascadeAndSenseStatistics.styles';
 
 const NetworkStatistics: React.FC = () => {
-  const [period, setPeriod] = useState<PeriodTypes>(periods[4][0]);
+  const [period, setPeriod] = useState<PeriodTypes>(periods[2][0]);
   const { isLoading, data: chartData } = useDeferredData<IHashRateResponse, TLineChartData>(
     { method: 'get', url: `${URLS.VOLUME_TRANSACTION_URL}`, params: { period } },
-    transformChartData,
+    res => transformChartData(res, true),
     undefined,
     undefined,
     [period],
@@ -50,7 +50,7 @@ const NetworkStatistics: React.FC = () => {
             <Dropdown
               value={period}
               onChange={handleDropdownChange}
-              options={generatePeriodToDropdownOptions(periods[4])}
+              options={generatePeriodToDropdownOptions(periods[2])}
               classNameWrapper="cascade-sense-statistics"
             />
           </Styles.Percentage>
