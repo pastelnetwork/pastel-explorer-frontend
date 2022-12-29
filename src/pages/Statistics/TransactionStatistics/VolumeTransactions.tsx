@@ -1,6 +1,5 @@
 import { useState, ChangeEvent } from 'react';
 import { Skeleton } from '@material-ui/lab';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 import {
   PeriodTypes,
@@ -61,14 +60,17 @@ const NetworkStatistics: React.FC = () => {
       <StatisticsStyles.ChartSection>
         {isLoading ? (
           <StatisticsStyles.Loader>
-            <CircularProgress size={40} />
+            <StatisticsStyles.LoadingText>Loading data...</StatisticsStyles.LoadingText>
           </StatisticsStyles.Loader>
         ) : null}
         {!chartData ? (
-          <Skeleton animation="wave" variant="rect" height={170} />
+          <>
+            <Skeleton animation="wave" variant="rect" height={300} />
+            <StatisticsStyles.LoadingText>Loading data...</StatisticsStyles.LoadingText>
+          </>
         ) : (
           <LineChart
-            chartName="networkStatistics"
+            chartName="volumeTransactions"
             dataX={chartData?.dataX}
             dataY={chartData?.dataY}
             offset={1000}

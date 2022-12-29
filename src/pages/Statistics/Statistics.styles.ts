@@ -42,6 +42,12 @@ export const BlockWrapper = styled.div`
   &.no-shadow {
     box-shadow: none;
   }
+
+  .cascade-sense-card {
+    .echarts-for-react {
+      height: 280px !important;
+    }
+  }
 `;
 
 export const BlockTitle = styled.h4`
@@ -131,5 +137,14 @@ export const TransactionsStatisticsWrapper = styled.div`
 
 export const ChartSection = styled.div`
   position: relative;
-  min-height: 170px;
+  width: 100%;
+`;
+
+export const LoadingText = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  font-size: 20px;
+  transform: translate(-50%, -50%);
 `;

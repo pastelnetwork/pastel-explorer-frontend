@@ -1,7 +1,6 @@
 import { useState, ChangeEvent, useContext, useEffect } from 'react';
 import { Skeleton } from '@material-ui/lab';
 import { format, fromUnixTime } from 'date-fns';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { PeriodTypes, generatePeriodToDropdownOptions } from '@utils/helpers/statisticsLib';
 import { periods } from '@utils/constants/statistics';
@@ -67,7 +66,7 @@ const BlockSizes: React.FC = () => {
   const generateChartData = (blocks: Array<IBlock>) => {
     const groupedBlocks = blocks.reduce(
       (acc: ChartProps, { size, timestamp }) => {
-        const time = format(fromUnixTime(timestamp), 'HH:mm');
+        const time = format(fromUnixTime(timestamp), 'MM/dd/yyyy hh:mm aa');
 
         acc.labels.push(time);
         acc.data.push(size / 1024);
@@ -102,7 +101,7 @@ const BlockSizes: React.FC = () => {
     <SummaryStyles.Card className="cascade-sense-card">
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
-          <SummaryStyles.Typography variant="h6">Block sizes (kB)</SummaryStyles.Typography>
+          <SummaryStyles.Typography variant="h6">Block sizes (MB)</SummaryStyles.Typography>
         </SummaryStyles.ValueWrapper>
         <SummaryStyles.PercentageWrapper>
           <Styles.Percentage>
@@ -118,17 +117,20 @@ const BlockSizes: React.FC = () => {
       <StatisticsStyles.ChartSection>
         {isLoading ? (
           <StatisticsStyles.Loader>
-            <CircularProgress size={40} />
+            <StatisticsStyles.LoadingText>Loading data...</StatisticsStyles.LoadingText>
           </StatisticsStyles.Loader>
         ) : null}
         {!chartData ? (
-          <Skeleton animation="wave" variant="rect" height={170} />
+          <>
+            <Skeleton animation="wave" variant="rect" height={300} />
+            <StatisticsStyles.LoadingText>Loading data...</StatisticsStyles.LoadingText>
+          </>
         ) : (
           <LineChart
             chartName="blockSizesStatistics"
             dataX={chartData?.labels}
             dataY={chartData?.data}
-            offset={1}
+            offset={1000}
             disableClick
           />
         )}

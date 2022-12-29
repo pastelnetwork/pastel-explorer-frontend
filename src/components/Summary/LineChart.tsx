@@ -7,6 +7,7 @@ import { TThemeInitOption, TThemeColor } from '@utils/constants/types';
 import { getSummaryThemeUpdateOption } from '@utils/helpers/chartOptions';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { themes } from '@utils/constants/statistics';
+import { generateMinMaxChartData } from '@utils/helpers/statisticsLib';
 
 import { getRouteForChart } from './Summary.helpers';
 import * as Styles from './Summary.styles';
@@ -52,9 +53,8 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
           'percentPSLStaked',
           'totalOfCascadeRequests',
           'totalSizeOfDataStored',
-          'blockSizesStatistics',
-          'networkStatistics',
           'incomingTransactions',
+          'volumeTransactions',
         ].indexOf(chartName) !== -1
       ) {
         setMinY(min - offset);
@@ -66,6 +66,10 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
       ) {
         setMinY(min);
         setMaxY(max);
+      } else if (['networkStatistics', 'blockSizesStatistics'].includes(chartName)) {
+        const result = generateMinMaxChartData(min, max, offset, 5, '1h', 4);
+        setMinY(result.min);
+        setMaxY(result.max);
       } else {
         setMinY(Math.round(min) - offset);
         setMaxY(Math.floor(max) + offset);
