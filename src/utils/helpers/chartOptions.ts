@@ -3314,7 +3314,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           return `
             <div class="tooltip-item-wrapper">
               <div class="item-label">${params[0].axisValue}</div>
-              <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value)}</div>
+              <div class="tooltip-value">${params[0].marker} ${formatNumber(
+            params[0].value,
+          )} ${getCurrencyName()}</div>
             </div>
           `;
         },
