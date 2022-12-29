@@ -3261,6 +3261,11 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           data: dataY,
           type: 'line',
           showSymbol: false,
+          emphasis: {
+            lineStyle: {
+              width: 2,
+            },
+          },
           areaStyle: {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
@@ -3327,6 +3332,12 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         type: 'line',
         sampling: 'lttb',
         data: dataY,
+        showSymbol: false,
+        emphasis: {
+          lineStyle: {
+            width: 2,
+          },
+        },
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {

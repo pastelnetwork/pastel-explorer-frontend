@@ -1,6 +1,7 @@
 import { useState, ChangeEvent, useContext, useEffect } from 'react';
 import { Skeleton } from '@material-ui/lab';
 import { format, fromUnixTime } from 'date-fns';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { PeriodTypes, generatePeriodToDropdownOptions } from '@utils/helpers/statisticsLib';
 import { periods } from '@utils/constants/statistics';
@@ -14,6 +15,7 @@ import { SocketContext } from '@context/socket';
 
 import * as SummaryStyles from '@components/Summary/Summary.styles';
 import * as Styles from '@pages/CascadeAndSenseStatistics/CascadeAndSenseStatistics.styles';
+import * as StatisticsStyles from '../Statistics.styles';
 
 import { transformBlocksData, ITransformBlocksData } from './BlockStatistics.helpers';
 
@@ -113,8 +115,13 @@ const BlockSizes: React.FC = () => {
           </Styles.Percentage>
         </SummaryStyles.PercentageWrapper>
       </SummaryStyles.CardContent>
-      <div>
-        {!chartData || isLoading ? (
+      <StatisticsStyles.ChartSection>
+        {isLoading ? (
+          <StatisticsStyles.Loader>
+            <CircularProgress size={40} />
+          </StatisticsStyles.Loader>
+        ) : null}
+        {!chartData ? (
           <Skeleton animation="wave" variant="rect" height={170} />
         ) : (
           <LineChart
@@ -125,7 +132,7 @@ const BlockSizes: React.FC = () => {
             disableClick
           />
         )}
-      </div>
+      </StatisticsStyles.ChartSection>
     </SummaryStyles.Card>
   );
 };

@@ -1,5 +1,6 @@
 import { useState, ChangeEvent } from 'react';
 import { Skeleton } from '@material-ui/lab';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import {
   transformChartData,
@@ -15,6 +16,7 @@ import { TLineChartData, IHashRateResponse } from '@utils/types/IStatistics';
 
 import * as SummaryStyles from '@components/Summary/Summary.styles';
 import * as Styles from '@pages/CascadeAndSenseStatistics/CascadeAndSenseStatistics.styles';
+import * as StatisticsStyles from '../Statistics.styles';
 
 const BLOCK_ELEMENTS_COUNT = 8;
 
@@ -29,7 +31,7 @@ const StatisticsBlocks: React.FC = () => {
     transformChartData,
     undefined,
     undefined,
-    [],
+    [period],
   );
 
   const handleDropdownChange = (
@@ -59,8 +61,13 @@ const StatisticsBlocks: React.FC = () => {
           </Styles.Percentage>
         </SummaryStyles.PercentageWrapper>
       </SummaryStyles.CardContent>
-      <div>
-        {!chartData || isLoading ? (
+      <StatisticsStyles.ChartSection>
+        {isLoading ? (
+          <StatisticsStyles.Loader>
+            <CircularProgress size={40} />
+          </StatisticsStyles.Loader>
+        ) : null}
+        {!chartData ? (
           <Skeleton animation="wave" variant="rect" height={170} />
         ) : (
           <LineChart
@@ -71,7 +78,7 @@ const StatisticsBlocks: React.FC = () => {
             disableClick
           />
         )}
-      </div>
+      </StatisticsStyles.ChartSection>
     </SummaryStyles.Card>
   );
 };

@@ -128,3 +128,8 @@ export const TransactionsStatisticsWrapper = styled.div`
     }
   }
 `;
+
+export const ChartSection = styled.div`
+  position: relative;
+  min-height: 170px;
+`;

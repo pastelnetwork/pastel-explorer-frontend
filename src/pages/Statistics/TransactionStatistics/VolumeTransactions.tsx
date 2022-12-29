@@ -1,5 +1,6 @@
 import { useState, ChangeEvent } from 'react';
 import { Skeleton } from '@material-ui/lab';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import {
   PeriodTypes,
@@ -16,6 +17,7 @@ import { Dropdown } from '@components/Dropdown/Dropdown';
 
 import * as SummaryStyles from '@components/Summary/Summary.styles';
 import * as Styles from '@pages/CascadeAndSenseStatistics/CascadeAndSenseStatistics.styles';
+import * as StatisticsStyles from '../Statistics.styles';
 
 const NetworkStatistics: React.FC = () => {
   const [period, setPeriod] = useState<PeriodTypes>(periods[2][0]);
@@ -56,8 +58,13 @@ const NetworkStatistics: React.FC = () => {
           </Styles.Percentage>
         </SummaryStyles.PercentageWrapper>
       </SummaryStyles.CardContent>
-      <div>
-        {!chartData || isLoading ? (
+      <StatisticsStyles.ChartSection>
+        {isLoading ? (
+          <StatisticsStyles.Loader>
+            <CircularProgress size={40} />
+          </StatisticsStyles.Loader>
+        ) : null}
+        {!chartData ? (
           <Skeleton animation="wave" variant="rect" height={170} />
         ) : (
           <LineChart
@@ -68,7 +75,7 @@ const NetworkStatistics: React.FC = () => {
             disableClick
           />
         )}
-      </div>
+      </StatisticsStyles.ChartSection>
     </SummaryStyles.Card>
   );
 };
