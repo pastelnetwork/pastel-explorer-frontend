@@ -28,4 +28,8 @@ export const LoadingWrapper = styled.div`
     transform: translate(-50%, -50%);
     z-index: 10;
   }
+
+  .inline-block {
+    display: inline-block;
+  }
 `;

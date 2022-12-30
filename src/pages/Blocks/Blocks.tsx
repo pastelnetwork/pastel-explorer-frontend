@@ -14,7 +14,7 @@ import { blocksFilters } from '@utils/constants/filter';
 import { getFilterState } from '@redux/reducers/filterReducer';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 
-import { TIMESTAMP_BLOCKS_KEY, columns, BLOCK_ID_KEY } from './Blocks.columns';
+import { columns, BLOCK_ID_KEY } from './Blocks.columns';
 import {
   transformTableData,
   DATA_FETCH_LIMIT,
@@ -32,7 +32,7 @@ interface IBlocksDataRef {
 const Blocks = () => {
   const fetchParams = React.useRef<IBlocksDataRef>({
     offset: DATA_OFFSET,
-    sortBy: TIMESTAMP_BLOCKS_KEY,
+    sortBy: 'id',
     sortDirection: DATA_DEFAULT_SORT,
   });
   const [isMobile, setMobileView] = React.useState(false);

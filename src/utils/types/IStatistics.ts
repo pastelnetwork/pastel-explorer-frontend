@@ -14,6 +14,7 @@ export interface IStatistic {
   marketCapInUSD: number;
   transactions: number;
   timestamp: number;
+  totalBurnedPSL: number;
 }
 export interface IDifficulty {
   id: string;
@@ -204,4 +205,16 @@ export type TCacheValue = {
     parseData: THashrateChartData | TLineChartData | TMultiLineChartData | TScatterChartData;
     lastDate: number;
   };
+};
+
+export type THeatmapChartParams = {
+  color: string;
+  componentIndex: number;
+  data: number[];
+  dataIndex: number;
+  name: string;
+  seriesIndex: number;
+  seriesName: string;
+  marker: string;
+  value: number[];
 };

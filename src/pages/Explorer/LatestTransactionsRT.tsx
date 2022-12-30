@@ -16,7 +16,9 @@ import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
 import { useDispatch } from 'react-redux';
 // application
 import { TAppTheme } from '@theme/index';
+import RouterLink from '@components/RouterLink/RouterLink';
 import { generateBlockKeyValue } from '@pages/Explorer/LatestTransactions/LatestTransactions.helpers';
+import { getTicketsTypeList } from '@pages/Movement/Movement.helpers';
 import { TransactionThunks } from '@redux/thunk';
 import { AppThunkDispatch } from '@redux/types';
 import { useTransactionLatestTransactions } from '@redux/hooks/transactionsHooks';
@@ -60,7 +62,6 @@ function LatestTransactions() {
   useEffect(() => {
     dispatch(TransactionThunks.getLatestBlocks());
   }, []);
-
   return (
     <Styles.BlockWrapper className="mt-24 latest-transactions-wrapper">
       <Styles.BlockTitle className="latest-blocks">
@@ -83,6 +84,9 @@ function LatestTransactions() {
               <StyledTableCell className="th-recipents" align="right">
                 Recipents
               </StyledTableCell>
+              <StyledTableCell className="th-amount" align="right">
+                Tickets
+              </StyledTableCell>
               <StyledTableCell className="th-fee" align="right">
                 Fee
               </StyledTableCell>
@@ -90,31 +94,47 @@ function LatestTransactions() {
           </TableHead>
           <TableBody>
             {transactions.size > 0 ? (
-              Array.from(transactions.values()).map((tx: ITransaction) => (
-                <StyledTableRow key={tx.id} className="table__row">
-                  <StyledTableCell component="th" scope="row">
-                    {generateBlockKeyValue(tx.blockHash || '', tx.block.height || '')}
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    <Link to={`${TRANSACTION_DETAILS}/${tx.id}`}>
-                      <Typography noWrap title={tx.id} className="no-limit">
-                        {formatAddress(tx.id)}
-                      </Typography>
-                    </Link>
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {tx.isNonStandard ? (
-                      <Tooltip title="Because the transaction is shielded, the amount sent is unknown.">
-                        <span>Unknown</span>
-                      </Tooltip>
-                    ) : (
-                      <>{(+tx.totalAmount.toFixed(2)).toLocaleString('en')}</>
-                    )}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">{tx.recipientCount}</StyledTableCell>
-                  <StyledTableCell align="right">{tx.fee || '--'}</StyledTableCell>
-                </StyledTableRow>
-              ))
+              Array.from(transactions.values()).map((tx: ITransaction) => {
+                const ticketsTypeList = getTicketsTypeList(tx.tickets || '');
+                return (
+                  <StyledTableRow key={tx.id} className="table__row">
+                    <StyledTableCell component="th" scope="row">
+                      {generateBlockKeyValue(tx.blockHash || '', tx.block.height || '')}
+                    </StyledTableCell>
+                    <StyledTableCell component="th" scope="row">
+                      <Link to={`${TRANSACTION_DETAILS}/${tx.id}`}>
+                        <Typography noWrap title={tx.id} className="no-limit">
+                          {formatAddress(tx.id)}
+                        </Typography>
+                      </Link>
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {tx.isNonStandard ? (
+                        <Tooltip title="Because the transaction is shielded, the amount sent is unknown.">
+                          <span>Unknown</span>
+                        </Tooltip>
+                      ) : (
+                        <>{(+tx.totalAmount.toFixed(2)).toLocaleString('en')}</>
+                      )}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">{tx.recipientCount}</StyledTableCell>
+                    <StyledTableCell align="right">
+                      {ticketsTypeList.total > 0 ? (
+                        <RouterLink
+                          route={`${TRANSACTION_DETAILS}/${tx.id}`}
+                          value={ticketsTypeList.total}
+                          textSize="large"
+                          title={ticketsTypeList.text.join(', <br />')}
+                          isUseTooltip
+                        />
+                      ) : (
+                        0
+                      )}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">{tx.fee || '--'}</StyledTableCell>
+                  </StyledTableRow>
+                );
+              })
             ) : (
               <StyledTableRow>
                 <StyledTableCell component="th" scope="row" colSpan={5} style={{ padding: 0 }}>

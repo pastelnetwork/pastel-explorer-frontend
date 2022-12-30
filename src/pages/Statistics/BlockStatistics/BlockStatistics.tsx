@@ -1,8 +1,8 @@
 import * as React from 'react';
 // third party
 import { useHistory } from 'react-router-dom';
-
-import { Grid, darken, CircularProgress } from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
+import { Grid, darken } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { TAppTheme } from '@theme/index';
 // application
@@ -112,7 +112,7 @@ const StatisticsBlocks: React.FC = () => {
       <Styles.BlockWrapper>
         <Styles.BlockTitle>Blocks Statistics</Styles.BlockTitle>
         <Styles.GridStyle classes={{ root: classes.wrapper }} container>
-          {blockElements && blockElements.length ? (
+          {blockElements?.length ? (
             <Styles.GridBlocksStatisticsRoot
               wrap="nowrap"
               container
@@ -147,9 +147,12 @@ const StatisticsBlocks: React.FC = () => {
                 ))}
             </Styles.GridBlocksStatisticsRoot>
           ) : (
-            <Styles.Loader>
-              <CircularProgress size={40} />
-            </Styles.Loader>
+            <Styles.ChartSection>
+              <>
+                <Skeleton animation="wave" variant="rect" height={207} />
+                <Styles.LoadingText>Loading data...</Styles.LoadingText>
+              </>
+            </Styles.ChartSection>
           )}
         </Styles.GridStyle>
       </Styles.BlockWrapper>

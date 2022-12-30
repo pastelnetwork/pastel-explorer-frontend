@@ -1801,7 +1801,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
         type: 'bar',
         sampling: 'lttb',
         name: `% of ${getCurrencyName()} Staked`,
-        data: dataY?.map((d: number) => parseInt((d * 100).toString(), 10)),
+        data: dataY?.map((d: number) => parseFloat((d * 100).toString())),
         showSymbol: false,
       },
       animation: false,
@@ -2733,7 +2733,6 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       xAxis: {
         type: 'category',
-        boundaryGap: false,
         data: dataX,
         axisLabel: {
           show: false,
@@ -2752,11 +2751,12 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           show: false,
         },
         show: false,
+        max: maxY,
       },
       series: {
         name: `% of ${getCurrencyName()} Staked: `,
         type: 'bar',
-        data: dataY?.map((d: number) => parseInt((d * 100).toString(), 10)),
+        data: dataY?.map((d: number) => parseFloat((d * 100).toString())),
       },
       stateAnimation: {
         duration: 300,
@@ -3150,8 +3150,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       textStyle: {
         color: theme?.color,
       },
+      color: ['#cd6661'],
       grid: {
-        top: 9,
+        top: 120,
         right: 0,
         bottom: 0,
         left: 0,
@@ -3159,6 +3160,16 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       tooltip: {
         trigger: 'axis',
+        formatter(params: TChartParams[]) {
+          return `
+            <div class="tooltip-item-wrapper">
+              <div class="item-label">${params[0].axisValue}</div>
+              <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
+            decimalsLength: 2,
+          })} kB</div>
+            </div>
+          `;
+        },
       },
       xAxis: {
         type: 'category',
@@ -3176,6 +3187,8 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       yAxis: {
         type: 'value',
+        min: minY,
+        max: maxY,
         splitLine: {
           show: false,
         },
@@ -3191,28 +3204,17 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           data: dataY,
           type: 'line',
           showSymbol: false,
+          emphasis: {
+            lineStyle: {
+              width: 2,
+            },
+          },
           lineStyle: {
             width: 2,
-            color: '#ff5500',
-          },
-          areaStyle: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              {
-                offset: 0,
-                color: 'rgba(255, 85, 0, 0.5)',
-              },
-              {
-                offset: 1,
-                color: theme?.backgroundColor || '#fff',
-              },
-            ]),
           },
         },
       ],
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
+      animation: false,
     },
     networkStatistics: {
       backgroundColor: theme?.backgroundColor,
@@ -3220,7 +3222,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         color: theme?.color,
       },
       grid: {
-        top: 9,
+        top: 100,
         right: 0,
         bottom: 0,
         left: 0,
@@ -3228,6 +3230,16 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       tooltip: {
         trigger: 'axis',
+        formatter(params: TChartParams[]) {
+          return `
+            <div class="tooltip-item-wrapper">
+              <div class="item-label">${params[0].axisValue}</div>
+              <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
+            decimalsLength: 3,
+          })} MSol/S</div>
+            </div>
+          `;
+        },
       },
       color: ['#5470c6', '#91cc75', '#fac858'],
       xAxis: {
@@ -3263,6 +3275,11 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           data: dataY,
           type: 'line',
           showSymbol: false,
+          emphasis: {
+            lineStyle: {
+              width: 2,
+            },
+          },
           areaStyle: {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
@@ -3277,10 +3294,87 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           },
         },
       ],
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
+      animation: false,
+    },
+    volumeTransactions: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
       },
+      grid: {
+        top: 100,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        formatter(params: TChartParams[]) {
+          return `
+            <div class="tooltip-item-wrapper">
+              <div class="item-label">${params[0].axisValue}</div>
+              <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
+            decimalsLength: 2,
+          })} ${getCurrencyName()}</div>
+            </div>
+          `;
+        },
+      },
+      color: ['#5470c6', '#91cc75', '#fac858'],
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+        data: dataX,
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        max: maxY,
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+      },
+      series: [
+        {
+          data: dataY,
+          type: 'line',
+          showSymbol: false,
+          emphasis: {
+            lineStyle: {
+              width: 2,
+            },
+          },
+          areaStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: '#5470C6',
+              },
+              {
+                offset: 1,
+                color: theme?.backgroundColor || '#fff',
+              },
+            ]),
+          },
+        },
+      ],
+      animation: false,
     },
     incomingTransactions: {
       backgroundColor: theme?.backgroundColor,
@@ -3289,7 +3383,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       color: ['#cd6661'],
       grid: {
-        top: 9,
+        top: 100,
         right: 0,
         bottom: 0,
         left: 0,
@@ -3297,10 +3391,21 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       tooltip: {
         trigger: 'axis',
+        formatter(params: TChartParams[]) {
+          return `
+            <div class="tooltip-item-wrapper">
+              <div class="item-label">${params[0].axisValue}</div>
+              <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
+            decimalsLength: 2,
+          })} ${getCurrencyName()}</div>
+            </div>
+          `;
+        },
       },
       xAxis: {
         type: 'category',
         data: dataX,
+        boundaryGap: false,
         splitLine: {
           show: false,
         },
@@ -3327,13 +3432,18 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       series: {
         type: 'line',
-        sampling: 'lttb',
         data: dataY,
+        showSymbol: false,
+        emphasis: {
+          lineStyle: {
+            width: 2,
+          },
+        },
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#5470C6',
+              color: '#cd6661',
             },
             {
               offset: 1,
@@ -3342,10 +3452,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           ]),
         },
       },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
+      animation: false,
     },
   };
   return chartOptions[chartName];

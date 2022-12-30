@@ -1,19 +1,25 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-
-import { Grid } from '@material-ui/core';
+import { CircularProgress, Grid } from '@material-ui/core';
 
 import Header from '@components/Header/Header';
 import RouterLink from '@components/RouterLink/RouterLink';
 import Table, { RowsProps } from '@components/Table/Table';
 import CopyButton from '@components/CopyButton/CopyButton';
+import TicketsList from '@pages/Details/BlockDetails/Tickets';
 
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import * as ROUTES from '@utils/constants/routes';
 import * as URLS from '@utils/constants/urls';
 import { formattedDate } from '@utils/helpers/date/date';
-import { TransactionEvent, DirectionType, ITransactionDetails } from '@utils/types/ITransactions';
+import {
+  TransactionEvent,
+  DirectionType,
+  ITransactionDetails,
+  ITicket,
+  TSenseRequests,
+} from '@utils/types/ITransactions';
 import { ISummary } from '@utils/types/ISummary';
 import { useSortData } from '@utils/hooks';
 
@@ -26,6 +32,7 @@ import {
   generateCoinbaseInfo,
 } from './TransactionDetails.helpers';
 import TransactionRawData from './TransactionRawData';
+import SensesList from './SensesList';
 
 interface ParamTypes {
   id: string;
@@ -34,6 +41,8 @@ interface ParamTypes {
 const TransactionDetails = () => {
   const { id } = useParams<ParamTypes>();
   const [transaction, setTransaction] = React.useState<ITransactionDetails | null>(null);
+  const [tickets, setTickets] = React.useState<ITicket[]>([]);
+  const [senses, setSenses] = React.useState<TSenseRequests[]>([]);
   const [exchangeRate, setExchangeRate] = React.useState(0);
   const [openRawDataModal, setOpenRawDataModal] = React.useState(false);
   const fetchTransactions = useFetch<{ data: ITransactionDetails }>({
@@ -51,6 +60,12 @@ const TransactionDetails = () => {
     fetchTransactions.fetchData().then(response => {
       if (response?.data) {
         setTransaction(response.data);
+        if (response.data?.ticketsList) {
+          setTickets(response.data.ticketsList);
+        }
+        if (response.data?.senseData) {
+          setSenses(response.data.senseData);
+        }
       }
     });
   };
@@ -143,7 +158,7 @@ const TransactionDetails = () => {
   return transaction ? (
     <Styles.Wrapper>
       <Header title="Transaction Details" />
-      <Grid container direction="column" spacing={2}>
+      <Grid container direction="column">
         <Styles.TransactionDesc item>
           {generateTableTitle(transaction, toggleOpenRawData)}
         </Styles.TransactionDesc>
@@ -151,6 +166,7 @@ const TransactionDetails = () => {
           open={openRawDataModal}
           toggleOpen={toggleOpenRawData}
           rawData={transaction.rawData}
+          tickets={tickets}
         />
         <Styles.GridStyle item>
           <Table
@@ -177,7 +193,7 @@ const TransactionDetails = () => {
                     handleClickSort={handleClickSort}
                     rows={generateTransactionEvents(transactionEvents, 'Outgoing')}
                     className="input-addresses"
-                    blockWrapperClassName="input-addresses-wrapper"
+                    blockWrapperClassName="input-addresses-wrapper addresses-wrapper"
                     tableWrapperClassName="none-border-radius-top"
                   />
                 )}
@@ -190,14 +206,31 @@ const TransactionDetails = () => {
                   handleClickSort={handleClickSort}
                   className="recipients"
                   tableWrapperClassName="none-border-radius-top"
+                  blockWrapperClassName="addresses-wrapper"
                 />
               </Styles.RightColumn>
             </Styles.GirdWrapper>
           )}
         </Styles.GridStyle>
+        {tickets.length ? (
+          <Styles.GridStyle item>
+            <TicketsList data={tickets} />
+          </Styles.GridStyle>
+        ) : null}
+        {senses.length ? (
+          <Styles.GridStyle item>
+            <SensesList data={senses} />
+          </Styles.GridStyle>
+        ) : null}
       </Grid>
     </Styles.Wrapper>
-  ) : null;
+  ) : (
+    <Styles.LoadingWrapper>
+      <Styles.Loader>
+        <CircularProgress size={40} />
+      </Styles.Loader>
+    </Styles.LoadingWrapper>
+  );
 };
 
 export default TransactionDetails;

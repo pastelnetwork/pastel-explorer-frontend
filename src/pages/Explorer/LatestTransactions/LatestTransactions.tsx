@@ -42,7 +42,6 @@ const LatestTransactions: React.FC = () => {
     method: 'get',
     url: URLS.TRANSACTION_URL,
   });
-
   const handleFetchTransactions = (
     offset: number,
     sortBy: string,

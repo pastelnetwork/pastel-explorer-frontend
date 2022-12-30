@@ -18,3 +18,21 @@ export const RouterLink = styled(Link)<{ textsize: 'normal' | 'large' }>`
     color: ${props => props.theme.link.pressed};
   }
 `;
+
+export const ExternalLink = styled.a`
+  width: 100%;
+  text-decoration: none;
+  color: ${props => props.theme.link.main};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 16px;
+  transition: all 0.5s ease;
+
+  &:hover {
+    color: ${props => props.theme.link.hover};
+  }
+
+  &:active {
+    color: ${props => props.theme.link.pressed};
+  }
+`;

@@ -49,8 +49,6 @@ export type PeriodTypes =
   | 'all';
 export type TGranularity = '1d' | '30d' | '1y' | 'all' | 'none';
 
-export const periodShowTime = ['24h', '7d', '14d'];
-
 export const makeDownloadFileName = (currencyName: string | number, title: string): string => {
   let imageTitle = '';
   const date = new Date();
@@ -190,8 +188,8 @@ export function transformHashrateInfo(hashrateInfo: TMiningInfo[]): TLineChartDa
   for (let i = 0; i < hashrateInfo.length; i += 1) {
     if (hashrateInfo[i].timestamp !== null) {
       const createTime = Number(hashrateInfo[i].timestamp);
-      dataY.push(+(Number(hashrateInfo[i].networksolps) / 10e3).toFixed(2));
-      dataX.push(new Date(createTime).toLocaleString());
+      dataY.push(+(Number(hashrateInfo[i].networksolps) / 1000000));
+      dataX.push(format(createTime, 'MM/dd/yyyy hh:mm aa'));
     }
   }
 
@@ -332,7 +330,7 @@ export const transformChartData = (
       dataX.push(time);
     } else {
       const date = isHourMinute
-        ? format(fromUnixTime(time), 'HH:mm')
+        ? format(fromUnixTime(time), 'MM/dd/yyyy hh:mm aa')
         : formattedDate(time, { onlyDayMonthYear: true });
       dataX.push(date);
     }
@@ -559,7 +557,7 @@ export function transformTotalSupplyDataChart(
   const dataX: string[] = [];
   const dataY: number[] = [];
   for (let i = 0; i < trans.length; i += 1) {
-    dataY.push(Number(trans[i].coinSupply));
+    dataY.push(Number(trans[i].coinSupply) - trans[i].totalBurnedPSL);
     dataX.push(new Date(trans[i].timestamp).toLocaleString());
   }
   if (period === '24h' && !timestamp && checkValidateData(trans[trans.length - 1]?.timestamp)) {
@@ -644,12 +642,11 @@ export const generateXAxisInterval = (
     case '24h':
       return Math.floor(dataX.length / 5);
     case '7d':
+    case '14d':
       if (dataX.length <= 8) {
         return 'auto';
       }
       return Math.floor(dataX.length / 7);
-    case '14d':
-      return Math.floor(dataX.length / 10);
     case '30d':
       if (dataX.length !== 31) {
         return Math.floor(dataX.length / 15);
@@ -1002,7 +999,7 @@ export const mergeHashRateChartData = (
   };
 };
 
-const getFractionDigits = (min: number, max: number, range = 6) => {
+export const getFractionDigits = (min: number, max: number, range = 6) => {
   const val = (max - min) / range;
   let fractionDigits = 0;
   if (val < 1) {
@@ -1040,4 +1037,38 @@ export const getYAxisLabel = (value: number, min: number, max: number, range = 6
   const fractionDigits = getFractionDigits(min, max, range);
   const newValue = value.toFixed(fractionDigits);
   return parseFloat(newValue) !== 0 ? newValue : 0;
+};
+
+const reshape = (arr: number[], rows: number, cols: number) => {
+  const result = new Array(rows);
+  for (let row = 0; row < rows; row += 1) {
+    result[row] = new Array(cols);
+  }
+  for (let row = 0; row < rows; row += 1) {
+    for (let col = 0; col < cols; col += 1) {
+      result[row][col] = arr[row * cols + col];
+    }
+  }
+  return result;
+};
+
+export const transformFingerprintsData = (data: number[]) => {
+  const newData = reshape(data, 39, 38);
+  const xData: number[] = [];
+  const yData: number[] = [];
+  const seriesData = [];
+  for (let i = 0; i <= 38; i += 1) {
+    for (let j = 0; j <= 37; j += 1) {
+      seriesData.push([i, j, newData[i][j]]);
+    }
+    yData.push(i);
+  }
+  for (let j = 0; j <= 37; j += 1) {
+    xData.push(j);
+  }
+  return {
+    seriesData,
+    xData,
+    yData,
+  };
 };

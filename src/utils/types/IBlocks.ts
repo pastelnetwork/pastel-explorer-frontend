@@ -1,8 +1,11 @@
+import { ITicket, TSenseRequests } from './ITransactions';
+
 export interface IBlockTransaction {
   id: string;
   recipientCount: number;
   totalAmount: number;
   isNonStandard?: boolean;
+  tickets: string;
 }
 
 export interface IBlock {
@@ -19,6 +22,10 @@ export interface IBlock {
   timestamp: number;
   transactionCount: number;
   transactions: Array<IBlockTransaction>;
+  totalTickets: number;
+  tickets: ITicket[];
+  ticketsList: string;
+  senses: TSenseRequests[];
 }
 
 export interface IRawBlock {
@@ -38,4 +45,6 @@ export interface IRawBlock {
   time: number;
   transactions: Array<IBlockTransaction>;
   tx: string[];
+  totalTickets: number;
+  tickets: ITicket[];
 }
