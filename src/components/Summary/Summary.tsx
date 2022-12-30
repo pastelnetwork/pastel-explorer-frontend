@@ -248,7 +248,7 @@ const Summary: React.FC = () => {
                 <>
                   <Box>
                     Coins Created:{' '}
-                    {formatNumber(currentStatsData?.circulatingSupply || 0, { decimalsLength: 2 })}
+                    {formatNumber(currentStatsData?.totalCoinSupply || 0, { decimalsLength: 2 })}
                   </Box>
                   <Box>
                     Less PSL Burnt:{' '}
