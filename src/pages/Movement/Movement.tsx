@@ -70,7 +70,7 @@ const Movement: React.FC = () => {
     filterValue = filter.dateRange || '',
   ) => {
     fetchParams.current.sortBy = sortBy;
-    const limit = DATA_FETCH_LIMIT;
+    const limit = DATA_FETCH_LIMIT * 2;
     const params: Record<string, string | number> = {
       offset,
       limit,

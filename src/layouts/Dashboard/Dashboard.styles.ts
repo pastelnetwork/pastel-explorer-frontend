@@ -39,6 +39,7 @@ export const MainContent = styled(Paper)`
   padding: 0 12px 20px;
   flex: 1;
   background: ${props => props.theme.palette.background.paper};
+  min-height: 65vh;
 
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     flex: none;

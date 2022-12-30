@@ -5,6 +5,7 @@ export const BLOCK_HASH_KEY = 'blockHash';
 export const RECIPIENT_COUNT_KEY = 'recipientCount';
 export const AMOUNT_KEY = 'totalAmount';
 export const TIMESTAMP_KEY = 'timestamp';
+export const TICKETS_KEY = 'ticketsTotal';
 
 export const columns = [
   {
@@ -42,6 +43,14 @@ export const columns = [
     dataKey: AMOUNT_KEY,
     disableSort: false,
     className: 'col-amount',
+  },
+  {
+    width: 40,
+    flexGrow: 1,
+    label: 'Tickets',
+    dataKey: TICKETS_KEY,
+    disableSort: false,
+    className: 'col-timestamp',
   },
   {
     width: 150,

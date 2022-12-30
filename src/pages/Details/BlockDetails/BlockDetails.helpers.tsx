@@ -15,7 +15,8 @@ export const blockHeaders: Array<HeaderType> = [
 export const transactionHeaders: Array<HeaderType> = [
   { id: 1, header: 'TXID', key: 'id' },
   { id: 2, header: 'Recipients', key: 'recipientCount' },
-  { id: 3, header: `Amount (${getCurrencyName()})`, key: 'totalAmount' },
+  { id: 3, header: 'Tickets', key: 'totalTickets' },
+  { id: 4, header: `Amount (${getCurrencyName()})`, key: 'totalAmount' },
 ];
 
 export const generateDetailsElement = (name: string, value: string) => (

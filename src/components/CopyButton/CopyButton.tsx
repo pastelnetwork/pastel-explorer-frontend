@@ -23,7 +23,7 @@ const CopyButton: React.FC<CopyButtonProps> = ({ copyText }) => {
       onOpen={() => setTooltipText('Copy to clipboard')}
       enterNextDelay={500}
     >
-      <Styles.IconButton onClick={handleTextCopy}>
+      <Styles.IconButton onClick={handleTextCopy} className="copy-icon">
         <FileCopyIcon />
       </Styles.IconButton>
     </Tooltip>

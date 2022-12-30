@@ -144,6 +144,18 @@ export const themeLight = createMuiTheme(
       border: '#A0AEC0',
       color: '#4A5568',
     },
+    nft: {
+      secondary: '#00ACB1',
+      accent: '#1B1D21',
+      primaryCustom: {
+        200: 'rgba(0, 172, 177, 0.1)',
+      },
+      grey: {
+        100: '#F7F7F7',
+        300: '#C4C4C4',
+        800: '#2D3748',
+      },
+    },
   },
 );
 
@@ -264,6 +276,18 @@ export const themeDark = createMuiTheme(
     dropdown: {
       border: '#A0AEC0',
       color: '#F8F9FA',
+    },
+    nft: {
+      secondary: '#00C28D',
+      accent: '#1B1D21',
+      primaryCustom: {
+        200: '#e8f4fd',
+      },
+      grey: {
+        100: '#A0AEC0',
+        300: '#C4C4C4',
+        800: '#F8F8FA',
+      },
     },
   },
 );

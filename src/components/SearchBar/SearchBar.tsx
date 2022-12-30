@@ -22,6 +22,8 @@ import {
   BLOCKS_IDS_LABEL,
   TRANSACTIONS_LABEL,
   BLOCKS_HEIGHTS_LABEL,
+  SENSES_LABEL,
+  PASTEL_ID_LABEL,
   TOptionsCategories,
   getRoute,
   collectData,
@@ -107,6 +109,8 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
       ...collectData(data.blocksIds, BLOCKS_IDS_LABEL),
       ...collectData(data.blocksHeights, BLOCKS_HEIGHTS_LABEL),
       ...collectData(data.transactions, TRANSACTIONS_LABEL),
+      ...collectData(data.senses, SENSES_LABEL),
+      ...collectData(data.pastelIds, PASTEL_ID_LABEL),
     ];
 
     return setSearchData(groupedData.sort((a, b) => -b.category.localeCompare(a.category)));
@@ -173,7 +177,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         renderInput={params => (
           <TextField
             {...params}
-            label="Search by block height, block hash, TX hash or address"
+            label="Search by Block Height, Block Hash, TX Hash, Address, Pastel ID or Image Data Hash"
             InputLabelProps={{
               ...params.InputLabelProps,
               classes: {
