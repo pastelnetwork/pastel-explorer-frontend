@@ -28,10 +28,10 @@ const Explorer: React.FC = () => {
   const transformGeoLocationData = ({ peers, masternodes }: INetwork) => {
     const transformedPeers = transformGeoLocationConnections(peers, false);
     const transformedSupernodes = transformGeoLocationConnections(masternodes, true);
-    const groupedNodes = groupGeoLocationConnections([
-      ...transformedPeers,
-      ...transformedSupernodes,
-    ]);
+    const groupedNodes = groupGeoLocationConnections(
+      [...transformedPeers, ...transformedSupernodes],
+      true,
+    );
 
     setNodesLength({ peers: peers.length, supernodes: masternodes.length });
     setGeoLocationList(groupedNodes);
