@@ -14,6 +14,7 @@ import { SocketContext } from '@context/socket';
 
 import * as SummaryStyles from '@components/Summary/Summary.styles';
 import * as Styles from '@pages/CascadeAndSenseStatistics/CascadeAndSenseStatistics.styles';
+import * as StatisticsStyles from '../Statistics.styles';
 
 import { transformBlocksData, ITransformBlocksData } from './BlockStatistics.helpers';
 
@@ -26,7 +27,7 @@ const BLOCK_ELEMENTS_COUNT = 8;
 
 const BlockSizes: React.FC = () => {
   const socket = useContext(SocketContext);
-  const [period, setPeriod] = useState<PeriodTypes>(periods[5][0]);
+  const [period, setPeriod] = useState<PeriodTypes>(periods[2][0]);
   const [blockElements, setBlockElements] = useState<Array<ITransformBlocksData>>([]);
 
   const fetchUnconfirmedTxs = useFetch<{ data: BlockUnconfirmed[] }>({
@@ -65,7 +66,7 @@ const BlockSizes: React.FC = () => {
   const generateChartData = (blocks: Array<IBlock>) => {
     const groupedBlocks = blocks.reduce(
       (acc: ChartProps, { size, timestamp }) => {
-        const time = format(fromUnixTime(timestamp), 'HH:mm');
+        const time = format(fromUnixTime(timestamp), 'MM/dd/yyyy hh:mm aa');
 
         acc.labels.push(time);
         acc.data.push(size / 1024);
@@ -80,7 +81,7 @@ const BlockSizes: React.FC = () => {
 
   const { isLoading, data: chartData } = useDeferredData<{ data: Array<IBlock> }, ChartProps>(
     { method: 'get', url: `${URLS.BLOCK_URL}?period=${period}` },
-    ({ data }) => generateChartData(data),
+    ({ data }) => generateChartData(data.sort((a, b) => a.timestamp - b.timestamp)),
     undefined,
     undefined,
     [period, blockElements],
@@ -107,25 +108,33 @@ const BlockSizes: React.FC = () => {
             <Dropdown
               value={period}
               onChange={handleDropdownChange}
-              options={generatePeriodToDropdownOptions(periods[5])}
+              options={generatePeriodToDropdownOptions(periods[2])}
               classNameWrapper="cascade-sense-statistics"
             />
           </Styles.Percentage>
         </SummaryStyles.PercentageWrapper>
       </SummaryStyles.CardContent>
-      <div>
-        {!chartData || isLoading ? (
-          <Skeleton animation="wave" variant="rect" height={170} />
+      <StatisticsStyles.ChartSection>
+        {isLoading ? (
+          <StatisticsStyles.Loader>
+            <StatisticsStyles.LoadingText>Loading data...</StatisticsStyles.LoadingText>
+          </StatisticsStyles.Loader>
+        ) : null}
+        {!chartData ? (
+          <>
+            <Skeleton animation="wave" variant="rect" height={300} />
+            <StatisticsStyles.LoadingText>Loading data...</StatisticsStyles.LoadingText>
+          </>
         ) : (
           <LineChart
             chartName="blockSizesStatistics"
             dataX={chartData?.labels}
             dataY={chartData?.data}
-            offset={1}
+            offset={1000}
             disableClick
           />
         )}
-      </div>
+      </StatisticsStyles.ChartSection>
     </SummaryStyles.Card>
   );
 };

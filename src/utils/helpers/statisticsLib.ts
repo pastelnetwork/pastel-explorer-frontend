@@ -49,8 +49,6 @@ export type PeriodTypes =
   | 'all';
 export type TGranularity = '1d' | '30d' | '1y' | 'all' | 'none';
 
-export const periodShowTime = ['24h', '7d', '14d'];
-
 export const makeDownloadFileName = (currencyName: string | number, title: string): string => {
   let imageTitle = '';
   const date = new Date();
@@ -190,8 +188,8 @@ export function transformHashrateInfo(hashrateInfo: TMiningInfo[]): TLineChartDa
   for (let i = 0; i < hashrateInfo.length; i += 1) {
     if (hashrateInfo[i].timestamp !== null) {
       const createTime = Number(hashrateInfo[i].timestamp);
-      dataY.push(+(Number(hashrateInfo[i].networksolps) / 10e3).toFixed(2));
-      dataX.push(new Date(createTime).toLocaleString());
+      dataY.push(+(Number(hashrateInfo[i].networksolps) / 1000000));
+      dataX.push(format(createTime, 'MM/dd/yyyy hh:mm aa'));
     }
   }
 
@@ -332,7 +330,7 @@ export const transformChartData = (
       dataX.push(time);
     } else {
       const date = isHourMinute
-        ? format(fromUnixTime(time), 'HH:mm')
+        ? format(fromUnixTime(time), 'MM/dd/yyyy hh:mm aa')
         : formattedDate(time, { onlyDayMonthYear: true });
       dataX.push(date);
     }
