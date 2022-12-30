@@ -101,7 +101,7 @@ const BlockSizes: React.FC = () => {
     <SummaryStyles.Card className="cascade-sense-card">
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
-          <SummaryStyles.Typography variant="h6">Block sizes (MB)</SummaryStyles.Typography>
+          <SummaryStyles.Typography variant="h6">Block sizes (kB)</SummaryStyles.Typography>
         </SummaryStyles.ValueWrapper>
         <SummaryStyles.PercentageWrapper>
           <Styles.Percentage>

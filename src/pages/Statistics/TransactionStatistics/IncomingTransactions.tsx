@@ -10,6 +10,7 @@ import { LineChart } from '@components/Summary/LineChart';
 import { Dropdown } from '@components/Dropdown/Dropdown';
 import { periods } from '@utils/constants/statistics';
 import * as URLS from '@utils/constants/urls';
+import { getCurrencyName } from '@utils/appInfo';
 import { useFetch, useDeferredData } from '@utils/helpers/useFetch/useFetch';
 import { TLineChartData, IHashRateResponse } from '@utils/types/IStatistics';
 import { BlockUnconfirmed } from '@utils/types/ITransactions';
@@ -90,7 +91,9 @@ const StatisticsBlocks: React.FC = () => {
     <SummaryStyles.Card className="cascade-sense-card">
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
-          <SummaryStyles.Typography variant="h6">Incoming transactions</SummaryStyles.Typography>
+          <SummaryStyles.Typography variant="h6">
+            Incoming transactions ({getCurrencyName()})
+          </SummaryStyles.Typography>
         </SummaryStyles.ValueWrapper>
         <SummaryStyles.PercentageWrapper>
           <Styles.Percentage>

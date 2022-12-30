@@ -3152,7 +3152,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       color: ['#cd6661'],
       grid: {
-        top: 60,
+        top: 120,
         right: 0,
         bottom: 0,
         left: 0,
@@ -3166,7 +3166,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
               <div class="item-label">${params[0].axisValue}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
             decimalsLength: 2,
-          })} MB</div>
+          })} kB</div>
             </div>
           `;
         },
@@ -3222,7 +3222,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         color: theme?.color,
       },
       grid: {
-        top: 50,
+        top: 100,
         right: 0,
         bottom: 0,
         left: 0,
@@ -3302,7 +3302,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         color: theme?.color,
       },
       grid: {
-        top: 50,
+        top: 100,
         right: 0,
         bottom: 0,
         left: 0,
@@ -3314,9 +3314,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           return `
             <div class="tooltip-item-wrapper">
               <div class="item-label">${params[0].axisValue}</div>
-              <div class="tooltip-value">${params[0].marker} ${formatNumber(
-            params[0].value,
-          )} ${getCurrencyName()}</div>
+              <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
+            decimalsLength: 2,
+          })} ${getCurrencyName()}</div>
             </div>
           `;
         },
@@ -3383,7 +3383,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       color: ['#cd6661'],
       grid: {
-        top: 50,
+        top: 100,
         right: 0,
         bottom: 0,
         left: 0,
@@ -3397,7 +3397,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
               <div class="item-label">${params[0].axisValue}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
             decimalsLength: 2,
-          })}</div>
+          })} ${getCurrencyName()}</div>
             </div>
           `;
         },
