@@ -4,6 +4,7 @@ import { SetInfoDrawerProps } from '../actions/infoDrawerActions';
 export interface InitialInfoDrawerProps {
   isOpen: boolean;
   content: JSX.Element | null;
+  title: string | null;
 }
 
 type ActionTypes = SetInfoDrawerProps;
@@ -11,6 +12,7 @@ type ActionTypes = SetInfoDrawerProps;
 const initialState: InitialInfoDrawerProps = {
   isOpen: false,
   content: null,
+  title: null,
 };
 
 const reducer = (state = initialState, actions: ActionTypes): InitialInfoDrawerProps => {
@@ -20,6 +22,7 @@ const reducer = (state = initialState, actions: ActionTypes): InitialInfoDrawerP
         ...state,
         isOpen: actions.payload.isOpen,
         content: actions.payload.content,
+        title: actions.payload.title,
       };
 
     default:
