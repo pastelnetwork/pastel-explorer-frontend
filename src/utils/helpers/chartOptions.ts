@@ -2752,6 +2752,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
         show: false,
         max: maxY,
+        min: 0,
       },
       series: {
         name: `% of ${getCurrencyName()} Staked: `,
