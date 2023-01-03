@@ -39,7 +39,10 @@ export const transformGeoLocationConnections = (
   return transformedLocations;
 };
 
-export const groupGeoLocationConnections = (locations: Array<MarkerProps>): Array<MarkerProps> => {
+export const groupGeoLocationConnections = (
+  locations: Array<MarkerProps>,
+  hasPeerData = false,
+): Array<MarkerProps> => {
   const groupedLocations = locations.reduce((acc: Array<Array<MarkerProps>>, value) => {
     const sameLocationIndex = acc.findIndex(element => {
       const hasSameLat = element[0]?.latLng[0] === value?.latLng[0];
@@ -59,8 +62,22 @@ export const groupGeoLocationConnections = (locations: Array<MarkerProps>): Arra
 
   const displayLocations = groupedLocations.map(locationElements => {
     const firstElement = locationElements[0];
-    const name = `${firstElement.name} (${locationElements.length})`;
-
+    const peerList = locationElements.filter(l => l.data.filter(d => d.type === 'Peer').length);
+    const supernodeList = locationElements.filter(
+      l => l.data.filter(d => d.type === 'Supernode').length,
+    );
+    const counter: string[] = [];
+    if (hasPeerData) {
+      if (peerList.length) {
+        counter.push(`Peer(s): ${peerList.length}`);
+      }
+      if (supernodeList.length) {
+        counter.push(`Supernode(s): ${supernodeList.length}`);
+      }
+    } else {
+      counter.push(`${locationElements.length}`);
+    }
+    const name = `${firstElement.name} (${counter.join(', ')})`;
     if (locationElements.length > 1) {
       const hasPeer = locationElements.find(element => element.data[0].type === NODE_NAMES.peer);
       const hasSupernode = locationElements.find(
