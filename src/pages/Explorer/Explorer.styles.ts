@@ -43,17 +43,6 @@ export const SupernodeColumn = styled.div`
   }
 `;
 
-export const ChartLegend = styled.div`
-  position: relative;
-  bottom: 6px;
-  font-size: 14px;
-  text-align: center;
-
-  @media screen and (min-width: 1280px) and (max-width: 1440px) {
-    bottom: 30px;
-  }
-`;
-
 export const BlockWrapper = styled.div`
   box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
   background: ${props => props.theme.sidebar.menu.background};

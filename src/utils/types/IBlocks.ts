@@ -47,4 +47,6 @@ export interface IRawBlock {
   tx: string[];
   totalTickets: number;
   tickets: ITicket[];
+  ticketsList: string;
+  senses: TSenseRequests[];
 }

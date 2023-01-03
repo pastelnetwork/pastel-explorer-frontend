@@ -32,7 +32,6 @@ const Explorer: React.FC = () => {
       ...transformedPeers,
       ...transformedSupernodes,
     ]);
-
     setNodesLength({ peers: peers.length, supernodes: masternodes.length });
     setGeoLocationList(groupedNodes);
   };

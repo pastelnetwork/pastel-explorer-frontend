@@ -34,8 +34,8 @@ function TotalSupply() {
     const loadLineChartData = async () => {
       let timestamp = '';
       let currentCache =
-        (cache.get(cacheList.totalTransactionsCount) as TCacheValue) ||
-        readCacheValue(cacheList.totalTransactionsCount) ||
+        (cache.get(cacheList.totalSupply) as TCacheValue) ||
+        readCacheValue(cacheList.totalSupply) ||
         {};
       if (!currentCache[period]) {
         setLoading(true);
@@ -72,13 +72,13 @@ function TotalSupply() {
           },
         };
         setCacheValue(
-          cacheList.totalTransactionsCount,
+          cacheList.totalSupply,
           JSON.stringify({
             currentCache,
             lastDate: Date.now(),
           }),
         );
-        cache.set(cacheList.totalTransactionsCount, currentCache);
+        cache.set(cacheList.totalSupply, currentCache);
       }
       setLoading(false);
     };

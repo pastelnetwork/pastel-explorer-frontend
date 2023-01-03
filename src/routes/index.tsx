@@ -2,22 +2,13 @@ import SearchIcon from '@material-ui/icons/Search';
 import CallSplitIcon from '@material-ui/icons/CallSplit';
 import WidgetsIcon from '@material-ui/icons/Widgets';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
-// import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 import BarChartIcon from '@material-ui/icons/BarChart';
-// import LocalLibraryIcon from '@assets/icons/supernode.svg';
-// Uncomment this when API page will be ready
-// import InfoIcon from '@material-ui/icons/Info';
 
 import Explorer from '@pages/Explorer/Explorer';
 import Movement from '@pages/Movement/Movement';
 import Richlist from '@pages/Richlist/Richlist';
 import Blocks from '@pages/Blocks/Blocks';
-// Uncomment this when API page will be ready
-// import Info from '@pages/Info/Info';
 import Supernodes from '@pages/Supernodes/Supernodes';
-// import BlockStatistics from '@pages/Statistics/BlockStatistics/BlockStatistics';
-// import NetworkStatistics from '@pages/Statistics/NetworkStatistics/NetworkStatistics';
-// import TransactionStatistics from '@pages/Statistics/TransactionStatistics/TransactionStatistics';
 
 import TransactionDetails from '@pages/Details/TransactionDetails/TransactionDetails';
 import BlockDetails from '@pages/Details/BlockDetails/BlockDetails';
@@ -320,16 +311,6 @@ const marketCapPriceStatisticsRoutes = {
   children: null,
 };
 
-// Uncomment this when API page will be ready
-// const infoRoutes = {
-//   id: 'API',
-//   path: ROUTES.INFO,
-//   icon: <InfoIcon />,
-//   component: Info,
-//   seoTitle: 'API Documentation',
-//   children: null,
-// };
-
 const transactionDetailsRoutes = {
   id: 'Transaction Details',
   path: `${ROUTES.TRANSACTION_DETAILS}/:id`,
@@ -412,8 +393,6 @@ export const pageRoutes = [
   blocksRoutes,
   richlistRoutes,
   supernodesRoutes,
-  // Uncomment this when API page will be ready
-  // infoRoutes,
   transactionDetailsRoutes,
   blockDetailsRoutes,
   addressDetailsRoutes,
@@ -452,6 +431,4 @@ export const sidebarRoutes = [
   supernodesRoutes,
   richlistRoutes,
   statisticsRoutes,
-  // statisticsOvertimeRoutes,
-  // infoRoutes,
 ];

@@ -1,9 +1,5 @@
 import styled from 'styled-components/macro';
 
-export const Title = styled.h1`
-  text-align: center;
-`;
-
 export const Wrapper = styled.section`
   text-align: left;
 
@@ -16,27 +12,6 @@ export const Wrapper = styled.section`
     font-weight: 500;
     font-size: 1.25rem;
   }
-`;
-
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  // flex: 1;
-`;
-
-export const BlockWrapper = styled.div`
-  margin-bottom: 30px;
-  box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
-  background: ${props => props.theme.sidebar.menu.background};
-  border-radius: 10px;
-  overflow: hidden;
-`;
-
-export const PageTitle = styled.h3`
-  margin: 0;
-  padding: 18px 16px;
-  background: ${props => props.theme.card.titleColor};
-  text-align: left;
 `;
 
 export const ContentWrapper = styled.div`

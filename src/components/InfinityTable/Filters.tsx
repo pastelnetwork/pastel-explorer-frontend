@@ -20,13 +20,6 @@ const useStyles = makeStyles((theme: TAppTheme) => {
         maxWidth: '100%',
       },
     },
-    button: {
-      paddingRight: 0,
-      minWidth: 'auto',
-    },
-    paper: {
-      border: '1px solid',
-    },
     rootMenuItem: {
       display: 'block',
       backgroundColor: 'inherit',
