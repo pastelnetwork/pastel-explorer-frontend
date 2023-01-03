@@ -137,7 +137,7 @@ function LatestTransactions() {
               })
             ) : (
               <StyledTableRow>
-                <StyledTableCell component="th" scope="row" colSpan={5} style={{ padding: 0 }}>
+                <StyledTableCell component="th" scope="row" colSpan={6} style={{ padding: 0 }}>
                   <Skeleton animation="wave" variant="rect" height={150} />
                 </StyledTableCell>
               </StyledTableRow>
