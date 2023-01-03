@@ -7,6 +7,8 @@ import { Drawer, Button } from '@material-ui/core';
 import { setInfoDrawer } from '@redux/actions/infoDrawerActions';
 import { AppStateType } from '@redux/reducers';
 
+import * as Styles from './InfoDrawer.styles';
+
 const useStyles = makeStyles(() => ({
   close: {
     minWidth: 'auto',
@@ -20,17 +22,22 @@ const useStyles = makeStyles(() => ({
 
 const InfoDrawer: React.FC = () => {
   const dispatch = useDispatch();
-  const handleClose = () => dispatch(setInfoDrawer(false, null));
+  const handleClose = () => dispatch(setInfoDrawer(false, null, null));
   const classes = useStyles();
 
   const drawer = useSelector((state: AppStateType) => state.infoDrawerReducer);
-  const { isOpen, content } = drawer;
+  const { isOpen, content, title } = drawer;
 
   return (
     <Drawer anchor="right" open={isOpen} onClose={handleClose}>
-      <Button type="button" className={classes.close} onClick={handleClose}>
-        ×
-      </Button>
+      <div>
+        <Button type="button" className={classes.close} onClick={handleClose}>
+          ×
+        </Button>
+        <Styles.TitleRow item className="title">
+          <Styles.Title variant="h3">{title}</Styles.Title>
+        </Styles.TitleRow>
+      </div>
       {content}
     </Drawer>
   );

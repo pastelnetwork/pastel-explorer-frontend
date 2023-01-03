@@ -5,15 +5,21 @@ export interface SetInfoDrawerProps {
   payload: {
     isOpen: boolean;
     content: JSX.Element | null;
+    title: string | null;
   };
 }
 
-export const setInfoDrawer = (isOpen: boolean, content: JSX.Element | null): SetInfoDrawerProps => {
+export const setInfoDrawer = (
+  isOpen: boolean,
+  content: JSX.Element | null,
+  title: string | null,
+): SetInfoDrawerProps => {
   return {
     type: types.INFO_DRAWER_SET,
     payload: {
       isOpen,
       content,
+      title,
     },
   };
 };

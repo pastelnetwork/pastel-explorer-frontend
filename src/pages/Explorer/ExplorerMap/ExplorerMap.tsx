@@ -34,7 +34,7 @@ const ExplorerMap: React.FC<ExplorerMapProps> = ({
 
       if (selectedLocation) {
         const content = generateDrawerContent(selectedLocation);
-        dispatch(setInfoDrawer(true, content));
+        dispatch(setInfoDrawer(true, content, 'Map details'));
       }
     },
   };

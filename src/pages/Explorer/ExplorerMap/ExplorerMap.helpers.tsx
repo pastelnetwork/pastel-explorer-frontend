@@ -21,9 +21,6 @@ export const generateDrawerContent = ({ name, latLng, data }: MarkerProps) => {
   return (
     <Styles.Wrapper>
       <Grid container spacing={5}>
-        <Styles.TitleRow item className="title">
-          <Styles.Title variant="h3">Map details</Styles.Title>
-        </Styles.TitleRow>
         <Styles.TitleRow item className="subTitle">
           <Styles.SubTitle variant="h4" align="center" gutterBottom>
             {name}
