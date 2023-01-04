@@ -57,7 +57,7 @@ const Footer: React.FC = () => {
         <Hidden xsDown implementation="css">
           <Styles.GridStyle item>
             <Styles.Typography>
-              Copyright © {getYear(currentDate)} Pastel. All rights reserved
+              Copyright © {getYear(currentDate)} Pastel Network. All rights reserved.
             </Styles.Typography>
           </Styles.GridStyle>
         </Hidden>
