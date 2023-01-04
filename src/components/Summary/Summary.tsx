@@ -264,7 +264,9 @@ const Summary: React.FC = () => {
                   <Box>Less PSL Staked by SuperNodes: {formatNumber(totalLockedInSupernodes)}</Box>
                   <Box>
                     Less PSL Locked by Foundation:{' '}
-                    {formatNumber(9384556240.23, { decimalsLength: 0 })}
+                    {formatNumber(currentStatsData?.pslLockedByFoundation || 0, {
+                      decimalsLength: 0,
+                    })}
                   </Box>
                 </>
               )}
