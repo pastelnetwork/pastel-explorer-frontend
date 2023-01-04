@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Skeleton } from '@material-ui/lab';
-import { makeStyles } from '@material-ui/styles';
+import { withStyles, makeStyles } from '@material-ui/styles';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -53,6 +53,15 @@ type TChartDataProps = {
   dataY2?: number[];
   offset: number;
 };
+
+const CustomTooltip = withStyles(theme => ({
+  tooltip: {
+    backgroundColor: theme.palette.common.white,
+    color: '#4A5568',
+    boxShadow: theme.shadows[2],
+    fontSize: 12,
+  },
+}))(Tooltip);
 
 const Summary: React.FC = () => {
   const [summaryList, setSummaryList] = React.useState(initialSummaryList);
@@ -241,7 +250,7 @@ const Summary: React.FC = () => {
       const theNumberOfTotalSupernodes = getCurrencyName() === 'PSL' ? 5000000 : 1000000;
       const totalLockedInSupernodes = totalSupernode * theNumberOfTotalSupernodes;
       return (
-        <Tooltip
+        <CustomTooltip
           title={
             <Box>
               {sumKey === 'coinSupply' ? (
@@ -274,7 +283,7 @@ const Summary: React.FC = () => {
           }
         >
           <Box>{value}</Box>
-        </Tooltip>
+        </CustomTooltip>
       );
     }
 
