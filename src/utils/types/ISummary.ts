@@ -14,6 +14,7 @@ export interface ISummaryStats {
   percentPSLStaked: number;
   totalBurnedPSL: number;
   totalCoinSupply: number;
+  pslLockedByFoundation: number;
 }
 
 export type TSummaryChartProps = {
