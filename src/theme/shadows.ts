@@ -7,7 +7,7 @@ function createShadow() {
 const shadows: Shadows = [
   'none',
   createShadow(),
-  createShadow(),
+  'rgb(0 0 0 / 20%) 1px 2px 10px',
   createShadow(),
   createShadow(),
   createShadow(),
