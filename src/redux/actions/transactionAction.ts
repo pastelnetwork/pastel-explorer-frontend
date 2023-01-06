@@ -1,4 +1,4 @@
-import { SET_LOADING_TRANSACTION, SET_LATEST_TRASACTIONS } from '@redux/actions/actionTypes';
+import { SET_LOADING_TRANSACTION, SET_LATEST_TRANSACTIONS } from '@redux/actions/actionTypes';
 import { ITransaction } from '@utils/types/ITransactions';
 
 export interface SetLoadingTransaction {
@@ -7,7 +7,7 @@ export interface SetLoadingTransaction {
 }
 
 export interface SetLatestTransactions {
-  type: typeof SET_LATEST_TRASACTIONS;
+  type: typeof SET_LATEST_TRANSACTIONS;
   payload: Map<string, ITransaction>;
 }
 
@@ -20,7 +20,7 @@ export function setLoadingTransaction(payload = false) {
 
 export function setLatestTransactions(payload: Map<string, ITransaction>) {
   return {
-    type: SET_LATEST_TRASACTIONS,
+    type: SET_LATEST_TRANSACTIONS,
     payload,
   };
 }

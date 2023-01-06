@@ -16,23 +16,6 @@ export interface IStatistic {
   timestamp: number;
   totalBurnedPSL: number;
 }
-export interface IDifficulty {
-  id: string;
-  difficulty: number;
-  solutions: number;
-  timestamp: number;
-}
-
-export interface IPlsPrice {
-  id: string;
-  price_usd: number;
-  timestamp: number;
-}
-export interface IPslPrice {
-  id: string;
-  price_usd: number;
-  timestamp: number;
-}
 
 export type TLineChartData = {
   dataX: string[];
@@ -66,25 +49,6 @@ export type TMiningInfo = {
   chain: string;
   generate: boolean;
   timestamp: number;
-};
-
-export type TRawMempoolInfo = {
-  [index: string]: {
-    transactionid: string;
-    size: number;
-    fee: number;
-    time: number;
-    height: number;
-    startingpriority: number;
-    currentpriority: number;
-    depends: TRawMempoolInfo[];
-  };
-};
-
-export type TRawMempool = {
-  size: number;
-  fee: number;
-  time: string;
 };
 
 export type TStatisticsInfo = {
@@ -141,18 +105,6 @@ export type MarketCoinRespone = {
 
 export type TChartStatisticsResponse = {
   time: number;
-  value: number;
-};
-
-export type TAnalyticsChartResponse = {
-  data: {
-    maxValue: number;
-    value: number;
-  };
-};
-
-export type TAnalyticsChartData = {
-  maxValue: number;
   value: number;
 };
 

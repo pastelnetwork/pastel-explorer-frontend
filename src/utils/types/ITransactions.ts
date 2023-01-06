@@ -375,12 +375,6 @@ export type TPastelData = {
   openApiSubsetIdString: string;
 };
 
-export type TPrevalenceOfSimilarImages = {
-  dupeProbAbove25pct: number;
-  dupeProbAbove33pct: number;
-  dupeProbAbove50pct: number;
-};
-
 export type TSubgraph = {
   nodes: TSubgraphNodes[];
   edges: TSubgraphEdges[];

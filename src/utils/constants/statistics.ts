@@ -228,8 +228,6 @@ export const CHART_THEME_BACKGROUND_DEFAULT_COLOR = '#2D3748';
 export const CHART_THEME_BACKGROUND_DEFAULT_COLOR_LIGHT = '#fff';
 export const BLOCK_CHART_DEFAULT_GRANULARITY = 'none';
 
-export const CHART_DEFAULT_PERIOD = 'all';
-
 export const info: TStatisticsInfo = {
   connections: 8,
   currencyName: getCurrencyName(),
