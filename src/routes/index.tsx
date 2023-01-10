@@ -1,49 +1,66 @@
+import loadable from '@loadable/component';
 import SearchIcon from '@material-ui/icons/Search';
 import CallSplitIcon from '@material-ui/icons/CallSplit';
 import WidgetsIcon from '@material-ui/icons/Widgets';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import BarChartIcon from '@material-ui/icons/BarChart';
 
-import Explorer from '@pages/Explorer/Explorer';
-import Movement from '@pages/Movement/Movement';
-import Richlist from '@pages/Richlist/Richlist';
-import Blocks from '@pages/Blocks/Blocks';
-import Supernodes from '@pages/Supernodes/Supernodes';
-
-import TransactionDetails from '@pages/Details/TransactionDetails/TransactionDetails';
-import BlockDetails from '@pages/Details/BlockDetails/BlockDetails';
-import AddressDetails from '@pages/Details/AddressDetails/AddressDetails';
-
-// Statistics overview components
-import StatisticsOvertime from '@pages/HistoricalStatistics';
-import DifficultyStatistics from '@pages/HistoricalStatistics/Difficulty';
-import PricesStatistics from '@pages/HistoricalStatistics/Prices';
-import HashRateStatistics from '@pages/HistoricalStatistics/HashRate';
-import TransactionFeeStatistics from '@pages/HistoricalStatistics/TransactionFee';
-import MempoolSize from '@pages/HistoricalStatistics/MempoolSize';
-import Nettotals from '@pages/HistoricalStatistics/Nettotals';
-import TransactionInBlock from '@pages/HistoricalStatistics/TransactionInBlock';
-import Statistics from '@pages/Statistics';
-import AverageBlockSize from '@pages/HistoricalStatistics/AverageBlockSize';
-import TransactionPerSecond from '@pages/HistoricalStatistics/TransactionPerSecond';
-import TransactionCount from '@pages/HistoricalStatistics/TransactionCount';
-import AverageTransactionsPerBlock from '@pages/HistoricalStatistics/AverageTransactionsPerBlock';
-import BlockchainSize from '@pages/HistoricalStatistics/BlockchainSize';
-import TotalTransactionCount from '@pages/HistoricalStatistics/TotalTransactionsCount';
-import TotalTransactionPerDay from '@pages/HistoricalStatistics/TotalTransactionsPerDay';
-import MarketVolumePrice from '@pages/HistoricalStatistics/MarketVolumePrice';
-import MarketCapPrice from '@pages/HistoricalStatistics/MarketCapPrice';
-import CirculatingSupply from '@pages/HistoricalStatistics/CirculatingSupply';
-import TotalSupply from '@pages/HistoricalStatistics/TotalSupply';
-import PercentOfPSLStaked from '@pages/HistoricalStatistics/PercentOfPSLStaked';
-import Accounts from '@pages/HistoricalStatistics/Accounts';
-import CascadeAndSenseStatistics from '@pages/CascadeAndSenseStatistics/CascadeAndSenseStatistics';
-import SenseDetails from '@pages/Details/SenseDetails/SenseDetails';
-import PastelIdDetails from '@pages/Details/PastelIdDetails/PastelIdDetails';
-
 import * as ROUTES from '@utils/constants/routes';
 import { getCurrencyName } from '@utils/appInfo';
-import TotalTransactionFees from '@pages/HistoricalStatistics/TotalTransactionFees';
+
+const Explorer = loadable(() => import('@pages/Explorer/Explorer'));
+const Movement = loadable(() => import('@pages/Movement/Movement'));
+const Richlist = loadable(() => import('@pages/Richlist/Richlist'));
+const Blocks = loadable(() => import('@pages/Blocks/Blocks'));
+const Supernodes = loadable(() => import('@pages/Supernodes/Supernodes'));
+
+const TransactionDetails = loadable(
+  () => import('@pages/Details/TransactionDetails/TransactionDetails'),
+);
+const BlockDetails = loadable(() => import('@pages/Details/BlockDetails/BlockDetails'));
+const AddressDetails = loadable(() => import('@pages/Details/AddressDetails/AddressDetails'));
+
+// Statistics overview components
+const StatisticsOvertime = loadable(() => import('@pages/HistoricalStatistics'));
+const DifficultyStatistics = loadable(() => import('@pages/HistoricalStatistics/Difficulty'));
+const PricesStatistics = loadable(() => import('@pages/HistoricalStatistics/Prices'));
+const HashRateStatistics = loadable(() => import('@pages/HistoricalStatistics/HashRate'));
+const TransactionFeeStatistics = loadable(
+  () => import('@pages/HistoricalStatistics/TransactionFee'),
+);
+const MempoolSize = loadable(() => import('@pages/HistoricalStatistics/MempoolSize'));
+const Nettotals = loadable(() => import('@pages/HistoricalStatistics/Nettotals'));
+const TransactionInBlock = loadable(() => import('@pages/HistoricalStatistics/TransactionInBlock'));
+const Statistics = loadable(() => import('@pages/Statistics'));
+const AverageBlockSize = loadable(() => import('@pages/HistoricalStatistics/AverageBlockSize'));
+const TransactionPerSecond = loadable(
+  () => import('@pages/HistoricalStatistics/TransactionPerSecond'),
+);
+const TransactionCount = loadable(() => import('@pages/HistoricalStatistics/TransactionCount'));
+const AverageTransactionsPerBlock = loadable(
+  () => import('@pages/HistoricalStatistics/AverageTransactionsPerBlock'),
+);
+const BlockchainSize = loadable(() => import('@pages/HistoricalStatistics/BlockchainSize'));
+const TotalTransactionCount = loadable(
+  () => import('@pages/HistoricalStatistics/TotalTransactionsCount'),
+);
+const TotalTransactionPerDay = loadable(
+  () => import('@pages/HistoricalStatistics/TotalTransactionsPerDay'),
+);
+const MarketVolumePrice = loadable(() => import('@pages/HistoricalStatistics/MarketVolumePrice'));
+const MarketCapPrice = loadable(() => import('@pages/HistoricalStatistics/MarketCapPrice'));
+const CirculatingSupply = loadable(() => import('@pages/HistoricalStatistics/CirculatingSupply'));
+const TotalSupply = loadable(() => import('@pages/HistoricalStatistics/TotalSupply'));
+const PercentOfPSLStaked = loadable(() => import('@pages/HistoricalStatistics/PercentOfPSLStaked'));
+const Accounts = loadable(() => import('@pages/HistoricalStatistics/Accounts'));
+const CascadeAndSenseStatistics = loadable(
+  () => import('@pages/CascadeAndSenseStatistics/CascadeAndSenseStatistics'),
+);
+const SenseDetails = loadable(() => import('@pages/Details/SenseDetails/SenseDetails'));
+const PastelIdDetails = loadable(() => import('@pages/Details/PastelIdDetails/PastelIdDetails'));
+const TotalTransactionFees = loadable(
+  () => import('@pages/HistoricalStatistics/TotalTransactionFees'),
+);
 
 const explorerRoutes = {
   id: 'Explorer',

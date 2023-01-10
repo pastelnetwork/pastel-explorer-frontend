@@ -1,23 +1,16 @@
 import * as React from 'react';
 
+import ExplorerMap from '@pages/Explorer/ExplorerMap/ExplorerMap';
+import SupernodeStatistics from '@pages/Explorer/SupernodeStatistics/SupernodeStatistics';
 import InfinityTable, {
   RowsProps,
   SortDirectionsType,
   ISortData,
 } from '@components/InfinityTable/InfinityTable';
-
-import * as URLS from '@utils/constants/urls';
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { INetwork, INetworkSupernodes } from '@utils/types/INetwork';
+import { INetworkSupernodes } from '@utils/types/INetwork';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import { MarkerProps } from '@components/Map/Map';
 import { Dropdown, OptionsProps } from '@components/Dropdown/Dropdown';
-import SupernodeStatistics from '../Explorer/SupernodeStatistics/SupernodeStatistics';
-import ExplorerMap from '../Explorer/ExplorerMap/ExplorerMap';
-import {
-  transformGeoLocationConnections,
-  groupGeoLocationConnections,
-} from '../Explorer/Explorer.helpers';
+import useSupernodes from '@hooks/useSupernodes';
 
 import { columns, SUPERNODE_LAST_PAID_KEY } from './Supernodes.columns';
 import {
@@ -35,6 +28,7 @@ interface ISupernodeData {
 }
 
 const Supernodes: React.FC = () => {
+  const { masternodes, isLoading } = useSupernodes(DATA_FETCH_LIMIT, DATA_OFFSET);
   const [isMobile, setMobileView] = React.useState(false);
   const [status, setStatus] = React.useState<string>(STATUS_LIST[0].value);
   const [sortData, setSortData] = React.useState<ISupernodeData>({
@@ -43,33 +37,6 @@ const Supernodes: React.FC = () => {
   });
   const [supernodes, setSupernodes] = React.useState<Array<RowsProps>>([]);
   const [originalSupernodes, setOriginalSupernodes] = React.useState<Array<INetworkSupernodes>>([]);
-  const [supernodeList, setSupernodeList] = React.useState<Array<INetworkSupernodes> | null>(null);
-  const [geoLocationList, setGeoLocationList] = React.useState<Array<MarkerProps> | null>(null);
-  const [nodesLength, setNodesLength] = React.useState({ peers: 0, supernodes: 0 });
-  const { fetchData, isLoading } = useFetch<INetwork>({
-    method: 'get',
-    url: URLS.NETWORK_URL,
-  });
-
-  const handleFetchSupernodes = (offset: number) => {
-    const limit = DATA_FETCH_LIMIT;
-
-    return fetchData({ params: { limit, offset } })
-      .then(response => {
-        if (response) {
-          setOriginalSupernodes(response.masternodes);
-
-          const transformedSupernodes = transformGeoLocationConnections(response.masternodes, true);
-          const groupedNodes = groupGeoLocationConnections([...transformedSupernodes]);
-          setNodesLength({ peers: 0, supernodes: response.masternodes.length });
-          setGeoLocationList(groupedNodes);
-          setSupernodeList(response?.masternodes || []);
-        }
-
-        return response ? transformSupernodesData(response.masternodes) : [];
-      })
-      .then(data => setSupernodes(data));
-  };
 
   const handleSort = ({ sortBy, sortDirection }: ISortData) => {
     const sortedSupernodes = supernodes.sort((a, b) => {
@@ -94,7 +61,13 @@ const Supernodes: React.FC = () => {
   };
 
   React.useEffect(() => {
-    handleFetchSupernodes(DATA_OFFSET);
+    if (masternodes?.length) {
+      setSupernodes(transformSupernodesData(masternodes));
+      setOriginalSupernodes(masternodes);
+    }
+  }, [isLoading]);
+
+  React.useEffect(() => {
     handleShowSubMenu();
 
     window.addEventListener('resize', handleShowSubMenu);
@@ -173,10 +146,10 @@ const Supernodes: React.FC = () => {
     <>
       <Styles.Gird>
         <Styles.ExplorerMapColumn>
-          <ExplorerMap geoLocationList={geoLocationList} nodesLength={nodesLength} hidePeer />
+          <ExplorerMap hidePeer />
         </Styles.ExplorerMapColumn>
         <Styles.SupernodeColumn>
-          <SupernodeStatistics supernodes={supernodeList} />
+          <SupernodeStatistics />
         </Styles.SupernodeColumn>
       </Styles.Gird>
       <Styles.BlockWrapper>
