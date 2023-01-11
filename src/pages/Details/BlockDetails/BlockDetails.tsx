@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
 import {
@@ -19,10 +19,8 @@ import CopyButton from '@components/CopyButton/CopyButton';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { formattedDate } from '@utils/helpers/date/date';
-import * as URLS from '@utils/constants/urls';
 import * as ROUTES from '@utils/constants/routes';
 import { IBlock, IBlockTransaction } from '@utils/types/IBlocks';
 import { formatAddress } from '@utils/helpers/format';
@@ -31,6 +29,7 @@ import { getCurrencyName } from '@utils/appInfo';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 import { getTicketsTypeList } from '@pages/Movement/Movement.helpers';
 import SensesList from '@pages/Details/TransactionDetails/SensesList';
+import useBlockDetails from '@hooks/useBlockDetails';
 
 import { blockHeaders, transactionHeaders, generateDetailsElement } from './BlockDetails.helpers';
 import * as Styles from './BlockDetails.styles';
@@ -43,13 +42,10 @@ interface ParamTypes {
 const BlockDetails = () => {
   const history = useHistory();
   const { id } = useParams<ParamTypes>();
-  const [isMobile, setMobileView] = React.useState(false);
-  const [isExpanded, setIsExpanded] = React.useState(false);
-  const [block, setBlock] = React.useState<IBlock | null>();
-  const { fetchData } = useFetch<{ data: IBlock }>({
-    method: 'get',
-    url: `${URLS.BLOCK_URL}/${id}`,
-  });
+  const { swrData, isLoading } = useBlockDetails(id);
+  const [isMobile, setMobileView] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [block, setBlock] = useState<IBlock | null>();
   const [transactions, handleClickSortTransaction] = useSortData<IBlockTransaction>({
     inititalData: block?.transactions || null,
   });
@@ -61,7 +57,7 @@ const BlockDetails = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     handleShowSubMenu();
 
     window.addEventListener('resize', handleShowSubMenu);
@@ -70,13 +66,11 @@ const BlockDetails = () => {
     };
   }, []);
 
-  React.useEffect(() => {
-    fetchData().then(response => {
-      if (response?.data) {
-        setBlock(response.data);
-      }
-    });
-  }, [id]);
+  useEffect(() => {
+    if (swrData) {
+      setBlock(swrData);
+    }
+  }, [isLoading, swrData]);
 
   const generateBlockTable = ({ height, confirmations, size, timestamp }: IBlock): RowsProps[] => {
     return [
