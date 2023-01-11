@@ -19,7 +19,7 @@ interface ExplorerMapProps {
 }
 
 const ExplorerMap: React.FC<ExplorerMapProps> = ({ hidePeer = false }) => {
-  const { geoLocationList, nodesLength, isLoading } = useNetwork();
+  const { geoLocationList, nodesLength, isLoading } = useNetwork(hidePeer);
   const dispatch = useDispatch();
   const mapOptions = generateMapOptions(geoLocationList);
 

@@ -9,23 +9,23 @@ import {
   groupGeoLocationConnections,
 } from '@pages/Explorer/Explorer.helpers';
 
-const transformGeoLocationData = ({ peers, masternodes }: INetwork) => {
-  const transformedPeers = transformGeoLocationConnections(peers, false);
+const transformGeoLocationData = ({ peers, masternodes }: INetwork, hidePeer: boolean) => {
+  const transformedPeers = hidePeer ? [] : transformGeoLocationConnections(peers, false);
   const transformedSupernodes = transformGeoLocationConnections(masternodes, true);
   const groupedNodes = groupGeoLocationConnections(
     [...transformedPeers, ...transformedSupernodes],
     true,
   );
   return {
-    nodesLength: { peers: peers.length, supernodes: masternodes.length },
+    nodesLength: { peers: hidePeer ? [] : peers.length, supernodes: masternodes.length },
     groupedNodes,
   };
 };
 
-export default function useNetwork() {
+export default function useNetwork(hidePeer: boolean) {
   const { data, isLoading } = useSWR<INetwork>(URLS.NETWORK_URL, axiosGet);
   if (data) {
-    const { nodesLength, groupedNodes } = transformGeoLocationData(data);
+    const { nodesLength, groupedNodes } = transformGeoLocationData(data, hidePeer);
 
     return {
       supernodeList: data?.masternodes,
