@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import InfinityTable, {
@@ -30,17 +30,12 @@ interface IMovementDataRef {
 }
 
 const Movement: React.FC = () => {
-  const fetchParams = useRef<IMovementDataRef>({
-    offset: 0,
-    sortBy: TIMESTAMP_MOVEMENT_KEY,
-    sortDirection: DATA_DEFAULT_SORT,
-    period: 'all',
-  });
+  const filter = useSelector(getFilterState);
   const [apiParams, setParams] = useState<IMovementDataRef>({
     offset: 0,
     sortBy: TIMESTAMP_MOVEMENT_KEY,
     sortDirection: DATA_DEFAULT_SORT,
-    period: 'all',
+    period: filter.dateRange || 'all',
   });
   const { swrData, isLoading } = useMovement(
     apiParams.offset,
@@ -49,7 +44,6 @@ const Movement: React.FC = () => {
     apiParams.sortDirection,
     apiParams.period,
   );
-  const filter = useSelector(getFilterState);
   const [isMobile, setMobileView] = useState(false);
   const [totalItem, setTotalItem] = useState<number>(0);
   const [size, setSize] = useState<number>(1);
@@ -73,7 +67,6 @@ const Movement: React.FC = () => {
 
   const handleFetchMoreMovements = (reachedTableBottom: boolean) => {
     if (!reachedTableBottom) return null;
-    fetchParams.current.offset += DATA_FETCH_LIMIT;
 
     setParams({ ...apiParams, offset: apiParams.offset + DATA_FETCH_LIMIT });
     setSize(size + 1);
@@ -82,8 +75,6 @@ const Movement: React.FC = () => {
   };
 
   const handleSort = ({ sortBy, sortDirection }: ISortData) => {
-    fetchParams.current.offset = DATA_OFFSET;
-    fetchParams.current.sortDirection = sortDirection;
     setSize(1);
     setParams({ ...apiParams, sortBy, offset: DATA_OFFSET, sortDirection });
   };
@@ -105,7 +96,7 @@ const Movement: React.FC = () => {
         setMovementList(newTransferData);
       }
     }
-  }, [isLoading]);
+  }, [isLoading, size, apiParams]);
 
   const getMovementTransactionsTitle = () => (
     <Styles.TitleWrapper>
@@ -115,6 +106,7 @@ const Movement: React.FC = () => {
       ) : null}
     </Styles.TitleWrapper>
   );
+
   return (
     <Styles.GridWrapper item>
       <InfinityTable

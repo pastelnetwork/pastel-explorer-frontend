@@ -68,7 +68,7 @@ const TransactionDetails = () => {
         setSenses(data.senseData);
       }
     }
-  }, [isLoading]);
+  }, [isLoading, data]);
 
   const generateTransactionEvents = (
     events: TransactionEvent[] | null,
