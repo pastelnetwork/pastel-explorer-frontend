@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import InfinityTable, {
@@ -9,10 +9,9 @@ import InfinityTable, {
 import { defaultFilters } from '@utils/constants/filter';
 import { getFilterState } from '@redux/reducers/filterReducer';
 
-import * as URLS from '@utils/constants/urls';
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { ITransaction } from '@utils/types/ITransactions';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
+import useMovement from '@hooks/useMovement';
+
 import * as Styles from './Movement.styles';
 
 import { TIMESTAMP_MOVEMENT_KEY, columns } from './Movement.columns';
@@ -27,23 +26,34 @@ interface IMovementDataRef {
   offset: number;
   sortBy: string;
   sortDirection: SortDirectionsType;
+  period: string;
 }
 
 const Movement: React.FC = () => {
-  const fetchParams = React.useRef<IMovementDataRef>({
-    offset: DATA_OFFSET,
+  const fetchParams = useRef<IMovementDataRef>({
+    offset: 0,
     sortBy: TIMESTAMP_MOVEMENT_KEY,
     sortDirection: DATA_DEFAULT_SORT,
+    period: 'all',
   });
+  const [apiParams, setParams] = useState<IMovementDataRef>({
+    offset: 0,
+    sortBy: TIMESTAMP_MOVEMENT_KEY,
+    sortDirection: DATA_DEFAULT_SORT,
+    period: 'all',
+  });
+  const { swrData, isLoading } = useMovement(
+    apiParams.offset,
+    DATA_FETCH_LIMIT * 2,
+    apiParams.sortBy,
+    apiParams.sortDirection,
+    apiParams.period,
+  );
   const filter = useSelector(getFilterState);
-
-  const [isMobile, setMobileView] = React.useState(false);
-  const [totalItem, setTotalItem] = React.useState<number>(0);
-  const [movementList, setMovementList] = React.useState<Array<RowsProps>>([]);
-  const fetchMovementsData = useFetch<{ data: Array<ITransaction>; total: number }>({
-    method: 'get',
-    url: URLS.TRANSACTION_URL,
-  });
+  const [isMobile, setMobileView] = useState(false);
+  const [totalItem, setTotalItem] = useState<number>(0);
+  const [size, setSize] = useState<number>(1);
+  const [movementList, setMovementList] = useState<Array<RowsProps>>([]);
 
   const handleShowSubMenu = () => {
     setMobileView(false);
@@ -52,7 +62,7 @@ const Movement: React.FC = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     handleShowSubMenu();
 
     window.addEventListener('resize', handleShowSubMenu);
@@ -61,81 +71,41 @@ const Movement: React.FC = () => {
     };
   }, []);
 
-  const handleFetchMovements = async (
-    offset: number,
-    sortBy: string,
-    sortDirection: SortDirectionsType,
-    replaceData = false,
-    filterBy = 'period',
-    filterValue = filter.dateRange || '',
-  ) => {
-    fetchParams.current.sortBy = sortBy;
-    const limit = DATA_FETCH_LIMIT * 2;
-    const params: Record<string, string | number> = {
-      offset,
-      limit,
-      sortBy,
-      sortDirection,
-      period: '1d',
-    };
-    if (filterValue && filterValue !== '1d') {
-      params[filterBy] = filterValue;
-    }
-    return fetchMovementsData
-      .fetchData({ params })
-      .then(response => {
-        if (response) {
-          setTotalItem(response?.total);
-        }
-        return response ? transformMovementData(response.data) : [];
-      })
-      .then(data =>
-        replaceData ? setMovementList(data) : setMovementList(prevState => [...prevState, ...data]),
-      );
-  };
-
   const handleFetchMoreMovements = (reachedTableBottom: boolean) => {
     if (!reachedTableBottom) return null;
-
     fetchParams.current.offset += DATA_FETCH_LIMIT;
 
-    return handleFetchMovements(
-      fetchParams.current.offset,
-      fetchParams.current.sortBy,
-      fetchParams.current.sortDirection,
-    );
+    setParams({ ...apiParams, offset: apiParams.offset + DATA_FETCH_LIMIT });
+    setSize(size + 1);
+
+    return true;
   };
 
   const handleSort = ({ sortBy, sortDirection }: ISortData) => {
     fetchParams.current.offset = DATA_OFFSET;
     fetchParams.current.sortDirection = sortDirection;
-
-    return handleFetchMovements(
-      fetchParams.current.offset,
-      sortBy,
-      fetchParams.current.sortDirection,
-      true,
-    );
+    setSize(1);
+    setParams({ ...apiParams, sortBy, offset: DATA_OFFSET, sortDirection });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (filter.dateRange) {
-      handleFetchMovements(
-        0,
-        fetchParams.current.sortBy,
-        fetchParams.current.sortDirection,
-        true,
-        'period',
-        filter.dateRange,
-      );
-    } else {
-      handleFetchMovements(
-        fetchParams.current.offset,
-        fetchParams.current.sortBy,
-        fetchParams.current.sortDirection,
-      );
+      setSize(1);
+      setParams({ ...apiParams, offset: 0, period: filter.dateRange });
     }
   }, [filter.dateRange]);
+
+  useEffect(() => {
+    if (!isLoading && swrData) {
+      setTotalItem(swrData?.total);
+      const newTransferData = swrData?.data ? transformMovementData(swrData.data) : [];
+      if (size > 1) {
+        setMovementList(prevState => [...prevState, ...newTransferData]);
+      } else {
+        setMovementList(newTransferData);
+      }
+    }
+  }, [isLoading]);
 
   const getMovementTransactionsTitle = () => (
     <Styles.TitleWrapper>
@@ -145,12 +115,11 @@ const Movement: React.FC = () => {
       ) : null}
     </Styles.TitleWrapper>
   );
-
   return (
     <Styles.GridWrapper item>
       <InfinityTable
-        sortBy={fetchParams.current.sortBy}
-        sortDirection={fetchParams.current.sortDirection}
+        sortBy={apiParams.sortBy}
+        sortDirection={apiParams.sortDirection}
         rows={movementList}
         columns={columns}
         tableHeight={950}

@@ -23,7 +23,7 @@ const transformGeoLocationData = ({ peers, masternodes }: INetwork) => {
 };
 
 export default function useNetwork() {
-  const { data, error, isLoading } = useSWR<INetwork>(URLS.NETWORK_URL, axiosGet);
+  const { data, isLoading } = useSWR<INetwork>(URLS.NETWORK_URL, axiosGet);
   if (data) {
     const { nodesLength, groupedNodes } = transformGeoLocationData(data);
 
@@ -31,7 +31,6 @@ export default function useNetwork() {
       supernodeList: data?.masternodes,
       geoLocationList: groupedNodes,
       nodesLength,
-      isError: error,
       isLoading,
     };
   }
@@ -40,7 +39,6 @@ export default function useNetwork() {
     supernodeList: [],
     geoLocationList: [],
     nodesLength: { peers: 0, supernodes: 0 },
-    isError: error,
     isLoading,
   };
 }
