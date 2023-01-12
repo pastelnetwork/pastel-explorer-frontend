@@ -3,18 +3,19 @@ import useSWRInfinite from 'swr/infinite';
 import { SWR_OPTIONS } from '@utils/constants/statistics';
 import { axiosGet } from '@utils/helpers/useFetch/useFetch';
 import * as URLS from '@utils/constants/urls';
+import { IAddress } from '@utils/types/IAddress';
 import { SortDirectionsType } from '@components/InfinityTable/InfinityTable';
 
-export default function useBlocks(
+export default function useAddressDetails(
+  id: string,
   offset: number,
   limit: number,
   sortBy: string,
   sortDirection: SortDirectionsType,
-  period: string,
 ) {
-  const { data, isLoading } = useSWRInfinite(
+  const { data, isLoading } = useSWRInfinite<IAddress>(
     () =>
-      `${URLS.BLOCK_URL}?offset=${offset}&limit=${limit}&sortBy=${sortBy}&sortDirection=${sortDirection}&period=${period}`,
+      `${URLS.ADDRESS_URL}/${id}?offset=${offset}&limit=${limit}&sortBy=${sortBy}&sortDirection=${sortDirection}`,
     axiosGet,
     SWR_OPTIONS,
   );

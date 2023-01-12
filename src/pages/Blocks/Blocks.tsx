@@ -89,13 +89,6 @@ const Blocks = () => {
   }, [filter.dateRange]);
 
   useEffect(() => {
-    if (filter.dateRange) {
-      setSize(1);
-      setParams({ ...apiParams, offset: 0, period: filter.dateRange });
-    }
-  }, [filter.dateRange]);
-
-  useEffect(() => {
     if (!isLoading && swrData) {
       setTotalItem(swrData?.total);
       const newTransferData = swrData?.data ? transformTableData(swrData.data, isMobile) : [];

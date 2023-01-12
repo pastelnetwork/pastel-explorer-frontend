@@ -3,17 +3,17 @@ import useSWR from 'swr';
 import { SWR_OPTIONS } from '@utils/constants/statistics';
 import { axiosGet } from '@utils/helpers/useFetch/useFetch';
 import * as URLS from '@utils/constants/urls';
-import { INetwork } from '@utils/types/INetwork';
+import { TSenseRequests } from '@utils/types/ITransactions';
 
-export default function useSupernodes(limit: number, offset: number) {
-  const { data, isLoading } = useSWR<INetwork>(
-    `${URLS.NETWORK_URL}?limit=${limit}&offset=${offset}`,
+export default function useSenseDetails(id: string) {
+  const { data, isLoading } = useSWR<{ data: TSenseRequests }>(
+    `${URLS.SENSE_URL}/${id}`,
     axiosGet,
     SWR_OPTIONS,
   );
 
   return {
-    masternodes: data?.masternodes,
+    senseData: data?.data,
     isLoading,
   };
 }

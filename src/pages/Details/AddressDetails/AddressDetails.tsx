@@ -10,13 +10,12 @@ import InfinityTable, {
   ISortData,
 } from '@components/InfinityTable/InfinityTable';
 
-import * as URLS from '@utils/constants/urls';
 import { IAddress } from '@utils/types/IAddress';
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { getCurrencyName } from '@utils/appInfo';
 import { formattedDate } from '@utils/helpers/date/date';
 import { eChartLineStyles } from '@pages/HistoricalStatistics/Chart/styles';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
+import useAddressDetails from '@hooks/useAddressDetails';
 
 import {
   addressHeaders,
@@ -47,76 +46,61 @@ const transactionHistoryCSVHeaders = [
 ];
 
 const AddressDetails = () => {
-  const styles = eChartLineStyles();
-  const downloadRef = useRef(null);
-  const [isMobile, setMobileView] = useState(false);
-  const fetchParams = useRef<IAddressDataRef>({
+  const { id } = useParams<ParamTypes>();
+  const [apiParams, setParams] = useState<IAddressDataRef>({
     offset: DATA_OFFSET,
     sortBy: ADDRESS_TRANSACTION_TIMESTAMP_KEY,
     sortDirection: DATA_DEFAULT_SORT,
   });
-  const { id } = useParams<ParamTypes>();
+  const { swrData, isLoading } = useAddressDetails(
+    id,
+    apiParams.offset,
+    DATA_FETCH_LIMIT,
+    apiParams.sortBy,
+    apiParams.sortDirection,
+  );
+  const [size, setSize] = useState<number>(1);
+  const styles = eChartLineStyles();
+  const downloadRef = useRef(null);
+  const [isMobile, setMobileView] = useState(false);
+
   const [addresses, setAddresses] = useState<IAddress>(DEFAULT_ADDRESS_DATA);
   const [csvData, setCsvData] = useState<string | Data>('');
-  const { fetchData, isLoading } = useFetch<IAddress>({
-    method: 'get',
-    url: `${URLS.ADDRESS_URL}/${id}`,
-  });
-
-  const handleFetchAddress = (
-    offset: number,
-    sortBy: string,
-    sortDirection: SortDirectionsType,
-    replaceData = false,
-  ) => {
-    fetchParams.current.sortBy = sortBy;
-    const limit = DATA_FETCH_LIMIT;
-
-    return fetchData({ params: { offset, limit, sortBy, sortDirection } })
-      .then(response => {
-        if (!response) {
-          return DEFAULT_ADDRESS_DATA;
-        }
-
-        return response;
-      })
-      .then(response =>
-        replaceData
-          ? setAddresses(response)
-          : setAddresses(prevState => ({
-              ...response,
-              data: [...prevState.data, ...response.data],
-            })),
-      );
-  };
 
   const handleFetchMoreTransactions = (reachedTableBottom: boolean) => {
     if (!reachedTableBottom) return null;
 
-    fetchParams.current.offset += DATA_FETCH_LIMIT;
-
-    return handleFetchAddress(
-      fetchParams.current.offset,
-      fetchParams.current.sortBy,
-      fetchParams.current.sortDirection,
-    );
+    setSize(size + 1);
+    setParams({ ...apiParams, offset: apiParams.offset + DATA_FETCH_LIMIT });
+    return true;
   };
 
   const handleSort = ({ sortBy, sortDirection }: ISortData) => {
-    fetchParams.current.sortDirection = sortDirection;
-    fetchParams.current.offset = DATA_OFFSET;
+    setSize(1);
+    setParams({
+      ...apiParams,
+      sortBy,
+      offset: DATA_OFFSET,
+      sortDirection,
+    });
+  };
 
-    return handleFetchAddress(DATA_OFFSET, sortBy, fetchParams.current.sortDirection, true);
+  const handleShowSubMenu = () => {
+    if (window.innerWidth < 1024) {
+      setMobileView(true);
+    } else {
+      setMobileView(false);
+    }
   };
 
   useEffect(() => {
-    handleFetchAddress(
-      DATA_OFFSET,
-      fetchParams.current.sortBy,
-      fetchParams.current.sortDirection,
-      true,
-    );
-  }, [id]);
+    handleShowSubMenu();
+
+    window.addEventListener('resize', handleShowSubMenu);
+    return () => {
+      window.removeEventListener('resize', handleShowSubMenu);
+    };
+  }, []);
 
   useEffect(() => {
     if (addresses.data.length) {
@@ -132,22 +116,18 @@ const AddressDetails = () => {
     }
   }, [addresses]);
 
-  const handleShowSubMenu = () => {
-    if (window.innerWidth < 1024) {
-      setMobileView(true);
-    } else {
-      setMobileView(false);
+  useEffect(() => {
+    if (!isLoading && swrData) {
+      if (size > 1) {
+        setAddresses(prevState => ({
+          ...swrData,
+          data: [...prevState.data, ...swrData.data],
+        }));
+      } else {
+        setAddresses(swrData);
+      }
     }
-  };
-
-  React.useEffect(() => {
-    handleShowSubMenu();
-
-    window.addEventListener('resize', handleShowSubMenu);
-    return () => {
-      window.removeEventListener('resize', handleShowSubMenu);
-    };
-  }, []);
+  }, [isLoading, size, apiParams]);
 
   const generateAddTitle = () => {
     return (
@@ -195,10 +175,9 @@ const AddressDetails = () => {
         <Styles.TableWrapper item>
           <InfinityTable
             title={generateTitle()}
-            sortBy={fetchParams.current.sortBy}
-            sortDirection={fetchParams.current.sortDirection}
+            sortBy={apiParams.sortBy}
+            sortDirection={apiParams.sortDirection}
             rows={generateLatestTransactions(addresses.data, isMobile)}
-            loadMoreFrom={DATA_FETCH_LIMIT}
             columns={columns}
             onBottomReach={handleFetchMoreTransactions}
             onHeaderClick={handleSort}
@@ -206,7 +185,6 @@ const AddressDetails = () => {
             headerBackground
             rowHeight={isMobile ? 135 : 45}
             tableHeight={isMobile ? 600 : 400}
-            isLoading={isLoading}
           />
         </Styles.TableWrapper>
       </Grid>

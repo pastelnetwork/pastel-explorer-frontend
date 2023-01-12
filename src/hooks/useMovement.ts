@@ -1,5 +1,6 @@
 import useSWRInfinite from 'swr/infinite';
 
+import { SWR_OPTIONS } from '@utils/constants/statistics';
 import { axiosGet } from '@utils/helpers/useFetch/useFetch';
 import * as URLS from '@utils/constants/urls';
 import { SortDirectionsType } from '@components/InfinityTable/InfinityTable';
@@ -15,6 +16,7 @@ export default function useMovement(
     () =>
       `${URLS.TRANSACTION_URL}?offset=${offset}&limit=${limit}&sortBy=${sortBy}&sortDirection=${sortDirection}&period=${period}`,
     axiosGet,
+    SWR_OPTIONS,
   );
 
   return {

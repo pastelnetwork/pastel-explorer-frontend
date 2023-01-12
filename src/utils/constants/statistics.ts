@@ -279,3 +279,10 @@ export const sense_chart_colors = [
   'rgba(153, 102, 255, 0.2)',
   'rgba(255, 159, 64, 0.2)',
 ];
+
+export const SWR_OPTIONS = {
+  refreshInterval: 0,
+  revalidateIfStale: false,
+  revalidateOnFocus: false,
+  revalidateOnReconnect: false,
+};
