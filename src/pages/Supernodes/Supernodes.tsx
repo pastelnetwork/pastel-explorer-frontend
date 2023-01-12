@@ -65,7 +65,7 @@ const Supernodes: React.FC = () => {
       setSupernodes(transformSupernodesData(masternodes));
       setOriginalSupernodes(masternodes);
     }
-  }, [isLoading]);
+  }, [isLoading, masternodes]);
 
   React.useEffect(() => {
     handleShowSubMenu();

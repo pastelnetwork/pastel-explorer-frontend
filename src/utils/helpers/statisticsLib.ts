@@ -266,7 +266,6 @@ export function transformBlocks(blocks: IBlock[]): TScatterChartData {
 export function transformAverageBlockSize(
   blockSizes: TAverageBlockSize[],
   period: PeriodTypes,
-  timestamp: string,
 ): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
@@ -279,11 +278,7 @@ export function transformAverageBlockSize(
       dataX.push(format(blockSizes[i].maxTime * 1000, 'MM/dd/yyyy HH:mm'));
     }
   }
-  if (
-    period === '24h' &&
-    !timestamp &&
-    checkValidateData(blockSizes[blockSizes.length - 1]?.time * 1000)
-  ) {
+  if (period === '24h' && checkValidateData(blockSizes[blockSizes.length - 1]?.time * 1000)) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy HH:mm'));
     dataY.push(0);
   }
@@ -344,13 +339,11 @@ export function transformBlockchainSizeData(
   period: PeriodTypes,
   startValue: number,
   endValue: number,
-  startValueCache: number,
   range = 10e6,
-  timestamp?: string,
 ): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
-  let preValue = startValueCache ? startValueCache * range : startValue;
+  let preValue = startValue;
   for (let i = 0; i < data.length; i += 1) {
     let value = data[i].value + preValue;
     if (i === data.length - 1) {
@@ -360,11 +353,7 @@ export function transformBlockchainSizeData(
     dataY.push(parseFloat((value / range).toFixed(2)));
     preValue += data[i].value;
   }
-  if (
-    period === '24h' &&
-    timestamp &&
-    checkValidateData(parseInt(data[data.length - 1]?.label, 10))
-  ) {
+  if (period === '24h' && checkValidateData(parseInt(data[data.length - 1]?.label, 10))) {
     dataX.push(new Date().toLocaleString());
     dataY.push(dataY[dataY.length - 1]);
   }

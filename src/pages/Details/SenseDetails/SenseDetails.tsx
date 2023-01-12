@@ -9,12 +9,11 @@ import { decode } from 'js-base64';
 import Header from '@components/Header/Header';
 import * as TableStyles from '@components/Table/Table.styles';
 import CopyButton from '@components/CopyButton/CopyButton';
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import * as URLS from '@utils/constants/urls';
 import { TSenseRequests } from '@utils/types/ITransactions';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
+import useSenseDetails from '@hooks/useSenseDetails';
 
 import * as ChartStyles from '@pages/HistoricalStatistics/Chart/Chart.styles';
 import PastelData from './PastelData';
@@ -75,24 +74,15 @@ const csvHeaders = [
 const SenseDetails: React.FC = () => {
   const downloadRef = useRef(null);
   const { id } = useParams<IParamTypes>();
+  const { senseData, isLoading } = useSenseDetails(id);
   const [sense, setSense] = useState<TSenseRequests | null>(null);
   const [openRawDataModal, setOpenRawDataModal] = useState(false);
-  const fetchSenses = useFetch<{ data: TSenseRequests }>({
-    method: 'get',
-    url: `${URLS.SENSE_URL}/${id}`,
-  });
-
-  const handleTransactionFetch = () => {
-    fetchSenses.fetchData().then(response => {
-      if (response?.data) {
-        setSense(response.data);
-      }
-    });
-  };
 
   useEffect(() => {
-    handleTransactionFetch();
-  }, [id]);
+    if (senseData) {
+      setSense(senseData);
+    }
+  }, [senseData, isLoading]);
 
   const toggleOpenRawData = () => setOpenRawDataModal(!openRawDataModal);
 

@@ -1,13 +1,11 @@
-import * as React from 'react';
+import { useEffect, useState, useMemo, MouseEvent } from 'react';
 import { Grid } from '@material-ui/core';
 
 import Table, { RowsProps } from '@components/Table/Table';
-import { SocketContext } from '@context/socket';
-import * as URLS from '@utils/constants/urls';
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { IRichlist } from '@utils/types/IRichlists';
-import { useSortData } from '@utils/hooks';
-import { ISummary } from '@utils/types/ISummary';
+import useCurrentStats from '@hooks/useCurrentStats';
+import useRichlist from '@hooks/useRichlist';
+
 import {
   balanceHeaders,
   generateBalanceTable,
@@ -25,40 +23,74 @@ export type WealthDistributionProps = {
 };
 
 const Richlist: React.FC = () => {
-  const socket = React.useContext(SocketContext);
-  const { fetchData, isLoading } = useFetch<{ data: Array<IRichlist> }>({
-    method: 'get',
-    url: `${URLS.RICHLIST_URL}`,
+  const { currentStats, isCurrentStatsLoading } = useCurrentStats();
+  const { data, isLoading } = useRichlist();
+
+  const [coinSupply, setCoinSupply] = useState(0);
+  const [list, setList] = useState<IRichlist[]>([]);
+  const [sort, setSort] = useState<{ sortBy: string | null; sortDirection: number }>({
+    sortBy: null,
+    sortDirection: 1,
   });
-  const fetchSummary = useFetch<ISummary>({ method: 'get', url: URLS.SUMMARY_URL });
-  const [coinSupply, setCoinSupply] = React.useState(0);
-  const [list, handleClickSort] = useSortData<IRichlist>({ fetchData });
-  const richlist = React.useMemo<RowsProps[] | null>(
+
+  const richlist = useMemo<RowsProps[] | null>(
     () => (list && list.length ? generateBalanceTable(list, coinSupply) : null),
     [list, coinSupply],
   );
-  const wealthDistribution = React.useMemo<WealthDistributionProps[] | null>(
+  const wealthDistribution = useMemo<WealthDistributionProps[] | null>(
     () => (list && list.length ? generateWealthDistributionData(list, coinSupply) : null),
     [list, coinSupply],
   );
   const wealthDistributionData = wealthDistribution?.sort((a, b) => a.top - b.top);
 
-  const handleExchangeRateFetch = () => {
-    fetchSummary.fetchData().then(response => {
-      if (!response) return null;
-      return setCoinSupply(response?.currentStats?.coinSupply || 0);
+  const handleClickSort = (event: MouseEvent<HTMLTableHeaderCellElement>) => {
+    const { id } = event.currentTarget.dataset as { id: string };
+    setSort(prev => {
+      const newSort = { ...prev };
+      if (!newSort.sortBy) {
+        newSort.sortBy = id;
+        return newSort;
+      }
+      if (newSort.sortBy !== id) {
+        return { sortBy: id, sortDirection: 1 };
+      }
+      newSort.sortDirection = newSort.sortDirection === 0 ? 1 : 0;
+      return newSort;
     });
   };
 
-  React.useEffect(() => {
-    handleExchangeRateFetch();
-    socket.on('getUpdateBlock', () => {
-      handleExchangeRateFetch();
-    });
-    return () => {
-      socket.off('getUpdateBlock');
-    };
-  }, []);
+  useEffect(() => {
+    if (data?.length) {
+      setList(data);
+    }
+  }, [isLoading, data]);
+
+  useEffect(() => {
+    if (data?.length && sort && sort.sortBy) {
+      const newList = [...data];
+      const sortBy = sort.sortBy as keyof IRichlist;
+      newList.sort((a: IRichlist, b: IRichlist) => {
+        let keyA = (a[sortBy] as unknown) as string | number;
+        let keyB = (b[sortBy] as unknown) as string | number;
+        if (typeof keyA === 'string' && typeof keyB === 'string') {
+          keyA = keyA.toUpperCase();
+          keyB = keyB.toUpperCase();
+        }
+
+        if (sort.sortDirection === 1) {
+          return keyA > keyB ? 1 : -1;
+        }
+        return keyA > keyB ? -1 : 1;
+      });
+      setList(newList);
+    }
+  }, [sort]);
+
+  useEffect(() => {
+    if (!isCurrentStatsLoading && currentStats) {
+      setCoinSupply(currentStats.coinSupply);
+    }
+  }, [isCurrentStatsLoading, currentStats]);
 
   return (
     <Styles.Wrapper>

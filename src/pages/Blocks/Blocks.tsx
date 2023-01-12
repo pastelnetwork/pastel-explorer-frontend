@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import InfinityTable, {
@@ -7,12 +7,10 @@ import InfinityTable, {
   ISortData,
 } from '@components/InfinityTable/InfinityTable';
 
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import * as URLS from '@utils/constants/urls';
-import { IBlock } from '@utils/types/IBlocks';
 import { blocksFilters } from '@utils/constants/filter';
 import { getFilterState } from '@redux/reducers/filterReducer';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
+import useBlocks from '@hooks/useBlocks';
 
 import { columns, BLOCK_ID_KEY } from './Blocks.columns';
 import {
@@ -27,22 +25,28 @@ interface IBlocksDataRef {
   offset: number;
   sortBy: string;
   sortDirection: SortDirectionsType;
+  period: string;
 }
 
 const Blocks = () => {
-  const fetchParams = React.useRef<IBlocksDataRef>({
-    offset: DATA_OFFSET,
+  const filter = useSelector(getFilterState);
+  const [apiParams, setParams] = useState<IBlocksDataRef>({
+    offset: 0,
     sortBy: 'id',
     sortDirection: DATA_DEFAULT_SORT,
+    period: filter.dateRange || 'all',
   });
-  const [isMobile, setMobileView] = React.useState(false);
-  const [totalItem, setTotalItem] = React.useState<number>(0);
-  const [blockList, setBlocksList] = React.useState<Array<RowsProps>>([]);
-  const filter = useSelector(getFilterState);
-  const fetchBlocksData = useFetch<{ data: Array<IBlock>; total: number }>({
-    method: 'get',
-    url: URLS.BLOCK_URL,
-  });
+  const { swrData, isLoading } = useBlocks(
+    apiParams.offset,
+    DATA_FETCH_LIMIT * 2,
+    apiParams.sortBy === BLOCK_ID_KEY ? 'id' : apiParams.sortBy,
+    apiParams.sortDirection,
+    apiParams.period,
+  );
+  const [size, setSize] = useState<number>(1);
+  const [isMobile, setMobileView] = useState(false);
+  const [totalItem, setTotalItem] = useState<number>(0);
+  const [blockList, setBlocksList] = useState<Array<RowsProps>>([]);
 
   const handleShowSubMenu = () => {
     setMobileView(false);
@@ -51,7 +55,7 @@ const Blocks = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     handleShowSubMenu();
 
     window.addEventListener('resize', handleShowSubMenu);
@@ -60,86 +64,41 @@ const Blocks = () => {
     };
   }, []);
 
-  const handleFetchBlocks = (
-    offset: number,
-    sortBy: string,
-    sortDirection: SortDirectionsType,
-    replaceData = false,
-    filterBy = 'period',
-    filterValue = filter.dateRange || '',
-  ) => {
-    fetchParams.current.sortBy = sortBy;
-    const limit = DATA_FETCH_LIMIT;
-
-    // Allow to sort by block height
-    // In this situation if user will click on block column we need to sort by timestamp
-    const fetchSortBy =
-      fetchParams.current.sortBy === BLOCK_ID_KEY ? 'id' : fetchParams.current.sortBy;
-    const params: Record<string, string | number> = {
-      offset,
-      limit,
-      sortBy: fetchSortBy,
-      sortDirection,
-      period: blocksFilters[blocksFilters.length - 1].value,
-    };
-    if (filterValue && filterValue !== blocksFilters[blocksFilters.length - 1].value) {
-      params[filterBy] = filterValue;
-    }
-    return fetchBlocksData
-      .fetchData({ params })
-      .then(response => {
-        if (response) {
-          setTotalItem(response?.total);
-          return transformTableData(response.data, isMobile);
-        }
-        return [];
-      })
-      .then(data =>
-        replaceData ? setBlocksList(data) : setBlocksList(prevState => [...prevState, ...data]),
-      );
-  };
-
   const handleFetchMoreBlocks = (reachedTableBottom: boolean) => {
     if (!reachedTableBottom) return null;
-
-    fetchParams.current.offset += DATA_FETCH_LIMIT;
-
-    return handleFetchBlocks(
-      fetchParams.current.offset,
-      fetchParams.current.sortBy,
-      fetchParams.current.sortDirection,
-    );
+    setSize(size + 1);
+    setParams({ ...apiParams, offset: apiParams.offset + DATA_FETCH_LIMIT });
+    return true;
   };
 
-  const handleSort = ({ sortBy, sortDirection, filterBy, filterValue }: ISortData) => {
-    fetchParams.current.offset = DATA_OFFSET;
-    fetchParams.current.sortDirection = sortDirection;
-
-    return handleFetchBlocks(
-      DATA_OFFSET,
-      sortBy === 'blockHash' ? 'id' : sortBy,
-      fetchParams.current.sortDirection,
-      true,
-      filterBy,
-      filterValue,
-    );
+  const handleSort = ({ sortBy, sortDirection }: ISortData) => {
+    setSize(1);
+    setParams({
+      ...apiParams,
+      sortBy: sortBy === 'blockHash' ? 'id' : sortBy,
+      offset: DATA_OFFSET,
+      sortDirection,
+    });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (filter.dateRange) {
-      fetchParams.current.offset = DATA_OFFSET;
-      handleFetchBlocks(
-        DATA_OFFSET,
-        fetchParams.current.sortBy,
-        fetchParams.current.sortDirection,
-        true,
-        'period',
-        filter.dateRange,
-      );
-    } else {
-      handleFetchBlocks(DATA_OFFSET, fetchParams.current.sortBy, fetchParams.current.sortDirection);
+      setSize(1);
+      setParams({ ...apiParams, offset: 0, period: filter.dateRange });
     }
   }, [filter.dateRange]);
+
+  useEffect(() => {
+    if (!isLoading && swrData) {
+      setTotalItem(swrData?.total);
+      const newTransferData = swrData?.data ? transformTableData(swrData.data, isMobile) : [];
+      if (size > 1) {
+        setBlocksList(prevState => [...prevState, ...newTransferData]);
+      } else {
+        setBlocksList(newTransferData);
+      }
+    }
+  }, [isLoading, size, apiParams]);
 
   const getMovementTransactionsTitle = () => (
     <Styles.TitleWrapper>
@@ -153,8 +112,8 @@ const Blocks = () => {
   return (
     <Styles.TableContainer item>
       <InfinityTable
-        sortBy={fetchParams.current.sortBy}
-        sortDirection={fetchParams.current.sortDirection}
+        sortBy={apiParams.sortBy}
+        sortDirection={apiParams.sortDirection}
         rows={blockList}
         filters={blocksFilters}
         title={getMovementTransactionsTitle()}

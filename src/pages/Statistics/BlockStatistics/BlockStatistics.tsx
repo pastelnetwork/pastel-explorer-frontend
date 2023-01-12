@@ -4,23 +4,15 @@ import { useHistory } from 'react-router-dom';
 import { Skeleton } from '@material-ui/lab';
 import { Grid, darken } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+
 import { TAppTheme } from '@theme/index';
-// application
+import * as ROUTES from '@utils/constants/routes';
 import { BlockUnconfirmed } from '@utils/types/ITransactions';
 
-import * as ROUTES from '@utils/constants/routes';
-import * as URLS from '@utils/constants/urls';
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { IBlock } from '@utils/types/IBlocks';
-
-import { SocketContext } from '@context/socket';
-
 import BlockVisualization from './BlockVisualization/BlockVisualization';
-import { transformBlocksData, ITransformBlocksData } from './BlockStatistics.helpers';
+import { ITransformBlocksData } from './BlockStatistics.helpers';
 
 import * as Styles from '../Statistics.styles';
-
-const BLOCK_ELEMENTS_COUNT = 8;
 
 const useStyles = makeStyles((_theme: TAppTheme) => ({
   wrapper: {
@@ -41,45 +33,14 @@ const useStyles = makeStyles((_theme: TAppTheme) => ({
   },
 }));
 
-const StatisticsBlocks: React.FC = () => {
+interface IStatisticsBlocks {
+  blockElements: ITransformBlocksData[];
+  blocksUnconfirmed: BlockUnconfirmed[] | null;
+}
+
+const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUnconfirmed }) => {
   const history = useHistory();
   const classes = useStyles();
-  const [blockElements, setBlockElements] = React.useState<Array<ITransformBlocksData>>([]);
-  const [blocksUnconfirmed, setBlocksUnconfirmed] = React.useState<BlockUnconfirmed[] | null>(null);
-  const fetchUnconfirmedTxs = useFetch<{ data: BlockUnconfirmed[] }>({
-    method: 'get',
-    url: URLS.GET_UNCONFIRMED_TRANSACTIONS,
-  });
-  const socket = React.useContext(SocketContext);
-
-  const fetchBlocksData = useFetch<{ data: Array<IBlock>; timestamp: number }>({
-    method: 'get',
-    url: URLS.BLOCK_URL,
-  });
-
-  const handleBlocksData = () => {
-    Promise.all([
-      fetchBlocksData.fetchData({ params: { limit: BLOCK_ELEMENTS_COUNT } }),
-      fetchUnconfirmedTxs.fetchData(),
-    ]).then(([blocksData, txs]) => {
-      if (blocksData) {
-        setBlockElements(transformBlocksData(blocksData.data, blocksData.timestamp));
-      }
-      setBlocksUnconfirmed(txs?.data || null);
-    });
-  };
-
-  React.useEffect(() => {
-    handleBlocksData();
-
-    socket.on('getUpdateBlock', () => {
-      handleBlocksData();
-    });
-
-    return () => {
-      socket.off('getUpdateBlock');
-    };
-  }, []);
 
   const renderMempoolBlock = () => {
     if (blocksUnconfirmed?.length) {

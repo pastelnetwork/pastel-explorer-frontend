@@ -2,8 +2,9 @@ import * as React from 'react';
 import { Typography, Dialog, AppBar, IconButton, Slide } from '@material-ui/core';
 import { TransitionProps } from '@material-ui/core/transitions';
 import CloseIcon from '@material-ui/icons/Close';
+import { decode } from 'js-base64';
 
-import { ITicket } from '@utils/types/ITransactions';
+import { ITicket, TSenseRequests } from '@utils/types/ITransactions';
 
 import * as Styles from './TransactionDetails.styles';
 
@@ -19,6 +20,7 @@ interface ITransactionRawDataProps {
   open: boolean;
   toggleOpen: () => void;
   tickets: ITicket[];
+  senses: TSenseRequests[];
 }
 
 const TransactionRawData: React.FC<ITransactionRawDataProps> = ({
@@ -26,6 +28,7 @@ const TransactionRawData: React.FC<ITransactionRawDataProps> = ({
   open,
   toggleOpen,
   tickets,
+  senses,
 }) => {
   const classes = Styles.useStyles();
 
@@ -34,6 +37,16 @@ const TransactionRawData: React.FC<ITransactionRawDataProps> = ({
       ...ticket.data.ticket,
       txid: ticket.transactionHash,
     }));
+  };
+
+  const getSenses = () => {
+    return senses.map(sense => {
+      if (sense.imageFileHash.indexOf('nosense') === -1) {
+        const senseRawData = JSON.parse(sense.rawData);
+        return JSON.parse(decode(senseRawData?.file));
+      }
+      return JSON.parse(sense.rawData);
+    });
   };
 
   return (
@@ -52,7 +65,11 @@ const TransactionRawData: React.FC<ITransactionRawDataProps> = ({
         <Styles.TransactionRawData>
           <code>
             {JSON.stringify(
-              { ...JSON.parse(rawData), tickets: tickets.length ? getTickets() : undefined },
+              {
+                ...JSON.parse(rawData),
+                tickets: tickets.length ? getTickets() : undefined,
+                senses: senses.length ? getSenses() : undefined,
+              },
               null,
               2,
             )}

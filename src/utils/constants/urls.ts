@@ -13,6 +13,8 @@ export const GET_UNCONFIRMED_TRANSACTIONS = 'v1/transactions/blocks-unconfirmed'
 export const GET_TRANSACTIONS_CHARTS = 'v1/transactions/charts';
 export const GET_BLOCKS_CHARTS = 'v1/block/charts';
 export const BLOCK_URL = 'v1/blocks';
+export const BLOCK_SIZE_URL = 'v1/blocks/size';
+export const STATISTICS_BLOCK_URL = 'v1/blocks/statistics';
 export const ADDRESS_URL = 'v1/addresses';
 export const RICHLIST_URL = 'v1/addresses/rank/100';
 export const NETWORK_URL = 'v1/network';
@@ -31,6 +33,7 @@ export const GET_STATISTICS_PERCENT_OF_PSL_STAKED = 'v1/stats/percent-of-psl-sta
 export const GET_STATISTICS_ACCOUNTS = 'v1/stats/accounts';
 export const SENSE_URL = 'v1/transactions/sense';
 export const PASTEL_ID_URL = 'v1/transactions/pastelid';
+export const CURRENT_STATS = 'v1/stats/current-stats';
 // External URLS
 export const TWITTER_URL = 'https://twitter.com/pastelnetwork';
 export const TELEGRAM_URL = 'https://t.me/PastelNetwork';
