@@ -1,87 +1,51 @@
 // react
 import { useEffect, useState } from 'react';
-import LRU from 'lru-cache';
+
 // application
-import * as URLS from '@utils/constants/urls';
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { PeriodTypes, transformDifficultyInfo, mergeChartData } from '@utils/helpers/statisticsLib';
-import { periods, info, LRU_OPTIONS, cacheList } from '@utils/constants/statistics';
-import { IStatistic, TLineChartData, TCacheValue } from '@utils/types/IStatistics';
+import { PeriodTypes, transformDifficultyInfo } from '@utils/helpers/statisticsLib';
+import { periods, info, cacheList } from '@utils/constants/statistics';
+import { TLineChartData } from '@utils/types/IStatistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
-import { EChartsLineChart } from '../Chart/EChartsLineChart';
+import useDifficulty from '@hooks/useDifficulty';
 
-const cache = new LRU(LRU_OPTIONS);
+import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
 function Difficulty() {
   const [chartData, setChartData] = useState<TLineChartData | null>(null);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const [period, setPeriod] = useState<PeriodTypes>(periods[1][0]);
   const [isLoading, setLoading] = useState(false);
+  const swrData = useDifficulty(period);
 
-  const fetchStats = useFetch<{ data: Array<IStatistic> }>({
-    method: 'get',
-    url: URLS.GET_STATISTICS,
-  });
   useEffect(() => {
-    let isSubscribed = true;
-    const loadLineChartData = async () => {
-      let timestamp = '';
-      let currentCache =
-        (cache.get(cacheList.difficulty) as TCacheValue) ||
-        readCacheValue(cacheList.difficulty) ||
-        {};
-      if (!currentCache[period]) {
-        setLoading(true);
-      } else {
-        setChartData(currentCache[period].parseData as TLineChartData);
-        timestamp = currentCache[period]?.lastDate?.toString() || '';
-      }
-      const data = await fetchStats.fetchData({
-        params: { sortDirection: 'DESC', period, timestamp },
-      });
-      if (data) {
-        const parseData = transformDifficultyInfo(data.data, period, timestamp);
-        if (
-          currentCache[period] &&
-          JSON.stringify(parseData) !== JSON.stringify(currentCache[period])
-        ) {
-          setLoading(true);
-        }
-        const newParseData = mergeChartData(
-          parseData,
-          currentCache[period]?.parseData as TLineChartData,
-          period,
-        );
-        if (isSubscribed) {
-          setChartData(newParseData);
-        }
-        currentCache = {
-          ...currentCache,
-          [period]: {
-            parseData: newParseData,
-            lastDate: data.data.length
-              ? data.data[data.data.length - 1]?.timestamp
-              : currentCache[period]?.lastDate,
-          },
-        };
-        setCacheValue(
-          cacheList.difficulty,
-          JSON.stringify({
-            currentCache,
-            lastDate: Date.now(),
-          }),
-        );
-        cache.set(cacheList.difficulty, currentCache);
-      }
+    let currentCache = readCacheValue(cacheList.difficulty) || {};
+    if (currentCache[period]) {
+      setChartData(currentCache[period].parseData as TLineChartData);
       setLoading(false);
-    };
-    loadLineChartData();
-    return () => {
-      isSubscribed = false;
-    };
-  }, [period]);
+    } else {
+      setLoading(true);
+    }
+    if (!swrData.isLoading && swrData.data) {
+      const parseData = transformDifficultyInfo(swrData.data, period);
+      setChartData(parseData);
+      currentCache = {
+        ...currentCache,
+        [period]: {
+          parseData,
+        },
+      };
+      setCacheValue(
+        cacheList.difficulty,
+        JSON.stringify({
+          currentCache,
+          lastDate: Date.now(),
+        }),
+      );
+      setLoading(false);
+    }
+  }, [period, swrData.isLoading, swrData.data]);
 
   const handlePeriodFilterChange = (value: PeriodTypes) => {
     setPeriod(value);
