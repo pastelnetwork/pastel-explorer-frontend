@@ -1,93 +1,51 @@
 // react
 import { useEffect, useState } from 'react';
-import LRU from 'lru-cache';
-// application
-import * as URLS from '@utils/constants/urls';
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import {
-  PeriodTypes,
-  transformNetTotals,
-  mergeMultiLineChartData,
-} from '@utils/helpers/statisticsLib';
-import { periods, info, LRU_OPTIONS, cacheList } from '@utils/constants/statistics';
+
+import { PeriodTypes, transformNetTotals } from '@utils/helpers/statisticsLib';
+import { periods, info, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
-import { TNettotalsInfo, TMultiLineChartData, TCacheValue } from '@utils/types/IStatistics';
+import { TMultiLineChartData } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
-import { EChartsLineChart } from '../Chart/EChartsLineChart';
+import useNettotals from '@hooks/useNettotals';
 
-const cache = new LRU(LRU_OPTIONS);
+import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
 function Nettotals() {
   const [chartData, setChartData] = useState<TMultiLineChartData | null>(null);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const [period, setPeriod] = useState<PeriodTypes>(periods[1][0]);
   const [isLoading, setLoading] = useState(false);
-
-  const fetchStats = useFetch<{ data: Array<TNettotalsInfo> }>({
-    method: 'get',
-    url: URLS.GET_STATISTICS_NETTOTALS,
-  });
+  const swrData = useNettotals(period);
 
   useEffect(() => {
-    let isSubscribed = true;
-    const loadLineChartData = async () => {
-      let timestamp = '';
-      let currentCache =
-        (cache.get(cacheList.networkTotal) as TCacheValue) ||
-        readCacheValue(cacheList.networkTotal) ||
-        {};
-      if (!currentCache[period]) {
-        setLoading(true);
-      } else {
-        setChartData(currentCache[period].parseData as TMultiLineChartData);
-        timestamp = currentCache[period]?.lastDate?.toString() || '';
-      }
-
-      const data = await fetchStats.fetchData({
-        params: { period, sortDirection: 'ASC', timestamp },
-      });
-      if (data) {
-        const parseData = transformNetTotals(data.data, period, timestamp);
-        if (
-          currentCache[period] &&
-          JSON.stringify(parseData) !== JSON.stringify(currentCache[period])
-        ) {
-          setLoading(true);
-        }
-        const newParseData = mergeMultiLineChartData(
-          parseData,
-          currentCache[period]?.parseData as TMultiLineChartData,
-          period,
-        );
-        if (isSubscribed) {
-          setChartData(newParseData);
-        }
-        currentCache = {
-          ...currentCache,
-          [period]: {
-            parseData: newParseData,
-            lastDate: data.data.length
-              ? data.data[data.data.length - 1]?.timestamp
-              : currentCache[period]?.lastDate,
-          },
-        };
-        setCacheValue(
-          cacheList.networkTotal,
-          JSON.stringify({
-            currentCache,
-            lastDate: Date.now(),
-          }),
-        );
-        cache.set(cacheList.networkTotal, currentCache);
-      }
+    let currentCache = readCacheValue(cacheList.networkTotal) || {};
+    if (currentCache[period]) {
+      setChartData(currentCache[period].parseData as TMultiLineChartData);
       setLoading(false);
-    };
-    loadLineChartData();
-    return () => {
-      isSubscribed = false;
-    };
-  }, [period]);
+    } else {
+      setLoading(true);
+    }
+    if (!swrData.isLoading && swrData.data) {
+      const parseData = transformNetTotals(swrData.data, period);
+      setChartData(parseData);
+      currentCache = {
+        ...currentCache,
+        [period]: {
+          parseData,
+        },
+      };
+      setCacheValue(
+        cacheList.networkTotal,
+        JSON.stringify({
+          currentCache,
+          lastDate: Date.now(),
+        }),
+      );
+      setLoading(false);
+    }
+  }, [period, swrData.isLoading, swrData.data]);
+
   const handlePeriodFilterChange = (value: PeriodTypes) => {
     setPeriod(value);
   };
