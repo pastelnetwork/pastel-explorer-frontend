@@ -95,7 +95,6 @@ const AddressDetails = () => {
 
   useEffect(() => {
     handleShowSubMenu();
-
     window.addEventListener('resize', handleShowSubMenu);
     return () => {
       window.removeEventListener('resize', handleShowSubMenu);
@@ -103,6 +102,12 @@ const AddressDetails = () => {
   }, []);
 
   useEffect(() => {
+    setSize(1);
+    setParams({
+      offset: DATA_OFFSET,
+      sortBy: ADDRESS_TRANSACTION_TIMESTAMP_KEY,
+      sortDirection: DATA_DEFAULT_SORT,
+    });
     if (addresses.data.length) {
       const data: Data = [];
       addresses.data.forEach(o => {
@@ -117,7 +122,7 @@ const AddressDetails = () => {
   }, [addresses]);
 
   useEffect(() => {
-    if (!isLoading && swrData) {
+    if (!isLoading && swrData?.data) {
       if (size > 1) {
         setAddresses(prevState => ({
           ...swrData,
@@ -127,7 +132,7 @@ const AddressDetails = () => {
         setAddresses(swrData);
       }
     }
-  }, [isLoading, size, apiParams]);
+  }, [isLoading, size, apiParams, swrData]);
 
   const generateAddTitle = () => {
     return (

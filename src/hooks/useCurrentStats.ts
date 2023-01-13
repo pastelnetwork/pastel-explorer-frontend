@@ -10,7 +10,7 @@ interface ICurrentStats {
 }
 
 export default function useCurrentStats() {
-  const { data, isLoading } = useSWR<ICurrentStats>(`${URLS.CURRENT_STATS}`, axiosGet, SWR_OPTIONS);
+  const { data, isLoading } = useSWR<ICurrentStats>(URLS.CURRENT_STATS, axiosGet, SWR_OPTIONS);
   return {
     currentStats: data,
     isCurrentStatsLoading: isLoading,

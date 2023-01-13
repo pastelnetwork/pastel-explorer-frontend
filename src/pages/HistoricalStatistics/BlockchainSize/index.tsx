@@ -16,7 +16,7 @@ function BlockchainSize() {
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const [period, setPeriod] = useState<PeriodTypes>(periods[1][0]);
   const [isLoading, setLoading] = useState(false);
-  const swrData = useBlockchainSize(period, 'DESC', 'SUM', 'size', 'blockchainSize');
+  const swrData = useBlockchainSize(period);
 
   useEffect(() => {
     let currentCache = readCacheValue(cacheList.blockchainSize) || {};
