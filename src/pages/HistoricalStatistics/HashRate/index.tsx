@@ -1,20 +1,13 @@
-// react
 import { useEffect, useState, ChangeEvent } from 'react';
-import LRU from 'lru-cache';
-// application
-import * as URLS from '@utils/constants/urls';
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import {
-  PeriodTypes,
-  transformHashRateCharts,
-  mergeHashRateChartData,
-} from '@utils/helpers/statisticsLib';
-import { periods, info, LRU_OPTIONS, cacheList } from '@utils/constants/statistics';
+
+import { PeriodTypes, transformHashRateCharts } from '@utils/helpers/statisticsLib';
+import { periods, info, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
-import { THashrate, THashrateChartData, TSolpsData, TCacheValue } from '@utils/types/IStatistics';
+import { THashrateChartData, TSolpsData } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
 import { Dropdown } from '@components/Dropdown/Dropdown';
+import useHashRate from '@hooks/useHashRate';
 
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
@@ -51,76 +44,41 @@ const options = [
   },
 ];
 
-const cache = new LRU(LRU_OPTIONS);
-
 function HashRate() {
   const [chartData, setChartData] = useState<THashrateChartData | null>(null);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const [period, setPeriod] = useState<PeriodTypes>(periods[1][0]);
   const [numberOfBlocks, setNumberOfBlocks] = useState<string>(options[0].value);
   const [isLoading, setLoading] = useState(false);
-
-  const fetchStats = useFetch<{ data: Array<THashrate> }>({
-    method: 'get',
-    url: URLS.GET_STATISTICS_MINING_CHARTS,
-  });
+  const swrData = useHashRate(period);
 
   useEffect(() => {
-    let isSubscribed = true;
-    const loadLineChartData = async () => {
-      let timestamp = '';
-      let currentCache =
-        (cache.get(cacheList.hashRate) as TCacheValue) || readCacheValue(cacheList.hashRate) || {};
-      if (!currentCache[period]) {
-        setLoading(true);
-      } else {
-        setChartData(currentCache[period].parseData as THashrateChartData);
-        timestamp = currentCache[period]?.lastDate?.toString() || '';
-      }
-      const data = await fetchStats.fetchData({
-        params: { period, timestamp },
-      });
-      if (data) {
-        const parseData = transformHashRateCharts(data.data, period, timestamp);
-        if (
-          currentCache[period] &&
-          JSON.stringify(parseData) !== JSON.stringify(currentCache[period])
-        ) {
-          setLoading(true);
-        }
-        const newParseData = mergeHashRateChartData(
-          parseData,
-          currentCache[period]?.parseData as THashrateChartData,
-          period,
-        );
-        if (isSubscribed) {
-          setChartData(newParseData);
-        }
-        currentCache = {
-          ...currentCache,
-          [period]: {
-            parseData: newParseData,
-            lastDate: data.data.length
-              ? data.data[data.data.length - 1]?.timestamp
-              : currentCache[period]?.lastDate,
-          },
-        };
-        setCacheValue(
-          cacheList.hashRate,
-          JSON.stringify({
-            currentCache,
-            lastDate: Date.now(),
-          }),
-        );
-        cache.set(cacheList.hashRate, currentCache);
-      }
+    let currentCache = readCacheValue(cacheList.hashRate) || {};
+    if (currentCache[period]) {
+      setChartData(currentCache[period].parseData as THashrateChartData);
       setLoading(false);
-    };
-    loadLineChartData();
-    return () => {
-      isSubscribed = false;
-    };
-  }, [period]);
+    } else {
+      setLoading(true);
+    }
+    if (!swrData.isLoading && swrData.data) {
+      const parseData = transformHashRateCharts(swrData.data, period);
+      setChartData(parseData);
+      currentCache = {
+        ...currentCache,
+        [period]: {
+          parseData,
+        },
+      };
+      setCacheValue(
+        cacheList.hashRate,
+        JSON.stringify({
+          currentCache,
+          lastDate: Date.now(),
+        }),
+      );
+      setLoading(false);
+    }
+  }, [period, swrData.isLoading, swrData.data]);
 
   const handlePeriodFilterChange = (value: PeriodTypes) => {
     setPeriod(value);
