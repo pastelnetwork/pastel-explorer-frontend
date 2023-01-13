@@ -1,83 +1,50 @@
-// react
 import { useEffect, useState } from 'react';
-import LRU from 'lru-cache';
-// application
-import * as URLS from '@utils/constants/urls';
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
+
 import { PeriodTypes, transformMarketCapPriceInfo } from '@utils/helpers/statisticsLib';
-import { periods, info, LRU_OPTIONS, cacheList } from '@utils/constants/statistics';
+import { periods, info, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
-import { MarketCoinRespone, TMultiLineChartData, TCacheValue } from '@utils/types/IStatistics';
+import { TMultiLineChartData } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import useMarketCapPrice from '@hooks/useMarketCapPrice';
+
 import { EChartsMultiLineChart } from '../Chart/EChartsMultiLineChart';
 
-const cache = new LRU(LRU_OPTIONS);
-
-function PriceOvertime() {
+function MarketCapPrice() {
   const [period, setPeriod] = useState<PeriodTypes>(periods[3][0]);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const [isLoading, setLoading] = useState(false);
-
-  const fetchStats = useFetch<{ data: MarketCoinRespone }>({
-    method: 'get',
-    url: URLS.GET_STATISTICS_MARKET_PRICE,
-  });
   const [transformLineChartData, setTransformLineChartData] = useState<TMultiLineChartData>();
 
+  const swrData = useMarketCapPrice(period);
+
   useEffect(() => {
-    let isSubscribed = true;
-    const loadLineChartData = async () => {
-      let isAddNewNode = true;
-      let currentCache =
-        (cache.get(cacheList.marketCapPrice) as TCacheValue) ||
-        readCacheValue(cacheList.marketCapPrice) ||
-        {};
-      if (!currentCache[period]) {
-        setLoading(true);
-      } else {
-        setTransformLineChartData(currentCache[period].parseData as TMultiLineChartData);
-        isAddNewNode = false;
-      }
-      const data = await fetchStats.fetchData({
-        params: { period },
-      });
-      if (data) {
-        const parseData = transformMarketCapPriceInfo(data.data, period, isAddNewNode);
-        if (
-          currentCache[period] &&
-          JSON.stringify(parseData) !== JSON.stringify(currentCache[period])
-        ) {
-          setLoading(true);
-        }
-        if (isSubscribed) {
-          setTransformLineChartData(parseData);
-        }
-        currentCache = {
-          ...currentCache,
-          [period]: {
-            parseData,
-            lastDate: data.data.prices.length
-              ? Number(data.data.prices[data.data.prices.length - 1][0])
-              : currentCache[period]?.lastDate,
-          },
-        };
-        setCacheValue(
-          cacheList.marketCapPrice,
-          JSON.stringify({
-            currentCache,
-            lastDate: Date.now(),
-          }),
-        );
-        cache.set(cacheList.marketCapPrice, currentCache);
-      }
+    let currentCache = readCacheValue(cacheList.marketCapPrice) || {};
+    if (currentCache[period]) {
+      setTransformLineChartData(currentCache[period].parseData as TMultiLineChartData);
       setLoading(false);
-    };
-    loadLineChartData();
-    return () => {
-      isSubscribed = false;
-    };
-  }, [period]);
+    } else {
+      setLoading(true);
+    }
+    if (!swrData.isLoading && swrData.data) {
+      const parseData = transformMarketCapPriceInfo(swrData.data, period);
+      setTransformLineChartData(parseData);
+      currentCache = {
+        ...currentCache,
+        [period]: {
+          parseData,
+        },
+      };
+      setCacheValue(
+        cacheList.marketCapPrice,
+        JSON.stringify({
+          currentCache,
+          lastDate: Date.now(),
+        }),
+      );
+      setLoading(false);
+    }
+  }, [period, swrData.isLoading, swrData.data]);
 
   const handlePeriodFilterChange = (per: PeriodTypes) => {
     setPeriod(per);
@@ -116,4 +83,4 @@ function PriceOvertime() {
   );
 }
 
-export default PriceOvertime;
+export default MarketCapPrice;
