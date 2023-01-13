@@ -31,6 +31,7 @@ export const GET_STATISTICS_MARKET_PRICE = 'v1/stats/market/chart';
 export const GET_STATISTICS_CIRCULATING_SUPPLY = 'v1/stats/circulating-supply';
 export const GET_STATISTICS_PERCENT_OF_PSL_STAKED = 'v1/stats/percent-of-psl-staked';
 export const GET_STATISTICS_ACCOUNTS = 'v1/stats/accounts';
+export const GET_HISTORICAL_STATISTICS = 'v1/stats/historical-statistics';
 export const SENSE_URL = 'v1/transactions/sense';
 export const PASTEL_ID_URL = 'v1/transactions/pastelid';
 export const CURRENT_STATS = 'v1/stats/current-stats';

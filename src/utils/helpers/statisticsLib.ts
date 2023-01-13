@@ -82,7 +82,6 @@ const checkValidateData = (timestamp: number) => {
 export function transformDifficultyInfo(
   difficulties: IStatistic[],
   period: PeriodTypes,
-  timestamp: string,
 ): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
@@ -93,11 +92,7 @@ export function transformDifficultyInfo(
       dataX.push(format(Number(difficulties[i].timestamp), 'MM/dd/yyyy hh:mm aa'));
     }
   }
-  if (
-    period === '24h' &&
-    !timestamp &&
-    checkValidateData(difficulties[difficulties.length - 1]?.timestamp)
-  ) {
+  if (period === '24h' && checkValidateData(difficulties[difficulties.length - 1]?.timestamp)) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
     dataY.push(difficulties[difficulties.length - 1].difficulty);
   }
@@ -105,11 +100,7 @@ export function transformDifficultyInfo(
   return { dataX, dataY };
 }
 
-export function transformPriceInfo(
-  prices: IStatistic[],
-  period: PeriodTypes,
-  timestamp: string,
-): TMultiLineChartData {
+export function transformPriceInfo(prices: IStatistic[], period: PeriodTypes): TMultiLineChartData {
   const dataX: string[] = [];
   const dataY1: number[] = [];
   const dataY2: number[] = [];
@@ -121,7 +112,7 @@ export function transformPriceInfo(
     dataY2.push(btc);
     dataX.push(new Date(Number(prices[i].timestamp)).toLocaleString());
   }
-  if (period === '24h' && !timestamp && checkValidateData(prices[prices.length - 1]?.timestamp)) {
+  if (period === '24h' && checkValidateData(prices[prices.length - 1]?.timestamp)) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
     dataY1.push(Number(prices[prices.length - 1].usdPrice));
     dataY2.push(Number(prices[prices.length - 1].btcPrice));
@@ -132,7 +123,6 @@ export function transformPriceInfo(
 export function transformMarketVolumePriceInfo(
   data: MarketCoinRespone,
   period: PeriodTypes,
-  isAddNewNode: boolean,
 ): TMultiLineChartData {
   const dataX: string[] = [];
   const dataY1: number[] = [];
@@ -147,7 +137,7 @@ export function transformMarketVolumePriceInfo(
     dataY1.push(+y1.toFixed(8));
     dataY2.push(Number(y2.toFixed(2)));
   }
-  if (period === '24h' && isAddNewNode && checkValidateData(prices[prices.length - 1][0])) {
+  if (period === '24h' && checkValidateData(prices[prices.length - 1][0])) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
     dataY1.push(Number(dataY1[dataY1.length - 1]));
     dataY2.push(Number(dataY2[dataY2.length - 1]));
@@ -158,7 +148,6 @@ export function transformMarketVolumePriceInfo(
 export function transformMarketCapPriceInfo(
   data: MarketCoinRespone,
   period: PeriodTypes,
-  isAddNewNode: boolean,
 ): TMultiLineChartData {
   const dataX: string[] = [];
   const dataY1: number[] = [];
@@ -173,7 +162,7 @@ export function transformMarketCapPriceInfo(
     dataY1.push(+y1.toFixed(8));
     dataY2.push(Math.round(y2));
   }
-  if (period === '24h' && isAddNewNode && checkValidateData(prices[prices.length - 1][0])) {
+  if (period === '24h' && checkValidateData(prices[prices.length - 1][0])) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
     dataY1.push(Number(dataY1[dataY1.length - 1]));
     dataY2.push(Number(dataY2[dataY2.length - 1]));
@@ -199,7 +188,6 @@ export function transformHashrateInfo(hashrateInfo: TMiningInfo[]): TLineChartDa
 export function transformMempoolInfo(
   mempoolInfo: TMempoolInfo[],
   period: PeriodTypes,
-  timestamp: string,
 ): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
@@ -210,11 +198,7 @@ export function transformMempoolInfo(
       dataX.push(new Date(Number(mempoolInfo[i].timestamp)).toLocaleString());
     }
   }
-  if (
-    period === '24h' &&
-    !timestamp &&
-    checkValidateData(mempoolInfo[mempoolInfo.length - 1]?.timestamp)
-  ) {
+  if (period === '24h' && checkValidateData(mempoolInfo[mempoolInfo.length - 1]?.timestamp)) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
     dataY.push(Number(mempoolInfo[mempoolInfo.length - 1].usage) / 1000);
   }
@@ -224,7 +208,6 @@ export function transformMempoolInfo(
 export function transformNetTotals(
   nettotals: TNettotalsInfo[],
   period: PeriodTypes,
-  timestamp: string,
 ): TMultiLineChartData {
   const dataX: string[] = [];
   const dataY1: number[] = [];
@@ -238,11 +221,7 @@ export function transformNetTotals(
       dataX.push(new Date(Number(nettotals[i].timemillis)).toLocaleString());
     }
   }
-  if (
-    period === '24h' &&
-    !timestamp &&
-    checkValidateData(nettotals[nettotals.length - 1]?.timemillis)
-  ) {
+  if (period === '24h' && checkValidateData(nettotals[nettotals.length - 1]?.timemillis)) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
     dataY1.push(Number(nettotals[nettotals.length - 1].totalbytesrecv));
     dataY2.push(Number(nettotals[nettotals.length - 1].totalbytessent));
@@ -541,7 +520,6 @@ export function transformAccountDataChart(
 export function transformTotalSupplyDataChart(
   trans: IStatistic[],
   period: PeriodTypes,
-  timestamp: string,
 ): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];
@@ -549,7 +527,7 @@ export function transformTotalSupplyDataChart(
     dataY.push(Number(trans[i].coinSupply) - trans[i].totalBurnedPSL);
     dataX.push(new Date(trans[i].timestamp).toLocaleString());
   }
-  if (period === '24h' && !timestamp && checkValidateData(trans[trans.length - 1]?.timestamp)) {
+  if (period === '24h' && checkValidateData(trans[trans.length - 1]?.timestamp)) {
     dataX.push(new Date().toLocaleString());
     dataY.push(dataY[dataY.length - 1]);
   }
@@ -573,7 +551,6 @@ export const generatePeriodToDropdownOptions = (periods: PeriodTypes[]) => {
 export function transformHashRateCharts(
   data: THashrate[],
   period: PeriodTypes,
-  timestamp: string,
 ): THashrateChartData {
   const dataX: string[] = [];
   const networksolps: TSolpsData = {
@@ -596,7 +573,7 @@ export function transformHashRateCharts(
     networksolps.solps500.push(item.networksolps500);
     networksolps.solps1000.push(item.networksolps1000);
   });
-  if (period === '24h' && !timestamp && checkValidateData(data[data.length - 1]?.timestamp)) {
+  if (period === '24h' && checkValidateData(data[data.length - 1]?.timestamp)) {
     dataX.push(new Date().toLocaleString());
     networksolps.solps5.push(0);
     networksolps.solps10.push(0);
@@ -834,43 +811,6 @@ export const generateXAxisIntervalForScatterChart = (
   return Math.floor(dataX.length / 14);
 };
 
-export const mergeChartData = (
-  parseData: TLineChartData,
-  currentData: TLineChartData,
-  period: PeriodTypes,
-) => {
-  if (!currentData || !currentData.dataX.length) {
-    return parseData;
-  }
-  if (!parseData || !parseData.dataX.length) {
-    return currentData;
-  }
-  const newDataX = [
-    ...currentData.dataX.splice(0, currentData.dataX.length - 1),
-    ...parseData.dataX,
-  ];
-  const newDataY = [
-    ...currentData.dataY.splice(0, currentData.dataY.length - 1),
-    ...parseData.dataY,
-  ];
-  let startIndex = 0;
-  if (period !== 'all' && period !== 'max') {
-    const target = getPeriodData(period, parseData.dataX[parseData.dataX.length - 1]);
-    for (let i = 0; i < newDataX.length; i += 1) {
-      const timestamp = new Date(newDataX[i]).valueOf();
-      if (timestamp >= target) {
-        startIndex = i;
-        break;
-      }
-    }
-  }
-
-  return {
-    dataX: newDataX.splice(startIndex, newDataX.length),
-    dataY: newDataY.splice(startIndex, newDataY.length),
-  };
-};
-
 export const mergeMultiLineChartData = (
   parseData: TMultiLineChartData,
   currentData: TMultiLineChartData,
@@ -1061,3 +1001,33 @@ export const transformFingerprintsData = (data: number[]) => {
     yData,
   };
 };
+
+export function transformTransactionsChartData(
+  data: TChartResponseItem[],
+  period: PeriodTypes,
+  isMicroseconds = true,
+  decimalsLength = 2,
+): TLineChartData {
+  const dataX: string[] = [];
+  const dataY: number[] = [];
+  data.forEach(({ value, label }) => {
+    dataX.push(new Date(isMicroseconds ? Number(label) * 1000 : label).toLocaleString());
+    if (decimalsLength) {
+      dataY.push(+value.toFixed(decimalsLength));
+    } else {
+      dataY.push(+value);
+    }
+  });
+  if (
+    period === '24h' &&
+    checkValidateData(
+      isMicroseconds
+        ? Number(data[data.length - 1]?.label) * 1000
+        : Number(data[data.length - 1]?.label),
+    )
+  ) {
+    dataX.push(new Date().toLocaleString());
+    dataY.push(dataY[dataY.length - 1]);
+  }
+  return { dataX, dataY };
+}
