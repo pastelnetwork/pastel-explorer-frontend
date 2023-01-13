@@ -1,94 +1,52 @@
 // react
 import { useEffect, useState } from 'react';
-import LRU from 'lru-cache';
 // application
-import * as URLS from '@utils/constants/urls';
 import { getCurrencyName } from '@utils/appInfo';
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import {
-  PeriodTypes,
-  transformPriceInfo,
-  mergeMultiLineChartData,
-} from '@utils/helpers/statisticsLib';
-import { periods, info, LRU_OPTIONS, cacheList } from '@utils/constants/statistics';
+import { PeriodTypes, transformPriceInfo } from '@utils/helpers/statisticsLib';
+import { periods, info, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
-import { IStatistic, TMultiLineChartData, TCacheValue } from '@utils/types/IStatistics';
+import { TMultiLineChartData } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
-import { EChartsMultiLineChart } from '../Chart/EChartsMultiLineChart';
+import usePriceOvertime from '@hooks/usePriceOvertime';
 
-const cache = new LRU(LRU_OPTIONS);
+import { EChartsMultiLineChart } from '../Chart/EChartsMultiLineChart';
 
 function PriceOvertime() {
   const [period, setPeriod] = useState<PeriodTypes>(periods[1][0]);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const [isLoading, setLoading] = useState(false);
-
-  const fetchStats = useFetch<{ data: Array<IStatistic> }>({
-    method: 'get',
-    url: URLS.GET_STATISTICS,
-  });
-
   const [transformLineChartData, setTransformLineChartData] = useState<TMultiLineChartData>();
+  const swrData = usePriceOvertime(period);
 
   useEffect(() => {
-    let isSubscribed = true;
-    const loadLineChartData = async () => {
-      let timestamp = '';
-      let currentCache =
-        (cache.get(cacheList.priceOvertime) as TCacheValue) ||
-        readCacheValue(cacheList.priceOvertime) ||
-        {};
-      if (!currentCache[period]) {
-        setLoading(true);
-      } else {
-        setTransformLineChartData(currentCache[period].parseData as TMultiLineChartData);
-        timestamp = currentCache[period]?.lastDate?.toString() || '';
-      }
-      const data = await fetchStats.fetchData({
-        params: { sortDirection: 'DESC', period, timestamp },
-      });
-      if (data) {
-        const parseData = transformPriceInfo(data.data, period, timestamp);
-        if (
-          currentCache[period] &&
-          JSON.stringify(parseData) !== JSON.stringify(currentCache[period])
-        ) {
-          setLoading(true);
-        }
-        const newParseData = mergeMultiLineChartData(
-          parseData,
-          currentCache[period]?.parseData as TMultiLineChartData,
-          period,
-        );
-        if (isSubscribed) {
-          setTransformLineChartData(newParseData);
-        }
-        currentCache = {
-          ...currentCache,
-          [period]: {
-            parseData: newParseData,
-            lastDate: data.data.length
-              ? data.data[data.data.length - 1]?.timestamp
-              : currentCache[period]?.lastDate,
-          },
-        };
-        setCacheValue(
-          cacheList.priceOvertime,
-          JSON.stringify({
-            currentCache,
-            lastDate: Date.now(),
-          }),
-        );
-        cache.set(cacheList.priceOvertime, currentCache);
-      }
+    let currentCache = readCacheValue(cacheList.priceOvertime) || {};
+    if (currentCache[period]) {
+      setTransformLineChartData(currentCache[period].parseData as TMultiLineChartData);
       setLoading(false);
-    };
-    loadLineChartData();
-    return () => {
-      isSubscribed = false;
-    };
-  }, [period]);
+    } else {
+      setLoading(true);
+    }
+    if (!swrData.isLoading && swrData.data) {
+      const parseData = transformPriceInfo(swrData.data, period);
+      setTransformLineChartData(parseData);
+      currentCache = {
+        ...currentCache,
+        [period]: {
+          parseData,
+        },
+      };
+      setCacheValue(
+        cacheList.priceOvertime,
+        JSON.stringify({
+          currentCache,
+          lastDate: Date.now(),
+        }),
+      );
+      setLoading(false);
+    }
+  }, [period, swrData.isLoading, swrData.data]);
+
   const handlePeriodFilterChange = (per: PeriodTypes) => {
     setPeriod(per);
   };

@@ -4,14 +4,13 @@ import { axiosGet } from '@utils/helpers/useFetch/useFetch';
 import * as URLS from '@utils/constants/urls';
 import { TTransactionsChart } from '@utils/types/IStatistics';
 
-export default function useBlockchainSize(period: string) {
+export default function useTotalTransactionFees(period: string) {
   const { data, isLoading } = useSWRInfinite<{
     data: Array<TTransactionsChart>;
     startValue: number;
     endValue: number;
   }>(
-    () =>
-      `${URLS.GET_BLOCKS_CHARTS}?period=${period}&sortDirection=DESC&func=SUM&col=size&name=blockchainSize`,
+    () => `${URLS.GET_TRANSACTIONS_CHARTS}?period=${period}&sortDirection=DESC&func=SUM&col=fee`,
     axiosGet,
   );
   return {

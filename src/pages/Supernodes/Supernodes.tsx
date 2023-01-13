@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 
 import ExplorerMap from '@pages/Explorer/ExplorerMap/ExplorerMap';
 import SupernodeStatistics from '@pages/Explorer/SupernodeStatistics/SupernodeStatistics';
@@ -13,13 +13,7 @@ import { Dropdown, OptionsProps } from '@components/Dropdown/Dropdown';
 import useSupernodes from '@hooks/useSupernodes';
 
 import { columns, SUPERNODE_LAST_PAID_KEY } from './Supernodes.columns';
-import {
-  transformSupernodesData,
-  DATA_FETCH_LIMIT,
-  DATA_OFFSET,
-  DATA_DEFAULT_SORT,
-  STATUS_LIST,
-} from './Supernodes.helpers';
+import { transformSupernodesData, DATA_DEFAULT_SORT, STATUS_LIST } from './Supernodes.helpers';
 import * as Styles from './Supernodes.styles';
 
 interface ISupernodeData {
@@ -28,15 +22,15 @@ interface ISupernodeData {
 }
 
 const Supernodes: React.FC = () => {
-  const { masternodes, isLoading } = useSupernodes(DATA_FETCH_LIMIT, DATA_OFFSET);
-  const [isMobile, setMobileView] = React.useState(false);
-  const [status, setStatus] = React.useState<string>(STATUS_LIST[0].value);
-  const [sortData, setSortData] = React.useState<ISupernodeData>({
+  const { masternodes, isLoading } = useSupernodes();
+  const [isMobile, setMobileView] = useState(false);
+  const [status, setStatus] = useState<string>(STATUS_LIST[0].value);
+  const [sortData, setSortData] = useState<ISupernodeData>({
     sortBy: SUPERNODE_LAST_PAID_KEY,
     sortDirection: DATA_DEFAULT_SORT,
   });
-  const [supernodes, setSupernodes] = React.useState<Array<RowsProps>>([]);
-  const [originalSupernodes, setOriginalSupernodes] = React.useState<Array<INetworkSupernodes>>([]);
+  const [supernodes, setSupernodes] = useState<Array<RowsProps>>([]);
+  const [originalSupernodes, setOriginalSupernodes] = useState<Array<INetworkSupernodes>>([]);
 
   const handleSort = ({ sortBy, sortDirection }: ISortData) => {
     const sortedSupernodes = supernodes.sort((a, b) => {
@@ -60,14 +54,14 @@ const Supernodes: React.FC = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (masternodes?.length) {
       setSupernodes(transformSupernodesData(masternodes));
       setOriginalSupernodes(masternodes);
     }
   }, [isLoading, masternodes]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     handleShowSubMenu();
 
     window.addEventListener('resize', handleShowSubMenu);
@@ -77,7 +71,7 @@ const Supernodes: React.FC = () => {
   }, []);
 
   const handleChange = (
-    event: React.ChangeEvent<{
+    event: ChangeEvent<{
       name?: string | undefined;
       value: unknown;
     }>,

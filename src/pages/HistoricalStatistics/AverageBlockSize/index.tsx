@@ -24,7 +24,7 @@ const AverageBlockSize = (): JSX.Element => {
   const [granularity, setGranularity] = useState<TGranularity>(BLOCK_CHART_DEFAULT_GRANULARITY);
   const [chartData, setChartData] = useState<TLineChartData | null>(null);
   const [isLoading, setLoading] = useState(false);
-  const swrData = useAverageBlockSize(period, 'DESC', granularity, 'true');
+  const swrData = useAverageBlockSize(period, granularity);
 
   useEffect(() => {
     let currentCache = readCacheValue(cacheList.averageBlockSize) || {};
