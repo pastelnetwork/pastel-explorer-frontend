@@ -1,90 +1,50 @@
 // react
 import { useEffect, useState } from 'react';
-import LRU from 'lru-cache';
-// application
-import * as URLS from '@utils/constants/urls';
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { PeriodTypes, transformMempoolInfo, mergeChartData } from '@utils/helpers/statisticsLib';
-import { periods, info, LRU_OPTIONS, cacheList } from '@utils/constants/statistics';
+
+import { PeriodTypes, transformMempoolInfo } from '@utils/helpers/statisticsLib';
+import { periods, info, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
-import { TMempoolInfo, TLineChartData, TCacheValue } from '@utils/types/IStatistics';
+import { TLineChartData } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import useMempoolSize from '@hooks/useMempoolSize';
 
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
-
-const cache = new LRU(LRU_OPTIONS);
 
 function MempoolSize() {
   const [chartData, setChartData] = useState<TLineChartData | null>(null);
   const [period, setPeriod] = useState<PeriodTypes>(periods[1][0]);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const [isLoading, setLoading] = useState(false);
-
-  const fetchStats = useFetch<{ data: Array<TMempoolInfo> }>({
-    method: 'get',
-    url: URLS.GET_STATISTICS_MEMPOOL_INFO,
-  });
+  const swrData = useMempoolSize(period);
 
   useEffect(() => {
-    let isSubscribed = true;
-    const loadLineChartData = async () => {
-      let timestamp = '';
-      let currentCache =
-        (cache.get(cacheList.mempoolSize) as TCacheValue) ||
-        readCacheValue(cacheList.mempoolSize) ||
-        {};
-      if (!currentCache[period]) {
-        setLoading(true);
-      } else {
-        setChartData(currentCache[period].parseData as TLineChartData);
-        timestamp = currentCache[period]?.lastDate?.toString() || '';
-      }
-
-      const data = await fetchStats.fetchData({
-        params: { period, sortDirection: 'DESC', timestamp },
-      });
-      if (data) {
-        const parseData = transformMempoolInfo(data.data, period, timestamp);
-        if (
-          currentCache[period] &&
-          JSON.stringify(parseData) !== JSON.stringify(currentCache[period])
-        ) {
-          setLoading(true);
-        }
-        const newParseData = mergeChartData(
-          parseData,
-          currentCache[period]?.parseData as TLineChartData,
-          period,
-        );
-        if (isSubscribed) {
-          setChartData(newParseData);
-        }
-        currentCache = {
-          ...currentCache,
-          [period]: {
-            parseData: newParseData,
-            lastDate: data.data.length
-              ? data.data[data.data.length - 1]?.timestamp
-              : currentCache[period]?.lastDate,
-          },
-        };
-        setCacheValue(
-          cacheList.mempoolSize,
-          JSON.stringify({
-            currentCache,
-            lastDate: Date.now(),
-          }),
-        );
-        cache.set(cacheList.mempoolSize, currentCache);
-      }
+    let currentCache = readCacheValue(cacheList.mempoolSize) || {};
+    if (currentCache[period]) {
+      setChartData(currentCache[period].parseData as TLineChartData);
       setLoading(false);
-    };
-    loadLineChartData();
-    return () => {
-      isSubscribed = false;
-    };
-  }, [period]);
+    } else {
+      setLoading(true);
+    }
+    if (!swrData.isLoading && swrData.data) {
+      const parseData = transformMempoolInfo(swrData.data, period);
+      setChartData(parseData);
+      currentCache = {
+        ...currentCache,
+        [period]: {
+          parseData,
+        },
+      };
+      setCacheValue(
+        cacheList.mempoolSize,
+        JSON.stringify({
+          currentCache,
+          lastDate: Date.now(),
+        }),
+      );
+      setLoading(false);
+    }
+  }, [period, swrData.isLoading, swrData.data]);
 
   const handlePeriodFilterChange = (value: PeriodTypes) => {
     setPeriod(value);
