@@ -28,7 +28,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature }) => {
       <Box>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={2}>
-            <Styles.TicketTitle>Principal PastelID:</Styles.TicketTitle>
+            <Styles.TicketTitle>PastelID of User Submitting Ticket:</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={10}>
             <Styles.TicketContent>{Object.keys(signatures.principal)[0]}</Styles.TicketContent>
@@ -36,7 +36,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature }) => {
         </Grid>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={2}>
-            <Styles.TicketTitle>Principal Signature:</Styles.TicketTitle>
+            <Styles.TicketTitle>Signature of User:</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={10}>
             <Styles.TicketContent className="break-all">
@@ -46,7 +46,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature }) => {
         </Grid>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={2}>
-            <Styles.TicketTitle>SuperNode 1 PastelID:</Styles.TicketTitle>
+            <Styles.TicketTitle>Registering Supernode #1 - PastelID:</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={10}>
             <Styles.TicketContent className="break-all">
@@ -56,7 +56,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature }) => {
         </Grid>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={2}>
-            <Styles.TicketTitle>SuperNode 1 Signature:</Styles.TicketTitle>
+            <Styles.TicketTitle>Registering Supernode #1 - Signature:</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={10}>
             <Styles.TicketContent className="break-all">
@@ -66,7 +66,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature }) => {
         </Grid>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={2}>
-            <Styles.TicketTitle>SuperNode 2 PastelID:</Styles.TicketTitle>
+            <Styles.TicketTitle>Registering Supernode #2 - PastelID:</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={10}>
             <Styles.TicketContent className="break-all">
@@ -76,7 +76,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature }) => {
         </Grid>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={2}>
-            <Styles.TicketTitle>SuperNode 2 Signature:</Styles.TicketTitle>
+            <Styles.TicketTitle>Registering Supernode #2 - Signature:</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={10}>
             <Styles.TicketContent className="break-all">
@@ -86,7 +86,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature }) => {
         </Grid>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={2}>
-            <Styles.TicketTitle>SuperNode 3 PastelID:</Styles.TicketTitle>
+            <Styles.TicketTitle>Registering Supernode #3 - PastelID:</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={10}>
             <Styles.TicketContent className="break-all">
@@ -96,7 +96,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature }) => {
         </Grid>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={2}>
-            <Styles.TicketTitle>SuperNode 3 Signature:</Styles.TicketTitle>
+            <Styles.TicketTitle>Registering Supernode #3 - Signature:</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={10}>
             <Styles.TicketContent className="break-all">

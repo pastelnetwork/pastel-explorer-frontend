@@ -133,6 +133,16 @@ const SenseDetails: React.FC = () => {
     return results;
   };
 
+  if (fetchSenses.isLoading) {
+    return (
+      <TransactionStyles.LoadingWrapper>
+        <TransactionStyles.Loader>
+          <CircularProgress size={40} />
+        </TransactionStyles.Loader>
+      </TransactionStyles.LoadingWrapper>
+    );
+  }
+
   return sense ? (
     <Styles.Wrapper>
       <Header title="Sense Details" />
@@ -257,11 +267,12 @@ const SenseDetails: React.FC = () => {
       <SenseRawData rawData={getRawData()} open={openRawDataModal} toggleOpen={toggleOpenRawData} />
     </Styles.Wrapper>
   ) : (
-    <TransactionStyles.LoadingWrapper>
-      <TransactionStyles.Loader>
-        <CircularProgress size={40} />
-      </TransactionStyles.Loader>
-    </TransactionStyles.LoadingWrapper>
+    <Styles.Wrapper>
+      <Header title="Sense Details" />
+      <Grid container direction="column" spacing={2}>
+        Sense not found
+      </Grid>
+    </Styles.Wrapper>
   );
 };
 
