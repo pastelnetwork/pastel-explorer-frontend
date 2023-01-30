@@ -4,12 +4,14 @@ import { AppStateType } from './index';
 
 export interface IFilterState {
   dateRange: string | null;
+  dropdownType: string[];
 }
 export const stateKey = 'filter';
 type ActionTypes = SetFilterValueProps;
 
 const initialState: IFilterState = {
   dateRange: null,
+  dropdownType: [],
 };
 
 const reducer = (state = initialState, actions: ActionTypes): IFilterState => {

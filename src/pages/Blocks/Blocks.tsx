@@ -10,7 +10,7 @@ import InfinityTable, {
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import * as URLS from '@utils/constants/urls';
 import { IBlock } from '@utils/types/IBlocks';
-import { blocksFilters } from '@utils/constants/filter';
+import { blocksPeriodFilters, blocksFilters } from '@utils/constants/filter';
 import { getFilterState } from '@redux/reducers/filterReducer';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 
@@ -67,6 +67,7 @@ const Blocks = () => {
     replaceData = false,
     filterBy = 'period',
     filterValue = filter.dateRange || '',
+    filterType = filter.dropdownType || [],
   ) => {
     fetchParams.current.sortBy = sortBy;
     const limit = DATA_FETCH_LIMIT;
@@ -80,10 +81,13 @@ const Blocks = () => {
       limit,
       sortBy: fetchSortBy,
       sortDirection,
-      period: blocksFilters[blocksFilters.length - 1].value,
+      period: blocksPeriodFilters[blocksPeriodFilters.length - 1].value,
     };
-    if (filterValue && filterValue !== blocksFilters[blocksFilters.length - 1].value) {
+    if (filterValue && filterValue !== blocksPeriodFilters[blocksPeriodFilters.length - 1].value) {
       params[filterBy] = filterValue;
+    }
+    if (filterType.length) {
+      params.types = filterType.join(',');
     }
     return fetchBlocksData
       .fetchData({ params })
@@ -126,7 +130,7 @@ const Blocks = () => {
   };
 
   React.useEffect(() => {
-    if (filter.dateRange) {
+    if (filter.dateRange || filter.dropdownType) {
       fetchParams.current.offset = DATA_OFFSET;
       handleFetchBlocks(
         DATA_OFFSET,
@@ -134,12 +138,13 @@ const Blocks = () => {
         fetchParams.current.sortDirection,
         true,
         'period',
-        filter.dateRange,
+        filter.dateRange || '',
+        filter.dropdownType || '',
       );
     } else {
       handleFetchBlocks(DATA_OFFSET, fetchParams.current.sortBy, fetchParams.current.sortDirection);
     }
-  }, [filter.dateRange]);
+  }, [filter.dateRange, filter.dropdownType]);
 
   const getMovementTransactionsTitle = () => (
     <Styles.TitleWrapper>
@@ -156,7 +161,9 @@ const Blocks = () => {
         sortBy={fetchParams.current.sortBy}
         sortDirection={fetchParams.current.sortDirection}
         rows={blockList}
-        filters={blocksFilters}
+        filters={blocksPeriodFilters}
+        dropdownFilters={blocksFilters}
+        dropdownLabel="Type"
         title={getMovementTransactionsTitle()}
         columns={columns}
         tableHeight={isMobile ? 750 : 650}
