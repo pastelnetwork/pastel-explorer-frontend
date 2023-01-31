@@ -145,7 +145,7 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  ${props => props.theme.breakpoints.down('xs')} {
+  ${props => props.theme.breakpoints.down('sm')} {
     flex-direction: column;
   }
 
@@ -163,4 +163,57 @@ export const Wrapper = styled.div`
 export const EmptyData = styled.div`
   display: block;
   min-height: 10vh;
+`;
+
+export const FilterWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+
+  .dropdown-filter {
+    max-width: 125px;
+    min-width: 70px;
+    margin-right: 15px;
+
+    label + .MuiInput-formControl {
+      margin-top: 0;
+    }
+
+    .MuiInputLabel-formControl {
+      top: -16px;
+      left: 6px;
+    }
+
+    .MuiInput-underline {
+      &:after,
+      &:before {
+        display: none;
+      }
+    }
+
+    .MuiInputBase-root {
+      padding-left: 5px;
+      border: 1px solid ${props => props.theme.filter.border};
+      border-radius: 4px;
+      background: transparent;
+    }
+
+    .MuiSelect-select.MuiSelect-select {
+      background: transparent;
+    }
+
+    .MuiSelect-icon {
+      top: calc(50% - 14px);
+      color: ${props => props.theme.palette.text.primary};
+    }
+  }
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    justify-content: center;
+    margin-top: 10px;
+
+    .dropdown-filter {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  }
 `;

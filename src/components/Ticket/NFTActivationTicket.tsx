@@ -38,7 +38,7 @@ const NFTActivationTicket: React.FC<INFTActivationTicketProps> = ({ ticket }) =>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={2}>
-          <Styles.TicketTitle>Version:</Styles.TicketTitle>
+          <Styles.TicketTitle>Pastel OpenAPI Ticket Version Number:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
           <Styles.TicketContent>{ticket.version}</Styles.TicketContent>
@@ -81,7 +81,9 @@ const NFTActivationTicket: React.FC<INFTActivationTicketProps> = ({ ticket }) =>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={2}>
-          <Styles.TicketTitle>Storage fee:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            Total Cost in PSL to Register Ticket on Blockchain:
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={10}>
           <Styles.TicketContent>

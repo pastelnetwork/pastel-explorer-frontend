@@ -7,7 +7,7 @@ import InfinityTable, {
   ISortData,
 } from '@components/InfinityTable/InfinityTable';
 
-import { blocksFilters } from '@utils/constants/filter';
+import { blocksPeriodFilters, blocksFilters } from '@utils/constants/filter';
 import { getFilterState } from '@redux/reducers/filterReducer';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import useBlocks from '@hooks/useBlocks';
@@ -26,6 +26,7 @@ interface IBlocksDataRef {
   sortBy: string;
   sortDirection: SortDirectionsType;
   period: string;
+  types: string[];
 }
 
 const Blocks = () => {
@@ -35,6 +36,7 @@ const Blocks = () => {
     sortBy: 'id',
     sortDirection: DATA_DEFAULT_SORT,
     period: filter.dateRange || 'all',
+    types: filter.dropdownType || [],
   });
   const { swrData, isLoading } = useBlocks(
     apiParams.offset,
@@ -42,6 +44,7 @@ const Blocks = () => {
     apiParams.sortBy === BLOCK_ID_KEY ? 'id' : apiParams.sortBy,
     apiParams.sortDirection,
     apiParams.period,
+    apiParams.types,
   );
   const [size, setSize] = useState<number>(1);
   const [isMobile, setMobileView] = useState(false);
@@ -82,11 +85,16 @@ const Blocks = () => {
   };
 
   useEffect(() => {
-    if (filter.dateRange) {
+    if (filter.dateRange || filter.dropdownType) {
       setSize(1);
-      setParams({ ...apiParams, offset: 0, period: filter.dateRange });
+      setParams({
+        ...apiParams,
+        offset: 0,
+        period: filter.dateRange || '',
+        types: filter.dropdownType || '',
+      });
     }
-  }, [filter.dateRange]);
+  }, [filter.dateRange, filter.dropdownType]);
 
   useEffect(() => {
     if (!isLoading && swrData) {
@@ -115,7 +123,9 @@ const Blocks = () => {
         sortBy={apiParams.sortBy}
         sortDirection={apiParams.sortDirection}
         rows={blockList}
-        filters={blocksFilters}
+        filters={blocksPeriodFilters}
+        dropdownFilters={blocksFilters}
+        dropdownLabel="Type"
         title={getMovementTransactionsTitle()}
         columns={columns}
         tableHeight={isMobile ? 750 : 650}

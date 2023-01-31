@@ -61,6 +61,8 @@ interface IInfinityTableComponentProps {
   className?: string;
   headerBackground?: boolean;
   isLoading?: boolean;
+  dropdownFilters?: TFilter[];
+  dropdownLabel?: string;
 }
 
 const noRowsRenderer = () => <Styles.EmptyData />;
@@ -97,6 +99,8 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   columns,
   sortBy,
   filters,
+  dropdownFilters,
+  dropdownLabel,
   sortDirection,
   loadMoreFrom = 0,
   onBottomReach,
@@ -165,7 +169,13 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
         {!filters ? (
           <h4 className="table-title">{title}</h4>
         ) : (
-          <Filters filters={filters} title={title} headerBackground={headerBackground} />
+          <Filters
+            filters={filters}
+            dropdownFilters={dropdownFilters}
+            title={title}
+            headerBackground={headerBackground}
+            dropdownLabel={dropdownLabel}
+          />
         )}
       </div>
     );

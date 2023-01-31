@@ -25,7 +25,7 @@ export const defaultFilters = [
   // },
 ];
 
-export const blocksFilters = [
+export const blocksPeriodFilters = [
   {
     name: '24H',
     value: '1d',
@@ -45,5 +45,20 @@ export const blocksFilters = [
   {
     name: 'All',
     value: 'all',
+  },
+];
+
+export const blocksFilters = [
+  {
+    name: 'NFT',
+    value: 'nft',
+  },
+  {
+    name: 'Cascade',
+    value: 'cascade',
+  },
+  {
+    name: 'Sense',
+    value: 'sense',
   },
 ];

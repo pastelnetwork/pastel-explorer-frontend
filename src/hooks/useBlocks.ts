@@ -11,10 +11,15 @@ export default function useBlocks(
   sortBy: string,
   sortDirection: SortDirectionsType,
   period: string,
+  types: string[],
 ) {
+  let typesParam = '';
+  if (types.length) {
+    typesParam = `&types=${types.join(',')}`;
+  }
   const { data, isLoading } = useSWRInfinite(
     () =>
-      `${URLS.BLOCK_URL}?offset=${offset}&limit=${limit}&sortBy=${sortBy}&sortDirection=${sortDirection}&period=${period}`,
+      `${URLS.BLOCK_URL}?offset=${offset}&limit=${limit}&sortBy=${sortBy}&sortDirection=${sortDirection}&period=${period}${typesParam}`,
     axiosGet,
     SWR_OPTIONS,
   );
