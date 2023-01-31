@@ -123,7 +123,7 @@ const SenseDetails: React.FC = () => {
     return results;
   };
 
-  if (fetchSenses.isLoading) {
+  if (isLoading) {
     return (
       <TransactionStyles.LoadingWrapper>
         <TransactionStyles.Loader>
