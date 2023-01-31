@@ -18,26 +18,26 @@ const UserNameChangeTicket: React.FC<IUserNameChangeTicketProps> = ({ ticket }) 
   return (
     <Box>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={2}>
+        <Grid item xs={4} sm={3}>
           <Styles.TicketTitle>Username:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={8} sm={10}>
+        <Grid item xs={8} sm={9}>
           <Styles.TicketContent>{ticket.username}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={2}>
+        <Grid item xs={4} sm={3}>
           <Styles.TicketTitle>Pastel OpenAPI Ticket Version Number:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={8} sm={10}>
+        <Grid item xs={8} sm={9}>
           <Styles.TicketContent>{ticket.version}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={2}>
+        <Grid item xs={4} sm={3}>
           <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={8} sm={10}>
+        <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
             <RouterLink
               route={`${ROUTES.PASTEL_ID_DETAILS}/${ticket.pastelID}`}
@@ -50,10 +50,10 @@ const UserNameChangeTicket: React.FC<IUserNameChangeTicketProps> = ({ ticket }) 
       </Grid>
       <Signatures signature={ticket.signature} />
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={2}>
+        <Grid item xs={4} sm={3}>
           <Styles.TicketTitle>Fee:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={8} sm={10}>
+        <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
             {formatNumber(ticket.fee)} {getCurrencyName()}
           </Styles.TicketContent>
