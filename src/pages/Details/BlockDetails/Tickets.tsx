@@ -107,10 +107,10 @@ const TicketsList: React.FC<ITicketsList> = ({ data }) => {
               id={ticket.transactionHash}
             >
               <Grid container spacing={3}>
-                <Grid item xs={4} sm={2}>
+                <Grid item xs={4} sm={3}>
                   <TicketStyles.TicketTitle>Type:</TicketStyles.TicketTitle>
                 </Grid>
-                <Grid item xs={8} sm={10}>
+                <Grid item xs={8} sm={9}>
                   <TicketStyles.TicketContent>
                     {getTicketTitle(ticket.type as TTicketType)}
                   </TicketStyles.TicketContent>

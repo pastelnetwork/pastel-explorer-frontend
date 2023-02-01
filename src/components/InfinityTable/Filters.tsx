@@ -1,4 +1,4 @@
-import { memo, FC, useCallback, MouseEvent, useEffect, ReactNode } from 'react';
+import { memo, FC, useCallback, MouseEvent, useEffect, ReactNode, useState } from 'react';
 import makeStyles from '@material-ui/styles/makeStyles';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -6,7 +6,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilterValueAction } from '@redux/actions/filterAction';
@@ -25,13 +24,6 @@ const useStyles = makeStyles((theme: TAppTheme) => {
       [theme.breakpoints.down('xs')]: {
         maxWidth: '100%',
       },
-    },
-    button: {
-      paddingRight: 0,
-      minWidth: 'auto',
-    },
-    paper: {
-      border: '1px solid',
     },
     rootMenuItem: {
       display: 'block',
@@ -57,13 +49,10 @@ interface IProps {
   dropdownLabel?: string;
 }
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
 const MenuProps = {
   PaperProps: {
     style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
+      maxHeight: 350,
     },
   },
 };
@@ -79,11 +68,21 @@ const Filters: FC<IProps> = ({
   const classes = useStyles();
   const { dateRange, dropdownType } = useSelector(getFilterState);
   const time: string = dateRange || 'all';
+  const [open, setOpen] = useState(false);
+  const [ticketType, setTicketType] = useState<string[]>(dropdownType || []);
 
   const handleSelectTime = useCallback((event: MouseEvent<HTMLButtonElement>) => {
     const { value } = event.currentTarget;
     dispatch(setFilterValueAction({ dateRange: value, dropdownType }));
   }, []);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
   useEffect(() => {
     return () => {
@@ -92,7 +91,12 @@ const Filters: FC<IProps> = ({
   }, [dispatch]);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    dispatch(setFilterValueAction({ dateRange, dropdownType: event.target.value as string[] }));
+    setTicketType(event.target.value as string[]);
+  };
+
+  const handleFilter = () => {
+    setOpen(false);
+    dispatch(setFilterValueAction({ dateRange, dropdownType: ticketType }));
   };
 
   const renderDropdownCheckbox = () => {
@@ -111,24 +115,39 @@ const Filters: FC<IProps> = ({
 
     return (
       <FormControl className="dropdown-filter">
-        {dropdownLabel && !dropdownType?.length ? (
-          <InputLabel id="dropdownCheckbox">{dropdownLabel}</InputLabel>
-        ) : null}
+        {dropdownLabel ? <div className="dropdown-label">{dropdownLabel}</div> : null}
         <Select
-          labelId="dropdownCheckbox"
           multiple
-          value={dropdownType || []}
+          displayEmpty
+          open={open}
+          onClose={handleClose}
+          onOpen={handleOpen}
+          value={ticketType || []}
           onChange={handleChange}
           input={<Input />}
-          renderValue={selected => renderValue(selected as string[])}
+          renderValue={selected => {
+            if ((selected as string[]).length === 0) {
+              return <>All</>;
+            }
+
+            return renderValue(selected as string[]);
+          }}
           MenuProps={MenuProps}
         >
           {dropdownFilters.map(item => (
-            <MenuItem key={item.value} value={item.value}>
-              <Checkbox checked={dropdownType?.indexOf(item.value) > -1} />
+            <Styles.MenuItem key={item.value} value={item.value}>
+              <Checkbox checked={ticketType?.indexOf(item.value) > -1} />
               <ListItemText primary={item.name} />
-            </MenuItem>
+            </Styles.MenuItem>
           ))}
+          <Styles.FilterButtonWrapper>
+            <Button className="btn-close" type="button" onClick={handleClose}>
+              Close
+            </Button>
+            <Button className="btn-filter" type="button" onClick={handleFilter}>
+              Filter
+            </Button>
+          </Styles.FilterButtonWrapper>
         </Select>
       </FormControl>
     );

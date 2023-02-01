@@ -22,10 +22,10 @@ const SenseItem: React.FC<ISenseItem> = ({ sense }) => {
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={2}>
+        <Grid item xs={4} sm={3}>
           <TicketStyles.TicketTitle>Image Hash:</TicketStyles.TicketTitle>
         </Grid>
-        <Grid item xs={8} sm={10}>
+        <Grid item xs={8} sm={9}>
           <TicketStyles.TicketContent>
             {sense.imageFileHash.indexOf('nosense') === -1 ? (
               <RouterLink
@@ -41,10 +41,10 @@ const SenseItem: React.FC<ISenseItem> = ({ sense }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={2}>
+        <Grid item xs={4} sm={3}>
           <TicketStyles.TicketTitle>Sense Version:</TicketStyles.TicketTitle>
         </Grid>
-        <Grid item xs={8} sm={10}>
+        <Grid item xs={8} sm={9}>
           <TicketStyles.TicketContent>
             {sense.imageFileHash.indexOf('nosense') === -1 ? sense.dupeDetectionSystemVersion : ''}
           </TicketStyles.TicketContent>
