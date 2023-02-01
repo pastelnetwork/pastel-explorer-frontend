@@ -246,19 +246,7 @@ export interface IActionRegistrationTicket {
   label: string;
   called_at: number;
   storage_fee: number;
-  activation_ticket: {
-    height: number;
-    ticket: {
-      called_at: number;
-      pastelID: string;
-      reg_txid: string;
-      signature: string;
-      storage_fee: number;
-      type: string;
-      version: number;
-    };
-    txid: string;
-  };
+  activation_ticket: string;
 }
 
 export interface IActionTicket {
