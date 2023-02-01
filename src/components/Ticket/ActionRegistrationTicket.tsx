@@ -27,7 +27,7 @@ interface IActionTicketProps {
 }
 
 const ActionTicket: React.FC<IActionTicketProps> = ({ ticket, actionType }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
   if (!ticket) {
     return null;
   }
@@ -104,7 +104,10 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket, actionType }) => {
         </Grid>
       </Grid>
       {nft.api_ticket ? (
-        <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
+        <Styles.Accordion
+          expanded={isExpanded}
+          onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}
+        >
           <AccordionSummary>
             <Grid container spacing={3}>
               <Grid item xs={4} sm={3}>
@@ -112,7 +115,7 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket, actionType }) => {
               </Grid>
               <Grid item xs={8} sm={9}>
                 <Styles.TicketContent className="expand-more">
-                  {isExpanded ? 'Click to see less' : 'Click to see detail'} <ExpandMoreIcon />
+                  {isExpanded ? 'Hide detail' : 'Click to see detail'} <ExpandMoreIcon />
                 </Styles.TicketContent>
               </Grid>
             </Grid>
@@ -158,6 +161,18 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3}>
+          <Styles.TicketTitle>Status:</Styles.TicketTitle>
+        </Grid>
+        <Grid item xs={8} sm={9}>
+          <Styles.ActionRegistrationTicketStatus
+            className={ticket?.activation_ticket ? 'active' : ''}
+          >
+            {ticket?.activation_ticket ? 'Activated' : 'Not Yet Activated'}
+          </Styles.ActionRegistrationTicketStatus>
+        </Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs={4} sm={3}>
           <Styles.TicketTitle>Pastel OpenAPI Ticket Version Number:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -174,7 +189,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3}>
-          <Styles.TicketTitle>Label:</Styles.TicketTitle>
+          <Styles.TicketTitle>TXID of Preburn 20%:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>{ticket.label || 'NA'}</Styles.TicketContent>
@@ -221,7 +236,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
               </Grid>
               <Grid item xs={8} sm={9}>
                 <Styles.TicketContent className="expand-more">
-                  {isExpanded ? 'Click to see less' : 'Click to see detail'} <ExpandMoreIcon />
+                  {isExpanded ? 'Hide detail' : 'Click to see detail'} <ExpandMoreIcon />
                 </Styles.TicketContent>
               </Grid>
             </Grid>

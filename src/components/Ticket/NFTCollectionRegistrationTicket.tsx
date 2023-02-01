@@ -185,7 +185,7 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3}>
-          <Styles.TicketTitle>Label:</Styles.TicketTitle>
+          <Styles.TicketTitle>TXID of Preburn 20%:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>{ticket.label || 'NA'}</Styles.TicketContent>

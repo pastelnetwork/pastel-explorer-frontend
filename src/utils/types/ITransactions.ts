@@ -246,6 +246,7 @@ export interface IActionRegistrationTicket {
   label: string;
   called_at: number;
   storage_fee: number;
+  activation_ticket: string;
 }
 
 export interface IActionTicket {

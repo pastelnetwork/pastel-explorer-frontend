@@ -1,6 +1,7 @@
 import styled from 'styled-components/macro';
 
 import { Card as MuiCard, TableCell, Paper } from '@material-ui/core';
+import MuiMenuItem from '@material-ui/core/MenuItem';
 import { spacing } from '@material-ui/system';
 
 const StyledCard = styled(MuiCard)`
@@ -170,9 +171,14 @@ export const FilterWrapper = styled.div`
   flex-wrap: wrap;
 
   .dropdown-filter {
-    max-width: 125px;
-    min-width: 70px;
+    width: 200px;
     margin-right: 15px;
+    flex-direction: row;
+    align-items: center;
+
+    .dropdown-label {
+      margin-right: 5px;
+    }
 
     label + .MuiInput-formControl {
       margin-top: 0;
@@ -191,6 +197,7 @@ export const FilterWrapper = styled.div`
     }
 
     .MuiInputBase-root {
+      width: 120px;
       padding-left: 5px;
       border: 1px solid ${props => props.theme.filter.border};
       border-radius: 4px;
@@ -215,5 +222,61 @@ export const FilterWrapper = styled.div`
       margin-right: 0;
       margin-bottom: 10px;
     }
+  }
+`;
+
+export const MenuList = styled.div`
+  max-height: 300px;
+  overflow-y: auto;
+
+  .MuiCheckbox-root {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+`;
+
+export const FilterButtonWrapper = styled.div`
+  position: sticky;
+  bottom: -5px;
+  width: 100%;
+  padding: 10px 5px 10px 0;
+  text-align: right;
+  background-color: ${props => props.theme.palette.background.default};
+  z-index: 2;
+
+  .btn-filter,
+  .btn-close {
+    padding: 4px 25px;
+    background: ${props => props.theme.sidebar.menu.toggle.switch};
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: 'Gill Sans';
+    cursor: pointer;
+    border-radius: 10px;
+    border: 0;
+    outline: none;
+    transition: all 0.5s ease;
+
+    &:hover {
+      background: ${props => props.theme.sidebar.menu.toggle.hover};
+    }
+  }
+
+  .btn-close {
+    margin-right: 10px;
+    background: ${props => props.theme.sidebar.menu.toggle.period};
+
+    &:hover {
+      background: ${props => props.theme.sidebar.menu.border};
+    }
+  }
+`;
+
+export const MenuItem = styled(MuiMenuItem)`
+  .MuiCheckbox-root {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
   }
 `;

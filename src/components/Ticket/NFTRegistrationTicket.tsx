@@ -25,7 +25,7 @@ interface INFTTicketProps {
 }
 
 const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
   if (!nftTicket) {
     return null;
   }
@@ -128,7 +128,10 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
         </Grid>
       ) : null}
       {nft.app_ticket ? (
-        <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
+        <Styles.Accordion
+          expanded={isExpanded}
+          onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}
+        >
           <AccordionSummary>
             <Grid container spacing={3}>
               <Grid item xs={4} sm={3}>
@@ -136,7 +139,7 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
               </Grid>
               <Grid item xs={8} sm={9}>
                 <Styles.TicketContent className="expand-more">
-                  {isExpanded ? 'Click to see less' : 'Click to see detail'} <ExpandMoreIcon />
+                  {isExpanded ? 'Hide detail' : 'Click to see detail'} <ExpandMoreIcon />
                 </Styles.TicketContent>
               </Grid>
             </Grid>
@@ -191,7 +194,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({ ticket }
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3}>
-          <Styles.TicketTitle>Label:</Styles.TicketTitle>
+          <Styles.TicketTitle>TXID of Preburn 20%:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>{ticket.label || 'NA'}</Styles.TicketContent>
@@ -251,7 +254,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({ ticket }
               </Grid>
               <Grid item xs={8} sm={9}>
                 <Styles.TicketContent className="expand-more">
-                  {isExpanded ? 'Click to see less' : 'Click to see detail'} <ExpandMoreIcon />
+                  {isExpanded ? 'Hide detail' : 'Click to see detail'} <ExpandMoreIcon />
                 </Styles.TicketContent>
               </Grid>
             </Grid>

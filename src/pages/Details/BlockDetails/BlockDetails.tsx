@@ -199,7 +199,9 @@ const BlockDetails = () => {
           >
             <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>{isExpanded ? 'Click to see less' : 'Click to see more'}</Typography>
+                <Typography className="see-more">
+                  {isExpanded ? 'Click to see less' : 'Click to see more'}
+                </Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container direction="column">

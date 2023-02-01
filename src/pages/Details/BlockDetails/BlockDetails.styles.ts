@@ -28,14 +28,16 @@ export const Wrapper = styled('div')`
   }
 
   .MuiAccordionSummary-content {
-    color: ${props => props.theme.link.main};
+    .MuiTypography-root.see-more {
+      color: ${props => props.theme.link.main};
 
-    &:hover {
-      color: ${props => props.theme.link.hover};
-    }
+      &:hover {
+        color: ${props => props.theme.link.hover};
+      }
 
-    &:active {
-      color: ${props => props.theme.link.pressed};
+      &:active {
+        color: ${props => props.theme.link.pressed};
+      }
     }
   }
 

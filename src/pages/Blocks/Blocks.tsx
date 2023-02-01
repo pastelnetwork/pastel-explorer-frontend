@@ -125,7 +125,7 @@ const Blocks = () => {
         rows={blockList}
         filters={blocksPeriodFilters}
         dropdownFilters={blocksFilters}
-        dropdownLabel="Type"
+        dropdownLabel="Ticket type:"
         title={getMovementTransactionsTitle()}
         columns={columns}
         tableHeight={isMobile ? 750 : 650}
