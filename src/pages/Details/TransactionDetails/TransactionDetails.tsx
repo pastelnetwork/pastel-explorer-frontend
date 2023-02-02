@@ -31,7 +31,6 @@ import {
   generateCoinbaseInfo,
 } from './TransactionDetails.helpers';
 import TransactionRawData from './TransactionRawData';
-import SensesList from './SensesList';
 
 interface ParamTypes {
   id: string;
@@ -204,12 +203,7 @@ const TransactionDetails = () => {
         </Styles.GridStyle>
         {tickets.length ? (
           <Styles.GridStyle item>
-            <TicketsList data={tickets} />
-          </Styles.GridStyle>
-        ) : null}
-        {senses.length ? (
-          <Styles.GridStyle item>
-            <SensesList data={senses} />
+            <TicketsList data={tickets} senses={senses} />
           </Styles.GridStyle>
         ) : null}
       </Grid>

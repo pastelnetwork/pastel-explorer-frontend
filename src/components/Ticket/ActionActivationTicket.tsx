@@ -51,7 +51,7 @@ const ActionActivationTicket: React.FC<IActionActivationTicketProps> = ({ ticket
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
             <RouterLink
-              route={`${ROUTES.BLOCK_DETAILS}/${ticket.pastelID}`}
+              route={`${ROUTES.PASTEL_ID_DETAILS}/${ticket.pastelID}`}
               value={ticket.pastelID}
               title={ticket.pastelID}
               className="address-link"

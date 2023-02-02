@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Header from '@components/Header/Header';
-import { ITicket } from '@utils/types/ITransactions';
+import { ITicket, TSenseRequests } from '@utils/types/ITransactions';
 import usePastelIdDetails from '@hooks/usePastelIdDetails';
 
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
@@ -36,6 +36,7 @@ const PastelIdDetails = () => {
   const { id } = useParams<ParamTypes>();
   const [ticketType, setTicketType] = useState<string>(TICKET_TYPE_OPTIONS[0].value);
   const [tickets, setTickets] = useState<ITicket[]>([]);
+  const [senses, setSenses] = useState<TSenseRequests[]>([]);
   const [ticketsTypeList, setTicketsTypeList] = useState<TTicketsTypeProps[]>([]);
   const [offset, setOffset] = useState(0);
   const [size, setSize] = useState(1);
@@ -79,6 +80,7 @@ const PastelIdDetails = () => {
       } else {
         setTickets(pastelIdData.data);
       }
+      setSenses(pastelIdData.senses);
     }
   }, [pastelIdData.isLoading, ticketType]);
 
@@ -113,6 +115,8 @@ const PastelIdDetails = () => {
             totalTickets={pastelIdData.total}
             totalAllTickets={pastelIdData.totalAllTickets}
             ticketsTypeList={ticketsTypeList}
+            isLoading={pastelIdData.isLoading}
+            senses={senses}
           />
         </Styles.GridStyle>
       </Grid>

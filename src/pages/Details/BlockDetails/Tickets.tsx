@@ -1,6 +1,9 @@
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import { Link } from 'react-router-dom';
 
+import RouterLink from '@components/RouterLink/RouterLink';
+import * as ROUTES from '@utils/constants/routes';
 import {
   ITicket,
   IPastelIDRegistrationTicket,
@@ -17,6 +20,7 @@ import {
   IAcceptTicket,
   ITransferTicket,
   TTicketType,
+  TSenseRequests,
 } from '@utils/types/ITransactions';
 import {
   PastelIDRegistrationTicket,
@@ -33,6 +37,7 @@ import {
   TransferTicket,
   getTicketTitle,
 } from '@components/Ticket';
+import { getBaseURL } from '@utils/constants/statistics';
 
 import * as TableStyles from '@components/Table/Table.styles';
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
@@ -40,12 +45,71 @@ import * as Styles from './BlockDetails.styles';
 
 interface ITicketsList {
   data: ITicket[];
+  senses?: TSenseRequests[];
 }
 
-const TicketsList: React.FC<ITicketsList> = ({ data }) => {
+const TicketsList: React.FC<ITicketsList> = ({ data, senses }) => {
   if (!data?.length) {
     return null;
   }
+
+  const renderSenseInfo = (ticket: IActionRegistrationTicket, transactionHash: string) => {
+    if (ticket.action_type !== 'sense') {
+      return null;
+    }
+    const sense = senses?.find(s => s.transactionHash === transactionHash);
+    if (!sense) {
+      return null;
+    }
+
+    return (
+      <>
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3}>
+            <TicketStyles.TicketTitle>Image:</TicketStyles.TicketTitle>
+          </Grid>
+          <Grid item xs={8} sm={9}>
+            <TicketStyles.TicketContent>
+              <Link to={`${ROUTES.SENSE_DETAILS}/${sense.imageFileHash}`}>
+                <img
+                  src={`${getBaseURL()}/static/senses/${sense.imageFileHash}.png`}
+                  alt={sense.imageFileHash}
+                  className="sense-img"
+                />
+              </Link>
+            </TicketStyles.TicketContent>
+          </Grid>
+        </Grid>
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3}>
+            <TicketStyles.TicketTitle>Image Hash:</TicketStyles.TicketTitle>
+          </Grid>
+          <Grid item xs={8} sm={9}>
+            <TicketStyles.TicketContent>
+              <RouterLink
+                route={`${ROUTES.SENSE_DETAILS}/${sense.imageFileHash}`}
+                value={sense.imageFileHash}
+                title={sense.imageFileHash}
+                className="address-link"
+              />
+            </TicketStyles.TicketContent>
+          </Grid>
+        </Grid>
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3}>
+            <TicketStyles.TicketTitle>Sense Version:</TicketStyles.TicketTitle>
+          </Grid>
+          <Grid item xs={8} sm={9}>
+            <TicketStyles.TicketContent>
+              {sense.imageFileHash.indexOf('nosense') === -1
+                ? sense.dupeDetectionSystemVersion
+                : ''}
+            </TicketStyles.TicketContent>
+          </Grid>
+        </Grid>
+      </>
+    );
+  };
 
   const renderContent = (
     type: string,
@@ -63,6 +127,7 @@ const TicketsList: React.FC<ITicketsList> = ({ data }) => {
       | IOfferTicket
       | IAcceptTicket
       | ITransferTicket,
+    transactionHash: string,
   ) => {
     switch (type) {
       case 'username-change':
@@ -80,7 +145,12 @@ const TicketsList: React.FC<ITicketsList> = ({ data }) => {
       case 'nft-royalty':
         return <NFTRoyaltyTicket ticket={ticket as INftRoyaltyTicket} />;
       case 'action-reg':
-        return <ActionRegistrationTicket ticket={ticket as IActionRegistrationTicket} />;
+        return (
+          <ActionRegistrationTicket
+            ticket={ticket as IActionRegistrationTicket}
+            senseInfo={renderSenseInfo(ticket as IActionRegistrationTicket, transactionHash)}
+          />
+        );
       case 'action-act':
         return <ActionActivationTicket ticket={ticket as IActionActivationTicket} />;
       case 'offer':
@@ -108,6 +178,21 @@ const TicketsList: React.FC<ITicketsList> = ({ data }) => {
             >
               <Grid container spacing={3}>
                 <Grid item xs={4} sm={3}>
+                  <TicketStyles.TicketTitle>TXID:</TicketStyles.TicketTitle>
+                </Grid>
+                <Grid item xs={8} sm={9}>
+                  <TicketStyles.TicketContent>
+                    <RouterLink
+                      route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.transactionHash}`}
+                      value={ticket.transactionHash}
+                      title={ticket.transactionHash}
+                      className="address-link"
+                    />
+                  </TicketStyles.TicketContent>
+                </Grid>
+              </Grid>
+              <Grid container spacing={3}>
+                <Grid item xs={4} sm={3}>
                   <TicketStyles.TicketTitle>Type:</TicketStyles.TicketTitle>
                 </Grid>
                 <Grid item xs={8} sm={9}>
@@ -116,7 +201,7 @@ const TicketsList: React.FC<ITicketsList> = ({ data }) => {
                   </TicketStyles.TicketContent>
                 </Grid>
               </Grid>
-              {renderContent(ticket.type, ticket.data.ticket)}
+              {renderContent(ticket.type, ticket.data.ticket, ticket.transactionHash)}
             </Styles.GridStyle>
           ))}
         </Box>

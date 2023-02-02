@@ -134,7 +134,7 @@ const SenseDetails: React.FC = () => {
   }
 
   return sense ? (
-    <Styles.Wrapper>
+    <Styles.Wrapper id="senseDetails">
       <Header title="Sense Details" />
       <Grid container direction="column" spacing={2}>
         <TransactionStyles.TransactionDesc item>
