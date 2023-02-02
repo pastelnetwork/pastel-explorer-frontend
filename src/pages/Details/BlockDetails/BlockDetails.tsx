@@ -30,7 +30,6 @@ import { useSortData } from '@utils/hooks';
 import { getCurrencyName } from '@utils/appInfo';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 import { getTicketsTypeList } from '@pages/Movement/Movement.helpers';
-import SensesList from '@pages/Details/TransactionDetails/SensesList';
 
 import { blockHeaders, transactionHeaders, generateDetailsElement } from './BlockDetails.helpers';
 import * as Styles from './BlockDetails.styles';
@@ -237,12 +236,7 @@ const BlockDetails = () => {
         </Styles.GridStyle>
         {block?.tickets?.length ? (
           <Styles.GridStyle item>
-            <TicketsList data={block?.tickets} />
-          </Styles.GridStyle>
-        ) : null}
-        {block?.senses?.length ? (
-          <Styles.GridStyle item className="mb-12">
-            <SensesList data={block?.senses} />
+            <TicketsList data={block?.tickets} senses={block?.senses} />
           </Styles.GridStyle>
         ) : null}
       </Grid>

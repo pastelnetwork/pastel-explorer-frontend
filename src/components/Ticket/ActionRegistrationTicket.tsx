@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, ReactNode } from 'react';
 import { decode } from 'js-base64';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -18,7 +18,7 @@ import * as Styles from './Ticket.styles';
 
 interface IActionRegistrationTicketProps {
   ticket: IActionRegistrationTicket;
-  imageHash?: string;
+  senseInfo?: ReactNode;
 }
 
 interface IActionTicketProps {
@@ -131,7 +131,7 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket, actionType }) => {
 
 const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
   ticket,
-  imageHash,
+  senseInfo,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -142,21 +142,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
           <Styles.TicketTitle>Action type:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>
-            {ticket.action_type}{' '}
-            {imageHash ? (
-              <>
-                (
-                <RouterLink
-                  route={`${ROUTES.SENSE_DETAILS}/${imageHash}`}
-                  value="View sense details"
-                  title={imageHash}
-                  className="address-link"
-                />
-                )
-              </>
-            ) : null}
-          </Styles.TicketContent>
+          <Styles.TicketContent>{ticket.action_type}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -171,6 +157,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
           </Styles.ActionRegistrationTicketStatus>
         </Grid>
       </Grid>
+      {senseInfo}
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3}>
           <Styles.TicketTitle>Pastel OpenAPI Ticket Version Number:</Styles.TicketTitle>

@@ -29,6 +29,16 @@ export const TicketContent = styled(Typography)`
     white-space: nowrap;
   }
 
+  .sense-img {
+    width: 50px;
+    height: 50px;
+
+    &:hover {
+      transform: scale(2.5);
+      transition: all 0.3s;
+    }
+  }
+
   @media screen and (max-width: 1024px) {
     overflow: hidden;
     text-overflow: ellipsis;
