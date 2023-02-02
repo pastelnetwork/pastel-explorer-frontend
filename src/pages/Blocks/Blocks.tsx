@@ -90,8 +90,8 @@ const Blocks = () => {
       setParams({
         ...apiParams,
         offset: 0,
-        period: filter.dateRange || '',
-        types: filter.dropdownType || '',
+        period: filter.dateRange || apiParams.period || '',
+        types: filter.dropdownType || apiParams.types || '',
       });
     }
   }, [filter.dateRange, filter.dropdownType]);
