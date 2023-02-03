@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Typography, Dialog, AppBar, IconButton, Slide } from '@material-ui/core';
 import { TransitionProps } from '@material-ui/core/transitions';
 import CloseIcon from '@material-ui/icons/Close';
-import { decode } from 'js-base64';
 
 import { ITicket, TSenseRequests } from '@utils/types/ITransactions';
 
@@ -41,11 +40,11 @@ const TransactionRawData: React.FC<ITransactionRawDataProps> = ({
 
   const getSenses = () => {
     return senses.map(sense => {
-      if (sense.imageFileHash.indexOf('nosense') === -1) {
-        const senseRawData = JSON.parse(sense.rawData);
-        return JSON.parse(decode(senseRawData?.file));
-      }
-      return JSON.parse(sense.rawData);
+      const parseSenseData = JSON.parse(sense.rawData);
+      return {
+        ...parseSenseData,
+        raw_sense_data_json: JSON.parse(parseSenseData.raw_sense_data_json),
+      };
     });
   };
 
