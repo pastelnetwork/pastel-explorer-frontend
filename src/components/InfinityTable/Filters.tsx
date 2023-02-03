@@ -91,7 +91,7 @@ const Filters: FC<IProps> = ({
   }, [dispatch]);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setTicketType(event.target.value as string[]);
+    setTicketType((event.target.value as string[]).filter(v => v));
   };
 
   const handleFilter = () => {
