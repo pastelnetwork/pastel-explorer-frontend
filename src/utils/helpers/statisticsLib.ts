@@ -407,9 +407,9 @@ export function setTransactionsLive(
 
   if (rawTransactions.length > 0) {
     const block = blocks[0];
-    rawTransactions.forEach((item: IRawTransactions) => {
+    rawTransactions?.forEach((item: IRawTransactions) => {
       let pslPrice = 0;
-      item.vout.forEach(({ value }) => {
+      item?.vout?.forEach(({ value }) => {
         pslPrice += value;
       });
       const fee = prev.get(item.txid)?.fee || item.fee || 0;

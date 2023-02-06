@@ -1,26 +1,39 @@
 import useSWRInfinite from 'swr/infinite';
 
+import { SortDirectionsType } from '@components/InfinityTable/InfinityTable';
 import { SWR_OPTIONS } from '@utils/constants/statistics';
 import { axiosGet } from '@utils/helpers/useFetch/useFetch';
 import * as URLS from '@utils/constants/urls';
-import { SortDirectionsType } from '@components/InfinityTable/InfinityTable';
+import { ITransaction } from '@utils/types/ITransactions';
+
+import { DATA_FETCH_LIMIT } from '@pages/Movement/Movement.helpers';
 
 export default function useMovement(
-  offset: number,
   limit: number,
   sortBy: string,
   sortDirection: SortDirectionsType,
   period: string,
 ) {
-  const { data, isLoading } = useSWRInfinite(
-    () =>
-      `${URLS.TRANSACTION_URL}?offset=${offset}&limit=${limit}&sortBy=${sortBy}&sortDirection=${sortDirection}&period=${period}`,
+  const { data, isLoading, size, setSize } = useSWRInfinite(
+    index =>
+      `${URLS.TRANSACTION_URL}?offset=${
+        index * DATA_FETCH_LIMIT
+      }&limit=${limit}&sortBy=${sortBy}&sortDirection=${sortDirection}&period=${period}`,
     axiosGet,
     SWR_OPTIONS,
   );
-
+  const isLoadingMore = isLoading || (size > 0 && data && typeof data[size - 1] === 'undefined');
+  const newData: ITransaction[] = [];
+  if (data?.length) {
+    for (let i = 0; i < data.length; i += 1) {
+      newData.push(...data[i].data);
+    }
+  }
   return {
-    swrData: data ? data[0] : null,
-    isLoading,
+    swrData: newData?.length ? newData : null,
+    total: data?.[0]?.total || 0,
+    isLoading: isLoadingMore,
+    swrSize: size,
+    swrSetSize: setSize,
   };
 }

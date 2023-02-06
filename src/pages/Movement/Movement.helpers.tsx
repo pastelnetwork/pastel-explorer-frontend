@@ -20,7 +20,7 @@ import {
   RECIPIENT_COUNT_KEY,
 } from './Movement.columns';
 
-export const DATA_FETCH_LIMIT = 20;
+export const DATA_FETCH_LIMIT = 40;
 export const DATA_OFFSET = 0;
 export const DATA_DEFAULT_SORT = 'DESC';
 

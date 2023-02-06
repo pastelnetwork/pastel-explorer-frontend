@@ -39,7 +39,6 @@ const PastelIdDetails = () => {
   const [senses, setSenses] = useState<TSenseRequests[]>([]);
   const [ticketsTypeList, setTicketsTypeList] = useState<TTicketsTypeProps[]>([]);
   const [offset, setOffset] = useState(0);
-  const [size, setSize] = useState(1);
   const pastelIdData = usePastelIdDetails(id, offset, limit, ticketType);
 
   const handleTicketTypeChange = (val: string) => {
@@ -49,12 +48,12 @@ const PastelIdDetails = () => {
     fetchParams.current.totalTickets = 0;
     fetchParams.current.size = 1;
     setOffset(0);
-    setSize(1);
+    pastelIdData.setSize(1);
   };
 
   const handleFetchMore = (newOffset: number, newSize: number) => {
     setOffset(newOffset);
-    setSize(newSize);
+    pastelIdData.setSize(newSize);
   };
 
   const handleScroll = () => {
@@ -72,22 +71,18 @@ const PastelIdDetails = () => {
   };
 
   useEffect(() => {
-    if (pastelIdData.data && !pastelIdData.isLoading) {
+    if (!pastelIdData.isLoading) {
       setTicketsTypeList(pastelIdData.ticketsType);
       fetchParams.current.totalTickets = pastelIdData.total;
-      if (size > 1) {
-        setTickets([...tickets, ...pastelIdData.data]);
-      } else {
-        setTickets(pastelIdData.data);
-      }
+      setTickets(pastelIdData.data);
       setSenses(pastelIdData.senses);
     }
-  }, [pastelIdData.isLoading, ticketType]);
+  }, [pastelIdData.isLoading, ticketType, pastelIdData.data.length]);
 
   useEffect(() => {
     (async () => {
       setOffset(0);
-      setSize(1);
+      pastelIdData.setSize(1);
       fetchParams.current.size = 1;
       fetchParams.current.offset = 0;
       setTicketType(TICKET_TYPE_OPTIONS[0].value);

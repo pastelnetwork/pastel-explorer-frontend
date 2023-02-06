@@ -64,7 +64,7 @@ const CustomTooltip = withStyles(theme => ({
 }))(Tooltip);
 
 const Summary: React.FC = () => {
-  const { supernodeList, isLoading } = useNetwork();
+  const { supernodeList, isLoading } = useNetwork(true);
   const [summaryList, setSummaryList] = React.useState(initialSummaryList);
   const [currentStatsData, setCurrentStatsData] = React.useState<ISummaryStats | null>(null);
   const [summaryChartData, setSummaryChartData] = React.useState<ISummaryChartStats>();

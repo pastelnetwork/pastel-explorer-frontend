@@ -2,28 +2,20 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import InfinityTable, {
-  RowsProps,
   SortDirectionsType,
   ISortData,
 } from '@components/InfinityTable/InfinityTable';
 import { defaultFilters } from '@utils/constants/filter';
 import { getFilterState } from '@redux/reducers/filterReducer';
-
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import useMovement from '@hooks/useMovement';
 
 import * as Styles from './Movement.styles';
 
 import { TIMESTAMP_MOVEMENT_KEY, columns } from './Movement.columns';
-import {
-  transformMovementData,
-  DATA_FETCH_LIMIT,
-  DATA_OFFSET,
-  DATA_DEFAULT_SORT,
-} from './Movement.helpers';
+import { transformMovementData, DATA_FETCH_LIMIT, DATA_DEFAULT_SORT } from './Movement.helpers';
 
 interface IMovementDataRef {
-  offset: number;
   sortBy: string;
   sortDirection: SortDirectionsType;
   period: string;
@@ -32,22 +24,17 @@ interface IMovementDataRef {
 const Movement: React.FC = () => {
   const filter = useSelector(getFilterState);
   const [apiParams, setParams] = useState<IMovementDataRef>({
-    offset: 0,
     sortBy: TIMESTAMP_MOVEMENT_KEY,
     sortDirection: DATA_DEFAULT_SORT,
     period: filter.dateRange || 'all',
   });
-  const { swrData, isLoading } = useMovement(
-    apiParams.offset,
-    DATA_FETCH_LIMIT * 2,
+  const { swrData, total, swrSize, swrSetSize, isLoading } = useMovement(
+    DATA_FETCH_LIMIT,
     apiParams.sortBy,
     apiParams.sortDirection,
     apiParams.period,
   );
   const [isMobile, setMobileView] = useState(false);
-  const [totalItem, setTotalItem] = useState<number>(0);
-  const [size, setSize] = useState<number>(1);
-  const [movementList, setMovementList] = useState<Array<RowsProps>>([]);
 
   const handleShowSubMenu = () => {
     setMobileView(false);
@@ -67,43 +54,27 @@ const Movement: React.FC = () => {
 
   const handleFetchMoreMovements = (reachedTableBottom: boolean) => {
     if (!reachedTableBottom) return null;
-
-    setParams({ ...apiParams, offset: apiParams.offset + DATA_FETCH_LIMIT });
-    setSize(size + 1);
-
+    swrSetSize(swrSize + 1);
+    setParams({ ...apiParams });
     return true;
   };
 
   const handleSort = ({ sortBy, sortDirection }: ISortData) => {
-    setSize(1);
-    setParams({ ...apiParams, sortBy, offset: DATA_OFFSET, sortDirection });
+    swrSetSize(1);
+    setParams({ ...apiParams, sortBy, sortDirection });
   };
 
   useEffect(() => {
     if (filter.dateRange) {
-      setSize(1);
-      setParams({ ...apiParams, offset: 0, period: filter.dateRange });
+      swrSetSize(1);
+      setParams({ ...apiParams, period: filter.dateRange });
     }
   }, [filter.dateRange]);
-
-  useEffect(() => {
-    if (!isLoading && swrData) {
-      setTotalItem(swrData?.total);
-      const newTransferData = swrData?.data ? transformMovementData(swrData.data) : [];
-      if (size > 1) {
-        setMovementList(prevState => [...prevState, ...newTransferData]);
-      } else {
-        setMovementList(newTransferData);
-      }
-    }
-  }, [isLoading, size, apiParams]);
 
   const getMovementTransactionsTitle = () => (
     <Styles.TitleWrapper>
       <Styles.Title>Transactions List</Styles.Title>{' '}
-      {totalItem > 0 ? (
-        <Styles.SubTitle>(Total {formatNumber(totalItem)} txs)</Styles.SubTitle>
-      ) : null}
+      {total > 0 ? <Styles.SubTitle>(Total {formatNumber(total)} txs)</Styles.SubTitle> : null}
     </Styles.TitleWrapper>
   );
 
@@ -112,7 +83,7 @@ const Movement: React.FC = () => {
       <InfinityTable
         sortBy={apiParams.sortBy}
         sortDirection={apiParams.sortDirection}
-        rows={movementList}
+        rows={swrData ? transformMovementData(swrData) : []}
         columns={columns}
         tableHeight={950}
         title={getMovementTransactionsTitle()}
@@ -122,6 +93,7 @@ const Movement: React.FC = () => {
         className="movement-table"
         headerBackground
         rowHeight={isMobile ? 180 : 45}
+        customLoading={isLoading}
       />
     </Styles.GridWrapper>
   );
