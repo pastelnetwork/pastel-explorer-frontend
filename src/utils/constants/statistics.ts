@@ -5,7 +5,7 @@ import { TCsvHeaderType } from './types';
 import { getCurrencyName } from '../appInfo';
 
 const BASE_API_URL = process.env.REACT_APP_EXPLORER_WEB_API_URL as string;
-const getBaseURL = () => {
+export const getBaseURL = () => {
   try {
     const persist = localStorage.getItem('persist:root');
     if (persist) {

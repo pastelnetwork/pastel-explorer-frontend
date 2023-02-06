@@ -290,3 +290,24 @@ export const LoadingWrapper = styled.div`
   width: 100%;
   height: 62vh;
 `;
+
+export const SenseItemWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const SenseImageWrapper = styled.div`
+  width: 60px;
+  height: 60px;
+  margin-right: 20px;
+  overflow: hidden;
+
+  img {
+    width: 50px;
+    height: 50px;
+  }
+`;
+
+export const SenseContentWrapper = styled.div`
+  width: calc(100% - 80px);
+`;

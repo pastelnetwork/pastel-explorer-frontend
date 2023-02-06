@@ -1,6 +1,9 @@
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import { Link } from 'react-router-dom';
 
+import RouterLink from '@components/RouterLink/RouterLink';
+import * as ROUTES from '@utils/constants/routes';
 import {
   ITicket,
   IPastelIDRegistrationTicket,
@@ -17,6 +20,7 @@ import {
   IAcceptTicket,
   ITransferTicket,
   TTicketType,
+  TSenseRequests,
 } from '@utils/types/ITransactions';
 import {
   PastelIDRegistrationTicket,
@@ -34,6 +38,7 @@ import {
   getTicketTitle,
 } from '@components/Ticket';
 import { Dropdown } from '@components/Dropdown/Dropdown';
+import { getBaseURL } from '@utils/constants/statistics';
 
 import * as TableStyles from '@components/Table/Table.styles';
 import * as BlockDetailsStyles from '@pages/Details/BlockDetails/BlockDetails.styles';
@@ -48,6 +53,8 @@ interface ITicketsList {
   totalTickets: number;
   totalAllTickets: number;
   ticketsTypeList: TTicketsTypeProps[];
+  isLoading?: boolean;
+  senses?: TSenseRequests[];
 }
 
 const TicketsList: React.FC<ITicketsList> = ({
@@ -57,7 +64,67 @@ const TicketsList: React.FC<ITicketsList> = ({
   totalTickets,
   totalAllTickets,
   ticketsTypeList,
+  isLoading = false,
+  senses,
 }) => {
+  const renderSenseInfo = (ticket: IActionRegistrationTicket, transactionHash: string) => {
+    if (ticket.action_type !== 'sense') {
+      return null;
+    }
+    const sense = senses?.find(s => s.transactionHash === transactionHash);
+    if (!sense) {
+      return null;
+    }
+
+    return (
+      <>
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3}>
+            <TicketStyles.TicketTitle>Image:</TicketStyles.TicketTitle>
+          </Grid>
+          <Grid item xs={8} sm={9}>
+            <TicketStyles.TicketContent>
+              <Link to={`${ROUTES.SENSE_DETAILS}/${sense.imageFileHash}`}>
+                <img
+                  src={`${getBaseURL()}/static/senses/${sense.imageFileHash}.png`}
+                  alt={sense.imageFileHash}
+                  className="sense-img"
+                />
+              </Link>
+            </TicketStyles.TicketContent>
+          </Grid>
+        </Grid>
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3}>
+            <TicketStyles.TicketTitle>Image Hash:</TicketStyles.TicketTitle>
+          </Grid>
+          <Grid item xs={8} sm={9}>
+            <TicketStyles.TicketContent>
+              <RouterLink
+                route={`${ROUTES.SENSE_DETAILS}/${sense.imageFileHash}`}
+                value={sense.imageFileHash}
+                title={sense.imageFileHash}
+                className="address-link"
+              />
+            </TicketStyles.TicketContent>
+          </Grid>
+        </Grid>
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3}>
+            <TicketStyles.TicketTitle>Sense Version:</TicketStyles.TicketTitle>
+          </Grid>
+          <Grid item xs={8} sm={9}>
+            <TicketStyles.TicketContent>
+              {sense.imageFileHash.indexOf('nosense') === -1
+                ? sense.dupeDetectionSystemVersion
+                : ''}
+            </TicketStyles.TicketContent>
+          </Grid>
+        </Grid>
+      </>
+    );
+  };
+
   const renderContent = (
     type: string,
     ticket:
@@ -74,7 +141,7 @@ const TicketsList: React.FC<ITicketsList> = ({
       | IOfferTicket
       | IAcceptTicket
       | ITransferTicket,
-    imageHash: string,
+    transactionHash: string,
   ) => {
     switch (type) {
       case 'username-change':
@@ -95,7 +162,7 @@ const TicketsList: React.FC<ITicketsList> = ({
         return (
           <ActionRegistrationTicket
             ticket={ticket as IActionRegistrationTicket}
-            imageHash={imageHash}
+            senseInfo={renderSenseInfo(ticket as IActionRegistrationTicket, transactionHash)}
           />
         );
       case 'action-act':
@@ -166,19 +233,34 @@ const TicketsList: React.FC<ITicketsList> = ({
               className="table__row"
             >
               <Grid container spacing={3}>
-                <Grid item xs={4} sm={2}>
+                <Grid item xs={4} sm={3}>
+                  <TicketStyles.TicketTitle>TXID:</TicketStyles.TicketTitle>
+                </Grid>
+                <Grid item xs={8} sm={9}>
+                  <TicketStyles.TicketContent>
+                    <RouterLink
+                      route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.transactionHash}`}
+                      value={ticket.transactionHash}
+                      title={ticket.transactionHash}
+                      className="address-link"
+                    />
+                  </TicketStyles.TicketContent>
+                </Grid>
+              </Grid>
+              <Grid container spacing={3}>
+                <Grid item xs={4} sm={3}>
                   <TicketStyles.TicketTitle>Type:</TicketStyles.TicketTitle>
                 </Grid>
-                <Grid item xs={8} sm={10}>
+                <Grid item xs={8} sm={9}>
                   <TicketStyles.TicketContent>
                     {getTicketTitle(ticket.type as TTicketType)}
                   </TicketStyles.TicketContent>
                 </Grid>
               </Grid>
-              {renderContent(ticket.type, ticket.data.ticket, ticket?.imageFileHash || '')}
+              {renderContent(ticket.type, ticket.data.ticket, ticket.transactionHash)}
             </BlockDetailsStyles.GridStyle>
           ))}
-          {!data.length ? (
+          {!data.length && !isLoading ? (
             <BlockDetailsStyles.GridStyle className="table__row">
               <TicketStyles.TicketTitle>No data</TicketStyles.TicketTitle>
             </BlockDetailsStyles.GridStyle>

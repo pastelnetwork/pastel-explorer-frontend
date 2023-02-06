@@ -5,7 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Header from '@components/Header/Header';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import { ITicket } from '@utils/types/ITransactions';
+import { ITicket, TSenseRequests } from '@utils/types/ITransactions';
 import * as URLS from '@utils/constants/urls';
 
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
@@ -34,6 +34,7 @@ const PastelIdDetails = () => {
   });
   const { id } = useParams<ParamTypes>();
   const [tickets, setTickets] = useState<ITicket[]>([]);
+  const [senses, setSenses] = useState<TSenseRequests[]>([]);
   const [ticketType, setTicketType] = useState<string>(TICKET_TYPE_OPTIONS[0].value);
   const [totalTickets, setTotalTickets] = useState(0);
   const [totalAllTickets, setTotalAllTickets] = useState(0);
@@ -44,6 +45,7 @@ const PastelIdDetails = () => {
     total: number;
     totalAllTickets: number;
     ticketsType: TTicketsTypeProps[];
+    senses: TSenseRequests[];
   }>({
     method: 'get',
     url: `${URLS.PASTEL_ID_URL}/${id}`,
@@ -70,6 +72,7 @@ const PastelIdDetails = () => {
           setTotalTickets(response.total);
           setTotalAllTickets(response.totalAllTickets);
           setTicketsTypeList(response.ticketsType);
+          setSenses(response.senses);
           fetchParams.current.totalTickets = response.total;
         }
       });
@@ -125,6 +128,8 @@ const PastelIdDetails = () => {
             totalTickets={totalTickets}
             totalAllTickets={totalAllTickets}
             ticketsTypeList={ticketsTypeList}
+            isLoading={isLoading}
+            senses={senses}
           />
         </Styles.GridStyle>
       </Grid>

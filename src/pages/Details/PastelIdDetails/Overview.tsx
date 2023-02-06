@@ -39,30 +39,30 @@ const Overview: React.FC<IOverviewProps> = ({ totalTickets, pastelId, ticketsTyp
         <Box className="custom-table tickets-table">
           <BlockDetailsStyles.GridStyle className="table__row">
             <Grid container spacing={3}>
-              <Grid item xs={4} sm={2}>
+              <Grid item xs={4} sm={3}>
                 <TicketStyles.TicketTitle>Pastel ID:</TicketStyles.TicketTitle>
               </Grid>
-              <Grid item xs={8} sm={10}>
+              <Grid item xs={8} sm={9}>
                 <TicketStyles.TicketContent>{pastelId}</TicketStyles.TicketContent>
               </Grid>
             </Grid>
           </BlockDetailsStyles.GridStyle>
           <BlockDetailsStyles.GridStyle className="table__row">
             <Grid container spacing={3}>
-              <Grid item xs={4} sm={2}>
+              <Grid item xs={4} sm={3}>
                 <TicketStyles.TicketTitle>Type:</TicketStyles.TicketTitle>
               </Grid>
-              <Grid item xs={8} sm={10}>
+              <Grid item xs={8} sm={9}>
                 <TicketStyles.TicketContent>{renderTicketsType()}</TicketStyles.TicketContent>
               </Grid>
             </Grid>
           </BlockDetailsStyles.GridStyle>
           <BlockDetailsStyles.GridStyle className="table__row">
             <Grid container spacing={3}>
-              <Grid item xs={4} sm={2}>
+              <Grid item xs={4} sm={3}>
                 <TicketStyles.TicketTitle>Total Tickets:</TicketStyles.TicketTitle>
               </Grid>
-              <Grid item xs={8} sm={10}>
+              <Grid item xs={8} sm={9}>
                 <TicketStyles.TicketContent>
                   {totalTickets} {totalTickets > 1 ? 'Tickets' : 'Ticket'}
                 </TicketStyles.TicketContent>

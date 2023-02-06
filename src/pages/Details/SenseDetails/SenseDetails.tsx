@@ -4,7 +4,6 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AlertTitle from '@material-ui/lab/AlertTitle';
-import { decode } from 'js-base64';
 
 import Header from '@components/Header/Header';
 import * as TableStyles from '@components/Table/Table.styles';
@@ -100,12 +99,13 @@ const SenseDetails: React.FC = () => {
     if (!sense?.rawData) {
       return '';
     }
-    if (sense.imageFileHash.indexOf('nosense') === -1) {
-      const rawData = JSON.parse(sense.rawData);
-      return JSON.stringify(decode(rawData?.file));
-    }
-
-    return JSON.stringify(JSON.stringify(JSON.parse(sense.rawData)));
+    const parseSenseData = JSON.parse(sense.rawData);
+    return JSON.stringify(
+      JSON.stringify({
+        ...parseSenseData,
+        raw_sense_data_json: JSON.parse(parseSenseData.raw_sense_data_json),
+      }),
+    );
   };
 
   const getCsvData = () => {
@@ -133,8 +133,18 @@ const SenseDetails: React.FC = () => {
     return results;
   };
 
+  if (fetchSenses.isLoading) {
+    return (
+      <TransactionStyles.LoadingWrapper>
+        <TransactionStyles.Loader>
+          <CircularProgress size={40} />
+        </TransactionStyles.Loader>
+      </TransactionStyles.LoadingWrapper>
+    );
+  }
+
   return sense ? (
-    <Styles.Wrapper>
+    <Styles.Wrapper id="senseDetails">
       <Header title="Sense Details" />
       <Grid container direction="column" spacing={2}>
         <TransactionStyles.TransactionDesc item>
@@ -257,11 +267,12 @@ const SenseDetails: React.FC = () => {
       <SenseRawData rawData={getRawData()} open={openRawDataModal} toggleOpen={toggleOpenRawData} />
     </Styles.Wrapper>
   ) : (
-    <TransactionStyles.LoadingWrapper>
-      <TransactionStyles.Loader>
-        <CircularProgress size={40} />
-      </TransactionStyles.Loader>
-    </TransactionStyles.LoadingWrapper>
+    <Styles.Wrapper>
+      <Header title="Sense Details" />
+      <Grid container direction="column" spacing={2}>
+        Sense not found
+      </Grid>
+    </Styles.Wrapper>
   );
 };
 

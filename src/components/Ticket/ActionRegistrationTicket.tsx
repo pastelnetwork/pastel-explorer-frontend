@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, ReactNode } from 'react';
 import { decode } from 'js-base64';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -18,7 +18,7 @@ import * as Styles from './Ticket.styles';
 
 interface IActionRegistrationTicketProps {
   ticket: IActionRegistrationTicket;
-  imageHash?: string;
+  senseInfo?: ReactNode;
 }
 
 interface IActionTicketProps {
@@ -27,7 +27,7 @@ interface IActionTicketProps {
 }
 
 const ActionTicket: React.FC<IActionTicketProps> = ({ ticket, actionType }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
   if (!ticket) {
     return null;
   }
@@ -35,26 +35,26 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket, actionType }) => {
   return (
     <Box>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={2}>
+        <Grid item xs={4} sm={3}>
           <Styles.TicketTitle>Action ticket version:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={8} sm={10}>
+        <Grid item xs={8} sm={9}>
           <Styles.TicketContent>{nft.action_ticket_version}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={2}>
+        <Grid item xs={4} sm={3}>
           <Styles.TicketTitle>Action type:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={8} sm={10}>
+        <Grid item xs={8} sm={9}>
           <Styles.TicketContent>{nft.action_type}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={2}>
+        <Grid item xs={4} sm={3}>
           <Styles.TicketTitle>Caller:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={8} sm={10}>
+        <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
             <RouterLink
               route={`${ROUTES.PASTEL_ID_DETAILS}/${nft.caller}`}
@@ -66,10 +66,10 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket, actionType }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={2}>
+        <Grid item xs={4} sm={3}>
           <Styles.TicketTitle>Block number:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={8} sm={10}>
+        <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
             {nft.blocknum ? (
               <RouterLink
@@ -85,10 +85,10 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket, actionType }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={2}>
+        <Grid item xs={4} sm={3}>
           <Styles.TicketTitle>Block hash:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={8} sm={10}>
+        <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
             {nft.block_hash ? (
               <RouterLink
@@ -104,15 +104,18 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket, actionType }) => {
         </Grid>
       </Grid>
       {nft.api_ticket ? (
-        <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
+        <Styles.Accordion
+          expanded={isExpanded}
+          onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}
+        >
           <AccordionSummary>
             <Grid container spacing={3}>
-              <Grid item xs={4} sm={2}>
+              <Grid item xs={4} sm={3}>
                 <Styles.TicketTitle>Api ticket:</Styles.TicketTitle>
               </Grid>
-              <Grid item xs={8} sm={10}>
+              <Grid item xs={8} sm={9}>
                 <Styles.TicketContent className="expand-more">
-                  {isExpanded ? 'Click to see less' : 'Click to see detail'} <ExpandMoreIcon />
+                  {isExpanded ? 'Hide detail' : 'Click to see detail'} <ExpandMoreIcon />
                 </Styles.TicketContent>
               </Grid>
             </Grid>
@@ -128,63 +131,62 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket, actionType }) => {
 
 const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
   ticket,
-  imageHash,
+  senseInfo,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <Box>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={2}>
+        <Grid item xs={4} sm={3}>
           <Styles.TicketTitle>Action type:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={8} sm={10}>
-          <Styles.TicketContent>
-            {ticket.action_type}{' '}
-            {imageHash ? (
-              <>
-                (
-                <RouterLink
-                  route={`${ROUTES.SENSE_DETAILS}/${imageHash}`}
-                  value="View sense details"
-                  title={imageHash}
-                  className="address-link"
-                />
-                )
-              </>
-            ) : null}
-          </Styles.TicketContent>
+        <Grid item xs={8} sm={9}>
+          <Styles.TicketContent>{ticket.action_type}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={2}>
-          <Styles.TicketTitle>Version:</Styles.TicketTitle>
+        <Grid item xs={4} sm={3}>
+          <Styles.TicketTitle>Status:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={8} sm={10}>
+        <Grid item xs={8} sm={9}>
+          <Styles.ActionRegistrationTicketStatus
+            className={ticket?.activation_ticket ? 'active' : ''}
+          >
+            {ticket?.activation_ticket ? 'Activated' : 'Not Yet Activated'}
+          </Styles.ActionRegistrationTicketStatus>
+        </Grid>
+      </Grid>
+      {senseInfo}
+      <Grid container spacing={3}>
+        <Grid item xs={4} sm={3}>
+          <Styles.TicketTitle>Pastel OpenAPI Ticket Version Number:</Styles.TicketTitle>
+        </Grid>
+        <Grid item xs={8} sm={9}>
           <Styles.TicketContent>{ticket.version}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={2}>
+        <Grid item xs={4} sm={3}>
           <Styles.TicketTitle>Key:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={8} sm={10}>
+        <Grid item xs={8} sm={9}>
           <Styles.TicketContent>{ticket.key || 'NA'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={2}>
-          <Styles.TicketTitle>Label:</Styles.TicketTitle>
+        <Grid item xs={4} sm={3}>
+          <Styles.TicketTitle>TXID of Preburn 20%:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={8} sm={10}>
+        <Grid item xs={8} sm={9}>
           <Styles.TicketContent>{ticket.label || 'NA'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={2}>
-          <Styles.TicketTitle>Called at:</Styles.TicketTitle>
+        <Grid item xs={4} sm={3}>
+          <Styles.TicketTitle>Pastel Block Height When Ticket Registered:</Styles.TicketTitle>
         </Grid>
-        <Grid item xs={8} sm={10}>
+        <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
             {ticket.called_at ? (
               <RouterLink
@@ -200,10 +202,12 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={2}>
-          <Styles.TicketTitle>Storage fee:</Styles.TicketTitle>
+        <Grid item xs={4} sm={3}>
+          <Styles.TicketTitle>
+            Total Cost in PSL to Register Ticket on Blockchain:
+          </Styles.TicketTitle>
         </Grid>
-        <Grid item xs={8} sm={10}>
+        <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
             {formatNumber(ticket.storage_fee)} {getCurrencyName()}
           </Styles.TicketContent>
@@ -214,12 +218,12 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
         <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
           <AccordionSummary>
             <Grid container spacing={3}>
-              <Grid item xs={4} sm={2}>
+              <Grid item xs={4} sm={3}>
                 <Styles.TicketTitle>Action ticket:</Styles.TicketTitle>
               </Grid>
-              <Grid item xs={8} sm={10}>
+              <Grid item xs={8} sm={9}>
                 <Styles.TicketContent className="expand-more">
-                  {isExpanded ? 'Click to see less' : 'Click to see detail'} <ExpandMoreIcon />
+                  {isExpanded ? 'Hide detail' : 'Click to see detail'} <ExpandMoreIcon />
                 </Styles.TicketContent>
               </Grid>
             </Grid>

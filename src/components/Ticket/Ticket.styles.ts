@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
 import MuiAccordion from '@material-ui/core/Accordion';
 
+import themeVariant from '@theme/variants';
+
 export const TicketTitle = styled(Typography)`
   font-weight: 600;
 `;
@@ -25,6 +27,16 @@ export const TicketContent = styled(Typography)`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .sense-img {
+    width: 50px;
+    height: 50px;
+
+    &:hover {
+      transform: scale(2.5);
+      transition: all 0.3s;
+    }
   }
 
   @media screen and (max-width: 1024px) {
@@ -99,5 +111,20 @@ export const ButtonLink = styled.button`
 
   &:hover {
     color: ${props => props.theme.link.hover};
+  }
+`;
+
+export const ActionRegistrationTicketStatus = styled.div`
+  display: inline-flex;
+  padding: 6px 10px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+  color: ${themeVariant.custom.white};
+  background-color: ${themeVariant.custom.red.dark};
+  border-radius: 4px;
+
+  &.active {
+    background-color: ${themeVariant.custom.green.main};
   }
 `;
