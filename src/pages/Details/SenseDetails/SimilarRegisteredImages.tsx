@@ -93,7 +93,7 @@ const SimilarRegisteredImages: React.FC<ISimilarRegisteredImages> = ({ rarenessS
     return null;
   }
   const fancyGridData = getSimilarRegisteredImagesData(rarenessScoresTable);
-  console.log(fancyGridData);
+
   return (
     <Styles.TableWrapper>
       <TableContainer component={Paper} className="table-container">

@@ -6,12 +6,7 @@ import * as URLS from '@utils/constants/urls';
 import { ITicket, TSenseRequests } from '@utils/types/ITransactions';
 import { TTicketsTypeProps } from '@pages/Details/PastelIdDetails/PastelIdDetails.helpers';
 
-export default function usePastelIdDetails(
-  id: string,
-  offset: number,
-  limit: number,
-  type: string,
-) {
+export default function usePastelIdDetails(id: string, limit: number, type: string) {
   const { data, isLoading, size, setSize } = useSWRInfinite<{
     data: ITicket[];
     total: number;

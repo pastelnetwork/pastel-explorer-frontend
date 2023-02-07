@@ -6,6 +6,7 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { IOfferTicket } from '@utils/types/ITransactions';
 import * as ROUTES from '@utils/constants/routes';
 import { getCurrencyName } from '@utils/appInfo';
+import { formatFullDate } from '@utils/helpers/date/date';
 
 import Signatures from './Signatures';
 import * as Styles from './Ticket.styles';
@@ -120,6 +121,16 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket }) => {
           <Styles.TicketContent>{ticket.locked_recipient}</Styles.TicketContent>
         </Grid>
       </Grid>
+      {ticket.transactionTime ? (
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3} className="max-w-370">
+            <Styles.TicketTitle>Timestamp:</Styles.TicketTitle>
+          </Grid>
+          <Grid item xs={8} sm={9}>
+            <Styles.TicketContent>{formatFullDate(ticket.transactionTime)}</Styles.TicketContent>
+          </Grid>
+        </Grid>
+      ) : null}
     </Box>
   );
 };

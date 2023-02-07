@@ -211,7 +211,7 @@ const TicketsList: React.FC<ITicketsList> = ({
       <TableStyles.BlockWrapper className="mb-12">
         <Styles.BlockWrapper>
           <Styles.BlockTitle>
-            Ticket List{' '}
+            Tickets Created Using this PastelID{' '}
             <Styles.SubTitle>
               (Total {totalTickets} {totalTickets > 1 ? 'Tickets' : 'Ticket'})
             </Styles.SubTitle>

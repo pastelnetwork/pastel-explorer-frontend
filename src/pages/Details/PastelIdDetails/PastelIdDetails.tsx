@@ -38,8 +38,7 @@ const PastelIdDetails = () => {
   const [tickets, setTickets] = useState<ITicket[]>([]);
   const [senses, setSenses] = useState<TSenseRequests[]>([]);
   const [ticketsTypeList, setTicketsTypeList] = useState<TTicketsTypeProps[]>([]);
-  const [offset, setOffset] = useState(0);
-  const pastelIdData = usePastelIdDetails(id, offset, limit, ticketType);
+  const pastelIdData = usePastelIdDetails(id, limit, ticketType);
 
   const handleTicketTypeChange = (val: string) => {
     setTicketType(val);
@@ -47,12 +46,10 @@ const PastelIdDetails = () => {
     fetchParams.current.offset = 0;
     fetchParams.current.totalTickets = 0;
     fetchParams.current.size = 1;
-    setOffset(0);
     pastelIdData.setSize(1);
   };
 
   const handleFetchMore = (newOffset: number, newSize: number) => {
-    setOffset(newOffset);
     pastelIdData.setSize(newSize);
   };
 
@@ -81,7 +78,6 @@ const PastelIdDetails = () => {
 
   useEffect(() => {
     (async () => {
-      setOffset(0);
       pastelIdData.setSize(1);
       fetchParams.current.size = 1;
       fetchParams.current.offset = 0;
