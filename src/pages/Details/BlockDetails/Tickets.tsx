@@ -54,7 +54,7 @@ const TicketsList: React.FC<ITicketsList> = ({ data, senses }) => {
   }
 
   const renderSenseInfo = (ticket: IActionRegistrationTicket, transactionHash: string) => {
-    if (ticket.action_type !== 'sense') {
+    if (ticket.action_type !== 'sense' || !ticket?.activation_ticket) {
       return null;
     }
     const sense = senses?.find(s => s.transactionHash === transactionHash);
@@ -65,8 +65,8 @@ const TicketsList: React.FC<ITicketsList> = ({ data, senses }) => {
     return (
       <>
         <Grid container spacing={3}>
-          <Grid item xs={4} sm={3}>
-            <TicketStyles.TicketTitle>Image:</TicketStyles.TicketTitle>
+          <Grid item xs={4} sm={3} className="max-w-370">
+            <TicketStyles.TicketTitle>Sense Output Details:</TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
             <TicketStyles.TicketContent>
@@ -81,7 +81,7 @@ const TicketsList: React.FC<ITicketsList> = ({ data, senses }) => {
           </Grid>
         </Grid>
         <Grid container spacing={3}>
-          <Grid item xs={4} sm={3}>
+          <Grid item xs={4} sm={3} className="max-w-370">
             <TicketStyles.TicketTitle>Image Hash:</TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -96,7 +96,7 @@ const TicketsList: React.FC<ITicketsList> = ({ data, senses }) => {
           </Grid>
         </Grid>
         <Grid container spacing={3}>
-          <Grid item xs={4} sm={3}>
+          <Grid item xs={4} sm={3} className="max-w-370">
             <TicketStyles.TicketTitle>Sense Version:</TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -177,7 +177,7 @@ const TicketsList: React.FC<ITicketsList> = ({ data, senses }) => {
               id={ticket.transactionHash}
             >
               <Grid container spacing={3}>
-                <Grid item xs={4} sm={3}>
+                <Grid item xs={4} sm={3} className="max-w-370">
                   <TicketStyles.TicketTitle>TXID:</TicketStyles.TicketTitle>
                 </Grid>
                 <Grid item xs={8} sm={9}>
@@ -192,7 +192,7 @@ const TicketsList: React.FC<ITicketsList> = ({ data, senses }) => {
                 </Grid>
               </Grid>
               <Grid container spacing={3}>
-                <Grid item xs={4} sm={3}>
+                <Grid item xs={4} sm={3} className="max-w-370">
                   <TicketStyles.TicketTitle>Type:</TicketStyles.TicketTitle>
                 </Grid>
                 <Grid item xs={8} sm={9}>

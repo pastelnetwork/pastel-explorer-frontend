@@ -19,7 +19,7 @@ const ApiTicket: React.FC<IApiTicketProps> = ({ apiTicket, actionType }) => {
   return (
     <Box>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-370">
           <Styles.TicketTitle>Data hash:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -29,7 +29,7 @@ const ApiTicket: React.FC<IApiTicketProps> = ({ apiTicket, actionType }) => {
       {actionType === 'sense' ? (
         <>
           <Grid container spacing={3}>
-            <Grid item xs={4} sm={3}>
+            <Grid item xs={4} sm={3} className="max-w-370">
               <Styles.TicketTitle>Dd and fingerprints max:</Styles.TicketTitle>
             </Grid>
             <Grid item xs={8} sm={9}>
@@ -37,7 +37,7 @@ const ApiTicket: React.FC<IApiTicketProps> = ({ apiTicket, actionType }) => {
             </Grid>
           </Grid>
           <Grid container spacing={3}>
-            <Grid item xs={4} sm={3}>
+            <Grid item xs={4} sm={3} className="max-w-370">
               <Styles.TicketTitle>Dd and fingerprints ic:</Styles.TicketTitle>
             </Grid>
             <Grid item xs={8} sm={9}>
@@ -45,7 +45,7 @@ const ApiTicket: React.FC<IApiTicketProps> = ({ apiTicket, actionType }) => {
             </Grid>
           </Grid>
           <Grid container spacing={3}>
-            <Grid item xs={4} sm={3}>
+            <Grid item xs={4} sm={3} className="max-w-370">
               <Styles.TicketTitle>Dd and fingerprints ids:</Styles.TicketTitle>
             </Grid>
             <Grid item xs={8} sm={9}>

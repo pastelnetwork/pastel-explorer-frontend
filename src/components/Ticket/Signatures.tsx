@@ -13,7 +13,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature }) => {
   if (signature) {
     return (
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-370">
           <Styles.TicketTitle>Signature:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -27,7 +27,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature }) => {
     return (
       <Box>
         <Grid container spacing={3}>
-          <Grid item xs={4} sm={3}>
+          <Grid item xs={4} sm={3} className="max-w-370">
             <Styles.TicketTitle>PastelID of User Submitting Ticket:</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -35,7 +35,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature }) => {
           </Grid>
         </Grid>
         <Grid container spacing={3}>
-          <Grid item xs={4} sm={3}>
+          <Grid item xs={4} sm={3} className="max-w-370">
             <Styles.TicketTitle>Signature of User:</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -45,7 +45,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature }) => {
           </Grid>
         </Grid>
         <Grid container spacing={3}>
-          <Grid item xs={4} sm={3}>
+          <Grid item xs={4} sm={3} className="max-w-370">
             <Styles.TicketTitle>Registering Supernode #1 - PastelID:</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -55,7 +55,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature }) => {
           </Grid>
         </Grid>
         <Grid container spacing={3}>
-          <Grid item xs={4} sm={3}>
+          <Grid item xs={4} sm={3} className="max-w-370">
             <Styles.TicketTitle>Registering Supernode #1 - Signature:</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -65,7 +65,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature }) => {
           </Grid>
         </Grid>
         <Grid container spacing={3}>
-          <Grid item xs={4} sm={3}>
+          <Grid item xs={4} sm={3} className="max-w-370">
             <Styles.TicketTitle>Registering Supernode #2 - PastelID:</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -75,7 +75,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature }) => {
           </Grid>
         </Grid>
         <Grid container spacing={3}>
-          <Grid item xs={4} sm={3}>
+          <Grid item xs={4} sm={3} className="max-w-370">
             <Styles.TicketTitle>Registering Supernode #2 - Signature:</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -85,7 +85,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature }) => {
           </Grid>
         </Grid>
         <Grid container spacing={3}>
-          <Grid item xs={4} sm={3}>
+          <Grid item xs={4} sm={3} className="max-w-370">
             <Styles.TicketTitle>Registering Supernode #3 - PastelID:</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -95,7 +95,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature }) => {
           </Grid>
         </Grid>
         <Grid container spacing={3}>
-          <Grid item xs={4} sm={3}>
+          <Grid item xs={4} sm={3} className="max-w-370">
             <Styles.TicketTitle>Registering Supernode #3 - Signature:</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>

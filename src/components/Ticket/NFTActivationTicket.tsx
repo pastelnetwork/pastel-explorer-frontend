@@ -18,7 +18,7 @@ const NFTActivationTicket: React.FC<INFTActivationTicketProps> = ({ ticket }) =>
   return (
     <Box>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-370">
           <Styles.TicketTitle>Creator height:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -37,7 +37,7 @@ const NFTActivationTicket: React.FC<INFTActivationTicketProps> = ({ ticket }) =>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-370">
           <Styles.TicketTitle>Pastel OpenAPI Ticket Version Number:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -45,7 +45,7 @@ const NFTActivationTicket: React.FC<INFTActivationTicketProps> = ({ ticket }) =>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-370">
           <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -61,7 +61,7 @@ const NFTActivationTicket: React.FC<INFTActivationTicketProps> = ({ ticket }) =>
       </Grid>
       <Signatures signature={ticket.signature} />
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-370">
           <Styles.TicketTitle>Reg txid:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -80,7 +80,7 @@ const NFTActivationTicket: React.FC<INFTActivationTicketProps> = ({ ticket }) =>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-370">
           <Styles.TicketTitle>
             Total Cost in PSL to Register Ticket on Blockchain:
           </Styles.TicketTitle>

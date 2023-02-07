@@ -79,7 +79,7 @@ const TicketsList: React.FC<ITicketsList> = ({
     return (
       <>
         <Grid container spacing={3}>
-          <Grid item xs={4} sm={3}>
+          <Grid item xs={4} sm={3} className="max-w-370">
             <TicketStyles.TicketTitle>Image:</TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -95,7 +95,7 @@ const TicketsList: React.FC<ITicketsList> = ({
           </Grid>
         </Grid>
         <Grid container spacing={3}>
-          <Grid item xs={4} sm={3}>
+          <Grid item xs={4} sm={3} className="max-w-370">
             <TicketStyles.TicketTitle>Image Hash:</TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -110,7 +110,7 @@ const TicketsList: React.FC<ITicketsList> = ({
           </Grid>
         </Grid>
         <Grid container spacing={3}>
-          <Grid item xs={4} sm={3}>
+          <Grid item xs={4} sm={3} className="max-w-370">
             <TicketStyles.TicketTitle>Sense Version:</TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -233,7 +233,7 @@ const TicketsList: React.FC<ITicketsList> = ({
               className="table__row"
             >
               <Grid container spacing={3}>
-                <Grid item xs={4} sm={3}>
+                <Grid item xs={4} sm={3} className="max-w-370">
                   <TicketStyles.TicketTitle>TXID:</TicketStyles.TicketTitle>
                 </Grid>
                 <Grid item xs={8} sm={9}>
@@ -248,7 +248,7 @@ const TicketsList: React.FC<ITicketsList> = ({
                 </Grid>
               </Grid>
               <Grid container spacing={3}>
-                <Grid item xs={4} sm={3}>
+                <Grid item xs={4} sm={3} className="max-w-370">
                   <TicketStyles.TicketTitle>Type:</TicketStyles.TicketTitle>
                 </Grid>
                 <Grid item xs={8} sm={9}>
