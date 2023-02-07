@@ -137,10 +137,10 @@ const SenseDetails: React.FC = () => {
     <Styles.Wrapper id="senseDetails">
       <Header title="Sense Details" />
       <Grid container direction="column" spacing={2}>
-        <TransactionStyles.TransactionDesc item>
+        <TransactionStyles.TransactionDesc item className="alert-wrapper">
           <TransactionStyles.ViewTransactionRawMuiAlert severity="info">
             <AlertTitle className="alert-title">
-              Image File Hash: {sense.imageFileHash}{' '}
+              Image File Hash: <span className="image-file-hash">{sense.imageFileHash}</span>{' '}
               <span>
                 (
                 <Styles.RawDataWrapper>
@@ -206,6 +206,29 @@ const SenseDetails: React.FC = () => {
             </Box>
           </Box>
           <BlockItemLayout
+            title=""
+            customTitle={
+              <Styles.TitleWrapper>
+                <TableStyles.BlockTitle>
+                  Top-10 Most Similar Registered Images on Pastel When Submitted
+                </TableStyles.BlockTitle>
+                <ChartStyles.CSVLinkButton
+                  data={getCsvData()}
+                  filename={`top_10_most_similar_images_to_image_hash__${sense.imageFileHash}.csv`}
+                  headers={csvHeaders}
+                  separator=","
+                  ref={downloadRef}
+                >
+                  Export to CSV
+                </ChartStyles.CSVLinkButton>
+              </Styles.TitleWrapper>
+            }
+            className="similar-registered-images"
+            childrenClassName="no-spacing"
+          >
+            <SimilarRegisteredImages rarenessScoresTable={sense?.rarenessScoresTable} />
+          </BlockItemLayout>
+          <BlockItemLayout
             title="Rare on the Internet Results Graph"
             className="rare-on-the-internet-results-graph"
           >
@@ -228,29 +251,6 @@ const SenseDetails: React.FC = () => {
                   : []
               }
             />
-          </BlockItemLayout>
-          <BlockItemLayout
-            title=""
-            customTitle={
-              <Styles.TitleWrapper>
-                <TableStyles.BlockTitle>
-                  Top-10 Most Similar Registered Images on Pastel When Submitted
-                </TableStyles.BlockTitle>
-                <ChartStyles.CSVLinkButton
-                  data={getCsvData()}
-                  filename={`top_10_most_similar_images_to_image_hash__${sense.imageFileHash}.csv`}
-                  headers={csvHeaders}
-                  separator=","
-                  ref={downloadRef}
-                >
-                  Export to CSV
-                </ChartStyles.CSVLinkButton>
-              </Styles.TitleWrapper>
-            }
-            className="similar-registered-images"
-            childrenClassName="no-spacing"
-          >
-            <SimilarRegisteredImages rarenessScoresTable={sense?.rarenessScoresTable} />
           </BlockItemLayout>
         </Styles.ImagesWrapper>
       </Grid>
