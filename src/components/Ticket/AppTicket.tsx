@@ -18,7 +18,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
   return (
     <Box>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Creator name:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -26,7 +26,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Creator website:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -34,7 +34,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Creator written statement:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -42,7 +42,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>NFT creation video youtube url:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -50,7 +50,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>NFT keyword set:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -60,7 +60,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>NFT series name:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -68,7 +68,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>NFT title:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -76,7 +76,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>NFT type:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -84,7 +84,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Preview hash:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -92,7 +92,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Thumbnail1 hash:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -100,7 +100,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Thumbnail2 hash:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -108,7 +108,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Data hash:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -116,7 +116,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Total copies:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -124,7 +124,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Dd and fingerprints ic:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -132,7 +132,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Dd and fingerprints max:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -140,7 +140,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Dd and fingerprints ids:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -150,7 +150,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Rq ic:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -158,7 +158,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Rq max:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -166,7 +166,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Rq oti:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -174,7 +174,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Rq ids:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>

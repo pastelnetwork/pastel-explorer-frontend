@@ -23,8 +23,8 @@ export const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
     height: 28px;
   }
 
-  .max-w-370 {
-    max-width: 370px;
+  .max-w-355 {
+    max-width: 335px;
   }
 `;
 

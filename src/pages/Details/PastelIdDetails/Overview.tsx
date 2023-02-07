@@ -39,7 +39,7 @@ const Overview: React.FC<IOverviewProps> = ({ totalTickets, pastelId, ticketsTyp
         <Box className="custom-table tickets-table">
           <BlockDetailsStyles.GridStyle className="table__row">
             <Grid container spacing={3}>
-              <Grid item xs={4} sm={3} className="max-w-370">
+              <Grid item xs={4} sm={3} className="max-w-355">
                 <TicketStyles.TicketTitle>Pastel ID:</TicketStyles.TicketTitle>
               </Grid>
               <Grid item xs={8} sm={9}>
@@ -49,7 +49,7 @@ const Overview: React.FC<IOverviewProps> = ({ totalTickets, pastelId, ticketsTyp
           </BlockDetailsStyles.GridStyle>
           <BlockDetailsStyles.GridStyle className="table__row">
             <Grid container spacing={3}>
-              <Grid item xs={4} sm={3} className="max-w-370">
+              <Grid item xs={4} sm={3} className="max-w-355">
                 <TicketStyles.TicketTitle>Type:</TicketStyles.TicketTitle>
               </Grid>
               <Grid item xs={8} sm={9}>
@@ -59,7 +59,7 @@ const Overview: React.FC<IOverviewProps> = ({ totalTickets, pastelId, ticketsTyp
           </BlockDetailsStyles.GridStyle>
           <BlockDetailsStyles.GridStyle className="table__row">
             <Grid container spacing={3}>
-              <Grid item xs={4} sm={3} className="max-w-370">
+              <Grid item xs={4} sm={3} className="max-w-355">
                 <TicketStyles.TicketTitle>
                   Total Tickets Created Using This PastelID:
                 </TicketStyles.TicketTitle>

@@ -17,7 +17,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
   return (
     <Box>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Pastel OpenAPI Ticket Version Number:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -25,7 +25,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -41,7 +41,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
       </Grid>
       <Signatures signature={ticket.signature} />
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Offer txid:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -56,7 +56,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Accept txid:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -71,7 +71,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Item txid:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -86,7 +86,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Registration txid:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -101,7 +101,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-370">
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Copy serial nr:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -110,7 +110,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
       </Grid>
       {ticket.transactionTime ? (
         <Grid container spacing={3}>
-          <Grid item xs={4} sm={3} className="max-w-370">
+          <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>Timestamp:</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
