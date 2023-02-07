@@ -64,6 +64,27 @@ export const Wrapper = styled('div')`
     margin-bottom: 0;
     word-break: 'break-word';
   }
+
+  @media screen and (max-width: 829px) {
+    .image-file-hash {
+      display: inline-block;
+      max-width: 50%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: bottom;
+    }
+
+    .address-link {
+      max-width: 50%;
+      display: inline-block;
+      vertical-align: bottom;
+    }
+
+    .alert-wrapper {
+      width: 100%;
+      overflow: hidden;
+    }
+  }
 `;
 
 export const ContentWrapper = styled.div`
@@ -189,6 +210,7 @@ export const ImagesWrapper = styled(Box)`
 
   .pastel-data {
     width: calc(40% - 20px);
+    min-height: 650px;
     margin-right: 20px;
 
     &.min-height-725 {
@@ -256,6 +278,7 @@ export const ImagesWrapper = styled(Box)`
     }
 
     .pastel-data {
+      min-height: unset;
       margin-right: 0;
       order: 2;
 
@@ -264,19 +287,19 @@ export const ImagesWrapper = styled(Box)`
       }
     }
 
-    .rare-on-the-internet-results-graph {
+    .similar-registered-images {
       order: 3;
     }
 
-    .rare-on-the-internet-alternative-results {
+    .rare-on-the-internet-results-graph {
       order: 4;
     }
 
-    .fingerprint-vector-heatmap {
+    .rare-on-the-internet-alternative-results {
       order: 5;
     }
 
-    .similar-registered-images {
+    .fingerprint-vector-heatmap {
       order: 6;
     }
   }
@@ -295,11 +318,16 @@ export const ImagesWrapper = styled(Box)`
   }
 
   @media screen and (max-width: 678px) {
-    .prevalence-of-similar-images,
-    .category-probabilities,
-    .summary,
-    .open-nsfw,
-    .rareness-score {
+    .summary-group,
+    .analytics-group {
+      display: block;
+    }
+
+    .analytics-group .prevalence-of-similar-images,
+    .analytics-group .category-probabilities,
+    .summary-group .summary,
+    .summary-group .open-nsfw,
+    .summary-group .rareness-score {
       width: 100%;
     }
 

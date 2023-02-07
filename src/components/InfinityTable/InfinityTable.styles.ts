@@ -133,12 +133,12 @@ export const HeaderCell = styled(TableCell)<{ $disabledSort: boolean }>`
 
 export const Loader = styled.div`
   position: absolute;
+  bottom: 30%;
   display: flex;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  z-index: 100;
 `;
 
 export const Wrapper = styled.div`

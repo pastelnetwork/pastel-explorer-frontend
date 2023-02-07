@@ -17,7 +17,7 @@ import {
 } from './Blocks.columns';
 import * as Styles from './Blocks.styles';
 
-export const DATA_FETCH_LIMIT = 20;
+export const DATA_FETCH_LIMIT = 40;
 export const DATA_OFFSET = 0;
 export const DATA_DEFAULT_SORT = 'DESC';
 

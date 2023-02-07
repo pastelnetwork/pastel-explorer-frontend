@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom';
 import { Skeleton } from '@material-ui/lab';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 // application
-import { TAppTheme } from '@theme/index';
 import { Dropdown, OptionsProps } from '@components/Dropdown/Dropdown';
 import { statistics } from '@utils/constants/statistics';
 
@@ -17,32 +16,11 @@ interface IProps {
   title?: string;
 }
 
-const useStyles = makeStyles((theme: TAppTheme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-  },
-  button: {
-    border: 0,
-    outline: 'unset',
-    marginLeft: theme.spacing(4),
-    marginTop: theme.spacing(4),
-    background: 'inherit',
-    cursor: 'pointer',
-    [theme.breakpoints.down('sm')]: {
-      marginLeft: theme.spacing(2),
-    },
-  },
-  icon: {
-    // fill: theme.palette.text.primary,
-    stroke: theme.palette.text.primary,
-    width: 24,
-    height: 22,
-    [theme.breakpoints.down('sm')]: {
-      width: 19,
-      height: 17,
-    },
   },
 }));
 

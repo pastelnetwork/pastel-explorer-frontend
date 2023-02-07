@@ -30,12 +30,12 @@ export const TicketContent = styled(Typography)`
   }
 
   .sense-img {
-    width: 50px;
-    height: 50px;
+    width: 200px;
+    height: 200px;
+    transition: all 0.3s ease-in-out;
 
     &:hover {
-      transform: scale(2.5);
-      transition: all 0.3s;
+      transform: scale(2);
     }
   }
 

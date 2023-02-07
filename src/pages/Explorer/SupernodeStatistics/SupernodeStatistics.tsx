@@ -1,8 +1,9 @@
 import * as React from 'react';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 import DoughnutChart from '@components/Charts/DoughnutChart/DoughnutChart';
-
 import { INetworkSupernodes } from '@utils/types/INetwork';
+import useNetwork from '@hooks/useNetwork';
 
 import {
   generateSupernodeCountriesList,
@@ -11,14 +12,16 @@ import {
 } from './SupernodeStatistics.helpers';
 import * as ExplorerMapStyles from '../ExplorerMap/ExplorerMap.styles';
 
+import * as ExplorerStyles from '../Explorer.styles';
+
 interface SupernodeStatisticsProps {
-  supernodes: Array<INetworkSupernodes> | null;
   link?: string;
 }
 
 const DISPLAY_COUNTRY_QUANTITY = 5;
 
-const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ supernodes, link = '' }) => {
+const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ link = '' }) => {
+  const { supernodeList, isLoading } = useNetwork();
   const [countryQuantity, setCountryQuantity] = React.useState(0);
   const [countryChartData, setCountryChartData] = React.useState<CountryList['chartData'] | null>(
     null,
@@ -35,12 +38,21 @@ const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ supernodes, l
   };
 
   React.useEffect(() => {
-    if (supernodes) {
-      generateSupernodeCountries(supernodes);
+    if (supernodeList.length) {
+      generateSupernodeCountries(supernodeList);
     }
-  }, [supernodes]);
+  }, [isLoading]);
 
   const totalSuperNodes = countryChartData?.quantities?.reduce((a, b) => a + b, 0);
+
+  if (isLoading) {
+    return (
+      <ExplorerStyles.BlockWrapper>
+        <ExplorerStyles.BlockTitle>Supernode Statistics</ExplorerStyles.BlockTitle>
+        <Skeleton animation="wave" variant="rect" height={355} />
+      </ExplorerStyles.BlockWrapper>
+    );
+  }
 
   return (
     <ExplorerMapStyles.Container>

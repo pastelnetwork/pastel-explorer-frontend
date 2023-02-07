@@ -2,6 +2,15 @@ import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 
 export const Wrapper = styled('div')`
+  position: relative;
+
+  .loading-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
   .block-wrapper {
     margin-bottom: 12px;
 

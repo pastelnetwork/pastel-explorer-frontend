@@ -18,13 +18,13 @@ import {
   ISummaryChartStats,
   TSummaryChartProps,
 } from '@utils/types/ISummary';
-import { INetwork } from '@utils/types/INetwork';
 import { SocketContext } from '@context/socket';
 import themeVariant from '@theme/variants';
 import { AppThunkDispatch } from '@redux/types';
 import { BlockThunks, TransactionThunks } from '@redux/thunk';
 import { ISocketData } from '@utils/types/ISocketData';
 import { getCurrencyName } from '@utils/appInfo';
+import useNetwork from '@hooks/useNetwork';
 
 import * as Styles from './Summary.styles';
 import { LineChart } from './LineChart';
@@ -64,17 +64,13 @@ const CustomTooltip = withStyles(theme => ({
 }))(Tooltip);
 
 const Summary: React.FC = () => {
+  const { supernodeList, isLoading } = useNetwork(true);
   const [summaryList, setSummaryList] = React.useState(initialSummaryList);
   const [currentStatsData, setCurrentStatsData] = React.useState<ISummaryStats | null>(null);
   const [summaryChartData, setSummaryChartData] = React.useState<ISummaryChartStats>();
-  const [totalSupernode, setTotalSupernode] = React.useState(0);
   const { fetchData } = useFetch<ISummary>({
     method: 'get',
     url: `${URLS.SUMMARY_URL}?limit=576&period=24h`,
-  });
-  const fetchGeoData = useFetch<INetwork>({
-    method: 'get',
-    url: `${URLS.NETWORK_URL}`,
   });
   const socket = React.useContext(SocketContext);
   const classes = useStyles();
@@ -143,11 +139,6 @@ const Summary: React.FC = () => {
         }
       },
     );
-    fetchGeoData.fetchData().then(response => {
-      if (response?.masternodes) {
-        setTotalSupernode(response.masternodes.length);
-      }
-    });
     return () => {
       socket.off('getUpdateBlock');
     };
@@ -243,12 +234,12 @@ const Summary: React.FC = () => {
   };
 
   const renderCardHeaderValue = (sumKey: string, value: string | number | null) => {
-    if (!value) {
+    if (!value || isLoading) {
       return <Skeleton animation="wave" variant="text" />;
     }
     if (sumKey === 'circulatingSupply' || sumKey === 'coinSupply') {
       const theNumberOfTotalSupernodes = getCurrencyName() === 'PSL' ? 5000000 : 1000000;
-      const totalLockedInSupernodes = totalSupernode * theNumberOfTotalSupernodes;
+      const totalLockedInSupernodes = supernodeList.length * theNumberOfTotalSupernodes;
       return (
         <CustomTooltip
           title={

@@ -1,7 +1,7 @@
 import { getCurrencyName } from '@utils/appInfo';
 import * as ROUTES from '@utils/constants/routes';
 
-export interface SummaryItemProps {
+interface SummaryItemProps {
   id: number;
   name: string;
   value: string | number | null;

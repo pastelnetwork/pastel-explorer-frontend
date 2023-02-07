@@ -141,3 +141,5 @@ export function useDeferredData<FetchedData, Transform = FetchedData>(
 
   return state;
 }
+
+export const axiosGet = (url: string) => axiosInstance.get(url).then(res => res.data);

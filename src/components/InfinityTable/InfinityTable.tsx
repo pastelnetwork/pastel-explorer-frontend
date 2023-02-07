@@ -63,6 +63,7 @@ interface IInfinityTableComponentProps {
   isLoading?: boolean;
   dropdownFilters?: TFilter[];
   dropdownLabel?: string;
+  customLoading?: boolean;
 }
 
 const noRowsRenderer = () => <Styles.EmptyData />;
@@ -113,6 +114,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   headerBackground,
   isLoading,
   customTitle,
+  customLoading,
 }) => {
   const [loading, setLoading] = React.useState(false);
   const isDarkMode = useGetThemeMode();
@@ -185,11 +187,11 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
     <Styles.Card className={className}>
       {renderTitle()}
       <Styles.TableContainer>
-        {loading && (
+        {loading || customLoading ? (
           <Styles.Loader>
             <CircularProgress size={40} />
           </Styles.Loader>
-        )}
+        ) : null}
         {!isLoading ? (
           <Styles.TableWrapper className={`${rows.length ? '' : 'empty-table'}`}>
             <AutoSizer disableHeight>

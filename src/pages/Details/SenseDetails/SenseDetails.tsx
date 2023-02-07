@@ -8,12 +8,11 @@ import AlertTitle from '@material-ui/lab/AlertTitle';
 import Header from '@components/Header/Header';
 import * as TableStyles from '@components/Table/Table.styles';
 import CopyButton from '@components/CopyButton/CopyButton';
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import * as URLS from '@utils/constants/urls';
 import { TSenseRequests } from '@utils/types/ITransactions';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
+import useSenseDetails from '@hooks/useSenseDetails';
 
 import * as ChartStyles from '@pages/HistoricalStatistics/Chart/Chart.styles';
 import PastelData from './PastelData';
@@ -74,24 +73,17 @@ const csvHeaders = [
 const SenseDetails: React.FC = () => {
   const downloadRef = useRef(null);
   const { id } = useParams<IParamTypes>();
+  const { senseData, isLoading } = useSenseDetails(id);
   const [sense, setSense] = useState<TSenseRequests | null>(null);
   const [openRawDataModal, setOpenRawDataModal] = useState(false);
-  const fetchSenses = useFetch<{ data: TSenseRequests }>({
-    method: 'get',
-    url: `${URLS.SENSE_URL}/${id}`,
-  });
-
-  const handleTransactionFetch = () => {
-    fetchSenses.fetchData().then(response => {
-      if (response?.data) {
-        setSense(response.data);
-      }
-    });
-  };
 
   useEffect(() => {
-    handleTransactionFetch();
-  }, [id]);
+    if (senseData) {
+      setSense(senseData);
+    } else {
+      setSense(null);
+    }
+  }, [senseData, isLoading]);
 
   const toggleOpenRawData = () => setOpenRawDataModal(!openRawDataModal);
 
@@ -133,7 +125,7 @@ const SenseDetails: React.FC = () => {
     return results;
   };
 
-  if (fetchSenses.isLoading) {
+  if (isLoading) {
     return (
       <TransactionStyles.LoadingWrapper>
         <TransactionStyles.Loader>
@@ -147,10 +139,10 @@ const SenseDetails: React.FC = () => {
     <Styles.Wrapper id="senseDetails">
       <Header title="Sense Details" />
       <Grid container direction="column" spacing={2}>
-        <TransactionStyles.TransactionDesc item>
+        <TransactionStyles.TransactionDesc item className="alert-wrapper">
           <TransactionStyles.ViewTransactionRawMuiAlert severity="info">
             <AlertTitle className="alert-title">
-              Image File Hash: {sense.imageFileHash}{' '}
+              Image File Hash: <span className="image-file-hash">{sense.imageFileHash}</span>{' '}
               <span>
                 (
                 <Styles.RawDataWrapper>
@@ -216,6 +208,29 @@ const SenseDetails: React.FC = () => {
             </Box>
           </Box>
           <BlockItemLayout
+            title=""
+            customTitle={
+              <Styles.TitleWrapper>
+                <TableStyles.BlockTitle>
+                  Top-10 Most Similar Registered Images on Pastel When Submitted
+                </TableStyles.BlockTitle>
+                <ChartStyles.CSVLinkButton
+                  data={getCsvData()}
+                  filename={`top_10_most_similar_images_to_image_hash__${sense.imageFileHash}.csv`}
+                  headers={csvHeaders}
+                  separator=","
+                  ref={downloadRef}
+                >
+                  Export to CSV
+                </ChartStyles.CSVLinkButton>
+              </Styles.TitleWrapper>
+            }
+            className="similar-registered-images"
+            childrenClassName="no-spacing"
+          >
+            <SimilarRegisteredImages rarenessScoresTable={sense?.rarenessScoresTable} />
+          </BlockItemLayout>
+          <BlockItemLayout
             title="Rare on the Internet Results Graph"
             className="rare-on-the-internet-results-graph"
           >
@@ -238,29 +253,6 @@ const SenseDetails: React.FC = () => {
                   : []
               }
             />
-          </BlockItemLayout>
-          <BlockItemLayout
-            title=""
-            customTitle={
-              <Styles.TitleWrapper>
-                <TableStyles.BlockTitle>
-                  Top-10 Most Similar Registered Images on Pastel When Submitted
-                </TableStyles.BlockTitle>
-                <ChartStyles.CSVLinkButton
-                  data={getCsvData()}
-                  filename={`top_10_most_similar_images_to_image_hash__${sense.imageFileHash}.csv`}
-                  headers={csvHeaders}
-                  separator=","
-                  ref={downloadRef}
-                >
-                  Export to CSV
-                </ChartStyles.CSVLinkButton>
-              </Styles.TitleWrapper>
-            }
-            className="similar-registered-images"
-            childrenClassName="no-spacing"
-          >
-            <SimilarRegisteredImages rarenessScoresTable={sense?.rarenessScoresTable} />
           </BlockItemLayout>
         </Styles.ImagesWrapper>
       </Grid>

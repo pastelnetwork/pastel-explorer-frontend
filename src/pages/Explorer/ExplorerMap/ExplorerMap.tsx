@@ -1,30 +1,25 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
-
 import { Grid, Typography } from '@material-ui/core';
+import Skeleton from '@material-ui/lab/Skeleton';
 
-import Map, { MarkerProps } from '@components/Map/Map';
+import Map from '@components/Map/Map';
 import { setInfoDrawer } from '@redux/actions/infoDrawerActions';
+import useNetwork from '@hooks/useNetwork';
 import themeVariant from '@theme/variants';
 
 import { generateDrawerContent } from './ExplorerMap.helpers';
 import * as Styles from './ExplorerMap.styles';
 import { generateMapOptions } from './ExplorerMap.options';
 
+import * as ExplorerStyles from '../Explorer.styles';
+
 interface ExplorerMapProps {
-  geoLocationList: Array<MarkerProps> | null;
-  nodesLength: {
-    peers: number;
-    supernodes: number;
-  };
   hidePeer?: boolean;
 }
 
-const ExplorerMap: React.FC<ExplorerMapProps> = ({
-  geoLocationList,
-  nodesLength,
-  hidePeer = false,
-}) => {
+const ExplorerMap: React.FC<ExplorerMapProps> = ({ hidePeer = false }) => {
+  const { geoLocationList, nodesLength, isLoading } = useNetwork(hidePeer);
   const dispatch = useDispatch();
   const mapOptions = generateMapOptions(geoLocationList);
 
@@ -38,6 +33,15 @@ const ExplorerMap: React.FC<ExplorerMapProps> = ({
       }
     },
   };
+
+  if (isLoading) {
+    return (
+      <ExplorerStyles.BlockWrapper>
+        <ExplorerStyles.BlockTitle>Explorer Map</ExplorerStyles.BlockTitle>
+        <Skeleton animation="wave" variant="rect" height={355} />
+      </ExplorerStyles.BlockWrapper>
+    );
+  }
 
   return (
     <Styles.Container>

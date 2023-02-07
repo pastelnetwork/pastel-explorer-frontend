@@ -1,15 +1,7 @@
 import styled from 'styled-components/macro';
 import { Link as RouterLink } from 'react-router-dom';
 
-import themeVariant from '@theme/variants';
-
-import {
-  Card as MuiCard,
-  CardContent as MuiCardContent,
-  TableCell as MuiTableCell,
-  TableRow as MuiTableRow,
-  Grid,
-} from '@material-ui/core';
+import { Card as MuiCard, CardContent as MuiCardContent, Grid } from '@material-ui/core';
 
 export const Card = styled(MuiCard)`
   background: transparent;
@@ -82,28 +74,6 @@ export const DoughnutInner = styled.div`
   z-index: 0;
   width: auto;
   transform: translateX(-50%);
-`;
-
-export const TableRow = styled(MuiTableRow)`
-  height: 42px;
-
-  &:last-child th,
-  &:last-child td {
-    border-bottom: 0;
-  }
-`;
-
-export const TableCell = styled(MuiTableCell)`
-  padding-top: 0;
-  padding-bottom: 0;
-`;
-
-export const GreenText = styled.span`
-  color: ${() => themeVariant.custom.green.main};
-`;
-
-export const RedText = styled.span`
-  color: ${() => themeVariant.custom.red.main};
 `;
 
 export const StakingWrapper = styled.div`

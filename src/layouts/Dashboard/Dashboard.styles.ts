@@ -22,6 +22,10 @@ export const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
     width: 28px;
     height: 28px;
   }
+
+  .max-w-355 {
+    max-width: 335px;
+  }
 `;
 
 export const Root = styled.div`

@@ -10,13 +10,13 @@ export interface IBlockState {
   timestamp: number | null;
 }
 
-const inititalState: IBlockState = {
+const initialState: IBlockState = {
   latestBlocks: new Map(),
   isLoading: true,
   timestamp: null,
 };
 
-const reducer = (state: IBlockState = inititalState, actions: BlocksActionsTypes) => {
+const reducer = (state: IBlockState = initialState, actions: BlocksActionsTypes) => {
   switch (actions.type) {
     case types.SET_LOADING_BLOCK:
       return { ...state, isLoading: true };

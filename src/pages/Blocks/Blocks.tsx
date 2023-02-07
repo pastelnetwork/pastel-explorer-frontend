@@ -1,48 +1,42 @@
-import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import InfinityTable, {
-  RowsProps,
   SortDirectionsType,
   ISortData,
 } from '@components/InfinityTable/InfinityTable';
-
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import * as URLS from '@utils/constants/urls';
-import { IBlock } from '@utils/types/IBlocks';
 import { blocksPeriodFilters, blocksFilters } from '@utils/constants/filter';
 import { getFilterState } from '@redux/reducers/filterReducer';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
+import useBlocks from '@hooks/useBlocks';
 
 import { columns, BLOCK_ID_KEY } from './Blocks.columns';
-import {
-  transformTableData,
-  DATA_FETCH_LIMIT,
-  DATA_OFFSET,
-  DATA_DEFAULT_SORT,
-} from './Blocks.helpers';
+import { transformTableData, DATA_DEFAULT_SORT, DATA_FETCH_LIMIT } from './Blocks.helpers';
 import * as Styles from './Blocks.styles';
 
 interface IBlocksDataRef {
-  offset: number;
   sortBy: string;
   sortDirection: SortDirectionsType;
+  period: string;
+  types: string[];
 }
 
 const Blocks = () => {
-  const fetchParams = React.useRef<IBlocksDataRef>({
-    offset: DATA_OFFSET,
+  const filter = useSelector(getFilterState);
+  const [apiParams, setParams] = useState<IBlocksDataRef>({
     sortBy: 'id',
     sortDirection: DATA_DEFAULT_SORT,
+    period: filter.dateRange || 'all',
+    types: filter.dropdownType || [],
   });
-  const [isMobile, setMobileView] = React.useState(false);
-  const [totalItem, setTotalItem] = React.useState<number>(0);
-  const [blockList, setBlocksList] = React.useState<Array<RowsProps>>([]);
-  const filter = useSelector(getFilterState);
-  const fetchBlocksData = useFetch<{ data: Array<IBlock>; total: number }>({
-    method: 'get',
-    url: URLS.BLOCK_URL,
-  });
+  const { swrData, total, swrSize, swrSetSize, isLoading } = useBlocks(
+    DATA_FETCH_LIMIT,
+    apiParams.sortBy === BLOCK_ID_KEY ? 'id' : apiParams.sortBy,
+    apiParams.sortDirection,
+    apiParams.period,
+    apiParams.types,
+  );
+  const [isMobile, setMobileView] = useState(false);
 
   const handleShowSubMenu = () => {
     setMobileView(false);
@@ -51,7 +45,7 @@ const Blocks = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     handleShowSubMenu();
 
     window.addEventListener('resize', handleShowSubMenu);
@@ -60,107 +54,46 @@ const Blocks = () => {
     };
   }, []);
 
-  const handleFetchBlocks = (
-    offset: number,
-    sortBy: string,
-    sortDirection: SortDirectionsType,
-    replaceData = false,
-    filterBy = 'period',
-    filterValue = filter.dateRange || '',
-    filterType = filter.dropdownType || [],
-  ) => {
-    fetchParams.current.sortBy = sortBy;
-    const limit = DATA_FETCH_LIMIT;
-
-    // Allow to sort by block height
-    // In this situation if user will click on block column we need to sort by timestamp
-    const fetchSortBy =
-      fetchParams.current.sortBy === BLOCK_ID_KEY ? 'id' : fetchParams.current.sortBy;
-    const params: Record<string, string | number> = {
-      offset,
-      limit,
-      sortBy: fetchSortBy,
-      sortDirection,
-      period: blocksPeriodFilters[blocksPeriodFilters.length - 1].value,
-    };
-    if (filterValue && filterValue !== blocksPeriodFilters[blocksPeriodFilters.length - 1].value) {
-      params[filterBy] = filterValue;
-    }
-    if (filterType.length) {
-      params.types = filterType.join(',');
-    }
-    return fetchBlocksData
-      .fetchData({ params })
-      .then(response => {
-        if (response) {
-          setTotalItem(response?.total);
-          return transformTableData(response.data, isMobile);
-        }
-        return [];
-      })
-      .then(data =>
-        replaceData ? setBlocksList(data) : setBlocksList(prevState => [...prevState, ...data]),
-      );
-  };
-
   const handleFetchMoreBlocks = (reachedTableBottom: boolean) => {
     if (!reachedTableBottom) return null;
-
-    fetchParams.current.offset += DATA_FETCH_LIMIT;
-
-    return handleFetchBlocks(
-      fetchParams.current.offset,
-      fetchParams.current.sortBy,
-      fetchParams.current.sortDirection,
-    );
+    swrSetSize(swrSize + 1);
+    setParams({ ...apiParams });
+    return true;
   };
 
-  const handleSort = ({ sortBy, sortDirection, filterBy, filterValue }: ISortData) => {
-    fetchParams.current.offset = DATA_OFFSET;
-    fetchParams.current.sortDirection = sortDirection;
-
-    return handleFetchBlocks(
-      DATA_OFFSET,
-      sortBy === 'blockHash' ? 'id' : sortBy,
-      fetchParams.current.sortDirection,
-      true,
-      filterBy,
-      filterValue,
-    );
+  const handleSort = ({ sortBy, sortDirection }: ISortData) => {
+    swrSetSize(1);
+    setParams({
+      ...apiParams,
+      sortBy: sortBy === 'blockHash' ? 'id' : sortBy,
+      sortDirection,
+    });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (filter.dateRange || filter.dropdownType) {
-      fetchParams.current.offset = DATA_OFFSET;
-      handleFetchBlocks(
-        DATA_OFFSET,
-        fetchParams.current.sortBy,
-        fetchParams.current.sortDirection,
-        true,
-        'period',
-        filter.dateRange || '',
-        filter.dropdownType || '',
-      );
-    } else {
-      handleFetchBlocks(DATA_OFFSET, fetchParams.current.sortBy, fetchParams.current.sortDirection);
+      swrSetSize(1);
+      setParams({
+        ...apiParams,
+        period: filter.dateRange || apiParams.period || '',
+        types: filter.dropdownType || apiParams.types || '',
+      });
     }
   }, [filter.dateRange, filter.dropdownType]);
 
   const getMovementTransactionsTitle = () => (
     <Styles.TitleWrapper>
       <Styles.Title>Block List</Styles.Title>{' '}
-      {totalItem > 0 ? (
-        <Styles.SubTitle>(Total {formatNumber(totalItem)} blocks)</Styles.SubTitle>
-      ) : null}
+      {total > 0 ? <Styles.SubTitle>(Total {formatNumber(total)} blocks)</Styles.SubTitle> : null}
     </Styles.TitleWrapper>
   );
 
   return (
     <Styles.TableContainer item>
       <InfinityTable
-        sortBy={fetchParams.current.sortBy}
-        sortDirection={fetchParams.current.sortDirection}
-        rows={blockList}
+        sortBy={apiParams.sortBy}
+        sortDirection={apiParams.sortDirection}
+        rows={swrData ? transformTableData(swrData, isMobile) : []}
         filters={blocksPeriodFilters}
         dropdownFilters={blocksFilters}
         dropdownLabel="Ticket type:"
@@ -172,6 +105,7 @@ const Blocks = () => {
         className="block-list-table"
         headerBackground
         rowHeight={isMobile ? 180 : 45}
+        customLoading={isLoading}
       />
     </Styles.TableContainer>
   );

@@ -7,6 +7,7 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { INftCollectionRegistrationTicket, INftCollectionTicket } from '@utils/types/ITransactions';
 import { getCurrencyName } from '@utils/appInfo';
 import * as ROUTES from '@utils/constants/routes';
+import { formatFullDate } from '@utils/helpers/date/date';
 
 import Signatures from './Signatures';
 import AppTicket from './AppTicket';
@@ -29,7 +30,7 @@ const NFTcollectionTicket: React.FC<INFTcollectionTicketProps> = ({ nftTicket })
   return (
     <Box>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>NFT collection ticket version:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -37,7 +38,7 @@ const NFTcollectionTicket: React.FC<INFTcollectionTicketProps> = ({ nftTicket })
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>NFT collection name:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -45,7 +46,7 @@ const NFTcollectionTicket: React.FC<INFTcollectionTicketProps> = ({ nftTicket })
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Creator:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -60,7 +61,7 @@ const NFTcollectionTicket: React.FC<INFTcollectionTicketProps> = ({ nftTicket })
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Permitted users:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -70,7 +71,7 @@ const NFTcollectionTicket: React.FC<INFTcollectionTicketProps> = ({ nftTicket })
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Blocknum:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -89,7 +90,7 @@ const NFTcollectionTicket: React.FC<INFTcollectionTicketProps> = ({ nftTicket })
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Block hash:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -108,7 +109,7 @@ const NFTcollectionTicket: React.FC<INFTcollectionTicketProps> = ({ nftTicket })
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Closing height:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -116,7 +117,7 @@ const NFTcollectionTicket: React.FC<INFTcollectionTicketProps> = ({ nftTicket })
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>NFT max count:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -124,7 +125,7 @@ const NFTcollectionTicket: React.FC<INFTcollectionTicketProps> = ({ nftTicket })
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>NFT copy count:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -132,7 +133,7 @@ const NFTcollectionTicket: React.FC<INFTcollectionTicketProps> = ({ nftTicket })
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>royalty:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -140,7 +141,7 @@ const NFTcollectionTicket: React.FC<INFTcollectionTicketProps> = ({ nftTicket })
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Green:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -158,7 +159,7 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
   return (
     <Box>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Pastel OpenAPI Ticket Version Number:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -166,7 +167,7 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Permitted users:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -176,7 +177,7 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Key:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -184,7 +185,7 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>TXID of Preburn 20%:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -192,7 +193,7 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Creator height:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -211,7 +212,7 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Closing height:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -230,7 +231,7 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>NFT max count:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -238,7 +239,7 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>NFT copy count:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -246,7 +247,7 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Royalty:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -254,7 +255,7 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Royalty address:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -273,7 +274,7 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Green:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -281,7 +282,7 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
             Total Cost in PSL to Register Ticket on Blockchain:
           </Styles.TicketTitle>
@@ -293,6 +294,16 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
         </Grid>
       </Grid>
       <Signatures signatures={ticket.signatures} />
+      {ticket.transactionTime ? (
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3} className="max-w-355">
+            <Styles.TicketTitle>Timestamp:</Styles.TicketTitle>
+          </Grid>
+          <Grid item xs={8} sm={9}>
+            <Styles.TicketContent>{formatFullDate(ticket.transactionTime)}</Styles.TicketContent>
+          </Grid>
+        </Grid>
+      ) : null}
       <NFTcollectionTicket nftTicket={ticket.nft_collection_ticket} />
     </Box>
   );
