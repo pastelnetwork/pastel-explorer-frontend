@@ -80,6 +80,8 @@ const SenseDetails: React.FC = () => {
   useEffect(() => {
     if (senseData) {
       setSense(senseData);
+    } else {
+      setSense(null);
     }
   }, [senseData, isLoading]);
 
