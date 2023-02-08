@@ -5,11 +5,12 @@ import * as Styles from './Header.styles';
 
 interface HeaderProps {
   title: string;
+  className?: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ title }) => {
+const Header: React.FC<HeaderProps> = ({ title, className = '' }) => {
   return (
-    <Styles.Container>
+    <Styles.Container className={className}>
       <Grid justify="space-between" container>
         <Grid item>
           <Styles.Typography variant="h3" gutterBottom>

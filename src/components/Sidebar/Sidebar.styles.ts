@@ -85,6 +85,10 @@ export const Brand = styled(ListItem)<{
   ${props => props.theme.breakpoints.down('sm')} {
     margin-right: 5px;
   }
+
+  ${props => props.theme.breakpoints.down('md')} {
+    margin-right: 10px;
+  }
 `;
 
 export const BrandLogo = styled.img`
@@ -107,9 +111,14 @@ export const Category = styled(ListItem)<CategoryType>`
   font-weight: ${props => props.theme.typography.fontWeightRegular};
   transition: all 0.3s ease-in-out;
 
+  ${props => props.theme.breakpoints.down('md')} {
+    margin: 0;
+  }
+
   ${props => props.theme.breakpoints.down('sm')} {
     display: block;
     margin-left: 0;
+    margin-right: 2px;
     padding: 12px 0 12px 42px;
   }
 

@@ -30,6 +30,7 @@ import * as Styles from './SenseDetails.styles';
 
 interface IParamTypes {
   id: string;
+  txid: string;
 }
 
 interface IBlockItemLayout {
@@ -72,8 +73,8 @@ const csvHeaders = [
 
 const SenseDetails: React.FC = () => {
   const downloadRef = useRef(null);
-  const { id } = useParams<IParamTypes>();
-  const { senseData, isLoading } = useSenseDetails(id);
+  const { id, txid } = useParams<IParamTypes>();
+  const { senseData, isLoading } = useSenseDetails(id, txid);
   const [sense, setSense] = useState<TSenseRequests | null>(null);
   const [openRawDataModal, setOpenRawDataModal] = useState(false);
 

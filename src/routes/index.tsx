@@ -61,6 +61,8 @@ const PastelIdDetails = loadable(() => import('@pages/Details/PastelIdDetails/Pa
 const TotalTransactionFees = loadable(
   () => import('@pages/HistoricalStatistics/TotalTransactionFees'),
 );
+const Tickets = loadable(() => import('@pages/Tickets/Tickets'));
+const TicketsType = loadable(() => import('@pages/TicketsType/TicketsType'));
 
 const explorerRoutes = {
   id: 'Explorer',
@@ -146,12 +148,12 @@ const statisticsRoutes = {
       component: StatisticsOvertime,
       seoTitle: 'Historical Statistics',
     },
-    // {
-    //   path: ROUTES.CASCADE_AND_SENSE_STATISTICS,
-    //   name: 'Cascade and Sense Statistics',
-    //   component: CascadeAndSenseStatistics,
-    //   seoTitle: 'Cascade and Sense Statistics',
-    // },
+    {
+      path: ROUTES.CASCADE_AND_SENSE_STATISTICS,
+      name: 'Cascade and Sense Statistics',
+      component: CascadeAndSenseStatistics,
+      seoTitle: 'Cascade and Sense Statistics',
+    },
   ],
 };
 // Statistics overtime routes
@@ -390,7 +392,7 @@ const accountsStatisticsRoutes = {
 
 const senseDetailsRoutes = {
   id: 'Sense Details',
-  path: `${ROUTES.SENSE_DETAILS}/:id`,
+  path: `${ROUTES.SENSE_DETAILS}/:txid/:id`,
   component: SenseDetails,
   seoTitle: 'Sense Details',
   children: null,
@@ -404,10 +406,29 @@ const pastelIdDetailsRoutes = {
   children: null,
 };
 
+const ticketsRoutes = {
+  id: 'Tickets',
+  path: ROUTES.TICKETS,
+  icon: <LocalAtmIcon />,
+  component: Tickets,
+  seoTitle: 'Tickets List',
+  children: null,
+};
+
+const ticketsTypeRoutes = {
+  id: 'Tickets',
+  path: `${ROUTES.TICKETS_TYPE}/:type`,
+  icon: <LocalAtmIcon />,
+  component: TicketsType,
+  seoTitle: 'Tickets List',
+  children: null,
+};
+
 export const pageRoutes = [
   explorerRoutes,
   movementRoutes,
   blocksRoutes,
+  ticketsRoutes,
   richlistRoutes,
   supernodesRoutes,
   transactionDetailsRoutes,
@@ -439,12 +460,14 @@ export const pageRoutes = [
   cascadeAndSenseStatisticsRoutes,
   senseDetailsRoutes,
   pastelIdDetailsRoutes,
+  ticketsTypeRoutes,
 ];
 
 export const sidebarRoutes = [
   explorerRoutes,
   movementRoutes,
   blocksRoutes,
+  ticketsRoutes,
   supernodesRoutes,
   richlistRoutes,
   statisticsRoutes,

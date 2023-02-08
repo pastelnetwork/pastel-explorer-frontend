@@ -29,7 +29,7 @@ export const GridStyle = styled(Grid)`
   }
 
   ${props => props.theme.breakpoints.down('md')} {
-    max-width: 350px;
+    max-width: 200px;
   }
 
   ${props => props.theme.breakpoints.down('xs')} {
@@ -70,11 +70,11 @@ export const AppBar = styled(MuiAppBar)`
   transition: min-height 0.5s ease-in;
 
   ${props => props.theme.breakpoints.up('md')} {
-    max-width: 34%;
+    max-width: 28%;
   }
 
   ${props => props.theme.breakpoints.up('lg')} {
-    max-width: calc(100% - 717px);
+    max-width: calc(100% - 783px);
   }
 
   fieldset {
@@ -153,6 +153,10 @@ export const AutocompleteWrapper = styled(Grid)`
   width: 100%;
   margin-right: 15px;
 
+  ${props => props.theme.breakpoints.down('md')} {
+    margin-right: 5px;
+  }
+
   .MuiFormLabel-root {
     display: inline-block;
     width: auto;
@@ -186,6 +190,10 @@ export const ModeToggle = styled.div`
   height: 26px;
   border-radius: 100px;
   overflow: hidden;
+
+  ${props => props.theme.breakpoints.down('md')} {
+    margin-right: 7px;
+  }
 
   ${props => props.theme.breakpoints.down('sm')} {
     width: 48px;

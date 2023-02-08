@@ -1,6 +1,6 @@
+import { useParams, Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import { Link } from 'react-router-dom';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
@@ -37,56 +37,50 @@ import {
   TransferTicket,
   getTicketTitle,
 } from '@components/Ticket';
+import { Dropdown } from '@components/Dropdown/Dropdown';
 import { getBaseURL } from '@utils/constants/statistics';
 
 import * as TableStyles from '@components/Table/Table.styles';
+import * as BlockDetailsStyles from '@pages/Details/BlockDetails/BlockDetails.styles';
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
-import * as Styles from './BlockDetails.styles';
+import * as Styles from '@pages/Details/PastelIdDetails/PastelIdDetails.styles';
+import { TTicketsTypeProps } from '@pages/Details/PastelIdDetails/PastelIdDetails.helpers';
+import { TICKET_TYPE_OPTIONS } from './TicketsType.helpers';
 
 interface ITicketsList {
   data: ITicket[];
+  ticketType: string;
+  onTicketTypeChange: (_value: string) => void;
+  totalTickets: number;
+  totalAllTickets: number;
+  ticketsTypeList: TTicketsTypeProps[];
+  isLoading?: boolean;
   senses?: TSenseRequests[];
 }
 
-const TicketsList: React.FC<ITicketsList> = ({ data, senses }) => {
-  if (!data?.length) {
-    return null;
-  }
+interface ParamTypes {
+  type: string;
+}
+
+const TicketsList: React.FC<ITicketsList> = ({
+  data,
+  ticketType,
+  onTicketTypeChange,
+  totalTickets,
+  totalAllTickets,
+  ticketsTypeList,
+  isLoading = false,
+  senses,
+}) => {
+  const { type: qType } = useParams<ParamTypes>();
 
   const renderSenseInfo = (ticket: IActionRegistrationTicket, transactionHash: string) => {
-    if (ticket.action_type !== 'sense' || !ticket?.activation_ticket) {
+    if (ticket.action_type !== 'sense') {
       return null;
     }
     const sense = senses?.find(s => s.transactionHash === transactionHash);
     if (!sense) {
-      return (
-        <>
-          <Grid container spacing={3}>
-            <Grid item xs={4} sm={3} className="max-w-355">
-              <TicketStyles.TicketTitle>Sense Output Details:</TicketStyles.TicketTitle>
-            </Grid>
-            <Grid item xs={8} sm={9}>
-              <TicketStyles.TicketContent>Not found</TicketStyles.TicketContent>
-            </Grid>
-          </Grid>
-          <Grid container spacing={3}>
-            <Grid item xs={4} sm={3} className="max-w-355">
-              <TicketStyles.TicketTitle>Image Hash:</TicketStyles.TicketTitle>
-            </Grid>
-            <Grid item xs={8} sm={9}>
-              <TicketStyles.TicketContent>NA</TicketStyles.TicketContent>
-            </Grid>
-          </Grid>
-          <Grid container spacing={3}>
-            <Grid item xs={4} sm={3} className="max-w-355">
-              <TicketStyles.TicketTitle>Sense Version:</TicketStyles.TicketTitle>
-            </Grid>
-            <Grid item xs={8} sm={9}>
-              <TicketStyles.TicketContent>NA</TicketStyles.TicketContent>
-            </Grid>
-          </Grid>
-        </>
-      );
+      return null;
     }
 
     return (
@@ -191,17 +185,63 @@ const TicketsList: React.FC<ITicketsList> = ({ data, senses }) => {
     }
   };
 
+  const handleTicketTypeChange = (
+    event: React.ChangeEvent<{
+      name?: string | undefined;
+      value: unknown;
+    }>,
+  ) => {
+    if (event.target.value) {
+      onTicketTypeChange(event.target.value as string);
+    }
+  };
+
+  const getTicketsTypeOptions = () => {
+    const results = [
+      {
+        value: TICKET_TYPE_OPTIONS[0].value,
+        name: `${TICKET_TYPE_OPTIONS[0].name}(${totalAllTickets})`,
+      },
+    ];
+    for (let i = 0; i < ticketsTypeList.length; i += 1) {
+      const item = TICKET_TYPE_OPTIONS.find(ticket => ticket.value === ticketsTypeList[i].type);
+      if (item) {
+        results.push({
+          value: ticketsTypeList[i].type,
+          name: `${item?.name}(${ticketsTypeList[i].total})`,
+        });
+      }
+    }
+    return results;
+  };
+
   return (
-    <Styles.GridStyle item>
+    <BlockDetailsStyles.GridStyle item>
       <TableStyles.BlockWrapper className="mb-12">
-        <TableStyles.BlockTitle>Tickets</TableStyles.BlockTitle>
+        <Styles.BlockWrapper>
+          <Styles.BlockTitle>
+            Tickets{' '}
+            <Styles.SubTitle>
+              (Total {totalTickets} {totalTickets > 1 ? 'tickets' : 'ticket'})
+            </Styles.SubTitle>
+          </Styles.BlockTitle>
+          {qType === 'other' ? (
+            <Styles.FilterBlock>
+              <Dropdown
+                value={ticketType}
+                onChange={handleTicketTypeChange}
+                options={getTicketsTypeOptions()}
+                label="Ticket Type"
+              />
+            </Styles.FilterBlock>
+          ) : null}
+        </Styles.BlockWrapper>
         <Box className="custom-table tickets-table">
           {data.map(ticket => (
-            <Styles.GridStyle
+            <BlockDetailsStyles.GridStyle
               item
-              key={ticket.id}
+              key={`${ticket.id}-${ticket.transactionHash}`}
               className="table__row"
-              id={ticket.transactionHash}
             >
               <Grid container spacing={3}>
                 <Grid item xs={4} sm={3} className="max-w-355">
@@ -229,11 +269,16 @@ const TicketsList: React.FC<ITicketsList> = ({ data, senses }) => {
                 </Grid>
               </Grid>
               {renderContent(ticket.type, ticket.data.ticket, ticket.transactionHash)}
-            </Styles.GridStyle>
+            </BlockDetailsStyles.GridStyle>
           ))}
+          {!data.length && !isLoading ? (
+            <BlockDetailsStyles.GridStyle className="table__row">
+              <TicketStyles.TicketTitle>No data</TicketStyles.TicketTitle>
+            </BlockDetailsStyles.GridStyle>
+          ) : null}
         </Box>
       </TableStyles.BlockWrapper>
-    </Styles.GridStyle>
+    </BlockDetailsStyles.GridStyle>
   );
 };
 

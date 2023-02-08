@@ -84,7 +84,7 @@ const TicketsList: React.FC<ITicketsList> = ({
           </Grid>
           <Grid item xs={8} sm={9}>
             <TicketStyles.TicketContent>
-              <Link to={`${ROUTES.SENSE_DETAILS}/${sense.imageFileHash}`}>
+              <Link to={`${ROUTES.SENSE_DETAILS}/${transactionHash}/${sense.imageFileHash}`}>
                 <img
                   src={`${getBaseURL()}/static/senses/${sense.imageFileHash}.png`}
                   alt={sense.imageFileHash}
@@ -101,7 +101,7 @@ const TicketsList: React.FC<ITicketsList> = ({
           <Grid item xs={8} sm={9}>
             <TicketStyles.TicketContent>
               <RouterLink
-                route={`${ROUTES.SENSE_DETAILS}/${sense.imageFileHash}`}
+                route={`${ROUTES.SENSE_DETAILS}/${transactionHash}/${sense.imageFileHash}`}
                 value={sense.imageFileHash}
                 title={sense.imageFileHash}
                 className="address-link"
