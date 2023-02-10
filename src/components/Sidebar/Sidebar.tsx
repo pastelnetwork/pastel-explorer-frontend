@@ -190,6 +190,9 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
           el => locationLink.pathname.startsWith(el) && locationLink.search?.includes('p=richlist'),
         );
       }
+      if (path.startsWith('/tickets')) {
+        return !!['/tickets'].some(el => locationLink.pathname.startsWith(el));
+      }
 
       return false;
     },

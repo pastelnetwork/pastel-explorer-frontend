@@ -1,6 +1,10 @@
-import { useParams, Link } from 'react-router-dom';
+import { MouseEvent } from 'react';
+import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import MenuItem from '@material-ui/core/MenuItem';
+import makeStyles from '@material-ui/styles/makeStyles';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
@@ -39,27 +43,54 @@ import {
 } from '@components/Ticket';
 import { Dropdown } from '@components/Dropdown/Dropdown';
 import { getBaseURL } from '@utils/constants/statistics';
-
+import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import * as TableStyles from '@components/Table/Table.styles';
 import * as BlockDetailsStyles from '@pages/Details/BlockDetails/BlockDetails.styles';
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
 import * as Styles from '@pages/Details/PastelIdDetails/PastelIdDetails.styles';
-import { TTicketsTypeProps } from '@pages/Details/PastelIdDetails/PastelIdDetails.helpers';
-import { TICKET_TYPE_OPTIONS } from './TicketsType.helpers';
+import * as FilterStyles from '@components/InfinityTable/InfinityTable.styles';
+import { blocksPeriodFilters } from '@utils/constants/filter';
+import { TAppTheme } from '@theme/index';
+
+import { TICKET_TYPE_OPTIONS, TICKET_STATUS_OPTIONS } from './TicketsType.helpers';
+
+const useStyles = makeStyles((theme: TAppTheme) => {
+  return {
+    listFilter: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      borderRadius: `${theme.spacing(1)}px`,
+      [theme.breakpoints.down('xs')]: {
+        maxWidth: '100%',
+      },
+    },
+    rootMenuItem: {
+      display: 'block',
+      backgroundColor: 'inherit',
+      padding: 0,
+      minHeight: 'auto',
+    },
+    rootMenuItemButton: {
+      width: '100%',
+      textAlign: 'left',
+      backgroundColor: 'inherit !important',
+      padding: '2px 10px',
+    },
+  };
+});
 
 interface ITicketsList {
   data: ITicket[];
   ticketType: string;
   onTicketTypeChange: (_value: string) => void;
   totalTickets: number;
-  totalAllTickets: number;
-  ticketsTypeList: TTicketsTypeProps[];
   isLoading?: boolean;
   senses?: TSenseRequests[];
-}
-
-interface ParamTypes {
-  type: string;
+  handleSelectTime: (_event: MouseEvent<HTMLButtonElement>) => void;
+  selectedTime: string;
+  onStatusChange: (_value: string) => void;
+  selectedStatus: string;
 }
 
 const TicketsList: React.FC<ITicketsList> = ({
@@ -67,15 +98,17 @@ const TicketsList: React.FC<ITicketsList> = ({
   ticketType,
   onTicketTypeChange,
   totalTickets,
-  totalAllTickets,
-  ticketsTypeList,
   isLoading = false,
   senses,
+  handleSelectTime,
+  selectedTime,
+  onStatusChange,
+  selectedStatus,
 }) => {
-  const { type: qType } = useParams<ParamTypes>();
+  const classes = useStyles();
 
   const renderSenseInfo = (ticket: IActionRegistrationTicket, transactionHash: string) => {
-    if (ticket.action_type !== 'sense') {
+    if (ticket.action_type !== 'sense' || !ticket.activation_ticket) {
       return null;
     }
     const sense = senses?.find(s => s.transactionHash === transactionHash);
@@ -91,9 +124,13 @@ const TicketsList: React.FC<ITicketsList> = ({
           </Grid>
           <Grid item xs={8} sm={9}>
             <TicketStyles.TicketContent>
-              <Link to={`${ROUTES.SENSE_DETAILS}/${transactionHash}/${sense.imageFileHash}`}>
+              <Link
+                to={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${sense.imageFileHash}`}
+              >
                 <img
-                  src={`${getBaseURL()}/static/senses/${sense.imageFileHash}.png`}
+                  src={`${getBaseURL()}/static/senses/${
+                    sense.imageFileHash
+                  }-${transactionHash}.png`}
                   alt={sense.imageFileHash}
                   className="sense-img"
                 />
@@ -108,7 +145,7 @@ const TicketsList: React.FC<ITicketsList> = ({
           <Grid item xs={8} sm={9}>
             <TicketStyles.TicketContent>
               <RouterLink
-                route={`${ROUTES.SENSE_DETAILS}/${transactionHash}/${sense.imageFileHash}`}
+                route={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${sense.imageFileHash}`}
                 value={sense.imageFileHash}
                 title={sense.imageFileHash}
                 className="address-link"
@@ -187,7 +224,6 @@ const TicketsList: React.FC<ITicketsList> = ({
 
   const handleTicketTypeChange = (
     event: React.ChangeEvent<{
-      name?: string | undefined;
       value: unknown;
     }>,
   ) => {
@@ -196,45 +232,84 @@ const TicketsList: React.FC<ITicketsList> = ({
     }
   };
 
-  const getTicketsTypeOptions = () => {
-    const results = [
-      {
-        value: TICKET_TYPE_OPTIONS[0].value,
-        name: `${TICKET_TYPE_OPTIONS[0].name}(${totalAllTickets})`,
-      },
-    ];
-    for (let i = 0; i < ticketsTypeList.length; i += 1) {
-      const item = TICKET_TYPE_OPTIONS.find(ticket => ticket.value === ticketsTypeList[i].type);
-      if (item) {
-        results.push({
-          value: ticketsTypeList[i].type,
-          name: `${item?.name}(${ticketsTypeList[i].total})`,
-        });
-      }
+  const getTitle = () => {
+    const ticket = TICKET_TYPE_OPTIONS.find(t => t.value === ticketType);
+    return ticket?.name || 'Other tickets';
+  };
+
+  const getDropdownOptions = () => {
+    const result = [];
+    if (ticketType === 'other') {
+      result.push({
+        name: 'Other tickets',
+        value: 'other',
+      });
     }
-    return results;
+
+    return [...result, ...TICKET_TYPE_OPTIONS];
+  };
+
+  const handleStatusChange = (
+    event: React.ChangeEvent<{
+      value: unknown;
+    }>,
+  ) => {
+    if (event.target.value) {
+      onStatusChange(event.target.value as string);
+    }
   };
 
   return (
     <BlockDetailsStyles.GridStyle item>
       <TableStyles.BlockWrapper className="mb-12">
-        <Styles.BlockWrapper>
+        <Styles.BlockWrapper className="ticket-title-wrapper">
           <Styles.BlockTitle>
-            Tickets{' '}
+            {getTitle()}{' '}
             <Styles.SubTitle>
-              (Total {totalTickets} {totalTickets > 1 ? 'tickets' : 'ticket'})
+              (Total {formatNumber(totalTickets)} {totalTickets > 1 ? 'tickets' : 'ticket'})
             </Styles.SubTitle>
           </Styles.BlockTitle>
-          {qType === 'other' ? (
-            <Styles.FilterBlock>
+          <Styles.FilterBlock>
+            <FilterStyles.FilterWrapper>
               <Dropdown
                 value={ticketType}
                 onChange={handleTicketTypeChange}
-                options={getTicketsTypeOptions()}
-                label="Ticket Type"
+                options={getDropdownOptions()}
+                label="Ticket Type:"
+                classNameWrapper="dropdown-ticket-type"
               />
-            </Styles.FilterBlock>
-          ) : null}
+              {['sense', 'cascade'].includes(ticketType) ? (
+                <Dropdown
+                  value={selectedStatus}
+                  onChange={handleStatusChange}
+                  options={TICKET_STATUS_OPTIONS}
+                  label="Status:"
+                  classNameWrapper="dropdown-status"
+                />
+              ) : null}
+              <div className={`${classes.listFilter} list-filter`}>
+                {blocksPeriodFilters.map(({ name, value }) => (
+                  <MenuItem
+                    key={value}
+                    classes={{
+                      root: `filter-item ${classes.rootMenuItem} ${
+                        selectedTime === value ? 'filter-item-active' : ''
+                      }`,
+                    }}
+                  >
+                    <Button
+                      classes={{ root: classes.rootMenuItemButton }}
+                      type="button"
+                      value={value}
+                      onClick={handleSelectTime}
+                    >
+                      {name}
+                    </Button>
+                  </MenuItem>
+                ))}
+              </div>
+            </FilterStyles.FilterWrapper>
+          </Styles.FilterBlock>
         </Styles.BlockWrapper>
         <Box className="custom-table tickets-table">
           {data.map(ticket => (

@@ -1,7 +1,15 @@
 export const TICKET_TYPE_OPTIONS = [
   {
-    name: 'ALL',
-    value: 'other',
+    name: 'Pastel ID Registration Ticket',
+    value: 'pastelid',
+  },
+  {
+    name: 'Action Registration Ticket (Cascade)',
+    value: 'cascade',
+  },
+  {
+    name: 'Action Registration Ticket (Sense)',
+    value: 'sense',
   },
   {
     name: 'User Name Change Ticket',
@@ -42,5 +50,20 @@ export const TICKET_TYPE_OPTIONS = [
   {
     name: 'Transfer Ticket',
     value: 'transfer',
+  },
+];
+
+export const TICKET_STATUS_OPTIONS = [
+  {
+    name: 'All',
+    value: 'all',
+  },
+  {
+    name: 'Activated',
+    value: 'activated',
+  },
+  {
+    name: 'Not Yet Activated',
+    value: 'inactivated',
   },
 ];

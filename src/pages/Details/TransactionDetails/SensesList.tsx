@@ -29,7 +29,7 @@ const SenseItem: React.FC<ISenseItem> = ({ sense }) => {
           <TicketStyles.TicketContent>
             {sense.imageFileHash.indexOf('nosense') === -1 ? (
               <RouterLink
-                route={`${ROUTES.SENSE_DETAILS}/${sense.transactionHash}/${sense.imageFileHash}`}
+                route={`${ROUTES.SENSE_DETAILS}?txid=${sense.transactionHash}&hash=${sense.imageFileHash}`}
                 value={sense.imageFileHash}
                 title={sense.imageFileHash}
                 className="address-link"

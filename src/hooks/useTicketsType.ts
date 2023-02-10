@@ -4,22 +4,26 @@ import { SWR_OPTIONS } from '@utils/constants/statistics';
 import { axiosGet } from '@utils/helpers/useFetch/useFetch';
 import * as URLS from '@utils/constants/urls';
 import { ITicket, TSenseRequests } from '@utils/types/ITransactions';
-import { TTicketsTypeProps } from '@pages/Details/PastelIdDetails/PastelIdDetails.helpers';
 
-export default function useTicketsType(type: string, limit: number, isIncludeAll = false) {
-  let allQuery = '';
-  if (isIncludeAll) {
-    allQuery = '&include=all';
+export default function useTicketsType(
+  type: string,
+  limit: number,
+  period: string,
+  status: string,
+) {
+  let qStatus = '';
+  if (status) {
+    qStatus = `&status=${status}`;
   }
   const { data, isLoading, size, setSize } = useSWRInfinite<{
     data: ITicket[];
     total: number;
-    totalAllTickets: number;
-    ticketsType: TTicketsTypeProps[];
     senses: TSenseRequests[];
   }>(
     index =>
-      `${URLS.GET_TICKETS}/${type}?offset=${index * limit}&limit=${limit}&type=${type}${allQuery}`,
+      `${URLS.GET_TICKETS}/${type}?offset=${
+        index * limit
+      }&limit=${limit}&type=${type}&period=${period}${qStatus}&include=all`,
     axiosGet,
     SWR_OPTIONS,
   );
@@ -36,8 +40,6 @@ export default function useTicketsType(type: string, limit: number, isIncludeAll
   return {
     data: newData,
     total: data?.[0]?.total || 0,
-    totalAllTickets: data?.[0]?.totalAllTickets || 0,
-    ticketsType: data?.[0]?.ticketsType || [],
     senses: data?.[0]?.senses || [],
     isLoading: isLoadingMore,
     size,

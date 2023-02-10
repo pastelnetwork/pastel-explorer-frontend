@@ -68,7 +68,7 @@ const TicketsList: React.FC<ITicketsList> = ({
   senses,
 }) => {
   const renderSenseInfo = (ticket: IActionRegistrationTicket, transactionHash: string) => {
-    if (ticket.action_type !== 'sense') {
+    if (ticket.action_type !== 'sense' || !ticket.activation_ticket) {
       return null;
     }
     const sense = senses?.find(s => s.transactionHash === transactionHash);
@@ -84,9 +84,13 @@ const TicketsList: React.FC<ITicketsList> = ({
           </Grid>
           <Grid item xs={8} sm={9}>
             <TicketStyles.TicketContent>
-              <Link to={`${ROUTES.SENSE_DETAILS}/${transactionHash}/${sense.imageFileHash}`}>
+              <Link
+                to={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${sense.imageFileHash}`}
+              >
                 <img
-                  src={`${getBaseURL()}/static/senses/${sense.imageFileHash}.png`}
+                  src={`${getBaseURL()}/static/senses/${
+                    sense.imageFileHash
+                  }-${transactionHash}.png`}
                   alt={sense.imageFileHash}
                   className="sense-img"
                 />
@@ -101,7 +105,7 @@ const TicketsList: React.FC<ITicketsList> = ({
           <Grid item xs={8} sm={9}>
             <TicketStyles.TicketContent>
               <RouterLink
-                route={`${ROUTES.SENSE_DETAILS}/${transactionHash}/${sense.imageFileHash}`}
+                route={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${sense.imageFileHash}`}
                 value={sense.imageFileHash}
                 title={sense.imageFileHash}
                 className="address-link"

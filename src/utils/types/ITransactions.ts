@@ -540,5 +540,8 @@ export type TicketsList = {
   timestamp: number;
   fee: number;
   imageHash: string;
+  dupeDetectionSystemVersion: string;
+  activation_ticket: string;
+  id_type: string;
   type: string;
 };

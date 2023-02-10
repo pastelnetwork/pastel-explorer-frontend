@@ -2,7 +2,50 @@ import styled from 'styled-components/macro';
 import Grid from '@material-ui/core/Grid';
 
 export const TicketsContainer = styled.div`
+  position: relative;
   width: 100%;
+
+  .dropdown-ticket-type {
+    .MuiInputBase-root {
+      width: 140px;
+    }
+  }
+
+  .dropdown-status {
+    .MuiInputBase-root {
+      width: 100px;
+    }
+  }
+
+  .list-filter {
+    margin-left: 10px;
+    border: 1px solid ${props => props.theme.filter.border};
+  }
+
+  .dropdown-status {
+    margin-left: 10px;
+  }
+
+  .filter-item {
+    transition: none;
+
+    &-active,
+    &:hover {
+      background: ${props => props.theme.filter.background};
+    }
+  }
+
+  ${props => props.theme.breakpoints.down(960)} {
+    .ticket-title-wrapper {
+      display: block;
+    }
+
+    .dropdown-ticket-type,
+    .dropdown-status,
+    .list-filter {
+      margin-top: 10px;
+    }
+  }
 `;
 
 export const GridStyle = styled(Grid)`
@@ -26,4 +69,14 @@ export const GridStyle = styled(Grid)`
       }
     }
   }
+`;
+
+export const LoadingWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background: rgba(1, 1, 1, 0.2);
 `;

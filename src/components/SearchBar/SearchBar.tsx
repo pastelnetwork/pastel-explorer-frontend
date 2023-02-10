@@ -167,13 +167,24 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         noOptionsText="No results containing all your search terms were found"
         loadingText="Loading results..."
         size="small"
-        renderOption={option => (
-          <RouterLink
-            styles={{ padding: '6px 24px 6px 16px' }}
-            route={`${getRoute(option.category)}/${option.value}`}
-            value={option.value}
-          />
-        )}
+        renderOption={option => {
+          if (option.category === SENSES_LABEL) {
+            return (
+              <RouterLink
+                styles={{ padding: '6px 24px 6px 16px' }}
+                route={`${getRoute(option.category)}?hash=${option.value}`}
+                value={option.value}
+              />
+            );
+          }
+          return (
+            <RouterLink
+              styles={{ padding: '6px 24px 6px 16px' }}
+              route={`${getRoute(option.category)}/${option.value}`}
+              value={option.value}
+            />
+          );
+        }}
         renderInput={params => (
           <TextField
             {...params}
