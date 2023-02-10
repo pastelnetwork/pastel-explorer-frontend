@@ -6,6 +6,8 @@ export const SUPERNODES = '/supernodes';
 export const STATISTICS_PARENT = '/statistics-parent';
 export const STATISTICS = '/statistics';
 export const NOT_FOUND = '/not-found';
+export const TICKETS = '/tickets';
+export const TICKETS_TYPE = '/tickets/type';
 
 export const TRANSACTION_DETAILS = '/tx';
 export const BLOCK_DETAILS = '/block';

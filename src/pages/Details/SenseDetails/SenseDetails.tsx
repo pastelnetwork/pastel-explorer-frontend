@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -13,6 +12,7 @@ import * as TransactionStyles from '@pages/Details/TransactionDetails/Transactio
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
 import useSenseDetails from '@hooks/useSenseDetails';
+import { getParameterByName } from '@utils/helpers/url';
 
 import * as ChartStyles from '@pages/HistoricalStatistics/Chart/Chart.styles';
 import PastelData from './PastelData';
@@ -27,10 +27,6 @@ import RareOnTheInternetAlternativeResults from './RareOnTheInternetAlternativeR
 import SenseRawData from './SenseRawData';
 import SimilarRegisteredImages, { getSimilarRegisteredImagesData } from './SimilarRegisteredImages';
 import * as Styles from './SenseDetails.styles';
-
-interface IParamTypes {
-  id: string;
-}
 
 interface IBlockItemLayout {
   title: string;
@@ -72,8 +68,9 @@ const csvHeaders = [
 
 const SenseDetails: React.FC = () => {
   const downloadRef = useRef(null);
-  const { id } = useParams<IParamTypes>();
-  const { senseData, isLoading } = useSenseDetails(id);
+  const id = getParameterByName('hash');
+  const txid = getParameterByName('txid');
+  const { senseData, isLoading } = useSenseDetails(id, txid);
   const [sense, setSense] = useState<TSenseRequests | null>(null);
   const [openRawDataModal, setOpenRawDataModal] = useState(false);
 

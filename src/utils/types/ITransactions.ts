@@ -531,3 +531,17 @@ export type TEdges = {
   source: number;
   target: number;
 };
+
+export type TicketsList = {
+  height: number;
+  transactionHash: string;
+  pastelID: string;
+  version: number;
+  timestamp: number;
+  fee: number;
+  imageHash: string;
+  dupeDetectionSystemVersion: string;
+  activation_ticket: string;
+  id_type: string;
+  type: string;
+};
