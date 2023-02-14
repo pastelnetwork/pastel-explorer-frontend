@@ -26,6 +26,7 @@ import RareOnTheInternetResultsGraph from './RareOnTheInternetResultsGraph';
 import RareOnTheInternetAlternativeResults from './RareOnTheInternetAlternativeResults';
 import SenseRawData from './SenseRawData';
 import SimilarRegisteredImages, { getSimilarRegisteredImagesData } from './SimilarRegisteredImages';
+import SubmittedImage from './SubmittedImage';
 import * as Styles from './SenseDetails.styles';
 
 interface IBlockItemLayout {
@@ -164,20 +165,11 @@ const SenseDetails: React.FC = () => {
         </TransactionStyles.TransactionDesc>
         <Styles.ImagesWrapper>
           <BlockItemLayout
-            title="Pastel Data"
-            className={`pastel-data ${!sense?.pastelIdOfSubmitter ? 'min-height-725' : ''}`}
+            title="Submitted Image"
+            className="submitted-image min-height-650"
+            childrenClassName="submitted-image-content"
           >
-            <PastelData
-              blockHash={sense?.blockHash}
-              blockHeight={sense?.blockHeight}
-              utcTimestampWhenRequestSubmitted={sense?.utcTimestampWhenRequestSubmitted}
-              pastelIdOfSubmitter={sense?.pastelIdOfSubmitter}
-              pastelIdOfRegisteringSupernode1={sense?.pastelIdOfRegisteringSupernode1}
-              pastelIdOfRegisteringSupernode2={sense?.pastelIdOfRegisteringSupernode2}
-              pastelIdOfRegisteringSupernode3={sense?.pastelIdOfRegisteringSupernode3}
-              isPastelOpenapiRequest={sense?.isPastelOpenapiRequest}
-              openApiSubsetIdString={sense?.openApiSubsetIdString}
-            />
+            <SubmittedImage imageUrl={sense.imageFileCdnUrl} imageHash={sense.imageFileHash} />
           </BlockItemLayout>
           <Box className="summary-group">
             <BlockItemLayout title="Summary" className="summary">
@@ -217,6 +209,7 @@ const SenseDetails: React.FC = () => {
                   headers={csvHeaders}
                   separator=","
                   ref={downloadRef}
+                  className="space-nowrap"
                 >
                   Export to CSV
                 </ChartStyles.CSVLinkButton>
@@ -249,6 +242,19 @@ const SenseDetails: React.FC = () => {
                   ? JSON.parse(sense?.imageFingerprintOfCandidateImageFile)
                   : []
               }
+            />
+          </BlockItemLayout>
+          <BlockItemLayout title="Pastel Data" className="pastel-data">
+            <PastelData
+              blockHash={sense?.blockHash}
+              blockHeight={sense?.blockHeight}
+              utcTimestampWhenRequestSubmitted={sense?.utcTimestampWhenRequestSubmitted}
+              pastelIdOfSubmitter={sense?.pastelIdOfSubmitter}
+              pastelIdOfRegisteringSupernode1={sense?.pastelIdOfRegisteringSupernode1}
+              pastelIdOfRegisteringSupernode2={sense?.pastelIdOfRegisteringSupernode2}
+              pastelIdOfRegisteringSupernode3={sense?.pastelIdOfRegisteringSupernode3}
+              isPastelOpenapiRequest={sense?.isPastelOpenapiRequest}
+              openApiSubsetIdString={sense?.openApiSubsetIdString}
             />
           </BlockItemLayout>
         </Styles.ImagesWrapper>
