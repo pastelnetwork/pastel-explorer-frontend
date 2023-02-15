@@ -21,13 +21,13 @@ interface IOverviewProps {
 const Overview: React.FC<IOverviewProps> = ({ totalTickets, pastelId, ticketsTypeList }) => {
   const renderTicketsType = () => {
     const tickets = ticketsTypeList.filter(i => i.total > 0);
-    return tickets.map((item, index) => {
+    return tickets.map(item => {
       const ticket = TICKET_TYPE_OPTIONS.find(i => i.value === item.type);
+      const total = getTicketTypeTotal(item.type, ticketsTypeList);
       return (
-        <React.Fragment key={item.type}>
-          {ticket?.name} ({getTicketTypeTotal(item.type, ticketsTypeList)})
-          {tickets.length - 1 > index ? ', ' : ''}
-        </React.Fragment>
+        <Box key={item.type}>
+          {ticket?.name} ({total} {total > 1 ? 'tickets' : 'ticket'})
+        </Box>
       );
     });
   };
