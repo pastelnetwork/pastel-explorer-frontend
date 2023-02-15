@@ -158,8 +158,8 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
         </Grid>
         <Grid item xs={12} sm={9}>
           <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Styles.TicketTitle>TXID:</Styles.TicketTitle>
+            <Styles.ActivationTicketItem className="item">
+              <Styles.TicketTitle className="mr-5">TXID:</Styles.TicketTitle>
               <Styles.TicketContent>
                 <RouterLink
                   route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.activationTicket.transactionHash}`}
@@ -168,19 +168,21 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
                   className="address-link"
                 />
               </Styles.TicketContent>
-            </Grid>
+            </Styles.ActivationTicketItem>
           </Grid>
           <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Styles.TicketTitle>Type:</Styles.TicketTitle>
+            <Styles.ActivationTicketItem className="item">
+              <Styles.TicketTitle className="mr-5">Type:</Styles.TicketTitle>
               <Styles.TicketContent>
-                {getTicketTitle(ticket.type as TTicketType)}
+                {getTicketTitle(ticket.activationTicket.type as TTicketType)}
               </Styles.TicketContent>
-            </Grid>
+            </Styles.ActivationTicketItem>
           </Grid>
           <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Styles.TicketTitle>Pastel Block Height When Ticket Registered:</Styles.TicketTitle>
+            <Styles.ActivationTicketItem className="item">
+              <Styles.TicketTitle className="mr-5">
+                Pastel Block Height When Ticket Registered:
+              </Styles.TicketTitle>
               <Styles.TicketContent>
                 {ticket.called_at ? (
                   <RouterLink
@@ -193,17 +195,19 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
                   'NA'
                 )}
               </Styles.TicketContent>
-            </Grid>
+            </Styles.ActivationTicketItem>
           </Grid>
           <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Styles.TicketTitle>Pastel OpenAPI Ticket Version Number:</Styles.TicketTitle>
+            <Styles.ActivationTicketItem className="item">
+              <Styles.TicketTitle className="mr-5">
+                Pastel OpenAPI Ticket Version Number:
+              </Styles.TicketTitle>
               <Styles.TicketContent>{activationTicket.version}</Styles.TicketContent>
-            </Grid>
+            </Styles.ActivationTicketItem>
           </Grid>
           <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
+            <Styles.ActivationTicketItem className="item">
+              <Styles.TicketTitle className="mr-5">Pastel ID:</Styles.TicketTitle>
               <Styles.TicketContent>
                 <RouterLink
                   route={`${ROUTES.PASTEL_ID_DETAILS}/${activationTicket.pastelID}`}
@@ -212,11 +216,11 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
                   className="address-link"
                 />
               </Styles.TicketContent>
-            </Grid>
+            </Styles.ActivationTicketItem>
           </Grid>
           <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Styles.TicketTitle>Reg txid:</Styles.TicketTitle>
+            <Styles.ActivationTicketItem className="item">
+              <Styles.TicketTitle className="mr-5">Reg txid:</Styles.TicketTitle>
               <Styles.TicketContent>
                 {activationTicket.reg_txid ? (
                   <RouterLink
@@ -229,26 +233,26 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
                   'NA'
                 )}
               </Styles.TicketContent>
-            </Grid>
+            </Styles.ActivationTicketItem>
           </Grid>
           <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Styles.TicketTitle>
+            <Styles.ActivationTicketItem className="item">
+              <Styles.TicketTitle className="mr-5">
                 Total Cost in PSL to Register Ticket on Blockchain:
               </Styles.TicketTitle>
               <Styles.TicketContent>
                 {formatNumber(activationTicket.storage_fee)} {getCurrencyName()}
               </Styles.TicketContent>
-            </Grid>
+            </Styles.ActivationTicketItem>
           </Grid>
           {activationTicket.transactionTime ? (
             <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Styles.TicketTitle>Timestamp:</Styles.TicketTitle>
+              <Styles.ActivationTicketItem className="item">
+                <Styles.TicketTitle className="mr-5">Timestamp:</Styles.TicketTitle>
                 <Styles.TicketContent>
                   {formatFullDate(activationTicket.transactionTime)}
                 </Styles.TicketContent>
-              </Grid>
+              </Styles.ActivationTicketItem>
             </Grid>
           ) : null}
         </Grid>
@@ -271,7 +275,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
           <Styles.TicketTitle>Status:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.StatusWrapper>
+          <Styles.StatusWrapper className="item">
             <Styles.ActionRegistrationTicketStatus
               className={ticket?.activation_ticket ? 'active' : ''}
             >
