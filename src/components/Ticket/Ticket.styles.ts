@@ -125,6 +125,15 @@ export const ActionRegistrationTicketStatus = styled.div`
   border-radius: 4px;
 
   &.active {
+    margin-right: 5px;
     background-color: ${themeVariant.custom.green.main};
+  }
+`;
+
+export const StatusWrapper = styled.div`
+  display: flex;
+
+  @media (max-width: 600px) {
+    display: block;
   }
 `;

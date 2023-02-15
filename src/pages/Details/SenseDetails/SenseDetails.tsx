@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -7,7 +7,6 @@ import AlertTitle from '@material-ui/lab/AlertTitle';
 import Header from '@components/Header/Header';
 import * as TableStyles from '@components/Table/Table.styles';
 import CopyButton from '@components/CopyButton/CopyButton';
-import { TSenseRequests } from '@utils/types/ITransactions';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
@@ -70,17 +69,8 @@ const SenseDetails: React.FC = () => {
   const downloadRef = useRef(null);
   const id = getParameterByName('hash');
   const txid = getParameterByName('txid');
-  const { senseData, isLoading } = useSenseDetails(id, txid);
-  const [sense, setSense] = useState<TSenseRequests | null>(null);
+  const { senseData: sense, isLoading } = useSenseDetails(id, txid);
   const [openRawDataModal, setOpenRawDataModal] = useState(false);
-
-  useEffect(() => {
-    if (senseData) {
-      setSense(senseData);
-    } else {
-      setSense(null);
-    }
-  }, [senseData, isLoading]);
 
   const toggleOpenRawData = () => setOpenRawDataModal(!openRawDataModal);
 
