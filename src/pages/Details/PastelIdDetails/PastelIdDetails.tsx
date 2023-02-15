@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import Header from '@components/Header/Header';
-import { ITicket, TSenseRequests } from '@utils/types/ITransactions';
+import { formattedDate } from '@utils/helpers/date/date';
+import { ITicket, TSenseRequests, IPastelIDRegistrationTicket } from '@utils/types/ITransactions';
 import usePastelIdDetails from '@hooks/usePastelIdDetails';
 
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
@@ -87,15 +87,23 @@ const PastelIdDetails = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [id]);
 
+  const pastelIdRegisterTicket = tickets.find(t => t.type === 'pastelid')?.data
+    ?.ticket as IPastelIDRegistrationTicket;
+
   return (
     <Styles.Wrapper>
-      <Header title="Pastel ID Details" />
       <Grid container direction="column">
         <Styles.GridStyle item>
           <Overview
             totalTickets={pastelIdData.totalAllTickets}
             pastelId={id}
             ticketsTypeList={ticketsTypeList}
+            registeredDate={
+              pastelIdRegisterTicket?.timeStamp
+                ? formattedDate(Number(pastelIdRegisterTicket.timeStamp))
+                : 'NA'
+            }
+            blockHeight={pastelIdRegisterTicket?.height?.toString() || ''}
           />
         </Styles.GridStyle>
         <Styles.GridStyle item id="list">
