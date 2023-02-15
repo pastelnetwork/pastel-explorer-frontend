@@ -46,9 +46,10 @@ import * as Styles from './BlockDetails.styles';
 interface ITicketsList {
   data: ITicket[];
   senses?: TSenseRequests[];
+  showActivationTicket?: boolean;
 }
 
-const TicketsList: React.FC<ITicketsList> = ({ data, senses }) => {
+const TicketsList: React.FC<ITicketsList> = ({ data, senses, showActivationTicket = false }) => {
   if (!data?.length) {
     return null;
   }
@@ -180,6 +181,7 @@ const TicketsList: React.FC<ITicketsList> = ({ data, senses }) => {
           <ActionRegistrationTicket
             ticket={ticket as IActionRegistrationTicket}
             senseInfo={renderSenseInfo(ticket as IActionRegistrationTicket, transactionHash)}
+            showActivationTicket={showActivationTicket}
           />
         );
       case 'action-act':

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
 import MuiAccordion from '@material-ui/core/Accordion';
+import Grid from '@material-ui/core/Grid';
 
 import themeVariant from '@theme/variants';
 
@@ -125,6 +126,33 @@ export const ActionRegistrationTicketStatus = styled.div`
   border-radius: 4px;
 
   &.active {
+    margin-right: 5px;
     background-color: ${themeVariant.custom.green.main};
+  }
+`;
+
+export const StatusWrapper = styled.div`
+  display: flex;
+
+  @media (max-width: 600px) {
+    display: block;
+  }
+`;
+
+export const ActivationTicketItem = styled(Grid)`
+  display: flex;
+
+  &.item {
+    margin-top: 6px;
+    margin-left: 6px;
+    margin-bottom: 4px;
+  }
+
+  .mr-5 {
+    margin-right: 5px;
+  }
+
+  @media (max-width: 600px) {
+    display: block;
   }
 `;

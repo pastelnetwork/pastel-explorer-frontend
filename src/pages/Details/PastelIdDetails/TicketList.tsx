@@ -167,6 +167,7 @@ const TicketsList: React.FC<ITicketsList> = ({
           <ActionRegistrationTicket
             ticket={ticket as IActionRegistrationTicket}
             senseInfo={renderSenseInfo(ticket as IActionRegistrationTicket, transactionHash)}
+            showActivationTicket
           />
         );
       case 'action-act':

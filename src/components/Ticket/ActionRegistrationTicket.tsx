@@ -6,8 +6,14 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 
-import { IActionRegistrationTicket, IActionTicket } from '@utils/types/ITransactions';
+import {
+  IActionRegistrationTicket,
+  IActionTicket,
+  IActionActivationTicket,
+  TTicketType,
+} from '@utils/types/ITransactions';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
+import { formatAddress } from '@utils/helpers/format';
 import RouterLink from '@components/RouterLink/RouterLink';
 import { getCurrencyName } from '@utils/appInfo';
 import * as ROUTES from '@utils/constants/routes';
@@ -15,11 +21,13 @@ import { formatFullDate } from '@utils/helpers/date/date';
 
 import ApiTicket from './ApiTicket';
 import Signatures from './Signatures';
+import { getTicketTitle } from './index';
 import * as Styles from './Ticket.styles';
 
 interface IActionRegistrationTicketProps {
   ticket: IActionRegistrationTicket;
   senseInfo?: ReactNode;
+  showActivationTicket?: boolean;
 }
 
 interface IActionTicketProps {
@@ -133,8 +141,124 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket, actionType }) => {
 const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
   ticket,
   senseInfo,
+  showActivationTicket,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const renderActivationTicket = () => {
+    if (!showActivationTicket || !ticket.activationTicket) {
+      return null;
+    }
+
+    const activationTicket = ticket.activationTicket.data.ticket as IActionActivationTicket;
+    return (
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={3} className="max-w-355">
+          <Styles.TicketTitle>Action Activation Ticket Detail:</Styles.TicketTitle>
+        </Grid>
+        <Grid item xs={12} sm={9}>
+          <Grid container spacing={3}>
+            <Styles.ActivationTicketItem className="item">
+              <Styles.TicketTitle className="mr-5">TXID:</Styles.TicketTitle>
+              <Styles.TicketContent>
+                <RouterLink
+                  route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.activationTicket.transactionHash}`}
+                  value={ticket.activationTicket.transactionHash}
+                  title={ticket.activationTicket.transactionHash}
+                  className="address-link"
+                />
+              </Styles.TicketContent>
+            </Styles.ActivationTicketItem>
+          </Grid>
+          <Grid container spacing={3}>
+            <Styles.ActivationTicketItem className="item">
+              <Styles.TicketTitle className="mr-5">Type:</Styles.TicketTitle>
+              <Styles.TicketContent>
+                {getTicketTitle(ticket.activationTicket.type as TTicketType)}
+              </Styles.TicketContent>
+            </Styles.ActivationTicketItem>
+          </Grid>
+          <Grid container spacing={3}>
+            <Styles.ActivationTicketItem className="item">
+              <Styles.TicketTitle className="mr-5">
+                Pastel Block Height When Ticket Registered:
+              </Styles.TicketTitle>
+              <Styles.TicketContent>
+                {ticket.called_at ? (
+                  <RouterLink
+                    route={`${ROUTES.BLOCK_DETAILS}/${activationTicket.called_at}`}
+                    value={activationTicket.called_at}
+                    title={activationTicket.called_at?.toString()}
+                    className="address-link"
+                  />
+                ) : (
+                  'NA'
+                )}
+              </Styles.TicketContent>
+            </Styles.ActivationTicketItem>
+          </Grid>
+          <Grid container spacing={3}>
+            <Styles.ActivationTicketItem className="item">
+              <Styles.TicketTitle className="mr-5">
+                Pastel OpenAPI Ticket Version Number:
+              </Styles.TicketTitle>
+              <Styles.TicketContent>{activationTicket.version}</Styles.TicketContent>
+            </Styles.ActivationTicketItem>
+          </Grid>
+          <Grid container spacing={3}>
+            <Styles.ActivationTicketItem className="item">
+              <Styles.TicketTitle className="mr-5">Pastel ID:</Styles.TicketTitle>
+              <Styles.TicketContent>
+                <RouterLink
+                  route={`${ROUTES.PASTEL_ID_DETAILS}/${activationTicket.pastelID}`}
+                  value={activationTicket.pastelID}
+                  title={activationTicket.pastelID}
+                  className="address-link"
+                />
+              </Styles.TicketContent>
+            </Styles.ActivationTicketItem>
+          </Grid>
+          <Grid container spacing={3}>
+            <Styles.ActivationTicketItem className="item">
+              <Styles.TicketTitle className="mr-5">Reg txid:</Styles.TicketTitle>
+              <Styles.TicketContent>
+                {activationTicket.reg_txid ? (
+                  <RouterLink
+                    route={`${ROUTES.TRANSACTION_DETAILS}/${activationTicket.reg_txid}`}
+                    value={activationTicket.reg_txid}
+                    title={activationTicket.reg_txid}
+                    className="address-link"
+                  />
+                ) : (
+                  'NA'
+                )}
+              </Styles.TicketContent>
+            </Styles.ActivationTicketItem>
+          </Grid>
+          <Grid container spacing={3}>
+            <Styles.ActivationTicketItem className="item">
+              <Styles.TicketTitle className="mr-5">
+                Total Cost in PSL to Register Ticket on Blockchain:
+              </Styles.TicketTitle>
+              <Styles.TicketContent>
+                {formatNumber(activationTicket.storage_fee)} {getCurrencyName()}
+              </Styles.TicketContent>
+            </Styles.ActivationTicketItem>
+          </Grid>
+          {activationTicket.transactionTime ? (
+            <Grid container spacing={3}>
+              <Styles.ActivationTicketItem className="item">
+                <Styles.TicketTitle className="mr-5">Timestamp:</Styles.TicketTitle>
+                <Styles.TicketContent>
+                  {formatFullDate(activationTicket.transactionTime)}
+                </Styles.TicketContent>
+              </Styles.ActivationTicketItem>
+            </Grid>
+          ) : null}
+        </Grid>
+      </Grid>
+    );
+  };
 
   return (
     <Box>
@@ -151,11 +275,25 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
           <Styles.TicketTitle>Status:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.ActionRegistrationTicketStatus
-            className={ticket?.activation_ticket ? 'active' : ''}
-          >
-            {ticket?.activation_ticket ? 'Activated' : 'Not Yet Activated'}
-          </Styles.ActionRegistrationTicketStatus>
+          <Styles.StatusWrapper className="item">
+            <Styles.ActionRegistrationTicketStatus
+              className={ticket?.activation_ticket ? 'active' : ''}
+            >
+              {ticket?.activation_ticket ? 'Activated' : 'Not Yet Activated'}
+            </Styles.ActionRegistrationTicketStatus>
+            {ticket?.activation_ticket && ticket?.activation_txId ? (
+              <Styles.TicketContent>
+                (Activation TXID:{' '}
+                <RouterLink
+                  route={`${ROUTES.TRANSACTION_DETAILS}/${ticket?.activation_txId}`}
+                  value={formatAddress(ticket.activation_txId, 10, -3)}
+                  title={ticket.activation_txId}
+                  className="address-link"
+                />
+                )
+              </Styles.TicketContent>
+            ) : null}
+          </Styles.StatusWrapper>
         </Grid>
       </Grid>
       {senseInfo}
@@ -244,6 +382,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
           </AccordionDetails>
         </Styles.Accordion>
       ) : null}
+      {renderActivationTicket()}
     </Box>
   );
 };

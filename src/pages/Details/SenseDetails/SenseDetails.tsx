@@ -1,13 +1,12 @@
-import { useEffect, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AlertTitle from '@material-ui/lab/AlertTitle';
 
-import Header from '@components/Header/Header';
 import * as TableStyles from '@components/Table/Table.styles';
 import CopyButton from '@components/CopyButton/CopyButton';
-import { TSenseRequests } from '@utils/types/ITransactions';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
@@ -70,17 +69,9 @@ const SenseDetails: React.FC = () => {
   const downloadRef = useRef(null);
   const id = getParameterByName('hash');
   const txid = getParameterByName('txid');
-  const { senseData, isLoading } = useSenseDetails(id, txid);
-  const [sense, setSense] = useState<TSenseRequests | null>(null);
+  const matchType = getParameterByName('matchType');
+  const { senseData: sense, isLoading } = useSenseDetails(id, txid);
   const [openRawDataModal, setOpenRawDataModal] = useState(false);
-
-  useEffect(() => {
-    if (senseData) {
-      setSense(senseData);
-    } else {
-      setSense(null);
-    }
-  }, [senseData, isLoading]);
 
   const toggleOpenRawData = () => setOpenRawDataModal(!openRawDataModal);
 
@@ -134,7 +125,6 @@ const SenseDetails: React.FC = () => {
 
   return sense ? (
     <Styles.Wrapper id="senseDetails">
-      <Header title="Sense Details" />
       <Grid container direction="column" spacing={2}>
         <TransactionStyles.TransactionDesc item className="alert-wrapper">
           <TransactionStyles.ViewTransactionRawMuiAlert severity="info">
@@ -256,11 +246,22 @@ const SenseDetails: React.FC = () => {
       <SenseRawData rawData={getRawData()} open={openRawDataModal} toggleOpen={toggleOpenRawData} />
     </Styles.Wrapper>
   ) : (
-    <Styles.Wrapper>
-      <Header title="Sense Details" />
-      <Grid container direction="column" spacing={2}>
-        Sense not found
+    <Styles.Wrapper className="content-center-wrapper">
+      <Grid container justify="center" alignItems="center" direction="column" spacing={2}>
+        <Grid item>
+          <Typography component="h1" variant="h1" align="center" gutterBottom>
+            404
+          </Typography>
+        </Grid>
       </Grid>
+      <Typography component="h2" variant="h5" align="center" gutterBottom>
+        Sense not found.
+      </Typography>
+      {!txid && matchType === 'seedimage' ? (
+        <Typography component="h3" variant="body1" align="center" gutterBottom>
+          This is one of the 12 seed images used to initialize the Sense system.
+        </Typography>
+      ) : null}
     </Styles.Wrapper>
   );
 };

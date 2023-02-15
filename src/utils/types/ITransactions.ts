@@ -142,6 +142,7 @@ export interface ISignature {
 export interface IPastelIDRegistrationTicket {
   type: string;
   version: number;
+  height: number;
   pastelID: string;
   pq_key: string;
   address: string;
@@ -255,7 +256,9 @@ export interface IActionRegistrationTicket {
   called_at: number;
   storage_fee: number;
   activation_ticket: string;
+  activation_txId: string;
   transactionTime: number;
+  activationTicket: ITicket;
 }
 
 export interface IActionTicket {
@@ -542,6 +545,7 @@ export type TicketsList = {
   imageHash: string;
   dupeDetectionSystemVersion: string;
   activation_ticket: string;
+  activation_txId: string;
   id_type: string;
   type: string;
 };

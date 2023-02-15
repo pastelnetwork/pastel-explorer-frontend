@@ -36,6 +36,21 @@ const PastelIDRegistrationTicket: React.FC<IPastelIDRegistrationTicketProps> = (
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
+          <Styles.TicketTitle>Block height:</Styles.TicketTitle>
+        </Grid>
+        <Grid item xs={8} sm={9}>
+          <Styles.TicketContent>
+            <RouterLink
+              route={`${ROUTES.BLOCK_DETAILS}/${ticket.height}`}
+              value={ticket.height}
+              title={ticket.height?.toString()}
+              className="address-link"
+            />
+          </Styles.TicketContent>
+        </Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
