@@ -65,6 +65,20 @@ export const Wrapper = styled('div')`
     word-break: 'break-word';
   }
 
+  &.content-center-wrapper {
+    display: flex;
+    width: 100%;
+    height: 60vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+
   @media screen and (max-width: 829px) {
     .image-file-hash {
       display: inline-block;

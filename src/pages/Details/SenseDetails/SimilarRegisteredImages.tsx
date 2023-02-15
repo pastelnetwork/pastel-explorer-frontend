@@ -138,7 +138,9 @@ const SimilarRegisteredImages: React.FC<ISimilarRegisteredImages> = ({ rarenessS
                   <TicketStyles.TicketContent className="white-space-nowrap">
                     {item.matchType === 'Seed Image' ? (
                       <RouterLink
-                        route={`${ROUTES.SENSE_DETAILS}?hash=${item.imageHashOriginal}`}
+                        route={`${ROUTES.SENSE_DETAILS}?hash=${
+                          item.imageHashOriginal
+                        }&matchType=${item?.matchType?.replaceAll(' ', '')?.toLowerCase()}`}
                         value={item.imageHash}
                         title={item.imageHash}
                         className="address-link"
