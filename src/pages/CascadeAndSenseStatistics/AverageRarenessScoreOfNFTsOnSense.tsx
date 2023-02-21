@@ -7,14 +7,18 @@ import { periods } from '@utils/constants/statistics';
 import { LineChart } from '@components/Summary/LineChart';
 import { Dropdown } from '@components/Dropdown/Dropdown';
 import themeVariant from '@theme/variants';
-
+import useAverageRarenessScoreOfNFTsOnSense from '@hooks/useAverageRarenessScoreOfNFTsOnSense';
 import * as SummaryStyles from '@components/Summary/Summary.styles';
+import * as StatisticsStyles from '@pages/Statistics/Statistics.styles';
+
+import { transformAverageRarenessScoreOfNFTsOnSenseChartData } from './CascadeAndSenseStatistics.helpers';
 import * as Styles from './CascadeAndSenseStatistics.styles';
-import { averageRarenessScoreOfNFTsOnSenseData } from './mockup';
 
 const AverageRarenessScoreOfNFTsOnSense: React.FC = () => {
   const [period, setPeriod] = useState<PeriodTypes>(periods[7][2]);
-  const [chartData, setChartData] = useState(averageRarenessScoreOfNFTsOnSenseData[0]);
+  const { data, isLoading, difference, currentValue } = useAverageRarenessScoreOfNFTsOnSense(
+    period,
+  );
 
   const handleDropdownChange = (
     event: ChangeEvent<{
@@ -23,27 +27,25 @@ const AverageRarenessScoreOfNFTsOnSense: React.FC = () => {
   ) => {
     if (event.target.value) {
       setPeriod(event.target.value as PeriodTypes);
-      if (event.target.value === periods[7][0]) {
-        setChartData(averageRarenessScoreOfNFTsOnSenseData[1]);
-      } else if (event.target.value === periods[7][3] || event.target.value === periods[7][4]) {
-        setChartData(averageRarenessScoreOfNFTsOnSenseData[2]);
-      } else {
-        setChartData(averageRarenessScoreOfNFTsOnSenseData[0]);
-      }
     }
   };
-  const total = chartData?.dataY?.reduce((partialSum, a) => partialSum + a, 0) || 0;
-  const difference = chartData.difference || 0;
+  const chartData = transformAverageRarenessScoreOfNFTsOnSenseChartData(data);
 
   return (
-    <SummaryStyles.Card className="cascade-sense-card">
+    <SummaryStyles.Card className="cascade-sense-card average-rareness-score">
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
           <SummaryStyles.Typography variant="h6">
             Average rareness score on Sense
           </SummaryStyles.Typography>
           <SummaryStyles.Typography variant="h4">
-            <SummaryStyles.Values>{formatNumber(total)}</SummaryStyles.Values>
+            <SummaryStyles.Values>
+              {isLoading ? (
+                <Skeleton animation="wave" variant="text" />
+              ) : (
+                `${formatNumber(currentValue ? currentValue * 100 : 0, { decimalsLength: 2 })}%`
+              )}
+            </SummaryStyles.Values>
           </SummaryStyles.Typography>
         </SummaryStyles.ValueWrapper>
         <SummaryStyles.PercentageWrapper>
@@ -103,9 +105,12 @@ const AverageRarenessScoreOfNFTsOnSense: React.FC = () => {
           </Styles.Percentage>
         </SummaryStyles.PercentageWrapper>
       </SummaryStyles.CardContent>
-      <div>
-        {!chartData ? (
-          <Skeleton animation="wave" variant="rect" height={386} />
+      <Styles.ChartContentWrapper>
+        {isLoading ? (
+          <StatisticsStyles.Loader>
+            <Skeleton animation="wave" variant="rect" height={170} width="100%" />
+            <StatisticsStyles.LoadingText>Loading data...</StatisticsStyles.LoadingText>
+          </StatisticsStyles.Loader>
         ) : (
           <LineChart
             chartName="averageRarenessScoreOfNFTsOnSense"
@@ -116,7 +121,7 @@ const AverageRarenessScoreOfNFTsOnSense: React.FC = () => {
             disableClick
           />
         )}
-      </div>
+      </Styles.ChartContentWrapper>
     </SummaryStyles.Card>
   );
 };

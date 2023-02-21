@@ -148,12 +148,12 @@ const statisticsRoutes = {
       component: StatisticsOvertime,
       seoTitle: 'Historical Statistics',
     },
-    // {
-    //   path: ROUTES.CASCADE_AND_SENSE_STATISTICS,
-    //   name: 'Cascade and Sense Statistics',
-    //   component: CascadeAndSenseStatistics,
-    //   seoTitle: 'Cascade and Sense Statistics',
-    // },
+    {
+      path: ROUTES.CASCADE_AND_SENSE_STATISTICS,
+      name: 'Cascade and Sense Statistics',
+      component: CascadeAndSenseStatistics,
+      seoTitle: 'Cascade and Sense Statistics',
+    },
   ],
 };
 // Statistics overtime routes

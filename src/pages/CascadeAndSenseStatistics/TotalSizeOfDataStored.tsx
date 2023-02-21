@@ -7,14 +7,16 @@ import { periods } from '@utils/constants/statistics';
 import { LineChart } from '@components/Summary/LineChart';
 import { Dropdown } from '@components/Dropdown/Dropdown';
 import themeVariant from '@theme/variants';
-
+import useTotalSizeOfDataStored from '@hooks/useTotalSizeOfDataStored';
 import * as SummaryStyles from '@components/Summary/Summary.styles';
+import * as StatisticsStyles from '@pages/Statistics/Statistics.styles';
+
+import { transformChartData } from './CascadeAndSenseStatistics.helpers';
 import * as Styles from './CascadeAndSenseStatistics.styles';
-import { totalSizeOfDataStoredData } from './mockup';
 
 const TotalSizeOfDataStored: React.FC = () => {
   const [period, setPeriod] = useState<PeriodTypes>(periods[7][2]);
-  const [chartData, setChartData] = useState(totalSizeOfDataStoredData[0]);
+  const { data, isLoading, difference, currentValue } = useTotalSizeOfDataStored(period);
 
   const handleDropdownChange = (
     event: ChangeEvent<{
@@ -23,27 +25,25 @@ const TotalSizeOfDataStored: React.FC = () => {
   ) => {
     if (event.target.value) {
       setPeriod(event.target.value as PeriodTypes);
-      if (event.target.value === periods[7][0]) {
-        setChartData(totalSizeOfDataStoredData[1]);
-      } else if (event.target.value === periods[7][3] || event.target.value === periods[7][4]) {
-        setChartData(totalSizeOfDataStoredData[2]);
-      } else {
-        setChartData(totalSizeOfDataStoredData[0]);
-      }
     }
   };
-  const total = chartData?.dataY?.reduce((partialSum, a) => partialSum + a, 0) || 0;
-  const difference = chartData.difference || 0;
+  const chartData = transformChartData(data, 10e6);
 
   return (
-    <SummaryStyles.Card className="cascade-sense-card">
+    <SummaryStyles.Card className="cascade-sense-card total-size-of-data-stored">
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
           <SummaryStyles.Typography variant="h6">
             Total data stored on Cascade
           </SummaryStyles.Typography>
           <SummaryStyles.Typography variant="h4">
-            <SummaryStyles.Values>{formatNumber(total)} MB</SummaryStyles.Values>
+            <SummaryStyles.Values>
+              {isLoading ? (
+                <Skeleton animation="wave" variant="text" />
+              ) : (
+                <>{formatNumber(currentValue / 10e6)} MB</>
+              )}
+            </SummaryStyles.Values>
           </SummaryStyles.Typography>
         </SummaryStyles.ValueWrapper>
         <SummaryStyles.PercentageWrapper>
@@ -103,9 +103,12 @@ const TotalSizeOfDataStored: React.FC = () => {
           </Styles.Percentage>
         </SummaryStyles.PercentageWrapper>
       </SummaryStyles.CardContent>
-      <div>
-        {!chartData ? (
-          <Skeleton animation="wave" variant="rect" height={386} />
+      <Styles.ChartContentWrapper>
+        {isLoading ? (
+          <StatisticsStyles.Loader>
+            <Skeleton animation="wave" variant="rect" height={170} width="100%" />
+            <StatisticsStyles.LoadingText>Loading data...</StatisticsStyles.LoadingText>
+          </StatisticsStyles.Loader>
         ) : (
           <LineChart
             chartName="totalSizeOfDataStored"
@@ -115,7 +118,7 @@ const TotalSizeOfDataStored: React.FC = () => {
             disableClick
           />
         )}
-      </div>
+      </Styles.ChartContentWrapper>
     </SummaryStyles.Card>
   );
 };

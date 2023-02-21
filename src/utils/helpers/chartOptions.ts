@@ -2001,6 +2001,7 @@ export type TToolTipParamsProps = {
   seriesName: string;
   data: number;
   dataIndex: number;
+  value: number;
 };
 
 type TRectProps = {
@@ -2780,63 +2781,79 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       tooltip: {
         trigger: 'axis',
         formatter: (params: TToolTipParamsProps[]) => {
-          return `<div style="text-align: left">${params[0].axisValue}</div>${
-            params[0].marker
-          } Average size of NFT stored:&nbsp;${formatNumber(params[0].data)} MB/NFT`;
+          let html = '';
+          for (let i = 0; i < params.length; i += 1) {
+            html += `<div>${params[i].marker} ${params[i].seriesName}: ${formatNumber(
+              params[i].value,
+              { decimalsLength: 2 },
+            )} MB</div>`;
+          }
+          return `
+            <div>
+              <div>${params[0].axisValue}</div>
+              <div>${html}</div>
+            </div>
+          `;
         },
       },
-      xAxis: {
-        type: 'category',
-        data: dataX,
-        axisLabel: {
-          show: false,
+      xAxis: [
+        {
+          type: 'category',
+          data: dataX,
+          axisLabel: {
+            show: false,
+          },
         },
-      },
-      yAxis: {
-        type: 'value',
-        min: minY,
-        max: maxY,
-        axisLine: {
-          show: false,
+      ],
+      yAxis: [
+        {
+          type: 'value',
+          max: maxY,
+          axisLine: {
+            show: false,
+          },
+          axisLabel: {
+            show: false,
+          },
+          splitLine: {
+            show: false,
+          },
         },
-        axisLabel: {
-          show: false,
+      ],
+      series: [
+        {
+          name: 'Highest size of NFT stored',
+          type: 'bar',
+          data: dataY,
+          color: '#cd6661',
         },
-        splitLine: {
-          show: false,
+        {
+          name: 'Average size of NFT stored',
+          type: 'line',
+          data: dataY1,
+          color: !darkMode ? '#2f2a03' : theme?.color,
+          showSymbol: false,
         },
-      },
-      series: {
-        type: 'line',
-        sampling: 'lttb',
-        data: dataY,
-        areaStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: '#cd6661',
-            },
-            {
-              offset: 1,
-              color: theme?.backgroundColor ?? '#F4F4F4',
-            },
-          ]),
-        },
-        showSymbol: false,
-      },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
+      ],
+      animation: false,
     },
     averageRarenessScoreOfNFTsOnSense: {
       tooltip: {
         trigger: 'axis',
-        axisPointer: {
-          type: 'cross',
-          crossStyle: {
-            color: '#999',
-          },
+        formatter: (params: TToolTipParamsProps[]) => {
+          let html = '';
+          for (let i = 0; i < params.length; i += 1) {
+            html += `<div>${params[i].marker} ${params[i].seriesName}: ${formatNumber(
+              params[i].value * 100,
+              { decimalsLength: 2 },
+            )}%</div>`;
+          }
+          return `
+            <div>
+              <div>${params[0].axisValue}</div>
+              <div>${html}</div>
+            </div>
+          `;
         },
       },
       grid: {
@@ -2881,14 +2898,11 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           name: 'Average rareness score',
           type: 'line',
           data: dataY1,
-          color: '#2f2a03',
+          color: !darkMode ? '#2f2a03' : theme?.color,
           showSymbol: false,
         },
       ],
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
+      animation: false,
     },
     totalOfCascadeRequests: {
       backgroundColor: theme?.backgroundColor,
@@ -2906,18 +2920,18 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       tooltip: {
         trigger: 'axis',
         formatter: (params: TToolTipParamsProps[]) => {
-          return `<div style="text-align: left">${params[0].axisValue}</div>${
-            params[0].marker
-          } Total:&nbsp;${formatNumber(params[0].data)} requests`;
+          return `<div style="text-align: left">${params[0].axisValue}</div>${params[0].marker} ${
+            params[0].seriesName
+          }:&nbsp;${formatNumber(params[0].data)} ${params[0].data > 1 ? 'requests' : 'request'}`;
         },
       },
       xAxis: {
         type: 'category',
         data: dataX,
+        boundaryGap: false,
         axisLabel: {
           show: false,
         },
-        boundaryGap: false,
       },
       yAxis: {
         type: 'value',
@@ -2933,6 +2947,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
+        name: 'Cascade Requests',
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -2950,10 +2965,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
         showSymbol: false,
       },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
+      animation: false,
     },
     totalOfSenseRequests: {
       backgroundColor: theme?.backgroundColor,
@@ -2971,14 +2983,15 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       tooltip: {
         trigger: 'axis',
         formatter: (params: TToolTipParamsProps[]) => {
-          return `<div style="text-align: left">${params[0].axisValue}</div>${
-            params[0].marker
-          } Total:&nbsp;${formatNumber(params[0].data)} requests`;
+          return `<div style="text-align: left">${params[0].axisValue}</div>${params[0].marker} ${
+            params[0].seriesName
+          }:&nbsp;${formatNumber(params[0].data)} ${params[0].data > 1 ? 'requests' : 'request'}`;
         },
       },
       xAxis: {
         type: 'category',
         data: dataX,
+        boundaryGap: false,
         axisLabel: {
           show: false,
         },
@@ -2997,6 +3010,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
+        name: 'Sense Requests',
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -3014,10 +3028,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
         showSymbol: false,
       },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
+      animation: false,
     },
     totalSizeOfDataStored: {
       backgroundColor: theme?.backgroundColor,
@@ -3035,9 +3046,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       tooltip: {
         trigger: 'axis',
         formatter: (params: TToolTipParamsProps[]) => {
-          return `<div style="text-align: left">${params[0].axisValue}</div>${
-            params[0].marker
-          } Total:&nbsp;${formatNumber(params[0].data)} MB`;
+          return `<div style="text-align: left">${params[0].axisValue}</div>${params[0].marker} ${
+            params[0].seriesName
+          }:&nbsp;${formatNumber(params[0].data, { decimalsLength: 2 })} MB`;
         },
       },
       xAxis: {
@@ -3061,6 +3072,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
+        name: 'Total data stored',
         type: 'bar',
         sampling: 'lttb',
         data: dataY,
@@ -3077,10 +3089,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           ]),
         },
       },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
+      animation: false,
     },
     totalFingerprintsOnSense: {
       backgroundColor: theme?.backgroundColor,
@@ -3098,9 +3107,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       tooltip: {
         trigger: 'axis',
         formatter: (params: TToolTipParamsProps[]) => {
-          return `<div style="text-align: left">${params[0].axisValue}</div>${
-            params[0].marker
-          } Total:&nbsp;${formatNumber(params[0].data)}`;
+          return `<div style="text-align: left">${params[0].axisValue}</div>${params[0].marker} ${
+            params[0].seriesName
+          }:&nbsp;${formatNumber(params[0].data)}`;
         },
       },
       xAxis: {
@@ -3124,6 +3133,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
+        name: 'Total fingerprints',
         type: 'bar',
         sampling: 'lttb',
         data: dataY,
@@ -3141,10 +3151,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
         showSymbol: false,
       },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
+      animation: false,
     },
     blockSizesStatistics: {
       backgroundColor: theme?.backgroundColor,
