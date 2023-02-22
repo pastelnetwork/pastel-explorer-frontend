@@ -137,7 +137,12 @@ const TransactionDetails = () => {
           { id: 2, value: block.confirmations },
           { id: 3, value: recipientCount },
           { id: 4, value: formatNumber(totalAmount) },
-          { id: 5, value: formattedDate(timestamp) },
+          {
+            id: 5,
+            value: formattedDate(timestamp, {
+              dayName: false,
+            }),
+          },
         ],
       },
     ];

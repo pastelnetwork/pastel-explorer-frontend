@@ -36,7 +36,9 @@ export default function useAddressDetails(
         csvData.push({
           transactionHash: data[i].data[j].transactionHash,
           amount: data[i].data[j].amount,
-          timestamp: formattedDate(data[i].data[j].timestamp),
+          timestamp: formattedDate(data[i].data[j].timestamp, {
+            dayName: false,
+          }),
         });
       }
     }

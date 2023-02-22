@@ -250,7 +250,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
               <Styles.ActivationTicketItem className="item">
                 <Styles.TicketTitle className="mr-5">Timestamp:</Styles.TicketTitle>
                 <Styles.TicketContent>
-                  {formatFullDate(activationTicket.transactionTime)}
+                  {formatFullDate(activationTicket.transactionTime, { dayName: false })}
                 </Styles.TicketContent>
               </Styles.ActivationTicketItem>
             </Grid>
@@ -359,7 +359,9 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
             <Styles.TicketTitle>Timestamp:</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
-            <Styles.TicketContent>{formatFullDate(ticket.transactionTime)}</Styles.TicketContent>
+            <Styles.TicketContent>
+              {formatFullDate(ticket.transactionTime, { dayName: false })}
+            </Styles.TicketContent>
           </Grid>
         </Grid>
       ) : null}

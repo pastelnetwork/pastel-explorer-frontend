@@ -34,7 +34,9 @@ export const generateLatestTransactions = (
   isMobile: boolean,
 ): RowsProps[] =>
   transactionsList.map(({ amount, timestamp, transactionHash }) => ({
-    [ADDRESS_TRANSACTION_TIMESTAMP_KEY]: formattedDate(timestamp),
+    [ADDRESS_TRANSACTION_TIMESTAMP_KEY]: formattedDate(timestamp, {
+      dayName: false,
+    }),
     [ADDRESS_TRANSACTION_HASH_KEY]: (
       <Grid container alignItems="center" wrap="nowrap">
         <CopyButton copyText={transactionHash} />

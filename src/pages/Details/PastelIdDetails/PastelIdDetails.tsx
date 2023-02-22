@@ -100,7 +100,9 @@ const PastelIdDetails = () => {
             ticketsTypeList={ticketsTypeList}
             registeredDate={
               pastelIdRegisterTicket?.timeStamp
-                ? formattedDate(Number(pastelIdRegisterTicket.timeStamp))
+                ? formattedDate(Number(pastelIdRegisterTicket.timeStamp), {
+                    dayName: false,
+                  })
                 : 'NA'
             }
             blockHeight={pastelIdRegisterTicket?.height?.toString() || ''}
