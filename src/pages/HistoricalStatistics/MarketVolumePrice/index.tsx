@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { PeriodTypes, transformMarketVolumePriceInfo } from '@utils/helpers/statisticsLib';
 import { periods, info, cacheList } from '@utils/constants/statistics';
@@ -7,10 +8,12 @@ import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import { TMultiLineChartData } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
 import useMarketVolumePrice from '@hooks/useMarketVolumePrice';
+import { getThemeState } from '@redux/reducers/appThemeReducer';
 
 import { EChartsMultiLineChart } from '../Chart/EChartsMultiLineChart';
 
 function MarketVolumePrice() {
+  const { darkMode } = useSelector(getThemeState);
   const [period, setPeriod] = useState<PeriodTypes>(periods[3][0]);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const [transformLineChartData, setTransformLineChartData] = useState<TMultiLineChartData>();
@@ -74,7 +77,7 @@ function MarketVolumePrice() {
         handlePeriodFilterChange={handlePeriodFilterChange}
         setHeaderBackground
         isLoading={isLoading}
-        color={['#000', '#5470C6']}
+        color={[darkMode ? '#fff' : '#000', darkMode ? '#1fbfff' : '#5470c6']}
         symbol="$"
         symbol1="$"
       />

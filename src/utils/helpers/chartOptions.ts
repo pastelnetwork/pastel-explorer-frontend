@@ -63,8 +63,10 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
     period,
     granularity,
     width,
+    darkMode,
   } = args;
   let firstDay = '';
+  const blueColor = darkMode ? '#1fbfff' : '#5470c6';
   const chartOptions: TChartOption = {
     difficulty: {
       backgroundColor: theme?.backgroundColor,
@@ -165,7 +167,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 40,
@@ -251,7 +253,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#5470C6',
+              color: blueColor,
             },
             {
               offset: 1,
@@ -273,7 +275,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
-      color: ['#cd6661', '#37A2FF'],
+      color: ['#cd6661', blueColor],
       grid: {
         top: 30,
         right: 40,
@@ -463,7 +465,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       series: {
         type: 'line',
         lineStyle: {
-          color: '#176987',
+          color: blueColor,
         },
         symbol: false,
         showSymbol: false,
@@ -481,7 +483,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 40,
@@ -592,7 +594,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 40,
@@ -1083,7 +1085,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 40,
@@ -1161,7 +1163,18 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       series: {
         type: 'line',
         data: dataY,
-        areaStyle: {},
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: blueColor,
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor || '#fff',
+            },
+          ]),
+        },
         showSymbol: false,
         emphasis: {
           lineStyle: {
@@ -1176,7 +1189,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 40,
@@ -1254,7 +1267,18 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       series: {
         type: 'line',
         data: dataY,
-        areaStyle: {},
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: blueColor,
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor || '#fff',
+            },
+          ]),
+        },
         showSymbol: false,
         emphasis: {
           lineStyle: {
@@ -1269,7 +1293,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 40,
@@ -1347,7 +1371,18 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       series: {
         type: 'line',
         data: dataY,
-        areaStyle: {},
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: blueColor,
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor || '#fff',
+            },
+          ]),
+        },
         showSymbol: false,
         emphasis: {
           lineStyle: {
@@ -1449,7 +1484,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 40,
@@ -1523,7 +1558,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#5470C6',
+              color: blueColor,
             },
             {
               offset: 1,
@@ -1630,7 +1665,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 40,
@@ -1709,7 +1744,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#5470C6',
+              color: blueColor,
             },
             {
               offset: 1,
@@ -2018,13 +2053,14 @@ type TSizeProps = {
 
 export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOption {
   const { theme, dataX, dataY, dataY1, chartName, minY, maxY, darkMode } = args;
+  const blueColor = darkMode ? '#1fbfff' : '#5470c6';
   const chartOptions: TChartOption = {
     gigaHashPerSec: {
       backgroundColor: theme?.backgroundColor,
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 0,
@@ -2073,7 +2109,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#5470C6',
+              color: blueColor,
             },
             {
               offset: 1,
@@ -2232,7 +2268,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 0,
@@ -2276,7 +2312,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#5470C6',
+              color: blueColor,
             },
             {
               offset: 1,
@@ -2295,7 +2331,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 0,
@@ -2635,7 +2671,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 0,
@@ -2695,7 +2731,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#5470C6',
+              color: blueColor,
             },
             {
               offset: 1,
@@ -2892,7 +2928,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           name: 'Highest rareness score',
           type: 'bar',
           data: dataY,
-          color: '#5470C6',
+          color: blueColor,
         },
         {
           name: 'Average rareness score',
@@ -2972,7 +3008,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 9,
         right: 0,
@@ -3018,7 +3054,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#5470C6',
+              color: blueColor,
             },
             {
               offset: 1,
@@ -3096,7 +3132,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 9,
         right: 0,
@@ -3141,7 +3177,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#cd6661',
+              color: blueColor,
             },
             {
               offset: 1,
@@ -3249,7 +3285,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           `;
         },
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       xAxis: {
         type: 'category',
         boundaryGap: false,
@@ -3292,7 +3328,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
                 offset: 0,
-                color: '#5470C6',
+                color: blueColor,
               },
               {
                 offset: 1,
@@ -3329,7 +3365,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           `;
         },
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       xAxis: {
         type: 'category',
         boundaryGap: false,
@@ -3372,7 +3408,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
                 offset: 0,
-                color: '#5470C6',
+                color: blueColor,
               },
               {
                 offset: 1,
