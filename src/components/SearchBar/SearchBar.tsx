@@ -5,7 +5,7 @@ import { darken } from 'polished';
 
 import { Grid, Hidden, Theme, TextField, CircularProgress, makeStyles } from '@material-ui/core';
 import { Menu as MenuIcon, Search as SearchIcon } from '@material-ui/icons';
-import MuiAutocomplete from '@material-ui/lab/Autocomplete';
+import MuiAutocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
@@ -65,6 +65,10 @@ const useStyles = makeStyles((theme: TAppTheme) => ({
 
 let isClicked = false;
 
+const filterOptions = createFilterOptions({
+  trim: true,
+});
+
 const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
   const classes = useStyles();
   const optionSelectedFromList = React.useRef(false);
@@ -118,7 +122,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
 
   const handleInputChange = _debounce(
     (_: React.ChangeEvent<Record<string, unknown>>, _value: string) => {
-      const value = _value.trimLeft().replace(/\s\s+/g, ' ');
+      const value = _value.replace(/\s\s+/g, ' ').trim();
       if (optionSelectedFromList.current || !value.length) return null;
       !loading && setLoading(true);
       searchData.length && setSearchData([]);
@@ -156,6 +160,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
           option: classes.option,
           paper: classes.listboxOptions,
         }}
+        filterOptions={filterOptions}
         groupBy={option => option.category}
         getOptionLabel={option => `${option.value}`}
         loading={loading}
@@ -167,6 +172,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         noOptionsText="No results containing all your search terms were found"
         loadingText="Loading results..."
         size="small"
+        debug
         renderOption={option => {
           if (option.category === SENSES_LABEL) {
             return (
