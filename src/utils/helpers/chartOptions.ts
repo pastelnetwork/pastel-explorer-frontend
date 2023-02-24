@@ -2844,7 +2844,6 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       yAxis: [
         {
           type: 'value',
-          max: maxY,
           axisLine: {
             show: false,
           },

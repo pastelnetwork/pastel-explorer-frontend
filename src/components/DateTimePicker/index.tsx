@@ -74,7 +74,9 @@ const DateTimePicker: React.FC<IDateTimePickerProps> = ({ onApply, defaultDateRa
 
   const handleContinueClick = () => {
     if (onApply) {
-      onApply(startDate.valueOf(), endDate?.valueOf() || null);
+      const newEndDate =
+        endDate?.valueOf() && startDate.valueOf() !== endDate.valueOf() ? endDate.valueOf() : null;
+      onApply(startDate.valueOf(), newEndDate);
     }
     setOpen(false);
   };

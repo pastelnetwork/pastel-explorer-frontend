@@ -182,6 +182,7 @@ export const FilterWrapper = styled.div`
 
     .dropdown-label {
       margin-right: 5px;
+      white-space: nowrap;
     }
 
     label + .MuiInput-formControl {

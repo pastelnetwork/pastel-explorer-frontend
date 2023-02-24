@@ -41,7 +41,7 @@ const AverageSizeOfNFTStoredOnCascade: React.FC = () => {
               {isLoading ? (
                 <Skeleton animation="wave" variant="text" />
               ) : (
-                <>{formatNumber(currentValue / 10e6)} MB</>
+                <>{formatNumber(currentValue / 10e6, { decimalsLength: 2 })} MB</>
               )}
             </SummaryStyles.Values>
           </SummaryStyles.Typography>

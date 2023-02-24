@@ -38,6 +38,13 @@ export const DatePicker = styled.div`
 
   .react-datepicker {
     border: 0;
+    background: transparent;
+
+    .react-datepicker__day,
+    .react-datepicker__day-name,
+    .react-datepicker__current-month {
+      color: ${props => props.theme.palette.text.primary};
+    }
 
     .react-datepicker__day--outside-month {
       color: ${props => props.theme.table.hover};
@@ -48,8 +55,8 @@ export const DatePicker = styled.div`
     .react-datepicker__day--in-range,
     .react-datepicker__day--keyboard-selected {
       background: ${props => props.theme.sidebar.menu.toggle.switch};
-      color: ${props => props.theme.table.header};
-      transition: all 0.3s ease;
+      color: #fff;
+      transition: background 0.3s ease;
     }
 
     .react-datepicker__header {
@@ -95,12 +102,12 @@ export const PredefinedWrapper = styled.div`
 
   ul {
     margin: 5px 0;
-    padding-left: 10px;
+    padding-left: 0;
     list-style: none;
 
     li {
       margin: 5px 0;
-      padding: 3px 10px;
+      padding: 5px 10px;
       font-size: 0.8rem;
       font-family: 'Helvetica Neue', helvetica, arial, sans-serif;
       border-radius: 4px;
@@ -110,6 +117,7 @@ export const PredefinedWrapper = styled.div`
         border: 0;
         background: transparent;
         cursor: pointer;
+        color: ${props => props.theme.palette.text.primary};
       }
 
       &:hover,
@@ -133,7 +141,6 @@ export const PredefinedWrapper = styled.div`
       width: 90%;
       height: 1px;
       transform: translateX(-50%);
-  }
     }
   }
 `;
@@ -168,6 +175,7 @@ export const CancelButton = styled.button`
   border: 0;
   outline: none;
   transition: all 0.3s ease;
+  color: ${props => props.theme.palette.text.primary};
 
   &:hover {
     background: ${props => props.theme.card.titleColor};
@@ -198,7 +206,11 @@ export const SelectedDay = styled.p`
   padding-right: 10px;
   text-align: right;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 600;
+
+  span {
+    font-weight: 400;
+  }
 
   ${props => props.theme.breakpoints.down('sm')} {
     display: none;
