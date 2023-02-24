@@ -24,9 +24,11 @@ import {
   BLOCKS_HEIGHTS_LABEL,
   SENSES_LABEL,
   PASTEL_ID_LABEL,
+  USERNAME,
   TOptionsCategories,
   getRoute,
   collectData,
+  collectUsernameData,
 } from './SearchBar.helpers';
 
 interface AppBarProps {
@@ -115,6 +117,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
       ...collectData(data.transactions, TRANSACTIONS_LABEL),
       ...collectData(data.senses, SENSES_LABEL),
       ...collectData(data.pastelIds, PASTEL_ID_LABEL),
+      ...collectUsernameData(data.usernameList, USERNAME),
     ];
 
     return setSearchData(groupedData.sort((a, b) => -b.category.localeCompare(a.category)));
@@ -174,6 +177,15 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         size="small"
         debug
         renderOption={option => {
+          if (option.category === USERNAME) {
+            return (
+              <RouterLink
+                styles={{ padding: '6px 24px 6px 16px' }}
+                route={`${getRoute(option.category)}/${option.pastelID}#${option.value}`}
+                value={option.value}
+              />
+            );
+          }
           if (option.category === SENSES_LABEL) {
             return (
               <RouterLink

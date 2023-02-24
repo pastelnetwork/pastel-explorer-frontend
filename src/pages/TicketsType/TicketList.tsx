@@ -49,6 +49,7 @@ import * as BlockDetailsStyles from '@pages/Details/BlockDetails/BlockDetails.st
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
 import * as Styles from '@pages/Details/PastelIdDetails/PastelIdDetails.styles';
 import * as FilterStyles from '@components/InfinityTable/InfinityTable.styles';
+import DateTimePicker from '@components/DateTimePicker';
 import { blocksPeriodFilters } from '@utils/constants/filter';
 import { TAppTheme } from '@theme/index';
 
@@ -91,6 +92,11 @@ interface ITicketsList {
   selectedTime: string;
   onStatusChange: (_value: string) => void;
   selectedStatus: string;
+  onDateRangeApply?: (_startDate: number, _endDate: number | null) => void;
+  defaultDateRange?: {
+    startDate: number;
+    endDate: number | null;
+  };
 }
 
 const TicketsList: React.FC<ITicketsList> = ({
@@ -104,6 +110,8 @@ const TicketsList: React.FC<ITicketsList> = ({
   selectedTime,
   onStatusChange,
   selectedStatus,
+  onDateRangeApply,
+  defaultDateRange,
 }) => {
   const classes = useStyles();
 
@@ -262,7 +270,7 @@ const TicketsList: React.FC<ITicketsList> = ({
 
   return (
     <BlockDetailsStyles.GridStyle item>
-      <TableStyles.BlockWrapper className="mb-12">
+      <TableStyles.BlockWrapper className="mb-12 min-h-60vh">
         <Styles.BlockWrapper className="ticket-title-wrapper">
           <Styles.BlockTitle>
             {getTitle()}{' '}
@@ -308,6 +316,15 @@ const TicketsList: React.FC<ITicketsList> = ({
                     </Button>
                   </MenuItem>
                 ))}
+                <MenuItem
+                  classes={{
+                    root: `filter-item date-picker ${classes.rootMenuItem} ${
+                      selectedTime === 'custom' ? 'filter-item-active' : ''
+                    }`,
+                  }}
+                >
+                  <DateTimePicker onApply={onDateRangeApply} defaultDateRange={defaultDateRange} />
+                </MenuItem>
               </div>
             </FilterStyles.FilterWrapper>
           </Styles.FilterBlock>

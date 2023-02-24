@@ -1,4 +1,7 @@
 import { Tooltip } from '@material-ui/core';
+import { useSelector } from 'react-redux';
+
+import { getThemeState } from '@redux/reducers/appThemeReducer';
 
 import * as Styles from './Hourglass.styles';
 
@@ -6,20 +9,91 @@ interface HourglassProps {
   className?: string;
 }
 
-const Hourglass: React.FC<HourglassProps> = ({ className }) => (
-  <Tooltip title="Transaction is not yet included in any block">
-    <Styles.Image className={className}>
-      <svg
-        fill="currentColor"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        width="24px"
-        height="24px"
-      >
-        <path d="M 3 0 L 3 3 L 4.03125 3 C 4.363281 7.910156 7.0625 10.863281 8.53125 12.125 C 7.414063 13.128906 4.402344 16.074219 4.03125 21 L 3 21 L 3 24 L 21 24 L 21 21 L 19.96875 21 C 19.597656 16.074219 16.585938 13.128906 15.46875 12.125 C 16.941406 10.878906 19.648438 7.976563 19.96875 3 L 21 3 L 21 0 Z M 6.0625 3 L 17.9375 3 C 17.511719 8.871094 13.5 11.125 13.5 11.125 L 12.21875 11.875 L 13.375 12.78125 C 13.375 12.78125 17.429688 16.097656 17.9375 21 L 17.78125 21 C 16.953125 18.816406 13.890625 16 12 16 C 10.109375 16 7.046875 18.816406 6.21875 21 L 6.0625 21 C 6.570313 16.097656 10.625 12.78125 10.625 12.78125 L 11.75 11.875 L 10.5 11.15625 C 10.5 11.15625 6.488281 8.796875 6.0625 3 Z M 10 8 C 10 8.898438 11.101563 11 12 11 C 12.898438 11 14 8.898438 14 8 Z" />
-      </svg>
-    </Styles.Image>
-  </Tooltip>
-);
+const Hourglass: React.FC<HourglassProps> = ({ className }) => {
+  const { darkMode } = useSelector(getThemeState);
+
+  return (
+    <Tooltip title="Transaction is not yet included in any block">
+      <Styles.Image className={className}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          xmlnsXlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="xMidYMid"
+        >
+          <defs>
+            <clipPath id="ldio-uck9wgvirzh-cp">
+              <rect x="0" y="0" width="100" height="50">
+                <animate
+                  attributeName="y"
+                  repeatCount="indefinite"
+                  dur="4.3478260869565215s"
+                  calcMode="spline"
+                  values="0;50;0;0;0"
+                  keyTimes="0;0.4;0.5;0.9;1"
+                  keySplines="0.3 0 1 0.7;0.3 0 1 0.7;0.3 0 1 0.7;0.3 0 1 0.7"
+                />
+                <animate
+                  attributeName="height"
+                  repeatCount="indefinite"
+                  dur="4.3478260869565215s"
+                  calcMode="spline"
+                  values="50;0;0;50;50"
+                  keyTimes="0;0.4;0.5;0.9;1"
+                  keySplines="0.3 0 1 0.7;0.3 0 1 0.7;0.3 0 1 0.7;0.3 0 1 0.7"
+                />
+              </rect>
+              <rect x="0" y="50" width="100" height="50">
+                <animate
+                  attributeName="y"
+                  repeatCount="indefinite"
+                  dur="4.3478260869565215s"
+                  calcMode="spline"
+                  values="100;50;50;50;50"
+                  keyTimes="0;0.4;0.5;0.9;1"
+                  keySplines="0.3 0 1 0.7;0.3 0 1 0.7;0.3 0 1 0.7;0.3 0 1 0.7"
+                />
+                <animate
+                  attributeName="height"
+                  repeatCount="indefinite"
+                  dur="4.3478260869565215s"
+                  calcMode="spline"
+                  values="0;50;50;0;0"
+                  keyTimes="0;0.4;0.5;0.9;1"
+                  keySplines="0.3 0 1 0.7;0.3 0 1 0.7;0.3 0 1 0.7;0.3 0 1 0.7"
+                />
+              </rect>
+            </clipPath>
+          </defs>
+          <g transform="translate(50 50)">
+            <g transform="scale(0.9)">
+              <g transform="translate(-50 -50)">
+                <g>
+                  <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    dur="4.3478260869565215s"
+                    repeatCount="indefinite"
+                    values="0 50 50;0 50 50;180 50 50;180 50 50;360 50 50"
+                    keyTimes="0;0.4;0.5;0.9;1"
+                  />
+                  <path
+                    clipPath="url(#ldio-uck9wgvirzh-cp)"
+                    fill={darkMode ? '#fff' : '#3f3f3f'}
+                    d="M54.864 50L54.864 50c0-1.291 0.689-2.412 1.671-2.729c9.624-3.107 17.154-12.911 19.347-25.296 c0.681-3.844-1.698-7.475-4.791-7.475H28.908c-3.093 0-5.472 3.631-4.791 7.475c2.194 12.385 9.723 22.189 19.347 25.296 c0.982 0.317 1.671 1.438 1.671 2.729v0c0 1.291-0.689 2.412-1.671 2.729C33.84 55.836 26.311 65.64 24.117 78.025 c-0.681 3.844 1.698 7.475 4.791 7.475h42.184c3.093 0 5.472-3.631 4.791-7.475C73.689 65.64 66.16 55.836 56.536 52.729 C55.553 52.412 54.864 51.291 54.864 50z"
+                  />
+                  <path
+                    fill={darkMode ? '#fff' : '#2d3748'}
+                    d="M81 81.5h-2.724l0.091-0.578c0.178-1.122 0.17-2.243-0.022-3.333C76.013 64.42 68.103 54.033 57.703 50.483l-0.339-0.116 v-0.715l0.339-0.135c10.399-3.552 18.31-13.938 20.642-27.107c0.192-1.089 0.2-2.211 0.022-3.333L78.276 18.5H81 c2.481 0 4.5-2.019 4.5-4.5S83.481 9.5 81 9.5H19c-2.481 0-4.5 2.019-4.5 4.5s2.019 4.5 4.5 4.5h2.724l-0.092 0.578 c-0.178 1.122-0.17 2.243 0.023 3.333c2.333 13.168 10.242 23.555 20.642 27.107l0.338 0.116v0.715l-0.338 0.135 c-10.4 3.551-18.31 13.938-20.642 27.106c-0.193 1.09-0.201 2.211-0.023 3.333l0.092 0.578H19c-2.481 0-4.5 2.019-4.5 4.5 s2.019 4.5 4.5 4.5h62c2.481 0 4.5-2.019 4.5-4.5S83.481 81.5 81 81.5z M73.14 81.191L73.012 81.5H26.988l-0.128-0.309 c-0.244-0.588-0.491-1.538-0.28-2.729c2.014-11.375 8.944-20.542 17.654-23.354c2.035-0.658 3.402-2.711 3.402-5.108 c0-2.398-1.368-4.451-3.403-5.108c-8.71-2.812-15.639-11.979-17.653-23.353c-0.211-1.191 0.036-2.143 0.281-2.731l0.128-0.308 h46.024l0.128 0.308c0.244 0.589 0.492 1.541 0.281 2.731c-2.015 11.375-8.944 20.541-17.654 23.353 c-2.035 0.658-3.402 2.71-3.402 5.108c0 2.397 1.368 4.45 3.403 5.108c8.71 2.812 15.64 11.979 17.653 23.354 C73.632 79.651 73.384 80.604 73.14 81.191z"
+                  />
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </Styles.Image>
+    </Tooltip>
+  );
+};
 
 export default Hourglass;

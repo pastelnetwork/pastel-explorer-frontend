@@ -26,15 +26,6 @@ const StyledCard = styled(MuiCard)`
   .list-filter {
     border: 1px solid ${props => props.theme.filter.border};
   }
-
-  .filter-item {
-    transition: none;
-
-    &-active,
-    &:hover {
-      background: ${props => props.theme.filter.background};
-    }
-  }
 `;
 
 export const Card = styled(StyledCard)(spacing);
@@ -170,6 +161,19 @@ export const FilterWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
 
+  .filter-item {
+    transition: none;
+
+    &-active,
+    &:hover {
+      background: ${props => props.theme.filter.background};
+    }
+
+    &.date-picker {
+      overflow: unset;
+    }
+  }
+
   .dropdown-filter {
     width: 200px;
     margin-right: 15px;
@@ -214,13 +218,24 @@ export const FilterWrapper = styled.div`
     }
   }
 
-  ${props => props.theme.breakpoints.down('sm')} {
+  ${props => props.theme.breakpoints.down(680)} {
+    flex-direction: column;
     justify-content: center;
-    margin-top: 10px;
+    align-items: center;
 
     .dropdown-filter {
       margin-right: 0;
       margin-bottom: 10px;
+    }
+  }
+
+  ${props => props.theme.breakpoints.down('xs')} {
+    .filter-item {
+      button {
+        min-width: unset;
+        padding-left: 18px;
+        padding-right: 18px;
+      }
     }
   }
 `;

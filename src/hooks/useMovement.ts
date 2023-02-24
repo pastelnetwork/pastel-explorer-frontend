@@ -13,12 +13,25 @@ export default function useMovement(
   sortBy: string,
   sortDirection: SortDirectionsType,
   period: string,
+  customDateRange: {
+    startDate: number;
+    endDate: number | null;
+  },
 ) {
+  let dateParam = '';
+  if (customDateRange.startDate) {
+    dateParam = `&startDate=${customDateRange.startDate}`;
+    if (customDateRange.endDate) {
+      dateParam += `&endDate=${customDateRange.endDate}`;
+    }
+  } else if (period && period !== 'custom') {
+    dateParam = `&period=${period}`;
+  }
   const { data, isLoading, size, setSize } = useSWRInfinite(
     index =>
       `${URLS.TRANSACTION_URL}?offset=${
         index * DATA_FETCH_LIMIT
-      }&limit=${limit}&sortBy=${sortBy}&sortDirection=${sortDirection}&period=${period}`,
+      }&limit=${limit}&sortBy=${sortBy}&sortDirection=${sortDirection}${dateParam}`,
     axiosGet,
     SWR_OPTIONS,
   );

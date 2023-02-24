@@ -61,6 +61,8 @@ export const transformTableData = (transactions: Array<IBlock>, isMobile: boolea
           )}
         </div>
       ),
-      [TIMESTAMP_BLOCKS_KEY]: formattedDate(timestamp, { dayName: false }),
+      [TIMESTAMP_BLOCKS_KEY]: (
+        <div className="timestamp">{formattedDate(timestamp, { dayName: false })}</div>
+      ),
     };
   });

@@ -38,6 +38,7 @@ import {
   getTicketTitle,
 } from '@components/Ticket';
 import { Dropdown } from '@components/Dropdown/Dropdown';
+import Pagination from '@components/Pagination';
 import { getBaseURL } from '@utils/constants/statistics';
 
 import * as TableStyles from '@components/Table/Table.styles';
@@ -55,6 +56,9 @@ interface ITicketsList {
   ticketsTypeList: TTicketsTypeProps[];
   isLoading?: boolean;
   senses?: TSenseRequests[];
+  limit: number;
+  onPageChange?: (_page: number) => void;
+  defaultPage?: number;
 }
 
 const TicketsList: React.FC<ITicketsList> = ({
@@ -66,6 +70,9 @@ const TicketsList: React.FC<ITicketsList> = ({
   ticketsTypeList,
   isLoading = false,
   senses,
+  limit,
+  onPageChange,
+  defaultPage = 0,
 }) => {
   const renderSenseInfo = (ticket: IActionRegistrationTicket, transactionHash: string) => {
     if (ticket.action_type !== 'sense' || !ticket.activation_ticket) {
@@ -210,7 +217,7 @@ const TicketsList: React.FC<ITicketsList> = ({
     }
     return results;
   };
-
+  const totalPage = Math.ceil(totalTickets / limit);
   return (
     <BlockDetailsStyles.GridStyle item>
       <TableStyles.BlockWrapper className="mb-12">
@@ -236,6 +243,11 @@ const TicketsList: React.FC<ITicketsList> = ({
               item
               key={`${ticket.id}-${ticket.transactionHash}`}
               className="table__row"
+              id={
+                ticket.type === 'username-change'
+                  ? (ticket.data.ticket as IUserNameChangeTicket).username
+                  : ticket.transactionHash
+              }
             >
               <Grid container spacing={3}>
                 <Grid item xs={4} sm={3} className="max-w-355">
@@ -272,6 +284,11 @@ const TicketsList: React.FC<ITicketsList> = ({
           ) : null}
         </Box>
       </TableStyles.BlockWrapper>
+      {totalPage > 1 ? (
+        <Styles.PaginationWrapper>
+          <Pagination totalPage={totalPage} onPageChange={onPageChange} defaultPage={defaultPage} />
+        </Styles.PaginationWrapper>
+      ) : null}
     </BlockDetailsStyles.GridStyle>
   );
 };

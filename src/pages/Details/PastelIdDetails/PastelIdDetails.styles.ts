@@ -66,3 +66,9 @@ export const BlockWrapper = styled.div`
 export const FilterBlock = styled.div`
   display: block;
 `;
+
+export const PaginationWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 10px;
+`;

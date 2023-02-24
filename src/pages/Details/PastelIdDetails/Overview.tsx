@@ -21,6 +21,7 @@ interface IOverviewProps {
   ticketsTypeList: TTicketsTypeProps[];
   registeredDate: string;
   blockHeight: string;
+  username?: string;
 }
 
 const Overview: React.FC<IOverviewProps> = ({
@@ -29,6 +30,7 @@ const Overview: React.FC<IOverviewProps> = ({
   ticketsTypeList,
   registeredDate,
   blockHeight,
+  username,
 }) => {
   const renderTicketsType = () => {
     const tickets = ticketsTypeList.filter(i => i.total > 0);
@@ -58,6 +60,18 @@ const Overview: React.FC<IOverviewProps> = ({
               </Grid>
             </Grid>
           </BlockDetailsStyles.GridStyle>
+          {username ? (
+            <BlockDetailsStyles.GridStyle className="table__row">
+              <Grid container spacing={3}>
+                <Grid item xs={4} sm={3} className="max-w-355">
+                  <TicketStyles.TicketTitle>Username:</TicketStyles.TicketTitle>
+                </Grid>
+                <Grid item xs={8} sm={9}>
+                  <TicketStyles.TicketContent>{username}</TicketStyles.TicketContent>
+                </Grid>
+              </Grid>
+            </BlockDetailsStyles.GridStyle>
+          ) : null}
           <BlockDetailsStyles.GridStyle className="table__row">
             <Grid container spacing={3}>
               <Grid item xs={4} sm={3} className="max-w-355">
@@ -109,7 +123,9 @@ const Overview: React.FC<IOverviewProps> = ({
                 <TicketStyles.TicketTitle>Type:</TicketStyles.TicketTitle>
               </Grid>
               <Grid item xs={8} sm={9}>
-                <TicketStyles.TicketContent>{renderTicketsType()}</TicketStyles.TicketContent>
+                <TicketStyles.TicketContent as="div">
+                  {renderTicketsType()}
+                </TicketStyles.TicketContent>
               </Grid>
             </Grid>
           </BlockDetailsStyles.GridStyle>

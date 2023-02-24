@@ -33,11 +33,18 @@ export const ExternalLink: React.FC<IExternalLinkProps> = ({
   rel,
   title = '',
   isUseTooltip = false,
+  styles,
 }) => {
   if (isUseTooltip) {
     return (
       <Tooltip title={parse(title)}>
-        <Styles.ExternalLink href={href} className={className} target={target} rel={rel}>
+        <Styles.ExternalLink
+          href={href}
+          className={className}
+          target={target}
+          rel={rel}
+          style={styles}
+        >
           {value}
         </Styles.ExternalLink>
       </Tooltip>

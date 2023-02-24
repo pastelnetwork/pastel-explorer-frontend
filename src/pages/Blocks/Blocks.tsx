@@ -19,6 +19,10 @@ interface IBlocksDataRef {
   sortDirection: SortDirectionsType;
   period: string;
   types: string[];
+  customDateRange: {
+    startDate: number;
+    endDate: number | null;
+  };
 }
 
 const Blocks = () => {
@@ -28,6 +32,10 @@ const Blocks = () => {
     sortDirection: DATA_DEFAULT_SORT,
     period: filter.dateRange || 'all',
     types: filter.dropdownType || [],
+    customDateRange: {
+      startDate: 0,
+      endDate: null,
+    },
   });
   const { swrData, total, swrSize, swrSetSize, isLoading } = useBlocks(
     DATA_FETCH_LIMIT,
@@ -35,6 +43,7 @@ const Blocks = () => {
     apiParams.sortDirection,
     apiParams.period,
     apiParams.types,
+    apiParams.customDateRange,
   );
   const [isMobile, setMobileView] = useState(false);
 
@@ -77,9 +86,12 @@ const Blocks = () => {
         ...apiParams,
         period: filter.dateRange || apiParams.period || '',
         types: filter.dropdownType || apiParams.types || '',
+        customDateRange: filter.customDateRange?.startDate
+          ? filter.customDateRange
+          : { startDate: 0, endDate: null },
       });
     }
-  }, [filter.dateRange, filter.dropdownType]);
+  }, [filter.dateRange, filter.dropdownType, filter.customDateRange]);
 
   const getMovementTransactionsTitle = () => (
     <Styles.TitleWrapper>
@@ -106,6 +118,8 @@ const Blocks = () => {
         headerBackground
         rowHeight={isMobile ? 180 : 45}
         customLoading={isLoading}
+        showDateTimePicker
+        dateRange={filter.customDateRange}
       />
     </Styles.TableContainer>
   );

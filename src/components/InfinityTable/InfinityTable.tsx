@@ -64,6 +64,11 @@ interface IInfinityTableComponentProps {
   dropdownFilters?: TFilter[];
   dropdownLabel?: string;
   customLoading?: boolean;
+  showDateTimePicker?: boolean;
+  dateRange?: {
+    startDate: number;
+    endDate: number | null;
+  };
 }
 
 const noRowsRenderer = () => <Styles.EmptyData />;
@@ -115,6 +120,8 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   isLoading,
   customTitle,
   customLoading,
+  showDateTimePicker = false,
+  dateRange,
 }) => {
   const [loading, setLoading] = React.useState(false);
   const isDarkMode = useGetThemeMode();
@@ -177,6 +184,8 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
             title={title}
             headerBackground={headerBackground}
             dropdownLabel={dropdownLabel}
+            showDateTimePicker={showDateTimePicker}
+            defaultDateRange={dateRange}
           />
         )}
       </div>

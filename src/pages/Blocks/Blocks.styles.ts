@@ -21,6 +21,10 @@ export const TableContainer = styled(Grid)`
     padding-right: 0;
   }
 
+  .timestamp {
+    white-space: nowrap;
+  }
+
   ${props => props.theme.breakpoints.down(1024)} {
     .ReactVirtualized__Grid,
     .ReactVirtualized__Table__headerRow {
@@ -66,19 +70,25 @@ export const TableContainer = styled(Grid)`
 
       &.col-hash {
         &:before {
-          content: 'Hash';
+          content: 'Hash:';
         }
       }
 
       &.col-transaction-quantity {
         &:before {
-          content: 'Transaction Quantity';
+          content: 'Transaction Quantity:';
+        }
+      }
+
+      &.col-total-tickets {
+        &:before {
+          content: 'Ticket Quantity:';
         }
       }
 
       &.col-timestamp {
         &:before {
-          content: 'Timestamp';
+          content: 'Timestamp:';
         }
       }
     }
@@ -90,6 +100,10 @@ export const TableContainer = styled(Grid)`
         width: 90px;
         min-width: 90px;
       }
+    }
+
+    .list-filter {
+      max-width: 84%;
     }
   }
 `;

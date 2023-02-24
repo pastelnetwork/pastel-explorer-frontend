@@ -57,6 +57,8 @@ export const TicketsContainer = styled.div`
 
   ${props => props.theme.breakpoints.down(960)} {
     .sense-status {
+      display: flex;
+      flex-wrap: wrap;
       padding: 10px 0;
     }
 
@@ -91,37 +93,37 @@ export const TicketsContainer = styled.div`
 
       &.txID {
         &:before {
-          content: 'txID';
+          content: 'txID:';
         }
       }
 
       &.type {
         &:before {
-          content: 'Type';
+          content: 'Type:';
         }
       }
 
       &.version {
         &:before {
-          content: 'Version';
+          content: 'Version:';
         }
       }
 
       &.timestamp {
         &:before {
-          content: 'Timestamp';
+          content: 'Timestamp:';
         }
       }
 
       &.status {
         &:before {
-          content: 'Status';
+          content: 'Status:';
         }
       }
 
       &.fee {
         &:before {
-          content: 'Fee';
+          content: 'Fee:';
         }
       }
 
