@@ -2819,10 +2819,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         formatter: (params: TToolTipParamsProps[]) => {
           let html = '';
           for (let i = 0; i < params.length; i += 1) {
-            html += `<div>${params[i].marker} ${params[i].seriesName}: ${formatNumber(
-              params[i].value,
-              { decimalsLength: 2 },
-            )} MB</div>`;
+            html += `<div>${params[i].marker} ${params[i].seriesName}: ${
+              params[i].value ? formatNumber(params[i].value, { decimalsLength: 2 }) : '0'
+            } MB</div>`;
           }
           return `
             <div>
@@ -2878,10 +2877,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         formatter: (params: TToolTipParamsProps[]) => {
           let html = '';
           for (let i = 0; i < params.length; i += 1) {
-            html += `<div>${params[i].marker} ${params[i].seriesName}: ${formatNumber(
-              params[i].value * 100,
-              { decimalsLength: 2 },
-            )}%</div>`;
+            html += `<div>${params[i].marker} ${params[i].seriesName}: ${
+              params[i].value ? formatNumber(params[i].value * 100, { decimalsLength: 2 }) : '0'
+            }%</div>`;
           }
           return `
             <div>
@@ -2957,7 +2955,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         formatter: (params: TToolTipParamsProps[]) => {
           return `<div style="text-align: left">${params[0].axisValue}</div>${params[0].marker} ${
             params[0].seriesName
-          }:&nbsp;${formatNumber(params[0].data)} ${params[0].data > 1 ? 'requests' : 'request'}`;
+          }:&nbsp;${params[0].data ? formatNumber(params[0].data) : '0'} ${
+            params[0].data > 1 ? 'requests' : 'request'
+          }`;
         },
       },
       xAxis: {
@@ -3020,7 +3020,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         formatter: (params: TToolTipParamsProps[]) => {
           return `<div style="text-align: left">${params[0].axisValue}</div>${params[0].marker} ${
             params[0].seriesName
-          }:&nbsp;${formatNumber(params[0].data)} ${params[0].data > 1 ? 'requests' : 'request'}`;
+          }:&nbsp;${params[0].data ? formatNumber(params[0].data) : '0'} ${
+            params[0].data > 1 ? 'requests' : 'request'
+          }`;
         },
       },
       xAxis: {
@@ -3083,7 +3085,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         formatter: (params: TToolTipParamsProps[]) => {
           return `<div style="text-align: left">${params[0].axisValue}</div>${params[0].marker} ${
             params[0].seriesName
-          }:&nbsp;${formatNumber(params[0].data, { decimalsLength: 2 })} MB`;
+          }:&nbsp;${params[0].data ? formatNumber(params[0].data, { decimalsLength: 2 }) : '0'} MB`;
         },
       },
       xAxis: {
@@ -3144,7 +3146,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         formatter: (params: TToolTipParamsProps[]) => {
           return `<div style="text-align: left">${params[0].axisValue}</div>${params[0].marker} ${
             params[0].seriesName
-          }:&nbsp;${formatNumber(params[0].data)}`;
+          }:&nbsp;${params[0].data ? formatNumber(params[0].data) : 0}`;
         },
       },
       xAxis: {

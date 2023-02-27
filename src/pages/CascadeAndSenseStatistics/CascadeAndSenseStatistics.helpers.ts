@@ -12,8 +12,8 @@ export const transformAverageRarenessScoreOfNFTsOnSenseChartData = (
   if (data?.length) {
     data.forEach(item => {
       dataX.push(format(item.timestamp, 'MM/dd/yyyy hh:mm aa'));
-      dataY.push(item.highest / range);
-      dataY1.push(item.average / range);
+      dataY.push(item.highest ? item.highest / range : 0);
+      dataY1.push(item.average ? item.average / range : 0);
     });
   }
 
@@ -30,7 +30,7 @@ export const transformChartData = (data: TCascadeAndSenseData[] | null, range = 
   if (data?.length) {
     data.forEach(item => {
       dataX.push(format(item.timestamp, 'MM/dd/yyyy hh:mm aa'));
-      dataY.push(item.value / range);
+      dataY.push(item.value ? item.value / range : 0);
     });
   }
 
