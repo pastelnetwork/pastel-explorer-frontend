@@ -70,6 +70,10 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
         const result = generateMinMaxChartData(min, max, offset, 5, '1h', 4);
         setMinY(result.min);
         setMaxY(result.max);
+      } else if (['totalSizeOfDataStored', 'totalFingerprintsOnSense'].includes(chartName)) {
+        const result = generateMinMaxChartData(min, max, offset, 5);
+        setMinY(result.min);
+        setMaxY(result.max);
       } else {
         setMinY(Math.round(min) - offset);
         setMaxY(Math.floor(max) + offset);

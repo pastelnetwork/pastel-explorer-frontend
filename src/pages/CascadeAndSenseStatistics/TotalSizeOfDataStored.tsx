@@ -114,7 +114,7 @@ const TotalSizeOfDataStored: React.FC = () => {
             chartName="totalSizeOfDataStored"
             dataX={chartData?.dataX}
             dataY={chartData?.dataY}
-            offset={1}
+            offset={0.1}
             disableClick
           />
         )}

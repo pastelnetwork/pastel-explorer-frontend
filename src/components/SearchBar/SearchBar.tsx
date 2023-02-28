@@ -206,7 +206,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         renderInput={params => (
           <TextField
             {...params}
-            label="Search by Block Height, Block Hash, TX Hash, Address, Pastel ID or Image Data Hash"
+            label="Search by Block Height, Block Hash, TxID, Address, PastelID, Username or Image File Hash"
             InputLabelProps={{
               ...params.InputLabelProps,
               classes: {

@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import DatePicker from 'react-datepicker';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import differenceInDays from 'date-fns/differenceInDays';
 import subDays from 'date-fns/subDays';
 
+import UseOnClickOutside from '@hooks/useOnClickOutside';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import * as Styles from './DateTimePicker.styles';
@@ -47,6 +48,7 @@ const getDifferenceInDays = (startDate: number, endDate: number) => {
 };
 
 const DateTimePicker: React.FC<IDateTimePickerProps> = ({ onApply, defaultDateRange }) => {
+  const dateTimePickerRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState<Date>(
     defaultDateRange?.startDate ? new Date(defaultDateRange.startDate) : new Date(),
@@ -57,6 +59,8 @@ const DateTimePicker: React.FC<IDateTimePickerProps> = ({ onApply, defaultDateRa
   const [selectedPredefined, setSelectedPredefined] = useState<number>(
     getDifferenceInDays(defaultDateRange?.startDate || 0, defaultDateRange?.endDate || 0),
   );
+
+  UseOnClickOutside(dateTimePickerRef, () => setOpen(false));
 
   const onChange = (dates: [Date, Date | null]) => {
     const [start, end] = dates;
@@ -105,7 +109,7 @@ const DateTimePicker: React.FC<IDateTimePickerProps> = ({ onApply, defaultDateRa
         <DateRangeIcon onClick={handleShowDatePicker} />
       </Styles.IconWrapper>
       {open ? (
-        <Styles.DatePickerPopper>
+        <Styles.DatePickerPopper ref={dateTimePickerRef}>
           <Styles.DatePickerContent>
             <Styles.DatePicker>
               <DatePicker {...options} />

@@ -3097,6 +3097,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       yAxis: {
         type: 'value',
+        min: minY,
         max: maxY,
         axisLine: {
           show: false,
@@ -3110,21 +3111,22 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       series: {
         name: 'Total data stored',
-        type: 'bar',
+        type: 'line',
         sampling: 'lttb',
         data: dataY,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#5470C6',
+              color: '#cd6661',
             },
             {
               offset: 1,
-              color: theme?.backgroundColor || '#fff',
+              color: theme?.backgroundColor ?? '#F4F4F4',
             },
           ]),
         },
+        showSymbol: false,
       },
       animation: false,
     },
@@ -3158,6 +3160,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       yAxis: {
         type: 'value',
+        min: minY,
         max: maxY,
         axisLine: {
           show: false,
@@ -3171,7 +3174,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       series: {
         name: 'Total fingerprints',
-        type: 'bar',
+        type: 'line',
         sampling: 'lttb',
         data: dataY,
         areaStyle: {
@@ -3182,7 +3185,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             },
             {
               offset: 1,
-              color: theme?.backgroundColor ?? '#F4F4F4',
+              color: theme?.backgroundColor || '#fff',
             },
           ]),
         },
