@@ -19,6 +19,10 @@ interface IMovementDataRef {
   sortBy: string;
   sortDirection: SortDirectionsType;
   period: string;
+  customDateRange: {
+    startDate: number;
+    endDate: number | null;
+  };
 }
 
 const Movement: React.FC = () => {
@@ -27,12 +31,17 @@ const Movement: React.FC = () => {
     sortBy: TIMESTAMP_MOVEMENT_KEY,
     sortDirection: DATA_DEFAULT_SORT,
     period: filter.dateRange || 'all',
+    customDateRange: {
+      startDate: 0,
+      endDate: null,
+    },
   });
   const { swrData, total, swrSize, swrSetSize, isLoading } = useMovement(
     DATA_FETCH_LIMIT,
     apiParams.sortBy,
     apiParams.sortDirection,
     apiParams.period,
+    apiParams.customDateRange,
   );
   const [isMobile, setMobileView] = useState(false);
 
@@ -65,11 +74,17 @@ const Movement: React.FC = () => {
   };
 
   useEffect(() => {
-    if (filter.dateRange) {
+    if (filter.dateRange || filter.customDateRange) {
       swrSetSize(1);
-      setParams({ ...apiParams, period: filter.dateRange });
+      setParams({
+        ...apiParams,
+        period: filter.dateRange || 'all',
+        customDateRange: filter.customDateRange?.startDate
+          ? filter.customDateRange
+          : { startDate: 0, endDate: null },
+      });
     }
-  }, [filter.dateRange]);
+  }, [filter.dateRange, filter.customDateRange]);
 
   const getMovementTransactionsTitle = () => (
     <Styles.TitleWrapper>
@@ -94,6 +109,8 @@ const Movement: React.FC = () => {
         headerBackground
         rowHeight={isMobile ? 180 : 45}
         customLoading={isLoading}
+        showDateTimePicker
+        dateRange={filter.customDateRange}
       />
     </Styles.GridWrapper>
   );

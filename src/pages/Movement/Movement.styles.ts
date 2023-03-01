@@ -61,7 +61,7 @@ export const GridWrapper = styled(Grid)`
 
       &:before {
         position: relative;
-        width: 120px;
+        width: 130px;
         font-weight: 600;
         font-size: 16px;
         color: ${props => props.theme.table.label};
@@ -69,19 +69,31 @@ export const GridWrapper = styled(Grid)`
 
       &.col-block {
         &:before {
-          content: 'Block';
+          content: 'Block:';
         }
       }
 
       &.col-timestamp {
         &:before {
-          content: 'Timestamp';
+          content: 'Timestamp:';
         }
       }
 
       &.col-amount {
         &:before {
-          content: 'Amount';
+          content: 'Amount:';
+        }
+      }
+
+      &.col-ticket-quantity {
+        &:before {
+          content: 'Ticket Quantity:';
+        }
+      }
+
+      &.col-recipents {
+        &:before {
+          content: 'Recipents:';
         }
       }
     }

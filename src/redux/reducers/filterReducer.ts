@@ -5,6 +5,10 @@ import { AppStateType } from './index';
 export interface IFilterState {
   dateRange: string | null;
   dropdownType: string[];
+  customDateRange?: {
+    startDate: number;
+    endDate: number | null;
+  };
 }
 export const stateKey = 'filter';
 type ActionTypes = SetFilterValueProps;
@@ -12,6 +16,10 @@ type ActionTypes = SetFilterValueProps;
 const initialState: IFilterState = {
   dateRange: null,
   dropdownType: [],
+  customDateRange: {
+    startDate: 0,
+    endDate: null,
+  },
 };
 
 const reducer = (state = initialState, actions: ActionTypes): IFilterState => {

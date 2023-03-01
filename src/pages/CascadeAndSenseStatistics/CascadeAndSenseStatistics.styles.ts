@@ -54,10 +54,22 @@ export const Wrapper = styled.div`
       }
     }
 
-    ${props => props.theme.breakpoints.down('xs')} {
+    ${props => props.theme.breakpoints.down(767)} {
       width: 100%;
       margin-right: 0;
       margin-left: 0;
+    }
+
+    ${props => props.theme.breakpoints.down(321)} {
+      &.total-size-of-data-stored,
+      &.average-size-of-nft-stored,
+      &.total-fingerprints,
+      &.average-rareness-score {
+        .cascade-sense-statistics {
+          min-height: 35px;
+          align-items: flex-start;
+        }
+      }
     }
   }
 `;
@@ -154,4 +166,13 @@ export const PercentageValue = styled(MuiTypography)<{
     font-weight: 500;
     font-size: 16px;
   }
+`;
+
+export const ChartContentWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 170px;
+  margin-top: ${props => props.theme.spacing(2.5)}px;
+  border-radius: 6px;
+  overflow: hidden;
 `;

@@ -21,6 +21,10 @@ type TPastelIdDetailsRef = {
   totalTickets: number;
   type: string;
   size: number;
+  defaultDateRange: {
+    startDate: number;
+    endDate: number | null;
+  };
 };
 
 const LIMIT = 6;
@@ -32,16 +36,28 @@ const TicketsType: React.FC = () => {
     type,
     totalTickets: 0,
     size: 1,
+    defaultDateRange: {
+      startDate: 0,
+      endDate: null,
+    },
   });
   const [selectedType, setTicketType] = useState<string>(type);
   const [selectedStatus, setSelectedStatus] = useState<string>(TICKET_STATUS_OPTIONS[0].value);
   const [selectedTime, setSelectedTime] = useState<string>(blocksPeriodFilters[4].value);
   const [tickets, setTickets] = useState<ITicket[]>([]);
+  const [customDateRange, setCustomDateRange] = useState<{
+    startDate: number;
+    endDate: number | null;
+  }>({
+    startDate: 0,
+    endDate: null,
+  });
   const { data, senses, total, isLoading, setSize } = useTicketsType(
     selectedType,
     LIMIT,
     selectedTime,
     selectedStatus,
+    customDateRange,
   );
 
   const handleTicketTypeChange = (val: string) => {
@@ -100,6 +116,22 @@ const TicketsType: React.FC = () => {
     setSelectedStatus(value);
   };
 
+  const handleDateRangeApply = (_startDate: number, _endDate: number | null) => {
+    fetchParams.current.offset = 0;
+    fetchParams.current.totalTickets = 0;
+    fetchParams.current.size = 1;
+    fetchParams.current.defaultDateRange = {
+      startDate: _startDate,
+      endDate: _endDate,
+    };
+    setSize(1);
+    setCustomDateRange({
+      startDate: _startDate,
+      endDate: _endDate,
+    });
+    setSelectedTime('custom');
+  };
+
   return (
     <Styles.TicketsContainer>
       <Grid container direction="column">
@@ -115,6 +147,7 @@ const TicketsType: React.FC = () => {
             selectedTime={selectedTime}
             onStatusChange={handleStatusChange}
             selectedStatus={selectedStatus}
+            onDateRangeApply={handleDateRangeApply}
           />
         </Styles.GridStyle>
       </Grid>

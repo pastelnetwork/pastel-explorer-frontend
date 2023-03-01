@@ -8,6 +8,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
 import { useDispatch, useSelector } from 'react-redux';
+
+import DateTimePicker from '@components/DateTimePicker';
 import { setFilterValueAction } from '@redux/actions/filterAction';
 import { TAppTheme } from '@theme/index';
 import { TFilter } from '@utils/types/IFilter';
@@ -22,7 +24,8 @@ const useStyles = makeStyles((theme: TAppTheme) => {
       justifyContent: 'flex-end',
       borderRadius: `${theme.spacing(1)}px`,
       [theme.breakpoints.down('xs')]: {
-        maxWidth: '100%',
+        maxWidth: '98%',
+        margin: 'auto',
       },
     },
     rootMenuItem: {
@@ -47,6 +50,11 @@ interface IProps {
   headerBackground?: boolean;
   dropdownFilters?: TFilter[];
   dropdownLabel?: string;
+  showDateTimePicker?: boolean;
+  defaultDateRange?: {
+    startDate: number;
+    endDate: number | null;
+  };
 }
 
 const MenuProps = {
@@ -63,17 +71,25 @@ const Filters: FC<IProps> = ({
   headerBackground,
   dropdownFilters,
   dropdownLabel,
+  showDateTimePicker = false,
+  defaultDateRange,
 }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const { dateRange, dropdownType } = useSelector(getFilterState);
+  const { dateRange, dropdownType, customDateRange } = useSelector(getFilterState);
   const time: string = dateRange || 'all';
   const [open, setOpen] = useState(false);
   const [ticketType, setTicketType] = useState<string[]>(dropdownType || []);
 
   const handleSelectTime = useCallback((event: MouseEvent<HTMLButtonElement>) => {
     const { value } = event.currentTarget;
-    dispatch(setFilterValueAction({ dateRange: value, dropdownType }));
+    dispatch(
+      setFilterValueAction({
+        dateRange: value,
+        dropdownType,
+        customDateRange: { startDate: 0, endDate: null },
+      }),
+    );
   }, []);
 
   const handleClose = () => {
@@ -86,7 +102,13 @@ const Filters: FC<IProps> = ({
 
   useEffect(() => {
     return () => {
-      dispatch(setFilterValueAction({ dateRange: 'all', dropdownType }));
+      dispatch(
+        setFilterValueAction({
+          dateRange: 'all',
+          dropdownType,
+          customDateRange: { startDate: 0, endDate: null },
+        }),
+      );
     };
   }, [dispatch]);
 
@@ -96,7 +118,17 @@ const Filters: FC<IProps> = ({
 
   const handleFilter = () => {
     setOpen(false);
-    dispatch(setFilterValueAction({ dateRange, dropdownType: ticketType }));
+    dispatch(setFilterValueAction({ dateRange, dropdownType: ticketType, customDateRange }));
+  };
+
+  const handleDateRangeApply = (_startDate: number, _endDate: number | null) => {
+    dispatch(
+      setFilterValueAction({
+        dateRange: 'custom',
+        dropdownType: ticketType,
+        customDateRange: { startDate: _startDate, endDate: _endDate },
+      }),
+    );
   };
 
   const renderDropdownCheckbox = () => {
@@ -178,6 +210,17 @@ const Filters: FC<IProps> = ({
               </Button>
             </MenuItem>
           ))}
+          {showDateTimePicker ? (
+            <MenuItem
+              classes={{
+                root: `filter-item date-picker ${classes.rootMenuItem} ${
+                  time === 'custom' ? 'filter-item-active' : ''
+                }`,
+              }}
+            >
+              <DateTimePicker onApply={handleDateRangeApply} defaultDateRange={defaultDateRange} />
+            </MenuItem>
+          ) : null}
         </div>
       </Styles.FilterWrapper>
     </Styles.Wrapper>

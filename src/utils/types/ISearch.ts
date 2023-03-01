@@ -6,5 +6,6 @@ export interface ISearchResponse {
     transactions: Array<string>;
     senses: Array<string>;
     pastelIds: Array<string>;
+    usernameList: Array<{ pastelID: string; username: string }>;
   };
 }

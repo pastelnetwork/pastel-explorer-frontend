@@ -7,14 +7,16 @@ import { periods } from '@utils/constants/statistics';
 import { LineChart } from '@components/Summary/LineChart';
 import { Dropdown } from '@components/Dropdown/Dropdown';
 import themeVariant from '@theme/variants';
-
+import useTotalOfCascadeRequests from '@hooks/useTotalOfCascadeRequests';
 import * as SummaryStyles from '@components/Summary/Summary.styles';
+import * as StatisticsStyles from '@pages/Statistics/Statistics.styles';
+
+import { transformChartData } from './CascadeAndSenseStatistics.helpers';
 import * as Styles from './CascadeAndSenseStatistics.styles';
-import { totalOfCascadeRequestsData } from './mockup';
 
 const TotalOfCascadeRequests: React.FC = () => {
   const [period, setPeriod] = useState<PeriodTypes>(periods[7][2]);
-  const [chartData, setChartData] = useState(totalOfCascadeRequestsData[0]);
+  const { data, isLoading, difference, currentValue } = useTotalOfCascadeRequests(period);
 
   const handleDropdownChange = (
     event: ChangeEvent<{
@@ -23,25 +25,25 @@ const TotalOfCascadeRequests: React.FC = () => {
   ) => {
     if (event.target.value) {
       setPeriod(event.target.value as PeriodTypes);
-      if (event.target.value === periods[7][0]) {
-        setChartData(totalOfCascadeRequestsData[1]);
-      } else if (event.target.value === periods[7][3] || event.target.value === periods[7][4]) {
-        setChartData(totalOfCascadeRequestsData[2]);
-      } else {
-        setChartData(totalOfCascadeRequestsData[0]);
-      }
     }
   };
-  const total = chartData?.dataY?.reduce((partialSum, a) => partialSum + a, 0) || 0;
-  const difference = chartData.difference || 0;
+  const chartData = transformChartData(data);
 
   return (
-    <SummaryStyles.Card className="cascade-sense-card">
+    <SummaryStyles.Card className="cascade-sense-card total-of-cascade-requests">
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
           <SummaryStyles.Typography variant="h6">Cascade Requests</SummaryStyles.Typography>
           <SummaryStyles.Typography variant="h4">
-            <SummaryStyles.Values>{formatNumber(total)} requests</SummaryStyles.Values>
+            <SummaryStyles.Values>
+              {isLoading ? (
+                <Skeleton animation="wave" variant="text" />
+              ) : (
+                <>
+                  {formatNumber(currentValue)} {currentValue > 1 ? 'requests' : 'request'}
+                </>
+              )}
+            </SummaryStyles.Values>
           </SummaryStyles.Typography>
         </SummaryStyles.ValueWrapper>
         <SummaryStyles.PercentageWrapper>
@@ -101,9 +103,12 @@ const TotalOfCascadeRequests: React.FC = () => {
           </Styles.Percentage>
         </SummaryStyles.PercentageWrapper>
       </SummaryStyles.CardContent>
-      <div>
-        {!chartData ? (
-          <Skeleton animation="wave" variant="rect" height={386} />
+      <Styles.ChartContentWrapper>
+        {isLoading ? (
+          <StatisticsStyles.Loader>
+            <Skeleton animation="wave" variant="rect" height={170} width="100%" />
+            <StatisticsStyles.LoadingText>Loading data...</StatisticsStyles.LoadingText>
+          </StatisticsStyles.Loader>
         ) : (
           <LineChart
             chartName="totalOfCascadeRequests"
@@ -113,7 +118,7 @@ const TotalOfCascadeRequests: React.FC = () => {
             disableClick
           />
         )}
-      </div>
+      </Styles.ChartContentWrapper>
     </SummaryStyles.Card>
   );
 };

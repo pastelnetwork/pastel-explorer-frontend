@@ -46,6 +46,23 @@ export const TicketsContainer = styled.div`
       margin-top: 10px;
     }
   }
+
+  ${props => props.theme.breakpoints.down('xs')} {
+    .dropdown-ticket-type,
+    .dropdown-status,
+    .list-filter {
+      margin-left: 0;
+    }
+
+    .ticket-title-wrapper {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+
+  .min-h-60vh {
+    min-height: 60vh;
+  }
 `;
 
 export const GridStyle = styled(Grid)`

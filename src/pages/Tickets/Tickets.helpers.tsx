@@ -106,7 +106,7 @@ export const transformCascadeData = (cascade: TicketsList[]) =>
           {formatNumber(fee)} {getCurrencyName()}
         </>
       ),
-      [TIMESTAMP_KEY]: timestamp ? formatFullDate(timestamp) : '--',
+      [TIMESTAMP_KEY]: timestamp ? formatFullDate(timestamp, { dayName: false }) : '--',
     };
   });
 
@@ -185,7 +185,7 @@ export const transformSenseData = (sense: TicketsList[]) =>
           {formatNumber(fee)} {getCurrencyName()}
         </>
       ),
-      [TIMESTAMP_KEY]: timestamp ? formatFullDate(timestamp) : '--',
+      [TIMESTAMP_KEY]: timestamp ? formatFullDate(timestamp, { dayName: false }) : '--',
     };
   });
 
@@ -249,7 +249,7 @@ export const transformPastelIdData = (data: TicketsList[]) =>
         </>
       ),
       [ID_TYPE_KEY]: <>{id_type}</>,
-      [TIMESTAMP_KEY]: timestamp ? formatFullDate(timestamp) : '--',
+      [TIMESTAMP_KEY]: timestamp ? formatFullDate(timestamp, { dayName: false }) : '--',
     };
   });
 
@@ -304,6 +304,6 @@ export const transformOtherData = (data: TicketsList[]) =>
       ),
       [TYPE_KEY]: getTicketTitle(type as TTicketType),
       [VERSION_KEY]: <>{version}</>,
-      [TIMESTAMP_KEY]: timestamp ? formatFullDate(timestamp) : '--',
+      [TIMESTAMP_KEY]: timestamp ? formatFullDate(timestamp, { dayName: false }) : '--',
     };
   });

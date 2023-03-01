@@ -89,7 +89,7 @@ export const transformTransactionsData = (transactions: Array<ITransaction>) =>
             )}
           </div>
         ),
-        [TIMESTAMP_KEY]: formattedDate(timestamp),
+        [TIMESTAMP_KEY]: formattedDate(timestamp, { dayName: false }),
       };
     },
   );

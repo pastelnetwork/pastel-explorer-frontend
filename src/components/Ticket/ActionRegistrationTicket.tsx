@@ -165,7 +165,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
                   route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.activationTicket.transactionHash}`}
                   value={ticket.activationTicket.transactionHash}
                   title={ticket.activationTicket.transactionHash}
-                  className="address-link"
+                  className="address-link small"
                 />
               </Styles.TicketContent>
             </Styles.ActivationTicketItem>
@@ -189,7 +189,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
                     route={`${ROUTES.BLOCK_DETAILS}/${activationTicket.called_at}`}
                     value={activationTicket.called_at}
                     title={activationTicket.called_at?.toString()}
-                    className="address-link"
+                    className="address-link small"
                   />
                 ) : (
                   'NA'
@@ -213,7 +213,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
                   route={`${ROUTES.PASTEL_ID_DETAILS}/${activationTicket.pastelID}`}
                   value={activationTicket.pastelID}
                   title={activationTicket.pastelID}
-                  className="address-link"
+                  className="address-link pastel"
                 />
               </Styles.TicketContent>
             </Styles.ActivationTicketItem>
@@ -227,7 +227,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
                     route={`${ROUTES.TRANSACTION_DETAILS}/${activationTicket.reg_txid}`}
                     value={activationTicket.reg_txid}
                     title={activationTicket.reg_txid}
-                    className="address-link"
+                    className="address-link small"
                   />
                 ) : (
                   'NA'
@@ -250,7 +250,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
               <Styles.ActivationTicketItem className="item">
                 <Styles.TicketTitle className="mr-5">Timestamp:</Styles.TicketTitle>
                 <Styles.TicketContent>
-                  {formatFullDate(activationTicket.transactionTime)}
+                  {formatFullDate(activationTicket.transactionTime, { dayName: false })}
                 </Styles.TicketContent>
               </Styles.ActivationTicketItem>
             </Grid>
@@ -359,7 +359,9 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
             <Styles.TicketTitle>Timestamp:</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
-            <Styles.TicketContent>{formatFullDate(ticket.transactionTime)}</Styles.TicketContent>
+            <Styles.TicketContent>
+              {formatFullDate(ticket.transactionTime, { dayName: false })}
+            </Styles.TicketContent>
           </Grid>
         </Grid>
       ) : null}

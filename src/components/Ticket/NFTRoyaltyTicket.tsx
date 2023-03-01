@@ -80,7 +80,9 @@ const NFTRoyaltyTicket: React.FC<INFTRoyaltyTicketProps> = ({ ticket }) => {
             <Styles.TicketTitle>Timestamp:</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
-            <Styles.TicketContent>{formatFullDate(ticket.transactionTime)}</Styles.TicketContent>
+            <Styles.TicketContent>
+              {formatFullDate(ticket.transactionTime, { dayName: false })}
+            </Styles.TicketContent>
           </Grid>
         </Grid>
       ) : null}

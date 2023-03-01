@@ -170,3 +170,26 @@ export type THeatmapChartParams = {
   marker: string;
   value: number[];
 };
+
+export type TAverageRarenessScoreData = {
+  timestamp: number;
+  average: number;
+  highest: number;
+};
+
+export type TCascadeAndSenseData = {
+  timestamp: number;
+  value: number;
+};
+
+export type TAverageRarenessScoreOfNFTsOnSense = {
+  data: TAverageRarenessScoreData[];
+  difference: number;
+  currentValue: number;
+};
+
+export type TCascadeAndSenseChart = {
+  data: TCascadeAndSenseData[];
+  difference: number;
+  currentValue: number;
+};

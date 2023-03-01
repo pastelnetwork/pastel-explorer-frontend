@@ -61,19 +61,19 @@ export const Wrapper = styled.div`
         td {
           &:nth-child(1) {
             &:before {
-              content: 'Total Sent (${getCurrencyName})';
+              content: 'Total Sent (${getCurrencyName}):';
             }
           }
 
           &:nth-child(2) {
             &:before {
-              content: 'Total Received (${getCurrencyName})';
+              content: 'Total Received (${getCurrencyName}):';
             }
           }
 
           &:nth-child(3) {
             &:before {
-              content: 'Balance (${getCurrencyName})';
+              content: 'Balance (${getCurrencyName}):';
             }
           }
         }
@@ -128,19 +128,19 @@ export const Wrapper = styled.div`
 
       &.col-timestamp {
         &:before {
-          content: 'Timestamp';
+          content: 'Timestamp:';
         }
       }
 
       &.col-hash {
         &:before {
-          content: 'Hash';
+          content: 'Hash:';
         }
       }
 
       &.col-amount {
         &:before {
-          content: 'Amount (${getCurrencyName})';
+          content: 'Amount (${getCurrencyName}):';
         }
       }
     }

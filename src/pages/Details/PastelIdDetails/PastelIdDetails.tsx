@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import Header from '@components/Header/Header';
+import { formattedDate } from '@utils/helpers/date/date';
 import { ITicket, TSenseRequests } from '@utils/types/ITransactions';
 import usePastelIdDetails from '@hooks/usePastelIdDetails';
 
@@ -13,89 +13,118 @@ import TicketsList from './TicketList';
 import Overview from './Overview';
 import { TICKET_TYPE_OPTIONS, TTicketsTypeProps } from './PastelIdDetails.helpers';
 
-interface ParamTypes {
+interface IParamTypes {
   id: string;
+}
+
+interface ILocationTypes {
+  hash: string;
 }
 
 const limit = 6;
 
 type TPastelIdDetailsRef = {
-  offset: number;
   totalTickets: number;
   type: string;
-  size: number;
 };
 
 const PastelIdDetails = () => {
   const fetchParams = useRef<TPastelIdDetailsRef>({
-    offset: 0,
     type: TICKET_TYPE_OPTIONS[0].value,
     totalTickets: 0,
-    size: 1,
   });
-  const { id } = useParams<ParamTypes>();
+  const { id } = useParams<IParamTypes>();
+  const location = useLocation<ILocationTypes>();
+  const currentUser = location.hash ? location.hash.substring(1, location.hash.length) : '';
   const [ticketType, setTicketType] = useState<string>(TICKET_TYPE_OPTIONS[0].value);
   const [tickets, setTickets] = useState<ITicket[]>([]);
   const [senses, setSenses] = useState<TSenseRequests[]>([]);
   const [ticketsTypeList, setTicketsTypeList] = useState<TTicketsTypeProps[]>([]);
-  const pastelIdData = usePastelIdDetails(id, limit, ticketType);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [firstLoad, setFistLoad] = useState(false);
+  const pastelIdData = usePastelIdDetails(id, limit, ticketType, currentUser, currentPage * limit);
 
   const handleTicketTypeChange = (val: string) => {
     setTicketType(val);
     fetchParams.current.type = val;
-    fetchParams.current.offset = 0;
     fetchParams.current.totalTickets = 0;
-    fetchParams.current.size = 1;
-    pastelIdData.setSize(1);
+    setCurrentPage(0);
   };
 
-  const handleFetchMore = (newOffset: number, newSize: number) => {
-    pastelIdData.setSize(newSize);
-  };
-
-  const handleScroll = () => {
-    const list = document.getElementById('list');
-    const clientHeight = list?.clientHeight || 0;
-    const offsetTop = list?.offsetTop || 0;
-    if (
-      window.scrollY + window.innerHeight >= clientHeight / 2 + offsetTop &&
-      fetchParams.current.offset <= fetchParams.current.totalTickets
-    ) {
-      fetchParams.current.offset += limit;
-      fetchParams.current.size += 1;
-      handleFetchMore(fetchParams.current.offset, fetchParams.current.size);
-    }
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
   };
 
   useEffect(() => {
+    let idTimeout: NodeJS.Timeout | null = null;
     if (!pastelIdData.isLoading) {
+      if (
+        currentPage === 0 &&
+        !pastelIdData.data.length &&
+        ticketType === TICKET_TYPE_OPTIONS[2].value
+      ) {
+        setTicketType(TICKET_TYPE_OPTIONS[0].value);
+      }
+      if (
+        currentPage === 0 &&
+        pastelIdData.position !== -1 &&
+        firstLoad &&
+        ticketType === TICKET_TYPE_OPTIONS[2].value
+      ) {
+        const currentUsernameInPage = Math.ceil(pastelIdData.position / limit) || 0;
+        const totalPage = Math.ceil(pastelIdData.totalAllTickets / limit);
+        if (currentPage !== currentUsernameInPage && totalPage > 1) {
+          setCurrentPage(currentUsernameInPage);
+        }
+      }
       setTicketsTypeList(pastelIdData.ticketsType);
       fetchParams.current.totalTickets = pastelIdData.total;
-      setTickets(pastelIdData.data);
+      setTickets([...pastelIdData.data]);
       setSenses(pastelIdData.senses);
+      setFistLoad(false);
+      if (currentUser && ticketType === TICKET_TYPE_OPTIONS[2].value) {
+        idTimeout = setTimeout(() => {
+          const element = document.getElementById(currentUser);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      }
     }
-  }, [pastelIdData.isLoading, ticketType, pastelIdData.data.length]);
+    return () => {
+      if (idTimeout) {
+        clearInterval(idTimeout);
+      }
+    };
+  }, [pastelIdData.isLoading, ticketType, pastelIdData.data]);
 
   useEffect(() => {
-    (async () => {
-      pastelIdData.setSize(1);
-      fetchParams.current.size = 1;
-      fetchParams.current.offset = 0;
+    if (location.hash) {
+      setTicketType(TICKET_TYPE_OPTIONS[2].value);
+    } else {
       setTicketType(TICKET_TYPE_OPTIONS[0].value);
-      window.addEventListener('scroll', handleScroll);
-    })();
-    return () => window.removeEventListener('scroll', handleScroll);
+    }
+    setCurrentPage(0);
+    setFistLoad(true);
   }, [id]);
 
   return (
     <Styles.Wrapper>
-      <Header title="Pastel ID Details" />
       <Grid container direction="column">
         <Styles.GridStyle item>
           <Overview
             totalTickets={pastelIdData.totalAllTickets}
             pastelId={id}
             ticketsTypeList={ticketsTypeList}
+            registeredDate={
+              pastelIdData?.registeredDate
+                ? formattedDate(Number(pastelIdData.registeredDate), {
+                    dayName: false,
+                  })
+                : 'NA'
+            }
+            blockHeight={pastelIdData?.blockHeight?.toString() || ''}
+            username={pastelIdData.username}
           />
         </Styles.GridStyle>
         <Styles.GridStyle item id="list">
@@ -108,6 +137,9 @@ const PastelIdDetails = () => {
             ticketsTypeList={ticketsTypeList}
             isLoading={pastelIdData.isLoading}
             senses={senses}
+            limit={limit}
+            onPageChange={handlePageChange}
+            defaultPage={currentPage}
           />
         </Styles.GridStyle>
       </Grid>

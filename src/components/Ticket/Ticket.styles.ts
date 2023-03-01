@@ -24,6 +24,18 @@ export const TicketContent = styled(Typography)`
     }
   }
 
+  .address-link {
+    &.small {
+      display: block;
+      max-width: 67%;
+    }
+
+    &.pastel {
+      display: block;
+      max-width: 52%;
+    }
+  }
+
   &.read-more {
     overflow: hidden;
     text-overflow: ellipsis;

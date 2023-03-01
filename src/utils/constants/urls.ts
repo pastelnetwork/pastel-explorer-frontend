@@ -36,6 +36,14 @@ export const SENSE_URL = 'v1/transactions/sense';
 export const PASTEL_ID_URL = 'v1/transactions/pastelid';
 export const CURRENT_STATS = 'v1/stats/current-stats';
 export const GET_TICKETS = 'v1/transactions/tickets';
+export const GET_STATISTICS_AVERAGE_RARENESS_SCORE_ON_SENSE =
+  'v1/stats/average-rareness-score-on-sense';
+export const GET_STATISTICS_SENSE_REQUESTS = 'v1/stats/sense-requests';
+export const GET_STATISTICS_TOTAL_FINGERPRINTS_ON_SENSE = 'v1/stats/total-fingerprints-on-sense';
+export const GET_STATISTICS_AVERAGE_SIZE_OF_NFT_STORED_ON_CASCADE =
+  'v1/stats/average-size-of-nft-stored-on-cascade';
+export const GET_STATISTICS_CASCADE_REQUEST = 'v1/stats/cascade-requests';
+export const GET_STATISTICS_TOTAL_DATA_STORED_ON_CASCADE = 'v1/stats/total-data-stored-on-cascade';
 // External URLS
 export const TWITTER_URL = 'https://twitter.com/pastelnetwork';
 export const TELEGRAM_URL = 'https://t.me/PastelNetwork';

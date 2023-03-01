@@ -10,10 +10,23 @@ export default function useTicketsType(
   limit: number,
   period: string,
   status: string,
+  customDateRange: {
+    startDate: number;
+    endDate: number | null;
+  },
 ) {
   let qStatus = '';
   if (status) {
     qStatus = `&status=${status}`;
+  }
+  let dateParam = '';
+  if (customDateRange.startDate) {
+    dateParam = `&startDate=${customDateRange.startDate}`;
+    if (customDateRange.endDate) {
+      dateParam += `&endDate=${customDateRange.endDate}`;
+    }
+  } else if (period && period !== 'custom') {
+    dateParam = `&period=${period}`;
   }
   const { data, isLoading, size, setSize } = useSWRInfinite<{
     data: ITicket[];
@@ -23,7 +36,7 @@ export default function useTicketsType(
     index =>
       `${URLS.GET_TICKETS}/${type}?offset=${
         index * limit
-      }&limit=${limit}&type=${type}&period=${period}${qStatus}&include=all`,
+      }&limit=${limit}&type=${type}${dateParam}${qStatus}&include=all`,
     axiosGet,
     SWR_OPTIONS,
   );

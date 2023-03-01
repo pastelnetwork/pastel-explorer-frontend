@@ -8,7 +8,7 @@ const getLatestTransactions = async (limit = 8) => {
   }: { data: { data: ITransaction[]; timestamp: number } } = await axiosInstance.get(
     TRANSACTION_URL,
     {
-      params: { offset: 0, limit, sortBy: 'timestamp', sortDirection: 'DESC' },
+      params: { offset: 0, limit, sortBy: 'timestamp', sortDirection: 'DESC', excludePaging: true },
     },
   );
 
