@@ -9,16 +9,16 @@ export interface ITransactionState {
   isLoading: boolean;
 }
 
-const inititalState: ITransactionState = {
+const initialState: ITransactionState = {
   latestTransaction: new Map(),
   isLoading: true,
 };
 
-const reducer = (state: ITransactionState = inititalState, actions: TransactionActionsTypes) => {
+const reducer = (state: ITransactionState = initialState, actions: TransactionActionsTypes) => {
   switch (actions.type) {
     case types.SET_LOADING_TRANSACTION:
       return { ...state, isLoading: true };
-    case types.SET_LATEST_TRASACTIONS:
+    case types.SET_LATEST_TRANSACTIONS:
       return { ...state, latestTransaction: actions.payload, isLoading: false };
     default:
       return state;

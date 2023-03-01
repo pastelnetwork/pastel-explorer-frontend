@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
 import MuiAccordion from '@material-ui/core/Accordion';
+import Grid from '@material-ui/core/Grid';
+
+import themeVariant from '@theme/variants';
 
 export const TicketTitle = styled(Typography)`
   font-weight: 600;
@@ -21,10 +24,32 @@ export const TicketContent = styled(Typography)`
     }
   }
 
+  .address-link {
+    &.small {
+      display: block;
+      max-width: 67%;
+    }
+
+    &.pastel {
+      display: block;
+      max-width: 52%;
+    }
+  }
+
   &.read-more {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .sense-img {
+    width: 200px;
+    height: 200px;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(2);
+    }
   }
 
   @media screen and (max-width: 1024px) {
@@ -99,5 +124,47 @@ export const ButtonLink = styled.button`
 
   &:hover {
     color: ${props => props.theme.link.hover};
+  }
+`;
+
+export const ActionRegistrationTicketStatus = styled.div`
+  display: inline-flex;
+  padding: 6px 10px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+  color: ${themeVariant.custom.white};
+  background-color: ${themeVariant.custom.red.dark};
+  border-radius: 4px;
+
+  &.active {
+    margin-right: 5px;
+    background-color: ${themeVariant.custom.green.main};
+  }
+`;
+
+export const StatusWrapper = styled.div`
+  display: flex;
+
+  @media (max-width: 600px) {
+    display: block;
+  }
+`;
+
+export const ActivationTicketItem = styled(Grid)`
+  display: flex;
+
+  &.item {
+    margin-top: 6px;
+    margin-left: 6px;
+    margin-bottom: 4px;
+  }
+
+  .mr-5 {
+    margin-right: 5px;
+  }
+
+  @media (max-width: 600px) {
+    display: block;
   }
 `;

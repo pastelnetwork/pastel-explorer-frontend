@@ -28,14 +28,16 @@ export const Wrapper = styled('div')`
   }
 
   .MuiAccordionSummary-content {
-    color: ${props => props.theme.link.main};
+    .MuiTypography-root.see-more {
+      color: ${props => props.theme.link.main};
 
-    &:hover {
-      color: ${props => props.theme.link.hover};
-    }
+      &:hover {
+        color: ${props => props.theme.link.hover};
+      }
 
-    &:active {
-      color: ${props => props.theme.link.pressed};
+      &:active {
+        color: ${props => props.theme.link.pressed};
+      }
     }
   }
 
@@ -153,21 +155,28 @@ export const Wrapper = styled('div')`
           td {
             &:nth-child(1) {
               &:before {
-                content: 'Hash';
+                content: 'TXID:';
               }
             }
 
             &:nth-child(2) {
               &:before {
                 margin-right: 8px;
-                content: 'Recipients';
+                content: 'Recipients:';
               }
             }
 
             &:nth-child(3) {
               &:before {
                 margin-right: 8px;
-                content: 'Amount (${getCurrencyName()})';
+                content: 'Tickets:';
+              }
+            }
+
+            &:nth-child(4) {
+              &:before {
+                margin-right: 8px;
+                content: 'Amount (${getCurrencyName()}):';
               }
             }
           }

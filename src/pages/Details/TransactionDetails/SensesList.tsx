@@ -22,14 +22,14 @@ const SenseItem: React.FC<ISenseItem> = ({ sense }) => {
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={2}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <TicketStyles.TicketTitle>Image Hash:</TicketStyles.TicketTitle>
         </Grid>
-        <Grid item xs={8} sm={10}>
+        <Grid item xs={8} sm={9}>
           <TicketStyles.TicketContent>
             {sense.imageFileHash.indexOf('nosense') === -1 ? (
               <RouterLink
-                route={`${ROUTES.SENSE_DETAILS}/${sense.imageFileHash}`}
+                route={`${ROUTES.SENSE_DETAILS}?txid=${sense.transactionHash}&hash=${sense.imageFileHash}`}
                 value={sense.imageFileHash}
                 title={sense.imageFileHash}
                 className="address-link"
@@ -41,10 +41,10 @@ const SenseItem: React.FC<ISenseItem> = ({ sense }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={4} sm={2}>
+        <Grid item xs={4} sm={3} className="max-w-355">
           <TicketStyles.TicketTitle>Sense Version:</TicketStyles.TicketTitle>
         </Grid>
-        <Grid item xs={8} sm={10}>
+        <Grid item xs={8} sm={9}>
           <TicketStyles.TicketContent>
             {sense.imageFileHash.indexOf('nosense') === -1 ? sense.dupeDetectionSystemVersion : ''}
           </TicketStyles.TicketContent>

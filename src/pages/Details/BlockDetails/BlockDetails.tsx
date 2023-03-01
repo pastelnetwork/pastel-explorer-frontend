@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
 import {
@@ -19,10 +19,8 @@ import CopyButton from '@components/CopyButton/CopyButton';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { formattedDate } from '@utils/helpers/date/date';
-import * as URLS from '@utils/constants/urls';
 import * as ROUTES from '@utils/constants/routes';
 import { IBlock, IBlockTransaction } from '@utils/types/IBlocks';
 import { formatAddress } from '@utils/helpers/format';
@@ -30,7 +28,7 @@ import { useSortData } from '@utils/hooks';
 import { getCurrencyName } from '@utils/appInfo';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 import { getTicketsTypeList } from '@pages/Movement/Movement.helpers';
-import SensesList from '@pages/Details/TransactionDetails/SensesList';
+import useBlockDetails from '@hooks/useBlockDetails';
 
 import { blockHeaders, transactionHeaders, generateDetailsElement } from './BlockDetails.helpers';
 import * as Styles from './BlockDetails.styles';
@@ -43,13 +41,10 @@ interface ParamTypes {
 const BlockDetails = () => {
   const history = useHistory();
   const { id } = useParams<ParamTypes>();
-  const [isMobile, setMobileView] = React.useState(false);
-  const [isExpanded, setIsExpanded] = React.useState(false);
-  const [block, setBlock] = React.useState<IBlock | null>();
-  const { fetchData } = useFetch<{ data: IBlock }>({
-    method: 'get',
-    url: `${URLS.BLOCK_URL}/${id}`,
-  });
+  const { swrData, isLoading } = useBlockDetails(id);
+  const [isMobile, setMobileView] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [block, setBlock] = useState<IBlock | null>();
   const [transactions, handleClickSortTransaction] = useSortData<IBlockTransaction>({
     inititalData: block?.transactions || null,
   });
@@ -61,7 +56,7 @@ const BlockDetails = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     handleShowSubMenu();
 
     window.addEventListener('resize', handleShowSubMenu);
@@ -70,13 +65,11 @@ const BlockDetails = () => {
     };
   }, []);
 
-  React.useEffect(() => {
-    fetchData().then(response => {
-      if (response?.data) {
-        setBlock(response.data);
-      }
-    });
-  }, [id]);
+  useEffect(() => {
+    if (swrData) {
+      setBlock(swrData);
+    }
+  }, [isLoading, swrData]);
 
   const generateBlockTable = ({ height, confirmations, size, timestamp }: IBlock): RowsProps[] => {
     return [
@@ -86,7 +79,7 @@ const BlockDetails = () => {
           { id: 1, value: height },
           { id: 3, value: formatNumber(confirmations) },
           { id: 4, value: formatNumber(size / 1024, { decimalsLength: 2 }) },
-          { id: 6, value: formattedDate(timestamp) },
+          { id: 6, value: formattedDate(timestamp, { dayName: false }) },
         ],
       },
     ];
@@ -205,7 +198,9 @@ const BlockDetails = () => {
           >
             <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>{isExpanded ? 'Click to see less' : 'Click to see more'}</Typography>
+                <Typography className="see-more">
+                  {isExpanded ? 'Click to see less' : 'Click to see more'}
+                </Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container direction="column">
@@ -235,12 +230,7 @@ const BlockDetails = () => {
         </Styles.GridStyle>
         {block?.tickets?.length ? (
           <Styles.GridStyle item>
-            <TicketsList data={block?.tickets} />
-          </Styles.GridStyle>
-        ) : null}
-        {block?.senses?.length ? (
-          <Styles.GridStyle item className="mb-12">
-            <SensesList data={block?.senses} />
+            <TicketsList data={block?.tickets} senses={block?.senses} showActivationTicket />
           </Styles.GridStyle>
         ) : null}
       </Grid>

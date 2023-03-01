@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { CircularProgress, Grid } from '@material-ui/core';
 
@@ -8,10 +8,8 @@ import Table, { RowsProps } from '@components/Table/Table';
 import CopyButton from '@components/CopyButton/CopyButton';
 import TicketsList from '@pages/Details/BlockDetails/Tickets';
 
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import * as ROUTES from '@utils/constants/routes';
-import * as URLS from '@utils/constants/urls';
 import { formattedDate } from '@utils/helpers/date/date';
 import {
   TransactionEvent,
@@ -20,8 +18,9 @@ import {
   ITicket,
   TSenseRequests,
 } from '@utils/types/ITransactions';
-import { ISummary } from '@utils/types/ISummary';
 import { useSortData } from '@utils/hooks';
+import useCurrentStats from '@hooks/useCurrentStats';
+import useTransactionDetails from '@hooks/useTransactionDetails';
 
 import * as Styles from './TransactionDetails.styles';
 import {
@@ -32,7 +31,6 @@ import {
   generateCoinbaseInfo,
 } from './TransactionDetails.helpers';
 import TransactionRawData from './TransactionRawData';
-import SensesList from './SensesList';
 
 interface ParamTypes {
   id: string;
@@ -40,46 +38,36 @@ interface ParamTypes {
 
 const TransactionDetails = () => {
   const { id } = useParams<ParamTypes>();
-  const [transaction, setTransaction] = React.useState<ITransactionDetails | null>(null);
-  const [tickets, setTickets] = React.useState<ITicket[]>([]);
-  const [senses, setSenses] = React.useState<TSenseRequests[]>([]);
-  const [exchangeRate, setExchangeRate] = React.useState(0);
-  const [openRawDataModal, setOpenRawDataModal] = React.useState(false);
-  const fetchTransactions = useFetch<{ data: ITransactionDetails }>({
-    method: 'get',
-    url: `${URLS.TRANSACTION_URL}/${id}`,
-  });
-
-  const fetchSummary = useFetch<ISummary>({ method: 'get', url: URLS.SUMMARY_URL });
+  const { currentStats, isCurrentStatsLoading } = useCurrentStats();
+  const { data, isLoading } = useTransactionDetails(id);
+  const [transaction, setTransaction] = useState<ITransactionDetails | null>(null);
+  const [tickets, setTickets] = useState<ITicket[]>([]);
+  const [senses, setSenses] = useState<TSenseRequests[]>([]);
+  const [exchangeRate, setExchangeRate] = useState(0);
+  const [openRawDataModal, setOpenRawDataModal] = useState(false);
 
   const toggleOpenRawData = () => setOpenRawDataModal(prevState => !prevState);
   const [transactionEvents, handleClickSort] = useSortData<TransactionEvent>({
     inititalData: transaction?.transactionEvents || null,
   });
-  const handleTransactionFetch = () => {
-    fetchTransactions.fetchData().then(response => {
-      if (response?.data) {
-        setTransaction(response.data);
-        if (response.data?.ticketsList) {
-          setTickets(response.data.ticketsList);
-        }
-        if (response.data?.senseData) {
-          setSenses(response.data.senseData);
-        }
-      }
-    });
-  };
-  const handleExchangeRateFetch = () => {
-    fetchSummary.fetchData().then(response => {
-      if (!response) return null;
-      return setExchangeRate(response?.currentStats?.usdPrice || 0);
-    });
-  };
 
-  React.useEffect(() => {
-    handleTransactionFetch();
-    handleExchangeRateFetch();
-  }, [id]);
+  useEffect(() => {
+    if (currentStats?.usdPrice) {
+      setExchangeRate(currentStats?.usdPrice);
+    }
+  }, [isCurrentStatsLoading]);
+
+  useEffect(() => {
+    if (data) {
+      setTransaction(data);
+      if (data?.ticketsList) {
+        setTickets(data.ticketsList);
+      }
+      if (data?.senseData) {
+        setSenses(data.senseData);
+      }
+    }
+  }, [isLoading, data]);
 
   const generateTransactionEvents = (
     events: TransactionEvent[] | null,
@@ -149,7 +137,12 @@ const TransactionDetails = () => {
           { id: 2, value: block.confirmations },
           { id: 3, value: recipientCount },
           { id: 4, value: formatNumber(totalAmount) },
-          { id: 5, value: formattedDate(timestamp) },
+          {
+            id: 5,
+            value: formattedDate(timestamp, {
+              dayName: false,
+            }),
+          },
         ],
       },
     ];
@@ -167,6 +160,7 @@ const TransactionDetails = () => {
           toggleOpen={toggleOpenRawData}
           rawData={transaction.rawData}
           tickets={tickets}
+          senses={senses}
         />
         <Styles.GridStyle item>
           <Table
@@ -214,12 +208,7 @@ const TransactionDetails = () => {
         </Styles.GridStyle>
         {tickets.length ? (
           <Styles.GridStyle item>
-            <TicketsList data={tickets} />
-          </Styles.GridStyle>
-        ) : null}
-        {senses.length ? (
-          <Styles.GridStyle item>
-            <SensesList data={senses} />
+            <TicketsList data={tickets} senses={senses} showActivationTicket />
           </Styles.GridStyle>
         ) : null}
       </Grid>

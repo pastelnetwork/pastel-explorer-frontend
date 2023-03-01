@@ -50,7 +50,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     isDynamicTitleColor,
     seriesName1Type = 'bar',
     isLoading,
-    color = ['#cd6661', '#5470C6'],
+    color,
     showLegend = false,
     symbol = '',
     symbol1 = '',
@@ -131,7 +131,15 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
       }
     }
   }, [dataY1, dataY2]);
+
+  let newColor = ['#cd6661', darkMode ? '#1fbfff' : '#5470c6'];
+  if (color) {
+    newColor = color;
+  }
   const options = {
+    textStyle: {
+      color: currentTheme?.color,
+    },
     grid: {
       top: showLegend ? 70 : 50,
       right: 100,
@@ -187,7 +195,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
       },
       show: showLegend,
     },
-    color,
+    color: newColor,
     dataZoom: [
       {
         type: 'inside',

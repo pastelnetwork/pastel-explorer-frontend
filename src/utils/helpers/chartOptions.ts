@@ -63,8 +63,10 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
     period,
     granularity,
     width,
+    darkMode,
   } = args;
   let firstDay = '';
+  const blueColor = darkMode ? '#1fbfff' : '#5470c6';
   const chartOptions: TChartOption = {
     difficulty: {
       backgroundColor: theme?.backgroundColor,
@@ -165,7 +167,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 40,
@@ -251,7 +253,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#5470C6',
+              color: blueColor,
             },
             {
               offset: 1,
@@ -273,7 +275,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
-      color: ['#cd6661', '#37A2FF'],
+      color: ['#cd6661', blueColor],
       grid: {
         top: 30,
         right: 40,
@@ -463,7 +465,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       series: {
         type: 'line',
         lineStyle: {
-          color: '#176987',
+          color: blueColor,
         },
         symbol: false,
         showSymbol: false,
@@ -481,7 +483,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 40,
@@ -592,7 +594,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 40,
@@ -1083,7 +1085,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 40,
@@ -1161,7 +1163,18 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       series: {
         type: 'line',
         data: dataY,
-        areaStyle: {},
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: blueColor,
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor || '#fff',
+            },
+          ]),
+        },
         showSymbol: false,
         emphasis: {
           lineStyle: {
@@ -1176,7 +1189,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 40,
@@ -1254,7 +1267,18 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       series: {
         type: 'line',
         data: dataY,
-        areaStyle: {},
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: blueColor,
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor || '#fff',
+            },
+          ]),
+        },
         showSymbol: false,
         emphasis: {
           lineStyle: {
@@ -1269,7 +1293,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 40,
@@ -1347,7 +1371,18 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       series: {
         type: 'line',
         data: dataY,
-        areaStyle: {},
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: blueColor,
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor || '#fff',
+            },
+          ]),
+        },
         showSymbol: false,
         emphasis: {
           lineStyle: {
@@ -1449,7 +1484,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 40,
@@ -1523,7 +1558,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#5470C6',
+              color: blueColor,
             },
             {
               offset: 1,
@@ -1630,7 +1665,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 40,
@@ -1709,7 +1744,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#5470C6',
+              color: blueColor,
             },
             {
               offset: 1,
@@ -2001,6 +2036,7 @@ export type TToolTipParamsProps = {
   seriesName: string;
   data: number;
   dataIndex: number;
+  value: number;
 };
 
 type TRectProps = {
@@ -2017,13 +2053,14 @@ type TSizeProps = {
 
 export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOption {
   const { theme, dataX, dataY, dataY1, chartName, minY, maxY, darkMode } = args;
+  const blueColor = darkMode ? '#1fbfff' : '#5470c6';
   const chartOptions: TChartOption = {
     gigaHashPerSec: {
       backgroundColor: theme?.backgroundColor,
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 0,
@@ -2072,7 +2109,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#5470C6',
+              color: blueColor,
             },
             {
               offset: 1,
@@ -2231,7 +2268,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 0,
@@ -2275,7 +2312,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#5470C6',
+              color: blueColor,
             },
             {
               offset: 1,
@@ -2294,7 +2331,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 0,
@@ -2634,7 +2671,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 8,
         right: 0,
@@ -2694,7 +2731,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#5470C6',
+              color: blueColor,
             },
             {
               offset: 1,
@@ -2780,63 +2817,76 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       tooltip: {
         trigger: 'axis',
         formatter: (params: TToolTipParamsProps[]) => {
-          return `<div style="text-align: left">${params[0].axisValue}</div>${
-            params[0].marker
-          } Average size of NFT stored:&nbsp;${formatNumber(params[0].data)} MB/NFT`;
+          let html = '';
+          for (let i = 0; i < params.length; i += 1) {
+            html += `<div>${params[i].marker} ${params[i].seriesName}: ${
+              params[i].value ? formatNumber(params[i].value, { decimalsLength: 2 }) : '0'
+            } MB</div>`;
+          }
+          return `
+            <div>
+              <div>${params[0].axisValue}</div>
+              <div>${html}</div>
+            </div>
+          `;
         },
       },
-      xAxis: {
-        type: 'category',
-        data: dataX,
-        axisLabel: {
-          show: false,
+      xAxis: [
+        {
+          type: 'category',
+          data: dataX,
+          axisLabel: {
+            show: false,
+          },
         },
-      },
-      yAxis: {
-        type: 'value',
-        min: minY,
-        max: maxY,
-        axisLine: {
-          show: false,
+      ],
+      yAxis: [
+        {
+          type: 'value',
+          axisLine: {
+            show: false,
+          },
+          axisLabel: {
+            show: false,
+          },
+          splitLine: {
+            show: false,
+          },
         },
-        axisLabel: {
-          show: false,
+      ],
+      series: [
+        {
+          name: 'Highest size of NFT stored',
+          type: 'bar',
+          data: dataY,
+          color: '#cd6661',
         },
-        splitLine: {
-          show: false,
+        {
+          name: 'Average size of NFT stored',
+          type: 'line',
+          data: dataY1,
+          color: !darkMode ? '#2f2a03' : theme?.color,
+          showSymbol: false,
         },
-      },
-      series: {
-        type: 'line',
-        sampling: 'lttb',
-        data: dataY,
-        areaStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: '#cd6661',
-            },
-            {
-              offset: 1,
-              color: theme?.backgroundColor ?? '#F4F4F4',
-            },
-          ]),
-        },
-        showSymbol: false,
-      },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
+      ],
+      animation: false,
     },
     averageRarenessScoreOfNFTsOnSense: {
       tooltip: {
         trigger: 'axis',
-        axisPointer: {
-          type: 'cross',
-          crossStyle: {
-            color: '#999',
-          },
+        formatter: (params: TToolTipParamsProps[]) => {
+          let html = '';
+          for (let i = 0; i < params.length; i += 1) {
+            html += `<div>${params[i].marker} ${params[i].seriesName}: ${
+              params[i].value ? formatNumber(params[i].value * 100, { decimalsLength: 2 }) : '0'
+            }%</div>`;
+          }
+          return `
+            <div>
+              <div>${params[0].axisValue}</div>
+              <div>${html}</div>
+            </div>
+          `;
         },
       },
       grid: {
@@ -2875,20 +2925,17 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           name: 'Highest rareness score',
           type: 'bar',
           data: dataY,
-          color: '#5470C6',
+          color: blueColor,
         },
         {
           name: 'Average rareness score',
           type: 'line',
           data: dataY1,
-          color: '#2f2a03',
+          color: !darkMode ? '#2f2a03' : theme?.color,
           showSymbol: false,
         },
       ],
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
+      animation: false,
     },
     totalOfCascadeRequests: {
       backgroundColor: theme?.backgroundColor,
@@ -2906,18 +2953,20 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       tooltip: {
         trigger: 'axis',
         formatter: (params: TToolTipParamsProps[]) => {
-          return `<div style="text-align: left">${params[0].axisValue}</div>${
-            params[0].marker
-          } Total:&nbsp;${formatNumber(params[0].data)} requests`;
+          return `<div style="text-align: left">${params[0].axisValue}</div>${params[0].marker} ${
+            params[0].seriesName
+          }:&nbsp;${params[0].data ? formatNumber(params[0].data) : '0'} ${
+            params[0].data > 1 ? 'requests' : 'request'
+          }`;
         },
       },
       xAxis: {
         type: 'category',
         data: dataX,
+        boundaryGap: false,
         axisLabel: {
           show: false,
         },
-        boundaryGap: false,
       },
       yAxis: {
         type: 'value',
@@ -2933,6 +2982,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
+        name: 'Cascade Requests',
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -2950,17 +3000,14 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
         showSymbol: false,
       },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
+      animation: false,
     },
     totalOfSenseRequests: {
       backgroundColor: theme?.backgroundColor,
       textStyle: {
         color: theme?.color,
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       grid: {
         top: 9,
         right: 0,
@@ -2971,14 +3018,17 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       tooltip: {
         trigger: 'axis',
         formatter: (params: TToolTipParamsProps[]) => {
-          return `<div style="text-align: left">${params[0].axisValue}</div>${
-            params[0].marker
-          } Total:&nbsp;${formatNumber(params[0].data)} requests`;
+          return `<div style="text-align: left">${params[0].axisValue}</div>${params[0].marker} ${
+            params[0].seriesName
+          }:&nbsp;${params[0].data ? formatNumber(params[0].data) : '0'} ${
+            params[0].data > 1 ? 'requests' : 'request'
+          }`;
         },
       },
       xAxis: {
         type: 'category',
         data: dataX,
+        boundaryGap: false,
         axisLabel: {
           show: false,
         },
@@ -2997,6 +3047,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
+        name: 'Sense Requests',
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -3004,7 +3055,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#5470C6',
+              color: blueColor,
             },
             {
               offset: 1,
@@ -3014,10 +3065,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
         showSymbol: false,
       },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
+      animation: false,
     },
     totalSizeOfDataStored: {
       backgroundColor: theme?.backgroundColor,
@@ -3035,9 +3083,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       tooltip: {
         trigger: 'axis',
         formatter: (params: TToolTipParamsProps[]) => {
-          return `<div style="text-align: left">${params[0].axisValue}</div>${
-            params[0].marker
-          } Total:&nbsp;${formatNumber(params[0].data)} MB`;
+          return `<div style="text-align: left">${params[0].axisValue}</div>${params[0].marker} ${
+            params[0].seriesName
+          }:&nbsp;${params[0].data ? formatNumber(params[0].data, { decimalsLength: 2 }) : '0'} MB`;
         },
       },
       xAxis: {
@@ -3049,6 +3097,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       yAxis: {
         type: 'value',
+        min: minY,
         max: maxY,
         axisLine: {
           show: false,
@@ -3061,70 +3110,8 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
-        type: 'bar',
-        sampling: 'lttb',
-        data: dataY,
-        areaStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: '#5470C6',
-            },
-            {
-              offset: 1,
-              color: theme?.backgroundColor || '#fff',
-            },
-          ]),
-        },
-      },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
-      },
-    },
-    totalFingerprintsOnSense: {
-      backgroundColor: theme?.backgroundColor,
-      textStyle: {
-        color: theme?.color,
-      },
-      color: ['#5470c6', '#91cc75', '#fac858'],
-      grid: {
-        top: 9,
-        right: 0,
-        bottom: 0,
-        left: 0,
-        show: false,
-      },
-      tooltip: {
-        trigger: 'axis',
-        formatter: (params: TToolTipParamsProps[]) => {
-          return `<div style="text-align: left">${params[0].axisValue}</div>${
-            params[0].marker
-          } Total:&nbsp;${formatNumber(params[0].data)}`;
-        },
-      },
-      xAxis: {
-        type: 'category',
-        data: dataX,
-        axisLabel: {
-          show: false,
-        },
-      },
-      yAxis: {
-        type: 'value',
-        max: maxY,
-        axisLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-      },
-      series: {
-        type: 'bar',
+        name: 'Total data stored',
+        type: 'line',
         sampling: 'lttb',
         data: dataY,
         areaStyle: {
@@ -3141,10 +3128,70 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
         showSymbol: false,
       },
-      stateAnimation: {
-        duration: 300,
-        easing: 'cubicOut',
+      animation: false,
+    },
+    totalFingerprintsOnSense: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
       },
+      color: [blueColor],
+      grid: {
+        top: 9,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `<div style="text-align: left">${params[0].axisValue}</div>${params[0].marker} ${
+            params[0].seriesName
+          }:&nbsp;${params[0].data ? formatNumber(params[0].data) : 0}`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        max: maxY,
+        axisLine: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+      },
+      series: {
+        name: 'Total fingerprints',
+        type: 'line',
+        sampling: 'lttb',
+        data: dataY,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: blueColor,
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor || '#fff',
+            },
+          ]),
+        },
+        showSymbol: false,
+      },
+      animation: false,
     },
     blockSizesStatistics: {
       backgroundColor: theme?.backgroundColor,
@@ -3242,7 +3289,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           `;
         },
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       xAxis: {
         type: 'category',
         boundaryGap: false,
@@ -3285,7 +3332,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
                 offset: 0,
-                color: '#5470C6',
+                color: blueColor,
               },
               {
                 offset: 1,
@@ -3322,7 +3369,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           `;
         },
       },
-      color: ['#5470c6', '#91cc75', '#fac858'],
+      color: [blueColor],
       xAxis: {
         type: 'category',
         boundaryGap: false,
@@ -3365,7 +3412,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
                 offset: 0,
-                color: '#5470C6',
+                color: blueColor,
               },
               {
                 offset: 1,

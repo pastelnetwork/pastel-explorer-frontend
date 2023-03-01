@@ -12,8 +12,3 @@ export interface MuiButtonSpacingType extends SpacingProps {
   component?: React.PropsWithoutRef<{}>;
   to?: string;
 }
-export interface MuiChipSpacingType extends SpacingProps {
-  component?: React.PropsWithoutRef<{}>;
-  href?: string;
-  icon?: JSX.Element | null;
-}

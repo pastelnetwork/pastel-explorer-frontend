@@ -1,30 +1,22 @@
 // react
 import { useEffect, useState } from 'react';
-import LRU from 'lru-cache';
+
 // application
-import { TLineChartData, TAverageBlockSize, TCacheValue } from '@utils/types/IStatistics';
-import {
-  TGranularity,
-  PeriodTypes,
-  transformAverageBlockSize,
-  mergeChartData,
-} from '@utils/helpers/statisticsLib';
-import * as URLS from '@utils/constants/urls';
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
+import { TLineChartData } from '@utils/types/IStatistics';
+import { TGranularity, PeriodTypes, transformAverageBlockSize } from '@utils/helpers/statisticsLib';
 import {
   BLOCK_CHART_DEFAULT_GRANULARITY,
   granularities,
   periods,
   info,
-  LRU_OPTIONS,
   cacheList,
 } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
-import { EChartsLineChart } from '../Chart/EChartsLineChart';
+import useAverageBlockSize from '@hooks/useAverageBlockSize';
 
-const cache = new LRU(LRU_OPTIONS);
+import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
 const AverageBlockSize = (): JSX.Element => {
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
@@ -32,70 +24,35 @@ const AverageBlockSize = (): JSX.Element => {
   const [granularity, setGranularity] = useState<TGranularity>(BLOCK_CHART_DEFAULT_GRANULARITY);
   const [chartData, setChartData] = useState<TLineChartData | null>(null);
   const [isLoading, setLoading] = useState(false);
-
-  const fetchStats = useFetch<{ data: Array<TAverageBlockSize> }>({
-    method: 'get',
-    url: URLS.GET_STATISTICS_AVERAGE_BLOCK_SIZE,
-  });
+  const swrData = useAverageBlockSize(period, granularity);
 
   useEffect(() => {
-    let isSubscribed = true;
-    const loadLineChartData = async () => {
-      let timestamp = '';
-      let currentCache =
-        (cache.get(cacheList.averageBlockSize) as TCacheValue) ||
-        readCacheValue(cacheList.averageBlockSize) ||
-        {};
-      if (!currentCache[`${period}-${granularity}`]) {
-        setLoading(true);
-      } else {
-        setChartData(currentCache[`${period}-${granularity}`].parseData as TLineChartData);
-        timestamp = currentCache[`${period}-${granularity}`]?.lastDate?.toString() || '';
-      }
-      const data = await fetchStats.fetchData({
-        params: { sortDirection: 'DESC', period, granularity, format: 'true', timestamp },
-      });
-      if (data) {
-        const parseData = transformAverageBlockSize(data.data, period, timestamp);
-        if (
-          currentCache[`${period}-${granularity}`] &&
-          JSON.stringify(parseData) !== JSON.stringify(currentCache[`${period}-${granularity}`])
-        ) {
-          setLoading(true);
-        }
-        const newParseData = mergeChartData(
-          parseData,
-          currentCache[`${period}-${granularity}`]?.parseData as TLineChartData,
-          period,
-        );
-        if (isSubscribed) {
-          setChartData(newParseData);
-        }
-        currentCache = {
-          ...currentCache,
-          [`${period}-${granularity}`]: {
-            parseData: newParseData,
-            lastDate: data.data.length
-              ? data.data[data.data.length - 1]?.time
-              : currentCache[period]?.lastDate,
-          },
-        };
-        setCacheValue(
-          cacheList.averageBlockSize,
-          JSON.stringify({
-            currentCache,
-            lastDate: Date.now(),
-          }),
-        );
-        cache.set(cacheList.averageBlockSize, currentCache);
-      }
+    let currentCache = readCacheValue(cacheList.averageBlockSize) || {};
+    if (!currentCache[`${period}-${granularity}`]) {
+      setLoading(true);
+    } else {
+      setChartData(currentCache[`${period}-${granularity}`].parseData as TLineChartData);
       setLoading(false);
-    };
-    loadLineChartData();
-    return () => {
-      isSubscribed = false;
-    };
-  }, [granularity, period]);
+    }
+    if (!swrData.isLoading && swrData.data) {
+      const parseData = transformAverageBlockSize(swrData.data, period);
+      setChartData(parseData);
+      currentCache = {
+        ...currentCache,
+        [`${period}-${granularity}`]: {
+          parseData,
+        },
+      };
+      setCacheValue(
+        cacheList.averageBlockSize,
+        JSON.stringify({
+          currentCache,
+          lastDate: Date.now(),
+        }),
+      );
+      setLoading(false);
+    }
+  }, [granularity, period, swrData.isLoading, swrData.data]);
 
   const handlePeriodFilterChange = (value: PeriodTypes) => {
     setGranularity('none');

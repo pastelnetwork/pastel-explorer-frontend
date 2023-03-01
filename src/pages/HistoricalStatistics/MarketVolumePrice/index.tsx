@@ -1,81 +1,52 @@
-// react
 import { useEffect, useState } from 'react';
-import LRU from 'lru-cache';
-// application
-import * as URLS from '@utils/constants/urls';
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
+import { useSelector } from 'react-redux';
+
 import { PeriodTypes, transformMarketVolumePriceInfo } from '@utils/helpers/statisticsLib';
-import { periods, info, LRU_OPTIONS, cacheList } from '@utils/constants/statistics';
+import { periods, info, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
-import { MarketCoinRespone, TMultiLineChartData, TCacheValue } from '@utils/types/IStatistics';
+import { TMultiLineChartData } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import useMarketVolumePrice from '@hooks/useMarketVolumePrice';
+import { getThemeState } from '@redux/reducers/appThemeReducer';
+
 import { EChartsMultiLineChart } from '../Chart/EChartsMultiLineChart';
 
-const cache = new LRU(LRU_OPTIONS);
-
-function PriceOvertime() {
+function MarketVolumePrice() {
+  const { darkMode } = useSelector(getThemeState);
   const [period, setPeriod] = useState<PeriodTypes>(periods[3][0]);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
-  const [isLoading, setLoading] = useState(false);
-
-  const fetchStats = useFetch<{ data: MarketCoinRespone }>({
-    method: 'get',
-    url: URLS.GET_STATISTICS_MARKET_PRICE,
-  });
   const [transformLineChartData, setTransformLineChartData] = useState<TMultiLineChartData>();
+  const [isLoading, setLoading] = useState(false);
+  const swrData = useMarketVolumePrice(period);
 
   useEffect(() => {
-    let isSubscribed = true;
-    const loadLineChartData = async () => {
-      let isAddNewNode = true;
-      let currentCache =
-        (cache.get(cacheList.marketVolumePrice) as TCacheValue) ||
-        readCacheValue(cacheList.marketVolumePrice) ||
-        {};
-      if (!currentCache[period]) {
-        setLoading(true);
-      } else {
-        setTransformLineChartData(currentCache[period].parseData as TMultiLineChartData);
-        isAddNewNode = false;
-      }
-      const data = await fetchStats.fetchData({
-        params: { period },
-      });
-      if (data) {
-        const parseData = transformMarketVolumePriceInfo(data.data, period, isAddNewNode);
-        if (
-          currentCache[period] &&
-          JSON.stringify(parseData) !== JSON.stringify(currentCache[period])
-        ) {
-          setLoading(true);
-        }
-        if (isSubscribed) {
-          setTransformLineChartData(parseData);
-        }
-        currentCache = {
-          ...currentCache,
-          [period]: {
-            parseData,
-            lastDate: Number(data.data.prices[data.data.prices.length - 1][0]),
-          },
-        };
-        setCacheValue(
-          cacheList.marketVolumePrice,
-          JSON.stringify({
-            currentCache,
-            lastDate: Date.now(),
-          }),
-        );
-        cache.set(cacheList.marketVolumePrice, currentCache);
-      }
+    let currentCache = readCacheValue(cacheList.marketVolumePrice) || {};
+    if (currentCache[period]) {
+      setTransformLineChartData(currentCache[period].parseData as TMultiLineChartData);
       setLoading(false);
-    };
-    loadLineChartData();
-    return () => {
-      isSubscribed = false;
-    };
-  }, [period]);
+    } else {
+      setLoading(true);
+    }
+    if (!swrData.isLoading && swrData.data) {
+      const parseData = transformMarketVolumePriceInfo(swrData.data, period);
+      setTransformLineChartData(parseData);
+      currentCache = {
+        ...currentCache,
+        [period]: {
+          parseData,
+        },
+      };
+      setCacheValue(
+        cacheList.marketVolumePrice,
+        JSON.stringify({
+          currentCache,
+          lastDate: Date.now(),
+        }),
+      );
+      setLoading(false);
+    }
+  }, [period, swrData.isLoading, swrData.data]);
 
   const handlePeriodFilterChange = (per: PeriodTypes) => {
     setPeriod(per);
@@ -106,7 +77,7 @@ function PriceOvertime() {
         handlePeriodFilterChange={handlePeriodFilterChange}
         setHeaderBackground
         isLoading={isLoading}
-        color={['#000', '#5470C6']}
+        color={[darkMode ? '#fff' : '#000', darkMode ? '#1fbfff' : '#5470c6']}
         symbol="$"
         symbol1="$"
       />
@@ -114,4 +85,4 @@ function PriceOvertime() {
   );
 }
 
-export default PriceOvertime;
+export default MarketVolumePrice;

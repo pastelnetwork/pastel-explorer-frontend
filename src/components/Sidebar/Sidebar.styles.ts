@@ -2,28 +2,8 @@ import styled from 'styled-components/macro';
 import { rgba } from 'polished';
 import { NavLink, match } from 'react-router-dom';
 
-import {
-  Grid as MuiGrid,
-  Box as MuiBox,
-  Chip,
-  Drawer as MuiDrawer,
-  List as MuiList,
-  ListItem,
-  Typography,
-  ListItemText,
-} from '@material-ui/core';
-import { spacing } from '@material-ui/system';
+import { Chip, Drawer as MuiDrawer, ListItem, Typography, ListItemText } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
-
-export const Box = styled(MuiBox)(spacing);
-
-export const Drawer = styled(MuiDrawer)`
-  border-right: 0;
-
-  > div {
-    border-right: 0;
-  }
-`;
 
 export const DrawerMobile = styled(MuiDrawer)`
   ${props => props.theme.breakpoints.down('sm')} {
@@ -53,10 +33,6 @@ export const DrawerMobile = styled(MuiDrawer)`
       color: ${props => props.theme.sidebar.menu.default};
     }
   }
-`;
-
-export const List = styled(MuiList)`
-  background-color: ${props => props.theme.sidebar.background.default};
 `;
 
 export const Items = styled.div`
@@ -109,6 +85,10 @@ export const Brand = styled(ListItem)<{
   ${props => props.theme.breakpoints.down('sm')} {
     margin-right: 5px;
   }
+
+  ${props => props.theme.breakpoints.down('md')} {
+    margin-right: 10px;
+  }
 `;
 
 export const BrandLogo = styled.img`
@@ -131,9 +111,14 @@ export const Category = styled(ListItem)<CategoryType>`
   font-weight: ${props => props.theme.typography.fontWeightRegular};
   transition: all 0.3s ease-in-out;
 
+  ${props => props.theme.breakpoints.down('md')} {
+    margin: 0;
+  }
+
   ${props => props.theme.breakpoints.down('sm')} {
     display: block;
     margin-left: 0;
+    margin-right: 2px;
     padding: 12px 0 12px 42px;
   }
 
@@ -382,21 +367,12 @@ export const CategoryBadge = styled(LinkBadge)`
   top: 12px;
 `;
 
-export const SidebarContainer = styled(MuiGrid)`
-  height: 50px;
-`;
-
 export const SidebarSection = styled(Typography)`
   color: ${props => props.theme.sidebar.color};
   padding: ${props => props.theme.spacing(4)}px ${props => props.theme.spacing(7)}px
     ${props => props.theme.spacing(1)}px;
   opacity: 0.9;
   display: block;
-`;
-
-export const SidebarFooter = styled.div`
-  background-color: ${props => props.theme.palette.background.paper};
-  padding: 4px ${props => props.theme.spacing(4)}px;
 `;
 
 export const SlideMenuMobileWrapper = styled.div`

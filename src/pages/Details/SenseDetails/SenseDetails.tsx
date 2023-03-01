@@ -1,20 +1,17 @@
-import { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState, useRef } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AlertTitle from '@material-ui/lab/AlertTitle';
-import { decode } from 'js-base64';
 
-import Header from '@components/Header/Header';
 import * as TableStyles from '@components/Table/Table.styles';
 import CopyButton from '@components/CopyButton/CopyButton';
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
-import * as URLS from '@utils/constants/urls';
-import { TSenseRequests } from '@utils/types/ITransactions';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
+import useSenseDetails from '@hooks/useSenseDetails';
+import { getParameterByName } from '@utils/helpers/url';
 
 import * as ChartStyles from '@pages/HistoricalStatistics/Chart/Chart.styles';
 import PastelData from './PastelData';
@@ -29,10 +26,6 @@ import RareOnTheInternetAlternativeResults from './RareOnTheInternetAlternativeR
 import SenseRawData from './SenseRawData';
 import SimilarRegisteredImages, { getSimilarRegisteredImagesData } from './SimilarRegisteredImages';
 import * as Styles from './SenseDetails.styles';
-
-interface IParamTypes {
-  id: string;
-}
 
 interface IBlockItemLayout {
   title: string;
@@ -74,25 +67,11 @@ const csvHeaders = [
 
 const SenseDetails: React.FC = () => {
   const downloadRef = useRef(null);
-  const { id } = useParams<IParamTypes>();
-  const [sense, setSense] = useState<TSenseRequests | null>(null);
+  const id = getParameterByName('hash');
+  const txid = getParameterByName('txid');
+  const matchType = getParameterByName('matchType');
+  const { senseData: sense, isLoading } = useSenseDetails(id, txid);
   const [openRawDataModal, setOpenRawDataModal] = useState(false);
-  const fetchSenses = useFetch<{ data: TSenseRequests }>({
-    method: 'get',
-    url: `${URLS.SENSE_URL}/${id}`,
-  });
-
-  const handleTransactionFetch = () => {
-    fetchSenses.fetchData().then(response => {
-      if (response?.data) {
-        setSense(response.data);
-      }
-    });
-  };
-
-  useEffect(() => {
-    handleTransactionFetch();
-  }, [id]);
 
   const toggleOpenRawData = () => setOpenRawDataModal(!openRawDataModal);
 
@@ -100,12 +79,13 @@ const SenseDetails: React.FC = () => {
     if (!sense?.rawData) {
       return '';
     }
-    if (sense.imageFileHash.indexOf('nosense') === -1) {
-      const rawData = JSON.parse(sense.rawData);
-      return JSON.stringify(decode(rawData?.file));
-    }
-
-    return JSON.stringify(JSON.stringify(JSON.parse(sense.rawData)));
+    const parseSenseData = JSON.parse(sense.rawData);
+    return JSON.stringify(
+      JSON.stringify({
+        ...parseSenseData,
+        raw_sense_data_json: JSON.parse(parseSenseData.raw_sense_data_json),
+      }),
+    );
   };
 
   const getCsvData = () => {
@@ -133,14 +113,23 @@ const SenseDetails: React.FC = () => {
     return results;
   };
 
+  if (isLoading) {
+    return (
+      <TransactionStyles.LoadingWrapper>
+        <TransactionStyles.Loader>
+          <CircularProgress size={40} />
+        </TransactionStyles.Loader>
+      </TransactionStyles.LoadingWrapper>
+    );
+  }
+
   return sense ? (
-    <Styles.Wrapper>
-      <Header title="Sense Details" />
+    <Styles.Wrapper id="senseDetails">
       <Grid container direction="column" spacing={2}>
-        <TransactionStyles.TransactionDesc item>
+        <TransactionStyles.TransactionDesc item className="alert-wrapper">
           <TransactionStyles.ViewTransactionRawMuiAlert severity="info">
             <AlertTitle className="alert-title">
-              Image File Hash: {sense.imageFileHash}{' '}
+              Image File Hash: <span className="image-file-hash">{sense.imageFileHash}</span>{' '}
               <span>
                 (
                 <Styles.RawDataWrapper>
@@ -206,6 +195,29 @@ const SenseDetails: React.FC = () => {
             </Box>
           </Box>
           <BlockItemLayout
+            title=""
+            customTitle={
+              <Styles.TitleWrapper>
+                <TableStyles.BlockTitle>
+                  Top-10 Most Similar Registered Images on Pastel When Submitted
+                </TableStyles.BlockTitle>
+                <ChartStyles.CSVLinkButton
+                  data={getCsvData()}
+                  filename={`top_10_most_similar_images_to_image_hash__${sense.imageFileHash}.csv`}
+                  headers={csvHeaders}
+                  separator=","
+                  ref={downloadRef}
+                >
+                  Export to CSV
+                </ChartStyles.CSVLinkButton>
+              </Styles.TitleWrapper>
+            }
+            className="similar-registered-images"
+            childrenClassName="no-spacing"
+          >
+            <SimilarRegisteredImages rarenessScoresTable={sense?.rarenessScoresTable} />
+          </BlockItemLayout>
+          <BlockItemLayout
             title="Rare on the Internet Results Graph"
             className="rare-on-the-internet-results-graph"
           >
@@ -229,39 +241,28 @@ const SenseDetails: React.FC = () => {
               }
             />
           </BlockItemLayout>
-          <BlockItemLayout
-            title=""
-            customTitle={
-              <Styles.TitleWrapper>
-                <TableStyles.BlockTitle>
-                  Top-10 Most Similar Registered Images on Pastel When Submitted
-                </TableStyles.BlockTitle>
-                <ChartStyles.CSVLinkButton
-                  data={getCsvData()}
-                  filename={`top_10_most_similar_images_to_image_hash__${sense.imageFileHash}.csv`}
-                  headers={csvHeaders}
-                  separator=","
-                  ref={downloadRef}
-                >
-                  Export to CSV
-                </ChartStyles.CSVLinkButton>
-              </Styles.TitleWrapper>
-            }
-            className="similar-registered-images"
-            childrenClassName="no-spacing"
-          >
-            <SimilarRegisteredImages rarenessScoresTable={sense?.rarenessScoresTable} />
-          </BlockItemLayout>
         </Styles.ImagesWrapper>
       </Grid>
       <SenseRawData rawData={getRawData()} open={openRawDataModal} toggleOpen={toggleOpenRawData} />
     </Styles.Wrapper>
   ) : (
-    <TransactionStyles.LoadingWrapper>
-      <TransactionStyles.Loader>
-        <CircularProgress size={40} />
-      </TransactionStyles.Loader>
-    </TransactionStyles.LoadingWrapper>
+    <Styles.Wrapper className="content-center-wrapper">
+      <Grid container justify="center" alignItems="center" direction="column" spacing={2}>
+        <Grid item>
+          <Typography component="h1" variant="h1" align="center" gutterBottom>
+            404
+          </Typography>
+        </Grid>
+      </Grid>
+      <Typography component="h2" variant="h5" align="center" gutterBottom>
+        Sense not found.
+      </Typography>
+      {!txid && matchType === 'seedimage' ? (
+        <Typography component="h3" variant="body1" align="center" gutterBottom>
+          This is one of the 12 seed images used to initialize the Sense system.
+        </Typography>
+      ) : null}
+    </Styles.Wrapper>
   );
 };
 

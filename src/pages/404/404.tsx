@@ -11,26 +11,30 @@ const Page404: React.FC = () => {
   return (
     <Styles.Wrapper>
       <Helmet title="404 Error" />
-      <Grid container justify="center" alignItems="center" direction="column" spacing={5}>
-        <Grid item>
-          <Styles.Logo src={PastelLogo} alt="Pastel Logo" />
-        </Grid>
-        <Grid item>
-          <Typography component="h1" variant="h1" align="center" gutterBottom>
-            404
+      <Styles.ContentWrapper>
+        <div className="content">
+          <Grid container justify="center" alignItems="center" direction="column" spacing={5}>
+            <Grid item>
+              <Styles.Logo src={PastelLogo} alt="Pastel Logo" />
+            </Grid>
+            <Grid item>
+              <Typography component="h1" variant="h1" align="center" gutterBottom>
+                404
+              </Typography>
+            </Grid>
+          </Grid>
+          <Typography component="h2" variant="h5" align="center" gutterBottom>
+            Page not found.
           </Typography>
-        </Grid>
-      </Grid>
-      <Typography component="h2" variant="h5" align="center" gutterBottom>
-        Page not found.
-      </Typography>
-      <Typography component="h2" variant="body1" align="center" gutterBottom>
-        The page you are looking for might have been removed.
-      </Typography>
+          <Typography component="h2" variant="body1" align="center" gutterBottom>
+            The page you are looking for might have been removed.
+          </Typography>
 
-      <Styles.Button component={Link} to="/" variant="contained" color="primary" mt={2}>
-        Return to website
-      </Styles.Button>
+          <Styles.Button component={Link} to="/" variant="contained" color="primary" mt={2}>
+            Back to Homepage
+          </Styles.Button>
+        </div>
+      </Styles.ContentWrapper>
     </Styles.Wrapper>
   );
 };

@@ -2,6 +2,7 @@ import styled from 'styled-components/macro';
 import { Grid } from '@material-ui/core';
 
 export const TableContainer = styled(Grid)`
+  position: relative;
   box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
   background: ${props => props.theme.sidebar.menu.background};
   border-radius: 10px;
@@ -18,6 +19,10 @@ export const TableContainer = styled(Grid)`
   .block-list-table {
     padding-left: 0;
     padding-right: 0;
+  }
+
+  .timestamp {
+    white-space: nowrap;
   }
 
   ${props => props.theme.breakpoints.down(1024)} {
@@ -65,19 +70,25 @@ export const TableContainer = styled(Grid)`
 
       &.col-hash {
         &:before {
-          content: 'Hash';
+          content: 'Hash:';
         }
       }
 
       &.col-transaction-quantity {
         &:before {
-          content: 'Transaction Quantity';
+          content: 'Transaction Quantity:';
+        }
+      }
+
+      &.col-total-tickets {
+        &:before {
+          content: 'Ticket Quantity:';
         }
       }
 
       &.col-timestamp {
         &:before {
-          content: 'Timestamp';
+          content: 'Timestamp:';
         }
       }
     }
@@ -89,6 +100,10 @@ export const TableContainer = styled(Grid)`
         width: 90px;
         min-width: 90px;
       }
+    }
+
+    .list-filter {
+      max-width: 84%;
     }
   }
 `;

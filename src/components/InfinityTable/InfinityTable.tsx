@@ -61,6 +61,14 @@ interface IInfinityTableComponentProps {
   className?: string;
   headerBackground?: boolean;
   isLoading?: boolean;
+  dropdownFilters?: TFilter[];
+  dropdownLabel?: string;
+  customLoading?: boolean;
+  showDateTimePicker?: boolean;
+  dateRange?: {
+    startDate: number;
+    endDate: number | null;
+  };
 }
 
 const noRowsRenderer = () => <Styles.EmptyData />;
@@ -97,6 +105,8 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   columns,
   sortBy,
   filters,
+  dropdownFilters,
+  dropdownLabel,
   sortDirection,
   loadMoreFrom = 0,
   onBottomReach,
@@ -109,6 +119,9 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   headerBackground,
   isLoading,
   customTitle,
+  customLoading,
+  showDateTimePicker = false,
+  dateRange,
 }) => {
   const [loading, setLoading] = React.useState(false);
   const isDarkMode = useGetThemeMode();
@@ -165,7 +178,15 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
         {!filters ? (
           <h4 className="table-title">{title}</h4>
         ) : (
-          <Filters filters={filters} title={title} headerBackground={headerBackground} />
+          <Filters
+            filters={filters}
+            dropdownFilters={dropdownFilters}
+            title={title}
+            headerBackground={headerBackground}
+            dropdownLabel={dropdownLabel}
+            showDateTimePicker={showDateTimePicker}
+            defaultDateRange={dateRange}
+          />
         )}
       </div>
     );
@@ -175,11 +196,11 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
     <Styles.Card className={className}>
       {renderTitle()}
       <Styles.TableContainer>
-        {loading && (
+        {loading || customLoading ? (
           <Styles.Loader>
             <CircularProgress size={40} />
           </Styles.Loader>
-        )}
+        ) : null}
         {!isLoading ? (
           <Styles.TableWrapper className={`${rows.length ? '' : 'empty-table'}`}>
             <AutoSizer disableHeight>

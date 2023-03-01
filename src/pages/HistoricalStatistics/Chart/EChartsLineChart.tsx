@@ -176,6 +176,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     granularity: selectedGranularityButton,
     height,
     width,
+    darkMode,
   };
   const options = getThemeInitOption(params);
   const downloadPNG = () => {

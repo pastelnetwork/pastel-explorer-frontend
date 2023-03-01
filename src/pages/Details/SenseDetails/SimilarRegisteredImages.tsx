@@ -10,6 +10,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import { TAppTheme } from '@theme/index';
 import { decompress_zstd_compressed_data_func } from '@utils/helpers/encryption';
+import RouterLink from '@components/RouterLink/RouterLink';
+import * as ROUTES from '@utils/constants/routes';
 
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
 import * as Styles from './SenseDetails.styles';
@@ -134,7 +136,18 @@ const SimilarRegisteredImages: React.FC<ISimilarRegisteredImages> = ({ rarenessS
                 </StyledTableCell>
                 <StyledTableCell component="td" scope="row">
                   <TicketStyles.TicketContent className="white-space-nowrap">
-                    {item.imageHash}
+                    {item.matchType === 'Seed Image' ? (
+                      <RouterLink
+                        route={`${ROUTES.SENSE_DETAILS}?hash=${
+                          item.imageHashOriginal
+                        }&matchType=${item?.matchType?.replaceAll(' ', '')?.toLowerCase()}`}
+                        value={item.imageHash}
+                        title={item.imageHash}
+                        className="address-link"
+                      />
+                    ) : (
+                      item.imageHash
+                    )}
                   </TicketStyles.TicketContent>
                 </StyledTableCell>
                 <StyledTableCell component="td" scope="row">

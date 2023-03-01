@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-import { Card as MuiCard, TableCell as MuiTableCell, CardHeader, Paper } from '@material-ui/core';
+import { Card as MuiCard, TableCell as MuiTableCell, Paper } from '@material-ui/core';
 
 import { spacing } from '@material-ui/system';
 
@@ -17,19 +17,6 @@ export const TableWrapper = styled.div`
   max-width: 100%;
   border-radius: 6px;
   overflow: hidden;
-`;
-
-export const TableCardHeader = styled(CardHeader)`
-  padding-left: 0;
-  word-break: break-word;
-
-  span {
-    &.MuiCardHeader-title {
-      color: ${props => props.theme.palette.text.primary};
-      font-weight: 700;
-      font-size: 1rem;
-    }
-  }
 `;
 
 export const TableCell = styled(MuiTableCell)`

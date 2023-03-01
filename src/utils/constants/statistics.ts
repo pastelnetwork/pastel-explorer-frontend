@@ -5,7 +5,7 @@ import { TCsvHeaderType } from './types';
 import { getCurrencyName } from '../appInfo';
 
 const BASE_API_URL = process.env.REACT_APP_EXPLORER_WEB_API_URL as string;
-const getBaseURL = () => {
+export const getBaseURL = () => {
   try {
     const persist = localStorage.getItem('persist:root');
     if (persist) {
@@ -228,8 +228,6 @@ export const CHART_THEME_BACKGROUND_DEFAULT_COLOR = '#2D3748';
 export const CHART_THEME_BACKGROUND_DEFAULT_COLOR_LIGHT = '#fff';
 export const BLOCK_CHART_DEFAULT_GRANULARITY = 'none';
 
-export const CHART_DEFAULT_PERIOD = 'all';
-
 export const info: TStatisticsInfo = {
   connections: 8,
   currencyName: getCurrencyName(),
@@ -243,11 +241,6 @@ export const info: TStatisticsInfo = {
 };
 
 export const granularities: TGranularity[][] = [['1d', '30d', '1y'], ['1d'], ['1d', '30d']];
-
-export const LRU_OPTIONS = {
-  max: 100,
-  ttl: 300000,
-};
 
 export const cacheList = {
   hashRate: 'explorerHashRate',
@@ -281,3 +274,11 @@ export const sense_chart_colors = [
   'rgba(153, 102, 255, 0.2)',
   'rgba(255, 159, 64, 0.2)',
 ];
+
+export const SWR_OPTIONS = {
+  refreshInterval: 0,
+  revalidateIfStale: false,
+  revalidateOnFocus: false,
+  revalidateOnReconnect: false,
+  keepPreviousData: false,
+};

@@ -48,7 +48,7 @@ export const columns = [
     label: 'Ticket Quantity',
     dataKey: TICKETS_KEY,
     disableSort: false,
-    className: 'col-timestamp',
+    className: 'col-ticket-quantity',
   },
   {
     width: 120,

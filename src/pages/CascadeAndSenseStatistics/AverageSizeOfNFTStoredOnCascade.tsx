@@ -7,14 +7,16 @@ import { periods } from '@utils/constants/statistics';
 import { LineChart } from '@components/Summary/LineChart';
 import { Dropdown } from '@components/Dropdown/Dropdown';
 import themeVariant from '@theme/variants';
-
+import useAverageSizeOfNFTStoredOnCascade from '@hooks/useAverageSizeOfNFTStoredOnCascade';
 import * as SummaryStyles from '@components/Summary/Summary.styles';
+import * as StatisticsStyles from '@pages/Statistics/Statistics.styles';
+
+import { transformAverageRarenessScoreOfNFTsOnSenseChartData } from './CascadeAndSenseStatistics.helpers';
 import * as Styles from './CascadeAndSenseStatistics.styles';
-import { averageSizeOfNFTStoredOnCascadeData } from './mockup';
 
 const AverageSizeOfNFTStoredOnCascade: React.FC = () => {
   const [period, setPeriod] = useState<PeriodTypes>(periods[7][2]);
-  const [chartData, setChartData] = useState(averageSizeOfNFTStoredOnCascadeData[0]);
+  const { data, isLoading, difference, currentValue } = useAverageSizeOfNFTStoredOnCascade(period);
 
   const handleDropdownChange = (
     event: ChangeEvent<{
@@ -23,27 +25,25 @@ const AverageSizeOfNFTStoredOnCascade: React.FC = () => {
   ) => {
     if (event.target.value) {
       setPeriod(event.target.value as PeriodTypes);
-      if (event.target.value === periods[7][0]) {
-        setChartData(averageSizeOfNFTStoredOnCascadeData[1]);
-      } else if (event.target.value === periods[7][3] || event.target.value === periods[7][4]) {
-        setChartData(averageSizeOfNFTStoredOnCascadeData[2]);
-      } else {
-        setChartData(averageSizeOfNFTStoredOnCascadeData[0]);
-      }
     }
   };
-  const total = chartData?.dataY?.reduce((partialSum, a) => partialSum + a, 0) || 0;
-  const difference = chartData.difference || 0;
+  const chartData = transformAverageRarenessScoreOfNFTsOnSenseChartData(data, 10e6);
 
   return (
-    <SummaryStyles.Card className="cascade-sense-card">
+    <SummaryStyles.Card className="cascade-sense-card average-size-of-nft-stored">
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
           <SummaryStyles.Typography variant="h6">
             Average size of NFT stored on Cascade
           </SummaryStyles.Typography>
           <SummaryStyles.Typography variant="h4">
-            <SummaryStyles.Values>{formatNumber(total)} MB</SummaryStyles.Values>
+            <SummaryStyles.Values>
+              {isLoading ? (
+                <Skeleton animation="wave" variant="text" />
+              ) : (
+                <>{formatNumber(currentValue / 10e6, { decimalsLength: 2 })} MB</>
+              )}
+            </SummaryStyles.Values>
           </SummaryStyles.Typography>
         </SummaryStyles.ValueWrapper>
         <SummaryStyles.PercentageWrapper>
@@ -103,19 +103,23 @@ const AverageSizeOfNFTStoredOnCascade: React.FC = () => {
           </Styles.Percentage>
         </SummaryStyles.PercentageWrapper>
       </SummaryStyles.CardContent>
-      <div>
-        {!chartData ? (
-          <Skeleton animation="wave" variant="rect" height={386} />
+      <Styles.ChartContentWrapper>
+        {isLoading ? (
+          <StatisticsStyles.Loader>
+            <Skeleton animation="wave" variant="rect" height={170} width="100%" />
+            <StatisticsStyles.LoadingText>Loading data...</StatisticsStyles.LoadingText>
+          </StatisticsStyles.Loader>
         ) : (
           <LineChart
             chartName="averageSizeOfNFTStoredOnCascade"
             dataX={chartData?.dataX}
             dataY={chartData?.dataY}
+            dataY1={chartData?.dataY1}
             offset={1}
             disableClick
           />
         )}
-      </div>
+      </Styles.ChartContentWrapper>
     </SummaryStyles.Card>
   );
 };

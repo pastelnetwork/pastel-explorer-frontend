@@ -1,13 +1,6 @@
 import styled from 'styled-components/macro';
-import { darken } from 'polished';
 
-import {
-  InputBase,
-  AppBar as MuiAppBar,
-  IconButton as MuiIconButton,
-  Grid,
-  Toolbar,
-} from '@material-ui/core';
+import { AppBar as MuiAppBar, IconButton as MuiIconButton, Grid, Toolbar } from '@material-ui/core';
 
 import sun from '@assets/icons/sun.svg';
 import moon from '@assets/icons/moon.svg';
@@ -20,7 +13,7 @@ export const ToolbarStyle = styled(Toolbar)`
 `;
 
 export const GridStyle = styled(Grid)`
-  max-width: 535px;
+  max-width: 530px;
 
   &.search-popup {
     display: none;
@@ -36,7 +29,7 @@ export const GridStyle = styled(Grid)`
   }
 
   ${props => props.theme.breakpoints.down('md')} {
-    max-width: 350px;
+    max-width: 200px;
   }
 
   ${props => props.theme.breakpoints.down('xs')} {
@@ -77,11 +70,11 @@ export const AppBar = styled(MuiAppBar)`
   transition: min-height 0.5s ease-in;
 
   ${props => props.theme.breakpoints.up('md')} {
-    max-width: 34%;
+    max-width: 28%;
   }
 
   ${props => props.theme.breakpoints.up('lg')} {
-    max-width: calc(100% - 717px);
+    max-width: calc(100% - 783px);
   }
 
   fieldset {
@@ -108,7 +101,7 @@ export const AppBar = styled(MuiAppBar)`
     }
 
     ${props => props.theme.breakpoints.up('lg')} {
-      max-width: 94%;
+      max-width: 96%;
     }
   }
 
@@ -156,25 +149,13 @@ export const IconButton = styled(MuiIconButton)`
   }
 `;
 
-export const Search = styled.div`
-  border-radius: 2px;
-  background-color: ${props => props.theme.palette.background.default};
-  display: none;
-  position: relative;
-  width: 100%;
-
-  &:hover {
-    background-color: ${props => darken(0.05, props.theme.palette.background.default)};
-  }
-
-  ${props => props.theme.breakpoints.up('md')} {
-    display: block;
-  }
-`;
-
 export const AutocompleteWrapper = styled(Grid)`
   width: 100%;
   margin-right: 15px;
+
+  ${props => props.theme.breakpoints.down('md')} {
+    margin-right: 5px;
+  }
 
   .MuiFormLabel-root {
     display: inline-block;
@@ -201,35 +182,6 @@ export const AutocompleteWrapper = styled(Grid)`
   }
 `;
 
-export const SearchIconWrapper = styled.div`
-  width: 50px;
-  height: 100%;
-  position: absolute;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  svg {
-    width: 22px;
-    height: 22px;
-  }
-`;
-
-export const Input = styled(InputBase)`
-  color: inherit;
-  width: 100%;
-
-  > input {
-    color: ${props => props.theme.header.search.color};
-    padding-top: ${props => props.theme.spacing(2.5)}px;
-    padding-right: ${props => props.theme.spacing(2.5)}px;
-    padding-bottom: ${props => props.theme.spacing(2.5)}px;
-    padding-left: ${props => props.theme.spacing(12)}px;
-    width: 100%;
-  }
-`;
-
 export const ModeToggle = styled.div`
   position: relative;
   width: 52px;
@@ -238,6 +190,10 @@ export const ModeToggle = styled.div`
   height: 26px;
   border-radius: 100px;
   overflow: hidden;
+
+  ${props => props.theme.breakpoints.down('md')} {
+    margin-right: 7px;
+  }
 
   ${props => props.theme.breakpoints.down('sm')} {
     width: 48px;

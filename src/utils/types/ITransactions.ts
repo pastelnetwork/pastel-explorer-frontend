@@ -142,12 +142,14 @@ export interface ISignature {
 export interface IPastelIDRegistrationTicket {
   type: string;
   version: number;
+  height: number;
   pastelID: string;
   pq_key: string;
   address: string;
   timeStamp: string;
   signature: string;
   id_type: string;
+  transactionTime: number;
 }
 
 export interface IUserNameChangeTicket {
@@ -157,6 +159,7 @@ export interface IUserNameChangeTicket {
   username: string;
   fee: number;
   signature: string;
+  transactionTime: number;
 }
 
 export interface INftRegistrationTicket {
@@ -172,6 +175,7 @@ export interface INftRegistrationTicket {
   royalty_address: string;
   green: boolean;
   storage_fee: number;
+  transactionTime: number;
 }
 
 export interface INftActivationTicket {
@@ -182,6 +186,7 @@ export interface INftActivationTicket {
   creator_height: number;
   storage_fee: number;
   signature: string;
+  transactionTime: number;
 }
 
 export interface INftCollectionRegistrationTicket {
@@ -200,6 +205,7 @@ export interface INftCollectionRegistrationTicket {
   royalty_address: string;
   green: boolean;
   storage_fee: number;
+  transactionTime: number;
 }
 
 export interface INftCollectionTicket {
@@ -215,6 +221,7 @@ export interface INftCollectionTicket {
   royalty: number;
   green: boolean;
   app_ticket: string;
+  transactionTime: number;
 }
 
 export interface INftCollectionActivationTicket {
@@ -225,6 +232,7 @@ export interface INftCollectionActivationTicket {
   creator_height: number;
   storage_fee: number;
   signature: string;
+  transactionTime: number;
 }
 
 export interface INftRoyaltyTicket {
@@ -234,6 +242,7 @@ export interface INftRoyaltyTicket {
   new_pastelID: string;
   nft_txid: string;
   signature: string;
+  transactionTime: number;
 }
 
 export interface IActionRegistrationTicket {
@@ -246,6 +255,10 @@ export interface IActionRegistrationTicket {
   label: string;
   called_at: number;
   storage_fee: number;
+  activation_ticket: string;
+  activation_txId: string;
+  transactionTime: number;
+  activationTicket: ITicket;
 }
 
 export interface IActionTicket {
@@ -255,6 +268,7 @@ export interface IActionTicket {
   blocknum: number;
   block_hash: string;
   api_ticket: string;
+  transactionTime: number;
 }
 
 export interface IActionActivationTicket {
@@ -265,6 +279,7 @@ export interface IActionActivationTicket {
   called_at: number;
   storage_fee: number;
   signature: string;
+  transactionTime: number;
 }
 
 export interface IOfferTicket {
@@ -279,6 +294,7 @@ export interface IOfferTicket {
   valid_before: number;
   locked_recipient: string;
   signature: string;
+  transactionTime: number;
 }
 
 export interface IAcceptTicket {
@@ -288,6 +304,7 @@ export interface IAcceptTicket {
   offer_txid: string;
   price: number;
   signature: string;
+  transactionTime: number;
 }
 
 export interface ITransferTicket {
@@ -301,6 +318,7 @@ export interface ITransferTicket {
   registration_txid: string;
   copy_serial_nr: string;
   signature: string;
+  transactionTime: number;
 }
 
 export interface ITicket {
@@ -373,12 +391,6 @@ export type TPastelData = {
   pastelIdOfRegisteringSupernode3: string;
   isPastelOpenApiRequest: boolean;
   openApiSubsetIdString: string;
-};
-
-export type TPrevalenceOfSimilarImages = {
-  dupeProbAbove25pct: number;
-  dupeProbAbove33pct: number;
-  dupeProbAbove50pct: number;
 };
 
 export type TSubgraph = {
@@ -521,4 +533,19 @@ export type TCounts = {
 export type TEdges = {
   source: number;
   target: number;
+};
+
+export type TicketsList = {
+  height: number;
+  transactionHash: string;
+  pastelID: string;
+  version: number;
+  timestamp: number;
+  fee: number;
+  imageHash: string;
+  dupeDetectionSystemVersion: string;
+  activation_ticket: string;
+  activation_txId: string;
+  id_type: string;
+  type: string;
 };

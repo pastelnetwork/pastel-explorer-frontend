@@ -234,18 +234,6 @@ export const PeriodSelect = styled.div`
   }
 `;
 
-export const LineChartTitle = styled.h4`
-  margin: 0;
-  text-align: left;
-  font-size: 16px;
-  font-weight: 700;
-
-  ${props => props.theme.breakpoints.down('sm')} {
-    margin-bottom: 10px;
-    font-size: 15px;
-  }
-`;
-
 export const ChartFilterWrapper = styled.div`
   display: flex;
   align-items: center;

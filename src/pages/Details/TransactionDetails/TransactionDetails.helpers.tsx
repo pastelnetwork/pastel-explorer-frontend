@@ -48,7 +48,9 @@ export const generateTableTitle = (
       </span>
     </AlertTitle>
     {`This transaction was first broadcast to the ${getCurrencyName()} network on 
-      ${formattedDate(transactionData.timestamp)}. 
+      ${formattedDate(transactionData.timestamp, {
+        dayName: false,
+      })}. 
       The transaction is currently 
       ${
         transactionData.block.confirmations >= BLOCK_CONFIRMED_NUMBER ? 'confirmed' : 'unconfirmed'

@@ -1,21 +1,17 @@
 export const EXPLORER = '/';
 export const MOVEMENT = '/movement';
-export const NETWORK = '/network';
 export const RICHLIST = '/richlist';
-export const INFO = '/info';
 export const BLOCKS = '/blocks';
 export const SUPERNODES = '/supernodes';
 export const STATISTICS_PARENT = '/statistics-parent';
 export const STATISTICS = '/statistics';
 export const NOT_FOUND = '/not-found';
+export const TICKETS = '/tickets';
+export const TICKETS_TYPE = '/tickets/type';
 
 export const TRANSACTION_DETAILS = '/tx';
 export const BLOCK_DETAILS = '/block';
 export const ADDRESS_DETAILS = '/address';
-
-export const STATISTICS_BLOCKS = `${STATISTICS}/blocks`;
-export const STATISTICS_NETWORK = `${STATISTICS}/network`;
-export const STATISTICS_TRANSACTIONS = `${STATISTICS}/transactions`;
 
 export const STATISTICS_OVERTIME = `/historical-statistics`;
 export const STATISTICS_DIFFICULTY = `${STATISTICS_OVERTIME}/difficulty`;
@@ -41,5 +37,4 @@ export const STATISTICS_PERCENT_OF_PSL_STAKED = `${STATISTICS_OVERTIME}/percent-
 export const STATISTICS_ACCOUNTS = `${STATISTICS_OVERTIME}/accounts`;
 export const CASCADE_AND_SENSE_STATISTICS = '/cascade-and-sense-statistics';
 export const SENSE_DETAILS = '/sense';
-export const CASCADE_DETAILS = '/cascade';
 export const PASTEL_ID_DETAILS = '/pastelid';
