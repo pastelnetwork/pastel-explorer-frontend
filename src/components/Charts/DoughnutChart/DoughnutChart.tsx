@@ -4,6 +4,8 @@ import { Doughnut } from 'react-chartjs-2';
 
 import { Typography, Grid } from '@material-ui/core';
 
+import { translate } from '@utils/helpers/i18n';
+
 import { defaultChartOptions } from './DoughnutChart.options';
 import * as Styles from './DoughnutChart.styles';
 
@@ -37,7 +39,9 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
         <Styles.ChartWrapper item xs={12} sm={6} md={7}>
           <Styles.StakingWrapper>
             {totalSuperNodes ? `${((51.84 / totalSuperNodes) * 100).toFixed(2)}%` : '--'}
-            <Styles.StakingTitle>Staking APR</Styles.StakingTitle>
+            <Styles.StakingTitle>
+              {translate('components.charts.doughnutChart.stakingAPR')}
+            </Styles.StakingTitle>
           </Styles.StakingWrapper>
         </Styles.ChartWrapper>
       </Grid>

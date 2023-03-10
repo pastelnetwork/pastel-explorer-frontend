@@ -3,6 +3,7 @@ import { HeaderType } from '@components/Table/Table';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { INetworkSupernodes } from '@utils/types/INetwork';
 import { chartColors } from '@components/Charts/DoughnutChart/DoughnutChart.options';
+import { translate } from '@utils/helpers/i18n';
 
 import themeVariant from '@theme/variants';
 
@@ -66,7 +67,7 @@ const generateOtherCountryList = (list: [string, number][], quantity: number) =>
   const otherCountryQuantity = list.reduce((acc, [, value]) => acc + value, 0);
 
   return {
-    name: 'Other',
+    name: translate('pages.explorer.other'),
     quantity: otherCountryQuantity,
     percentage: formatNumber((otherCountryQuantity / quantity) * 100, { decimalsLength: 2 }),
   };

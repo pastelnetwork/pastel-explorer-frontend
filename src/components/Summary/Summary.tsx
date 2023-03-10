@@ -25,6 +25,7 @@ import { BlockThunks, TransactionThunks } from '@redux/thunk';
 import { ISocketData } from '@utils/types/ISocketData';
 import { getCurrencyName } from '@utils/appInfo';
 import useNetwork from '@hooks/useNetwork';
+import { translate } from '@utils/helpers/i18n';
 
 import * as Styles from './Summary.styles';
 import { LineChart } from './LineChart';
@@ -247,23 +248,31 @@ const Summary: React.FC = () => {
               {sumKey === 'coinSupply' ? (
                 <>
                   <Box>
-                    Coins Created:{' '}
+                    {translate('components.summary.coinsCreated')}:{' '}
                     {formatNumber(currentStatsData?.totalCoinSupply || 0, { decimalsLength: 2 })}
                   </Box>
                   <Box>
-                    Less PSL Burnt:{' '}
+                    {translate('components.summary.lessPSLBurnt', { currency: getCurrencyName() })}:{' '}
                     {formatNumber(currentStatsData?.totalBurnedPSL || 0, { decimalsLength: 2 })}
                   </Box>
                 </>
               ) : (
                 <>
                   <Box>
-                    Total Supply:{' '}
+                    {translate('components.summary.totalSupply')}:{' '}
                     {formatNumber(currentStatsData?.coinSupply || 0, { decimalsLength: 2 })}
                   </Box>
-                  <Box>Less PSL Staked by SuperNodes: {formatNumber(totalLockedInSupernodes)}</Box>
                   <Box>
-                    Less PSL Locked by Foundation:{' '}
+                    {translate('components.summary.lessPSLStakedBySuperNodes', {
+                      currency: getCurrencyName(),
+                    })}
+                    : {formatNumber(totalLockedInSupernodes)}
+                  </Box>
+                  <Box>
+                    {translate('components.summary.lessPSLLockedByFoundation', {
+                      currency: getCurrencyName(),
+                    })}
+                    :{' '}
                     {formatNumber(currentStatsData?.pslLockedByFoundation || 0, {
                       decimalsLength: 0,
                     })}
@@ -289,7 +298,9 @@ const Summary: React.FC = () => {
             <Styles.CardContent>
               <Styles.ValueWrapper>
                 <Styles.Typography variant="h6" className={classes.textTitle}>
-                  {name}
+                  {['circulatingSupply', 'coinSupply', 'percentPSLStaked'].includes(sumKey)
+                    ? translate(name, { currency: getCurrencyName() })
+                    : translate(name)}
                 </Styles.Typography>
                 <Styles.Typography variant="h4">
                   <Styles.Values>{renderCardHeaderValue(sumKey, value)}</Styles.Values>
@@ -310,7 +321,9 @@ const Summary: React.FC = () => {
                         : themeVariant.custom.red.error
                     }`}
                   >
-                    {sumKey === 'percentPSLStaked' ? 'Last 30d' : 'Last 24h'}
+                    {sumKey === 'percentPSLStaked'
+                      ? translate('components.summary.last30d')
+                      : translate('components.summary.last24h')}
                     <br />
                     <span>
                       {`${difference > 0 ? '+' : ''}`}

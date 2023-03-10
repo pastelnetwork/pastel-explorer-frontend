@@ -23,43 +23,43 @@ export const DATA_DEFAULT_SORT = 'DESC';
 export const STATUS_LIST = [
   {
     value: 'all',
-    name: 'ALL',
+    name: 'pages.supernodes.all',
   },
   {
     value: 'PRE_ENABLED',
-    name: 'PRE_ENABLED',
+    name: 'pages.supernodes.preEnabled',
   },
   {
     value: 'ENABLED',
-    name: 'ENABLED',
+    name: 'pages.supernodes.enabled',
   },
   {
     value: 'EXPIRED',
-    name: 'EXPIRED',
+    name: 'pages.supernodes.expired',
   },
   {
     value: 'WATCHDOG_EXPIRED',
-    name: 'WATCHDOG_EXPIRED',
+    name: 'pages.supernodes.watchdogExpired',
   },
   {
     value: 'NEW_START_REQUIRED',
-    name: 'NEW_START_REQUIRED',
+    name: 'pages.supernodes.newStartRequired',
   },
   {
     value: 'UPDATE_REQUIRED',
-    name: 'UPDATE_REQUIRED',
+    name: 'pages.supernodes.updateRequired',
   },
   {
     value: 'POSE_BAN',
-    name: 'POSE_BAN',
+    name: 'pages.supernodes.poseBan',
   },
   {
     value: 'OUTPOINT_SPENT',
-    name: 'OUTPOINT_SPENT',
+    name: 'pages.supernodes.outpointSpent',
   },
 ];
 
-const generateStutusData = (status: string) => {
+const generateStatusData = (status: string) => {
   return <Styles.Status className={status.toLowerCase()}>{status}</Styles.Status>;
 };
 
@@ -79,7 +79,7 @@ export const transformSupernodesData = (masternodes: Array<INetworkSupernodes>) 
         />
       </Grid>
     ),
-    [SUPERNODE_STATUS_KEY]: generateStutusData(status),
+    [SUPERNODE_STATUS_KEY]: generateStatusData(status),
     [SUPERNODE_COUNTRY_KEY]: country,
     [SUPERNODE_LAST_PAID_KEY]: formattedTimeElapsed(lastPaidTime),
   }));

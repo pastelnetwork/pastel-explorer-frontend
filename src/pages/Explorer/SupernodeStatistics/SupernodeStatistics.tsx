@@ -4,6 +4,7 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import DoughnutChart from '@components/Charts/DoughnutChart/DoughnutChart';
 import { INetworkSupernodes } from '@utils/types/INetwork';
 import useNetwork from '@hooks/useNetwork';
+import { translate } from '@utils/helpers/i18n';
 
 import {
   generateSupernodeCountriesList,
@@ -48,7 +49,9 @@ const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ link = '' }) 
   if (isLoading) {
     return (
       <ExplorerStyles.BlockWrapper>
-        <ExplorerStyles.BlockTitle>Supernode Statistics</ExplorerStyles.BlockTitle>
+        <ExplorerStyles.BlockTitle>
+          {translate('pages.explorer.supernodeStatistics')}
+        </ExplorerStyles.BlockTitle>
         <Skeleton animation="wave" variant="rect" height={355} />
       </ExplorerStyles.BlockWrapper>
     );
@@ -57,8 +60,8 @@ const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ link = '' }) 
   return (
     <ExplorerMapStyles.Container>
       <DoughnutChart
-        title="Supernode Statistics"
-        innerTitle="Total"
+        title={translate('pages.explorer.supernodeStatistics')}
+        innerTitle={translate('pages.explorer.total')}
         innerSubtitle={countryQuantity}
         data={
           countryChartData &&

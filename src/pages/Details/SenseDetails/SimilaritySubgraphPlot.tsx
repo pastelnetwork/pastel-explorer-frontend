@@ -2,6 +2,7 @@ import ReactECharts from 'echarts-for-react';
 
 import { TSubgraph } from '@utils/types/ITransactions';
 import { TChartParams } from '@utils/types/IStatistics';
+import { translate } from '@utils/helpers/i18n';
 
 import * as Styles from './SenseDetails.styles';
 
@@ -24,15 +25,15 @@ const SimilaritySubgraphPlot: React.FC<ISimilaritySubgraphPlot> = ({ data }) => 
               <div class="tooltip-url">${item.imgLink}</div>
               <div class="tooltip-content-wrapper">
                 <div class="tooltip-item">
-                  <div class="label">Sense Rareness Score:</div>
+                  <div class="label">${translate('pages.senseDetails.senseRarenessScore')}:</div>
                   <div class="value">${item.rarenessScore}</div>
                 </div>
                 <div class="tooltip-item">
-                  <div class="label">Open NSFW Score:</div>
+                  <div class="label">${translate('pages.senseDetails.openNSFWScore')}:</div>
                   <div class="value">${item.openNsfwScore}</div>
                 </div>
                 <div class="tooltip-item">
-                  <div class="label">Is Likely Dupe:</div>
+                  <div class="label">${translate('pages.senseDetails.isLikelyDupe')}:</div>
                   <div class="value">${item.isLikelyDupe?.toString()}</div>
                 </div>
               </div>

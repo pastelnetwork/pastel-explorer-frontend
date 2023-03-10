@@ -7,6 +7,7 @@ import { IOfferTicket } from '@utils/types/ITransactions';
 import * as ROUTES from '@utils/constants/routes';
 import { getCurrencyName } from '@utils/appInfo';
 import { formatFullDate } from '@utils/helpers/date/date';
+import { translate } from '@utils/helpers/i18n';
 
 import Signatures from './Signatures';
 import * as Styles from './Ticket.styles';
@@ -20,7 +21,9 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket }) => {
     <Box>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Pastel OpenAPI Ticket Version Number:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.offerTicket.version')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>{ticket.version}</Styles.TicketContent>
@@ -28,7 +31,9 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket }) => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.offerTicket.pastelID')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
@@ -44,7 +49,9 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket }) => {
       <Signatures signature={ticket.signature} />
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Item txid:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.offerTicket.itemTxId')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
@@ -59,7 +66,9 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket }) => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Copy number:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.offerTicket.copyNumber')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>{ticket.copy_number}</Styles.TicketContent>
@@ -67,7 +76,9 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket }) => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Asked price:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.offerTicket.askedPrice')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
@@ -77,7 +88,9 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket }) => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Valid after:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.offerTicket.validAfter')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
@@ -96,7 +109,9 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket }) => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Valid before:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.offerTicket.validBefore')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
@@ -115,7 +130,9 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket }) => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Locked recipient:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.offerTicket.lockedRecipient')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>{ticket.locked_recipient}</Styles.TicketContent>
@@ -124,7 +141,9 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket }) => {
       {ticket.transactionTime ? (
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
-            <Styles.TicketTitle>Timestamp:</Styles.TicketTitle>
+            <Styles.TicketTitle>
+              {translate('components.ticket.offerTicket.timestamp')}
+            </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
             <Styles.TicketContent>

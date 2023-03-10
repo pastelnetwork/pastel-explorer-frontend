@@ -7,6 +7,7 @@ import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import { TLineChartData } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
 import useAccounts from '@hooks/useAccounts';
+import { translate } from '@utils/helpers/i18n';
 
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
@@ -50,12 +51,15 @@ function Accounts() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Accounts">
+    <HistoricalStatisticsLayout
+      currentBgColor={currentBgColor}
+      title={translate('pages.historicalStatistics.accounts')}
+    >
       <EChartsLineChart
         chartName="accounts"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title="Accounts"
+        title={translate('pages.historicalStatistics.accounts')}
         info={info}
         period={period}
         offset={10}

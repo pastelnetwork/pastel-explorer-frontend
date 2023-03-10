@@ -7,6 +7,7 @@ import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import useTotalTransactionsPerDay from '@hooks/useTotalTransactionsPerDay';
+import { translate } from '@utils/helpers/i18n';
 
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
@@ -50,12 +51,15 @@ function TotalTransactionsPerDay() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Total Transactions Per Day">
+    <HistoricalStatisticsLayout
+      currentBgColor={currentBgColor}
+      title={translate('pages.historicalStatistics.totalTransactionsPerDay')}
+    >
       <EChartsLineChart
         chartName="totalTransactionsPerDay"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title="Total Transactions Per Day"
+        title={translate('pages.historicalStatistics.totalTransactionsPerDay')}
         period={period}
         info={info}
         offset={0}

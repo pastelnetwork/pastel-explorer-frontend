@@ -59,41 +59,14 @@ export const GridWrapper = styled(Grid)`
         border-bottom: 0;
       }
 
-      &:before {
-        position: relative;
-        width: 130px;
-        font-weight: 600;
-        font-size: 16px;
-        color: ${props => props.theme.table.label};
-      }
-
-      &.col-block {
+      .cell-content {
         &:before {
-          content: 'Block:';
-        }
-      }
-
-      &.col-timestamp {
-        &:before {
-          content: 'Timestamp:';
-        }
-      }
-
-      &.col-amount {
-        &:before {
-          content: 'Amount:';
-        }
-      }
-
-      &.col-ticket-quantity {
-        &:before {
-          content: 'Ticket Quantity:';
-        }
-      }
-
-      &.col-recipents {
-        &:before {
-          content: 'Recipents:';
+          content: attr(data-title);
+          position: relative;
+          width: 130px;
+          font-weight: 600;
+          font-size: 16px;
+          color: ${props => props.theme.table.label};
         }
       }
     }

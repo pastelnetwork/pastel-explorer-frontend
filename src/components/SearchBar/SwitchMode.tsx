@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Tooltip } from '@material-ui/core';
 import { setAppThemeAction } from '@redux/actions/appThemeAction';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
+import { translate } from '@utils/helpers/i18n';
 
 import * as Styles from './SearchBar.styles';
 
@@ -16,7 +17,7 @@ function SwitchMode() {
   }, [isDarkMode]);
 
   return (
-    <Tooltip title="Toggle light/dark theme">
+    <Tooltip title={translate('components.searchBar.switchMode.title')}>
       <Styles.ModeToggle>
         <input type="checkbox" onChange={handleChangeMode} />
         <div className="toggle-switch">&nbsp;</div>

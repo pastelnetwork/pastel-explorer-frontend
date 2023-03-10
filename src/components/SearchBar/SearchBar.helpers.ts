@@ -1,12 +1,12 @@
 import * as ROUTES from '@utils/constants/routes';
 
-export const ADDRESSES_LABEL = 'Addresses';
-export const BLOCKS_HEIGHTS_LABEL = 'Blocks Heights';
-export const BLOCKS_IDS_LABEL = 'Blocks Ids';
-export const TRANSACTIONS_LABEL = 'Transactions';
-export const SENSES_LABEL = 'Senses';
-export const PASTEL_ID_LABEL = 'Pastel ID';
-export const USERNAME = 'Username';
+export const ADDRESSES_LABEL = 'components.searchBar.addresses';
+export const BLOCKS_HEIGHTS_LABEL = 'components.searchBar.blocksHeights';
+export const BLOCKS_IDS_LABEL = 'components.searchBar.blocksIds';
+export const TRANSACTIONS_LABEL = 'components.searchBar.transactions';
+export const SENSES_LABEL = 'components.searchBar.senses';
+export const PASTEL_ID_LABEL = 'components.searchBar.pastelID';
+export const USERNAME = 'components.searchBar.username';
 
 export type TOptionsCategories =
   | typeof ADDRESSES_LABEL

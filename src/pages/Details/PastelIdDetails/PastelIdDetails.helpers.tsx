@@ -5,55 +5,55 @@ export type TTicketsTypeProps = {
 
 export const TICKET_TYPE_OPTIONS = [
   {
-    name: 'ALL',
+    name: 'pages.pastelIdDetails.all',
     value: 'all',
   },
   {
-    name: 'Pastel ID Registration Ticket',
+    name: 'pages.pastelIdDetails.pastelid',
     value: 'pastelid',
   },
   {
-    name: 'User Name Change Ticket',
+    name: 'pages.pastelIdDetails.usernameChange',
     value: 'username-change',
   },
   {
-    name: 'NFT Registration Ticket',
+    name: 'pages.pastelIdDetails.nftReg',
     value: 'nft-reg',
   },
   {
-    name: 'NFT Activation Ticket',
+    name: 'pages.pastelIdDetails.nftAct',
     value: 'nft-act',
   },
   {
-    name: 'NFT Collection Registration Ticket',
+    name: 'pages.pastelIdDetails.nftCollectionReg',
     value: 'nft-collection-reg',
   },
   {
-    name: 'NFT Collection Activation Ticket',
+    name: 'pages.pastelIdDetails.nftCollectionAct',
     value: 'nft-collection-act',
   },
   {
-    name: 'NFT Royalty Ticket',
+    name: 'pages.pastelIdDetails.nftRoyalty',
     value: 'nft-royalty',
   },
   {
-    name: 'Action Registration Ticket',
+    name: 'pages.pastelIdDetails.actionReg',
     value: 'action-reg',
   },
   {
-    name: 'Action Activation Ticket',
+    name: 'pages.pastelIdDetails.actionAct',
     value: 'action-act',
   },
   {
-    name: 'Offer Ticket',
+    name: 'pages.pastelIdDetails.offer',
     value: 'offer',
   },
   {
-    name: 'Accept Ticket',
+    name: 'pages.pastelIdDetails.accept',
     value: 'accept',
   },
   {
-    name: 'Transfer Ticket',
+    name: 'pages.pastelIdDetails.transfer',
     value: 'transfer',
   },
 ];

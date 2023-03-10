@@ -6,6 +6,7 @@ import * as ROUTES from '@utils/constants/routes';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import useTickets from '@hooks/useTickets';
 import InfinityTable from '@components/InfinityTable/InfinityTable';
+import { translate } from '@utils/helpers/i18n';
 
 import { cascadeColumns, transformCascadeData, DATA_LIMIT } from './Tickets.helpers';
 import * as Styles from './Tickets.styles';
@@ -20,10 +21,14 @@ const Cascade: React.FC<ICascadeProps> = ({ isMobile }) => {
   const getTitle = () => {
     return (
       <Styles.BlockTitle className="latest-blocks">
-        Cascade tickets (Total {formatNumber(total)} tickets)
+        {translate('pages.tickets.cascadeTickets')} (
+        {total > 1
+          ? translate('pages.tickets.totalTickets', { total: formatNumber(total) })
+          : translate('pages.tickets.totalTicket', { total: formatNumber(total) })}
+        )
         <Link to={`${ROUTES.TICKETS_TYPE}/cascade`} className="view-all">
           <Typography align="center" className="p-16">
-            View all <ArrowForwardIos />
+            {translate('pages.tickets.viewAll')} <ArrowForwardIos />
           </Typography>
         </Link>
       </Styles.BlockTitle>

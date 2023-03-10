@@ -5,6 +5,7 @@ import Table, { RowsProps } from '@components/Table/Table';
 import { IRichlist } from '@utils/types/IRichlists';
 import useCurrentStats from '@hooks/useCurrentStats';
 import useRichlist from '@hooks/useRichlist';
+import { translate } from '@utils/helpers/i18n';
 
 import {
   balanceHeaders,
@@ -96,7 +97,7 @@ const Richlist: React.FC = () => {
     <Styles.Wrapper>
       <Grid item>
         <Styles.BlockWrapper>
-          <Styles.Title>Wealth Distribution</Styles.Title>
+          <Styles.Title>{translate('pages.richlist.wealthDistribution')}</Styles.Title>
           <Styles.ContentWrapper>
             <Styles.Info>
               <Styles.InfoItem>{wealthDistributionData?.[0]?.data}</Styles.InfoItem>
@@ -116,7 +117,7 @@ const Richlist: React.FC = () => {
         <Table
           headers={balanceHeaders}
           rows={richlist ? richlist.slice(0, 100) : []}
-          title="Top 100"
+          title={translate('pages.richlist.top100')}
           handleClickSort={handleClickSort}
           className="richlist"
           tableWrapperClassName="richlist-table-wrapper"

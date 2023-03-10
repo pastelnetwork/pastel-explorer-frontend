@@ -1,6 +1,9 @@
 import * as React from 'react';
-import { Typography } from '@material-ui/core';
+import { Typography, Grid } from '@material-ui/core';
 import { Helmet } from 'react-helmet-async';
+
+import { translate } from '@utils/helpers/i18n';
+import PastelLogo from '@assets/images/pastel-logo.png';
 
 import * as Styles from './ErrorHandler.styles';
 
@@ -31,25 +34,36 @@ class ErrorHandler extends React.Component<IErrorHandlerProps, IErrorHandlerStat
     if (hasError) {
       return (
         <Styles.Wrapper>
-          <Helmet title="Page Error" />
-          <Typography component="h1" variant="h1" align="center" gutterBottom>
-            General Error
-          </Typography>
-          <Typography component="h2" variant="h5" align="center" gutterBottom>
-            We are sorry — somethings gone wrong.
-          </Typography>
-          <Typography component="h2" variant="body1" align="center" gutterBottom>
-            Please try to refresh the page.
-          </Typography>
+          <Helmet title={translate('pages.errorHandler.pageError')} />
+          <Styles.ContentWrapper>
+            <div className="content">
+              <Grid container justify="center" alignItems="center" direction="column" spacing={5}>
+                <Grid item>
+                  <Styles.Logo src={PastelLogo} alt={translate('common.pastelLogo')} />
+                </Grid>
+                <Grid item>
+                  <Typography component="h1" variant="h1" align="center" gutterBottom>
+                    {translate('pages.errorHandler.generalError')}
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Typography component="h2" variant="h5" align="center" gutterBottom>
+                {translate('pages.errorHandler.description')}
+              </Typography>
+              <Typography component="h2" variant="body1" align="center" gutterBottom>
+                {translate('pages.errorHandler.refresh')}
+              </Typography>
 
-          <Styles.Button
-            onClick={() => window.location.reload(true)}
-            variant="contained"
-            color="secondary"
-            mt={2}
-          >
-            Refresh the page
-          </Styles.Button>
+              <Styles.Button
+                onClick={() => window.location.reload()}
+                variant="contained"
+                color="secondary"
+                mt={2}
+              >
+                {translate('pages.errorHandler.btnRefresh')}
+              </Styles.Button>
+            </div>
+          </Styles.ContentWrapper>
         </Styles.Wrapper>
       );
     }

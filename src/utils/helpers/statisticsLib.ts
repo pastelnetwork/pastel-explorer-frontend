@@ -26,6 +26,8 @@ import { IBlock } from '@utils/types/IBlocks';
 import { formattedDate } from '@utils/helpers/date/date';
 import { IRawTransactions, ITransaction } from '@utils/types/ITransactions';
 import { ISocketData } from '@utils/types/ISocketData';
+import { translate } from '@utils/helpers/i18n';
+
 import { getCurrencyName } from '../appInfo';
 
 export type PeriodTypes =
@@ -541,7 +543,7 @@ export const generatePeriodToDropdownOptions = (periods: PeriodTypes[]) => {
   const results = [];
   for (let i = 0; i < periods.length; i += 1) {
     results.push({
-      name: `Last ${periods[i]}`,
+      name: translate('pages.statistics.filterLabel', { period: periods[i] }),
       value: periods[i],
     });
   }

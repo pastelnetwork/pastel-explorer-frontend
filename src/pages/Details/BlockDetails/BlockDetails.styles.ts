@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-import { getCurrencyName } from '@utils/appInfo';
-
 import {
   Typography as MuiTypography,
   Accordion as MuiAccordion,
@@ -56,36 +54,13 @@ export const Wrapper = styled('div')`
           display: flex;
 
           &:before {
+            content: attr(data-title);
             position: relative;
             min-width: 130px;
             display: inline-block;
             font-weight: 600;
             font-size: 16px;
             color: ${props => props.theme.table.label};
-          }
-
-          &:nth-child(1) {
-            &:before {
-              content: 'Height';
-            }
-          }
-
-          &:nth-child(2) {
-            &:before {
-              content: 'Confirmations';
-            }
-          }
-
-          &:nth-child(3) {
-            &:before {
-              content: 'Size (kB)';
-            }
-          }
-
-          &:nth-child(4) {
-            &:before {
-              content: 'Timestamp';
-            }
           }
         }
       }
@@ -110,6 +85,7 @@ export const Wrapper = styled('div')`
           border-bottom: 0;
 
           &:before {
+            content: attr(data-title);
             position: relative;
             min-width: 130px;
             display: inline-block;
@@ -120,63 +96,24 @@ export const Wrapper = styled('div')`
         }
       }
 
-      &.block {
-        .table__row {
-          td {
-            &:nth-child(1) {
-              &:before {
-                content: 'Height';
-              }
-            }
-
-            &:nth-child(2) {
-              &:before {
-                content: 'Confirmations';
-              }
-            }
-
-            &:nth-child(3) {
-              &:before {
-                content: 'Size (kB)';
-              }
-            }
-
-            &:nth-child(4) {
-              &:before {
-                content: 'Timestamp';
-              }
-            }
-          }
-        }
-      }
-
       &.transactions {
         .table__row {
           td {
-            &:nth-child(1) {
-              &:before {
-                content: 'TXID:';
-              }
-            }
-
             &:nth-child(2) {
               &:before {
                 margin-right: 8px;
-                content: 'Recipients:';
               }
             }
 
             &:nth-child(3) {
               &:before {
                 margin-right: 8px;
-                content: 'Tickets:';
               }
             }
 
             &:nth-child(4) {
               &:before {
                 margin-right: 8px;
-                content: 'Amount (${getCurrencyName()}):';
               }
             }
           }

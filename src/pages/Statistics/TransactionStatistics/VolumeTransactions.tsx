@@ -13,6 +13,7 @@ import { periods } from '@utils/constants/statistics';
 import { getCurrencyName } from '@utils/appInfo';
 import { LineChart } from '@components/Summary/LineChart';
 import { Dropdown } from '@components/Dropdown/Dropdown';
+import { translate } from '@utils/helpers/i18n';
 
 import * as SummaryStyles from '@components/Summary/Summary.styles';
 import * as Styles from '@pages/CascadeAndSenseStatistics/CascadeAndSenseStatistics.styles';
@@ -49,7 +50,7 @@ const VolumeTransactions: React.FC<IVolumeTransactions> = ({ blockElements }) =>
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
           <SummaryStyles.Typography variant="h6">
-            Volume of transactions ({getCurrencyName()})
+            {translate('pages.statistics.volumeOfTransactions', { currency: getCurrencyName() })}
           </SummaryStyles.Typography>
         </SummaryStyles.ValueWrapper>
         <SummaryStyles.PercentageWrapper>
@@ -66,13 +67,17 @@ const VolumeTransactions: React.FC<IVolumeTransactions> = ({ blockElements }) =>
       <StatisticsStyles.ChartSection>
         {isLoading ? (
           <StatisticsStyles.Loader>
-            <StatisticsStyles.LoadingText>Loading data...</StatisticsStyles.LoadingText>
+            <StatisticsStyles.LoadingText>
+              {translate('common.loadingData')}
+            </StatisticsStyles.LoadingText>
           </StatisticsStyles.Loader>
         ) : null}
         {!chartData ? (
           <>
             <Skeleton animation="wave" variant="rect" height={300} />
-            <StatisticsStyles.LoadingText>Loading data...</StatisticsStyles.LoadingText>
+            <StatisticsStyles.LoadingText>
+              {translate('common.loadingData')}
+            </StatisticsStyles.LoadingText>
           </>
         ) : (
           <LineChart

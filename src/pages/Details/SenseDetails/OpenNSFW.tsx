@@ -2,6 +2,7 @@ import ReactECharts from 'echarts-for-react';
 import { useSelector } from 'react-redux';
 
 import { getThemeState } from '@redux/reducers/appThemeReducer';
+import { translate } from '@utils/helpers/i18n';
 
 import * as Styles from './SenseDetails.styles';
 
@@ -88,7 +89,7 @@ const OpenNSFW: React.FC<IOpenNSFWProps> = ({ openNSFWScore }) => {
         data: [
           {
             value: openNSFWScore || 0,
-            name: 'NSFW',
+            name: translate('pages.senseDetails.nsfw'),
           },
         ],
       },

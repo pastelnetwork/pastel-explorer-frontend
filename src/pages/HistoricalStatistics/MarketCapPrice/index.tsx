@@ -9,6 +9,7 @@ import { TMultiLineChartData } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
 import useMarketCapPrice from '@hooks/useMarketCapPrice';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
+import { translate } from '@utils/helpers/i18n';
 
 import { EChartsMultiLineChart } from '../Chart/EChartsMultiLineChart';
 
@@ -56,20 +57,20 @@ function MarketCapPrice() {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title="Market Price and Circ. Cap ($USD)"
+      title={translate('pages.historicalStatistics.marketPriceAndCircCap')}
     >
       <EChartsMultiLineChart
         chartName="marketCapPrice"
         dataX={transformLineChartData?.dataX}
         dataY1={transformLineChartData?.dataY1}
         dataY2={transformLineChartData?.dataY2}
-        yaxisName="Price ($USD)"
-        yaxisName1="Circ. Cap ($USD)"
-        seriesName="Price"
-        seriesName1="Market Cap"
+        yaxisName={translate('pages.historicalStatistics.priceUSD')}
+        yaxisName1={translate('pages.historicalStatistics.circCapUSD')}
+        seriesName={translate('pages.historicalStatistics.price')}
+        seriesName1={translate('pages.historicalStatistics.marketCap')}
         fixedNum={5}
         fixedNum1={2}
-        title="Market Price and Circ. Cap ($USD)"
+        title={translate('pages.historicalStatistics.marketPriceAndCircCap')}
         info={info}
         offset={0.0001}
         period={period}

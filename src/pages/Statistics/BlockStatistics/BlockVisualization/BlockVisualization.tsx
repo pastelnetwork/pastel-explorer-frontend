@@ -1,5 +1,7 @@
 import { Typography } from '@material-ui/core';
 
+import { translate } from '@utils/helpers/i18n';
+
 import * as Styles from './BlockVisualization.styles';
 
 type BlockElementType = string | number | JSX.Element;
@@ -20,7 +22,7 @@ const BlockVisualization: React.FC<BlockVisualizationProps> = ({
   transactionCount,
   minutesAgo,
   className = '',
-  title = 'Block #:',
+  title = translate('pages.statistics.block'),
   clickHandler,
 }) => {
   return (

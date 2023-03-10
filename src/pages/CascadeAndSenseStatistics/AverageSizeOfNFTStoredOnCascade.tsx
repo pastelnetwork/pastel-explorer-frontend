@@ -8,6 +8,7 @@ import { LineChart } from '@components/Summary/LineChart';
 import { Dropdown } from '@components/Dropdown/Dropdown';
 import themeVariant from '@theme/variants';
 import useAverageSizeOfNFTStoredOnCascade from '@hooks/useAverageSizeOfNFTStoredOnCascade';
+import { translate } from '@utils/helpers/i18n';
 import * as SummaryStyles from '@components/Summary/Summary.styles';
 import * as StatisticsStyles from '@pages/Statistics/Statistics.styles';
 
@@ -34,14 +35,17 @@ const AverageSizeOfNFTStoredOnCascade: React.FC = () => {
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
           <SummaryStyles.Typography variant="h6">
-            Average size of NFT stored on Cascade
+            {translate('pages.cascadeAndSenseStatistics.averageSizeOfNFTStoredOnCascade')}
           </SummaryStyles.Typography>
           <SummaryStyles.Typography variant="h4">
             <SummaryStyles.Values>
               {isLoading ? (
                 <Skeleton animation="wave" variant="text" />
               ) : (
-                <>{formatNumber(currentValue / 10e6, { decimalsLength: 2 })} MB</>
+                <>
+                  {formatNumber(currentValue / 10e6, { decimalsLength: 2 })}{' '}
+                  {translate('pages.cascadeAndSenseStatistics.mb')}
+                </>
               )}
             </SummaryStyles.Values>
           </SummaryStyles.Typography>
@@ -107,7 +111,9 @@ const AverageSizeOfNFTStoredOnCascade: React.FC = () => {
         {isLoading ? (
           <StatisticsStyles.Loader>
             <Skeleton animation="wave" variant="rect" height={170} width="100%" />
-            <StatisticsStyles.LoadingText>Loading data...</StatisticsStyles.LoadingText>
+            <StatisticsStyles.LoadingText>
+              {translate('common.loadingData')}
+            </StatisticsStyles.LoadingText>
           </StatisticsStyles.Loader>
         ) : (
           <LineChart

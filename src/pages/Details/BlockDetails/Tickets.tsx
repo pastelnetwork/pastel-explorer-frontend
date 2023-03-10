@@ -38,6 +38,7 @@ import {
   getTicketTitle,
 } from '@components/Ticket';
 import { getBaseURL } from '@utils/constants/statistics';
+import { translate } from '@utils/helpers/i18n';
 
 import * as TableStyles from '@components/Table/Table.styles';
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
@@ -64,26 +65,34 @@ const TicketsList: React.FC<ITicketsList> = ({ data, senses, showActivationTicke
         <>
           <Grid container spacing={3}>
             <Grid item xs={4} sm={3} className="max-w-355">
-              <TicketStyles.TicketTitle>Sense Output Details:</TicketStyles.TicketTitle>
+              <TicketStyles.TicketTitle>
+                {translate('pages.blockDetails.senseOutputDetails')}
+              </TicketStyles.TicketTitle>
             </Grid>
             <Grid item xs={8} sm={9}>
-              <TicketStyles.TicketContent>Not found</TicketStyles.TicketContent>
+              <TicketStyles.TicketContent>
+                {translate('common.notFound')}
+              </TicketStyles.TicketContent>
             </Grid>
           </Grid>
           <Grid container spacing={3}>
             <Grid item xs={4} sm={3} className="max-w-355">
-              <TicketStyles.TicketTitle>Image Hash:</TicketStyles.TicketTitle>
+              <TicketStyles.TicketTitle>
+                {translate('pages.blockDetails.imageHash')}
+              </TicketStyles.TicketTitle>
             </Grid>
             <Grid item xs={8} sm={9}>
-              <TicketStyles.TicketContent>NA</TicketStyles.TicketContent>
+              <TicketStyles.TicketContent>{translate('common.na')}</TicketStyles.TicketContent>
             </Grid>
           </Grid>
           <Grid container spacing={3}>
             <Grid item xs={4} sm={3} className="max-w-355">
-              <TicketStyles.TicketTitle>Sense Version:</TicketStyles.TicketTitle>
+              <TicketStyles.TicketTitle>
+                {translate('pages.blockDetails.senseVersion')}
+              </TicketStyles.TicketTitle>
             </Grid>
             <Grid item xs={8} sm={9}>
-              <TicketStyles.TicketContent>NA</TicketStyles.TicketContent>
+              <TicketStyles.TicketContent>{translate('common.na')}</TicketStyles.TicketContent>
             </Grid>
           </Grid>
         </>
@@ -94,7 +103,9 @@ const TicketsList: React.FC<ITicketsList> = ({ data, senses, showActivationTicke
       <>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
-            <TicketStyles.TicketTitle>Sense Output Details:</TicketStyles.TicketTitle>
+            <TicketStyles.TicketTitle>
+              {translate('pages.blockDetails.senseOutputDetails')}
+            </TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
             <TicketStyles.TicketContent>
@@ -114,7 +125,9 @@ const TicketsList: React.FC<ITicketsList> = ({ data, senses, showActivationTicke
         </Grid>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
-            <TicketStyles.TicketTitle>Image Hash:</TicketStyles.TicketTitle>
+            <TicketStyles.TicketTitle>
+              {translate('pages.blockDetails.imageHash')}
+            </TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
             <TicketStyles.TicketContent>
@@ -129,7 +142,9 @@ const TicketsList: React.FC<ITicketsList> = ({ data, senses, showActivationTicke
         </Grid>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
-            <TicketStyles.TicketTitle>Sense Version:</TicketStyles.TicketTitle>
+            <TicketStyles.TicketTitle>
+              {translate('pages.blockDetails.senseVersion')}
+            </TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
             <TicketStyles.TicketContent>
@@ -200,7 +215,7 @@ const TicketsList: React.FC<ITicketsList> = ({ data, senses, showActivationTicke
   return (
     <Styles.GridStyle item>
       <TableStyles.BlockWrapper className="mb-12">
-        <TableStyles.BlockTitle>Tickets</TableStyles.BlockTitle>
+        <TableStyles.BlockTitle>{translate('pages.blockDetails.tickets')}</TableStyles.BlockTitle>
         <Box className="custom-table tickets-table">
           {data.map(ticket => (
             <Styles.GridStyle
@@ -211,7 +226,9 @@ const TicketsList: React.FC<ITicketsList> = ({ data, senses, showActivationTicke
             >
               <Grid container spacing={3}>
                 <Grid item xs={4} sm={3} className="max-w-355">
-                  <TicketStyles.TicketTitle>TXID:</TicketStyles.TicketTitle>
+                  <TicketStyles.TicketTitle>
+                    {translate('pages.blockDetails.txId')}:
+                  </TicketStyles.TicketTitle>
                 </Grid>
                 <Grid item xs={8} sm={9}>
                   <TicketStyles.TicketContent>
@@ -226,7 +243,9 @@ const TicketsList: React.FC<ITicketsList> = ({ data, senses, showActivationTicke
               </Grid>
               <Grid container spacing={3}>
                 <Grid item xs={4} sm={3} className="max-w-355">
-                  <TicketStyles.TicketTitle>Type:</TicketStyles.TicketTitle>
+                  <TicketStyles.TicketTitle>
+                    {translate('pages.blockDetails.type')}:
+                  </TicketStyles.TicketTitle>
                 </Grid>
                 <Grid item xs={8} sm={9}>
                   <TicketStyles.TicketContent>

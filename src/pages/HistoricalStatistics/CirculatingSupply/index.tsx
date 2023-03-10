@@ -8,6 +8,7 @@ import { TLineChartData } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
 import { getCurrencyName } from '@utils/appInfo';
 import useCirculatingSupply from '@hooks/useCirculatingSupply';
+import { translate } from '@utils/helpers/i18n';
 
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
@@ -53,13 +54,17 @@ function CirculatingSupply() {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title={`Circulating Supply (${getCurrencyName()})`}
+      title={translate('pages.historicalStatistics.circulatingSupply', {
+        currency: getCurrencyName(),
+      })}
     >
       <EChartsLineChart
         chartName="circulatingSupply"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title={`Circulating Supply (${getCurrencyName()})`}
+        title={translate('pages.historicalStatistics.circulatingSupply', {
+          currency: getCurrencyName(),
+        })}
         info={info}
         period={period}
         offset={0}

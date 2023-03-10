@@ -12,6 +12,7 @@ import { TAppTheme } from '@theme/index';
 import { decompress_zstd_compressed_data_func } from '@utils/helpers/encryption';
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
+import { translate } from '@utils/helpers/i18n';
 
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
 import * as Styles from './SenseDetails.styles';
@@ -100,19 +101,45 @@ const SimilarRegisteredImages: React.FC<ISimilarRegisteredImages> = ({ rarenessS
         <Table aria-label="customized table" className="custom-table latest-transactions">
           <TableHead className="table__row-header">
             <TableRow>
-              <StyledTableCell component="th">Rank</StyledTableCell>
-              <StyledTableCell component="th">Thumbnail</StyledTableCell>
-              <StyledTableCell component="th">Image Hash</StyledTableCell>
-              <StyledTableCell component="th">Date-Time Added</StyledTableCell>
-              <StyledTableCell component="th">Match Type</StyledTableCell>
-              <StyledTableCell component="th">Dupe Probability</StyledTableCell>
-              <StyledTableCell component="th">Dupe Probability</StyledTableCell>
-              <StyledTableCell component="th">Cosine Similarity</StyledTableCell>
-              <StyledTableCell component="th">Cosine Gain</StyledTableCell>
-              <StyledTableCell component="th">Hoeffding’s Dependency</StyledTableCell>
-              <StyledTableCell component="th">Hoeffding Gain</StyledTableCell>
-              <StyledTableCell component="th">Hilbert Schmidt Information Criteria</StyledTableCell>
-              <StyledTableCell component="th">Hilbert Schmidt Gain</StyledTableCell>
+              <StyledTableCell component="th">
+                {translate('pages.senseDetails.rank')}
+              </StyledTableCell>
+              <StyledTableCell component="th">
+                {translate('pages.senseDetails.thumbnail')}
+              </StyledTableCell>
+              <StyledTableCell component="th">
+                {translate('pages.senseDetails.imageHash')}
+              </StyledTableCell>
+              <StyledTableCell component="th">
+                {translate('pages.senseDetails.dateTimeAdded')}
+              </StyledTableCell>
+              <StyledTableCell component="th">
+                {translate('pages.senseDetails.matchType')}
+              </StyledTableCell>
+              <StyledTableCell component="th">
+                {translate('pages.senseDetails.dupeProbability')}
+              </StyledTableCell>
+              <StyledTableCell component="th">
+                {translate('pages.senseDetails.dupeProbability')}
+              </StyledTableCell>
+              <StyledTableCell component="th">
+                {translate('pages.senseDetails.cosineSimilarity')}
+              </StyledTableCell>
+              <StyledTableCell component="th">
+                {translate('pages.senseDetails.cosineGain')}
+              </StyledTableCell>
+              <StyledTableCell component="th">
+                {translate('pages.senseDetails.hoeffdingsDependency')}
+              </StyledTableCell>
+              <StyledTableCell component="th">
+                {translate('pages.senseDetails.hoeffdingGain')}
+              </StyledTableCell>
+              <StyledTableCell component="th">
+                {translate('pages.senseDetails.hilbertSchmidtInformationCriteria')}
+              </StyledTableCell>
+              <StyledTableCell component="th">
+                {translate('pages.senseDetails.hilbertSchmidtGain')}
+              </StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>

@@ -1,5 +1,3 @@
-import { getCurrencyName } from '@utils/appInfo';
-
 export const BLOCK_KEY = 'block';
 export const BLOCK_HASH_KEY = 'blockHash';
 export const RECIPIENT_COUNT_KEY = 'recipientCount';
@@ -12,7 +10,7 @@ export const columns = [
     width: 30,
     minWidth: 30,
     flexGrow: 1,
-    label: 'Block',
+    label: 'pages.explorer.block',
     dataKey: BLOCK_KEY,
     disableSort: false,
     className: 'col-block',
@@ -21,7 +19,7 @@ export const columns = [
     width: 360,
     minWidth: 360,
     flexGrow: 1,
-    label: 'TXID',
+    label: 'pages.explorer.txId',
     dataKey: BLOCK_HASH_KEY,
     disableSort: false,
     className: 'col-txid',
@@ -30,7 +28,7 @@ export const columns = [
     width: 20,
     minWidth: 20,
     flexGrow: 1,
-    label: 'Recipents',
+    label: 'pages.explorer.recipients',
     dataKey: RECIPIENT_COUNT_KEY,
     disableSort: false,
     className: 'col-recipents',
@@ -39,7 +37,7 @@ export const columns = [
     width: 60,
     minWidth: 60,
     flexGrow: 1,
-    label: `Amount (${getCurrencyName()})`,
+    label: 'pages.explorer.amount',
     dataKey: AMOUNT_KEY,
     disableSort: false,
     className: 'col-amount',
@@ -47,7 +45,7 @@ export const columns = [
   {
     width: 40,
     flexGrow: 1,
-    label: 'Tickets',
+    label: 'pages.explorer.tickets',
     dataKey: TICKETS_KEY,
     disableSort: false,
     className: 'col-timestamp',
@@ -56,7 +54,7 @@ export const columns = [
     width: 150,
     minWidth: 150,
     flexGrow: 1,
-    label: 'Timestamp',
+    label: 'pages.explorer.timestamp',
     dataKey: TIMESTAMP_KEY,
     disableSort: false,
     className: 'col-timestamp',

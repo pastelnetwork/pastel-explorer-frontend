@@ -7,6 +7,7 @@ import Social from '@components/Social/Social';
 import { currentDate } from '@utils/helpers/date/date';
 import * as ROUTES from '@utils/constants/routes';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
+import { translate } from '@utils/helpers/i18n';
 
 import PastelLogoWhite from '@assets/images/pastel-logo-white.svg';
 import PastelLogo from '@assets/images/pastel-logo.svg';
@@ -31,7 +32,7 @@ const Footer: React.FC = () => {
             <Box>
               <SidebarStyles.BrandLogo
                 src={isDarkMode ? PastelLogoWhite : PastelLogo}
-                alt="Pastel Logo"
+                alt={translate('components.footer.pastelLogo')}
               />
             </Box>
           </SidebarStyles.Brand>
@@ -39,13 +40,13 @@ const Footer: React.FC = () => {
         <Styles.FooterMenuWrapper>
           {footerMenu.map(menu => (
             <Styles.FooterMenuBlock key={menu.id}>
-              <Styles.FooterMenuTitle>{menu.title}</Styles.FooterMenuTitle>
+              <Styles.FooterMenuTitle>{translate(menu.title)}</Styles.FooterMenuTitle>
               {menu.children.length ? (
                 <Styles.FooterMenuList>
                   {menu.children.map(item => (
                     <Styles.FooterMenuItem key={item.path}>
                       <Styles.FooterMenuLink href={item.path} target={item.target}>
-                        {item.name}
+                        {translate(item.name)}
                       </Styles.FooterMenuLink>
                     </Styles.FooterMenuItem>
                   ))}
@@ -57,7 +58,7 @@ const Footer: React.FC = () => {
         <Hidden xsDown implementation="css">
           <Styles.GridStyle item>
             <Styles.Typography>
-              Copyright © {getYear(currentDate)} Pastel Network. All rights reserved.
+              {translate('components.footer.copyright', { year: getYear(currentDate) })}
             </Styles.Typography>
           </Styles.GridStyle>
         </Hidden>
@@ -68,7 +69,7 @@ const Footer: React.FC = () => {
             <Box>
               <SidebarStyles.BrandLogo
                 src={isDarkMode ? PastelLogoWhite : PastelLogo}
-                alt="Pastel Logo"
+                alt={translate('components.footer.pastelLogo')}
               />
             </Box>
           </SidebarStyles.Brand>
@@ -78,7 +79,7 @@ const Footer: React.FC = () => {
       <Hidden smUp implementation="js">
         <Styles.GridStyle item>
           <Styles.Typography>
-            Copyright © {getYear(currentDate)} Pastel. All rights reserved
+            {translate('components.footer.copyright', { year: getYear(currentDate) })}
           </Styles.Typography>
         </Styles.GridStyle>
       </Hidden>

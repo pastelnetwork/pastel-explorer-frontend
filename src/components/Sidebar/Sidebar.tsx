@@ -11,6 +11,7 @@ import * as ROUTES from '@utils/constants/routes';
 import { RouteType, RouteChildType } from '@utils/types/routes';
 import { sidebarRoutes as routes } from '@routes/index';
 import breakpoints from '@theme/breakpoints';
+import { translate } from '@utils/helpers/i18n';
 
 import PastelLogoWhite from '@assets/images/pastel-logo-white.png';
 import PastelLogo from '@assets/images/pastel-logo.png';
@@ -102,7 +103,7 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
   return (
     <Styles.Category {...rest}>
       <Styles.CategoryText className={`menu-text ${active}`}>
-        {name}
+        {translate(name)}
         {isCollapsable ? categoryIcon : null}
       </Styles.CategoryText>
       {badge ? <Styles.CategoryBadge label={badge} /> : ''}
@@ -111,7 +112,7 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
           {category.children.map((route: RouteChildType) => (
             <SidebarLink
               key={route.name}
-              name={route.name}
+              name={translate(route.name)}
               to={route.path}
               icon={route.icon}
               badge={route.badge}
@@ -238,7 +239,10 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
         <Styles.SlideLogoMobileWrapper>
           <Styles.Brand component={NavLink} to={ROUTES.EXPLORER} button>
             <Box ml={1}>
-              <Styles.BrandLogo src={isDarkMode ? PastelLogoWhite : PastelLogo} alt="Pastel Logo" />
+              <Styles.BrandLogo
+                src={isDarkMode ? PastelLogoWhite : PastelLogo}
+                alt={translate('components.footer.pastelLogo')}
+              />
             </Box>
           </Styles.Brand>
         </Styles.SlideLogoMobileWrapper>

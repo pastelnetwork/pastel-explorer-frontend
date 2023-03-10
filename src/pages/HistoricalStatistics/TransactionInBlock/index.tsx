@@ -7,6 +7,7 @@ import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import { TScatterChartData } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
 import useTransactionInBlock from '@hooks/useTransactionInBlock';
+import { translate } from '@utils/helpers/i18n';
 
 import { EChartsScatterChart } from '../Chart/EChartsScatterChart';
 
@@ -50,12 +51,15 @@ function TransactionInBlock() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Transactions In Block">
+    <HistoricalStatisticsLayout
+      currentBgColor={currentBgColor}
+      title={translate('pages.historicalStatistics.transactionsInBlock')}
+    >
       <EChartsScatterChart
         chartName="transactionsinblock"
         data={chartData?.data}
         dataX={chartData?.dataX}
-        title="Transactions In Block"
+        title={translate('pages.historicalStatistics.transactionsInBlock')}
         info={info}
         offset={1}
         period={period}

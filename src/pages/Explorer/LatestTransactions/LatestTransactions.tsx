@@ -12,6 +12,7 @@ import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { defaultFilters } from '@utils/constants/filter';
 import { getFilterState } from '@redux/reducers/filterReducer';
 import { ITransaction } from '@utils/types/ITransactions';
+import { translate } from '@utils/helpers/i18n';
 
 import * as Styles from './LatestTransactions.styles';
 
@@ -149,7 +150,7 @@ const LatestTransactions: React.FC = () => {
         columns={columns}
         tableHeight={isMobile ? 750 : 650}
         filters={defaultFilters}
-        title="Latest Transactions"
+        title={translate('pages.explorer.latestTransactions')}
         onBottomReach={handleFetchMoreTransactions}
         onHeaderClick={handleSort}
         className="latest-transactions-table"

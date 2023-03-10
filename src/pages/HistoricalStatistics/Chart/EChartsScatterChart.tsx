@@ -18,6 +18,7 @@ import {
 import { getThemeInitOption, getThemeUpdateOption } from '@utils/helpers/chartOptions';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import useWindowDimensions from '@hooks/useWindowDimensions';
+import { translate } from '@utils/helpers/i18n';
 
 import { eChartLineStyles } from './styles';
 import * as Styles from './Chart.styles';
@@ -114,7 +115,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
           }
         })
         .catch(function onError(error) {
-          throw new Error(`PNG download error: ${error}`);
+          throw new Error(`${translate('pages.historicalStatistics.pngDownloadError')}: ${error}`);
         });
     }
   };
@@ -150,6 +151,14 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
     return '';
   };
 
+  const getCsvHeaders = () => {
+    const headers = csvHeaders[chartName];
+    return headers.map(header => ({
+      ...header,
+      label: translate(header.label),
+    }));
+  };
+
   return (
     <Styles.ChartContainer>
       <Styles.LineChartHeader
@@ -161,7 +170,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
           <Styles.ChartTitle>{title}</Styles.ChartTitle>
         )}
         <Styles.PeriodSelect>
-          <span>period: </span>
+          <span>{translate('pages.historicalStatistics.period')}: </span>
           {periods.map(period => (
             <Styles.PeriodButton
               className={getActivePriodButtonStyle(period)}
@@ -182,7 +191,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
         {isLoading || !dataX?.length ? (
           <Styles.LoadingWrapper>
             <Skeleton animation="wave" variant="rect" height={386} />
-            <Styles.LoadingText>Loading data...</Styles.LoadingText>
+            <Styles.LoadingText>{translate('common.loadingData')}</Styles.LoadingText>
           </Styles.LoadingWrapper>
         ) : (
           <ReactECharts
@@ -212,17 +221,17 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
         </div>
         <div className={styles.lineChartDownloadButtonBar}>
           <Styles.DonwloadButton type="button" onClick={downloadPNG}>
-            Download PNG
+            {translate('pages.historicalStatistics.downloadPNG')}
           </Styles.DonwloadButton>
           <Styles.CSVLinkButton
             data={csvData}
             filename={`${makeDownloadFileName(info.currencyName, chartName)}.csv`}
-            headers={csvHeaders[chartName]}
+            headers={getCsvHeaders()}
             separator=","
             ref={downloadRef}
             className={styles.uploadButton}
           >
-            Download CSV
+            {translate('pages.historicalStatistics.downloadCSV')}
           </Styles.CSVLinkButton>
         </div>
       </Styles.LineChartFooter>

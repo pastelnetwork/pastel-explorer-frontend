@@ -58,37 +58,16 @@ export const TableContainer = styled(Grid)`
         border-bottom: 0;
       }
 
-      &:before {
-        position: relative;
-        width: 150px;
-        min-width: 150px;
-        padding-right: 0;
-        font-weight: 600;
-        font-size: 16px;
-        color: ${props => props.theme.table.label};
-      }
-
-      &.col-hash {
+      .cell-content {
         &:before {
-          content: 'Hash:';
-        }
-      }
-
-      &.col-transaction-quantity {
-        &:before {
-          content: 'Transaction Quantity:';
-        }
-      }
-
-      &.col-total-tickets {
-        &:before {
-          content: 'Ticket Quantity:';
-        }
-      }
-
-      &.col-timestamp {
-        &:before {
-          content: 'Timestamp:';
+          content: attr(data-title);
+          position: relative;
+          width: 150px;
+          min-width: 150px;
+          padding-right: 0;
+          font-weight: 600;
+          font-size: 16px;
+          color: ${props => props.theme.table.label};
         }
       }
     }

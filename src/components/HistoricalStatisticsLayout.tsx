@@ -7,6 +7,7 @@ import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 // application
 import { Dropdown, OptionsProps } from '@components/Dropdown/Dropdown';
 import { statistics } from '@utils/constants/statistics';
+import { translate } from '@utils/helpers/i18n';
 
 import * as Styles from './HistoricalStatisticsLayout.styles';
 
@@ -54,7 +55,7 @@ const HistoricalStatisticsLayout = ({ children, currentBgColor, title }: IProps)
     for (let i = 0; i < statistics.length; i += 1) {
       if (statistics[i].title !== title) {
         results.push({
-          name: statistics[i].title,
+          name: translate(statistics[i].title),
           value: statistics[i].url,
         });
       }
@@ -67,7 +68,7 @@ const HistoricalStatisticsLayout = ({ children, currentBgColor, title }: IProps)
       <div style={{ flex: 1 }}>
         <Styles.BackButtonWrapper>
           <Styles.BackButton type="button" onClick={() => history.goBack()}>
-            <NavigateBeforeIcon /> Back
+            <NavigateBeforeIcon /> {translate('components.historicalStatisticsLayout.back')}
           </Styles.BackButton>
           <Styles.DropdownWrapper>
             <Dropdown

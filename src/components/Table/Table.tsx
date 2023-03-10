@@ -2,6 +2,9 @@ import { MouseEvent, useCallback, ReactNode } from 'react';
 import { CircularProgress, Table, TableBody, TableHead, TableRow } from '@material-ui/core';
 import { CSSProperties } from '@material-ui/styles';
 
+import { translate } from '@utils/helpers/i18n';
+import { getCurrencyName } from '@utils/appInfo';
+
 import * as Styles from './Table.styles';
 
 export type HeaderType = { id: number | string; header: string; key?: string };
@@ -55,7 +58,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
                   <TableRow>
                     {headers.map(({ id, header, key }) => (
                       <Styles.TableCell key={id} data-id={key} onClick={onClickHeader}>
-                        {header}
+                        {translate(header, { currency: getCurrencyName() })}
                       </Styles.TableCell>
                     ))}
                   </TableRow>
@@ -63,8 +66,16 @@ const TableComponent: React.FC<TableComponentProps> = ({
                 <TableBody>
                   {rows?.map(({ id, data }) => (
                     <TableRow key={id} className="table__row">
-                      {data.map(dataElement => (
-                        <Styles.RowCell key={dataElement.id}>{dataElement.value}</Styles.RowCell>
+                      {data.map((dataElement, index) => (
+                        <Styles.RowCell
+                          key={dataElement.id}
+                          data-title={translate(headers[index].header, {
+                            currency: getCurrencyName(),
+                          })}
+                          className="cell-content"
+                        >
+                          {dataElement.value}
+                        </Styles.RowCell>
                       ))}
                     </TableRow>
                   ))}

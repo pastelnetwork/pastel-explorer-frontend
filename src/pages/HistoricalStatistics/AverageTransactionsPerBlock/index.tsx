@@ -7,6 +7,7 @@ import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import { TLineChartData } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
 import useAverageTransactionsPerBlock from '@hooks/useAverageTransactionsPerBlock';
+import { translate } from '@utils/helpers/i18n';
 
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
@@ -52,13 +53,13 @@ function AverageTransactionsPerBlock() {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title="Average Transactions Per Block"
+      title={translate('pages.historicalStatistics.averageTransactionsPerBlock')}
     >
       <EChartsLineChart
         chartName="averageTransactionsPerBlock"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title="Average Transaction Per Block"
+        title={translate('pages.historicalStatistics.averageTransactionsPerBlock')}
         info={info}
         offset={1}
         period={period}

@@ -10,6 +10,7 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { formattedDate } from '@utils/helpers/date/date';
 import { ITransaction, TCounts, TTicketType } from '@utils/types/ITransactions';
 import { formatAddress } from '@utils/helpers/format';
+import { translate } from '@utils/helpers/i18n';
 
 import {
   TIMESTAMP_MOVEMENT_KEY,
@@ -78,8 +79,8 @@ export const transformMovementData = (transactions: Array<ITransaction>) =>
         [AMOUNT_MOVEMENT_KEY]: (
           <>
             {isNonStandard ? (
-              <Tooltip title="Because the transaction is shielded, the amount sent is unknown.">
-                <span>Unknown</span>
+              <Tooltip title={translate('pages.movement.shieldedTransactionInfo')}>
+                <span>{translate('common.unknown')}</span>
               </Tooltip>
             ) : (
               formatNumber(totalAmount, { decimalsLength: 2 })

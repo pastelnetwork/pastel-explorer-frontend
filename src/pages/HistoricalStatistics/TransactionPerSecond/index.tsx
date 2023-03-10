@@ -7,6 +7,7 @@ import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import useTransactionPerSecond from '@hooks/useTransactionPerSecond';
+import { translate } from '@utils/helpers/i18n';
 
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
@@ -50,12 +51,15 @@ function TransactionPerSecond() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Transaction Per Second">
+    <HistoricalStatisticsLayout
+      currentBgColor={currentBgColor}
+      title={translate('pages.historicalStatistics.transactionsPerSecond')}
+    >
       <EChartsLineChart
         chartName="transactionspersecond"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title="Transactions Per Second"
+        title={translate('pages.historicalStatistics.transactionsPerSecond')}
         period={period}
         info={info}
         offset={100000}

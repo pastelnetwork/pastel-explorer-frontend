@@ -4,33 +4,11 @@ import DateRangeIcon from '@material-ui/icons/DateRange';
 import differenceInDays from 'date-fns/differenceInDays';
 import subDays from 'date-fns/subDays';
 
+import { translate } from '@utils/helpers/i18n';
 import UseOnClickOutside from '@hooks/useOnClickOutside';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import * as Styles from './DateTimePicker.styles';
-
-const predefinedList = [
-  {
-    name: 'Last 7 days',
-    value: 7,
-  },
-  {
-    name: 'Last 30 days',
-    value: 30,
-  },
-  {
-    name: 'Last 90 days',
-    value: 90,
-  },
-  {
-    name: 'Last 180 days',
-    value: 180,
-  },
-  {
-    name: 'Last 365 days',
-    value: 365,
-  },
-];
 
 interface IDateTimePickerProps {
   onApply?: (_startDate: number, _endDate: number | null) => void;
@@ -48,6 +26,28 @@ const getDifferenceInDays = (startDate: number, endDate: number) => {
 };
 
 const DateTimePicker: React.FC<IDateTimePickerProps> = ({ onApply, defaultDateRange }) => {
+  const predefinedList = [
+    {
+      name: translate('components.dateTimePicker.predefinedList.7days'),
+      value: 7,
+    },
+    {
+      name: translate('components.dateTimePicker.predefinedList.30days'),
+      value: 30,
+    },
+    {
+      name: translate('components.dateTimePicker.predefinedList.90days'),
+      value: 90,
+    },
+    {
+      name: translate('components.dateTimePicker.predefinedList.180days'),
+      value: 180,
+    },
+    {
+      name: translate('components.dateTimePicker.predefinedList.365days'),
+      value: 365,
+    },
+  ];
   const dateTimePickerRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState<Date>(
@@ -101,6 +101,7 @@ const DateTimePicker: React.FC<IDateTimePickerProps> = ({ onApply, defaultDateRa
     selectsRange: true,
     inline: true,
     showPopperArrow: false,
+    locale: 'en',
   };
 
   return (
@@ -115,7 +116,7 @@ const DateTimePicker: React.FC<IDateTimePickerProps> = ({ onApply, defaultDateRa
               <DatePicker {...options} />
             </Styles.DatePicker>
             <Styles.PredefinedWrapper>
-              <p>Predefined dates</p>
+              <p>{translate('components.dateTimePicker.predefinedDates')}</p>
               <ul>
                 {predefinedList.map(item => (
                   <li
@@ -131,14 +132,20 @@ const DateTimePicker: React.FC<IDateTimePickerProps> = ({ onApply, defaultDateRa
             </Styles.PredefinedWrapper>
           </Styles.DatePickerContent>
           <Styles.Footer>
-            <Styles.CancelButton onClick={handleCloseDatePicker}>Cancel</Styles.CancelButton>
+            <Styles.CancelButton onClick={handleCloseDatePicker}>
+              {translate('components.dateTimePicker.cancel')}
+            </Styles.CancelButton>
             <Styles.SelectedDay>
-              <span>Selected</span>:{' '}
+              <span>{translate('components.dateTimePicker.selected')}</span>:{' '}
               {endDate && startDate
-                ? `${getDifferenceInDays(startDate.valueOf(), endDate.valueOf())} days`
-                : '1 day'}
+                ? `${getDifferenceInDays(startDate.valueOf(), endDate.valueOf())} ${translate(
+                    'components.dateTimePicker.days',
+                  )}`
+                : `1 ${translate('components.dateTimePicker.day')}`}
             </Styles.SelectedDay>
-            <Styles.ContinueButton onClick={handleContinueClick}>Continue</Styles.ContinueButton>
+            <Styles.ContinueButton onClick={handleContinueClick}>
+              {translate('components.dateTimePicker.continue')}
+            </Styles.ContinueButton>
           </Styles.Footer>
         </Styles.DatePickerPopper>
       ) : null}

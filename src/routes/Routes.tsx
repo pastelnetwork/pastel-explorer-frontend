@@ -7,6 +7,7 @@ import Page404 from '@pages/404/404';
 
 import { RouteType } from '@utils/types/routes';
 import ScrollToTop from '@utils/helpers/scrollToTop/scrollToTop';
+import { translate } from '@utils/helpers/i18n';
 
 import { pageRoutes } from './index';
 
@@ -29,7 +30,7 @@ const childRoutes = (Layout: React.ElementType, routes: Array<RouteType>) =>
             render={(props: RouteComponentProps) => (
               <Layout>
                 <ChildrenGuard>
-                  <Helmet title={element.seoTitle || seoTitle} />
+                  <Helmet title={translate(element.seoTitle || seoTitle)} />
                   <ElementComponent {...props} />
                 </ChildrenGuard>
               </Layout>
@@ -48,7 +49,7 @@ const childRoutes = (Layout: React.ElementType, routes: Array<RouteType>) =>
           render={props => (
             <Layout>
               <Guard>
-                <Helmet title={seoTitle} />
+                <Helmet title={translate(seoTitle)} />
                 <Component {...props} />
               </Guard>
             </Layout>
