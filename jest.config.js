@@ -2,6 +2,11 @@ module.exports = {
   roots: [
     "<rootDir>/src"
   ],
+  globals: {
+    'ts-jest': {
+      babelConfig: '.babelrc',
+    },
+  },
   transform: {
     "^.+\\.(ts|tsx)$": "ts-jest"
   },
@@ -33,6 +38,7 @@ module.exports = {
     '@context/(.*)': '<rootDir>/src/context/$1',
     '@apis/(.*)': '<rootDir>/src/apis/$1',
     '@services/(.*)': '<rootDir>/src/services/$1',
+    'styled-components/macro': '<rootDir>/node_modules/styled-components/dist/styled-components-macro.cjs.js',
   },
   moduleDirectories: ['node_modules', 'src'],
   testEnvironment: "jsdom",
