@@ -1,7 +1,5 @@
 import format from 'date-fns/format';
 import fromUnixTime from 'date-fns/fromUnixTime';
-import subDays from 'date-fns/subDays';
-import subHours from 'date-fns/subHours';
 import {
   TMultiLineChartData,
   TMiningInfo,
@@ -699,33 +697,6 @@ export const toPlainString = (num: number) => {
   });
 };
 
-const getPeriodData = (period: PeriodTypes, date: string, isHour = false) => {
-  if (isHour) {
-    const periodHourData = {
-      '1h': 1,
-      '3h': 3,
-      '6h': 6,
-      '12h': 12,
-    };
-    return subHours(
-      new Date(date),
-      periodHourData[period as keyof typeof periodHourData],
-    ).valueOf();
-  }
-
-  const periodData = {
-    '24h': 1,
-    '7d': 7,
-    '14d': 14,
-    '30d': 30,
-    '60d': 60,
-    '90d': 90,
-    '180d': 180,
-    '1y': 365,
-  };
-  return subDays(new Date(date), periodData[period as keyof typeof periodData]).valueOf();
-};
-
 export function transformLineChartData(
   data: TChartResponseItem[],
   period: PeriodTypes,
@@ -737,7 +708,7 @@ export function transformLineChartData(
   const dataX: string[] = [];
   const dataY: number[] = [];
   data.forEach(({ value, label }) => {
-    dataX.push(new Date(isMicroseconds ? Number(label) * 1000 : label).toLocaleString());
+    dataX.push(new Date(isMicroseconds ? Number(label) * 1000 : Number(label)).toLocaleString());
     if (decimalsLength) {
       dataY.push(+(value / range).toFixed(decimalsLength));
     } else {
@@ -759,40 +730,6 @@ export function transformLineChartData(
   return { dataX, dataY };
 }
 
-export const getScatterChartData = (
-  parseData: TScatterChartData,
-  currentData: TScatterChartData,
-  period: PeriodTypes,
-) => {
-  if (!currentData || !currentData.dataX.length) {
-    return parseData;
-  }
-  if (!parseData || !parseData.dataX.length) {
-    return currentData;
-  }
-  const newDataX = [
-    ...currentData.dataX.splice(0, currentData.dataX.length - 1),
-    ...parseData.dataX,
-  ];
-  const newData = currentData.data.splice(0, currentData.data.length - 1).concat(parseData.data);
-  let startIndex = 0;
-  if (period !== 'all' && period !== 'max') {
-    const target = getPeriodData(period, parseData.dataX[parseData.dataX.length - 1], true);
-    for (let i = 0; i < newDataX.length; i += 1) {
-      const timestamp = new Date(newDataX[i]).valueOf();
-      if (timestamp >= target) {
-        startIndex = i;
-        break;
-      }
-    }
-  }
-  const dataX = newDataX.splice(startIndex, newDataX.length);
-  return {
-    dataX,
-    data: newData.splice(startIndex, newData.length),
-  };
-};
-
 export const generateXAxisIntervalForScatterChart = (
   period?: PeriodTypes,
   dataX?: string[],
@@ -811,123 +748,6 @@ export const generateXAxisIntervalForScatterChart = (
   }
 
   return Math.floor(dataX.length / 14);
-};
-
-export const mergeMultiLineChartData = (
-  parseData: TMultiLineChartData,
-  currentData: TMultiLineChartData,
-  period: PeriodTypes,
-) => {
-  if (!currentData || !currentData.dataX.length) {
-    return parseData;
-  }
-  if (!parseData || !parseData.dataX.length) {
-    return currentData;
-  }
-  const newDataX = [
-    ...currentData.dataX.splice(0, currentData.dataX.length - 1),
-    ...parseData.dataX,
-  ];
-  const newDataY1 = [
-    ...currentData.dataY1.splice(0, currentData.dataY1.length - 1),
-    ...parseData.dataY1,
-  ];
-  const newDataY2 = [
-    ...currentData.dataY2.splice(0, currentData.dataY2.length - 1),
-    ...parseData.dataY2,
-  ];
-  let startIndex = 0;
-  if (period !== 'all' && period !== 'max') {
-    const target = getPeriodData(period, parseData.dataX[parseData.dataX.length - 1]);
-    for (let i = 0; i < newDataX.length; i += 1) {
-      const timestamp = new Date(newDataX[i]).valueOf();
-      if (timestamp >= target) {
-        startIndex = i;
-        break;
-      }
-    }
-  }
-
-  return {
-    dataX: newDataX.splice(startIndex, newDataX.length),
-    dataY1: newDataY1.splice(startIndex, newDataY1.length),
-    dataY2: newDataY2.splice(startIndex, newDataY2.length),
-  };
-};
-
-export const mergeHashRateChartData = (
-  parseData: THashrateChartData,
-  currentData: THashrateChartData,
-  period: PeriodTypes,
-) => {
-  if (!currentData || !currentData.dataX.length) {
-    return parseData;
-  }
-  if (!parseData || !parseData.dataX.length) {
-    return currentData;
-  }
-  const newDataX = [
-    ...currentData.dataX.splice(0, currentData.dataX.length - 1),
-    ...parseData.dataX,
-  ];
-  const networksolps: TSolpsData = {
-    solps5: [
-      ...currentData.networksolps.solps5.splice(0, currentData.networksolps.solps5.length - 1),
-      ...parseData.networksolps.solps5,
-    ],
-    solps10: [
-      ...currentData.networksolps.solps10.splice(0, currentData.networksolps.solps10.length - 1),
-      ...parseData.networksolps.solps10,
-    ],
-    solps25: [
-      ...currentData.networksolps.solps25.splice(0, currentData.networksolps.solps25.length - 1),
-      ...parseData.networksolps.solps25,
-    ],
-    solps50: [
-      ...currentData.networksolps.solps50.splice(0, currentData.networksolps.solps50.length - 1),
-      ...parseData.networksolps.solps50,
-    ],
-    solps100: [
-      ...currentData.networksolps.solps100.splice(0, currentData.networksolps.solps100.length - 1),
-      ...parseData.networksolps.solps100,
-    ],
-    solps500: [
-      ...currentData.networksolps.solps500.splice(0, currentData.networksolps.solps500.length - 1),
-      ...parseData.networksolps.solps5,
-    ],
-    solps1000: [
-      ...currentData.networksolps.solps1000.splice(
-        0,
-        currentData.networksolps.solps1000.length - 1,
-      ),
-      ...parseData.networksolps.solps1000,
-    ],
-  };
-
-  let startIndex = 0;
-  if (period !== 'all' && period !== 'max') {
-    const target = getPeriodData(period, parseData.dataX[parseData.dataX.length - 1]);
-    for (let i = 0; i < newDataX.length; i += 1) {
-      const timestamp = new Date(newDataX[i]).valueOf();
-      if (timestamp >= target) {
-        startIndex = i;
-        break;
-      }
-    }
-  }
-
-  return {
-    dataX: newDataX.splice(startIndex, newDataX.length),
-    networksolps: {
-      solps5: networksolps.solps5.splice(startIndex, networksolps.solps5.length),
-      solps10: networksolps.solps10.splice(startIndex, networksolps.solps10.length),
-      solps25: networksolps.solps25.splice(startIndex, networksolps.solps25.length),
-      solps50: networksolps.solps50.splice(startIndex, networksolps.solps50.length),
-      solps100: networksolps.solps100.splice(startIndex, networksolps.solps100.length),
-      solps500: networksolps.solps500.splice(startIndex, networksolps.solps500.length),
-      solps1000: networksolps.solps5.splice(startIndex, networksolps.solps1000.length),
-    },
-  };
 };
 
 export const getFractionDigits = (min: number, max: number, range = 6) => {
@@ -1013,7 +833,7 @@ export function transformTransactionsChartData(
   const dataX: string[] = [];
   const dataY: number[] = [];
   data.forEach(({ value, label }) => {
-    dataX.push(new Date(isMicroseconds ? Number(label) * 1000 : label).toLocaleString());
+    dataX.push(new Date(isMicroseconds ? Number(label) * 1000 : Number(label)).toLocaleString());
     if (decimalsLength) {
       dataY.push(+value.toFixed(decimalsLength));
     } else {

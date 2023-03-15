@@ -2,12 +2,12 @@ import { Box, Hidden } from '@material-ui/core';
 import getYear from 'date-fns/getYear';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import Social from '@components/Social/Social';
 import { currentDate } from '@utils/helpers/date/date';
 import * as ROUTES from '@utils/constants/routes';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
-import { translate } from '@utils/helpers/i18n';
 
 import PastelLogoWhite from '@assets/images/pastel-logo-white.svg';
 import PastelLogo from '@assets/images/pastel-logo.svg';
@@ -17,6 +17,7 @@ import * as Styles from './Footer.styles';
 import * as SidebarStyles from '../Sidebar/Sidebar.styles';
 
 const Footer: React.FC = () => {
+  const { t } = useTranslation();
   const isDarkMode = useSelector(getThemeState).darkMode;
 
   return (
@@ -32,7 +33,7 @@ const Footer: React.FC = () => {
             <Box>
               <SidebarStyles.BrandLogo
                 src={isDarkMode ? PastelLogoWhite : PastelLogo}
-                alt={translate('components.footer.pastelLogo')}
+                alt={t('components.footer.pastelLogo.message') || ''}
               />
             </Box>
           </SidebarStyles.Brand>
@@ -40,13 +41,13 @@ const Footer: React.FC = () => {
         <Styles.FooterMenuWrapper>
           {footerMenu.map(menu => (
             <Styles.FooterMenuBlock key={menu.id}>
-              <Styles.FooterMenuTitle>{translate(menu.title)}</Styles.FooterMenuTitle>
+              <Styles.FooterMenuTitle>{t(`${menu.title}.message`)}</Styles.FooterMenuTitle>
               {menu.children.length ? (
                 <Styles.FooterMenuList>
                   {menu.children.map(item => (
                     <Styles.FooterMenuItem key={item.path}>
                       <Styles.FooterMenuLink href={item.path} target={item.target}>
-                        {translate(item.name)}
+                        {t(`${item.name}.message`)}
                       </Styles.FooterMenuLink>
                     </Styles.FooterMenuItem>
                   ))}
@@ -58,7 +59,7 @@ const Footer: React.FC = () => {
         <Hidden xsDown implementation="css">
           <Styles.GridStyle item>
             <Styles.Typography>
-              {translate('components.footer.copyright', { year: getYear(currentDate) })}
+              {t('components.footer.copyright.message', { year: getYear(currentDate) })}
             </Styles.Typography>
           </Styles.GridStyle>
         </Hidden>
@@ -69,7 +70,7 @@ const Footer: React.FC = () => {
             <Box>
               <SidebarStyles.BrandLogo
                 src={isDarkMode ? PastelLogoWhite : PastelLogo}
-                alt={translate('components.footer.pastelLogo')}
+                alt={t('components.footer.pastelLogo.message') || ''}
               />
             </Box>
           </SidebarStyles.Brand>
@@ -79,7 +80,7 @@ const Footer: React.FC = () => {
       <Hidden smUp implementation="js">
         <Styles.GridStyle item>
           <Styles.Typography>
-            {translate('components.footer.copyright', { year: getYear(currentDate) })}
+            {t('components.footer.copyright.message', { year: getYear(currentDate) })}
           </Styles.Typography>
         </Styles.GridStyle>
       </Hidden>

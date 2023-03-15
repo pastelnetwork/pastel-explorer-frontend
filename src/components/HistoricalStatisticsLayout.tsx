@@ -8,6 +8,7 @@ import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import { Dropdown, OptionsProps } from '@components/Dropdown/Dropdown';
 import { statistics } from '@utils/constants/statistics';
 import { translate } from '@utils/helpers/i18n';
+import { getCurrencyName } from '@utils/appInfo';
 
 import * as Styles from './HistoricalStatisticsLayout.styles';
 
@@ -55,7 +56,7 @@ const HistoricalStatisticsLayout = ({ children, currentBgColor, title }: IProps)
     for (let i = 0; i < statistics.length; i += 1) {
       if (statistics[i].title !== title) {
         results.push({
-          name: translate(statistics[i].title),
+          name: translate(statistics[i].title, { currency: getCurrencyName() }),
           value: statistics[i].url,
         });
       }
@@ -75,7 +76,7 @@ const HistoricalStatisticsLayout = ({ children, currentBgColor, title }: IProps)
               value={selectedChart}
               onChange={handleDropdownChange}
               options={generateChartOption()}
-              label="Historical statistic:"
+              label={`${translate('components.historicalStatisticsLayout.historicalStatistic')}:`}
               classNameWrapper="historical-statistics"
             />
           </Styles.DropdownWrapper>

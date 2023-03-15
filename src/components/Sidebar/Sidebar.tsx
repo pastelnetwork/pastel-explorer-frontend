@@ -1,17 +1,16 @@
 import * as React from 'react';
 import { NavLink, withRouter, RouteComponentProps, match } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
-
 import { useCallback } from 'react';
 import { Collapse, List, Hidden, Button, Box } from '@material-ui/core';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import * as ROUTES from '@utils/constants/routes';
 import { RouteType, RouteChildType } from '@utils/types/routes';
 import { sidebarRoutes as routes } from '@routes/index';
 import breakpoints from '@theme/breakpoints';
-import { translate } from '@utils/helpers/i18n';
 
 import PastelLogoWhite from '@assets/images/pastel-logo-white.png';
 import PastelLogo from '@assets/images/pastel-logo.png';
@@ -71,6 +70,7 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
   category,
   ...rest
 }) => {
+  const { t } = useTranslation();
   const [isMobile, setMobileView] = React.useState(false);
   const categoryIcon = isOpen ? <Styles.CategoryIconMore /> : <Styles.CategoryIconLess />;
   let active = '';
@@ -103,7 +103,7 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
   return (
     <Styles.Category {...rest}>
       <Styles.CategoryText className={`menu-text ${active}`}>
-        {translate(name)}
+        {t(`${name}.message`)}
         {isCollapsable ? categoryIcon : null}
       </Styles.CategoryText>
       {badge ? <Styles.CategoryBadge label={badge} /> : ''}
@@ -112,7 +112,7 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
           {category.children.map((route: RouteChildType) => (
             <SidebarLink
               key={route.name}
-              name={translate(route.name)}
+              name={t(`${route.name}.message`)}
               to={route.path}
               icon={route.icon}
               badge={route.badge}
@@ -139,6 +139,7 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
   interface InitOptionsProps {
     [key: number]: boolean;
   }
+  const { t } = useTranslation();
   const classes = useStyles();
 
   const initOpenRoutes = (): InitOptionsProps => {
@@ -241,7 +242,7 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
             <Box ml={1}>
               <Styles.BrandLogo
                 src={isDarkMode ? PastelLogoWhite : PastelLogo}
-                alt={translate('components.footer.pastelLogo')}
+                alt={t('components.footer.pastelLogo.message') || ''}
               />
             </Box>
           </Styles.Brand>

@@ -976,6 +976,10 @@
       "back": {
         "message": "Back",
         "description": "Used for the HistoricalStatisticsLayout component"
+      },
+      "historicalStatistic": {
+        "message": "Historical statistic",
+        "description": "Used for the HistoricalStatisticsLayout component"
       }
     }
   },
