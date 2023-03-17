@@ -5,7 +5,7 @@ import { PeriodTypes, transformTotalTransactionCount } from '@utils/helpers/stat
 import { periods, info, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
-import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout/HistoricalStatisticsLayout';
 import useTotalTransactionFees from '@hooks/useTotalTransactionFees';
 import { translate } from '@utils/helpers/i18n';
 

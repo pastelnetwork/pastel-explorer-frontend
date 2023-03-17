@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { PeriodTypes, transformLineChartData } from '@utils/helpers/statisticsLib';
 import { periods, info, cacheList } from '@utils/constants/statistics';
 import { TLineChartData } from '@utils/types/IStatistics';
-import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout/HistoricalStatisticsLayout';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import useTotalTransactionsPerDay from '@hooks/useTotalTransactionsPerDay';

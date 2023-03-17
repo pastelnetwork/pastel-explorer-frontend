@@ -49,7 +49,7 @@ import * as BlockDetailsStyles from '@pages/Details/BlockDetails/BlockDetails.st
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
 import * as Styles from '@pages/Details/PastelIdDetails/PastelIdDetails.styles';
 import * as FilterStyles from '@components/InfinityTable/InfinityTable.styles';
-import DateTimePicker from '@components/DateTimePicker';
+import DateTimePicker from '@components/DateTimePicker/DateTimePicker';
 import { blocksPeriodFilters } from '@utils/constants/filter';
 import { TAppTheme } from '@theme/index';
 import { translate } from '@utils/helpers/i18n';

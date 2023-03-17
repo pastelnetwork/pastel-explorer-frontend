@@ -30,6 +30,7 @@ import {
   getRoute,
   collectData,
   collectUsernameData,
+  TAutocompleteOptions,
 } from './SearchBar.helpers';
 
 interface AppBarProps {
@@ -143,11 +144,11 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
     optionSelectedFromList.current = true;
 
     // Reset reference object when to allow user search again if he will click on some option from dropdown
-    setTimeout(() => {
+    const id = setTimeout(() => {
       optionSelectedFromList.current = false;
     }, 600);
 
-    return () => clearTimeout();
+    return () => clearTimeout(id);
   };
 
   const handleClose = () => searchData.length && setSearchData([]);
@@ -165,42 +166,50 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
           paper: classes.listboxOptions,
         }}
         filterOptions={filterOptions}
-        groupBy={option => option.category}
-        getOptionLabel={option => `${option.value}`}
+        groupBy={option => (option as TAutocompleteOptions).category}
+        getOptionLabel={option => `${(option as TAutocompleteOptions).value}`}
         loading={loading}
         onInputChange={handleInputChange}
         onChange={handleChange}
         onClose={handleClose}
         forcePopupIcon={false}
-        getOptionSelected={(option, value) => option.value === value.value}
+        getOptionSelected={(option, value) =>
+          (option as TAutocompleteOptions).value === (value as TAutocompleteOptions).value
+        }
         noOptionsText={translate('components.searchBar.noResults')}
         loadingText={translate('components.searchBar.loadingResults')}
         size="small"
         debug
         renderOption={option => {
-          if (option.category === USERNAME) {
+          if ((option as TAutocompleteOptions).category === USERNAME) {
             return (
               <RouterLink
                 styles={{ padding: '6px 24px 6px 16px' }}
-                route={`${getRoute(option.category)}/${option.pastelID}#${option.value}`}
-                value={option.value}
+                route={`${getRoute((option as TAutocompleteOptions).category)}/${
+                  (option as TAutocompleteOptions).pastelID
+                }#${(option as TAutocompleteOptions).value}`}
+                value={(option as TAutocompleteOptions).value}
               />
             );
           }
-          if (option.category === SENSES_LABEL) {
+          if ((option as TAutocompleteOptions).category === SENSES_LABEL) {
             return (
               <RouterLink
                 styles={{ padding: '6px 24px 6px 16px' }}
-                route={`${getRoute(option.category)}?hash=${option.value}`}
-                value={option.value}
+                route={`${getRoute((option as TAutocompleteOptions).category)}?hash=${
+                  (option as TAutocompleteOptions).value
+                }`}
+                value={(option as TAutocompleteOptions).value}
               />
             );
           }
           return (
             <RouterLink
               styles={{ padding: '6px 24px 6px 16px' }}
-              route={`${getRoute(option.category)}/${option.value}`}
-              value={option.value}
+              route={`${getRoute((option as TAutocompleteOptions).category)}/${
+                (option as TAutocompleteOptions).value
+              }`}
+              value={(option as TAutocompleteOptions).value}
             />
           );
         }}

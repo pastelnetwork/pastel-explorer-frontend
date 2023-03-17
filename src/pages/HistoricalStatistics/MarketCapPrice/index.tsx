@@ -6,7 +6,7 @@ import { periods, info, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import { TMultiLineChartData } from '@utils/types/IStatistics';
-import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout/HistoricalStatisticsLayout';
 import useMarketCapPrice from '@hooks/useMarketCapPrice';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { translate } from '@utils/helpers/i18n';

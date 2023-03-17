@@ -13,7 +13,7 @@ import {
 } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
-import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout/HistoricalStatisticsLayout';
 import useAverageBlockSize from '@hooks/useAverageBlockSize';
 import { translate } from '@utils/helpers/i18n';
 

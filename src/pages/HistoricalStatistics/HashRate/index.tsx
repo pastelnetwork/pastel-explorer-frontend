@@ -5,7 +5,7 @@ import { periods, info, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import { THashrateChartData, TSolpsData } from '@utils/types/IStatistics';
-import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout/HistoricalStatisticsLayout';
 import { Dropdown } from '@components/Dropdown/Dropdown';
 import useHashRate from '@hooks/useHashRate';
 import { translate } from '@utils/helpers/i18n';

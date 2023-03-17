@@ -1,8 +1,7 @@
-import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
 import { DEFAULT_API_URL } from '../../constants/urls';
-import { getBaseURL, axiosGet } from '../useFetch/useFetch';
+import { getBaseURL, axiosGet, axiosInstance } from '../useFetch/useFetch';
 
 describe('utils/helpers/useFetch', () => {
   test('getBaseURL should works correctly', () => {
@@ -23,7 +22,7 @@ describe('utils/helpers/useFetch', () => {
   });
 
   test('axiosGet should works correctly', done => {
-    const mock = new MockAdapter(axios);
+    const mock = new MockAdapter(axiosInstance);
     const data = { response: true };
     JSON.parse = jest.fn().mockImplementation(() => {
       return data;

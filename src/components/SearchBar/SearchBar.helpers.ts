@@ -17,6 +17,12 @@ export type TOptionsCategories =
   | typeof PASTEL_ID_LABEL
   | typeof USERNAME;
 
+export type TAutocompleteOptions = {
+  category: TOptionsCategories;
+  value: string;
+  pastelID: string;
+};
+
 export const collectData = (data: Array<string | number>, category: TOptionsCategories) =>
   data?.map((item: string | number) => ({ value: `${item}`, category }));
 

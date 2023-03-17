@@ -5,7 +5,7 @@ import { periods, info, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import { TLineChartData } from '@utils/types/IStatistics';
-import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout/HistoricalStatisticsLayout';
 import { getCurrencyName } from '@utils/appInfo';
 import useCirculatingSupply from '@hooks/useCirculatingSupply';
 import { translate } from '@utils/helpers/i18n';

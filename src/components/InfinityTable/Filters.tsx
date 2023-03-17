@@ -10,7 +10,7 @@ import FormControl from '@material-ui/core/FormControl';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { translate } from '@utils/helpers/i18n';
-import DateTimePicker from '@components/DateTimePicker';
+import DateTimePicker from '@components/DateTimePicker/DateTimePicker';
 import { setFilterValueAction } from '@redux/actions/filterAction';
 import { TAppTheme } from '@theme/index';
 import { TFilter } from '@utils/types/IFilter';

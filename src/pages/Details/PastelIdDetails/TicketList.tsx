@@ -38,7 +38,7 @@ import {
   getTicketTitle,
 } from '@components/Ticket';
 import { Dropdown } from '@components/Dropdown/Dropdown';
-import Pagination from '@components/Pagination';
+import Pagination from '@components/Pagination/Pagination';
 import { getBaseURL } from '@utils/constants/statistics';
 import { translate } from '@utils/helpers/i18n';
 
