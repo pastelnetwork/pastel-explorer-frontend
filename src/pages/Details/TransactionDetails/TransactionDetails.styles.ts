@@ -5,8 +5,6 @@ import { Alert as MuiAlert } from '@material-ui/lab';
 import { Grid, Toolbar } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 
-import { getCurrencyName } from '@utils/appInfo';
-
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appBar: {
@@ -62,6 +60,7 @@ export const Wrapper = styled('div')`
           border: 0;
 
           &:before {
+            content: attr(data-title);
             position: relative;
             min-width: 120px;
             display: inline-block;
@@ -77,38 +76,6 @@ export const Wrapper = styled('div')`
           &:nth-of-type(odd) {
             background-color: ${props => props.theme.sidebar.background.default} !important;
           }
-
-          td {
-            &:nth-child(1) {
-              &:before {
-                content: 'Block Hash';
-              }
-            }
-
-            &:nth-child(2) {
-              &:before {
-                content: 'Confirmations';
-              }
-            }
-
-            &:nth-child(3) {
-              &:before {
-                content: 'Recipients';
-              }
-            }
-
-            &:nth-child(4) {
-              &:before {
-                content: 'Amount (${getCurrencyName()})';
-              }
-            }
-
-            &:nth-child(5) {
-              &:before {
-                content: 'Timestamp';
-              }
-            }
-          }
         }
       }
 
@@ -116,23 +83,15 @@ export const Wrapper = styled('div')`
       &.recipients {
         .table__row {
           td {
-            &:nth-child(1) {
-              &:before {
-                content: 'Address';
-              }
-            }
-
             &:nth-child(2) {
               &:before {
                 margin-right: 8px;
-                content: 'Amount (${getCurrencyName()})';
               }
             }
 
             &:nth-child(3) {
               &:before {
                 margin-right: 8px;
-                content: 'Amount (USD)';
               }
             }
           }

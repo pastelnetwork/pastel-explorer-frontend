@@ -9,6 +9,7 @@ import { Dropdown } from '@components/Dropdown/Dropdown';
 import { useDeferredData } from '@utils/helpers/useFetch/useFetch';
 import { IBlock } from '@utils/types/IBlocks';
 import * as URLS from '@utils/constants/urls';
+import { translate } from '@utils/helpers/i18n';
 
 import * as SummaryStyles from '@components/Summary/Summary.styles';
 import * as Styles from '@pages/CascadeAndSenseStatistics/CascadeAndSenseStatistics.styles';
@@ -66,7 +67,9 @@ const BlockSizes: React.FC<IBlockSizes> = ({ blockElements }) => {
     <SummaryStyles.Card className="cascade-sense-card">
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
-          <SummaryStyles.Typography variant="h6">Block sizes (kB)</SummaryStyles.Typography>
+          <SummaryStyles.Typography variant="h6">
+            {translate('pages.statistics.blockSizes')}
+          </SummaryStyles.Typography>
         </SummaryStyles.ValueWrapper>
         <SummaryStyles.PercentageWrapper>
           <Styles.Percentage>
@@ -82,13 +85,17 @@ const BlockSizes: React.FC<IBlockSizes> = ({ blockElements }) => {
       <StatisticsStyles.ChartSection>
         {isLoading ? (
           <StatisticsStyles.Loader>
-            <StatisticsStyles.LoadingText>Loading data...</StatisticsStyles.LoadingText>
+            <StatisticsStyles.LoadingText>
+              {translate('common.loadingData')}
+            </StatisticsStyles.LoadingText>
           </StatisticsStyles.Loader>
         ) : null}
         {!chartData ? (
           <>
             <Skeleton animation="wave" variant="rect" height={300} />
-            <StatisticsStyles.LoadingText>Loading data...</StatisticsStyles.LoadingText>
+            <StatisticsStyles.LoadingText>
+              {translate('common.loadingData')}
+            </StatisticsStyles.LoadingText>
           </>
         ) : (
           <LineChart

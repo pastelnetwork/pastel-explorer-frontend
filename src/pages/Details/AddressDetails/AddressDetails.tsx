@@ -8,6 +8,7 @@ import InfinityTable, {
   SortDirectionsType,
   ISortData,
 } from '@components/InfinityTable/InfinityTable';
+import { translate } from '@utils/helpers/i18n';
 
 import { getCurrencyName } from '@utils/appInfo';
 import { eChartLineStyles } from '@pages/HistoricalStatistics/Chart/styles';
@@ -33,13 +34,16 @@ interface IAddressDataRef {
   sortDirection: SortDirectionsType;
 }
 
-const transactionHistoryCSVHeaders = [
-  { label: 'Hash', key: 'transactionHash' },
-  { label: `Amount (${getCurrencyName()})`, key: 'amount' },
-  { label: 'Timestamp', key: 'timestamp' },
-];
-
 const AddressDetails = () => {
+  const transactionHistoryCSVHeaders = [
+    { label: translate('pages.addressDetails.hash'), key: 'transactionHash' },
+    {
+      label: translate('pages.addressDetails.amount', { currency: getCurrencyName() }),
+      key: 'amount',
+    },
+    { label: translate('pages.addressDetails.timestamp'), key: 'timestamp' },
+  ];
+
   const { id } = useParams<ParamTypes>();
   const [apiParams, setParams] = useState<IAddressDataRef>({
     sortBy: ADDRESS_TRANSACTION_TIMESTAMP_KEY,
@@ -91,7 +95,8 @@ const AddressDetails = () => {
   const generateAddTitle = () => {
     return (
       <Styles.AddressTitleBlock>
-        {getCurrencyName()} address: <span>{id}</span>
+        {translate('pages.addressDetails.address', { currency: getCurrencyName() })}:{' '}
+        <span>{id}</span>
       </Styles.AddressTitleBlock>
     );
   };
@@ -103,7 +108,7 @@ const AddressDetails = () => {
     }_${date.getDate()}.csv`;
     return (
       <Styles.TitleWrapper>
-        <h4>Latest Transactions</h4>
+        <h4>{translate('pages.addressDetails.latestTransactions')}</h4>
         <CSVLink
           data={csvData}
           filename={fileName}
@@ -112,7 +117,7 @@ const AddressDetails = () => {
           ref={downloadRef}
           className={styles.uploadButton}
         >
-          Download CSV
+          {translate('pages.addressDetails.downloadCSV')}
         </CSVLink>
       </Styles.TitleWrapper>
     );

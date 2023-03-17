@@ -83,59 +83,14 @@ export const TicketsContainer = styled.div`
         border-bottom: 0;
       }
 
-      &:before {
-        position: relative;
-        width: 120px;
-        font-weight: 600;
-        font-size: 16px;
-        color: ${props => props.theme.table.label};
-      }
-
-      &.txID {
+      .cell-content {
         &:before {
-          content: 'txID:';
-        }
-      }
-
-      &.type {
-        &:before {
-          content: 'Type:';
-        }
-      }
-
-      &.version {
-        &:before {
-          content: 'Version:';
-        }
-      }
-
-      &.timestamp {
-        &:before {
-          content: 'Timestamp:';
-        }
-      }
-
-      &.status {
-        &:before {
-          content: 'Status:';
-        }
-      }
-
-      &.fee {
-        &:before {
-          content: 'Fee:';
-        }
-      }
-
-      &.pastelID {
-        &:before {
-          content: 'PastelID';
-        }
-      }
-
-      &.idType {
-        &:before {
-          content: 'ID Type';
+          content: attr(data-title);
+          position: relative;
+          width: 120px;
+          font-weight: 600;
+          font-size: 16px;
+          color: ${props => props.theme.table.label};
         }
       }
     }

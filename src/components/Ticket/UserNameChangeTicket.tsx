@@ -7,6 +7,7 @@ import { getCurrencyName } from '@utils/appInfo';
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
 import { formatFullDate } from '@utils/helpers/date/date';
+import { translate } from '@utils/helpers/i18n';
 
 import Signatures from './Signatures';
 import * as Styles from './Ticket.styles';
@@ -20,7 +21,9 @@ const UserNameChangeTicket: React.FC<IUserNameChangeTicketProps> = ({ ticket }) 
     <Box>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Username:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.userNameChangeTicket.username')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>{ticket.username}</Styles.TicketContent>
@@ -28,7 +31,9 @@ const UserNameChangeTicket: React.FC<IUserNameChangeTicketProps> = ({ ticket }) 
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Pastel OpenAPI Ticket Version Number:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.userNameChangeTicket.version')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>{ticket.version}</Styles.TicketContent>
@@ -36,7 +41,9 @@ const UserNameChangeTicket: React.FC<IUserNameChangeTicketProps> = ({ ticket }) 
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.userNameChangeTicket.pastelID')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
@@ -52,7 +59,9 @@ const UserNameChangeTicket: React.FC<IUserNameChangeTicketProps> = ({ ticket }) 
       <Signatures signature={ticket.signature} />
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Fee:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.userNameChangeTicket.fee')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
@@ -63,7 +72,9 @@ const UserNameChangeTicket: React.FC<IUserNameChangeTicketProps> = ({ ticket }) 
       {ticket.transactionTime ? (
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
-            <Styles.TicketTitle>Timestamp:</Styles.TicketTitle>
+            <Styles.TicketTitle>
+              {translate('components.ticket.userNameChangeTicket.timestamp')}
+            </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
             <Styles.TicketContent>

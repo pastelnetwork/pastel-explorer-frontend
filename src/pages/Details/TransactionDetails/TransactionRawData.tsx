@@ -4,6 +4,7 @@ import { TransitionProps } from '@material-ui/core/transitions';
 import CloseIcon from '@material-ui/icons/Close';
 
 import { ITicket, TSenseRequests } from '@utils/types/ITransactions';
+import { translate } from '@utils/helpers/i18n';
 
 import * as Styles from './TransactionDetails.styles';
 
@@ -56,7 +57,7 @@ const TransactionRawData: React.FC<ITransactionRawDataProps> = ({
             <CloseIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Transaction Raw Data
+            {translate('pages.transactionDetails.transactionRawData')}
           </Typography>
         </Styles.TransactionRawDataToolbar>
       </AppBar>
@@ -75,7 +76,7 @@ const TransactionRawData: React.FC<ITransactionRawDataProps> = ({
           </code>
         </Styles.TransactionRawData>
       ) : (
-        'No data'
+        translate('common.noData')
       )}
     </Dialog>
   );

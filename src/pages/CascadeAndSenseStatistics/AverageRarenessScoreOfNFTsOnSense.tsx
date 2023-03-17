@@ -8,6 +8,7 @@ import { LineChart } from '@components/Summary/LineChart';
 import { Dropdown } from '@components/Dropdown/Dropdown';
 import themeVariant from '@theme/variants';
 import useAverageRarenessScoreOfNFTsOnSense from '@hooks/useAverageRarenessScoreOfNFTsOnSense';
+import { translate } from '@utils/helpers/i18n';
 import * as SummaryStyles from '@components/Summary/Summary.styles';
 import * as StatisticsStyles from '@pages/Statistics/Statistics.styles';
 
@@ -36,7 +37,7 @@ const AverageRarenessScoreOfNFTsOnSense: React.FC = () => {
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
           <SummaryStyles.Typography variant="h6">
-            Average rareness score on Sense
+            {translate('pages.cascadeAndSenseStatistics.averageRarenessScoreOnSense')}
           </SummaryStyles.Typography>
           <SummaryStyles.Typography variant="h4">
             <SummaryStyles.Values>
@@ -109,7 +110,9 @@ const AverageRarenessScoreOfNFTsOnSense: React.FC = () => {
         {isLoading ? (
           <StatisticsStyles.Loader>
             <Skeleton animation="wave" variant="rect" height={170} width="100%" />
-            <StatisticsStyles.LoadingText>Loading data...</StatisticsStyles.LoadingText>
+            <StatisticsStyles.LoadingText>
+              {translate('common.loadingData')}
+            </StatisticsStyles.LoadingText>
           </StatisticsStyles.Loader>
         ) : (
           <LineChart

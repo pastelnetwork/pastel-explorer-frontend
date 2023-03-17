@@ -5,8 +5,9 @@ import { periods, info, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import { TLineChartData } from '@utils/types/IStatistics';
-import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout/HistoricalStatisticsLayout';
 import useTransactionFee from '@hooks/useTransactionFee';
+import { translate } from '@utils/helpers/i18n';
 
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
@@ -50,12 +51,15 @@ function TransactionFee() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Average Transaction Fee">
+    <HistoricalStatisticsLayout
+      currentBgColor={currentBgColor}
+      title={translate('pages.historicalStatistics.averageTransactionFee')}
+    >
       <EChartsLineChart
         chartName="transactionfee"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title="Average Transaction Fee (USD)"
+        title={translate('pages.historicalStatistics.averageTransactionFeeUSD')}
         info={info}
         offset={10000}
         period={period}

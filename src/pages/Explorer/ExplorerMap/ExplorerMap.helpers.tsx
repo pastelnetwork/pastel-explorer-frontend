@@ -2,6 +2,8 @@ import { MarkerProps } from '@components/Map/Map';
 import { Typography, Grid, AccordionSummary, AccordionDetails } from '@material-ui/core';
 import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 
+import { translate } from '@utils/helpers/i18n';
+
 import * as Styles from './ExplorerMap.styles';
 
 const generateDrawerInfoBlock = (description: string, value: string) => {
@@ -32,15 +34,20 @@ export const generateDrawerContent = ({ name, latLng, data }: MarkerProps) => {
           <Grid item key={id}>
             <Styles.Accordion>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>{`${type} #${index + 1}`}</Typography>
+                <Typography>{`${translate(`pages.explorer.${type.toLowerCase()}`)} #${
+                  index + 1
+                }`}</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container direction="column">
-                  {generateDrawerInfoBlock('Latitude | Longitude', `${latLng[0]} | ${latLng[1]}`)}
-                  {generateDrawerInfoBlock('Country', country)}
-                  {generateDrawerInfoBlock('City', city)}
-                  {generateDrawerInfoBlock('Pastel ID', id)}
-                  {generateDrawerInfoBlock('IP', ip)}
+                  {generateDrawerInfoBlock(
+                    translate('pages.explorer.latitudeLongitude'),
+                    `${latLng[0]} | ${latLng[1]}`,
+                  )}
+                  {generateDrawerInfoBlock(translate('pages.explorer.country'), country)}
+                  {generateDrawerInfoBlock(translate('pages.explorer.city'), city)}
+                  {generateDrawerInfoBlock(translate('pages.explorer.pastelID'), id)}
+                  {generateDrawerInfoBlock(translate('pages.explorer.ip'), ip)}
                 </Grid>
               </AccordionDetails>
             </Styles.Accordion>

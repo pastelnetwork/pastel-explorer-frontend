@@ -1,4 +1,3 @@
-import { getCurrencyName } from '@utils/appInfo';
 import * as ROUTES from '@utils/constants/routes';
 
 interface SummaryItemProps {
@@ -15,7 +14,7 @@ interface SummaryItemProps {
 export const initialSummaryList: Array<SummaryItemProps> = [
   {
     id: 1,
-    name: `Circulating Supply (${getCurrencyName()})`,
+    name: 'components.summary.summaryList.circulatingSupply',
     value: null,
     previousValue: null,
     key: 'circulatingSupply',
@@ -24,7 +23,7 @@ export const initialSummaryList: Array<SummaryItemProps> = [
   },
   {
     id: 2,
-    name: `Total Supply (${getCurrencyName()})`,
+    name: 'components.summary.summaryList.coinSupply',
     value: null,
     previousValue: null,
     key: 'coinSupply',
@@ -33,7 +32,7 @@ export const initialSummaryList: Array<SummaryItemProps> = [
   },
   {
     id: 3,
-    name: `% of ${getCurrencyName()} Staked`,
+    name: 'components.summary.summaryList.percentPSLStaked',
     value: null,
     previousValue: null,
     key: 'percentPSLStaked',
@@ -42,7 +41,7 @@ export const initialSummaryList: Array<SummaryItemProps> = [
   },
   {
     id: 4,
-    name: 'Accounts',
+    name: 'components.summary.summaryList.nonZeroAddressesCount',
     value: null,
     previousValue: null,
     key: 'nonZeroAddressesCount',
@@ -51,7 +50,7 @@ export const initialSummaryList: Array<SummaryItemProps> = [
   },
   {
     id: 5,
-    name: 'Network (MH/s)',
+    name: 'components.summary.summaryList.gigaHashPerSec',
     value: null,
     previousValue: null,
     key: 'gigaHashPerSec',
@@ -60,7 +59,7 @@ export const initialSummaryList: Array<SummaryItemProps> = [
   },
   {
     id: 6,
-    name: 'Difficulty',
+    name: 'components.summary.summaryList.difficulty',
     value: null,
     previousValue: null,
     key: 'difficulty',
@@ -69,7 +68,7 @@ export const initialSummaryList: Array<SummaryItemProps> = [
   },
   {
     id: 7,
-    name: 'Average Block Size (Bytes)',
+    name: 'components.summary.summaryList.avgBlockSizeLast24Hour',
     value: null,
     previousValue: null,
     key: 'avgBlockSizeLast24Hour',
@@ -78,7 +77,7 @@ export const initialSummaryList: Array<SummaryItemProps> = [
   },
   {
     id: 8,
-    name: 'Transactions (avg/block)',
+    name: 'components.summary.summaryList.avgTransactionPerBlockLast24Hour',
     value: null,
     previousValue: null,
     key: 'avgTransactionPerBlockLast24Hour',

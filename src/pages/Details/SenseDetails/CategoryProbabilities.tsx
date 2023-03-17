@@ -5,6 +5,7 @@ import { sense_chart_colors } from '@utils/constants/statistics';
 import { getMinMax } from '@utils/helpers/statisticsLib';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { TChartParams } from '@utils/types/IStatistics';
+import { translate } from '@utils/helpers/i18n';
 
 import * as Styles from './SenseDetails.styles';
 
@@ -48,7 +49,7 @@ const CategoryProbabilities: React.FC<ICategoryProbabilities> = ({ data }) => {
           <div class="tooltip-wrapper">
             <div class="tooltip-label">${params[0].axisValue}</div>
             <div class="tooltip-value">
-              ${params[0].marker} NSFW Scores: ${params[0].value}
+              ${params[0].marker} ${translate('pages.senseDetails.nsfwScores')}: ${params[0].value}
             </div>
           </div>
         `;

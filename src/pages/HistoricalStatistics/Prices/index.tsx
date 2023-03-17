@@ -7,8 +7,9 @@ import { periods, info, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import { TMultiLineChartData } from '@utils/types/IStatistics';
-import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout/HistoricalStatisticsLayout';
 import usePriceOvertime from '@hooks/usePriceOvertime';
+import { translate } from '@utils/helpers/i18n';
 
 import { EChartsMultiLineChart } from '../Chart/EChartsMultiLineChart';
 
@@ -54,14 +55,14 @@ function PriceOvertime() {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title={`${getCurrencyName()} Price ($USD and BTC)`}
+      title={translate('pages.historicalStatistics.prices', { currency: getCurrencyName() })}
     >
       <EChartsMultiLineChart
         chartName="prices"
         dataX={transformLineChartData?.dataX}
         dataY1={transformLineChartData?.dataY1}
         dataY2={transformLineChartData?.dataY2}
-        title={`${getCurrencyName()} Price ($USD and BTC)`}
+        title={translate('pages.historicalStatistics.prices', { currency: getCurrencyName() })}
         info={info}
         offset={0.0001}
         period={period}

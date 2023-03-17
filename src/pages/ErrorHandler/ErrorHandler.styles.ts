@@ -15,3 +15,19 @@ export const Wrapper = styled.div`
     padding: ${props => props.theme.spacing(10)}px;
   }
 `;
+
+export const Logo = styled.img`
+  width: 170px;
+`;
+
+export const ContentWrapper = styled.div`
+  display: flex;
+  align-item: center;
+  justify-content: center;
+  min-height: 85vh;
+
+  .content {
+    display: inline-block;
+    margin: auto;
+  }
+`;

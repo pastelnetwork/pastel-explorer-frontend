@@ -4,6 +4,7 @@ import Box from '@material-ui/core/Box';
 import { TSenseRequests } from '@utils/types/ITransactions';
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
+import { translate } from '@utils/helpers/i18n';
 
 import * as TableStyles from '@components/Table/Table.styles';
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
@@ -23,7 +24,9 @@ const SenseItem: React.FC<ISenseItem> = ({ sense }) => {
     <>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <TicketStyles.TicketTitle>Image Hash:</TicketStyles.TicketTitle>
+          <TicketStyles.TicketTitle>
+            {translate('pages.transactionDetails.imageHash')}:
+          </TicketStyles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <TicketStyles.TicketContent>
@@ -42,7 +45,9 @@ const SenseItem: React.FC<ISenseItem> = ({ sense }) => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <TicketStyles.TicketTitle>Sense Version:</TicketStyles.TicketTitle>
+          <TicketStyles.TicketTitle>
+            {translate('pages.transactionDetails.senseVersion')}:
+          </TicketStyles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <TicketStyles.TicketContent>
@@ -58,7 +63,9 @@ const SensesList: React.FC<ISensesList> = ({ data }) => {
   return (
     <BlockStyles.GridStyle item>
       <TableStyles.BlockWrapper className="mb-0">
-        <TableStyles.BlockTitle>Senses</TableStyles.BlockTitle>
+        <TableStyles.BlockTitle>
+          {translate('pages.transactionDetails.senses')}
+        </TableStyles.BlockTitle>
         <Box className="custom-table tickets-table">
           {data.map(sense => (
             <Styles.GridStyle item key={sense.imageFileHash} className="table__row">

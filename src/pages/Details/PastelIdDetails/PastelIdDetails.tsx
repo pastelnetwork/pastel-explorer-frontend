@@ -6,6 +6,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { formattedDate } from '@utils/helpers/date/date';
 import { ITicket, TSenseRequests } from '@utils/types/ITransactions';
 import usePastelIdDetails from '@hooks/usePastelIdDetails';
+import { translate } from '@utils/helpers/i18n';
 
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 import * as Styles from './PastelIdDetails.styles';
@@ -121,7 +122,7 @@ const PastelIdDetails = () => {
                 ? formattedDate(Number(pastelIdData.registeredDate), {
                     dayName: false,
                   })
-                : 'NA'
+                : translate('common.na')
             }
             blockHeight={pastelIdData?.blockHeight?.toString() || ''}
             username={pastelIdData.username}

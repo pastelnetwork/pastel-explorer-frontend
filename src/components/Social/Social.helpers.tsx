@@ -1,9 +1,8 @@
 import * as URLS from '@utils/constants/urls';
-
-import { ReactComponent as TelegramIcon } from '@assets/icons/telegram.svg';
-import { ReactComponent as TwitterIcon } from '@assets/icons/twitter.svg';
-import { ReactComponent as DiscordIcon } from '@assets/icons/discord.svg';
-import { ReactComponent as Medium } from '@assets/icons/medium.svg';
+import TelegramIcon from '@components/SvgIcon/TelegramIcon';
+import TwitterIcon from '@components/SvgIcon/TwitterIcon';
+import DiscordIcon from '@components/SvgIcon/DiscordIcon';
+import Medium from '@components/SvgIcon/Medium';
 
 export const footerIcons = [
   { id: 2, url: URLS.TELEGRAM_URL, icon: <TelegramIcon /> },

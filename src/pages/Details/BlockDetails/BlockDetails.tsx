@@ -29,6 +29,7 @@ import { getCurrencyName } from '@utils/appInfo';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 import { getTicketsTypeList } from '@pages/Movement/Movement.helpers';
 import useBlockDetails from '@hooks/useBlockDetails';
+import { translate } from '@utils/helpers/i18n';
 
 import { blockHeaders, transactionHeaders, generateDetailsElement } from './BlockDetails.helpers';
 import * as Styles from './BlockDetails.styles';
@@ -134,8 +135,8 @@ const BlockDetails = () => {
             value: (
               <>
                 {transaction.totalAmount === 0 ? (
-                  <Tooltip title="Because the transaction is shielded, the amount sent is unknown.">
-                    <span>Unknown</span>
+                  <Tooltip title={translate('pages.blockDetails.shieldedTooltip')}>
+                    <span>{translate('common.unknown')}</span>
                   </Tooltip>
                 ) : (
                   formatNumber(transaction.totalAmount, { decimalsLength: 2 })
@@ -156,7 +157,10 @@ const BlockDetails = () => {
   const generateHeaderNavigationElement = (hash: string, type: 'previous' | 'next') => {
     if (hash) {
       const icon = type === 'previous' ? <NavigateBeforeIcon /> : <NavigateNextIcon />;
-      const tooltip = type === 'previous' ? 'Previous Block' : 'Next Block';
+      const tooltip =
+        type === 'previous'
+          ? translate('pages.blockDetails.previousBlock')
+          : translate('pages.blockDetails.nextBlock');
 
       return (
         <Tooltip title={tooltip} arrow>
@@ -184,7 +188,7 @@ const BlockDetails = () => {
 
   return block ? (
     <Styles.Wrapper>
-      <Header title="Block Details" />
+      <Header title={translate('pages.blockDetails.blockDetails')} />
       <Grid container direction="column" spacing={2}>
         <Styles.GridStyle item>
           <Table
@@ -199,19 +203,30 @@ const BlockDetails = () => {
             <Styles.Accordion onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography className="see-more">
-                  {isExpanded ? 'Click to see less' : 'Click to see more'}
+                  {isExpanded
+                    ? translate('pages.blockDetails.seeLess')
+                    : translate('pages.blockDetails.seeMore')}
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container direction="column">
                   {generateDetailsElement(
-                    'Difficulty',
+                    translate('pages.blockDetails.difficulty'),
                     formatNumber(block.difficulty, { decimalsLength: 2 }),
                   )}
-                  {generateDetailsElement('Nonce', block.nonce)}
-                  {generateDetailsElement('Merkle Root', block.merkleRoot)}
-                  {generateDetailsElement('Previous Block', block.previousBlockHash)}
-                  {generateDetailsElement('Next Block', block.nextBlockHash)}
+                  {generateDetailsElement(translate('pages.blockDetails.nonce'), block.nonce)}
+                  {generateDetailsElement(
+                    translate('pages.blockDetails.merkleRoot'),
+                    block.merkleRoot,
+                  )}
+                  {generateDetailsElement(
+                    translate('pages.blockDetails.previousBlock'),
+                    block.previousBlockHash,
+                  )}
+                  {generateDetailsElement(
+                    translate('pages.blockDetails.nextBlock'),
+                    block.nextBlockHash,
+                  )}
                 </Grid>
               </AccordionDetails>
             </Styles.Accordion>
@@ -219,7 +234,7 @@ const BlockDetails = () => {
         </Styles.GridStyle>
         <Styles.GridStyle item>
           <Table
-            title="Transactions"
+            title={translate('pages.blockDetails.transactions')}
             headers={transactionHeaders}
             rows={generateLatestTransactions(transactions)}
             handleClickSort={handleClickSortTransaction}

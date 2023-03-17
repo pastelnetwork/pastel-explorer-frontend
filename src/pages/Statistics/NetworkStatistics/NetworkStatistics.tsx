@@ -12,6 +12,7 @@ import { useDeferredData } from '@utils/helpers/useFetch/useFetch';
 import { periods } from '@utils/constants/statistics';
 import { LineChart } from '@components/Summary/LineChart';
 import { Dropdown } from '@components/Dropdown/Dropdown';
+import { translate } from '@utils/helpers/i18n';
 
 import * as SummaryStyles from '@components/Summary/Summary.styles';
 import * as Styles from '@pages/CascadeAndSenseStatistics/CascadeAndSenseStatistics.styles';
@@ -46,7 +47,9 @@ const NetworkStatistics: React.FC<NetworkStatistics> = ({ blockElements }) => {
     <SummaryStyles.Card className="cascade-sense-card">
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
-          <SummaryStyles.Typography variant="h6">Hashrate (MSol/S)</SummaryStyles.Typography>
+          <SummaryStyles.Typography variant="h6">
+            {translate('pages.statistics.hashrate')}
+          </SummaryStyles.Typography>
         </SummaryStyles.ValueWrapper>
         <SummaryStyles.PercentageWrapper>
           <Styles.Percentage>
@@ -62,13 +65,17 @@ const NetworkStatistics: React.FC<NetworkStatistics> = ({ blockElements }) => {
       <StatisticsStyles.ChartSection>
         {isLoading ? (
           <StatisticsStyles.Loader>
-            <StatisticsStyles.LoadingText>Loading data...</StatisticsStyles.LoadingText>
+            <StatisticsStyles.LoadingText>
+              {translate('common.loadingData')}
+            </StatisticsStyles.LoadingText>
           </StatisticsStyles.Loader>
         ) : null}
         {!chartData ? (
           <>
             <Skeleton animation="wave" variant="rect" height={300} />
-            <StatisticsStyles.LoadingText>Loading data...</StatisticsStyles.LoadingText>
+            <StatisticsStyles.LoadingText>
+              {translate('common.loadingData')}
+            </StatisticsStyles.LoadingText>
           </>
         ) : (
           <LineChart

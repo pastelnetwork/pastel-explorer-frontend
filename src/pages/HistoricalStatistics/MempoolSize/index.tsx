@@ -6,8 +6,9 @@ import { periods, info, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import { TLineChartData } from '@utils/types/IStatistics';
-import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout/HistoricalStatisticsLayout';
 import useMempoolSize from '@hooks/useMempoolSize';
+import { translate } from '@utils/helpers/i18n';
 
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
@@ -51,12 +52,15 @@ function MempoolSize() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Mempool Size">
+    <HistoricalStatisticsLayout
+      currentBgColor={currentBgColor}
+      title={translate('pages.historicalStatistics.mempoolSize')}
+    >
       <EChartsLineChart
         chartName="mempoolsize"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title="Mempool Size(kB)"
+        title={translate('pages.historicalStatistics.mempoolSizeKB')}
         info={info}
         offset={1}
         period={period}

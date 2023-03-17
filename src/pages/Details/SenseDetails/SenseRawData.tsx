@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Typography, Dialog, AppBar, IconButton, Slide } from '@material-ui/core';
 import { TransitionProps } from '@material-ui/core/transitions';
 import CloseIcon from '@material-ui/icons/Close';
+import { translate } from '@utils/helpers/i18n';
 
 import * as Styles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 
@@ -28,7 +29,7 @@ const SenseRawData: React.FC<ISenseRawDataProps> = ({ rawData, open, toggleOpen 
             <CloseIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Sense Raw Data
+            {translate('pages.senseDetails.senseRawData')}
           </Typography>
         </Styles.TransactionRawDataToolbar>
       </AppBar>
@@ -37,7 +38,7 @@ const SenseRawData: React.FC<ISenseRawDataProps> = ({ rawData, open, toggleOpen 
           <code>{JSON.stringify(JSON.parse(JSON.parse(rawData)), null, 2)}</code>
         </Styles.TransactionRawData>
       ) : (
-        'No data'
+        translate('pages.senseDetails.noData')
       )}
     </Dialog>
   );

@@ -6,7 +6,6 @@ import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import BarChartIcon from '@material-ui/icons/BarChart';
 
 import * as ROUTES from '@utils/constants/routes';
-import { getCurrencyName } from '@utils/appInfo';
 
 const Explorer = loadable(() => import('@pages/Explorer/Explorer'));
 const Movement = loadable(() => import('@pages/Movement/Movement'));
@@ -65,44 +64,44 @@ const Tickets = loadable(() => import('@pages/Tickets/Tickets'));
 const TicketsType = loadable(() => import('@pages/TicketsType/TicketsType'));
 
 const explorerRoutes = {
-  id: 'Explorer',
+  id: 'routes.explorer',
   path: ROUTES.EXPLORER,
   icon: <SearchIcon />,
   component: Explorer,
   containsHome: true,
-  seoTitle: 'Explorer',
+  seoTitle: 'routes.explorer',
   children: null,
 };
 
 const movementRoutes = {
-  id: 'Movement',
+  id: 'routes.movement',
   path: ROUTES.MOVEMENT,
   icon: <CallSplitIcon />,
   component: Movement,
-  seoTitle: 'Movement Transactions',
+  seoTitle: 'routes.movementTransactions',
   children: null,
 };
 
 const blocksRoutes = {
-  id: 'Blocks',
+  id: 'routes.blocks',
   path: ROUTES.BLOCKS,
   icon: <WidgetsIcon />,
   component: Blocks,
-  seoTitle: 'Blocks List',
+  seoTitle: 'routes.blocksList',
   children: null,
 };
 
 const richlistRoutes = {
-  id: 'Richlist',
+  id: 'routes.richlist',
   path: ROUTES.RICHLIST,
   icon: <LocalAtmIcon />,
   component: Richlist,
-  seoTitle: 'Richlist (Top 100)',
+  seoTitle: 'routes.richlistTop100',
   children: null,
 };
 
 const supernodesRoutes = {
-  id: 'Supernodes',
+  id: 'routes.supernodes',
   path: ROUTES.SUPERNODES,
   icon: (
     <svg
@@ -116,12 +115,12 @@ const supernodesRoutes = {
     </svg>
   ),
   component: Supernodes,
-  seoTitle: 'Supernodes List',
+  seoTitle: 'routes.supernodesList',
   children: null,
 };
 
 const statisticsRoutes = {
-  id: 'Statistics',
+  id: 'routes.statistics',
   path: ROUTES.STATISTICS_PARENT,
   icon: (
     <svg
@@ -135,98 +134,98 @@ const statisticsRoutes = {
     </svg>
   ),
   component: Statistics,
-  seoTitle: 'Statistics',
+  seoTitle: 'routes.statistics',
   children: [
     {
       path: ROUTES.STATISTICS,
-      name: 'Current Statistics',
+      name: 'routes.currentStatistics',
       component: Statistics,
     },
     {
       path: ROUTES.STATISTICS_OVERTIME,
-      name: 'Historical Statistics',
+      name: 'routes.historicalStatistics',
       component: StatisticsOvertime,
-      seoTitle: 'Historical Statistics',
+      seoTitle: 'routes.historicalStatistics',
     },
     {
       path: ROUTES.CASCADE_AND_SENSE_STATISTICS,
-      name: 'Cascade and Sense Statistics',
+      name: 'routes.cascadeAndSenseStatistics',
       component: CascadeAndSenseStatistics,
-      seoTitle: 'Cascade and Sense Statistics',
+      seoTitle: 'routes.cascadeAndSenseStatistics',
     },
   ],
 };
 // Statistics overtime routes
 const statisticsOvertimeRoutes = {
-  id: 'Historical Statistics',
+  id: 'routes.historicalStatistics',
   path: ROUTES.STATISTICS_OVERTIME,
   component: StatisticsOvertime,
   icon: <BarChartIcon />,
-  seoTitle: 'Statistics Overtime',
+  seoTitle: 'routes.statisticsOvertime',
   children: null,
   exact: false,
 };
 
 const cascadeAndSenseStatisticsRoutes = {
-  id: 'Cascade and Sense Statistics',
+  id: 'routes.cascadeAndSenseStatistics',
   path: ROUTES.CASCADE_AND_SENSE_STATISTICS,
   component: CascadeAndSenseStatistics,
   icon: <BarChartIcon />,
-  seoTitle: 'Cascade and Sense Statistics',
+  seoTitle: 'routes.cascadeAndSenseStatistics',
   children: null,
   exact: false,
 };
 
 const difficultyStatisticsRoutes = {
-  id: 'Network Difficulty',
+  id: 'routes.networkDifficulty',
   path: ROUTES.STATISTICS_DIFFICULTY,
   component: DifficultyStatistics,
-  seoTitle: 'Network Difficulty',
+  seoTitle: 'routes.cascadeAndSenseStatistics',
   children: null,
   exact: false,
 };
 
 const pricesStatisticsRoutes = {
-  id: `${getCurrencyName()} Prices Overtime`,
+  id: 'routes.networkDifficulty',
   path: ROUTES.STATISTICS_PSLPRICE,
   component: PricesStatistics,
-  seoTitle: `${getCurrencyName()} Prices Overtime`,
+  seoTitle: 'routes.pricesOvertime',
   children: null,
   exact: false,
 };
 
 const hashRateStatisticsRoutes = {
-  id: 'HashRate Overtime',
+  id: 'routes.hashRateOvertime',
   path: ROUTES.STATISTICS_HASHRATE,
   component: HashRateStatistics,
-  seoTitle: 'HashRate Overtime',
+  seoTitle: 'routes.hashRateOvertime',
   children: null,
   exact: false,
 };
 
 const transactionFeeStatisticsRoutes = {
-  id: 'Transaction Fee Overtime',
+  id: 'routes.transactionFeeOvertime',
   path: ROUTES.STATISTICS_TRANSACTION_FEE,
   component: TransactionFeeStatistics,
-  seoTitle: 'Transaction Fee Overtime',
+  seoTitle: 'routes.transactionFeeOvertime',
   children: null,
   exact: false,
 };
 
 const mempoolSizeStatisticsRoutes = {
-  id: 'Mempool Size',
+  id: 'routes.mempoolSize',
   path: ROUTES.STATISTICS_MEMPOOL_SIZE,
   component: MempoolSize,
-  seoTitle: 'Mempool Size',
+  seoTitle: 'routes.mempoolSize',
   children: null,
   exact: false,
 };
 
 const nettotalsStatisticsRoutes = {
-  id: 'Nettotals',
+  id: 'routes.nettotals',
   path: ROUTES.STATISTICS_NETTOTALS,
   component: Nettotals,
-  seoTitle: 'Network Total',
+  seoTitle: 'routes.networkTotal',
   children: null,
   exact: false,
 };
@@ -235,7 +234,7 @@ const transactionInBlockStatisticsRoutes = {
   id: 'transactionInBlock',
   path: ROUTES.STATISTICS_TRANSACTION_IN_BLOCK,
   component: TransactionInBlock,
-  seoTitle: 'Transactions In Block',
+  seoTitle: 'routes.transactionInBlock',
   children: null,
   exact: false,
 };
@@ -244,7 +243,7 @@ const averageBlockSizeStatisticsRoutes = {
   id: 'averageBlockSize',
   path: ROUTES.STATISTICS_AVERAGE_BLOCK_SIZE,
   component: AverageBlockSize,
-  seoTitle: 'Cumulative Overall Average Block Size',
+  seoTitle: 'routes.averageBlockSize',
   children: null,
   exact: false,
 };
@@ -253,7 +252,7 @@ const transactionPerSecondStatisticsRoutes = {
   id: 'transactionPerSecond',
   path: ROUTES.STATISTICS_TRANSACTION_PER_SECOND,
   component: TransactionPerSecond,
-  seoTitle: 'Transaction Per Second',
+  seoTitle: 'routes.transactionPerSecond',
   children: null,
   exact: false,
 };
@@ -262,7 +261,7 @@ const transactionCountStatisticsRoutes = {
   id: 'transactionCount',
   path: ROUTES.STATISTICS_TRANSACTION_COUNT,
   component: TransactionCount,
-  seoTitle: 'Transaction Count',
+  seoTitle: 'routes.transactionCount',
   children: null,
   exact: false,
 };
@@ -271,7 +270,7 @@ const averageTransactionsPerBlockStatisticsRoutes = {
   id: 'transactionCount',
   path: ROUTES.STATISTICS_AVERAGE_TRANSACTIONS_PER_BLOCK,
   component: AverageTransactionsPerBlock,
-  seoTitle: 'Transaction Count',
+  seoTitle: 'routes.averageTransactionsPerBlock',
   children: null,
   exact: false,
 };
@@ -280,7 +279,7 @@ const blockchainSizeStatisticsRoutes = {
   id: 'blockchainsize',
   path: ROUTES.STATISTICS_BLOCKCHAIN_SIZE,
   component: BlockchainSize,
-  seoTitle: 'Blockchain Size',
+  seoTitle: 'routes.blockchainSize',
   children: null,
   exact: false,
 };
@@ -289,7 +288,7 @@ const totalTransactionCountStatisticsRoutes = {
   id: 'totaltransactioncount',
   path: ROUTES.STATISTICS_TOTAL_TRANSACTION_COUNT,
   component: TotalTransactionCount,
-  seoTitle: 'Total Transaction Count',
+  seoTitle: 'routes.totalTransactionCount',
   children: null,
   exact: false,
 };
@@ -299,7 +298,7 @@ const totalTransactionFeesStatisticsRoutes = {
   path: ROUTES.STATISTICS_TOTAL_TRANSACTION_FEES,
   component: TotalTransactionFees,
   icon: null,
-  seoTitle: 'Total Transaction Fees',
+  seoTitle: 'routes.totalTransactionFees',
   children: null,
 };
 
@@ -308,7 +307,7 @@ const totalTransactionsPerDayStatisticsRoutes = {
   path: ROUTES.STATISTICS_TOTAL_TRANSACTIONS_PER_DAY,
   component: TotalTransactionPerDay,
   icon: null,
-  seoTitle: 'Total Transactions Per Day',
+  seoTitle: 'routes.totalTransactionsPerDay',
   children: null,
 };
 
@@ -317,7 +316,7 @@ const marketVolumePriceStatisticsRoutes = {
   path: ROUTES.STATISTICS_MARKET_VOLUME_PRICE,
   component: MarketVolumePrice,
   icon: null,
-  seoTitle: 'Market Price and Volume ($USD)',
+  seoTitle: 'routes.marketCapPrice',
   children: null,
 };
 
@@ -326,31 +325,31 @@ const marketCapPriceStatisticsRoutes = {
   path: ROUTES.STATISTICS_MARKET_CAP_PRICE,
   component: MarketCapPrice,
   icon: null,
-  seoTitle: 'Market Price and Circ. Cap ($USD)',
+  seoTitle: 'routes.marketCapUSD',
   children: null,
 };
 
 const transactionDetailsRoutes = {
-  id: 'Transaction Details',
+  id: 'routes.transactionDetails',
   path: `${ROUTES.TRANSACTION_DETAILS}/:id`,
   component: TransactionDetails,
-  seoTitle: 'Transaction Details',
+  seoTitle: 'routes.transactionDetails',
   children: null,
 };
 
 const blockDetailsRoutes = {
-  id: 'Block Details',
+  id: 'routes.blockDetails',
   path: `${ROUTES.BLOCK_DETAILS}/:id`,
   component: BlockDetails,
-  seoTitle: 'Block Details',
+  seoTitle: 'routes.blockDetails',
   children: null,
 };
 
 const addressDetailsRoutes = {
-  id: 'Address Details',
+  id: 'routes.addressDetails',
   path: `${ROUTES.ADDRESS_DETAILS}/:id`,
   component: AddressDetails,
-  seoTitle: 'Address Details',
+  seoTitle: 'routes.addressDetails',
   children: null,
 };
 
@@ -359,7 +358,7 @@ const circulatingSupplyStatisticsRoutes = {
   path: ROUTES.STATISTICS_CIRCULATING_SUPPLY,
   component: CirculatingSupply,
   icon: null,
-  seoTitle: 'Circulating Supply',
+  seoTitle: 'routes.circulatingSupply',
   children: null,
 };
 
@@ -368,7 +367,7 @@ const totalSupplyStatisticsRoutes = {
   path: ROUTES.STATISTICS_TOTAL_SUPPLY,
   component: TotalSupply,
   icon: null,
-  seoTitle: 'Total Supply',
+  seoTitle: 'routes.totalSupply',
   children: null,
 };
 
@@ -377,7 +376,7 @@ const percentOfPSLStakedStatisticsRoutes = {
   path: ROUTES.STATISTICS_PERCENT_OF_PSL_STAKED,
   component: PercentOfPSLStaked,
   icon: null,
-  seoTitle: '% of PSL Staked',
+  seoTitle: 'routes.percentOfPSLStaked',
   children: null,
 };
 
@@ -386,41 +385,41 @@ const accountsStatisticsRoutes = {
   path: ROUTES.STATISTICS_ACCOUNTS,
   component: Accounts,
   icon: null,
-  seoTitle: 'Accounts',
+  seoTitle: 'routes.accounts',
   children: null,
 };
 
 const senseDetailsRoutes = {
-  id: 'Sense Details',
+  id: 'routes.senseDetails',
   path: ROUTES.SENSE_DETAILS,
   component: SenseDetails,
-  seoTitle: 'Sense Details',
+  seoTitle: 'routes.senseDetails',
   children: null,
 };
 
 const pastelIdDetailsRoutes = {
-  id: 'Sense Details',
+  id: 'routes.pastelIdDetails',
   path: `${ROUTES.PASTEL_ID_DETAILS}/:id`,
   component: PastelIdDetails,
-  seoTitle: 'Pastel ID Details',
+  seoTitle: 'routes.pastelIdDetails',
   children: null,
 };
 
 const ticketsRoutes = {
-  id: 'Tickets',
+  id: 'routes.tickets',
   path: ROUTES.TICKETS,
   icon: <LocalAtmIcon />,
   component: Tickets,
-  seoTitle: 'Tickets List',
+  seoTitle: 'routes.ticketsList',
   children: null,
 };
 
 const ticketsTypeRoutes = {
-  id: 'Tickets',
+  id: 'routes.ticketsType',
   path: `${ROUTES.TICKETS_TYPE}/:type`,
   icon: <LocalAtmIcon />,
   component: TicketsType,
-  seoTitle: 'Tickets List',
+  seoTitle: 'routes.ticketsType',
   children: null,
 };
 

@@ -9,7 +9,6 @@ import * as ROUTES from '@utils/constants/routes';
 import { formattedDate } from '@utils/helpers/date/date';
 import { IAddressData, IAddress } from '@utils/types/IAddress';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import { getCurrencyName } from '@utils/appInfo';
 import { formatAddress } from '@utils/helpers/format';
 
 import {
@@ -71,7 +70,7 @@ export const generateAddressSummary = ({
 };
 
 export const addressHeaders: Array<HeaderType> = [
-  { id: 1, header: `Total Sent (${getCurrencyName()})` },
-  { id: 2, header: `Total Received (${getCurrencyName()})` },
-  { id: 3, header: `Balance (${getCurrencyName()})` },
+  { id: 1, header: 'pages.addressDetails.totalSent' },
+  { id: 2, header: 'pages.addressDetails.totalReceived' },
+  { id: 3, header: 'pages.addressDetails.balance' },
 ];

@@ -6,8 +6,9 @@ import { periods, info, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import { TLineChartData } from '@utils/types/IStatistics';
-import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout/HistoricalStatisticsLayout';
 import useBlockchainSize from '@hooks/useBlockchainSize';
+import { translate } from '@utils/helpers/i18n';
 
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
@@ -57,12 +58,15 @@ function BlockchainSize() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Blockchain Size">
+    <HistoricalStatisticsLayout
+      currentBgColor={currentBgColor}
+      title={translate('pages.historicalStatistics.blockchainSize')}
+    >
       <EChartsLineChart
         chartName="blockchainSize"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title="Blockchain Size (Mb)"
+        title={translate('pages.historicalStatistics.blockchainSizeMb')}
         info={info}
         period={period}
         offset={0}

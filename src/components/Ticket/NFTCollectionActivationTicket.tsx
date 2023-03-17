@@ -7,6 +7,7 @@ import { INftCollectionActivationTicket } from '@utils/types/ITransactions';
 import { getCurrencyName } from '@utils/appInfo';
 import * as ROUTES from '@utils/constants/routes';
 import { formatFullDate } from '@utils/helpers/date/date';
+import { translate } from '@utils/helpers/i18n';
 
 import Signatures from './Signatures';
 import * as Styles from './Ticket.styles';
@@ -22,7 +23,9 @@ const NFTCollectionActivationTicket: React.FC<INFTCollectionActivationTicketProp
     <Box>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Creator height:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.nftCollectionActivationTicket.creatorHeight')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
@@ -34,14 +37,16 @@ const NFTCollectionActivationTicket: React.FC<INFTCollectionActivationTicketProp
                 className="address-link"
               />
             ) : (
-              'NA'
+              translate('common.na')
             )}
           </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Pastel OpenAPI Ticket Version Number:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.nftCollectionActivationTicket.version')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>{ticket.version}</Styles.TicketContent>
@@ -49,7 +54,9 @@ const NFTCollectionActivationTicket: React.FC<INFTCollectionActivationTicketProp
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.nftCollectionActivationTicket.pastelID')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
@@ -65,7 +72,9 @@ const NFTCollectionActivationTicket: React.FC<INFTCollectionActivationTicketProp
       <Signatures signature={ticket.signature} />
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Reg txid:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.nftCollectionActivationTicket.regTxId')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
@@ -77,7 +86,7 @@ const NFTCollectionActivationTicket: React.FC<INFTCollectionActivationTicketProp
                 className="address-link"
               />
             ) : (
-              'NA'
+              translate('common.na')
             )}
           </Styles.TicketContent>
         </Grid>
@@ -85,7 +94,9 @@ const NFTCollectionActivationTicket: React.FC<INFTCollectionActivationTicketProp
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            Total Cost in PSL to Register Ticket on Blockchain:
+            {translate('components.ticket.nftCollectionActivationTicket.storageFee', {
+              currency: getCurrencyName(),
+            })}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -97,7 +108,9 @@ const NFTCollectionActivationTicket: React.FC<INFTCollectionActivationTicketProp
       {ticket.transactionTime ? (
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
-            <Styles.TicketTitle>Timestamp:</Styles.TicketTitle>
+            <Styles.TicketTitle>
+              {translate('components.ticket.nftCollectionActivationTicket.timestamp')}
+            </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
             <Styles.TicketContent>

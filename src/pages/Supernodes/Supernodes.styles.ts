@@ -49,51 +49,17 @@ export const GridWrapper = styled(Grid)`
         border-bottom: 0;
       }
 
-      &:before {
-        position: relative;
-        width: 100px;
-        min-width: 100px;
-        margin-right: 10px;
-        padding-right: 0;
-        font-weight: 600;
-        font-size: 16px;
-        color: ${props => props.theme.table.label};
-      }
-
-      &.col-supernode-ip {
+      .cell-content {
         &:before {
-          content: 'Supernode IP';
-        }
-      }
-
-      &.col-port {
-        &:before {
-          content: 'Port';
-        }
-      }
-
-      &.col-address {
-        &:before {
-          content: 'Address';
-          margin-right: 0;
-        }
-      }
-
-      &.col-status {
-        &:before {
-          content: 'Status';
-        }
-      }
-
-      &.col-country {
-        &:before {
-          content: 'Country';
-        }
-      }
-
-      &.col-last-paid {
-        &:before {
-          content: 'Last paid';
+          content: attr(data-title);
+          position: relative;
+          width: 100px;
+          min-width: 100px;
+          margin-right: 10px;
+          padding-right: 0;
+          font-weight: 600;
+          font-size: 16px;
+          color: ${props => props.theme.table.label};
         }
       }
     }

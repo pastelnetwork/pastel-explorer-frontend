@@ -6,8 +6,9 @@ import { periods, info, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import { TMultiLineChartData } from '@utils/types/IStatistics';
-import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout/HistoricalStatisticsLayout';
 import useNettotals from '@hooks/useNettotals';
+import { translate } from '@utils/helpers/i18n';
 
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
@@ -51,13 +52,16 @@ function Nettotals() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Network Total">
+    <HistoricalStatisticsLayout
+      currentBgColor={currentBgColor}
+      title={translate('pages.historicalStatistics.networkTotal')}
+    >
       <EChartsLineChart
         chartName="networktotals"
         dataX={chartData?.dataX}
         dataY1={chartData?.dataY1}
         dataY2={chartData?.dataY2}
-        title="Network Total"
+        title={translate('pages.historicalStatistics.networkTotal')}
         info={info}
         period={period}
         offset={0}

@@ -5,8 +5,9 @@ import { PeriodTypes, transformTotalTransactionCount } from '@utils/helpers/stat
 import { periods, info, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
-import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout/HistoricalStatisticsLayout';
 import useTotalTransactionFees from '@hooks/useTotalTransactionFees';
+import { translate } from '@utils/helpers/i18n';
 
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
@@ -57,12 +58,15 @@ function TotalTransactionFees() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Total Transaction Fees">
+    <HistoricalStatisticsLayout
+      currentBgColor={currentBgColor}
+      title={translate('pages.historicalStatistics.totalTransactionFees')}
+    >
       <EChartsLineChart
         chartName="totalTransactionFees"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title="Total transaction fees"
+        title={translate('pages.historicalStatistics.totalTransactionFees')}
         info={info}
         period={period}
         offset={10}

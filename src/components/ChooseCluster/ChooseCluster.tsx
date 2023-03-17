@@ -13,6 +13,8 @@ import { DEFAULT_CURRENCY, TEST_CURRENCY_NAME } from '@utils/appInfo';
 
 import { ReactComponent as SettingIcon } from '@assets/icons/setting.svg';
 
+import { translate } from '@utils/helpers/i18n';
+
 import * as Styles from './ChooseCluster.styles';
 
 const useStyles = makeStyles((theme: TAppTheme) => ({
@@ -61,33 +63,33 @@ const useStyles = makeStyles((theme: TAppTheme) => ({
   },
 }));
 
-const data = [
-  {
-    id: 'cluster-1',
-    name: 'Mainnet Beta',
-    value: 'mainnet',
-    api: BASE_URL,
-  },
-  {
-    id: 'cluster-2',
-    name: 'Testnet',
-    value: 'testnet',
-    api: BASE_URL_TESTNET,
-  },
-  {
-    id: 'cluster-3',
-    name: 'Devnet',
-    value: 'devnet',
-    api: BASE_URL_DEVNET,
-  },
-];
-
 interface IProps {
   url: string;
   setApiHosting: (_url: string, _currencyName: string) => void;
 }
 
 const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
+  const data = [
+    {
+      id: 'cluster-1',
+      name: translate('components.chooseCluster.mainnetBeta'),
+      value: 'mainnet',
+      api: BASE_URL,
+    },
+    {
+      id: 'cluster-2',
+      name: translate('components.chooseCluster.testnet'),
+      value: 'testnet',
+      api: BASE_URL_TESTNET,
+    },
+    {
+      id: 'cluster-3',
+      name: translate('components.chooseCluster.devnet'),
+      value: 'devnet',
+      api: BASE_URL_DEVNET,
+    },
+  ];
+
   const [open, { toggle }] = useBooleanState();
   const classes = useStyles();
   const { replace } = useHistory();
@@ -132,7 +134,7 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
         color="primary"
         className="cluster-button"
       >
-        <Tooltip title="Choose a Cluster">
+        <Tooltip title={translate('components.chooseCluster.chooseACluster') || ''}>
           <SettingIcon className="cluster-icon" />
         </Tooltip>
       </Button>
@@ -141,7 +143,7 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
           <Button type="button" className={classes.close} onClick={handleClusterClose}>
             ×
           </Button>
-          <h1 className={classes.title}>Choose a Cluster</h1>
+          <h1 className={classes.title}>{translate('components.chooseCluster.chooseACluster')}</h1>
           {data.map(({ id, name, value, api }) => {
             if (!api) {
               return null;

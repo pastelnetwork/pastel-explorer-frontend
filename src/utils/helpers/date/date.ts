@@ -33,9 +33,9 @@ export const formattedDate = (timestamp: number, options: DateOptions = initialD
 
   return format(fromUnixTime(timestamp), dateFormat);
 };
-export const formattedTimeElapsed = (timestamp: number) => {
+export const formattedTimeElapsed = (timestamp: number, now = currentDate) => {
   const { days, hours, minutes, seconds } = intervalToDuration({
-    start: currentDate,
+    start: now,
     end: fromUnixTime(timestamp),
   });
 

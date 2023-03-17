@@ -1,0 +1,2908 @@
+{
+  "common": {
+    "na": {
+      "message": "NA",
+      "description": "Used for the common"
+    },
+    "pastelLogo": {
+      "message": "Pastel Logo",
+      "description": "Used for the common"
+    },
+    "loadingData": {
+      "message": "Loading data...",
+      "description": "Used for the common"
+    },
+    "unknown": {
+      "message": "Unknown",
+      "description": "Used for the common"
+    },
+    "notFound": {
+      "message": "Not found",
+      "description": "Used for the common"
+    },
+    "noData": {
+      "message": "No data",
+      "description": "Used for the common"
+    }
+  },
+  "components": {
+    "description": "Translate the components",
+    "chooseCluster": {
+      "mainnetBeta": {
+        "message": "Mainnet Beta",
+        "description": "Used for the ChooseCluster component"
+      },
+      "testnet": {
+        "message": "Testnet",
+        "description": "Used for the ChooseCluster component"
+      },
+      "devnet": {
+        "message": "Devnet",
+        "description": "Used for the ChooseCluster component"
+      },
+      "chooseACluster": {
+        "message": "Choose a Cluster",
+        "description": "Used for the ChooseCluster component"
+      }
+    },
+    "charts": {
+      "doughnutChart": {
+        "stakingAPR": {
+          "message": "Staking APR",
+          "description": "Used for the DoughnutChart component"
+        }
+      }
+    },
+    "copyButton": {
+      "copyToClipboard": {
+        "message": "Copy to clipboard",
+        "description": "Used for the CopyButton component"
+      },
+      "copied": {
+        "message": "Copied",
+        "description": "Used for the CopyButton component"
+      }
+    },
+    "dateTimePicker": {
+      "description": "Used for the DateTimePicker component",
+      "predefinedList": {
+        "7days": {
+          "message": "Last 7 days",
+          "description": "Used for the DateTimePicker component"
+        },
+        "30days": {
+          "message": "Last 30 days",
+          "description": "Used for the DateTimePicker component"
+        },
+        "90days": {
+          "message": "Last 90 days",
+          "description": "Used for the DateTimePicker component"
+        },
+        "180days": {
+          "message": "Last 180 days",
+          "description": "Used for the DateTimePicker component"
+        },
+        "365days": {
+          "message": "Last 365 days",
+          "description": "Used for the DateTimePicker component"
+        }
+      },
+      "predefinedDates": {
+        "message": "Predefined dates",
+        "description": "Used for the DateTimePicker component"
+      },
+      "selected": {
+        "message": "Selected",
+        "description": "Used for the DateTimePicker component"
+      },
+      "day": {
+        "message": "day",
+        "description": "Used for the DateTimePicker component"
+      },
+      "days": {
+        "message": "days",
+        "description": "Used for the DateTimePicker component"
+      },
+      "continue": {
+        "message": "Continue",
+        "description": "Used for the DateTimePicker component"
+      },
+      "cancel": {
+        "message": "Cancel",
+        "description": "Used for the DateTimePicker component"
+      }
+    },
+    "footer": {
+      "pastelEcosystem": {
+        "message": "Pastel Ecosystem",
+        "description": "Used for the Footer component"
+      },
+      "pastelNetwork": {
+        "message": "Pastel.network",
+        "description": "Used for the Footer component"
+      },
+      "wallet": {
+        "message": "Wallet",
+        "description": "Used for the Footer component"
+      },
+      "developers": {
+        "message": "Developers",
+        "description": "Used for the Footer component"
+      },
+      "github": {
+        "message": "Github",
+        "description": "Used for the Footer component"
+      },
+      "documentation": {
+        "message": "Documentation",
+        "description": "Used for the Footer component"
+      },
+      "pastelLogo": {
+        "message": "Pastel Logo",
+        "description": "Used for the Footer component"
+      },
+      "copyright": {
+        "message": "Copyright © {{year}} Pastel Network. All rights reserved.",
+        "description": "Used for the Footer component"
+      }
+    },
+    "infinityTable": {
+      "filters": {
+        "all": {
+          "message": "All",
+          "description": "Used for the InfinityTable component"
+        },
+        "close": {
+          "message": "Close",
+          "description": "Used for the InfinityTable component"
+        },
+        "filter": {
+          "message": "Filter",
+          "description": "Used for the InfinityTable component"
+        }
+      }
+    },
+    "responseErrorAlert": {
+      "title": {
+        "message": "There was a problem with the query",
+        "description": "Used for the ResponseErrorAlert component"
+      },
+      "content": {
+        "message": "Not all data will be visible. Please try refreshing the page",
+        "description": "Used for the ResponseErrorAlert component"
+      }
+    },
+    "searchBar": {
+      "addresses": {
+        "message": "Addresses",
+        "description": "Used for the SearchBar component"
+      },
+      "blocksHeights": {
+        "message": "Blocks Heights",
+        "description": "Used for the SearchBar component"
+      },
+      "blocksIds": {
+        "message": "Blocks Ids",
+        "description": "Used for the SearchBar component"
+      },
+      "transactions": {
+        "message": "Transactions",
+        "description": "Used for the SearchBar component"
+      },
+      "senses": {
+        "message": "Senses",
+        "description": "Used for the SearchBar component"
+      },
+      "pastelID": {
+        "message": "Pastel ID",
+        "description": "Used for the SearchBar component"
+      },
+      "username": {
+        "message": "Username",
+        "description": "Used for the SearchBar component"
+      },
+      "noResults": {
+        "message": "No results containing all your search terms were found",
+        "description": "Used for the SearchBar component"
+      },
+      "loadingResults": {
+        "message": "Loading results...",
+        "description": "Used for the SearchBar component"
+      },
+      "inputSearchLabel": {
+        "message": "Search by Block Height, Block Hash, TxID, Address, PastelID, Username or Image File Hash",
+        "description": "Used for the SearchBar component"
+      },
+      "openSearch": {
+        "message": "Open search",
+        "description": "Used for the SearchBar component"
+      },
+      "openDrawer": {
+        "message": "Open drawer",
+        "description": "Used for the SearchBar component"
+      },
+      "switchMode": {
+        "title": {
+          "message": "Toggle light/dark theme",
+          "description": "Used for the SearchBar component"
+        }
+      }
+    },
+    "summary": {
+      "summaryList": {
+        "circulatingSupply": {
+          "message": "Circulating Supply ({{currency}})",
+          "description": "Used for the Summary component"
+        },
+        "coinSupply": {
+          "message": "Total Supply ({{currency}})",
+          "description": "Used for the Summary component"
+        },
+        "percentPSLStaked": {
+          "message": "% of {{currency}} Staked",
+          "description": "Used for the Summary component"
+        },
+        "nonZeroAddressesCount": {
+          "message": "Accounts",
+          "description": "Used for the Summary component"
+        },
+        "gigaHashPerSec": {
+          "message": "Network (MH/s)",
+          "description": "Used for the Summary component"
+        },
+        "difficulty": {
+          "message": "Difficulty",
+          "description": "Used for the Summary component"
+        },
+        "avgBlockSizeLast24Hour": {
+          "message": "Average Block Size (Bytes)",
+          "description": "Used for the Summary component"
+        },
+        "avgTransactionPerBlockLast24Hour": {
+          "message": "Transactions (avg/block)",
+          "description": "Used for the Summary component"
+        }
+      },
+      "last30d": {
+        "message": "Last 30d",
+        "description": "Used for the Summary component"
+      },
+      "last24h": {
+        "message": "Last 24h",
+        "description": "Used for the Summary component"
+      },
+      "coinsCreated": {
+        "message": "Coins Created",
+        "description": "Used for the Summary component"
+      },
+      "lessPSLBurnt": {
+        "message": "Less {{currency}} Burnt",
+        "description": "Used for the Summary component"
+      },
+      "totalSupply": {
+        "message": "Total Supply",
+        "description": "Used for the Summary component"
+      },
+      "lessPSLStakedBySuperNodes": {
+        "message": "Less {{currency}} Staked by SuperNodes",
+        "description": "Used for the Summary component"
+      },
+      "lessPSLLockedByFoundation": {
+        "message": "Less PSL Locked by Foundation",
+        "description": "Used for the Summary component"
+      }
+    },
+    "ticket": {
+      "ticketsTitle": {
+        "pastelid": {
+          "message": "Pastel ID Registration Ticket",
+          "description": "Used for the ticket title component"
+        },
+        "usernameChange": {
+          "message": "User Name Change Ticket",
+          "description": "Used for the ticket title component"
+        },
+        "nftReg": {
+          "message": "NFT Registration Ticket",
+          "description": "Used for the ticket title component"
+        },
+        "nftAct": {
+          "message": "NFT Activation Ticket",
+          "description": "Used for the ticket title component"
+        },
+        "nftCollectionReg": {
+          "message": "NFT Collection Registration Ticket",
+          "description": "Used for the ticket title component"
+        },
+        "nftCollectionAct": {
+          "message": "NFT Collection Activation Ticket",
+          "description": "Used for the ticket title component"
+        },
+        "nftRoyalty": {
+          "message": "NFT Royalty Ticket",
+          "description": "Used for the ticket title component"
+        },
+        "actionReg": {
+          "message": "Action Registration Ticket",
+          "description": "Used for the ticket title component"
+        },
+        "actionAct": {
+          "message": "Action Activation Ticket",
+          "description": "Used for the ticket title component"
+        },
+        "offer": {
+          "message": "Offer Ticket",
+          "description": "Used for the ticket title component"
+        },
+        "accept": {
+          "message": "Accept Ticket",
+          "description": "Used for the ticket title component"
+        },
+        "transfer": {
+          "message": "Transfer Ticket",
+          "description": "Used for the ticket title component"
+        }
+      },
+      "acceptTicket": {
+        "version": {
+          "message": "Pastel OpenAPI Ticket Version Number:",
+          "description": "Used for the AcceptTicket component"
+        },
+        "pastelID": {
+          "message": "Pastel ID:",
+          "description": "Used for the AcceptTicket component"
+        },
+        "offerTxId": {
+          "message": "Offer txid:",
+          "description": "Used for the AcceptTicket component"
+        },
+        "price": {
+          "message": "Price:",
+          "description": "Used for the AcceptTicket component"
+        },
+        "timestamp": {
+          "message": "Timestamp:",
+          "description": "Used for the AcceptTicket component"
+        }
+      },
+      "actionActivationTicket": {
+        "calledAt": {
+          "message": "Pastel Block Height When Ticket Registered:",
+          "description": "Used for the ActionActivationTicket component"
+        },
+        "version": {
+          "message": "Pastel OpenAPI Ticket Version Number:",
+          "description": "Used for the ActionActivationTicket component"
+        },
+        "pastelID": {
+          "message": "Pastel ID:",
+          "description": "Used for the ActionActivationTicket component"
+        },
+        "regTxId": {
+          "message": "Reg txid:",
+          "description": "Used for the ActionActivationTicket component"
+        },
+        "storageFee": {
+          "message": "Total Cost in {{currency}} to Register Ticket on Blockchain:",
+          "description": "Used for the ActionActivationTicket component"
+        },
+        "timestamp": {
+          "message": "Timestamp:",
+          "description": "Used for the ActionActivationTicket component"
+        }
+      },
+      "actionRegistrationTicket": {
+        "actionActivationTicketDetail": {
+          "message": "Action Activation Ticket Detail:",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "txId": {
+          "message": "TXID:",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "type": {
+          "message": "Type:",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "calledAt": {
+          "message": "Pastel Block Height When Ticket Registered:",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "version": {
+          "message": "Pastel OpenAPI Ticket Version Number:",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "pastelID": {
+          "message": "Pastel ID:",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "regTxId": {
+          "message": "Reg txid:",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "storageFee": {
+          "message": "Total Cost in {{currency}} to Register Ticket on Blockchain:",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "timestamp": {
+          "message": "Timestamp:",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "actionType": {
+          "message": "Action type:",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "status": {
+          "message": "Status:",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "activated": {
+          "message": "Activated",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "notYetActivated": {
+          "message": "Not Yet Activated",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "activationTXID": {
+          "message": "Activation TXID:",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "key": {
+          "message": "Key:",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "txIdOfPreburn": {
+          "message": "TXID of Preburn 20%:",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "actionTicket": {
+          "message": "Action ticket:",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "hideDetail": {
+          "message": "Hide detail",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "clickToSeeDetail": {
+          "message": "Click to see detail",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "actionTicketVersion": {
+          "message": "Action ticket version",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "caller": {
+          "message": "Caller",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "blockNumber": {
+          "message": "Block number",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "blockHash": {
+          "message": "Block hash",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "apiTicket": {
+          "message": "Api ticket",
+          "description": "Used for the ActionRegistrationTicket component"
+        }
+      },
+      "apiTicket": {
+        "creatorName": {
+          "message": "Creator name:",
+          "description": "Used for the ApiTicket component"
+        },
+        "creatorWebsite": {
+          "message": "Creator website:",
+          "description": "Used for the ApiTicket component"
+        },
+        "creatorWrittenStatement": {
+          "message": "Creator written statement:",
+          "description": "Used for the ApiTicket component"
+        },
+        "nftCreationVideoYoutubeUrl": {
+          "message": "NFT creation video youtube url:",
+          "description": "Used for the ApiTicket component"
+        },
+        "nftKeywordSet": {
+          "message": "NFT keyword set:",
+          "description": "Used for the ApiTicket component"
+        },
+        "nftSeriesName": {
+          "message": "NFT series name:",
+          "description": "Used for the ApiTicket component"
+        },
+        "nftTitle": {
+          "message": "NFT title:",
+          "description": "Used for the ApiTicket component"
+        },
+        "nftType": {
+          "message": "NFT type:",
+          "description": "Used for the ApiTicket component"
+        },
+        "previewHash": {
+          "message": "Preview hash:",
+          "description": "Used for the ApiTicket component"
+        },
+        "thumbnail1Hash": {
+          "message": "Thumbnail1 hash:",
+          "description": "Used for the ApiTicket component"
+        },
+        "thumbnail2Hash": {
+          "message": "Thumbnail2 hash:",
+          "description": "Used for the ApiTicket component"
+        },
+        "dataHash": {
+          "message": "Data hash:",
+          "description": "Used for the ApiTicket component"
+        },
+        "totalCopies": {
+          "message": "Total copies:",
+          "description": "Used for the ApiTicket component"
+        },
+        "ddAndFingerprintsIc": {
+          "message": "Dd and fingerprints ic:",
+          "description": "Used for the ApiTicket component"
+        },
+        "ddAndFingerprintsMax": {
+          "message": "Dd and fingerprints max:",
+          "description": "Used for the ApiTicket component"
+        },
+        "ddAndFingerprintsIds": {
+          "message": "Dd and fingerprints ids:",
+          "description": "Used for the ApiTicket component"
+        },
+        "rqIc": {
+          "message": "Rq ic:",
+          "description": "Used for the ApiTicket component"
+        },
+        "rqMax": {
+          "message": "Rq max:",
+          "description": "Used for the ApiTicket component"
+        },
+        "rqOti": {
+          "message": "Rq oti:",
+          "description": "Used for the ApiTicket component"
+        },
+        "rqIds": {
+          "message": "Rq ids:",
+          "description": "Used for the ApiTicket component"
+        }
+      },
+      "nftActivationTicket": {
+        "creatorHeight": {
+          "message": "Creator height:",
+          "description": "Used for the NFTActivationTicket component"
+        },
+        "version": {
+          "message": "Pastel OpenAPI Ticket Version Number:",
+          "description": "Used for the NFTActivationTicket component"
+        },
+        "pastelID": {
+          "message": "Pastel ID:",
+          "description": "Used for the NFTActivationTicket component"
+        },
+        "regTxId": {
+          "message": "Reg txid:",
+          "description": "Used for the NFTActivationTicket component"
+        },
+        "storageFee": {
+          "message": "Total Cost in {{currency}} to Register Ticket on Blockchain:",
+          "description": "Used for the NFTActivationTicket component"
+        },
+        "timestamp": {
+          "message": "Timestamp:",
+          "description": "Used for the NFTActivationTicket component"
+        }
+      },
+      "nftCollectionActivationTicket": {
+        "creatorHeight": {
+          "message": "Creator height:",
+          "description": "Used for the NFTCollectionActivationTicket component"
+        },
+        "version": {
+          "message": "Pastel OpenAPI Ticket Version Number:",
+          "description": "Used for the NFTCollectionActivationTicket component"
+        },
+        "pastelID": {
+          "message": "Pastel ID:",
+          "description": "Used for the NFTCollectionActivationTicket component"
+        },
+        "regTxId": {
+          "message": "Reg txid:",
+          "description": "Used for the NFTCollectionActivationTicket component"
+        },
+        "storageFee": {
+          "message": "Total Cost in {{currency}} to Register Ticket on Blockchain:",
+          "description": "Used for the NFTCollectionActivationTicket component"
+        },
+        "timestamp": {
+          "message": "Timestamp:",
+          "description": "Used for the NFTCollectionActivationTicket component"
+        }
+      },
+      "nftCollectionRegistrationTicket": {
+        "nftCollectionTicketVersion": {
+          "message": "NFT collection ticket version:",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "nftCollectionName": {
+          "message": "NFT collection name:",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "creator": {
+          "message": "Creator:",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "permittedUsers": {
+          "message": "Permitted users:",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "blockNum": {
+          "message": "Blocknum:",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "blockHash": {
+          "message": "Block hash:",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "closingHeight": {
+          "message": "Closing height:",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "nftMaxCount": {
+          "message": "NFT max count:",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "nftCopyCount": {
+          "message": "NFT copy count:",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "royalty": {
+          "message": "Royalty:",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "green": {
+          "message": "Green:",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "version": {
+          "message": "Pastel OpenAPI Ticket Version Number:",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "key": {
+          "message": "Key:",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "label": {
+          "message": "TXID of Preburn 20%",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "creatorHeight": {
+          "message": "Creator height:",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "royaltyAddress": {
+          "message": "Royalty address:",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "storageFee": {
+          "message": "Total Cost in {{currency}} to Register Ticket on Blockchain:",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "timestamp": {
+          "message": "Timestamp",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        }
+      },
+      "nftRegistrationTicket": {
+        "nftTicketVersion": {
+          "message": "NFT Ticket Version:",
+          "description": "Used for the NFTRegistrationTicket component"
+        },
+        "author": {
+          "message": "Author:",
+          "description": "Used for the NFTRegistrationTicket component"
+        },
+        "blockNum": {
+          "message": "Block number:",
+          "description": "Used for the NFTRegistrationTicket component"
+        },
+        "blockHash": {
+          "message": "Block hash:",
+          "description": "Used for the NFTRegistrationTicket component"
+        },
+        "copies": {
+          "message": "Copies:",
+          "description": "Used for the NFTRegistrationTicket component"
+        },
+        "royalty": {
+          "message": "Royalty",
+          "description": "Used for the NFTRegistrationTicket component"
+        },
+        "green": {
+          "message": "Green:",
+          "description": "Used for the NFTRegistrationTicket component"
+        },
+        "nftCollectionTxId": {
+          "message": "NFT collection txid:",
+          "description": "Used for the NFTRegistrationTicket component"
+        },
+        "appTicket": {
+          "message": "App ticket:",
+          "description": "Used for the NFTRegistrationTicket component"
+        },
+        "hideDetail": {
+          "message": "Hide detail",
+          "description": "Used for the NFTRegistrationTicket component"
+        },
+        "clickToSeeDetail": {
+          "message": "Click to see detail",
+          "description": "Used for the NFTRegistrationTicket component"
+        },
+        "creatorHeight": {
+          "message": "Creator height:",
+          "description": "Used for the NFTRegistrationTicket component"
+        },
+        "version": {
+          "message": "Pastel OpenAPI Ticket Version Number:",
+          "description": "Used for the NFTRegistrationTicket component"
+        },
+        "key": {
+          "message": "Key:",
+          "description": "Used for the NFTRegistrationTicket component"
+        },
+        "label": {
+          "message": "TXID of Preburn 20%:",
+          "description": "Used for the NFTRegistrationTicket component"
+        },
+        "totalCopies": {
+          "message": "Total copies:",
+          "description": "Used for the NFTRegistrationTicket component"
+        },
+        "royaltyAddress": {
+          "message": "Royalty address::",
+          "description": "Used for the NFTRegistrationTicket component"
+        },
+        "storageFee": {
+          "message": "Total Cost in {{currency}} to Register Ticket on Blockchain:",
+          "description": "Used for the NFTRegistrationTicket component"
+        },
+        "timestamp": {
+          "message": "Timestamp:",
+          "description": "Used for the NFTRegistrationTicket component"
+        },
+        "nftTicket": {
+          "message": "NFT Ticket",
+          "description": "Used for the NFTRegistrationTicket component"
+        }
+      },
+      "nftRoyaltyTicket": {
+        "version": {
+          "message": "Pastel OpenAPI Ticket Version Number:",
+          "description": "Used for the NFTRoyaltyTicket component"
+        },
+        "pastelID": {
+          "message": "Pastel ID:",
+          "description": "Used for the NFTRoyaltyTicket component"
+        },
+        "newPastelID": {
+          "message": "New PastelID:",
+          "description": "Used for the NFTRoyaltyTicket component"
+        },
+        "nftTxId": {
+          "message": "NFT txid:",
+          "description": "Used for the NFTRoyaltyTicket component"
+        },
+        "timestamp": {
+          "message": "Timestamp:",
+          "description": "Used for the NFTRoyaltyTicket component"
+        }
+      },
+      "offerTicket": {
+        "version": {
+          "message": "Pastel OpenAPI Ticket Version Number:",
+          "description": "Used for the OfferTicket component"
+        },
+        "pastelID": {
+          "message": "Pastel ID:",
+          "description": "Used for the OfferTicket component"
+        },
+        "itemTxId": {
+          "message": "Item txid:",
+          "description": "Used for the OfferTicket component"
+        },
+        "copyNumber": {
+          "message": "Copy number:",
+          "description": "Used for the OfferTicket component"
+        },
+        "askedPrice": {
+          "message": "Asked price:",
+          "description": "Used for the OfferTicket component"
+        },
+        "validAfter": {
+          "message": "Valid after:",
+          "description": "Used for the OfferTicket component"
+        },
+        "validBefore": {
+          "message": "Valid before:",
+          "description": "Used for the OfferTicket component"
+        },
+        "lockedRecipient": {
+          "message": "Locked recipient:",
+          "description": "Used for the OfferTicket component"
+        },
+        "timestamp": {
+          "message": "Timestamp:",
+          "description": "Used for the OfferTicket component"
+        }
+      },
+      "pastelIDRegistrationTicket": {
+        "idType": {
+          "message": "ID Type:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "version": {
+          "message": "Pastel OpenAPI Ticket Version Number:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "height": {
+          "message": "Block height:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "pastelID": {
+          "message": "Pastel ID:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "address": {
+          "message": "Address:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "pqKey": {
+          "message": "PQ key:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "clickToSeeMore": {
+          "message": "Click to see more",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "clickToSeeLess": {
+          "message": "Click to see less",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "timestamp": {
+          "message": "Timestamp:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        }
+      },
+      "signatures": {
+        "signature": {
+          "message": "Signature:",
+          "description": "Used for the signatures component"
+        },
+        "pastelIDOfUserSubmittingTicket": {
+          "message": "PastelID of User Submitting Ticket:",
+          "description": "Used for the signatures component"
+        },
+        "signatureOfUser": {
+          "message": "Signature of User:",
+          "description": "Used for the signatures component"
+        },
+        "supernode1": {
+          "message": "Registering Supernode #1 - PastelID:",
+          "description": "Used for the signatures component"
+        },
+        "signature1": {
+          "message": "Registering Supernode #1 - Signature:",
+          "description": "Used for the signatures component"
+        },
+        "supernode2": {
+          "message": "Registering Supernode #2 - PastelID:",
+          "description": "Used for the signatures component"
+        },
+        "signature2": {
+          "message": "Registering Supernode #2 - Signature:",
+          "description": "Used for the signatures component"
+        },
+        "supernode3": {
+          "message": "Registering Supernode #3 - PastelID:",
+          "description": "Used for the signatures component"
+        },
+        "signature3": {
+          "message": "Registering Supernode #3 - Signature:",
+          "description": "Used for the signatures component"
+        }
+      },
+      "transferTicket": {
+        "version": {
+          "message": "Pastel OpenAPI Ticket Version Number:",
+          "description": "Used for the TransferTicket component"
+        },
+        "pastelID": {
+          "message": "Pastel ID:",
+          "description": "Used for the TransferTicket component"
+        },
+        "offerTxid": {
+          "message": "Offer txid:",
+          "description": "Used for the TransferTicket component"
+        },
+        "acceptTxId": {
+          "message": "Accept txid:",
+          "description": "Used for the TransferTicket component"
+        },
+        "itemTxId": {
+          "message": "Item txid:",
+          "description": "Used for the TransferTicket component"
+        },
+        "registrationTxId": {
+          "message": "Registration txid:",
+          "description": "Used for the TransferTicket component"
+        },
+        "copySerialNr": {
+          "message": "Copy serial nr:",
+          "description": "Used for the TransferTicket component"
+        },
+        "timestamp": {
+          "message": "Timestamp:",
+          "description": "Used for the TransferTicket component"
+        }
+      },
+      "userNameChangeTicket": {
+        "username": {
+          "message": "Username:",
+          "description": "Used for the userNameChangeTicket component"
+        },
+        "version": {
+          "message": "Pastel OpenAPI Ticket Version Number:",
+          "description": "Used for the userNameChangeTicket component"
+        },
+        "pastelID": {
+          "message": "Pastel ID:",
+          "description": "Used for the userNameChangeTicket component"
+        },
+        "fee": {
+          "message": "Fee:",
+          "description": "Used for the userNameChangeTicket component"
+        },
+        "timestamp": {
+          "message": "Timestamp:",
+          "description": "Used for the userNameChangeTicket component"
+        }
+      }
+    },
+    "historicalStatisticsLayout": {
+      "back": {
+        "message": "Back",
+        "description": "Used for the HistoricalStatisticsLayout component"
+      },
+      "historicalStatistic": {
+        "message": "Historical statistic",
+        "description": "Used for the HistoricalStatisticsLayout component"
+      }
+    }
+  },
+  "pages": {
+    "404": {
+      "title": {
+        "message": "404",
+        "description": "Used for the 404 page"
+      },
+      "content": {
+        "message": "Page not found.",
+        "description": "Used for the 404 page"
+      },
+      "description": {
+        "message": "The page you are looking for might have been removed.",
+        "description": "Used for the 404 page"
+      },
+      "backToHomepage": {
+        "message": "Back to Homepage",
+        "description": "Used for the 404 page"
+      }
+    },
+    "blocks": {
+      "block": {
+        "message": "Block",
+        "description": "Used for the Blocks page"
+      },
+      "hash": {
+        "message": "Hash",
+        "description": "Used for the Blocks page"
+      },
+      "transactionQuantity": {
+        "message": "Transaction Quantity",
+        "description": "Used for the Blocks page"
+      },
+      "ticketQuantity": {
+        "message": "Ticket Quantity",
+        "description": "Used for the Blocks page"
+      },
+      "timestamp": {
+        "message": "Timestamp",
+        "description": "Used for the Blocks page"
+      },
+      "blockList": {
+        "message": "Block List",
+        "description": "Used for the Blocks page"
+      },
+      "totalBlocks": {
+        "message": "Total {{total}} blocks",
+        "description": "Used for the Blocks page"
+      },
+      "ticketType": {
+        "message": "Ticket type:",
+        "description": "Used for the Blocks page"
+      }
+    },
+    "cascadeAndSenseStatistics": {
+      "averageRarenessScoreOnSense": {
+        "message": "Average rareness score on Sense",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "averageSizeOfNFTStoredOnCascade": {
+        "message": "Average size of NFT stored on Cascade",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "mb": {
+        "message": "MB",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "totalFingerprintsOnSense": {
+        "message": "Total fingerprints on Sense",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "cascadeRequests": {
+        "message": "Cascade Requests",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "requests": {
+        "message": "requests",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "request": {
+        "message": "request",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "senseRequests": {
+        "message": "Sense Requests",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "totalDataStoredOnCascade": {
+        "message": "Total data stored on Cascade",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      }
+    },
+    "addressDetails": {
+      "hash": {
+        "message": "Hash",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "amount": {
+        "message": "Amount ({{currency}})",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "timestamp": {
+        "message": "Timestamp",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "totalSent": {
+        "message": "Total Sent ({{currency}})",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "totalReceived": {
+        "message": "Total Received ({{currency}})",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "balance": {
+        "message": "Balance ({{currency}})",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "latestTransactions": {
+        "message": "Latest Transactions",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "downloadCSV": {
+        "message": "Download CSV",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "address": {
+        "message": "{{currency}} address",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      }
+    },
+    "blockDetails": {
+      "height": {
+        "message": "Height",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "confirmations": {
+        "message": "Confirmations",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "size": {
+        "message": "Size (kB)",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "timestamp": {
+        "message": "Timestamp",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "txId": {
+        "message": "TXID",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "recipients": {
+        "message": "Recipients",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "tickets": {
+        "message": "Tickets",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "amount": {
+        "message": "Amount ({{currency}})",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "shieldedTooltip": {
+        "message": "Because the transaction is shielded, the amount sent is unknown.",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "previousBlock": {
+        "message": "Previous Block",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "nextBlock": {
+        "message": "Next Block",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "blockDetails": {
+        "message": "Block Details",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "seeLess": {
+        "message": "Click to see less",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "seeMore": {
+        "message": "Click to see more",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "difficulty": {
+        "message": "Difficulty",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "nonce": {
+        "message": "Nonce",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "merkleRoot": {
+        "message": "Merkle Root",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "transactions": {
+        "message": "Transactions",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "senseOutputDetails": {
+        "message": "Sense Output Details:",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "imageHash": {
+        "message": "Image Hash:",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "senseVersion": {
+        "message": "Sense Version:",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "type": {
+        "message": "Type",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      }
+    },
+    "pastelIdDetails": {
+      "tickets": {
+        "message": "tickets",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "ticket": {
+        "message": "ticket",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "pastelIDOverview": {
+        "message": "PastelID Overview",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "pastelId": {
+        "message": "Pastel ID",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "username": {
+        "message": "Username",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "blockHeight": {
+        "message": "Block height",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "registeredDate": {
+        "message": "Registered Date",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "totalTicketsCreatedUsingThisPastelID": {
+        "message": "Total Tickets Created Using This PastelID",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "type": {
+        "message": "Type",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "all": {
+        "message": "ALL",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "pastelid": {
+        "message": "Pastel ID Registration Ticket",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "usernameChange": {
+        "message": "User Name Change Ticket",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "nftReg": {
+        "message": "NFT Registration Ticket",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "nftAct": {
+        "message": "NFT Activation Ticket",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "nftCollectionReg": {
+        "message": "NFT Collection Registration Ticket",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "nftCollectionAct": {
+        "message": "NFT Collection Activation Ticket",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "nftRoyalty": {
+        "message": "NFT Royalty Ticket",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "actionReg": {
+        "message": "Action Registration Ticket",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "actionAct": {
+        "message": "Action Activation Ticket",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "offer": {
+        "message": "Offer Ticket",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "accept": {
+        "message": "Accept Ticket",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "transfer": {
+        "message": "Transfer Ticket",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "senseOutputDetails": {
+        "message": "Sense Output Details",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "imageHash": {
+        "message": "Image Hash",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "senseVersion": {
+        "message": "Sense Version",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "ticketsCreatedUsingThisPastelID": {
+        "message": "Tickets Created Using this PastelID",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "totalTickets": {
+        "message": "Total {{totalTickets}} Tickets",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "totalTicket": {
+        "message": "Total {{totalTickets}} Ticket",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "ticketType": {
+        "message": "Ticket Type",
+        "description": "Used for the PastelIdDetails page"
+      },
+      "txId": {
+        "message": "TXID",
+        "description": "Used for the PastelIdDetails page"
+      }
+    },
+    "senseDetails": {
+      "nsfwScores": {
+        "message": "NSFW Scores",
+        "description": "Used for the SenseDetails page"
+      },
+      "nsfw": {
+        "message": "NSFW",
+        "description": "Used for the SenseDetails page"
+      },
+      "blockHash": {
+        "message": "Pastel Block Hash When Request Submitted",
+        "description": "Used for the SenseDetails page"
+      },
+      "blockHeight": {
+        "message": "Pastel Block Height When Request Submitted",
+        "description": "Used for the SenseDetails page"
+      },
+      "utcTimestampWhenRequestSubmitted": {
+        "message": "UTC Timestamp When Request Submitted",
+        "description": "Used for the SenseDetails page"
+      },
+      "pastelIdOfSubmitter": {
+        "message": "PastelID of Submitter",
+        "description": "Used for the SenseDetails page"
+      },
+      "pastelIdOfRegisteringSupernode1": {
+        "message": "PastelID of Registering Supernode 1",
+        "description": "Used for the SenseDetails page"
+      },
+      "pastelIdOfRegisteringSupernode2": {
+        "message": "PastelID of Registering Supernode 2",
+        "description": "Used for the SenseDetails page"
+      },
+      "pastelIdOfRegisteringSupernode3": {
+        "message": "PastelID of Registering Supernode 3",
+        "description": "Used for the SenseDetails page"
+      },
+      "isPastelOpenapiRequest": {
+        "message": "Is Pastel OpenAPI Request",
+        "description": "Used for the SenseDetails page"
+      },
+      "true": {
+        "message": "True",
+        "description": "Used for the SenseDetails page"
+      },
+      "false": {
+        "message": "False",
+        "description": "Used for the SenseDetails page"
+      },
+      "openApiSubsetIdString": {
+        "message": "OpenAPI Subset String",
+        "description": "Used for the SenseDetails page"
+      },
+      "top10SimilarImages": {
+        "message": "% of Top-10 Most<br>SimilarImages with Dupe<br>Probability Above",
+        "description": "Used for the SenseDetails page"
+      },
+      "relevantTextStringInResults": {
+        "message": "Relevant Text String in Results",
+        "description": "Used for the SenseDetails page"
+      },
+      "resultRanking": {
+        "message": "Result Ranking",
+        "description": "Used for the SenseDetails page"
+      },
+      "originalImageResolution": {
+        "message": "Original Image Resolution",
+        "description": "Used for the SenseDetails page"
+      },
+      "imageDate": {
+        "message": "Image Date",
+        "description": "Used for the SenseDetails page"
+      },
+      "rank": {
+        "message": "Rank",
+        "description": "Used for the SenseDetails page"
+      },
+      "thumbnail": {
+        "message": "Thumbnail",
+        "description": "Used for the SenseDetails page"
+      },
+      "imageHash": {
+        "message": "Image Hash",
+        "description": "Used for the SenseDetails page"
+      },
+      "dateTimeAdded": {
+        "message": "Date-Time Added",
+        "description": "Used for the SenseDetails page"
+      },
+      "matchType": {
+        "message": "Match Type",
+        "description": "Used for the SenseDetails page"
+      },
+      "dupeProbability": {
+        "message": "Dupe Probability",
+        "description": "Used for the SenseDetails page"
+      },
+      "cosineSimilarity": {
+        "message": "Cosine Similarity",
+        "description": "Used for the SenseDetails page"
+      },
+      "cosineGain": {
+        "message": "Cosine Gain",
+        "description": "Used for the SenseDetails page"
+      },
+      "hoeffdingsDependency": {
+        "message": "Hoeffding’s Dependency",
+        "description": "Used for the SenseDetails page"
+      },
+      "hoeffdingGain": {
+        "message": "Hoeffding Gain",
+        "description": "Used for the SenseDetails page"
+      },
+      "hilbertSchmidtInformationCriteria": {
+        "message": "Hilbert Schmidt Information Criteria",
+        "description": "Used for the SenseDetails page"
+      },
+      "hilbertSchmidtGain": {
+        "message": "Hilbert Schmidt Gain",
+        "description": "Used for the SenseDetails page"
+      },
+      "imageFileHash": {
+        "message": "Image File Hash",
+        "description": "Used for the SenseDetails page"
+      },
+      "viewSenseRawData": {
+        "message": "View Sense Raw Data",
+        "description": "Used for the SenseDetails page"
+      },
+      "ticketDetail": {
+        "message": "Ticket Detail",
+        "description": "Used for the SenseDetails page"
+      },
+      "pastelData": {
+        "message": "Pastel Data",
+        "description": "Used for the SenseDetails page"
+      },
+      "summary": {
+        "message": "Summary",
+        "description": "Used for the SenseDetails page"
+      },
+      "openNSFW": {
+        "message": "Open NSFW",
+        "description": "Used for the SenseDetails page"
+      },
+      "rarenessScore": {
+        "message": "Rareness Score",
+        "description": "Used for the SenseDetails page"
+      },
+      "prevalenceOfSimilarImages": {
+        "message": "Prevalence of Similar Images",
+        "description": "Used for the SenseDetails page"
+      },
+      "categoryProbabilities": {
+        "message": "Category Probabilities",
+        "description": "Used for the SenseDetails page"
+      },
+      "top10MostSimilarRegisteredImages": {
+        "message": "Top-10 Most Similar Registered Images on Pastel When Submitted",
+        "description": "Used for the SenseDetails page"
+      },
+      "exportToCSV": {
+        "message": "Export to CSV",
+        "description": "Used for the SenseDetails page"
+      },
+      "rareOnTheInternetResultsGraph": {
+        "message": "Rare on the Internet Results Graph",
+        "description": "Used for the SenseDetails page"
+      },
+      "rareOnTheInternetAlternativeResults": {
+        "message": "Rare on the Internet, Alternative Results",
+        "description": "Used for the SenseDetails page"
+      },
+      "fingerprintVectorHeatmap": {
+        "message": "Fingerprint Vector Heatmap",
+        "description": "Used for the SenseDetails page"
+      },
+      "404": {
+        "message": "404",
+        "description": "Used for the SenseDetails page"
+      },
+      "senseNotFound": {
+        "message": "Sense not found",
+        "description": "Used for the SenseDetails page"
+      },
+      "seedImagesInfo": {
+        "message": "This is one of the 12 seed images used to initialize the Sense system.",
+        "description": "Used for the SenseDetails page"
+      },
+      "senseRawData": {
+        "message": "Sense Raw Data",
+        "description": "Used for the SenseDetails page"
+      },
+      "senseRarenessScore": {
+        "message": "Sense Rareness Score",
+        "description": "Used for the SenseDetails page"
+      },
+      "openNSFWScore": {
+        "message": "Open NSFW Score",
+        "description": "Used for the SenseDetails page"
+      },
+      "isLikelyDupe": {
+        "message": "Is Likely Dupe",
+        "description": "Used for the SenseDetails page"
+      },
+      "dupe": {
+        "message": "Dupe!",
+        "description": "Used for the SenseDetails page"
+      },
+      "rare": {
+        "message": "Rare!",
+        "description": "Used for the SenseDetails page"
+      },
+      "senseVersion": {
+        "message": "Sense Version",
+        "description": "Used for the SenseDetails page"
+      }
+    },
+    "transactionDetails": {
+      "imageHash": {
+        "message": "Image Hash",
+        "description": "Used for the TransactionDetails page"
+      },
+      "senseVersion": {
+        "message": "Sense Version",
+        "description": "Used for the TransactionDetails page"
+      },
+      "senses": {
+        "message": "Senses",
+        "description": "Used for the TransactionDetails page"
+      },
+      "blockHash": {
+        "message": "Block Hash",
+        "description": "Used for the TransactionDetails page"
+      },
+      "confirmations": {
+        "message": "Confirmations",
+        "description": "Used for the TransactionDetails page"
+      },
+      "recipients": {
+        "message": "Recipients",
+        "description": "Used for the TransactionDetails page"
+      },
+      "amount": {
+        "message": "Amount ({{currency}})",
+        "description": "Used for the TransactionDetails page"
+      },
+      "timestamp": {
+        "message": "Timestamp",
+        "description": "Used for the TransactionDetails page"
+      },
+      "address": {
+        "message": "Address",
+        "description": "Used for the TransactionDetails page"
+      },
+      "amountUSD": {
+        "message": "Amount (USD)",
+        "description": "Used for the TransactionDetails page"
+      },
+      "txId": {
+        "message": "TXID",
+        "description": "Used for the TransactionDetails page"
+      },
+      "viewTransactionRawData": {
+        "message": "View Transaction Raw Data",
+        "description": "Used for the TransactionDetails page"
+      },
+      "transactionMessage": {
+        "message": "This transaction was first broadcast to the {{currency}} network on {{timestamp}}. The transaction is currently {{confirmations}} by the network. {{reason}} ",
+        "description": "Used for the TransactionDetails page"
+      },
+      "confirmed": {
+        "message": "confirmed",
+        "description": "Used for the TransactionDetails page"
+      },
+      "unconfirmed": {
+        "message": "unconfirmed",
+        "description": "Used for the TransactionDetails page"
+      },
+      "shieldedTransactionInfo": {
+        "message": "Because the transaction is shielded, the amount sent is unknown.",
+        "description": "Used for the TransactionDetails page"
+      },
+      "transparentTransactionInfo": {
+        "message": "At the time of this transaction {{info}}",
+        "description": "Used for the TransactionDetails page"
+      },
+      "totalAmountTransactionInfo": {
+        "message": "{{totalAmount}} {{currency}} was sent.",
+        "description": "Used for the TransactionDetails page"
+      },
+      "unknownTransactionInfo": {
+        "message": "an unknown amount of {{currency}} was sent (since it’s a shielded transaction).",
+        "description": "Used for the TransactionDetails page"
+      },
+      "coinbaseInfo": {
+        "message": "New {{currency}} are released through mining rewards, which is the process of confirming Pastel transactions and securing the entire historical record of transactions known as the blockchain. When miners finds a new block, they are rewarded.",
+        "description": "Used for the TransactionDetails page"
+      },
+      "nonStandardTransactionInfo": {
+        "message": "A shielded transaction is a privacy-preserving tx involving shielded addresses. Shielded addresses use zero-knowledge proofs to allow transaction data to be encrypted by remaining verifiable by network nodes.",
+        "description": "Used for the TransactionDetails page"
+      },
+      "newCoins": {
+        "message": "New coins",
+        "description": "Used for the TransactionDetails page"
+      },
+      "shieldedTransaction": {
+        "message": "Shielded Transaction",
+        "description": "Used for the TransactionDetails page"
+      },
+      "transactionDetails": {
+        "message": "Transaction Details",
+        "description": "Used for the TransactionDetails page"
+      },
+      "overview": {
+        "message": "Overview",
+        "description": "Used for the TransactionDetails page"
+      },
+      "inputAddresses": {
+        "message": "Input Addresses",
+        "description": "Used for the TransactionDetails page"
+      },
+      "transactionRawData": {
+        "message": "Transaction Raw Data",
+        "description": "Used for the TransactionDetails page"
+      }
+    },
+    "errorHandler": {
+      "pageError": {
+        "message": "Page Error",
+        "description": "Used for the ErrorHandler page"
+      },
+      "generalError": {
+        "message": "General Error",
+        "description": "Used for the ErrorHandler page"
+      },
+      "description": {
+        "message": "We are sorry — somethings gone wrong.",
+        "description": "Used for the ErrorHandler page"
+      },
+      "refresh": {
+        "message": "Please try to refresh the page.",
+        "description": "Used for the ErrorHandler page"
+      },
+      "btnRefresh": {
+        "message": "Refresh the page",
+        "description": "Used for the ErrorHandler page"
+      }
+    },
+    "explorer": {
+      "latitudeLongitude": {
+        "message": "Latitude | Longitude",
+        "description": "Used for the ErrorHandler page"
+      },
+      "country": {
+        "message": "Country",
+        "description": "Used for the ErrorHandler page"
+      },
+      "city": {
+        "message": "City",
+        "description": "Used for the ErrorHandler page"
+      },
+      "pastelID": {
+        "message": "Pastel ID",
+        "description": "Used for the ErrorHandler page"
+      },
+      "ip": {
+        "message": "IP",
+        "description": "Used for the ErrorHandler page"
+      },
+      "mapDetails": {
+        "message": "Map details",
+        "description": "Used for the ErrorHandler page"
+      },
+      "explorerMap": {
+        "message": "Explorer Map",
+        "description": "Used for the ErrorHandler page"
+      },
+      "supernodes": {
+        "message": "Supernodes",
+        "description": "Used for the ErrorHandler page"
+      },
+      "peers": {
+        "message": "Peers",
+        "description": "Used for the ErrorHandler page"
+      },
+      "block": {
+        "message": "Block",
+        "description": "Used for the ErrorHandler page"
+      },
+      "txId": {
+        "message": "TXID",
+        "description": "Used for the ErrorHandler page"
+      },
+      "recipients": {
+        "message": "Recipients",
+        "description": "Used for the ErrorHandler page"
+      },
+      "amount": {
+        "message": "Amount ({{currency}})",
+        "description": "Used for the ErrorHandler page"
+      },
+      "tickets": {
+        "message": "Tickets",
+        "description": "Used for the ErrorHandler page"
+      },
+      "timestamp": {
+        "message": "Timestamp",
+        "description": "Used for the ErrorHandler page"
+      },
+      "shieldedTransactionTooltip": {
+        "message": "Because the transaction is shielded, the amount sent is unknown.",
+        "description": "Used for the ErrorHandler page"
+      },
+      "latestTransactions": {
+        "message": "Latest Transactions",
+        "description": "Used for the ErrorHandler page"
+      },
+      "other": {
+        "message": "Other",
+        "description": "Used for the ErrorHandler page"
+      },
+      "supernodeStatistics": {
+        "message": "Supernode Statistics",
+        "description": "Used for the ErrorHandler page"
+      },
+      "total": {
+        "message": "Total",
+        "description": "Used for the ErrorHandler page"
+      },
+      "peer": {
+        "message": "Peer(s)",
+        "description": "Used for the ErrorHandler page"
+      },
+      "supernode": {
+        "message": "Supernode(s)",
+        "description": "Used for the ErrorHandler page"
+      },
+      "latestBlocksLive": {
+        "message": "Latest Blocks (Live)",
+        "description": "Used for the ErrorHandler page"
+      },
+      "viewAll": {
+        "message": "View all",
+        "description": "Used for the ErrorHandler page"
+      },
+      "hash": {
+        "message": "Hash",
+        "description": "Used for the ErrorHandler page"
+      },
+      "txs": {
+        "message": "TXs",
+        "description": "Used for the ErrorHandler page"
+      },
+      "size": {
+        "message": "Size(kB)",
+        "description": "Used for the ErrorHandler page"
+      },
+      "latestTransactionsLive": {
+        "message": "Latest Transactions (Live)",
+        "description": "Used for the ErrorHandler page"
+      },
+      "recipents": {
+        "message": "Recipents",
+        "description": "Used for the ErrorHandler page"
+      },
+      "fee": {
+        "message": "Fee",
+        "description": "Used for the ErrorHandler page"
+      }
+    },
+    "historicalStatistics": {
+      "accounts": {
+        "message": "Accounts",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "averageblocksizePageTitle": {
+        "message": "Cumulative Overall Average Block Size",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "averageblocksizeChartTitle": {
+        "message": "Cumulative Overall Average Block Size (MB)",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "averageTransactionsPerBlock": {
+        "message": "Average Transaction Per Block",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "blockchainSize": {
+        "message": "Blockchain Size",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "blockchainSizeMb": {
+        "message": "Blockchain Size (Mb)",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "granularity": {
+        "message": "Granularity",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "period": {
+        "message": "Period",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "downloadPNG": {
+        "message": "Download PNG",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "downloadCSV": {
+        "message": "Download CSV",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "usdPrice": {
+        "message": "USD Price",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "btcPrice": {
+        "message": "BTC Price",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "pngDownloadError": {
+        "message": "PNG download error",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "circulatingSupply": {
+        "message": "Circulating Supply ({{currency}})",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "difficulty": {
+        "message": "Difficulty",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "networkDifficulty": {
+        "message": "Network Difficulty",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "hashRate5": {
+        "message": "5",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "hashRate10": {
+        "message": "10",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "hashRate25": {
+        "message": "25",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "hashRate50": {
+        "message": "50",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "hashRate100": {
+        "message": "100",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "hashRate500": {
+        "message": "500",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "hashRate1000": {
+        "message": "1000",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "numberOfBlocks": {
+        "message": "Number of blocks used in trailing average:",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "hashrate": {
+        "message": "Hashrate",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "hashrateMSolS": {
+        "message": "Hashrate(MSol/S)",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "marketPriceAndCircCap": {
+        "message": "Market Price and Circ. Cap ($USD)",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "priceUSD": {
+        "message": "Price ($USD)",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "circCapUSD": {
+        "message": "Circ. Cap ($USD)",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "price": {
+        "message": "Price",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "marketCap": {
+        "message": "Market Cap",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "marketPriceAndVolume": {
+        "message": "Market Price and Volume ($USD)",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "volumeUSD": {
+        "message": "Volume ($USD)",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "vol24h": {
+        "message": "Vol 24h",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "mempoolSize": {
+        "message": "Mempool Size",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "mempoolSizeKB": {
+        "message": "Mempool Size(kB)",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "networkTotal": {
+        "message": "Network Total",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "percentOfPSLStaked": {
+        "message": "% of {{currency}} Staked",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "prices": {
+        "message": "{{currency}} Price ($USD and BTC)",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "totalSupply": {
+        "message": "Total Supply ({{currency}})",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "totalTransactionFees": {
+        "message": "Total Transaction Fees",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "totalTransactionCount": {
+        "message": "Total Transaction Count",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "totalTransactionsPerDay": {
+        "message": "Total Transactions Per Day",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "transactionCount": {
+        "message": "Transaction Count",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "averageTransactionFee": {
+        "message": "Average Transaction Fee",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "averageTransactionFeeUSD": {
+        "message": "Average Transaction Fee (USD)",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "transactionsInBlock": {
+        "message": "Transactions In Block",
+        "description": "Used for the HistoricalStatistics page"
+      },
+      "transactionsPerSecond": {
+        "message": "Transactions Per Second",
+        "description": "Used for the HistoricalStatistics page"
+      }
+    },
+    "movement": {
+      "txID": {
+        "message": "txID",
+        "description": "Used for the Movement page"
+      },
+      "block": {
+        "message": "Block",
+        "description": "Used for the Movement page"
+      },
+      "recipients": {
+        "message": "Recipients",
+        "description": "Used for the Movement page"
+      },
+      "amount": {
+        "message": "Amount ({{currency}})",
+        "description": "Used for the Movement page"
+      },
+      "timestamp": {
+        "message": "Timestamp",
+        "description": "Used for the Movement page"
+      },
+      "ticketQuantity": {
+        "message": "Ticket Quantity",
+        "description": "Used for the Movement page"
+      },
+      "shieldedTransactionInfo": {
+        "message": "Because the transaction is shielded, the amount sent is unknown.",
+        "description": "Used for the Movement page"
+      },
+      "transactionsList": {
+        "message": "Transactions List",
+        "description": "Used for the Movement page"
+      },
+      "totalTxs": {
+        "message": "Total {{total}} txs",
+        "description": "Used for the Movement page"
+      }
+    },
+    "richlist": {
+      "amount": {
+        "message": "Amount ({{currency}})",
+        "description": "Used for the Richlist page"
+      },
+      "rank": {
+        "message": "Rank",
+        "description": "Used for the Richlist page"
+      },
+      "address": {
+        "message": "Address",
+        "description": "Used for the Richlist page"
+      },
+      "balance": {
+        "message": "Balance ({{currency}})",
+        "description": "Used for the Richlist page"
+      },
+      "percentage": {
+        "message": "Percentage",
+        "description": "Used for the Richlist page"
+      },
+      "top": {
+        "message": "Top {{rank}}",
+        "description": "Used for the Richlist page"
+      },
+      "wealthDistribution": {
+        "message": "Wealth Distribution",
+        "description": "Used for the Richlist page"
+      },
+      "top100": {
+        "message": "Top 100",
+        "description": "Used for the Richlist page"
+      }
+    },
+    "statistics": {
+      "block": {
+        "message": "Block #:",
+        "description": "Used for the Statistics page"
+      },
+      "blockSizes": {
+        "message": "Block sizes (kB)",
+        "description": "Used for the Statistics page"
+      },
+      "size": {
+        "message": "{{size}} kB",
+        "description": "Used for the Statistics page"
+      },
+      "minuteAgo": {
+        "message": "{{minutesAgo}} minute ago",
+        "description": "Used for the Statistics page"
+      },
+      "minutesAgo": {
+        "message": "{{minutesAgo}} minutes ago",
+        "description": "Used for the Statistics page"
+      },
+      "mempool": {
+        "message": "Mempool",
+        "description": "Used for the Statistics page"
+      },
+      "pendingBlock": {
+        "message": "Pending Block",
+        "description": "Used for the Statistics page"
+      },
+      "blocksUnconfirmedTime": {
+        "message": "In ~{{time}} minutes",
+        "description": "Used for the Statistics page"
+      },
+      "transaction": {
+        "message": "{{txsCount}} transaction",
+        "description": "Used for the Statistics page"
+      },
+      "transactions": {
+        "message": "{{txsCount}} transactions",
+        "description": "Used for the Statistics page"
+      },
+      "blocksStatistics": {
+        "message": "Blocks Statistics",
+        "description": "Used for the Statistics page"
+      },
+      "hashrate": {
+        "message": "Hashrate (MSol/S)",
+        "description": "Used for the Statistics page"
+      },
+      "incomingTransactions": {
+        "message": "Incoming transactions ({{currency}})",
+        "description": "Used for the Statistics page"
+      },
+      "volumeOfTransactions": {
+        "message": "Volume of transactions ({{currency}})",
+        "description": "Used for the Statistics page"
+      },
+      "filterLabel": {
+        "message": "Last {{period}}",
+        "description": "Used for the Statistics page"
+      }
+    },
+    "supernodes": {
+      "supernodeIP": {
+        "message": "Supernode IP",
+        "description": "Used for the Supernodes page"
+      },
+      "port": {
+        "message": "Port",
+        "description": "Used for the Supernodes page"
+      },
+      "address": {
+        "message": "Address",
+        "description": "Used for the Supernodes page"
+      },
+      "status": {
+        "message": "Status",
+        "description": "Used for the Supernodes page"
+      },
+      "country": {
+        "message": "Country",
+        "description": "Used for the Supernodes page"
+      },
+      "lastPaid": {
+        "message": "Last paid",
+        "description": "Used for the Supernodes page"
+      },
+      "all": {
+        "message": "ALL",
+        "description": "Used for the Supernodes page"
+      },
+      "preEnabled": {
+        "message": "PRE_ENABLED",
+        "description": "Used for the Supernodes page"
+      },
+      "enabled": {
+        "message": "ENABLED",
+        "description": "Used for the Supernodes page"
+      },
+      "expired": {
+        "message": "EXPIRED",
+        "description": "Used for the Supernodes page"
+      },
+      "watchdogExpired": {
+        "message": "WATCHDOG_EXPIRED",
+        "description": "Used for the Supernodes page"
+      },
+      "newStartRequired": {
+        "message": "NEW_START_REQUIRED",
+        "description": "Used for the Supernodes page"
+      },
+      "updateRequired": {
+        "message": "UPDATE_REQUIRED",
+        "description": "Used for the Supernodes page"
+      },
+      "poseBan": {
+        "message": "POSE_BAN",
+        "description": "Used for the Supernodes page"
+      },
+      "outpointSpent": {
+        "message": "OUTPOINT_SPENT",
+        "description": "Used for the Supernodes page"
+      },
+      "supernodeList": {
+        "message": "Supernode List",
+        "description": "Used for the Supernodes page"
+      },
+      "totalSupernodes": {
+        "message": "Total {{total}} Supernodes",
+        "description": "Used for the Supernodes page"
+      },
+      "supernodeStatus": {
+        "message": "Supernode's status",
+        "description": "Used for the Supernodes page"
+      }
+    },
+    "tickets": {
+      "cascadeTickets": {
+        "message": "Cascade tickets",
+        "description": "Used for the Tickets page"
+      },
+      "totalTickets": {
+        "message": "Total {{total}} tickets",
+        "description": "Used for the Tickets page"
+      },
+      "totalTicket": {
+        "message": "Total {{total}} ticket",
+        "description": "Used for the Tickets page"
+      },
+      "viewAll": {
+        "message": "View all",
+        "description": "Used for the Tickets page"
+      },
+      "otherTickets": {
+        "message": "Other tickets",
+        "description": "Used for the Tickets page"
+      },
+      "pastelNFTTickets": {
+        "message": "Pastel NFT tickets",
+        "description": "Used for the Tickets page"
+      },
+      "senseTickets": {
+        "message": "Sense tickets",
+        "description": "Used for the Tickets page"
+      },
+      "txID": {
+        "message": "txID",
+        "description": "Used for the Tickets page"
+      },
+      "status": {
+        "message": "Status",
+        "description": "Used for the Tickets page"
+      },
+      "fee": {
+        "message": "Fee",
+        "description": "Used for the Tickets page"
+      },
+      "timestamp": {
+        "message": "Timestamp",
+        "description": "Used for the Tickets page"
+      },
+      "activated": {
+        "message": "Activated",
+        "description": "Used for the Tickets page"
+      },
+      "notYetActivated": {
+        "message": "Not Yet Activated",
+        "description": "Used for the Tickets page"
+      },
+      "senseDetail": {
+        "message": "Sense detail",
+        "description": "Used for the Tickets page"
+      },
+      "pastelID": {
+        "message": "PastelID",
+        "description": "Used for the Tickets page"
+      },
+      "idType": {
+        "message": "ID Type",
+        "description": "Used for the Tickets page"
+      },
+      "type": {
+        "message": "Type",
+        "description": "Used for the Tickets page"
+      },
+      "version": {
+        "message": "Version",
+        "description": "Used for the Tickets page"
+      }
+    },
+    "ticketsType": {
+      "senseOutputDetails": {
+        "message": "Sense Output Details",
+        "description": "Used for the TicketsType page"
+      },
+      "imageHash": {
+        "message": "Image Hash",
+        "description": "Used for the TicketsType page"
+      },
+      "senseVersion": {
+        "message": "Sense Version",
+        "description": "Used for the TicketsType page"
+      },
+      "otherTickets": {
+        "message": "Other tickets",
+        "description": "Used for the TicketsType page"
+      },
+      "totalTickets": {
+        "message": "Total {{total}} tickets",
+        "description": "Used for the TicketsType page"
+      },
+      "totalTicket": {
+        "message": "Total {{total}} ticket",
+        "description": "Used for the TicketsType page"
+      },
+      "ticketType": {
+        "message": "Ticket Type:",
+        "description": "Used for the TicketsType page"
+      },
+      "status": {
+        "message": "Status:",
+        "description": "Used for the TicketsType page"
+      },
+      "txId": {
+        "message": "TXID",
+        "description": "Used for the TicketsType page"
+      },
+      "type": {
+        "message": "Type",
+        "description": "Used for the TicketsType page"
+      },
+      "pastelid": {
+        "message": "Pastel ID Registration Ticket",
+        "description": "Used for the TicketsType page"
+      },
+      "cascade": {
+        "message": "Action Registration Ticket (Cascade)",
+        "description": "Used for the TicketsType page"
+      },
+      "sense": {
+        "message": "Action Registration Ticket (Sense)",
+        "description": "Used for the TicketsType page"
+      },
+      "usernameChange": {
+        "message": "User Name Change Ticket",
+        "description": "Used for the TicketsType page"
+      },
+      "nftReg": {
+        "message": "NFT Registration Ticket",
+        "description": "Used for the TicketsType page"
+      },
+      "nftAct": {
+        "message": "NFT Activation Ticket",
+        "description": "Used for the TicketsType page"
+      },
+      "nftCollectionReg": {
+        "message": "NFT Collection Registration Ticket",
+        "description": "Used for the TicketsType page"
+      },
+      "nftCollectionAct": {
+        "message": "NFT Collection Activation Ticket",
+        "description": "Used for the TicketsType page"
+      },
+      "nftRoyalty": {
+        "message": "NFT Royalty Ticket",
+        "description": "Used for the TicketsType page"
+      },
+      "actionAct": {
+        "message": "Action Activation Ticket",
+        "description": "Used for the TicketsType page"
+      },
+      "offer": {
+        "message": "Offer Ticket",
+        "description": "Used for the TicketsType page"
+      },
+      "accept": {
+        "message": "Accept Ticket",
+        "description": "Used for the TicketsType page"
+      },
+      "transfer": {
+        "message": "Transfer Ticket",
+        "description": "Used for the TicketsType page"
+      },
+      "all": {
+        "message": "All",
+        "description": "Used for the TicketsType page"
+      },
+      "activated": {
+        "message": "Activated",
+        "description": "Used for the TicketsType page"
+      },
+      "inactivated": {
+        "message": "Not Yet Activated",
+        "description": "Used for the TicketsType page"
+      }
+    }
+  },
+  "routes": {
+    "explorer": {
+      "message": "Explorer",
+      "description": "Used for the routes"
+    },
+    "movement": {
+      "message": "Movement",
+      "description": "Used for the routes"
+    },
+    "movementTransactions": {
+      "message": "Movement Transactions",
+      "description": "Used for the routes"
+    },
+    "blocks": {
+      "message": "Blocks",
+      "description": "Used for the routes"
+    },
+    "blocksList": {
+      "message": "Blocks List",
+      "description": "Used for the routes"
+    },
+    "richlist": {
+      "message": "Richlist",
+      "description": "Used for the routes"
+    },
+    "richlistTop100": {
+      "message": "Richlist (Top 100)",
+      "description": "Used for the routes"
+    },
+    "supernodes": {
+      "message": "Supernodes",
+      "description": "Used for the routes"
+    },
+    "supernodesList": {
+      "message": "Supernodes List",
+      "description": "Used for the routes"
+    },
+    "statistics": {
+      "message": "Statistics",
+      "description": "Used for the routes"
+    },
+    "currentStatistics": {
+      "message": "Current Statistics",
+      "description": "Used for the routes"
+    },
+    "historicalStatistics": {
+      "message": "Historical Statistics",
+      "description": "Used for the routes"
+    },
+    "cascadeAndSenseStatistics": {
+      "message": "Cascade and Sense Statistics",
+      "description": "Used for the routes"
+    },
+    "statisticsOvertime": {
+      "message": "Statistics Overtime",
+      "description": "Used for the routes"
+    },
+    "networkDifficulty": {
+      "message": "Network Difficulty",
+      "description": "Used for the routes"
+    },
+    "pricesOvertime": {
+      "message": "{{currency}} Prices Overtime",
+      "description": "Used for the routes"
+    },
+    "hashRateOvertime": {
+      "message": "HashRate Overtime",
+      "description": "Used for the routes"
+    },
+    "transactionFeeOvertime": {
+      "message": "Transaction Fee Overtime",
+      "description": "Used for the routes"
+    },
+    "mempoolSize": {
+      "message": "Mempool Size",
+      "description": "Used for the routes"
+    },
+    "nettotals": {
+      "message": "Nettotals",
+      "description": "Used for the routes"
+    },
+    "networkTotal": {
+      "message": "Network Total",
+      "description": "Used for the routes"
+    },
+    "transactionInBlock": {
+      "message": "Transactions In Block",
+      "description": "Used for the routes"
+    },
+    "averageBlockSize": {
+      "message": "Cumulative Overall Average Block Size",
+      "description": "Used for the routes"
+    },
+    "transactionPerSecond": {
+      "message": "Transaction Per Second",
+      "description": "Used for the routes"
+    },
+    "transactionCount": {
+      "message": "Transaction Count",
+      "description": "Used for the routes"
+    },
+    "averageTransactionsPerBlock": {
+      "message": "Average Transactions Per Block",
+      "description": "Used for the routes"
+    },
+    "blockchainSize": {
+      "message": "Blockchain Size",
+      "description": "Used for the routes"
+    },
+    "totalTransactionCount": {
+      "message": "Total Transaction Count",
+      "description": "Used for the routes"
+    },
+    "totalTransactionFees": {
+      "message": "Total Transaction Fees",
+      "description": "Used for the routes"
+    },
+    "totalTransactionsPerDay": {
+      "message": "Total Transactions Per Day",
+      "description": "Used for the routes"
+    },
+    "marketCapPrice": {
+      "message": "Market Price and Volume ($USD)",
+      "description": "Used for the routes"
+    },
+    "marketCapUSD": {
+      "message": "Market Price and Circ. Cap ($USD)",
+      "description": "Used for the routes"
+    },
+    "transactionDetails": {
+      "message": "Transaction Details",
+      "description": "Used for the routes"
+    },
+    "blockDetails": {
+      "message": "Block Details",
+      "description": "Used for the routes"
+    },
+    "addressDetails": {
+      "message": "Address Details",
+      "description": "Used for the routes"
+    },
+    "circulatingSupply": {
+      "message": "Circulating Supply",
+      "description": "Used for the routes"
+    },
+    "totalSupply": {
+      "message": "Total Supply",
+      "description": "Used for the routes"
+    },
+    "percentOfPSLStaked": {
+      "message": "% of PSL Staked",
+      "description": "Used for the routes"
+    },
+    "accounts": {
+      "message": "Accounts",
+      "description": "Used for the routes"
+    },
+    "senseDetails": {
+      "message": "Sense Details",
+      "description": "Used for the routes"
+    },
+    "pastelIdDetails": {
+      "message": "Pastel ID Details",
+      "description": "Used for the routes"
+    },
+    "tickets": {
+      "message": "Tickets",
+      "description": "Used for the routes"
+    },
+    "ticketsList": {
+      "message": "Tickets List",
+      "description": "Used for the routes"
+    },
+    "ticketsType": {
+      "message": "Tickets Type",
+      "description": "Used for the routes"
+    }
+  },
+  "chartOptions": {
+    "mSolS": {
+      "message": "MSol/S",
+      "description": "Used for the chartOptions"
+    },
+    "bytes": {
+      "message": "bytes",
+      "description": "Used for the chartOptions"
+    },
+    "trafficReceived": {
+      "message": "Traffic received",
+      "description": "Used for the chartOptions"
+    },
+    "trafficSent": {
+      "message": "Traffic sent",
+      "description": "Used for the chartOptions"
+    },
+    "kB": {
+      "message": "kB",
+      "description": "Used for the chartOptions"
+    },
+    "averagePerHour": {
+      "message": "Average per hour: ",
+      "description": "Used for the chartOptions"
+    },
+    "averagePerDay": {
+      "message": "Average per day: ",
+      "description": "Used for the chartOptions"
+    },
+    "averagePerMonth": {
+      "message": "Average per month: ",
+      "description": "Used for the chartOptions"
+    },
+    "averagePerYear": {
+      "message": "Average per year: ",
+      "description": "Used for the chartOptions"
+    },
+    "mb": {
+      "message": "MB",
+      "description": "Used for the chartOptions"
+    },
+    "blockId": {
+      "message": "block id",
+      "description": "Used for the chartOptions"
+    },
+    "count": {
+      "message": "count",
+      "description": "Used for the chartOptions"
+    },
+    "accounts": {
+      "message": "Accounts",
+      "description": "Used for the chartOptions"
+    },
+    "totalSupply": {
+      "message": "Total Supply ({{currency}})",
+      "description": "Used for the chartOptions"
+    },
+    "circulatingSupply": {
+      "message": "Circulating Supply ({{currency}})",
+      "description": "Used for the chartOptions"
+    },
+    "percentOfPSLStaked": {
+      "message": "% of {{currency}} Staked",
+      "description": "Used for the chartOptions"
+    },
+    "network": {
+      "message": "Network (MH/s): ",
+      "description": "Used for the chartOptions"
+    },
+    "difficulty": {
+      "message": "Difficulty: ",
+      "description": "Used for the chartOptions"
+    },
+    "coinSupply": {
+      "message": "Coin Supply ({{currency}}): ",
+      "description": "Used for the chartOptions"
+    },
+    "accountsSeriesName": {
+      "message": "Accounts: ",
+      "description": "Used for the chartOptions"
+    },
+    "avgTransactionsPerSecond": {
+      "message": "Transactions (avg/s): ",
+      "description": "Used for the chartOptions"
+    },
+    "avgBlockSizeLast24Hour": {
+      "message": "Average Block Size (Bytes): ",
+      "description": "Used for the chartOptions"
+    },
+    "avgTransactionPerBlockLast24Hour": {
+      "message": "Transactions (avg/block): ",
+      "description": "Used for the chartOptions"
+    },
+    "avgTransactionFeeLast24Hour": {
+      "message": "Transaction Fee (in USD): ",
+      "description": "Used for the chartOptions"
+    },
+    "memPoolSize": {
+      "message": "Mempool Size (kB): ",
+      "description": "Used for the chartOptions"
+    },
+    "circulatingSupplySeriesName": {
+      "message": "Circulating Supply ({{currency}}): ",
+      "description": "Used for the chartOptions"
+    },
+    "percentPSLStaked": {
+      "message": "% of {{currency}} Staked: ",
+      "description": "Used for the chartOptions"
+    },
+    "highestSizeOfNFTStored": {
+      "message": "Highest size of NFT stored",
+      "description": "Used for the chartOptions"
+    },
+    "averageSizeOfNFTStored": {
+      "message": "Average size of NFT stored",
+      "description": "Used for the chartOptions"
+    },
+    "HighestRarenessScore": {
+      "message": "Highest rareness score",
+      "description": "Used for the chartOptions"
+    },
+    "averageRarenessScore": {
+      "message": "Average rareness score",
+      "description": "Used for the chartOptions"
+    },
+    "requests": {
+      "message": "requests",
+      "description": "Used for the chartOptions"
+    },
+    "request": {
+      "message": "request",
+      "description": "Used for the chartOptions"
+    },
+    "cascadeRequests": {
+      "message": "Cascade Requests",
+      "description": "Used for the chartOptions"
+    },
+    "senseRequests": {
+      "message": "Sense Requests",
+      "description": "Used for the chartOptions"
+    },
+    "totalDataStored": {
+      "message": "Total data stored",
+      "description": "Used for the chartOptions"
+    },
+    "totalFingerprints": {
+      "message": "Total fingerprints",
+      "description": "Used for the chartOptions"
+    }
+  },
+  "constants": {
+    "filters": {
+      "24H": {
+        "message": "24H",
+        "description": "Used for the constants"
+      },
+      "1W": {
+        "message": "1W",
+        "description": "Used for the constants"
+      },
+      "1M": {
+        "message": "1M",
+        "description": "Used for the constants"
+      },
+      "all": {
+        "message": "All",
+        "description": "Used for the constants"
+      },
+      "2M": {
+        "message": "2M",
+        "description": "Used for the constants"
+      },
+      "pastelid": {
+        "message": "Pastel ID Registration Ticket",
+        "description": "Used for the constants"
+      },
+      "cascade": {
+        "message": "Action Registration Ticket (Cascade)",
+        "description": "Used for the TicketsType page"
+      },
+      "sense": {
+        "message": "Action Registration Ticket (Sense)",
+        "description": "Used for the TicketsType page"
+      },
+      "usernameChange": {
+        "message": "User Name Change Ticket",
+        "description": "Used for the TicketsType page"
+      },
+      "nftReg": {
+        "message": "NFT Registration Ticket",
+        "description": "Used for the TicketsType page"
+      },
+      "nftAct": {
+        "message": "NFT Activation Ticket",
+        "description": "Used for the TicketsType page"
+      },
+      "nftCollectionReg": {
+        "message": "NFT Collection Registration Ticket",
+        "description": "Used for the TicketsType page"
+      },
+      "nftCollectionAct": {
+        "message": "NFT Collection Activation Ticket",
+        "description": "Used for the TicketsType page"
+      },
+      "nftRoyalty": {
+        "message": "NFT Royalty Ticket",
+        "description": "Used for the TicketsType page"
+      },
+      "actionAct": {
+        "message": "Action Activation Ticket",
+        "description": "Used for the TicketsType page"
+      },
+      "offer": {
+        "message": "Offer Ticket",
+        "description": "Used for the TicketsType page"
+      },
+      "accept": {
+        "message": "Accept Ticket",
+        "description": "Used for the TicketsType page"
+      },
+      "transfer": {
+        "message": "Transfer Ticket",
+        "description": "Used for the TicketsType page"
+      }
+    },
+    "statistics": {
+      "blockchainSize": {
+        "message": "Blockchain Size",
+        "description": "Used for the constants"
+      },
+      "averageBlockSize": {
+        "message": "Cumulative Overall Average Block Size",
+        "description": "Used for the constants"
+      },
+      "difficulty": {
+        "message": "Difficulty",
+        "description": "Used for the constants"
+      },
+      "pslPrice": {
+        "message": "{{currency}} Price ($USD and BTC)",
+        "description": "Used for the constants"
+      },
+      "hashrate": {
+        "message": "Hashrate",
+        "description": "Used for the constants"
+      },
+      "mempoolSize": {
+        "message": "Mempool Size",
+        "description": "Used for the constants"
+      },
+      "nettotals": {
+        "message": "Network Total",
+        "description": "Used for the constants"
+      },
+      "transactionsCount": {
+        "message": "Transaction Count",
+        "description": "Used for the constants"
+      },
+      "totalTransactionCount": {
+        "message": "Total Transaction Count",
+        "description": "Used for the constants"
+      },
+      "transactionFee": {
+        "message": "Average Transaction Fee",
+        "description": "Used for the constants"
+      },
+      "transactionPerSecond": {
+        "message": "Transaction Per Second",
+        "description": "Used for the constants"
+      },
+      "transactionInBlock": {
+        "message": "Transactions In Block",
+        "description": "Used for the constants"
+      },
+      "averageTransactionsPerBlock": {
+        "message": "Average Transactions Per Block",
+        "description": "Used for the constants"
+      },
+      "totalTransactionFees": {
+        "message": "Total Transaction Fees",
+        "description": "Used for the constants"
+      },
+      "totalTransactionsPerDay": {
+        "message": "Total Transactions Per Day",
+        "description": "Used for the constants"
+      },
+      "marketPriceVolume": {
+        "message": "Market Price and Volume ($USD)",
+        "description": "Used for the constants"
+      },
+      "marketCapVolume": {
+        "message": "Market Price and Circ. Cap ($USD)",
+        "description": "Used for the constants"
+      },
+      "circulatingSupply": {
+        "message": "Circulating Supply ({{currency}})",
+        "description": "Used for the constants"
+      },
+      "totalSupply": {
+        "message": "Total Supply ({{currency}})",
+        "description": "Used for the constants"
+      },
+      "percentOfPSLStaked": {
+        "message": "% of {{currency}} Staked",
+        "description": "Used for the constants"
+      },
+      "accounts": {
+        "message": "Accounts",
+        "description": "Used for the constants"
+      },
+      "value": {
+        "message": "Value",
+        "description": "Used for the constants"
+      },
+      "createdTime": {
+        "message": "Created time",
+        "description": "Used for the constants"
+      },
+      "receiveSent": {
+        "message": "Receive, Sent",
+        "description": "Used for the constants"
+      },
+      "createdTimeCSV": {
+        "message": "Created time",
+        "description": "Used for the constants"
+      },
+      "transactionFeeCSV": {
+        "message": "Transaction Fee",
+        "description": "Used for the constants"
+      },
+      "blockHeight": {
+        "message": "Block Height",
+        "description": "Used for the constants"
+      },
+      "transactions": {
+        "message": "Transactions",
+        "description": "Used for the constants"
+      },
+      "usdPrice": {
+        "message": "USD Price",
+        "description": "Used for the constants"
+      },
+      "btcPrice": {
+        "message": "BTC Price",
+        "description": "Used for the constants"
+      }
+    }
+  }
+}

@@ -1,8 +1,6 @@
 import styled from 'styled-components/macro';
 import { Grid } from '@material-ui/core';
 
-import { getCurrencyName } from '@utils/appInfo';
-
 export const TableWrapper = styled(Grid)`
   .latest-transaction-table {
     padding-left: 0;
@@ -46,36 +44,13 @@ export const Wrapper = styled.div`
         background: ${props => props.theme.sidebar.menu.background};
 
         &:before {
+          content: attr(data-title);
           position: relative;
           min-width: 150px;
           display: inline-block;
           font-weight: 600;
           font-size: 16px;
           color: ${props => props.theme.table.label};
-        }
-      }
-    }
-
-    &.address {
-      .table__row {
-        td {
-          &:nth-child(1) {
-            &:before {
-              content: 'Total Sent (${getCurrencyName}):';
-            }
-          }
-
-          &:nth-child(2) {
-            &:before {
-              content: 'Total Received (${getCurrencyName}):';
-            }
-          }
-
-          &:nth-child(3) {
-            &:before {
-              content: 'Balance (${getCurrencyName}):';
-            }
-          }
         }
       }
     }
@@ -116,31 +91,16 @@ export const Wrapper = styled.div`
         border-bottom: 0;
       }
 
-      &:before {
-        position: relative;
-        width: 100px;
-        min-width: 100px;
-        padding-right: 0;
-        font-weight: 600;
-        font-size: 16px;
-        color: ${props => props.theme.table.label};
-      }
-
-      &.col-timestamp {
+      .cell-content {
         &:before {
-          content: 'Timestamp:';
-        }
-      }
-
-      &.col-hash {
-        &:before {
-          content: 'Hash:';
-        }
-      }
-
-      &.col-amount {
-        &:before {
-          content: 'Amount (${getCurrencyName}):';
+          content: attr(data-title);
+          position: relative;
+          width: 100px;
+          min-width: 100px;
+          padding-right: 0;
+          font-weight: 600;
+          font-size: 16px;
+          color: ${props => props.theme.table.label};
         }
       }
     }

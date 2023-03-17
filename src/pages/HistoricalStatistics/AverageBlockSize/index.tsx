@@ -13,8 +13,9 @@ import {
 } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
-import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout/HistoricalStatisticsLayout';
 import useAverageBlockSize from '@hooks/useAverageBlockSize';
+import { translate } from '@utils/helpers/i18n';
 
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
@@ -79,13 +80,13 @@ const AverageBlockSize = (): JSX.Element => {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title="Cumulative Overall Average Block Size"
+      title={translate('pages.historicalStatistics.averageblocksizePageTitle')}
     >
       <EChartsLineChart
         chartName="averageblocksize"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title="Cumulative Overall Average Block Size (MB)"
+        title={translate('pages.historicalStatistics.averageblocksizeChartTitle')}
         info={info}
         offset={10000}
         period={period}

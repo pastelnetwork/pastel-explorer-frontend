@@ -14,6 +14,7 @@ import ChooseCluster from '@components/ChooseCluster/ChooseCluster';
 import RouterLink from '@components/RouterLink/RouterLink';
 import { TAppTheme } from '@theme/index';
 import breakpoints from '@theme/breakpoints';
+import { translate } from '@utils/helpers/i18n';
 
 import SwitchMode from './SwitchMode';
 import * as Styles from './SearchBar.styles';
@@ -29,6 +30,7 @@ import {
   getRoute,
   collectData,
   collectUsernameData,
+  TAutocompleteOptions,
 } from './SearchBar.helpers';
 
 interface AppBarProps {
@@ -111,13 +113,13 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
     if (!data) return [];
 
     const groupedData = [
-      ...collectData(data.address, ADDRESSES_LABEL),
-      ...collectData(data.blocksIds, BLOCKS_IDS_LABEL),
-      ...collectData(data.blocksHeights, BLOCKS_HEIGHTS_LABEL),
-      ...collectData(data.transactions, TRANSACTIONS_LABEL),
-      ...collectData(data.senses, SENSES_LABEL),
-      ...collectData(data.pastelIds, PASTEL_ID_LABEL),
-      ...collectUsernameData(data.usernameList, USERNAME),
+      ...collectData(data.address, translate(ADDRESSES_LABEL) as TOptionsCategories),
+      ...collectData(data.blocksIds, translate(BLOCKS_IDS_LABEL) as TOptionsCategories),
+      ...collectData(data.blocksHeights, translate(BLOCKS_HEIGHTS_LABEL) as TOptionsCategories),
+      ...collectData(data.transactions, translate(TRANSACTIONS_LABEL) as TOptionsCategories),
+      ...collectData(data.senses, translate(SENSES_LABEL) as TOptionsCategories),
+      ...collectData(data.pastelIds, translate(PASTEL_ID_LABEL) as TOptionsCategories),
+      ...collectUsernameData(data.usernameList, translate(USERNAME) as TOptionsCategories),
     ];
 
     return setSearchData(groupedData.sort((a, b) => -b.category.localeCompare(a.category)));
@@ -142,11 +144,11 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
     optionSelectedFromList.current = true;
 
     // Reset reference object when to allow user search again if he will click on some option from dropdown
-    setTimeout(() => {
+    const id = setTimeout(() => {
       optionSelectedFromList.current = false;
     }, 600);
 
-    return () => clearTimeout();
+    return () => clearTimeout(id);
   };
 
   const handleClose = () => searchData.length && setSearchData([]);
@@ -164,49 +166,57 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
           paper: classes.listboxOptions,
         }}
         filterOptions={filterOptions}
-        groupBy={option => option.category}
-        getOptionLabel={option => `${option.value}`}
+        groupBy={option => (option as TAutocompleteOptions).category}
+        getOptionLabel={option => `${(option as TAutocompleteOptions).value}`}
         loading={loading}
         onInputChange={handleInputChange}
         onChange={handleChange}
         onClose={handleClose}
         forcePopupIcon={false}
-        getOptionSelected={(option, value) => option.value === value.value}
-        noOptionsText="No results containing all your search terms were found"
-        loadingText="Loading results..."
+        getOptionSelected={(option, value) =>
+          (option as TAutocompleteOptions).value === (value as TAutocompleteOptions).value
+        }
+        noOptionsText={translate('components.searchBar.noResults')}
+        loadingText={translate('components.searchBar.loadingResults')}
         size="small"
         debug
         renderOption={option => {
-          if (option.category === USERNAME) {
+          if ((option as TAutocompleteOptions).category === USERNAME) {
             return (
               <RouterLink
                 styles={{ padding: '6px 24px 6px 16px' }}
-                route={`${getRoute(option.category)}/${option.pastelID}#${option.value}`}
-                value={option.value}
+                route={`${getRoute((option as TAutocompleteOptions).category)}/${
+                  (option as TAutocompleteOptions).pastelID
+                }#${(option as TAutocompleteOptions).value}`}
+                value={(option as TAutocompleteOptions).value}
               />
             );
           }
-          if (option.category === SENSES_LABEL) {
+          if ((option as TAutocompleteOptions).category === SENSES_LABEL) {
             return (
               <RouterLink
                 styles={{ padding: '6px 24px 6px 16px' }}
-                route={`${getRoute(option.category)}?hash=${option.value}`}
-                value={option.value}
+                route={`${getRoute((option as TAutocompleteOptions).category)}?hash=${
+                  (option as TAutocompleteOptions).value
+                }`}
+                value={(option as TAutocompleteOptions).value}
               />
             );
           }
           return (
             <RouterLink
               styles={{ padding: '6px 24px 6px 16px' }}
-              route={`${getRoute(option.category)}/${option.value}`}
-              value={option.value}
+              route={`${getRoute((option as TAutocompleteOptions).category)}/${
+                (option as TAutocompleteOptions).value
+              }`}
+              value={(option as TAutocompleteOptions).value}
             />
           );
         }}
         renderInput={params => (
           <TextField
             {...params}
-            label="Search by Block Height, Block Hash, TxID, Address, PastelID, Username or Image File Hash"
+            label={translate('components.searchBar.inputSearchLabel')}
             InputLabelProps={{
               ...params.InputLabelProps,
               classes: {
@@ -263,14 +273,18 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
           className="search-icon"
           id="search-icon"
           color="inherit"
-          aria-label="Open search"
+          aria-label={translate('components.searchBar.openSearch')}
           onClick={handleClick}
         >
           <SearchIcon />
         </Styles.IconButton>
         <Hidden mdUp>
           <Grid item>
-            <Styles.IconButton color="inherit" aria-label="Open drawer" onClick={onOpenDrawerClick}>
+            <Styles.IconButton
+              color="inherit"
+              aria-label={translate('components.searchBar.openDrawer')}
+              onClick={onOpenDrawerClick}
+            >
               <MenuIcon />
             </Styles.IconButton>
           </Grid>

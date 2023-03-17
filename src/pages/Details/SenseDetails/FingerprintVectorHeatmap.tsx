@@ -99,7 +99,7 @@ const FingerprintVectorHeatmap: React.FC<IFingerprintVectorHeatmap> = ({ data })
     },
     series: [
       {
-        name: 'Gaussian',
+        name: 'fingerprintVectorHeatmap',
         type: 'heatmap',
         data: seriesData,
         emphasis: {

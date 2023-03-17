@@ -8,6 +8,7 @@ import { LineChart } from '@components/Summary/LineChart';
 import { Dropdown } from '@components/Dropdown/Dropdown';
 import themeVariant from '@theme/variants';
 import useTotalOfCascadeRequests from '@hooks/useTotalOfCascadeRequests';
+import { translate } from '@utils/helpers/i18n';
 import * as SummaryStyles from '@components/Summary/Summary.styles';
 import * as StatisticsStyles from '@pages/Statistics/Statistics.styles';
 
@@ -33,14 +34,19 @@ const TotalOfCascadeRequests: React.FC = () => {
     <SummaryStyles.Card className="cascade-sense-card total-of-cascade-requests">
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
-          <SummaryStyles.Typography variant="h6">Cascade Requests</SummaryStyles.Typography>
+          <SummaryStyles.Typography variant="h6">
+            {translate('pages.cascadeAndSenseStatistics.cascadeRequests')}
+          </SummaryStyles.Typography>
           <SummaryStyles.Typography variant="h4">
             <SummaryStyles.Values>
               {isLoading ? (
                 <Skeleton animation="wave" variant="text" />
               ) : (
                 <>
-                  {formatNumber(currentValue)} {currentValue > 1 ? 'requests' : 'request'}
+                  {formatNumber(currentValue)}{' '}
+                  {currentValue > 1
+                    ? translate('pages.cascadeAndSenseStatistics.requests')
+                    : translate('pages.cascadeAndSenseStatistics.request')}
                 </>
               )}
             </SummaryStyles.Values>
@@ -107,7 +113,9 @@ const TotalOfCascadeRequests: React.FC = () => {
         {isLoading ? (
           <StatisticsStyles.Loader>
             <Skeleton animation="wave" variant="rect" height={170} width="100%" />
-            <StatisticsStyles.LoadingText>Loading data...</StatisticsStyles.LoadingText>
+            <StatisticsStyles.LoadingText>
+              {translate('common.loadingData')}
+            </StatisticsStyles.LoadingText>
           </StatisticsStyles.Loader>
         ) : (
           <LineChart
