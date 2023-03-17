@@ -1,9 +1,10 @@
 import { shallow } from 'enzyme';
-
+import { Grid } from '@material-ui/core';
 import 'jest-styled-components';
 
 import i18next from '../../../utils/helpers/i18n';
 import Header from '../Header';
+import * as Styles from '../Header.styles';
 
 jest.mock('i18next-http-backend');
 jest.mock('react-i18next', () => ({
@@ -34,5 +35,17 @@ describe('components/Header', () => {
 
   test('renders correctly', () => {
     expect(wrapper).toMatchSnapshot();
+  });
+
+  test('should render <Grid>', () => {
+    expect(wrapper.find(Grid).length).toBeGreaterThanOrEqual(1);
+  });
+
+  test('should render <Styles.Container>', () => {
+    expect(wrapper.find(Styles.Container).length).toBeGreaterThanOrEqual(1);
+  });
+
+  test('should render <Styles.Typography>', () => {
+    expect(wrapper.find(Styles.Typography).length).toBeGreaterThanOrEqual(1);
   });
 });

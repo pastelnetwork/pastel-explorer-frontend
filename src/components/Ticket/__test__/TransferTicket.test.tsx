@@ -5,7 +5,7 @@ import 'jest-styled-components';
 
 import RouterLink from '../../RouterLink/RouterLink';
 import i18next from '../../../utils/helpers/i18n';
-import ActionActivationTicket from '../ActionActivationTicket';
+import TransferTicket from '../TransferTicket';
 import Signatures from '../Signatures';
 import * as Styles from '../Ticket.styles';
 
@@ -33,20 +33,25 @@ i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
 });
 
-describe('components/ActionActivationTicket', () => {
+describe('components/TransferTicket', () => {
   const ticket = {
-    type: 'action-act',
-    version: 1,
+    accept_txid: '6f667bc2141c8631e4f272632f3569962e3a75685ba69866bd3963fbca2f1e2d',
+    copy_serial_nr: '1',
+    nft_txid: '1ca1089a7d64a2dc29318836bfddd28451cc721ec2a1a7a2c752a827eb793e22',
+    item_txid: '1ca1089a7d64a2dc29318836bfddd28451cc721ec2a1a7a2c752a827eb793e22',
+    offer_txid: '837ba17393461a9f424c0f536fb3527c8ac5e243eaca9781b08fda406e1e23f1',
     pastelID:
-      'jXXcKdSL8XAd1kMCkBwe4vMfyZj4Jo5D63nnGzZuXGZuPS7qjax8SayHDHj4Erk2kThZvH7JuoX9PkDeS3q8TY',
-    reg_txid: 'ead40b73c1f1c8d5a551a3f05a8d8030651c84f026f0ee865ecf1666c0eb6255',
-    called_at: 154620,
-    storage_fee: 65,
+      'jXYPomtuN9fTrREPpneTqSP5jQU5YvCuPnNjTTRw8oigUBwgUW55kVmzGiAjhzrQ3Rs9hpwTyQmG9nRfeotxLu',
+    registration_txid: '1060e97461b30a6ba3e94c88f37350a23ebf04e096b2dacd1584007b045c454d',
     signature:
-      '3424e8a2ecbef0064193d503754bde123693089ae26ae9838cab09be15eea95b79f68d9d186120c733bbfd0c37d6fa553c3c6a56c4329f19000b9c74e5473b82bef35bd21bfaac958cdadd46fd92f5502ddbb741f74cfcc6db885d998d3e923d5cf10cbdbf18ca27be6f844575c7953f3a00',
-    transactionTime: 1678937408698,
+      'a7d24beb5b5ad0f7d4c9865eac49302f99be8e0266eebeead2c91b4d07a4e25a0d4b6513b2941ed8361a6a5ffcd6a42734acfb4154ba854980378773a455533f011dc37384b84a1b1cf3073e10e83aef5f34ae78e3a3dbe8ae15d3a5e59069f7500073dddafdca10c12931f0b267bd472b00',
+    type: 'transfer',
+    version: 0,
+    transactionTime: 1674520491000,
+    activation_ticket: null,
+    height: 217462,
   };
-  const wrapper = shallow(<ActionActivationTicket ticket={ticket} />);
+  const wrapper = shallow(<TransferTicket ticket={ticket} />);
 
   test('renders correctly', () => {
     expect(wrapper).toMatchSnapshot();

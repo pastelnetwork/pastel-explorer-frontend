@@ -1,8 +1,9 @@
 import { shallow } from 'enzyme';
-
+import { VectorMap } from 'react-jvectormap';
 import 'jest-styled-components';
 
 import Map, { MarkerProps } from '../Map';
+import * as Styles from '../Map.styles';
 
 describe('components/Map', () => {
   const markers = [
@@ -61,5 +62,21 @@ describe('components/Map', () => {
 
   test('renders correctly', () => {
     expect(wrapper).toMatchSnapshot();
+  });
+
+  test('should render <VectorMap>', () => {
+    expect(wrapper.find(VectorMap).length).toBeGreaterThanOrEqual(1);
+  });
+
+  test('should render <Styles.Card>', () => {
+    expect(wrapper.find(Styles.Card).length).toBeGreaterThanOrEqual(1);
+  });
+
+  test('should render <h4>', () => {
+    expect(wrapper.find('h4').length).toBeGreaterThanOrEqual(1);
+  });
+
+  test('should render <Styles.MapContainer>', () => {
+    expect(wrapper.find(Styles.MapContainer).length).toBeGreaterThanOrEqual(1);
   });
 });

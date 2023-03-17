@@ -5,7 +5,7 @@ import 'jest-styled-components';
 
 import RouterLink from '../../RouterLink/RouterLink';
 import i18next from '../../../utils/helpers/i18n';
-import ActionActivationTicket from '../ActionActivationTicket';
+import UserNameChangeTicket from '../UserNameChangeTicket';
 import Signatures from '../Signatures';
 import * as Styles from '../Ticket.styles';
 
@@ -33,20 +33,21 @@ i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
 });
 
-describe('components/ActionActivationTicket', () => {
+describe('components/UserNameChangeTicket', () => {
   const ticket = {
-    type: 'action-act',
-    version: 1,
+    fee: 5000,
     pastelID:
-      'jXXcKdSL8XAd1kMCkBwe4vMfyZj4Jo5D63nnGzZuXGZuPS7qjax8SayHDHj4Erk2kThZvH7JuoX9PkDeS3q8TY',
-    reg_txid: 'ead40b73c1f1c8d5a551a3f05a8d8030651c84f026f0ee865ecf1666c0eb6255',
-    called_at: 154620,
-    storage_fee: 65,
+      'jXYDQ9EgqZBmJXNSrAUTQZqSkXqZiHBabyW2Hk7rYR33AXyQiF4oPWjJHXg5XQdYind3ER5yzo7bfn9v8DLiwe',
     signature:
-      '3424e8a2ecbef0064193d503754bde123693089ae26ae9838cab09be15eea95b79f68d9d186120c733bbfd0c37d6fa553c3c6a56c4329f19000b9c74e5473b82bef35bd21bfaac958cdadd46fd92f5502ddbb741f74cfcc6db885d998d3e923d5cf10cbdbf18ca27be6f844575c7953f3a00',
-    transactionTime: 1678937408698,
+      'e7a4475292553dbc057013a153fbe68b5470a90e1a72eecd23b995f28a36d4607880357cfb04a38af2730f7618c58c9025efffbe9880a1b180c796feb4e1ca215a4be2dc99208eca187fca986ac7dab1146a6af4308be89d356ba9c7414d9c5d822a857c74ae4c58df6a583c9486acd23a00',
+    type: 'username-change',
+    username: 'Knuckles',
+    version: 1,
+    transactionTime: 1675924447000,
+    activation_ticket: null,
+    height: 226704,
   };
-  const wrapper = shallow(<ActionActivationTicket ticket={ticket} />);
+  const wrapper = shallow(<UserNameChangeTicket ticket={ticket} />);
 
   test('renders correctly', () => {
     expect(wrapper).toMatchSnapshot();

@@ -25,7 +25,9 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{data.creator_name || translate('common.na')}</Styles.TicketContent>
+          <Styles.TicketContent>
+            {data?.creator_name || translate('common.na')}
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -36,7 +38,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-            {data.creator_website || translate('common.na')}
+            {data?.creator_website || translate('common.na')}
           </Styles.TicketContent>
         </Grid>
       </Grid>
@@ -48,7 +50,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-            {data.creator_written_statement || translate('common.na')}
+            {data?.creator_written_statement || translate('common.na')}
           </Styles.TicketContent>
         </Grid>
       </Grid>
@@ -60,7 +62,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-            {data.nft_creation_video_youtube_url || translate('common.na')}
+            {data?.nft_creation_video_youtube_url || translate('common.na')}
           </Styles.TicketContent>
         </Grid>
       </Grid>
@@ -72,7 +74,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-            {data.nft_keyword_set
+            {data?.nft_keyword_set
               ? data.nft_keyword_set.replaceAll(',', ', ')
               : translate('common.na')}
           </Styles.TicketContent>
@@ -86,7 +88,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-            {data.nft_series_name || translate('common.na')}
+            {data?.nft_series_name || translate('common.na')}
           </Styles.TicketContent>
         </Grid>
       </Grid>
@@ -97,7 +99,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{data.nft_title || translate('common.na')}</Styles.TicketContent>
+          <Styles.TicketContent>{data?.nft_title || translate('common.na')}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -107,7 +109,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{data.nft_type || translate('common.na')}</Styles.TicketContent>
+          <Styles.TicketContent>{data?.nft_type || translate('common.na')}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -117,7 +119,9 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{data.preview_hash || translate('common.na')}</Styles.TicketContent>
+          <Styles.TicketContent>
+            {data?.preview_hash || translate('common.na')}
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -128,7 +132,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-            {data.thumbnail1_hash || translate('common.na')}
+            {data?.thumbnail1_hash || translate('common.na')}
           </Styles.TicketContent>
         </Grid>
       </Grid>
@@ -140,7 +144,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-            {data.thumbnail2_hash || translate('common.na')}
+            {data?.thumbnail2_hash || translate('common.na')}
           </Styles.TicketContent>
         </Grid>
       </Grid>
@@ -151,7 +155,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{data.data_hash || translate('common.na')}</Styles.TicketContent>
+          <Styles.TicketContent>{data?.data_hash || translate('common.na')}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -228,7 +232,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-            {data.rq_ids ? data.rq_ids.join(', ') : translate('common.na')}
+            {data?.rq_ids ? data.rq_ids.join(', ') : translate('common.na')}
           </Styles.TicketContent>
         </Grid>
       </Grid>

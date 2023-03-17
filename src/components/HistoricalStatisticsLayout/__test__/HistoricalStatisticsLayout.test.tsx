@@ -1,9 +1,13 @@
 import { shallow } from 'enzyme';
+import { Skeleton } from '@material-ui/lab';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import 'jest-styled-components';
 
+import { Dropdown } from '../../Dropdown/Dropdown';
 import i18next from '../../../utils/helpers/i18n';
 import { CHART_THEME_BACKGROUND_DEFAULT_COLOR } from '../../../utils/constants/statistics';
 import HistoricalStatisticsLayout from '../HistoricalStatisticsLayout';
+import * as Styles from '../HistoricalStatisticsLayout.styles';
 
 jest.mock('i18next-http-backend');
 jest.mock('react-i18next', () => ({
@@ -38,5 +42,29 @@ describe('components/HistoricalStatisticsLayout', () => {
 
   test('renders correctly', () => {
     expect(wrapper).toMatchSnapshot();
+  });
+
+  test('should render <NavigateBeforeIcon>', () => {
+    expect(wrapper.find(NavigateBeforeIcon).length).toBeGreaterThanOrEqual(1);
+  });
+
+  test('should render <Dropdown>', () => {
+    expect(wrapper.find(Dropdown).length).toBeGreaterThanOrEqual(1);
+  });
+
+  test('should render <Styles.BackButtonWrapper>', () => {
+    expect(wrapper.find(Styles.BackButtonWrapper).length).toBeGreaterThanOrEqual(1);
+  });
+
+  test('should render <Styles.BackButton>', () => {
+    expect(wrapper.find(Styles.BackButton).length).toBeGreaterThanOrEqual(1);
+  });
+
+  test('should render <Styles.ChartWrapper>', () => {
+    expect(wrapper.find(Styles.ChartWrapper).length).toBeGreaterThanOrEqual(1);
+  });
+
+  test('should render <Skeleton>', () => {
+    expect(wrapper.find(Skeleton).length).toBe(0);
   });
 });

@@ -5,7 +5,7 @@ import 'jest-styled-components';
 
 import RouterLink from '../../RouterLink/RouterLink';
 import i18next from '../../../utils/helpers/i18n';
-import ActionActivationTicket from '../ActionActivationTicket';
+import NFTActivationTicket from '../NFTActivationTicket';
 import Signatures from '../Signatures';
 import * as Styles from '../Ticket.styles';
 
@@ -33,20 +33,22 @@ i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
 });
 
-describe('components/ActionActivationTicket', () => {
+describe('components/NFTActivationTicket', () => {
   const ticket = {
-    type: 'action-act',
-    version: 1,
+    creator_height: 147573,
     pastelID:
-      'jXXcKdSL8XAd1kMCkBwe4vMfyZj4Jo5D63nnGzZuXGZuPS7qjax8SayHDHj4Erk2kThZvH7JuoX9PkDeS3q8TY',
-    reg_txid: 'ead40b73c1f1c8d5a551a3f05a8d8030651c84f026f0ee865ecf1666c0eb6255',
-    called_at: 154620,
-    storage_fee: 65,
+      'jXYpteB4PBusbct9GgVZQYABshppSZ2eqQHBJMdQzRU3Si7BybowHFfuyfES6kq9hWp8GWcPRvrNfj576jc44x',
+    reg_txid: 'df2d19bd534fd65005bfd5b25044e0b9f9171ab98291d3637c8edd2072eac3d1',
     signature:
-      '3424e8a2ecbef0064193d503754bde123693089ae26ae9838cab09be15eea95b79f68d9d186120c733bbfd0c37d6fa553c3c6a56c4329f19000b9c74e5473b82bef35bd21bfaac958cdadd46fd92f5502ddbb741f74cfcc6db885d998d3e923d5cf10cbdbf18ca27be6f844575c7953f3a00',
-    transactionTime: 1678937408698,
+      'fab240c360a3c31f20e759ab19db4f09ed64586ec24904b72f1834e9c82e908ae227ebce5956a3acf7e6851884082693d19d5366d646dbf080c1d53c2bb990327325df95fedc8502dbade63b99c1143bd884111469596168e16863f447dc63b0ba5825b0b0319cb351b67eedb39dccfb3e00',
+    storage_fee: 137,
+    type: 'nft-act',
+    version: 0,
+    transactionTime: 1660256540000,
+    activation_ticket: null,
+    height: 147589,
   };
-  const wrapper = shallow(<ActionActivationTicket ticket={ticket} />);
+  const wrapper = shallow(<NFTActivationTicket ticket={ticket} />);
 
   test('renders correctly', () => {
     expect(wrapper).toMatchSnapshot();

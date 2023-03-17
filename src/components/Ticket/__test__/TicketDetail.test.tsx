@@ -1,13 +1,11 @@
 import { shallow } from 'enzyme';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import 'jest-styled-components';
 
-import RouterLink from '../../RouterLink/RouterLink';
 import i18next from '../../../utils/helpers/i18n';
+import TicketDetail from '../TicketDetail';
 import AcceptTicket from '../AcceptTicket';
-import Signatures from '../Signatures';
-import * as Styles from '../Ticket.styles';
+import * as TableStyles from '../../Table/Table.styles';
+import * as Styles from '../../../pages/Details/TransactionDetails/TransactionDetails.styles';
 
 jest.mock('i18next-http-backend');
 jest.mock('react-i18next', () => ({
@@ -33,7 +31,7 @@ i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
 });
 
-describe('components/AcceptTicket', () => {
+describe('components/TicketDetail', () => {
   const ticket = {
     type: 'accept',
     version: 1,
@@ -45,33 +43,25 @@ describe('components/AcceptTicket', () => {
       '3424e8a2ecbef0064193d503754bde123693089ae26ae9838cab09be15eea95b79f68d9d186120c733bbfd0c37d6fa553c3c6a56c4329f19000b9c74e5473b82bef35bd21bfaac958cdadd46fd92f5502ddbb741f74cfcc6db885d998d3e923d5cf10cbdbf18ca27be6f844575c7953f3a00',
     transactionTime: 1678937408698,
   };
-  const wrapper = shallow(<AcceptTicket ticket={ticket} />);
+  const wrapper = shallow(<TicketDetail title="Pastel ID" type="accept" ticket={ticket} />);
 
   test('renders correctly', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  test('should render <Grid>', () => {
-    expect(wrapper.find(Grid).length).toBeGreaterThanOrEqual(1);
+  test('should render <Styles.ContentWrapper>', () => {
+    expect(wrapper.find(Styles.ContentWrapper).length).toBeGreaterThanOrEqual(1);
   });
 
-  test('should render <Box>', () => {
-    expect(wrapper.find(Box).length).toBeGreaterThanOrEqual(1);
+  test('should render <AcceptTicket>', () => {
+    expect(wrapper.find(AcceptTicket).length).toBeGreaterThanOrEqual(1);
   });
 
-  test('should render <RouterLink>', () => {
-    expect(wrapper.find(RouterLink).length).toBeGreaterThanOrEqual(1);
+  test('should render <TableStyles.BlockWrapper>', () => {
+    expect(wrapper.find(TableStyles.BlockWrapper).length).toBeGreaterThanOrEqual(1);
   });
 
-  test('should render <Signatures>', () => {
-    expect(wrapper.find(Signatures).length).toBeGreaterThanOrEqual(1);
-  });
-
-  test('should render <Styles.TicketTitle>', () => {
-    expect(wrapper.find(Styles.TicketTitle).length).toBeGreaterThanOrEqual(1);
-  });
-
-  test('should render <Styles.TicketContent>', () => {
-    expect(wrapper.find(Styles.TicketContent).length).toBeGreaterThanOrEqual(1);
+  test('should render <TableStyles.BlockTitle>', () => {
+    expect(wrapper.find(TableStyles.BlockTitle).length).toBeGreaterThanOrEqual(1);
   });
 });

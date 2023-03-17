@@ -5,7 +5,7 @@ import 'jest-styled-components';
 
 import RouterLink from '../../RouterLink/RouterLink';
 import i18next from '../../../utils/helpers/i18n';
-import ActionActivationTicket from '../ActionActivationTicket';
+import OfferTicket from '../OfferTicket';
 import Signatures from '../Signatures';
 import * as Styles from '../Ticket.styles';
 
@@ -33,20 +33,27 @@ i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
 });
 
-describe('components/ActionActivationTicket', () => {
+describe('components/OfferTicket', () => {
   const ticket = {
-    type: 'action-act',
-    version: 1,
+    asked_price: 1,
+    copy_number: 1,
+    item_txid: '6b43be16291af3b546fa4309d42497fc01927f1898eebb09e1bc9541e4d8f582',
+    nft_txid: '7b43be16291af3b546fa4309d42497fc01927f1898eebb09e1bc9541e4d8f582',
+    locked_recipient:
+      'jXZqgvtqGERZuAbNkEXV1WXonpay98zUUgTk4AWwx2vSJq42vBxwyvwQZ36dVEAkBVB6sYqPh46SvktveCA93L',
     pastelID:
-      'jXXcKdSL8XAd1kMCkBwe4vMfyZj4Jo5D63nnGzZuXGZuPS7qjax8SayHDHj4Erk2kThZvH7JuoX9PkDeS3q8TY',
-    reg_txid: 'ead40b73c1f1c8d5a551a3f05a8d8030651c84f026f0ee865ecf1666c0eb6255',
-    called_at: 154620,
-    storage_fee: 65,
+      'jXac5N8FdQWM354v9zpk2rEqfuWGXfeti2EuV44AgFsxiJWHzdxhprjD68cgr3H8qUJ5gydmXjYKqQ9ubF131s',
     signature:
-      '3424e8a2ecbef0064193d503754bde123693089ae26ae9838cab09be15eea95b79f68d9d186120c733bbfd0c37d6fa553c3c6a56c4329f19000b9c74e5473b82bef35bd21bfaac958cdadd46fd92f5502ddbb741f74cfcc6db885d998d3e923d5cf10cbdbf18ca27be6f844575c7953f3a00',
-    transactionTime: 1678937408698,
+      '884cb82675f4eca59a7fbdac7bb093884bc9cca8749bbe43b81b2e5871576b14d1b3fd157fa8a8c2e787cc44ef451e9cdb4568f8c1a949d100e0af5738abbf4cdc85e06614c194d2ce3943823fb5ffb4fbf210330442f94067aafcf7f240108feeca31f19c1c0f465919b7c8ff59a9ab2800',
+    type: 'offer',
+    valid_after: 0,
+    valid_before: 0,
+    version: 0,
+    transactionTime: 1675206868000,
+    activation_ticket: null,
+    height: 221947,
   };
-  const wrapper = shallow(<ActionActivationTicket ticket={ticket} />);
+  const wrapper = shallow(<OfferTicket ticket={ticket} />);
 
   test('renders correctly', () => {
     expect(wrapper).toMatchSnapshot();
