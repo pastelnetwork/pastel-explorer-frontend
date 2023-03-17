@@ -1,7 +1,8 @@
 import { shallow } from 'enzyme';
-
+import { ThemeProvider } from 'styled-components/macro';
 import 'jest-styled-components';
 
+import { themeLight } from '../../../theme';
 import i18next from '../../../utils/helpers/i18n';
 import SearchBar from '../SearchBar';
 
@@ -31,7 +32,11 @@ i18next.t = jest.fn().mockImplementation((...arg) => {
 
 describe('components/SearchBar', () => {
   const onDrawerToggle = jest.fn();
-  const wrapper = shallow(<SearchBar onDrawerToggle={onDrawerToggle} />);
+  const wrapper = shallow(
+    <ThemeProvider theme={themeLight}>
+      <SearchBar onDrawerToggle={onDrawerToggle} />
+    </ThemeProvider>,
+  );
 
   test('renders correctly', () => {
     expect(wrapper).toMatchSnapshot();
