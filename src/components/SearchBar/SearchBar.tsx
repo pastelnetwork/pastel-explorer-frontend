@@ -19,6 +19,13 @@ import { translate } from '@utils/helpers/i18n';
 import SwitchMode from './SwitchMode';
 import * as Styles from './SearchBar.styles';
 import {
+  ADDRESSES_TEXT_LABEL,
+  BLOCKS_IDS_TEXT_LABEL,
+  TRANSACTIONS_TEXT_LABEL,
+  BLOCKS_HEIGHTS_TEXT_LABEL,
+  SENSES_TEXT_LABEL,
+  PASTEL_ID_TEXT_LABEL,
+  USERNAME_TEXT_LABEL,
   ADDRESSES_LABEL,
   BLOCKS_IDS_LABEL,
   TRANSACTIONS_LABEL,
@@ -113,13 +120,37 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
     if (!data) return [];
 
     const groupedData = [
-      ...collectData(data.address, translate(ADDRESSES_LABEL) as TOptionsCategories),
-      ...collectData(data.blocksIds, translate(BLOCKS_IDS_LABEL) as TOptionsCategories),
-      ...collectData(data.blocksHeights, translate(BLOCKS_HEIGHTS_LABEL) as TOptionsCategories),
-      ...collectData(data.transactions, translate(TRANSACTIONS_LABEL) as TOptionsCategories),
-      ...collectData(data.senses, translate(SENSES_LABEL) as TOptionsCategories),
-      ...collectData(data.pastelIds, translate(PASTEL_ID_LABEL) as TOptionsCategories),
-      ...collectUsernameData(data.usernameList, translate(USERNAME) as TOptionsCategories),
+      ...collectData(
+        data.address,
+        ADDRESSES_LABEL,
+        translate(ADDRESSES_TEXT_LABEL) as TOptionsCategories,
+      ),
+      ...collectData(
+        data.blocksIds,
+        BLOCKS_IDS_LABEL,
+        translate(BLOCKS_IDS_TEXT_LABEL) as TOptionsCategories,
+      ),
+      ...collectData(
+        data.blocksHeights,
+        BLOCKS_HEIGHTS_LABEL,
+        translate(BLOCKS_HEIGHTS_TEXT_LABEL) as TOptionsCategories,
+      ),
+      ...collectData(
+        data.transactions,
+        TRANSACTIONS_LABEL,
+        translate(TRANSACTIONS_TEXT_LABEL) as TOptionsCategories,
+      ),
+      ...collectData(data.senses, SENSES_LABEL, translate(SENSES_TEXT_LABEL) as TOptionsCategories),
+      ...collectData(
+        data.pastelIds,
+        PASTEL_ID_LABEL,
+        translate(PASTEL_ID_TEXT_LABEL) as TOptionsCategories,
+      ),
+      ...collectUsernameData(
+        data.usernameList,
+        USERNAME,
+        translate(USERNAME_TEXT_LABEL) as TOptionsCategories,
+      ),
     ];
 
     return setSearchData(groupedData.sort((a, b) => -b.category.localeCompare(a.category)));
@@ -166,7 +197,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
           paper: classes.listboxOptions,
         }}
         filterOptions={filterOptions}
-        groupBy={option => (option as TAutocompleteOptions).category}
+        groupBy={option => (option as TAutocompleteOptions).categoryText}
         getOptionLabel={option => `${(option as TAutocompleteOptions).value}`}
         loading={loading}
         onInputChange={handleInputChange}

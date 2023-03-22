@@ -7,7 +7,8 @@ import { TThemeInitOption, TThemeColor } from '@utils/constants/types';
 import { getSummaryThemeUpdateOption } from '@utils/helpers/chartOptions';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { themes } from '@utils/constants/statistics';
-import { generateMinMaxChartData } from '@utils/helpers/statisticsLib';
+import { generateMinMaxChartData, PeriodTypes } from '@utils/helpers/statisticsLib';
+import useWindowDimensions from '@hooks/useWindowDimensions';
 
 import { getRouteForChart } from './Summary.helpers';
 import * as Styles from './Summary.styles';
@@ -20,10 +21,26 @@ type TLineChartProps = {
   dataY2?: number[];
   offset: number;
   disableClick?: boolean;
+  className?: string;
+  period?: PeriodTypes;
+  seriesName?: string;
+  chartColor?: string;
 };
 
 export const LineChart = (props: TLineChartProps): JSX.Element | null => {
-  const { chartName, dataX, dataY, offset, dataY1, dataY2 } = props;
+  const { width } = useWindowDimensions();
+  const {
+    className,
+    chartName,
+    dataX,
+    dataY,
+    offset,
+    dataY1,
+    dataY2,
+    period,
+    seriesName,
+    chartColor,
+  } = props;
   const { darkMode } = useSelector(getThemeState);
   const history = useHistory();
   const [currentTheme, setCurrentTheme] = useState<TThemeColor | null>(null);
@@ -74,6 +91,10 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
         const result = generateMinMaxChartData(min, max, offset, 5);
         setMinY(result.min);
         setMaxY(result.max);
+      } else if (['balanceHistory'].includes(chartName)) {
+        const result = generateMinMaxChartData(min, max, offset, 5, period);
+        setMinY(result.min);
+        setMaxY(result.max);
       } else {
         setMinY(Math.round(min) - offset);
         setMaxY(Math.floor(max) + offset);
@@ -91,6 +112,10 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
     minY,
     maxY,
     darkMode,
+    period,
+    width,
+    seriesName,
+    chartColor,
   };
   const options = getSummaryThemeUpdateOption(params);
 
@@ -101,7 +126,7 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
   };
 
   return (
-    <Styles.LineChartWrap onClick={onChartClick}>
+    <Styles.LineChartWrap className={className || ''} onClick={onChartClick}>
       <ReactECharts notMerge={false} lazyUpdate option={options} />
     </Styles.LineChartWrap>
   );
@@ -112,5 +137,9 @@ LineChart.defaultProps = {
   dataY: undefined,
   dataY1: undefined,
   dataY2: undefined,
+  className: undefined,
+  period: undefined,
+  seriesName: undefined,
+  chartColor: undefined,
   disableClick: false,
 };

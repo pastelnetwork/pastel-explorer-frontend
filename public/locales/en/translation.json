@@ -1100,7 +1100,7 @@
         "description": "Used for the CascadeAndSenseStatistics page"
       },
       "latestTransactions": {
-        "message": "Latest Transactions",
+        "message": "Transactions",
         "description": "Used for the CascadeAndSenseStatistics page"
       },
       "downloadCSV": {
@@ -1108,8 +1108,22 @@
         "description": "Used for the CascadeAndSenseStatistics page"
       },
       "address": {
-        "message": "{{currency}} address",
+        "message": "{{currency}} Address",
         "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "balanceHistory": {
+        "balance": {
+          "message": "Balance",
+          "description": "Used for the CascadeAndSenseStatistics page"
+        },
+        "sent": {
+          "message": "Sent",
+          "description": "Used for the CascadeAndSenseStatistics page"
+        },
+        "received": {
+          "message": "Received",
+          "description": "Used for the CascadeAndSenseStatistics page"
+        }
       }
     },
     "blockDetails": {

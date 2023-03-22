@@ -615,7 +615,7 @@ export const generateXAxisInterval = (
       return Math.floor(dataX.length / 7);
     case '30d':
       if (dataX.length !== 31) {
-        return Math.floor(dataX.length / 15);
+        return Math.floor(dataX.length / 11);
       }
       return 1;
     case '90d':
@@ -853,3 +853,19 @@ export function transformTransactionsChartData(
   }
   return { dataX, dataY };
 }
+
+export const balanceHistoryXAxisInterval = (dataX?: string[], width?: number) => {
+  if (!dataX?.length || !width) {
+    return 'auto';
+  }
+
+  if (width > 960 && width < 1200) {
+    return Math.floor(dataX.length / 5);
+  }
+
+  if (width <= 960) {
+    return Math.floor(dataX.length / 3);
+  }
+
+  return Math.floor(dataX.length / 8);
+};

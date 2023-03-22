@@ -1,17 +1,50 @@
 import useSWRInfinite from 'swr/infinite';
+import useSWR from 'swr';
 
+import { TChartStatisticsResponse } from '@utils/types/IStatistics';
 import { SWR_OPTIONS } from '@utils/constants/statistics';
 import { axiosGet } from '@utils/helpers/useFetch/useFetch';
 import * as URLS from '@utils/constants/urls';
 import { IAddress } from '@utils/types/IAddress';
 import { formattedDate } from '@utils/helpers/date/date';
 import { SortDirectionsType } from '@components/InfinityTable/InfinityTable';
-import {
-  DATA_FETCH_LIMIT,
-  DEFAULT_ADDRESS_DATA,
-} from '@pages/Details/AddressDetails/AddressDetails.helpers';
+import { DATA_FETCH_LIMIT } from '@pages/Details/AddressDetails/AddressDetails.helpers';
 
-export default function useAddressDetails(
+interface IAddressDetails {
+  outgoingSum: number;
+  incomingSum: number;
+}
+
+export default function useAddressDetails(id: string) {
+  const { data, isLoading } = useSWR<IAddressDetails>(
+    `${URLS.ADDRESS_URL}/${id}`,
+    axiosGet,
+    SWR_OPTIONS,
+  );
+
+  return {
+    isLoading,
+    outgoingSum: data?.outgoingSum || 0,
+    incomingSum: data?.incomingSum || 0,
+  };
+}
+
+export function useBalanceHistory(id: string, period: string) {
+  const { data, isLoading } = useSWRInfinite<{
+    data: Array<TChartStatisticsResponse>;
+    incoming: Array<TChartStatisticsResponse>;
+    outgoing: Array<TChartStatisticsResponse>;
+  }>(() => `${URLS.BALANCE_HISTORY_URL}/${id}?period=${period}`, axiosGet, SWR_OPTIONS);
+
+  return {
+    balance: data ? data[0].data : [],
+    incoming: data ? data[0].incoming : [],
+    outgoing: data ? data[0].outgoing : [],
+    isLoading,
+  };
+}
+
+export function useLatestTransactions(
   id: string,
   limit: number,
   sortBy: string,
@@ -19,12 +52,13 @@ export default function useAddressDetails(
 ) {
   const { data, isLoading, size, setSize } = useSWRInfinite<IAddress>(
     index =>
-      `${URLS.ADDRESS_URL}/${id}?offset=${
+      `${URLS.LATEST_TRANSACTIONS_URL}/${id}?offset=${
         index * DATA_FETCH_LIMIT
       }&limit=${limit}&sortBy=${sortBy}&sortDirection=${sortDirection}`,
     axiosGet,
     SWR_OPTIONS,
   );
+
   const isLoadingMore = isLoading || (size > 0 && data && typeof data[size - 1] === 'undefined');
   const newData = [];
   const csvData = [];
@@ -45,14 +79,7 @@ export default function useAddressDetails(
   }
 
   return {
-    swrData: newData.length
-      ? {
-          address: data?.[0]?.address || '',
-          data: newData,
-          incomingSum: data?.[0]?.incomingSum || 0,
-          outgoingSum: data?.[0]?.outgoingSum || 0,
-        }
-      : DEFAULT_ADDRESS_DATA,
+    addresses: data?.length ? newData : null,
     isLoading: isLoadingMore,
     csvData,
     swrSize: size,

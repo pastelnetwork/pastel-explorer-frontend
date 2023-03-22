@@ -1,4 +1,5 @@
 import { Grid } from '@material-ui/core';
+import format from 'date-fns/format';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import CopyButton from '@components/CopyButton/CopyButton';
@@ -10,6 +11,7 @@ import { formattedDate } from '@utils/helpers/date/date';
 import { IAddressData, IAddress } from '@utils/types/IAddress';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { formatAddress } from '@utils/helpers/format';
+import { TChartStatisticsResponse } from '@utils/types/IStatistics';
 
 import {
   ADDRESS_TRANSACTION_TIMESTAMP_KEY,
@@ -74,3 +76,26 @@ export const addressHeaders: Array<HeaderType> = [
   { id: 2, header: 'pages.addressDetails.totalReceived' },
   { id: 3, header: 'pages.addressDetails.balance' },
 ];
+
+export const transformChartData = (data: TChartStatisticsResponse[] | null) => {
+  const dataX: string[] = [];
+  const dataY: number[] = [];
+  if (data?.length) {
+    data.forEach(item => {
+      dataX.push(format(item.time, 'MM/dd/yyyy'));
+      dataY.push(item.value);
+    });
+
+    const nowHour = format(new Date(), 'MM/dd/yyyy');
+    const targetHour = format(new Date(dataX[dataX.length - 1]), 'MM/dd/yyyy');
+    if (nowHour !== targetHour) {
+      dataX.push(format(new Date(), 'MM/dd/yyyy'));
+      dataY.push(dataY[dataY.length - 1]);
+    }
+  }
+
+  return {
+    dataX,
+    dataY,
+  };
+};
