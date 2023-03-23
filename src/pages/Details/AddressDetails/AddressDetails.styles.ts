@@ -223,12 +223,28 @@ export const ChartWrapper = styled.div`
     margin-right: 12px;
     margin-bottom: 0;
   }
+
+  @media (max-width: 960px) {
+    .period {
+      width: 100%;
+      margin-top: 10px;
+    }
+  }
 `;
 
 export const SummaryWrapper = styled.div`
   display: flex;
   width: 30%;
   margin-left: 8px;
+
+  @media (max-width: 960px) {
+    width: 100%;
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 export const SummaryItem = styled.div`
@@ -236,6 +252,11 @@ export const SummaryItem = styled.div`
   align-items: center;
   margin-right: 30px;
   cursor: pointer;
+
+  @media (max-width: 600px) {
+    margin-right: 0;
+    margin-top: 10px;
+  }
 `;
 
 export const SummaryLabel = styled.span`
@@ -260,6 +281,11 @@ export const BalanceHistorySummaryWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-top: 5px;
+
+  @media (max-width: 960px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 export const SummaryIcon = styled.div`

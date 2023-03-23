@@ -633,6 +633,7 @@ export const generateMinMaxChartData = (
   step: number,
   period?: PeriodTypes,
   decimalsLength?: number,
+  percent?: number,
 ): TMinMaxChartData => {
   let result = {
     min: 0,
@@ -650,7 +651,7 @@ export const generateMinMaxChartData = (
       max: Math.ceil(max),
     };
   } else {
-    let minVal = Math.floor(inputMin - Math.floor(inputMin) * 0.02);
+    let minVal = Math.floor(inputMin - Math.floor(inputMin) * (percent || 0.02));
     if (minVal % step !== 0) {
       const minRange = minVal / step;
       const tmpMin = minVal;

@@ -92,7 +92,7 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
         setMinY(result.min);
         setMaxY(result.max);
       } else if (['balanceHistory'].includes(chartName)) {
-        const result = generateMinMaxChartData(min, max, offset, 5, period);
+        const result = generateMinMaxChartData(min, max, offset, 5, period, 0, 0.5);
         setMinY(result.min);
         setMaxY(result.max);
       } else {
