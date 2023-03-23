@@ -140,7 +140,7 @@ const AddressDetails = () => {
         </Grid>
         <Styles.TableWrapper item>
           <Grid container spacing={5}>
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} lg={8}>
               {addresses ? (
                 <InfinityTable
                   title={generateTitle()}
@@ -169,7 +169,7 @@ const AddressDetails = () => {
                 </Box>
               ) : null}
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} lg={4}>
               <DirectionChart id={id} />
             </Grid>
           </Grid>

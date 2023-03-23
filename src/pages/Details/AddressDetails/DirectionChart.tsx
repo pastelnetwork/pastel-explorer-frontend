@@ -86,7 +86,7 @@ const DirectionChart: React.FC<IDirectionChartProps> = ({ id }) => {
   return (
     <Styles.DirectionChartWrapper>
       <Grid container spacing={4}>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6} lg={12}>
           <DirectionItem
             id={id}
             direction="Incoming"
@@ -94,7 +94,7 @@ const DirectionChart: React.FC<IDirectionChartProps> = ({ id }) => {
             title={translate('pages.addressDetails.balanceHistory.receivedByMonth')}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6} lg={12}>
           <DirectionItem
             id={id}
             direction="Outgoing"

@@ -50,11 +50,11 @@ export const generateLatestTransactions = (transactionsList: Array<IAddressData>
       </Grid>
     ),
     [ADDRESS_TRANSACTION_DIRECTION_KEY]: (
-      <>
+      <div className={`direction-status ${direction.toLowerCase()}`}>
         {direction === 'Outgoing'
           ? translate('pages.addressDetails.balanceHistory.sent')
           : translate('pages.addressDetails.balanceHistory.received')}
-      </>
+      </div>
     ),
     [ADDRESS_TRANSACTION_AMOUNT_KEY]: formatNumber(amount, { decimalsLength: 2 }),
   }));

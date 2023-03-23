@@ -70,16 +70,18 @@ const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
         />
         <ChartStyles.PeriodSelect className="period">
           <span>{translate('pages.historicalStatistics.period')}: </span>
-          {periods[1].map(period => (
-            <ChartStyles.PeriodButton
-              className={`${getActivePeriodButtonStyle(period)} ${isLoading ? 'disable' : ''}`}
-              onClick={() => handlePeriodFilterChange(period)}
-              type="button"
-              key={`button-filter-${period}`}
-            >
-              {period}
-            </ChartStyles.PeriodButton>
-          ))}
+          <div className="balance-history-period">
+            {periods[1].map(period => (
+              <ChartStyles.PeriodButton
+                className={`${getActivePeriodButtonStyle(period)} ${isLoading ? 'disable' : ''}`}
+                onClick={() => handlePeriodFilterChange(period)}
+                type="button"
+                key={`button-filter-${period}`}
+              >
+                {period}
+              </ChartStyles.PeriodButton>
+            ))}
+          </div>
         </ChartStyles.PeriodSelect>
       </Styles.BalanceHistorySummaryWrapper>
       <Styles.ChartWrapper>

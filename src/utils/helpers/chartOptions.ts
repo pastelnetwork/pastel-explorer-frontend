@@ -3544,7 +3544,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       color: [chartColor || blueColor],
       grid: {
-        top: 8,
+        top: 10,
         right: 0,
         bottom: 20,
         left: 0,
@@ -3652,7 +3652,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       color: ['#E94830'],
       grid: {
-        top: 8,
+        top: 10,
         right: 0,
         bottom: 0,
         left: 0,
@@ -3750,7 +3750,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       color: ['#219653'],
       grid: {
-        top: 8,
+        top: 10,
         right: 0,
         bottom: 0,
         left: 0,

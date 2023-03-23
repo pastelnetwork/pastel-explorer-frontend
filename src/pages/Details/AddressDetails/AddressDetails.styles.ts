@@ -1,9 +1,26 @@
 import styled from 'styled-components/macro';
 import { Grid } from '@material-ui/core';
 
+import themeVariant from '@theme/variants';
+
 export const TableWrapper = styled(Grid)`
   position: relative;
   min-height: 30vh;
+
+  .direction-status {
+    display: inline-flex;
+    padding: 6px 10px 7px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1;
+    color: ${themeVariant.custom.white};
+    background-color: ${themeVariant.custom.red.dark};
+    border-radius: 4px;
+
+    &.incoming {
+      background-color: ${themeVariant.custom.green.main};
+    }
+  }
 
   .latest-transaction-table {
     padding-left: 0;
@@ -34,6 +51,32 @@ export const TableWrapper = styled(Grid)`
 
   .mt-15 {
     margin-top: 15px;
+  }
+
+  @media (min-width: 1024px) {
+    .col-hash {
+      .MuiTableCell-root {
+        padding-left: 7px;
+      }
+    }
+
+    .col-amount {
+      .MuiTableCell-root {
+        padding-left: 16px;
+      }
+    }
+
+    .col-direction {
+      .MuiTableCell-root {
+        padding-left: 21px;
+      }
+    }
+
+    .col-timestamp {
+      .MuiTableCell-root {
+        padding-left: 22px;
+      }
+    }
   }
 `;
 
@@ -215,6 +258,14 @@ export const Heading = styled.div`
   &.direction-item {
     padding: 14px 16px;
   }
+
+  @media (max-width: 390px) {
+    flex-direction: column;
+
+    .direction-period {
+      margin-top: 5px;
+    }
+  }
 `;
 
 export const HeadingTitle = styled.h4`
@@ -256,6 +307,18 @@ export const ChartWrapper = styled.div`
     .period {
       width: 100%;
       margin-top: 10px;
+
+      span,
+      button {
+        margin-button: 0;
+      }
+    }
+  }
+
+  @media (max-width: 390px) {
+    .period {
+      flex-direction: column;
+      margin-top: 20px;
     }
   }
 `;
@@ -389,13 +452,16 @@ export const ChartItem = styled.div`
   }
 
   .direction-period {
+    justify-content: flex-end;
+
     .MuiSelect-select {
       width: auto;
     }
-  }
 
-  .direction-period {
-    justify-content: flex-end;
+    button,
+    span {
+      margin-bottom: 0;
+    }
   }
 `;
 
