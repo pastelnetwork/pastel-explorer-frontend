@@ -86,3 +86,15 @@ export function useLatestTransactions(
     swrSetSize: setSize,
   };
 }
+
+export function useDirection(id: string, period: string, direction: string) {
+  const { data, isLoading } = useSWRInfinite<Array<TChartStatisticsResponse>>(
+    () => `${URLS.DIRECTION_URL}/${id}?period=${period}&direction=${direction}`,
+    axiosGet,
+    SWR_OPTIONS,
+  );
+  return {
+    data: data ? data[0] : [],
+    isLoading,
+  };
+}

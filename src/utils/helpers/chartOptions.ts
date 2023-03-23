@@ -19,6 +19,11 @@ import {
 import { TChartParams } from '@utils/types/IStatistics';
 import { translate } from '@utils/helpers/i18n';
 
+type TAxisPointerProps = {
+  axisDimension: string;
+  value: number;
+};
+
 type TChartOption = {
   [index: string]: EChartsOption;
 };
@@ -2075,6 +2080,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
     chartColor,
   } = args;
   const blueColor = darkMode ? '#1fbfff' : '#5470c6';
+  const seriesLabelColor = darkMode ? '#fff' : '#000';
   const chartOptions: TChartOption = {
     gigaHashPerSec: {
       backgroundColor: theme?.backgroundColor,
@@ -3546,6 +3552,18 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       tooltip: {
         trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            formatter: (param: TAxisPointerProps) => {
+              if (param.axisDimension === 'x') {
+                return param.value;
+              }
+
+              return `${formatNumber(param.value, { decimalsLength: 2 })} ${getCurrencyName()}`;
+            },
+          },
+        },
         formatter: (params: TToolTipParamsProps[]) => {
           return `<div style="text-align: left">${params[0].axisValue}</div>${params[0].marker} ${
             params[0].seriesName
@@ -3624,6 +3642,202 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           ]),
         },
         showSymbol: false,
+      },
+      animation: false,
+    },
+    directionOutgoing: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#E94830'],
+      grid: {
+        top: 8,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            formatter: (param: TAxisPointerProps) => {
+              if (param.axisDimension === 'x') {
+                return format(Number(param.value), 'MM/yyyy');
+              }
+
+              return `${formatNumber(param.value, { decimalsLength: 2 })} ${getCurrencyName()}`;
+            },
+          },
+        },
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `<div style="text-align: left">${format(
+            Number(params[0].axisValue),
+            'MM/yyyy',
+          )}</div>${params[0].marker} ${params[0].seriesName}:&nbsp;${
+            params[0].data ? formatNumber(params[0].value, { decimalsLength: 2 }) : '0'
+          } ${getCurrencyName()}`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+      },
+      yAxis: {
+        type: 'value',
+        min: 0,
+        max: maxY,
+        interval: maxY / 5,
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+      },
+      series: {
+        name: translate('pages.addressDetails.balanceHistory.sentByMonth') || '',
+        type: 'bar',
+        data: dataY?.map((d, index) => {
+          return {
+            value: d,
+            label: {
+              show: true,
+              fontSize: 10,
+              rotate: 90,
+              position: 'insideBottom',
+              align: 'left',
+              verticalAlign: 'middle',
+              distance: 10,
+              color: seriesLabelColor,
+              formatter: () => {
+                return dataX ? format(Number(dataX[index]), 'MM/yyyy') : '';
+              },
+            },
+          };
+        }),
+        showBackground: true,
+        backgroundStyle: {
+          color: 'rgba(180, 180, 180, 0.2)',
+        },
+      },
+      animation: false,
+    },
+    directionIncoming: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#219653'],
+      grid: {
+        top: 8,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            formatter: (param: TAxisPointerProps) => {
+              if (param.axisDimension === 'x') {
+                return format(Number(param.value), 'MM/yyyy');
+              }
+
+              return `${formatNumber(param.value, { decimalsLength: 2 })} ${getCurrencyName()}`;
+            },
+          },
+        },
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `<div style="text-align: left">${format(
+            Number(params[0].axisValue),
+            'MM/yyyy',
+          )}</div>${params[0].marker} ${params[0].seriesName}:&nbsp;${
+            params[0].data ? formatNumber(params[0].value, { decimalsLength: 2 }) : '0'
+          } ${getCurrencyName()}`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+      },
+      yAxis: {
+        type: 'value',
+        min: 0,
+        max: maxY,
+        interval: maxY / 5,
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+      },
+      series: {
+        name: translate('pages.addressDetails.balanceHistory.receivedByMonth') || '',
+        type: 'bar',
+        data: dataY?.map((d, index) => {
+          return {
+            value: d,
+            label: {
+              show: true,
+              fontSize: 10,
+              rotate: 90,
+              position: 'insideBottom',
+              align: 'left',
+              verticalAlign: 'middle',
+              distance: 10,
+              color: seriesLabelColor,
+              formatter: () => {
+                return dataX ? format(Number(dataX[index]), 'MM/yyyy') : '';
+              },
+            },
+          };
+        }),
+        showBackground: true,
+        backgroundStyle: {
+          color: 'rgba(180, 180, 180, 0.2)',
+        },
       },
       animation: false,
     },

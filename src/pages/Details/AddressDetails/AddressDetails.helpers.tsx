@@ -12,11 +12,13 @@ import { IAddressData, IAddress } from '@utils/types/IAddress';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { formatAddress } from '@utils/helpers/format';
 import { TChartStatisticsResponse } from '@utils/types/IStatistics';
+import { translate } from '@utils/helpers/i18n';
 
 import {
   ADDRESS_TRANSACTION_TIMESTAMP_KEY,
   ADDRESS_TRANSACTION_HASH_KEY,
   ADDRESS_TRANSACTION_AMOUNT_KEY,
+  ADDRESS_TRANSACTION_DIRECTION_KEY,
 } from './AddressDetails.columns';
 
 export const DEFAULT_ADDRESS_DATA: IAddress = {
@@ -30,11 +32,8 @@ export const DATA_FETCH_LIMIT = 20;
 export const DATA_OFFSET = 0;
 export const DATA_DEFAULT_SORT = 'DESC';
 
-export const generateLatestTransactions = (
-  transactionsList: Array<IAddressData>,
-  isMobile: boolean,
-): RowsProps[] =>
-  transactionsList.map(({ amount, timestamp, transactionHash }) => ({
+export const generateLatestTransactions = (transactionsList: Array<IAddressData>): RowsProps[] =>
+  transactionsList.map(({ amount, timestamp, transactionHash, direction }) => ({
     [ADDRESS_TRANSACTION_TIMESTAMP_KEY]: formattedDate(timestamp, {
       dayName: false,
     }),
@@ -43,12 +42,19 @@ export const generateLatestTransactions = (
         <CopyButton copyText={transactionHash} />
         <RouterLink
           route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
-          value={isMobile ? formatAddress(transactionHash) : transactionHash}
+          value={formatAddress(transactionHash, 15, -4)}
           textSize="large"
           title={transactionHash}
           className="transaction-hash-link"
         />
       </Grid>
+    ),
+    [ADDRESS_TRANSACTION_DIRECTION_KEY]: (
+      <>
+        {direction === 'Outgoing'
+          ? translate('pages.addressDetails.balanceHistory.sent')
+          : translate('pages.addressDetails.balanceHistory.received')}
+      </>
     ),
     [ADDRESS_TRANSACTION_AMOUNT_KEY]: formatNumber(amount, { decimalsLength: 2 }),
   }));
@@ -92,6 +98,22 @@ export const transformChartData = (data: TChartStatisticsResponse[] | null) => {
       dataX.push(format(new Date(), 'MM/dd/yyyy'));
       dataY.push(dataY[dataY.length - 1]);
     }
+  }
+
+  return {
+    dataX,
+    dataY,
+  };
+};
+
+export const transformDirectionChartData = (data: TChartStatisticsResponse[] | null) => {
+  const dataX: string[] = [];
+  const dataY: number[] = [];
+  if (data?.length) {
+    data.forEach(item => {
+      dataX.push(item.time.toString());
+      dataY.push(item.value);
+    });
   }
 
   return {

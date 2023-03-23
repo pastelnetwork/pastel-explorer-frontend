@@ -44,7 +44,9 @@ export type PeriodTypes =
   | '60d'
   | '90d'
   | '180d'
+  | '6m'
   | '1y'
+  | '2y'
   | 'max'
   | 'all';
 export type TGranularity = '1d' | '30d' | '1y' | 'all' | 'none';
@@ -540,10 +542,17 @@ export function transformTotalSupplyDataChart(
 export const generatePeriodToDropdownOptions = (periods: PeriodTypes[]) => {
   const results = [];
   for (let i = 0; i < periods.length; i += 1) {
-    results.push({
-      name: translate('pages.statistics.filterLabel', { period: periods[i] }),
-      value: periods[i],
-    });
+    if (periods[i] !== 'max') {
+      results.push({
+        name: translate('pages.statistics.filterLabel', { period: periods[i] }),
+        value: periods[i],
+      });
+    } else {
+      results.push({
+        name: translate('pages.statistics.filterLabel'),
+        value: periods[i],
+      });
+    }
   }
   return results;
 };

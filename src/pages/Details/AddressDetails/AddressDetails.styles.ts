@@ -10,20 +10,48 @@ export const TableWrapper = styled(Grid)`
     padding-right: 0;
   }
 
+  .table-wrapper {
+    overflow-x: hidden;
+  }
+
   .loading-wrapper {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
+
+  .relative {
+    position: relative;
+  }
+
+  .transaction-table-mask {
+    min-height: 595px;
+    background: ${props => props.theme.sidebar.menu.background};
+    box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
+    border-radius: 0 0 10px 10px;
+  }
+
+  .mt-15 {
+    margin-top: 15px;
+  }
 `;
 
 export const Wrapper = styled.div`
+  .disable {
+    cursor: default;
+    pointer-events: none;
+  }
+
   .address-table-wrapper {
     padding: 10px 0;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     background: ${props => props.theme.sidebar.menu.background};
+  }
+
+  .ReactVirtualized__Grid {
+    min-width: unset;
   }
 
   .address-wrapper {
@@ -70,10 +98,6 @@ export const Wrapper = styled.div`
     .transaction-hash,
     .transaction-hash-link {
       max-width: calc(100vw - 225px);
-    }
-
-    .ReactVirtualized__Grid {
-      min-width: unset;
     }
 
     .ReactVirtualized__Table__headerRow {
@@ -187,6 +211,10 @@ export const Heading = styled.div`
   background: ${props => props.theme.card.titleColor};
   border-radius: 10px 10px 0 0;
   overflow: hidden;
+
+  &.direction-item {
+    padding: 14px 16px;
+  }
 `;
 
 export const HeadingTitle = styled.h4`
@@ -286,6 +314,16 @@ export const BalanceHistorySummaryWrapper = styled.div`
     flex-direction: column;
     align-items: flex-start;
   }
+
+  @media (max-width: 375px) {
+    .period {
+      span {
+        display: block;
+        width: 100%;
+        padding-left: 12px;
+      }
+    }
+  }
 `;
 
 export const SummaryIcon = styled.div`
@@ -323,4 +361,54 @@ export const SummaryIcon = styled.div`
 
 export const ItemWrapper = styled.div`
   line-height: 1;
+`;
+
+export const DirectionChartWrapper = styled.div`
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+
+  .line-chart {
+    padding: 16px;
+  }
+`;
+
+export const ChartItem = styled.div`
+  width: 100%;
+
+  .chart-box {
+    position: relative;
+    min-height: 260px;
+    background: ${props => props.theme.sidebar.menu.background};
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
+  }
+
+  .echarts-for-react {
+    height: 240px !important;
+  }
+
+  .direction-period {
+    .MuiSelect-select {
+      width: auto;
+    }
+  }
+
+  .direction-period {
+    justify-content: flex-end;
+  }
+`;
+
+export const Loader = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: inline-block;
+  text-align: center;
+  transform: translate(-50%, -50%);
+`;
+
+export const LoadingText = styled.div`
+  margin-top: 0;
+  font-size: 20px;
 `;

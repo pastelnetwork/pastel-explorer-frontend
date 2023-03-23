@@ -19,6 +19,7 @@ export const ADDRESS_URL = 'v1/addresses';
 export const RICHLIST_URL = 'v1/addresses/rank/100';
 export const BALANCE_HISTORY_URL = 'v1/addresses/balance-history';
 export const LATEST_TRANSACTIONS_URL = 'v1/addresses/latest-transactions';
+export const DIRECTION_URL = 'v1/addresses/direction';
 export const NETWORK_URL = 'v1/network';
 export const SUMMARY_URL = 'v1/stats';
 export const GET_STATISTICS = 'v1/stats/list';

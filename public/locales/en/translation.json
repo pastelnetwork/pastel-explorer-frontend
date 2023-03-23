@@ -1087,6 +1087,10 @@
         "message": "Timestamp",
         "description": "Used for the CascadeAndSenseStatistics page"
       },
+      "direction": {
+        "message": "Type",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
       "totalSent": {
         "message": "Total Sent ({{currency}})",
         "description": "Used for the CascadeAndSenseStatistics page"
@@ -1122,6 +1126,14 @@
         },
         "received": {
           "message": "Received",
+          "description": "Used for the CascadeAndSenseStatistics page"
+        },
+        "receivedByMonth": {
+          "message": "Received by Month",
+          "description": "Used for the CascadeAndSenseStatistics page"
+        },
+        "sentByMonth": {
+          "message": "Sent by Month",
           "description": "Used for the CascadeAndSenseStatistics page"
         }
       }

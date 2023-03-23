@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { CSVLink } from 'react-csv';
 import { CircularProgress, Grid } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 
 import InfinityTable, {
   SortDirectionsType,
@@ -11,7 +12,6 @@ import { translate } from '@utils/helpers/i18n';
 
 import { getCurrencyName } from '@utils/appInfo';
 import { eChartLineStyles } from '@pages/HistoricalStatistics/Chart/styles';
-import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 import * as TableStyles from '@components/Table/Table.styles';
 import { useLatestTransactions } from '@hooks/useAddressDetails';
 
@@ -22,6 +22,7 @@ import {
 } from './AddressDetails.helpers';
 import { ADDRESS_TRANSACTION_TIMESTAMP_KEY, columns } from './AddressDetails.columns';
 import BalanceHistory from './BalanceHistory';
+import DirectionChart from './DirectionChart';
 import * as Styles from './AddressDetails.styles';
 
 interface ParamTypes {
@@ -114,7 +115,7 @@ const AddressDetails = () => {
           headers={transactionHistoryCSVHeaders}
           separator=","
           ref={downloadRef}
-          className={styles.uploadButton}
+          className={`${styles.uploadButton} ${!addresses ? 'disable' : ''}`}
         >
           {translate('pages.addressDetails.downloadCSV')}
         </CSVLink>
@@ -138,29 +139,40 @@ const AddressDetails = () => {
           </TableStyles.BlockWrapper>
         </Grid>
         <Styles.TableWrapper item>
-          {addresses ? (
-            <InfinityTable
-              title={generateTitle()}
-              sortBy={apiParams.sortBy}
-              sortDirection={apiParams.sortDirection}
-              rows={generateLatestTransactions(addresses, isMobile)}
-              columns={columns}
-              onBottomReach={handleFetchMoreTransactions}
-              onHeaderClick={handleSort}
-              className="latest-transaction-table"
-              headerBackground
-              rowHeight={isMobile ? 135 : 45}
-              tableHeight={isMobile ? 600 : 400}
-              customLoading={isLoading}
-            />
-          ) : null}
-          {isLoading && !addresses?.length ? (
-            <TransactionStyles.LoadingWrapper className="loading-wrapper">
-              <TransactionStyles.Loader>
-                <CircularProgress size={40} />
-              </TransactionStyles.Loader>
-            </TransactionStyles.LoadingWrapper>
-          ) : null}
+          <Grid container spacing={5}>
+            <Grid item xs={12} md={8}>
+              {addresses ? (
+                <InfinityTable
+                  title={generateTitle()}
+                  sortBy={apiParams.sortBy}
+                  sortDirection={apiParams.sortDirection}
+                  rows={generateLatestTransactions(addresses)}
+                  columns={columns}
+                  onBottomReach={handleFetchMoreTransactions}
+                  onHeaderClick={handleSort}
+                  className="latest-transaction-table"
+                  headerBackground
+                  rowHeight={isMobile ? 135 : 45}
+                  tableHeight={isMobile ? 600 : 615}
+                  customLoading={isLoading}
+                />
+              ) : null}
+              {isLoading && !addresses?.length ? (
+                <Box className="relative mt-15">
+                  {generateTitle()}
+                  <Box className="transaction-table-mask">
+                    <Styles.Loader>
+                      <CircularProgress size={40} />
+                      <Styles.LoadingText>{translate('common.loadingData')}</Styles.LoadingText>
+                    </Styles.Loader>
+                  </Box>
+                </Box>
+              ) : null}
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <DirectionChart id={id} />
+            </Grid>
+          </Grid>
         </Styles.TableWrapper>
       </Grid>
     </Styles.Wrapper>

@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { Skeleton } from '@material-ui/lab';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { periods } from '@utils/constants/statistics';
 import { translate } from '@utils/helpers/i18n';
 import { LineChart } from '@components/Summary/LineChart';
 import { PeriodTypes } from '@utils/helpers/statisticsLib';
 import { useBalanceHistory } from '@hooks/useAddressDetails';
-import * as StatisticsStyles from '@pages/Statistics/Statistics.styles';
 import * as ChartStyles from '@pages/HistoricalStatistics/Chart/Chart.styles';
 
 import Summary from './Summary';
@@ -63,12 +62,17 @@ const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
   return (
     <Styles.BalanceHistoryWrapper>
       <Styles.BalanceHistorySummaryWrapper>
-        <Summary id={id} onChange={handleChangeTypeChange} selectedChart={selectedChartType} />
+        <Summary
+          id={id}
+          onChange={handleChangeTypeChange}
+          selectedChart={selectedChartType}
+          isBalanceLoading={isLoading}
+        />
         <ChartStyles.PeriodSelect className="period">
           <span>{translate('pages.historicalStatistics.period')}: </span>
           {periods[1].map(period => (
             <ChartStyles.PeriodButton
-              className={getActivePeriodButtonStyle(period)}
+              className={`${getActivePeriodButtonStyle(period)} ${isLoading ? 'disable' : ''}`}
               onClick={() => handlePeriodFilterChange(period)}
               type="button"
               key={`button-filter-${period}`}
@@ -80,12 +84,10 @@ const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
       </Styles.BalanceHistorySummaryWrapper>
       <Styles.ChartWrapper>
         {isLoading ? (
-          <StatisticsStyles.Loader className="balance-history-loader">
-            <Skeleton animation="wave" variant="rect" height={266} width="100%" />
-            <StatisticsStyles.LoadingText>
-              {translate('common.loadingData')}
-            </StatisticsStyles.LoadingText>
-          </StatisticsStyles.Loader>
+          <Styles.Loader>
+            <CircularProgress size={40} />
+            <Styles.LoadingText>{translate('common.loadingData')}</Styles.LoadingText>
+          </Styles.Loader>
         ) : (
           <LineChart
             chartName="balanceHistory"
