@@ -153,7 +153,7 @@ const AddressDetails = () => {
                   className="latest-transaction-table"
                   headerBackground
                   rowHeight={isMobile ? 135 : 45}
-                  tableHeight={isMobile ? 600 : 615}
+                  tableHeight={isMobile ? 600 : 610}
                   customLoading={isLoading}
                 />
               ) : null}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import ReactECharts from 'echarts-for-react';
+import * as echarts from 'echarts';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -28,6 +29,7 @@ type TLineChartProps = {
 };
 
 export const LineChart = (props: TLineChartProps): JSX.Element | null => {
+  const [eChartRef, setEChartRef] = useState<ReactECharts | null>();
   const { width } = useWindowDimensions();
   const {
     className,
@@ -109,6 +111,13 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
     }
   }, [dataY]);
 
+  useEffect(() => {
+    if (eChartRef) {
+      const chartInstance: echarts.ECharts = eChartRef.getEchartsInstance();
+      chartInstance.resize();
+    }
+  }, [width]);
+
   const params: TThemeInitOption = {
     theme: currentTheme,
     dataX,
@@ -134,7 +143,14 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
 
   return (
     <Styles.LineChartWrap className={className || ''} onClick={onChartClick}>
-      <ReactECharts notMerge={false} lazyUpdate option={options} />
+      <ReactECharts
+        notMerge={false}
+        lazyUpdate
+        option={options}
+        ref={e => {
+          setEChartRef(e);
+        }}
+      />
     </Styles.LineChartWrap>
   );
 };

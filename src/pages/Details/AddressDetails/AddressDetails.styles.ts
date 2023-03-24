@@ -43,7 +43,7 @@ export const TableWrapper = styled(Grid)`
   }
 
   .transaction-table-mask {
-    min-height: 595px;
+    min-height: 590px;
     background: ${props => props.theme.sidebar.menu.background};
     box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
     border-radius: 0 0 10px 10px;
@@ -77,6 +77,10 @@ export const TableWrapper = styled(Grid)`
         padding-left: 22px;
       }
     }
+  }
+
+  @media (max-width: 960px) {
+    max-width: 98vw;
   }
 `;
 
@@ -345,8 +349,15 @@ export const SummaryItem = styled.div`
   cursor: pointer;
 
   @media (max-width: 600px) {
+    width: 100%;
     margin-right: 0;
     margin-top: 10px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid ${props => props.theme.card.richlist.border};
+
+    &:last-child {
+      border-bottom: 0;
+    }
   }
 `;
 
@@ -356,6 +367,10 @@ export const SummaryLabel = styled.span`
   font-size: 14px;
   line-height: 1;
   white-space: nowrap;
+
+  @media (max-width: 960px) {
+    font-size: 12px;
+  }
 `;
 
 export const SummaryValue = styled.p`
@@ -365,6 +380,10 @@ export const SummaryValue = styled.p`
   font-weight: 700;
   overflow: hidden;
   color: ${props => props.theme.card.color};
+
+  @media (max-width: 960px) {
+    font-size: 16px;
+  }
 `;
 
 export const BalanceHistorySummaryWrapper = styled.div`
@@ -419,6 +438,12 @@ export const SummaryIcon = styled.div`
     &.received {
       border-color: #219653;
     }
+  }
+
+  @media (max-width: 960px) {
+    width: 32px;
+    height: 32px;
+    padding: 6px;
   }
 `;
 

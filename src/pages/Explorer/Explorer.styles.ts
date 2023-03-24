@@ -82,6 +82,7 @@ export const BlockWrapper = styled.div`
         &.th-amount,
         &.th-size {
           width: 90px;
+          white-space: nowrap;
         }
 
         &.th-recipents {
