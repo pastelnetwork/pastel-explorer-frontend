@@ -1,4 +1,5 @@
 import { Skeleton } from '@material-ui/lab';
+import { useHistory } from 'react-router-dom';
 
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { getCurrencyName, isPastelBurnAddress } from '@utils/appInfo';
@@ -7,6 +8,7 @@ import useAddressDetails from '@hooks/useAddressDetails';
 import Balance, { BurnBalance } from '@components/SvgIcon/Balance';
 import Sent from '@components/SvgIcon/Sent';
 import Received, { RedReceived } from '@components/SvgIcon/Received';
+import * as ROUTES from '@utils/constants/routes';
 
 import * as Styles from './AddressDetails.styles';
 
@@ -18,8 +20,13 @@ interface ISummaryProps {
 }
 
 const Summary: React.FC<ISummaryProps> = ({ id, onChange, selectedChart, isBalanceLoading }) => {
+  const history = useHistory();
   const isBurnAddress = isPastelBurnAddress(id);
-  const { outgoingSum, incomingSum, isLoading } = useAddressDetails(id);
+  const { outgoingSum, incomingSum, isLoading, error } = useAddressDetails(id);
+
+  if (error) {
+    history.push(ROUTES.NOT_FOUND);
+  }
 
   return (
     <Styles.SummaryWrapper>

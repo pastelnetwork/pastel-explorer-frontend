@@ -18,7 +18,7 @@ interface IAddressDetails {
 }
 
 export default function useAddressDetails(id: string) {
-  const { data, isLoading } = useSWR<IAddressDetails>(
+  const { data, isLoading, error } = useSWR<IAddressDetails>(
     `${URLS.ADDRESS_URL}/${id}`,
     axiosGet,
     SWR_OPTIONS,
@@ -28,6 +28,7 @@ export default function useAddressDetails(id: string) {
     isLoading,
     outgoingSum: data?.outgoingSum || 0,
     incomingSum: data?.incomingSum || 0,
+    error,
   };
 }
 
