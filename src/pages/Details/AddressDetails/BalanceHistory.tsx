@@ -6,6 +6,7 @@ import { translate } from '@utils/helpers/i18n';
 import { LineChart } from '@components/Summary/LineChart';
 import { PeriodTypes } from '@utils/helpers/statisticsLib';
 import { useBalanceHistory } from '@hooks/useAddressDetails';
+import { isPastelBurnAddress } from '@utils/appInfo';
 import * as ChartStyles from '@pages/HistoricalStatistics/Chart/Chart.styles';
 
 import Summary from './Summary';
@@ -17,6 +18,7 @@ interface IBalanceHistoryProps {
 }
 
 const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
+  const isBurnAddress = isPastelBurnAddress(id);
   const [selectedPeriod, setSelectedPeriod] = useState<PeriodTypes>(periods[1][0]);
   const [selectedChartType, setSelectedChartType] = useState('balance');
   const { isLoading, balance, incoming, outgoing } = useBalanceHistory(id, selectedPeriod);
@@ -49,6 +51,10 @@ const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
   }
 
   const getChartColor = () => {
+    if (isBurnAddress) {
+      return '#E94830';
+    }
+
     switch (selectedChartType) {
       case 'sent':
         return '#E94830';
@@ -99,7 +105,9 @@ const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
             disableClick
             className="line-chart"
             period={selectedPeriod}
-            seriesName={`pages.addressDetails.balanceHistory.${selectedChartType}`}
+            seriesName={`pages.addressDetails.balanceHistory.${
+              isBurnAddress && selectedChartType === 'received' ? 'totalBurned' : selectedChartType
+            }`}
             chartColor={getChartColor()}
           />
         )}

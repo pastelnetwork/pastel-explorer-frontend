@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { CSVLink } from 'react-csv';
 import { CircularProgress, Grid } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import InfinityTable, {
   SortDirectionsType,
@@ -10,9 +11,10 @@ import InfinityTable, {
 } from '@components/InfinityTable/InfinityTable';
 import { translate } from '@utils/helpers/i18n';
 
-import { getCurrencyName } from '@utils/appInfo';
+import { getCurrencyName, isPastelBurnAddress } from '@utils/appInfo';
 import { eChartLineStyles } from '@pages/HistoricalStatistics/Chart/styles';
 import * as TableStyles from '@components/Table/Table.styles';
+import Fire from '@components/SvgIcon/Fire';
 import { useLatestTransactions } from '@hooks/useAddressDetails';
 
 import {
@@ -41,6 +43,7 @@ const AddressDetails = () => {
       label: translate('pages.addressDetails.amount', { currency: getCurrencyName() }),
       key: 'amount',
     },
+    { label: translate('pages.addressDetails.direction'), key: 'direction' },
     { label: translate('pages.addressDetails.timestamp'), key: 'timestamp' },
   ];
 
@@ -92,11 +95,20 @@ const AddressDetails = () => {
     };
   }, []);
 
+  const isBurnAddress = isPastelBurnAddress(id);
+
   const generateAddTitle = () => {
     return (
       <Styles.AddressTitleBlock>
         {translate('pages.addressDetails.address', { currency: getCurrencyName() })}:{' '}
         <span>{id}</span>
+        {isBurnAddress ? (
+          <Tooltip title={translate('pages.addressDetails.pastelBurnAddress')}>
+            <Styles.FireIcon>
+              <Fire />
+            </Styles.FireIcon>
+          </Tooltip>
+        ) : null}
       </Styles.AddressTitleBlock>
     );
   };
@@ -146,7 +158,7 @@ const AddressDetails = () => {
                   title={generateTitle()}
                   sortBy={apiParams.sortBy}
                   sortDirection={apiParams.sortDirection}
-                  rows={generateLatestTransactions(addresses)}
+                  rows={generateLatestTransactions(addresses, id)}
                   columns={columns}
                   onBottomReach={handleFetchMoreTransactions}
                   onHeaderClick={handleSort}

@@ -1,9 +1,9 @@
 import { shallow } from 'enzyme';
 
-import TelegramIcon from '../TelegramIcon';
+import Fire from '../Fire';
 
-describe('components/SvgIcon/TelegramIcon', () => {
-  const wrapper = shallow(<TelegramIcon />);
+describe('components/SvgIcon/Fire', () => {
+  const wrapper = shallow(<Fire />);
 
   test('renders correctly', () => {
     expect(wrapper).toMatchSnapshot();
@@ -14,6 +14,6 @@ describe('components/SvgIcon/TelegramIcon', () => {
   });
 
   test('should render <path>', () => {
-    expect(wrapper.find('path').length).toBe(1);
+    expect(wrapper.find('path').length).toBe(273);
   });
 });

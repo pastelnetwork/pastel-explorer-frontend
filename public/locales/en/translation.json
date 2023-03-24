@@ -1099,6 +1099,10 @@
         "message": "Total Received ({{currency}})",
         "description": "Used for the CascadeAndSenseStatistics page"
       },
+      "totalBurned": {
+        "message": "Total Burned ({{currency}})",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
       "balance": {
         "message": "Balance ({{currency}})",
         "description": "Used for the CascadeAndSenseStatistics page"
@@ -1113,6 +1117,10 @@
       },
       "address": {
         "message": "{{currency}} Address",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "pastelBurnAddress": {
+        "message": "Burn Address",
         "description": "Used for the CascadeAndSenseStatistics page"
       },
       "balanceHistory": {
@@ -1134,6 +1142,18 @@
         },
         "sentByMonth": {
           "message": "Sent by Month",
+          "description": "Used for the CascadeAndSenseStatistics page"
+        },
+        "burnedByMonth": {
+          "message": "Burned by Month",
+          "description": "Used for the CascadeAndSenseStatistics page"
+        },
+        "burned": {
+          "message": "Burned",
+          "description": "Used for the CascadeAndSenseStatistics page"
+        },
+        "totalBurned": {
+          "message": "Total Burned",
           "description": "Used for the CascadeAndSenseStatistics page"
         }
       }

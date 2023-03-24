@@ -10,14 +10,14 @@ describe('components/SvgIcon/TwitterIcon', () => {
   });
 
   test('should render <svg>', () => {
-    expect(wrapper.find('svg').length).toBeGreaterThanOrEqual(1);
+    expect(wrapper.find('svg').length).toBe(1);
   });
 
   test('should render <g>', () => {
-    expect(wrapper.find('g').length).toBeGreaterThanOrEqual(1);
+    expect(wrapper.find('g').length).toBe(1);
   });
 
   test('should render <path>', () => {
-    expect(wrapper.find('path').length).toBeGreaterThanOrEqual(1);
+    expect(wrapper.find('path').length).toBe(1);
   });
 });

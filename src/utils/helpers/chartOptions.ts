@@ -3748,7 +3748,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       textStyle: {
         color: theme?.color,
       },
-      color: ['#219653'],
+      color: [chartColor || '#219653'],
       grid: {
         top: 10,
         right: 0,
@@ -3814,7 +3814,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
-        name: translate('pages.addressDetails.balanceHistory.receivedByMonth') || '',
+        name: translate(seriesName || 'pages.addressDetails.balanceHistory.receivedByMonth') || '',
         type: 'bar',
         data: dataY?.map((d, index) => {
           return {

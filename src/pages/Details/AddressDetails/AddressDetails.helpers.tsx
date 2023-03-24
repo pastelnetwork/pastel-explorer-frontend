@@ -13,6 +13,7 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { formatAddress } from '@utils/helpers/format';
 import { TChartStatisticsResponse } from '@utils/types/IStatistics';
 import { translate } from '@utils/helpers/i18n';
+import { isPastelBurnAddress } from '@utils/appInfo';
 
 import {
   ADDRESS_TRANSACTION_TIMESTAMP_KEY,
@@ -32,7 +33,10 @@ export const DATA_FETCH_LIMIT = 20;
 export const DATA_OFFSET = 0;
 export const DATA_DEFAULT_SORT = 'DESC';
 
-export const generateLatestTransactions = (transactionsList: Array<IAddressData>): RowsProps[] =>
+export const generateLatestTransactions = (
+  transactionsList: Array<IAddressData>,
+  address: string,
+): RowsProps[] =>
   transactionsList.map(({ amount, timestamp, transactionHash, direction }) => ({
     [ADDRESS_TRANSACTION_TIMESTAMP_KEY]: formattedDate(timestamp, {
       dayName: false,
@@ -50,10 +54,18 @@ export const generateLatestTransactions = (transactionsList: Array<IAddressData>
       </Grid>
     ),
     [ADDRESS_TRANSACTION_DIRECTION_KEY]: (
-      <div className={`direction-status ${direction.toLowerCase()}`}>
+      <div
+        className={`direction-status ${direction.toLowerCase()} ${
+          isPastelBurnAddress(address) ? 'burned' : ''
+        }`}
+      >
         {direction === 'Outgoing'
           ? translate('pages.addressDetails.balanceHistory.sent')
-          : translate('pages.addressDetails.balanceHistory.received')}
+          : translate(
+              `pages.addressDetails.balanceHistory.${
+                isPastelBurnAddress(address) ? 'burned' : 'received'
+              }`,
+            )}
       </div>
     ),
     [ADDRESS_TRANSACTION_AMOUNT_KEY]: formatNumber(amount, { decimalsLength: 2 }),

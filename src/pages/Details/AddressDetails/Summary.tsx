@@ -1,12 +1,12 @@
 import { Skeleton } from '@material-ui/lab';
 
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import { getCurrencyName } from '@utils/appInfo';
+import { getCurrencyName, isPastelBurnAddress } from '@utils/appInfo';
 import { translate } from '@utils/helpers/i18n';
 import useAddressDetails from '@hooks/useAddressDetails';
-import Balance from '@components/SvgIcon/Balance';
+import Balance, { BurnBalance } from '@components/SvgIcon/Balance';
 import Sent from '@components/SvgIcon/Sent';
-import Received from '@components/SvgIcon/Received';
+import Received, { RedReceived } from '@components/SvgIcon/Received';
 
 import * as Styles from './AddressDetails.styles';
 
@@ -18,6 +18,7 @@ interface ISummaryProps {
 }
 
 const Summary: React.FC<ISummaryProps> = ({ id, onChange, selectedChart, isBalanceLoading }) => {
+  const isBurnAddress = isPastelBurnAddress(id);
   const { outgoingSum, incomingSum, isLoading } = useAddressDetails(id);
 
   return (
@@ -26,8 +27,12 @@ const Summary: React.FC<ISummaryProps> = ({ id, onChange, selectedChart, isBalan
         className={isBalanceLoading || isLoading ? 'disable' : ''}
         onClick={() => onChange('balance')}
       >
-        <Styles.SummaryIcon className={`balance ${selectedChart === 'balance' ? 'active' : ''}`}>
-          <Balance />
+        <Styles.SummaryIcon
+          className={`balance ${isBurnAddress ? 'burn' : ''} ${
+            selectedChart === 'balance' ? 'active' : ''
+          }`}
+        >
+          {isBurnAddress ? <BurnBalance /> : <Balance />}
         </Styles.SummaryIcon>
         <Styles.ItemWrapper>
           <Styles.SummaryLabel>
@@ -48,7 +53,11 @@ const Summary: React.FC<ISummaryProps> = ({ id, onChange, selectedChart, isBalan
         className={isBalanceLoading || isLoading ? 'disable' : ''}
         onClick={() => onChange('sent')}
       >
-        <Styles.SummaryIcon className={`sent ${selectedChart === 'sent' ? 'active' : ''}`}>
+        <Styles.SummaryIcon
+          className={`sent ${isBurnAddress ? 'burn' : ''} ${
+            selectedChart === 'sent' ? 'active' : ''
+          }`}
+        >
           <Sent />
         </Styles.SummaryIcon>
         <Styles.ItemWrapper>
@@ -68,12 +77,16 @@ const Summary: React.FC<ISummaryProps> = ({ id, onChange, selectedChart, isBalan
         className={isBalanceLoading || isLoading ? 'disable' : ''}
         onClick={() => onChange('received')}
       >
-        <Styles.SummaryIcon className={`received ${selectedChart === 'received' ? 'active' : ''}`}>
-          <Received />
+        <Styles.SummaryIcon
+          className={`received ${isBurnAddress ? 'burn' : ''} ${
+            selectedChart === 'received' ? 'active' : ''
+          }`}
+        >
+          {isBurnAddress ? <RedReceived /> : <Received />}
         </Styles.SummaryIcon>
         <Styles.ItemWrapper>
           <Styles.SummaryLabel>
-            {translate('pages.addressDetails.totalReceived', {
+            {translate(`pages.addressDetails.${isBurnAddress ? 'totalBurned' : 'totalReceived'}`, {
               currency: getCurrencyName(),
             })}
           </Styles.SummaryLabel>

@@ -20,6 +20,10 @@ export const TableWrapper = styled(Grid)`
     &.incoming {
       background-color: ${themeVariant.custom.green.main};
     }
+
+    &.burned {
+      background-color: ${themeVariant.custom.red.dark};
+    }
   }
 
   .latest-transaction-table {
@@ -190,9 +194,14 @@ export const Wrapper = styled.div`
 
 export const AddressTitleBlock = styled.div`
   display: flex;
+  width: 100%;
 
   span {
     margin-left: 5px;
+  }
+
+  svg {
+    width: 18px;
   }
 
   ${props => props.theme.breakpoints.down(1024)} {
@@ -233,6 +242,11 @@ export const TitleWrapper = styled('div')`
     margin-right: 0;
     padding: 6px 24px;
     font-size: 14px;
+
+    @media (max-width: 768px) {
+      padding: 4px 20px;
+      font-size: 12px;
+    }
   }
 `;
 
@@ -438,6 +452,10 @@ export const SummaryIcon = styled.div`
     &.received {
       border-color: #219653;
     }
+
+    &.burn {
+      border-color: #e94830;
+    }
   }
 
   @media (max-width: 960px) {
@@ -502,4 +520,9 @@ export const Loader = styled.div`
 export const LoadingText = styled.div`
   margin-top: 0;
   font-size: 20px;
+`;
+
+export const FireIcon = styled.div`
+  display: inline-flex;
+  align-items: center;
 `;

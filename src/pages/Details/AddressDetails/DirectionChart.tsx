@@ -8,6 +8,7 @@ import { useDirection } from '@hooks/useAddressDetails';
 import { translate } from '@utils/helpers/i18n';
 import { periods } from '@utils/constants/statistics';
 import { PeriodTypes } from '@utils/helpers/statisticsLib';
+import { isPastelBurnAddress } from '@utils/appInfo';
 
 import * as ChartStyles from '@pages/HistoricalStatistics/Chart/Chart.styles';
 
@@ -23,9 +24,18 @@ interface IDirectionItemProps {
   direction: string;
   chartName: string;
   title: string;
+  seriesName?: string;
+  chartColor?: string;
 }
 
-const DirectionItem: React.FC<IDirectionItemProps> = ({ id, direction, chartName, title }) => {
+const DirectionItem: React.FC<IDirectionItemProps> = ({
+  id,
+  direction,
+  chartName,
+  title,
+  seriesName,
+  chartColor,
+}) => {
   const [period, setPeriod] = useState<PeriodTypes>(periods[10][0]);
   const { data, isLoading } = useDirection(id, period, direction);
 
@@ -75,6 +85,8 @@ const DirectionItem: React.FC<IDirectionItemProps> = ({ id, direction, chartName
             offset={0}
             disableClick
             className="line-chart"
+            seriesName={seriesName}
+            chartColor={chartColor}
           />
         )}
       </Box>
@@ -83,6 +95,7 @@ const DirectionItem: React.FC<IDirectionItemProps> = ({ id, direction, chartName
 };
 
 const DirectionChart: React.FC<IDirectionChartProps> = ({ id }) => {
+  const isBurnAddress = isPastelBurnAddress(id);
   return (
     <Styles.DirectionChartWrapper>
       <Grid container spacing={4}>
@@ -91,7 +104,15 @@ const DirectionChart: React.FC<IDirectionChartProps> = ({ id }) => {
             id={id}
             direction="Incoming"
             chartName="directionIncoming"
-            title={translate('pages.addressDetails.balanceHistory.receivedByMonth')}
+            title={translate(
+              `pages.addressDetails.balanceHistory.${
+                isBurnAddress ? 'burnedByMonth' : 'receivedByMonth'
+              }`,
+            )}
+            seriesName={`pages.addressDetails.balanceHistory.${
+              isBurnAddress ? 'burnedByMonth' : 'receivedByMonth'
+            }`}
+            chartColor={isBurnAddress ? '#E94830' : undefined}
           />
         </Grid>
         <Grid item xs={12} md={6} lg={12}>

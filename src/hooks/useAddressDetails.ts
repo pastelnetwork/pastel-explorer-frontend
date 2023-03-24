@@ -7,6 +7,8 @@ import { axiosGet } from '@utils/helpers/useFetch/useFetch';
 import * as URLS from '@utils/constants/urls';
 import { IAddress } from '@utils/types/IAddress';
 import { formattedDate } from '@utils/helpers/date/date';
+import { isPastelBurnAddress } from '@utils/appInfo';
+import { translate } from '@utils/helpers/i18n';
 import { SortDirectionsType } from '@components/InfinityTable/InfinityTable';
 import { DATA_FETCH_LIMIT } from '@pages/Details/AddressDetails/AddressDetails.helpers';
 
@@ -70,6 +72,14 @@ export function useLatestTransactions(
         csvData.push({
           transactionHash: data[i].data[j].transactionHash,
           amount: data[i].data[j].amount,
+          direction:
+            data[i].data[j].direction === 'Outgoing'
+              ? translate('pages.addressDetails.balanceHistory.sent')
+              : translate(
+                  `pages.addressDetails.balanceHistory.${
+                    isPastelBurnAddress(id) ? 'burned' : 'received'
+                  }`,
+                ),
           timestamp: formattedDate(data[i].data[j].timestamp, {
             dayName: false,
           }),
