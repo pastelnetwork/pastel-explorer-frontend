@@ -47,6 +47,8 @@ export const GET_STATISTICS_AVERAGE_SIZE_OF_NFT_STORED_ON_CASCADE =
   'v1/stats/average-size-of-nft-stored-on-cascade';
 export const GET_STATISTICS_CASCADE_REQUEST = 'v1/stats/cascade-requests';
 export const GET_STATISTICS_TOTAL_DATA_STORED_ON_CASCADE = 'v1/stats/total-data-stored-on-cascade';
+export const GET_BURNED_BY_MONTH = 'v1/stats/burned-by-month';
+export const GET_TOTAL_BURNED = 'v1/stats/total-burned';
 // External URLS
 export const TWITTER_URL = 'https://twitter.com/pastelnetwork';
 export const TELEGRAM_URL = 'https://t.me/PastelNetwork';

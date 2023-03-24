@@ -2423,6 +2423,28 @@
         "message": "Not Yet Activated",
         "description": "Used for the TicketsType page"
       }
+    },
+    "burned": {
+      "title": {
+        "message": "Total {{currency}} Burned",
+        "description": "Used for the TicketsType page"
+      },
+      "totalBurned": {
+        "message": "Total Burned ({{currency}})",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "burnedByMonth": {
+        "message": "Burned by Month",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "burnedAddresses": {
+        "message": "Burned Addresses",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "address": {
+        "message": "Address",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      }
     }
   },
   "routes": {
@@ -2600,6 +2622,10 @@
     },
     "ticketsType": {
       "message": "Tickets Type",
+      "description": "Used for the routes"
+    },
+    "burned": {
+      "message": "Burned",
       "description": "Used for the routes"
     }
   },

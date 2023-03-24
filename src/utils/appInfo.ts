@@ -25,3 +25,12 @@ export const isPastelBurnAddress = (address: string): boolean => {
 
   return false;
 };
+
+export const getPastelBurnAddresses = (): string[] => {
+  if (PASTEL_BURN_ADDRESS) {
+    const pastelBurnAddresses = PASTEL_BURN_ADDRESS.split(',');
+    return pastelBurnAddresses;
+  }
+
+  return [];
+};

@@ -100,8 +100,10 @@ export const transformChartData = (data: TChartStatisticsResponse[] | null) => {
   const dataY: number[] = [];
   if (data?.length) {
     data.forEach(item => {
-      dataX.push(format(item.time, 'MM/dd/yyyy'));
-      dataY.push(item.value);
+      if (item.time) {
+        dataX.push(format(item.time, 'MM/dd/yyyy'));
+        dataY.push(item.value);
+      }
     });
 
     const nowHour = format(new Date(), 'MM/dd/yyyy');
@@ -123,8 +125,10 @@ export const transformDirectionChartData = (data: TChartStatisticsResponse[] | n
   const dataY: number[] = [];
   if (data?.length) {
     data.forEach(item => {
-      dataX.push(item.time.toString());
-      dataY.push(item.value);
+      if (item.time) {
+        dataX.push(item.time.toString());
+        dataY.push(item.value);
+      }
     });
   }
 

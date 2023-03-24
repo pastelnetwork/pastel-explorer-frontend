@@ -195,6 +195,7 @@ export const Wrapper = styled.div`
 export const AddressTitleBlock = styled.div`
   display: flex;
   width: 100%;
+  white-space: nowrap;
 
   span {
     margin-left: 5px;
