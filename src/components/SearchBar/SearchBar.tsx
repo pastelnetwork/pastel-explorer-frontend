@@ -88,6 +88,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
   const [loading, setLoading] = React.useState(false);
   const [isShowSearchInput, setShowSearchInput] = React.useState(false);
   const [forceShowSearchInput, setForceShowSearchInput] = React.useState(false);
+  const [isInputFocus, setInputFocus] = React.useState(false);
 
   const handleShowSearchInput = () => {
     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -184,6 +185,14 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
 
   const handleClose = () => searchData.length && setSearchData([]);
 
+  const handleFocus = () => {
+    setInputFocus(true);
+  };
+
+  const handleBlur = () => {
+    setInputFocus(false);
+  };
+
   const dropdownOpen = Boolean(searchData.length) || loading;
 
   const renderSearchInput = () => (
@@ -203,6 +212,8 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         onInputChange={handleInputChange}
         onChange={handleChange}
         onClose={handleClose}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         forcePopupIcon={false}
         getOptionSelected={(option, value) =>
           (option as TAutocompleteOptions).value === (value as TAutocompleteOptions).value
@@ -297,7 +308,12 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
       className={`${isShowSearchInput ? 'search-show' : ''} ${forceShowSearchInput ? 'force' : ''}`}
     >
       <Styles.ToolbarStyle className="disable-padding">
-        <Styles.GridStyle className="top" container alignItems="center" wrap="nowrap">
+        <Styles.GridStyle
+          className={`top ${isInputFocus ? 'autocomplete-focus' : ''}`}
+          container
+          alignItems="center"
+          wrap="nowrap"
+        >
           {renderSearchInput()}
         </Styles.GridStyle>
         <Styles.IconButton
