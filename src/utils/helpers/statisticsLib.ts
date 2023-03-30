@@ -549,7 +549,7 @@ export const generatePeriodToDropdownOptions = (periods: PeriodTypes[]) => {
       });
     } else {
       results.push({
-        name: translate('pages.statistics.filterLabel'),
+        name: translate('pages.statistics.filterLabelMax'),
         value: periods[i],
       });
     }

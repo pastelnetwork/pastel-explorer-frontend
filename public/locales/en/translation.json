@@ -2168,6 +2168,10 @@
       "filterLabel": {
         "message": "Last {{period}}",
         "description": "Used for the Statistics page"
+      },
+      "filterLabelMax": {
+        "message": "Max",
+        "description": "Used for the Statistics page"
       }
     },
     "supernodes": {
