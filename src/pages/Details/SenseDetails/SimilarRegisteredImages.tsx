@@ -173,7 +173,12 @@ const SimilarRegisteredImages: React.FC<ISimilarRegisteredImages> = ({ rarenessS
                         className="address-link"
                       />
                     ) : (
-                      item.imageHash
+                      <RouterLink
+                        route={`${ROUTES.SENSE_DETAILS}?hash=${item.imageHashOriginal}`}
+                        value={item.imageHash}
+                        title={item.imageHash}
+                        className="address-link"
+                      />
                     )}
                   </TicketStyles.TicketContent>
                 </StyledTableCell>

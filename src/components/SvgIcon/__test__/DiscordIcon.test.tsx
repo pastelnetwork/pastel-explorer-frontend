@@ -10,10 +10,10 @@ describe('components/SvgIcon/DiscordIcon', () => {
   });
 
   test('should render <svg>', () => {
-    expect(wrapper.find('svg').length).toBeGreaterThanOrEqual(1);
+    expect(wrapper.find('svg').length).toBe(1);
   });
 
   test('should render <path>', () => {
-    expect(wrapper.find('path').length).toBeGreaterThanOrEqual(1);
+    expect(wrapper.find('path').length).toBe(1);
   });
 });

@@ -66,7 +66,7 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
                 ? translate('pages.statistics.transactions', { txsCount })
                 : translate('pages.statistics.transaction', { txsCount })
             }
-            minutesAgo={translate('pages.statistics.transaction', {
+            minutesAgo={translate('pages.statistics.blocksUnconfirmedTime', {
               time: blocksUnconfirmed.length * 10,
             })}
           />

@@ -58,7 +58,7 @@ export const BarChart = ({ data }: BarChartProps): JSX.Element => {
       formatter: (params: TTooltipParams) => {
         return `<div>
           <div class="tooltip-title">${params.name}</div>
-          <div class="tooltip-amount">${translate('pages.richlist.accounts', {
+          <div class="tooltip-amount">${translate('pages.richlist.amount', {
             currency: getCurrencyName(),
           })}: ${formatNumber(params.value, {
           decimalsLength: 2,

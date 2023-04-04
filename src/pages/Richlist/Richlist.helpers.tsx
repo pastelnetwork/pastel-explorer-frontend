@@ -140,7 +140,7 @@ export const generateWealthDistributionData = (list: IRichlist[], coinSupply: nu
   const newList = list.sort((a, b) => a.rank - b.rank);
   const dividedLists = LIST_DIVIDERS.map(([firstDivider, lastDivider]) => {
     const currentWealthDistributionList = newList.slice(firstDivider, lastDivider);
-    const rowLabel = translate('pages.richlist.percentage', {
+    const rowLabel = translate('pages.richlist.top', {
       rank: `${firstDivider + 1}-${lastDivider}`,
     });
     return generateWealthDistributionItem(

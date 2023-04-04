@@ -62,6 +62,7 @@ const TotalTransactionFees = loadable(
 );
 const Tickets = loadable(() => import('@pages/Tickets/Tickets'));
 const TicketsType = loadable(() => import('@pages/TicketsType/TicketsType'));
+const Burned = loadable(() => import('@pages/Burned/Burned'));
 
 const explorerRoutes = {
   id: 'routes.explorer',
@@ -423,6 +424,15 @@ const ticketsTypeRoutes = {
   children: null,
 };
 
+const burnedRoutes = {
+  id: 'routes.burned',
+  path: `${ROUTES.PASTEL_BURN_ADDRESS}`,
+  icon: <LocalAtmIcon />,
+  component: Burned,
+  seoTitle: 'routes.burned',
+  children: null,
+};
+
 export const pageRoutes = [
   explorerRoutes,
   movementRoutes,
@@ -460,6 +470,7 @@ export const pageRoutes = [
   senseDetailsRoutes,
   pastelIdDetailsRoutes,
   ticketsTypeRoutes,
+  burnedRoutes,
 ];
 
 export const sidebarRoutes = [

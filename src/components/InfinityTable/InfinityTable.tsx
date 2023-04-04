@@ -217,7 +217,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
           </Styles.Loader>
         ) : null}
         {!isLoading ? (
-          <Styles.TableWrapper className={`${rows.length ? '' : 'empty-table'}`}>
+          <Styles.TableWrapper className={`table-wrapper ${rows.length ? '' : 'empty-table'}`}>
             <AutoSizer disableHeight>
               {({ width }) => (
                 <div style={{ width }}>

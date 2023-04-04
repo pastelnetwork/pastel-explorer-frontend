@@ -32,11 +32,18 @@ export default function useBlocks(
   } else if (period && period !== 'custom') {
     dateParam = `&period=${period}`;
   }
+  let newSortBy = sortBy;
+  if (sortBy === 'blockHash') {
+    newSortBy = 'id';
+  }
+  if (sortBy === 'blockId') {
+    newSortBy = 'height';
+  }
   const { data, isLoading, size, setSize } = useSWRInfinite(
     index =>
       `${URLS.BLOCK_URL}?offset=${
         index * DATA_FETCH_LIMIT
-      }&limit=${limit}&sortBy=${sortBy}&sortDirection=${sortDirection}${dateParam}${typesParam}`,
+      }&limit=${limit}&sortBy=${newSortBy}&sortDirection=${sortDirection}${dateParam}${typesParam}`,
     axiosGet,
     SWR_OPTIONS,
   );

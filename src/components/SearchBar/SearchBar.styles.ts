@@ -60,6 +60,38 @@ export const GridStyle = styled(Grid)`
   .MuiInputBase-input {
     font-size: 13px;
   }
+
+  @media (max-width: 1424px) and (min-width: 900px) {
+    &.autocomplete-focus {
+      position: absolute;
+      right: 76px;
+      width: 55vw;
+      max-width: 74vw;
+      background: ${props => props.theme.sidebar.menu.background};
+      z-index: 100;
+
+      .label-input {
+        max-width: 100%;
+        width: auto;
+      }
+    }
+  }
+
+  @media (max-width: 900px) and (min-width: 600px) {
+    &.autocomplete-focus {
+      position: absolute;
+      right: 76px;
+      width: 74vw;
+      max-width: 74vw;
+      background: ${props => props.theme.sidebar.menu.background};
+      z-index: 100;
+
+      .label-input {
+        max-width: 100%;
+        width: auto;
+      }
+    }
+  }
 `;
 
 export const AppBar = styled(MuiAppBar)`
@@ -68,6 +100,7 @@ export const AppBar = styled(MuiAppBar)`
   background: ${props => props.theme.sidebar.menu.background};
   color: ${props => props.theme.header.color};
   transition: min-height 0.5s ease-in;
+  z-index: 10;
 
   ${props => props.theme.breakpoints.up('md')} {
     max-width: 28%;

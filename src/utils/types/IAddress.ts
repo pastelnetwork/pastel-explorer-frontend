@@ -2,6 +2,7 @@ export interface IAddressData {
   amount: number;
   timestamp: number;
   transactionHash: string;
+  direction: string;
 }
 
 export interface IAddress {

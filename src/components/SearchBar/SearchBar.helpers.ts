@@ -1,12 +1,20 @@
 import * as ROUTES from '@utils/constants/routes';
 
-export const ADDRESSES_LABEL = 'components.searchBar.addresses';
-export const BLOCKS_HEIGHTS_LABEL = 'components.searchBar.blocksHeights';
-export const BLOCKS_IDS_LABEL = 'components.searchBar.blocksIds';
-export const TRANSACTIONS_LABEL = 'components.searchBar.transactions';
-export const SENSES_LABEL = 'components.searchBar.senses';
-export const PASTEL_ID_LABEL = 'components.searchBar.pastelID';
-export const USERNAME = 'components.searchBar.username';
+export const ADDRESSES_TEXT_LABEL = 'components.searchBar.addresses';
+export const BLOCKS_HEIGHTS_TEXT_LABEL = 'components.searchBar.blocksHeights';
+export const BLOCKS_IDS_TEXT_LABEL = 'components.searchBar.blocksIds';
+export const TRANSACTIONS_TEXT_LABEL = 'components.searchBar.transactions';
+export const SENSES_TEXT_LABEL = 'components.searchBar.senses';
+export const PASTEL_ID_TEXT_LABEL = 'components.searchBar.pastelID';
+export const USERNAME_TEXT_LABEL = 'components.searchBar.username';
+
+export const ADDRESSES_LABEL = 'addresses';
+export const BLOCKS_HEIGHTS_LABEL = 'blocksHeights';
+export const BLOCKS_IDS_LABEL = 'blocksIds';
+export const TRANSACTIONS_LABEL = 'transactions';
+export const SENSES_LABEL = 'senses';
+export const PASTEL_ID_LABEL = 'pastelID';
+export const USERNAME = 'username';
 
 export type TOptionsCategories =
   | typeof ADDRESSES_LABEL
@@ -20,19 +28,25 @@ export type TOptionsCategories =
 export type TAutocompleteOptions = {
   category: TOptionsCategories;
   value: string;
+  categoryText: string;
   pastelID: string;
 };
 
-export const collectData = (data: Array<string | number>, category: TOptionsCategories) =>
-  data?.map((item: string | number) => ({ value: `${item}`, category }));
+export const collectData = (
+  data: Array<string | number>,
+  category: TOptionsCategories,
+  categoryText: TOptionsCategories,
+) => data?.map((item: string | number) => ({ value: `${item}`, category, categoryText }));
 
 export const collectUsernameData = (
   data: Array<{ pastelID: string; username: string }>,
   category: TOptionsCategories,
+  categoryText: TOptionsCategories,
 ) =>
   data?.map((item: { pastelID: string; username: string }) => ({
     value: `${item.username}`,
     category,
+    categoryText,
     pastelID: item.pastelID,
   }));
 
@@ -46,6 +60,5 @@ export const getRoute = (optionType: TOptionsCategories) => {
     [PASTEL_ID_LABEL]: ROUTES.PASTEL_ID_DETAILS,
     [USERNAME]: ROUTES.PASTEL_ID_DETAILS,
   };
-
   return routeTypes[optionType] || ROUTES.NOT_FOUND;
 };

@@ -222,16 +222,17 @@ export const pricesCSVHeaders = [
 ];
 
 export const periods: PeriodTypes[][] = [
-  ['2h', '2d', '4d', 'all'],
-  ['30d', '60d', '180d', '1y', 'all'],
+  ['2h', '2d', '4d', 'max'],
+  ['30d', '60d', '180d', '1y', 'max'],
   ['1h', '3h', '6h', '12h'],
-  ['24h', '7d', '14d', '30d', '60d', '180d', '1y', 'all'],
+  ['24h', '7d', '14d', '30d', '60d', '180d', '1y', 'max'],
   ['30d', '60d', '180d'],
   ['1h', '1d', '7d', '30d'],
   ['24h', '7d', '14d', '30d', '90d', '180d', '1y', 'max'],
   ['24h', '7d', '30d', '1y', 'max'],
   ['24h', '7d', '14d'],
   ['7d', '14d'],
+  ['1y', '2y', 'max'],
 ];
 
 export const CHART_THEME_BACKGROUND_DEFAULT_COLOR = '#2D3748';

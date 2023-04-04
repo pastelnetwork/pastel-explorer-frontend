@@ -11,12 +11,18 @@ import {
   PeriodTypes,
   generateXAxisInterval,
   generateXAxisIntervalForScatterChart,
+  balanceHistoryXAxisInterval,
   TGranularity,
   getYAxisLabel,
   convertYAxisLabel,
 } from '@utils/helpers/statisticsLib';
 import { TChartParams } from '@utils/types/IStatistics';
 import { translate } from '@utils/helpers/i18n';
+
+type TAxisPointerProps = {
+  axisDimension: string;
+  value: number;
+};
 
 type TChartOption = {
   [index: string]: EChartsOption;
@@ -2059,8 +2065,22 @@ type TSizeProps = {
 };
 
 export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOption {
-  const { theme, dataX, dataY, dataY1, chartName, minY, maxY, darkMode } = args;
+  const {
+    theme,
+    dataX,
+    dataY,
+    dataY1,
+    chartName,
+    minY,
+    maxY,
+    darkMode,
+    period,
+    width,
+    seriesName,
+    chartColor,
+  } = args;
   const blueColor = darkMode ? '#1fbfff' : '#5470c6';
+  const seriesLabelColor = darkMode ? '#fff' : '#000';
   const chartOptions: TChartOption = {
     gigaHashPerSec: {
       backgroundColor: theme?.backgroundColor,
@@ -3514,6 +3534,418 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             },
           ]),
         },
+      },
+      animation: false,
+    },
+    balanceHistory: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: [chartColor || blueColor],
+      grid: {
+        top: 10,
+        right: 0,
+        bottom: 20,
+        left: 0,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            formatter: (param: TAxisPointerProps) => {
+              if (param.axisDimension === 'x') {
+                return param.value;
+              }
+
+              return `${formatNumber(param.value, { decimalsLength: 2 })} ${getCurrencyName()}`;
+            },
+          },
+        },
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `<div style="text-align: left">${params[0].axisValue}</div>${params[0].marker} ${
+            params[0].seriesName
+          }:&nbsp;${
+            params[0].data ? formatNumber(params[0].data, { decimalsLength: 2 }) : '0'
+          } ${getCurrencyName()}`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        boundaryGap: false,
+        axisLabel: {
+          show: true,
+          formatter(value: string) {
+            return value ? generateXAxisLabel(new Date(value), period, false) : null;
+          },
+          showMaxLabel: false,
+          showMinLabel: true,
+          interval: balanceHistoryXAxisInterval(dataX, width),
+          align: 'left',
+        },
+        axisLine: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+        name: dataX?.length
+          ? generateXAxisLabel(new Date(dataX[dataX.length - 1]), period, false)
+          : '',
+        nameGap: 0,
+        nameLocation: 'end',
+        nameTextStyle: {
+          align: 'right',
+          verticalAlign: 'top',
+          padding: [8, 2, 0, 0],
+        },
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        max: maxY,
+        interval: (maxY - minY) / 5,
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+      },
+      series: {
+        name: translate(seriesName || 'pages.addressDetails.balanceHistory.balance') || '',
+        type: 'line',
+        sampling: 'lttb',
+        data: dataY,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: chartColor || blueColor,
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor || '#fff',
+            },
+          ]),
+        },
+        showSymbol: false,
+      },
+      animation: false,
+    },
+    directionOutgoing: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#E94830'],
+      grid: {
+        top: 10,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            formatter: (param: TAxisPointerProps) => {
+              if (param.axisDimension === 'x') {
+                return format(Number(param.value), 'MM/yyyy');
+              }
+
+              return `${formatNumber(param.value, { decimalsLength: 2 })} ${getCurrencyName()}`;
+            },
+          },
+        },
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `<div style="text-align: left">${format(
+            Number(params[0].axisValue),
+            'MM/yyyy',
+          )}</div>${params[0].marker} ${params[0].seriesName}:&nbsp;${
+            params[0].data ? formatNumber(params[0].value, { decimalsLength: 2 }) : '0'
+          } ${getCurrencyName()}`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+      },
+      yAxis: {
+        type: 'value',
+        min: 0,
+        max: maxY,
+        interval: maxY / 5,
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+      },
+      series: {
+        name: translate('pages.addressDetails.balanceHistory.sentByMonth') || '',
+        type: 'bar',
+        data: dataY?.map((d, index) => {
+          return {
+            value: d,
+            label: {
+              show: true,
+              fontSize: 10,
+              rotate: 90,
+              position: 'insideBottom',
+              align: 'left',
+              verticalAlign: 'middle',
+              distance: 10,
+              color: seriesLabelColor,
+              formatter: () => {
+                return dataX ? format(Number(dataX[index]), 'MM/yyyy') : '';
+              },
+            },
+          };
+        }),
+        showBackground: true,
+        backgroundStyle: {
+          color: 'rgba(180, 180, 180, 0.2)',
+        },
+      },
+      animation: false,
+    },
+    directionIncoming: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: [chartColor || '#219653'],
+      grid: {
+        top: 10,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            formatter: (param: TAxisPointerProps) => {
+              if (param.axisDimension === 'x') {
+                return format(Number(param.value), 'MM/yyyy');
+              }
+
+              return `${formatNumber(param.value, { decimalsLength: 2 })} ${getCurrencyName()}`;
+            },
+          },
+        },
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `<div style="text-align: left">${format(
+            Number(params[0].axisValue),
+            'MM/yyyy',
+          )}</div>${params[0].marker} ${params[0].seriesName}:&nbsp;${
+            params[0].data ? formatNumber(params[0].value, { decimalsLength: 2 }) : '0'
+          } ${getCurrencyName()}`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+      },
+      yAxis: {
+        type: 'value',
+        min: 0,
+        max: maxY,
+        interval: maxY / 5,
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+      },
+      series: {
+        name: translate(seriesName || 'pages.addressDetails.balanceHistory.receivedByMonth') || '',
+        type: 'bar',
+        data: dataY?.map((d, index) => {
+          return {
+            value: d,
+            label: {
+              show: true,
+              fontSize: 10,
+              rotate: 90,
+              position: 'insideBottom',
+              align: 'left',
+              verticalAlign: 'middle',
+              distance: 10,
+              color: seriesLabelColor,
+              formatter: () => {
+                return dataX ? format(Number(dataX[index]), 'MM/yyyy') : '';
+              },
+            },
+          };
+        }),
+        showBackground: true,
+        backgroundStyle: {
+          color: 'rgba(180, 180, 180, 0.2)',
+        },
+      },
+      animation: false,
+    },
+    totalBurned: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: [chartColor || blueColor],
+      grid: {
+        top: 10,
+        right: 0,
+        bottom: 20,
+        left: 0,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            formatter: (param: TAxisPointerProps) => {
+              if (param.axisDimension === 'x') {
+                return param.value;
+              }
+
+              return `${formatNumber(param.value, { decimalsLength: 2 })} ${getCurrencyName()}`;
+            },
+          },
+        },
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `<div style="text-align: left">${params[0].axisValue}</div>${params[0].marker} ${
+            params[0].seriesName
+          }:&nbsp;${
+            params[0].data ? formatNumber(params[0].data, { decimalsLength: 2 }) : '0'
+          } ${getCurrencyName()}`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        boundaryGap: false,
+        axisLabel: {
+          show: true,
+          formatter(value: string) {
+            return value ? generateXAxisLabel(new Date(value), period, false) : null;
+          },
+          showMaxLabel: false,
+          showMinLabel: true,
+          interval: balanceHistoryXAxisInterval(dataX, width),
+          align: 'left',
+        },
+        axisLine: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+        name: dataX?.length
+          ? generateXAxisLabel(new Date(dataX[dataX.length - 1]), period, false)
+          : '',
+        nameGap: 0,
+        nameLocation: 'end',
+        nameTextStyle: {
+          align: 'right',
+          verticalAlign: 'top',
+          padding: [8, 2, 0, 0],
+        },
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        max: maxY,
+        interval: (maxY - minY) / 5,
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+      },
+      series: {
+        name: translate('pages.burned.totalBurned', { currency: getCurrencyName() }) || '',
+        type: 'line',
+        sampling: 'lttb',
+        data: dataY,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: chartColor || blueColor,
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor || '#fff',
+            },
+          ]),
+        },
+        showSymbol: false,
       },
       animation: false,
     },

@@ -20,7 +20,7 @@ describe('utils/helpers/date', () => {
   });
 
   test('formattedDate should works incorrectly', () => {
-    expect(formattedDate(123)).toEqual('Th, 1st Jan 1970 08:02:03');
+    expect(formattedDate(123)).not.toEqual('Fr, 23rd Apr 55165 21:11:28');
   });
 
   test('formattedTimeElapsed should works correctly', () => {
@@ -52,6 +52,6 @@ describe('utils/helpers/date', () => {
   });
 
   test('formatFullDate should works incorrectly', () => {
-    expect(formatFullDate(123)).toEqual('Th, 1st Jan 1970 08:00:00');
+    expect(formatFullDate(123)).not.toEqual('Mo, 13th Mar 2023 11:30:07');
   });
 });

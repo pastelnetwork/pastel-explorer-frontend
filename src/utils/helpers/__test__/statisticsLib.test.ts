@@ -847,7 +847,7 @@ describe('utils/helpers/statisticsLib', () => {
 
   test('generatePeriodToDropdownOptions should works correctly', () => {
     i18next.t = jest.fn().mockImplementation((...arg) => {
-      return `Last ${arg[1].period}`;
+      return arg[1] ? `Last ${arg[1]?.period}` : 'max';
     });
 
     const results: OptionsProps[] = [
@@ -868,7 +868,7 @@ describe('utils/helpers/statisticsLib', () => {
         value: '1y',
       },
       {
-        name: 'Last max',
+        name: 'max',
         value: 'max',
       },
     ];
@@ -956,7 +956,7 @@ describe('utils/helpers/statisticsLib', () => {
     expect(generateXAxisInterval('1d', '14d', dataX, 1500)).toEqual('auto');
     expect(generateXAxisInterval('1d', '14d', dataX1, 1500)).toEqual(2);
     expect(generateXAxisInterval('1d', '30d', dataX2, 1500)).toEqual(1);
-    expect(generateXAxisInterval('1d', '30d', dataX3, 1500)).toEqual(3);
+    expect(generateXAxisInterval('1d', '30d', dataX3, 1500)).toEqual(4);
     expect(generateXAxisInterval('1d', '90d', dataX3, 1500)).toEqual(3);
     expect(generateXAxisInterval('1d', '180d', dataX3, 1500)).toEqual(3);
     expect(generateXAxisInterval('1d', '60d', dataX3, 1500)).toEqual(3);

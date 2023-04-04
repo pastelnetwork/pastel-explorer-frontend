@@ -31,6 +31,8 @@ export type TThemeInitOption = {
   granularity?: TGranularity;
   height?: number;
   width?: number;
+  seriesName?: string;
+  chartColor?: string;
 };
 
 export type TLineChartProps = {

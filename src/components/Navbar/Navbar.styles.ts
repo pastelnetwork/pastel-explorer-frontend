@@ -42,6 +42,7 @@ export const BrandLogo = styled.img`
 
 export const Menu = styled.div`
   display: flex;
+  z-index: 3;
 
   ${props => props.theme.breakpoints.down('xs')} {
     align-items: flex-start;

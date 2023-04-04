@@ -1087,6 +1087,10 @@
         "message": "Timestamp",
         "description": "Used for the CascadeAndSenseStatistics page"
       },
+      "direction": {
+        "message": "Type",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
       "totalSent": {
         "message": "Total Sent ({{currency}})",
         "description": "Used for the CascadeAndSenseStatistics page"
@@ -1095,12 +1099,16 @@
         "message": "Total Received ({{currency}})",
         "description": "Used for the CascadeAndSenseStatistics page"
       },
+      "totalBurned": {
+        "message": "Total Burned ({{currency}})",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
       "balance": {
         "message": "Balance ({{currency}})",
         "description": "Used for the CascadeAndSenseStatistics page"
       },
       "latestTransactions": {
-        "message": "Latest Transactions",
+        "message": "Transactions",
         "description": "Used for the CascadeAndSenseStatistics page"
       },
       "downloadCSV": {
@@ -1108,8 +1116,46 @@
         "description": "Used for the CascadeAndSenseStatistics page"
       },
       "address": {
-        "message": "{{currency}} address",
+        "message": "{{currency}} Address",
         "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "pastelBurnAddress": {
+        "message": "Burn Address",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "balanceHistory": {
+        "balance": {
+          "message": "Balance",
+          "description": "Used for the CascadeAndSenseStatistics page"
+        },
+        "sent": {
+          "message": "Sent",
+          "description": "Used for the CascadeAndSenseStatistics page"
+        },
+        "received": {
+          "message": "Received",
+          "description": "Used for the CascadeAndSenseStatistics page"
+        },
+        "receivedByMonth": {
+          "message": "Received by Month",
+          "description": "Used for the CascadeAndSenseStatistics page"
+        },
+        "sentByMonth": {
+          "message": "Sent by Month",
+          "description": "Used for the CascadeAndSenseStatistics page"
+        },
+        "burnedByMonth": {
+          "message": "Burned by Month",
+          "description": "Used for the CascadeAndSenseStatistics page"
+        },
+        "burned": {
+          "message": "Burned",
+          "description": "Used for the CascadeAndSenseStatistics page"
+        },
+        "totalBurned": {
+          "message": "Total Burned",
+          "description": "Used for the CascadeAndSenseStatistics page"
+        }
       }
     },
     "blockDetails": {
@@ -2122,6 +2168,10 @@
       "filterLabel": {
         "message": "Last {{period}}",
         "description": "Used for the Statistics page"
+      },
+      "filterLabelMax": {
+        "message": "Max",
+        "description": "Used for the Statistics page"
       }
     },
     "supernodes": {
@@ -2377,6 +2427,28 @@
         "message": "Not Yet Activated",
         "description": "Used for the TicketsType page"
       }
+    },
+    "burned": {
+      "title": {
+        "message": "Total {{currency}} Burned",
+        "description": "Used for the TicketsType page"
+      },
+      "totalBurned": {
+        "message": "Total Burned ({{currency}})",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "burnedByMonth": {
+        "message": "Burned by Month",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "burnedAddresses": {
+        "message": "Burned Addresses",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "address": {
+        "message": "Address",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      }
     }
   },
   "routes": {
@@ -2554,6 +2626,10 @@
     },
     "ticketsType": {
       "message": "Tickets Type",
+      "description": "Used for the routes"
+    },
+    "burned": {
+      "message": "Burned",
       "description": "Used for the routes"
     }
   },

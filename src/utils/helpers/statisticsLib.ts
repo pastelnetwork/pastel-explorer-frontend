@@ -44,7 +44,9 @@ export type PeriodTypes =
   | '60d'
   | '90d'
   | '180d'
+  | '6m'
   | '1y'
+  | '2y'
   | 'max'
   | 'all';
 export type TGranularity = '1d' | '30d' | '1y' | 'all' | 'none';
@@ -540,10 +542,17 @@ export function transformTotalSupplyDataChart(
 export const generatePeriodToDropdownOptions = (periods: PeriodTypes[]) => {
   const results = [];
   for (let i = 0; i < periods.length; i += 1) {
-    results.push({
-      name: translate('pages.statistics.filterLabel', { period: periods[i] }),
-      value: periods[i],
-    });
+    if (periods[i] !== 'max') {
+      results.push({
+        name: translate('pages.statistics.filterLabel', { period: periods[i] }),
+        value: periods[i],
+      });
+    } else {
+      results.push({
+        name: translate('pages.statistics.filterLabelMax'),
+        value: periods[i],
+      });
+    }
   }
   return results;
 };
@@ -615,7 +624,7 @@ export const generateXAxisInterval = (
       return Math.floor(dataX.length / 7);
     case '30d':
       if (dataX.length !== 31) {
-        return Math.floor(dataX.length / 15);
+        return Math.floor(dataX.length / 11);
       }
       return 1;
     case '90d':
@@ -633,6 +642,7 @@ export const generateMinMaxChartData = (
   step: number,
   period?: PeriodTypes,
   decimalsLength?: number,
+  percent?: number,
 ): TMinMaxChartData => {
   let result = {
     min: 0,
@@ -650,7 +660,7 @@ export const generateMinMaxChartData = (
       max: Math.ceil(max),
     };
   } else {
-    let minVal = Math.floor(inputMin - Math.floor(inputMin) * 0.02);
+    let minVal = Math.floor(inputMin - Math.floor(inputMin) * (percent || 0.02));
     if (minVal % step !== 0) {
       const minRange = minVal / step;
       const tmpMin = minVal;
@@ -853,3 +863,19 @@ export function transformTransactionsChartData(
   }
   return { dataX, dataY };
 }
+
+export const balanceHistoryXAxisInterval = (dataX?: string[], width?: number) => {
+  if (!dataX?.length || !width) {
+    return 'auto';
+  }
+
+  if (width > 960 && width < 1200) {
+    return Math.floor(dataX.length / 5);
+  }
+
+  if (width <= 960) {
+    return Math.floor(dataX.length / 3);
+  }
+
+  return Math.floor(dataX.length / 8);
+};

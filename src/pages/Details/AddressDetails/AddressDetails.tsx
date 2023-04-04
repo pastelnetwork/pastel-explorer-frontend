@@ -2,27 +2,29 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { CSVLink } from 'react-csv';
 import { CircularProgress, Grid } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Tooltip from '@material-ui/core/Tooltip';
 
-import Table from '@components/Table/Table';
 import InfinityTable, {
   SortDirectionsType,
   ISortData,
 } from '@components/InfinityTable/InfinityTable';
 import { translate } from '@utils/helpers/i18n';
 
-import { getCurrencyName } from '@utils/appInfo';
+import { getCurrencyName, isPastelBurnAddress } from '@utils/appInfo';
 import { eChartLineStyles } from '@pages/HistoricalStatistics/Chart/styles';
-import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
-import useAddressDetails from '@hooks/useAddressDetails';
+import * as TableStyles from '@components/Table/Table.styles';
+import Fire from '@components/SvgIcon/Fire';
+import { useLatestTransactions } from '@hooks/useAddressDetails';
 
 import {
-  addressHeaders,
   DATA_FETCH_LIMIT,
   DATA_DEFAULT_SORT,
   generateLatestTransactions,
-  generateAddressSummary,
 } from './AddressDetails.helpers';
 import { ADDRESS_TRANSACTION_TIMESTAMP_KEY, columns } from './AddressDetails.columns';
+import BalanceHistory from './BalanceHistory';
+import DirectionChart from './DirectionChart';
 import * as Styles from './AddressDetails.styles';
 
 interface ParamTypes {
@@ -41,6 +43,7 @@ const AddressDetails = () => {
       label: translate('pages.addressDetails.amount', { currency: getCurrencyName() }),
       key: 'amount',
     },
+    { label: translate('pages.addressDetails.direction'), key: 'direction' },
     { label: translate('pages.addressDetails.timestamp'), key: 'timestamp' },
   ];
 
@@ -49,7 +52,7 @@ const AddressDetails = () => {
     sortBy: ADDRESS_TRANSACTION_TIMESTAMP_KEY,
     sortDirection: DATA_DEFAULT_SORT,
   });
-  const { swrData: addresses, csvData, swrSize, swrSetSize, isLoading } = useAddressDetails(
+  const { addresses, isLoading, swrSize, swrSetSize, csvData } = useLatestTransactions(
     id,
     DATA_FETCH_LIMIT,
     apiParams.sortBy,
@@ -92,18 +95,27 @@ const AddressDetails = () => {
     };
   }, []);
 
+  const isBurnAddress = isPastelBurnAddress(id);
+
   const generateAddTitle = () => {
     return (
       <Styles.AddressTitleBlock>
         {translate('pages.addressDetails.address', { currency: getCurrencyName() })}:{' '}
         <span>{id}</span>
+        {isBurnAddress ? (
+          <Tooltip title={translate('pages.addressDetails.pastelBurnAddress')}>
+            <Styles.FireIcon>
+              <Fire />
+            </Styles.FireIcon>
+          </Tooltip>
+        ) : null}
       </Styles.AddressTitleBlock>
     );
   };
 
   const generateTitle = () => {
     const date = new Date();
-    const fileName = `Transaction_History__${addresses.address}__${date.getFullYear()}_${
+    const fileName = `Transaction_History__${id}__${date.getFullYear()}_${
       date.getMonth() + 1
     }_${date.getDate()}.csv`;
     return (
@@ -115,7 +127,7 @@ const AddressDetails = () => {
           headers={transactionHistoryCSVHeaders}
           separator=","
           ref={downloadRef}
-          className={styles.uploadButton}
+          className={`${styles.uploadButton} ${!addresses ? 'disable' : ''}`}
         >
           {translate('pages.addressDetails.downloadCSV')}
         </CSVLink>
@@ -123,43 +135,59 @@ const AddressDetails = () => {
     );
   };
 
-  return addresses ? (
+  return (
     <Styles.Wrapper>
       <Grid container direction="column">
         <Grid item>
-          <Table
-            title={generateAddTitle()}
-            headers={addressHeaders}
-            rows={generateAddressSummary(addresses)}
-            tableWrapperClassName="address-table-wrapper"
-            className="address"
-            blockWrapperClassName="address-wrapper"
-          />
+          <TableStyles.BlockWrapper className="address-wrapper">
+            <TableStyles.Card>
+              <Styles.Heading>
+                <Styles.HeadingTitle>{generateAddTitle()}</Styles.HeadingTitle>
+              </Styles.Heading>
+              <Styles.ChartWrapper>
+                <BalanceHistory id={id} />
+              </Styles.ChartWrapper>
+            </TableStyles.Card>
+          </TableStyles.BlockWrapper>
         </Grid>
         <Styles.TableWrapper item>
-          <InfinityTable
-            title={generateTitle()}
-            sortBy={apiParams.sortBy}
-            sortDirection={apiParams.sortDirection}
-            rows={generateLatestTransactions(addresses.data, isMobile)}
-            columns={columns}
-            onBottomReach={handleFetchMoreTransactions}
-            onHeaderClick={handleSort}
-            className="latest-transaction-table"
-            headerBackground
-            rowHeight={isMobile ? 135 : 45}
-            tableHeight={isMobile ? 600 : 400}
-            customLoading={isLoading}
-          />
+          <Grid container spacing={5}>
+            <Grid item xs={12} lg={8}>
+              {addresses ? (
+                <InfinityTable
+                  title={generateTitle()}
+                  sortBy={apiParams.sortBy}
+                  sortDirection={apiParams.sortDirection}
+                  rows={generateLatestTransactions(addresses, id)}
+                  columns={columns}
+                  onBottomReach={handleFetchMoreTransactions}
+                  onHeaderClick={handleSort}
+                  className="latest-transaction-table"
+                  headerBackground
+                  rowHeight={isMobile ? 135 : 45}
+                  tableHeight={isMobile ? 600 : 610}
+                  customLoading={isLoading}
+                />
+              ) : null}
+              {isLoading && !addresses?.length ? (
+                <Box className="relative mt-15">
+                  {generateTitle()}
+                  <Box className="transaction-table-mask">
+                    <Styles.Loader>
+                      <CircularProgress size={40} />
+                      <Styles.LoadingText>{translate('common.loadingData')}</Styles.LoadingText>
+                    </Styles.Loader>
+                  </Box>
+                </Box>
+              ) : null}
+            </Grid>
+            <Grid item xs={12} lg={4}>
+              <DirectionChart id={id} />
+            </Grid>
+          </Grid>
         </Styles.TableWrapper>
       </Grid>
     </Styles.Wrapper>
-  ) : (
-    <TransactionStyles.LoadingWrapper>
-      <TransactionStyles.Loader>
-        <CircularProgress size={40} />
-      </TransactionStyles.Loader>
-    </TransactionStyles.LoadingWrapper>
   );
 };
 

@@ -212,14 +212,14 @@ const TicketsList: React.FC<ITicketsList> = ({
     const results = [
       {
         value: TICKET_TYPE_OPTIONS[0].value,
-        name: `${TICKET_TYPE_OPTIONS[0].name}(${totalAllTickets})`,
+        name: `${translate(TICKET_TYPE_OPTIONS[0].name)}(${totalAllTickets})`,
       },
     ];
     for (let i = 0; i < ticketsTypeList.length; i += 1) {
       const item = TICKET_TYPE_OPTIONS.find(ticket => ticket.value === ticketsTypeList[i].type);
       results.push({
         value: ticketsTypeList[i].type,
-        name: `${item?.name}(${ticketsTypeList[i].total})`,
+        name: `${translate(item?.name || '')}(${ticketsTypeList[i].total})`,
       });
     }
     return results;
