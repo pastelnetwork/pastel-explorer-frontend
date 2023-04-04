@@ -19,7 +19,7 @@ interface IBalanceHistoryProps {
 
 const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
   const isBurnAddress = isPastelBurnAddress(id);
-  const [selectedPeriod, setSelectedPeriod] = useState<PeriodTypes>(periods[1][0]);
+  const [selectedPeriod, setSelectedPeriod] = useState<PeriodTypes>(periods[1][4]);
   const [selectedChartType, setSelectedChartType] = useState('balance');
   const { isLoading, balance, incoming, outgoing } = useBalanceHistory(id, selectedPeriod);
 
