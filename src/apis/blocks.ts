@@ -6,7 +6,7 @@ const getLatestBlock = async (limit = 8) => {
   const {
     data: { data, timestamp },
   }: { data: { data: IBlock[]; timestamp: number } } = await axiosInstance.get(BLOCK_URL, {
-    params: { limit, sortBy: 'id', excludePaging: true },
+    params: { limit, sortBy: 'height', excludePaging: true },
   });
 
   const blockTuple: [string, IBlock][] = data.map((block: IBlock) => [block.id, block]);

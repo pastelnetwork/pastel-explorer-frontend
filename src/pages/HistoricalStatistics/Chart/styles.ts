@@ -27,6 +27,10 @@ export const eChartLineStyles = makeStyles((theme: TAppTheme) => ({
       backgroundColor: '#0971DC',
       borderColor: '#0971DC',
     },
+    [theme.breakpoints.down('sm')]: {
+      padding: '4px 20px',
+      fontSize: '12px',
+    },
   },
   reactECharts: {
     width: '100%',

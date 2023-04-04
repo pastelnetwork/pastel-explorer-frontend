@@ -5,28 +5,28 @@ import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 import { HeaderType } from '@components/Table/Table';
 import CopyButton from '@components/CopyButton/CopyButton';
-
 import { ITransactionDetails } from '@utils/types/ITransactions';
 import { formattedDate } from '@utils/helpers/date/date';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { getCurrencyName } from '@utils/appInfo';
+import { translate } from '@utils/helpers/i18n';
 
 import * as Styles from './TransactionDetails.styles';
 
 const BLOCK_CONFIRMED_NUMBER = 1;
 
 export const transactionHeaders: Array<HeaderType> = [
-  { id: 1, header: 'Block Hash' },
-  { id: 2, header: 'Confirmations' },
-  { id: 4, header: 'Recipients' },
-  { id: 5, header: `Amount (${getCurrencyName()})` },
-  { id: 6, header: 'Timestamp' },
+  { id: 1, header: 'pages.transactionDetails.blockHash' },
+  { id: 2, header: 'pages.transactionDetails.confirmations' },
+  { id: 4, header: 'pages.transactionDetails.recipients' },
+  { id: 5, header: 'pages.transactionDetails.amount' },
+  { id: 6, header: 'pages.transactionDetails.timestamp' },
 ];
 
 export const addressHeaders: Array<HeaderType> = [
-  { id: 1, header: 'Address', key: 'address' },
-  { id: 2, header: `Amount (${getCurrencyName()})`, key: 'amount' },
-  { id: 3, header: 'Amount (USD)', key: 'amount' },
+  { id: 1, header: 'pages.transactionDetails.address', key: 'address' },
+  { id: 2, header: 'pages.transactionDetails.amount', key: 'amount' },
+  { id: 3, header: 'pages.transactionDetails.amountUSD', key: 'amount' },
 ];
 
 export const generateTableTitle = (
@@ -35,36 +35,42 @@ export const generateTableTitle = (
 ) => (
   <Styles.ViewTransactionRawMuiAlert severity="info">
     <AlertTitle style={{ wordBreak: 'break-word' }}>
-      {getCurrencyName()} TXID: {transactionData.id}{' '}
+      {getCurrencyName()} {translate('pages.transactionDetails.txId')}: {transactionData.id}{' '}
       <span>
         (
         <Styles.RawDataWrapper>
           <CopyButton copyText={transactionData.rawData} />
           <Styles.ViewTransactionRaw type="button" onClick={toggleOpenRawData}>
-            View Transaction Raw Data
+            {translate('pages.transactionDetails.viewTransactionRawData')}
           </Styles.ViewTransactionRaw>
         </Styles.RawDataWrapper>
         )
       </span>
     </AlertTitle>
-    {`This transaction was first broadcast to the ${getCurrencyName()} network on 
-      ${formattedDate(transactionData.timestamp, {
+    {translate('pages.transactionDetails.transactionMessage', {
+      currency: getCurrencyName(),
+      timestamp: formattedDate(transactionData.timestamp, {
         dayName: false,
-      })}. 
-      The transaction is currently 
-      ${
-        transactionData.block.confirmations >= BLOCK_CONFIRMED_NUMBER ? 'confirmed' : 'unconfirmed'
-      } by the network. `}
-    {transactionData.isNonStandard
-      ? 'Because the transaction is shielded, the amount sent is unknown.'
-      : `At the time of this transaction 
-      ${
-        transactionData.totalAmount
-          ? `${formatNumber(transactionData.totalAmount, {
-              decimalsLength: 2,
-            })} ${getCurrencyName()} was sent.`
-          : `an unknown amount of ${getCurrencyName()} was sent (since it’s a shielded transaction).`
-      } `}
+      }),
+      confirmations:
+        transactionData.block.confirmations >= BLOCK_CONFIRMED_NUMBER
+          ? translate('pages.transactionDetails.confirmed')
+          : translate('pages.transactionDetails.unconfirmed'),
+      reason: transactionData.isNonStandard
+        ? translate('pages.transactionDetails.shieldedTransactionInfo')
+        : translate('pages.transactionDetails.transparentTransactionInfo', {
+            info: transactionData.totalAmount
+              ? translate('pages.transactionDetails.totalAmountTransactionInfo', {
+                  totalAmount: formatNumber(transactionData.totalAmount, {
+                    decimalsLength: 2,
+                  }),
+                  currency: getCurrencyName(),
+                })
+              : translate('pages.transactionDetails.unknownTransactionInfo', {
+                  currency: getCurrencyName(),
+                }),
+          }),
+    })}
   </Styles.ViewTransactionRawMuiAlert>
 );
 
@@ -73,14 +79,18 @@ export const generateCoinbaseInfo = (info: number) => (
     severity="info"
     icon={
       <Tooltip
-        title="New PSL are released through mining rewards, which is the process of confirming Pastel transactions and securing the entire historical record of transactions known as the blockchain. When miners finds a new block, they are rewarded."
+        title={translate('pages.transactionDetails.coinbaseInfo', {
+          currency: getCurrencyName(),
+        })}
         arrow
       >
         <InfoOutlinedIcon fontSize="small" />
       </Tooltip>
     }
   >
-    <AlertTitle>New coins ({formatNumber(info, { decimalsLength: 2 })})</AlertTitle>
+    <AlertTitle>
+      {translate('pages.transactionDetails.newCoins')} ({formatNumber(info, { decimalsLength: 2 })})
+    </AlertTitle>
   </Alert>
 );
 
@@ -89,15 +99,12 @@ export const generateNonStandardTransactionInfo = () => (
     <Styles.Alert
       severity="info"
       icon={
-        <Tooltip
-          title="A shielded transaction is a privacy-preserving tx involving shielded addresses. Shielded addresses use zero-knowledge proofs to allow transaction data to be encrypted by remaining verifiable by network nodes."
-          arrow
-        >
+        <Tooltip title={translate('pages.transactionDetails.nonStandardTransactionInfo')} arrow>
           <InfoOutlinedIcon fontSize="small" />
         </Tooltip>
       }
     >
-      <AlertTitle>Shielded Transaction</AlertTitle>
+      <AlertTitle>{translate('pages.transactionDetails.shieldedTransaction')}</AlertTitle>
     </Styles.Alert>
   </Grid>
 );

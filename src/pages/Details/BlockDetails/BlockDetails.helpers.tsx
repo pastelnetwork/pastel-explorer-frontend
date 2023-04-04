@@ -1,22 +1,21 @@
 import { Grid, Typography } from '@material-ui/core';
 
 import { HeaderType } from '@components/Table/Table';
-import { getCurrencyName } from '@utils/appInfo';
 
 import * as Styles from './BlockDetails.styles';
 
 export const blockHeaders: Array<HeaderType> = [
-  { id: 1, header: 'Height' },
-  { id: 3, header: 'Confirmations' },
-  { id: 4, header: 'Size (kB)' },
-  { id: 6, header: 'Timestamp' },
+  { id: 1, header: 'pages.blockDetails.height' },
+  { id: 3, header: 'pages.blockDetails.confirmations' },
+  { id: 4, header: 'pages.blockDetails.size' },
+  { id: 6, header: 'pages.blockDetails.timestamp' },
 ];
 
 export const transactionHeaders: Array<HeaderType> = [
-  { id: 1, header: 'TXID', key: 'id' },
-  { id: 2, header: 'Recipients', key: 'recipientCount' },
-  { id: 3, header: 'Tickets', key: 'totalTickets' },
-  { id: 4, header: `Amount (${getCurrencyName()})`, key: 'totalAmount' },
+  { id: 1, header: 'pages.blockDetails.txId', key: 'id' },
+  { id: 2, header: 'pages.blockDetails.recipients', key: 'recipientCount' },
+  { id: 3, header: 'pages.blockDetails.tickets', key: 'totalTickets' },
+  { id: 4, header: 'pages.blockDetails.amount', key: 'totalAmount' },
 ];
 
 export const generateDetailsElement = (name: string, value: string) => (

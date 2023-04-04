@@ -2,6 +2,7 @@ import { Box, Hidden } from '@material-ui/core';
 import getYear from 'date-fns/getYear';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import Social from '@components/Social/Social';
 import { currentDate } from '@utils/helpers/date/date';
@@ -16,6 +17,7 @@ import * as Styles from './Footer.styles';
 import * as SidebarStyles from '../Sidebar/Sidebar.styles';
 
 const Footer: React.FC = () => {
+  const { t } = useTranslation();
   const isDarkMode = useSelector(getThemeState).darkMode;
 
   return (
@@ -31,7 +33,7 @@ const Footer: React.FC = () => {
             <Box>
               <SidebarStyles.BrandLogo
                 src={isDarkMode ? PastelLogoWhite : PastelLogo}
-                alt="Pastel Logo"
+                alt={t('components.footer.pastelLogo.message') || ''}
               />
             </Box>
           </SidebarStyles.Brand>
@@ -39,13 +41,13 @@ const Footer: React.FC = () => {
         <Styles.FooterMenuWrapper>
           {footerMenu.map(menu => (
             <Styles.FooterMenuBlock key={menu.id}>
-              <Styles.FooterMenuTitle>{menu.title}</Styles.FooterMenuTitle>
+              <Styles.FooterMenuTitle>{t(`${menu.title}.message`)}</Styles.FooterMenuTitle>
               {menu.children.length ? (
                 <Styles.FooterMenuList>
                   {menu.children.map(item => (
                     <Styles.FooterMenuItem key={item.path}>
                       <Styles.FooterMenuLink href={item.path} target={item.target}>
-                        {item.name}
+                        {t(`${item.name}.message`)}
                       </Styles.FooterMenuLink>
                     </Styles.FooterMenuItem>
                   ))}
@@ -57,7 +59,7 @@ const Footer: React.FC = () => {
         <Hidden xsDown implementation="css">
           <Styles.GridStyle item>
             <Styles.Typography>
-              Copyright © {getYear(currentDate)} Pastel Network. All rights reserved.
+              {t('components.footer.copyright.message', { year: getYear(currentDate) })}
             </Styles.Typography>
           </Styles.GridStyle>
         </Hidden>
@@ -68,7 +70,7 @@ const Footer: React.FC = () => {
             <Box>
               <SidebarStyles.BrandLogo
                 src={isDarkMode ? PastelLogoWhite : PastelLogo}
-                alt="Pastel Logo"
+                alt={t('components.footer.pastelLogo.message') || ''}
               />
             </Box>
           </SidebarStyles.Brand>
@@ -78,7 +80,7 @@ const Footer: React.FC = () => {
       <Hidden smUp implementation="js">
         <Styles.GridStyle item>
           <Styles.Typography>
-            Copyright © {getYear(currentDate)} Pastel. All rights reserved
+            {t('components.footer.copyright.message', { year: getYear(currentDate) })}
           </Styles.Typography>
         </Styles.GridStyle>
       </Hidden>

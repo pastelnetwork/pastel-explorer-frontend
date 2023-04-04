@@ -23,6 +23,7 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { TChartParams } from '@utils/types/IStatistics';
 import useWindowDimensions from '@hooks/useWindowDimensions';
+import { translate } from '@utils/helpers/i18n';
 
 import { eChartLineStyles } from './styles';
 import * as Styles from './Chart.styles';
@@ -40,10 +41,10 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     period: selectedPeriodButton,
     periods = [],
     title,
-    seriesName = 'USD Price',
-    seriesName1 = 'BTC Price',
-    yaxisName = 'USD Price',
-    yaxisName1 = 'BTC Price',
+    seriesName = translate('pages.historicalStatistics.usdPrice'),
+    seriesName1 = translate('pages.historicalStatistics.btcPrice'),
+    yaxisName = translate('pages.historicalStatistics.usdPrice'),
+    yaxisName1 = translate('pages.historicalStatistics.btcPrice'),
     handlePeriodFilterChange,
     handleBgColorChange,
     setHeaderBackground,
@@ -307,7 +308,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
           }
         })
         .catch(function getError(error) {
-          throw new Error(`PNG download error: ${error}`);
+          throw new Error(`${translate('pages.historicalStatistics.pngDownloadError')}: ${error}`);
         });
     }
   };
@@ -390,6 +391,14 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     },
     [handlePeriodFilterChange],
   );
+
+  const getCsvHeaders = () => {
+    return pricesCSVHeaders.map(header => ({
+      ...header,
+      label: translate(header.label),
+    }));
+  };
+
   return (
     <Styles.ChartContainer>
       <Styles.LineChartHeader
@@ -401,7 +410,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
           <Styles.ChartTitle>{title}</Styles.ChartTitle>
         )}
         <Styles.PeriodSelect>
-          <span>Period: </span>
+          <span>{translate('pages.historicalStatistics.period')}: </span>
           {periods.length &&
             periods.map(period => (
               <Styles.PeriodButton
@@ -420,7 +429,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
         {isLoading || !dataX?.length ? (
           <Styles.LoadingWrapper>
             <Skeleton animation="wave" variant="rect" height={386} />
-            <Styles.LoadingText>Loading data...</Styles.LoadingText>
+            <Styles.LoadingText>{translate('common.loadingData')}</Styles.LoadingText>
           </Styles.LoadingWrapper>
         ) : (
           <ReactECharts
@@ -450,17 +459,17 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
         </div>
         <div className={styles.lineChartDownloadButtonBar}>
           <Styles.DonwloadButton type="button" onClick={downloadPNG}>
-            Download PNG
+            {translate('pages.historicalStatistics.downloadPNG')}
           </Styles.DonwloadButton>
           <Styles.CSVLinkButton
             data={csvData}
             filename={`${makeDownloadFileName(info.currencyName, chartName)}.csv`}
-            headers={pricesCSVHeaders}
+            headers={getCsvHeaders()}
             separator=","
             ref={downloadRef}
             className={styles.uploadButton}
           >
-            Download CSV
+            {translate('pages.historicalStatistics.downloadCSV')}
           </Styles.CSVLinkButton>
         </div>
       </Styles.LineChartFooter>

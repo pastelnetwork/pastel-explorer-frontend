@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/SvgIcon/Balance renders correctly 1`] = `ShallowWrapper {}`;
+
+exports[`components/SvgIcon/BurnBalance renders correctly 1`] = `ShallowWrapper {}`;

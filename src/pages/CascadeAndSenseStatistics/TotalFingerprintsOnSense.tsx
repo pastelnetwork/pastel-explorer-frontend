@@ -8,6 +8,7 @@ import { LineChart } from '@components/Summary/LineChart';
 import { Dropdown } from '@components/Dropdown/Dropdown';
 import themeVariant from '@theme/variants';
 import useTotalFingerprintsOnSense from '@hooks/useTotalFingerprintsOnSense';
+import { translate } from '@utils/helpers/i18n';
 import * as SummaryStyles from '@components/Summary/Summary.styles';
 import * as StatisticsStyles from '@pages/Statistics/Statistics.styles';
 
@@ -34,7 +35,7 @@ const TotalFingerprintsOnSense: React.FC = () => {
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
           <SummaryStyles.Typography variant="h6">
-            Total fingerprints on Sense
+            {translate('pages.cascadeAndSenseStatistics.totalFingerprintsOnSense')}
           </SummaryStyles.Typography>
           <SummaryStyles.Typography variant="h4">
             <SummaryStyles.Values>
@@ -107,7 +108,9 @@ const TotalFingerprintsOnSense: React.FC = () => {
         {isLoading ? (
           <StatisticsStyles.Loader>
             <Skeleton animation="wave" variant="rect" height={170} width="100%" />
-            <StatisticsStyles.LoadingText>Loading data...</StatisticsStyles.LoadingText>
+            <StatisticsStyles.LoadingText>
+              {translate('common.loadingData')}
+            </StatisticsStyles.LoadingText>
           </StatisticsStyles.Loader>
         ) : (
           <LineChart

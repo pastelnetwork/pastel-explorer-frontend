@@ -40,18 +40,44 @@ export const CardContent = styled(MuiCardContent)`
 `;
 
 export const ChartWrapper = styled(Grid)`
-  height: 160px;
+  height: 273px;
   position: relative;
   padding: 20px;
 
   @media (min-width: 960px) {
     padding: 10px 20px;
     height: 273px;
+
+    .echarts-for-react {
+      height: 253px !important;
+    }
   }
 
   @media (min-width: 1280px) {
     padding: 20px;
     height: 332px;
+    height: 300px !important;
+  }
+
+  @media (max-width: 959px) {
+    height: 273px;
+
+    .echarts-for-react {
+      height: 234px !important;
+    }
+  }
+
+  @media (max-width: 600px) {
+    height: 190px;
+    padding: 0;
+
+    &:last-child {
+      height: auto;
+    }
+
+    .echarts-for-react {
+      height: 190px !important;
+    }
   }
 
   .chartjs-render-monitor {
@@ -61,7 +87,6 @@ export const ChartWrapper = styled(Grid)`
   canvas {
     position: relative;
     z-index: 1;
-    }
   }
 `;
 
@@ -87,6 +112,11 @@ export const StakingWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 600px) {
+    padding-top: 10px;
+    font-size: 32px;
+  }
 `;
 
 export const StakingTitle = styled.div`
@@ -94,6 +124,11 @@ export const StakingTitle = styled.div`
   font-size: 20px;
   font-weight: 400;
   line-height: 1;
+
+  @media (max-width: 600px) {
+    margin-top: 5px;
+    font-size: 16px;
+  }
 `;
 
 export const Link = styled(RouterLink)`

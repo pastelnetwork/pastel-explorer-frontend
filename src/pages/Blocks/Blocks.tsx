@@ -9,8 +9,9 @@ import { blocksPeriodFilters, blocksFilters } from '@utils/constants/filter';
 import { getFilterState } from '@redux/reducers/filterReducer';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import useBlocks from '@hooks/useBlocks';
+import { translate } from '@utils/helpers/i18n';
 
-import { columns, BLOCK_ID_KEY } from './Blocks.columns';
+import { columns } from './Blocks.columns';
 import { transformTableData, DATA_DEFAULT_SORT, DATA_FETCH_LIMIT } from './Blocks.helpers';
 import * as Styles from './Blocks.styles';
 
@@ -28,7 +29,7 @@ interface IBlocksDataRef {
 const Blocks = () => {
   const filter = useSelector(getFilterState);
   const [apiParams, setParams] = useState<IBlocksDataRef>({
-    sortBy: 'id',
+    sortBy: 'blockId',
     sortDirection: DATA_DEFAULT_SORT,
     period: filter.dateRange || 'all',
     types: filter.dropdownType || [],
@@ -39,7 +40,7 @@ const Blocks = () => {
   });
   const { swrData, total, swrSize, swrSetSize, isLoading } = useBlocks(
     DATA_FETCH_LIMIT,
-    apiParams.sortBy === BLOCK_ID_KEY ? 'id' : apiParams.sortBy,
+    apiParams.sortBy,
     apiParams.sortDirection,
     apiParams.period,
     apiParams.types,
@@ -74,7 +75,7 @@ const Blocks = () => {
     swrSetSize(1);
     setParams({
       ...apiParams,
-      sortBy: sortBy === 'blockHash' ? 'id' : sortBy,
+      sortBy,
       sortDirection,
     });
   };
@@ -95,8 +96,12 @@ const Blocks = () => {
 
   const getMovementTransactionsTitle = () => (
     <Styles.TitleWrapper>
-      <Styles.Title>Block List</Styles.Title>{' '}
-      {total > 0 ? <Styles.SubTitle>(Total {formatNumber(total)} blocks)</Styles.SubTitle> : null}
+      <Styles.Title>{translate('pages.blocks.blockList')}</Styles.Title>{' '}
+      {total > 0 ? (
+        <Styles.SubTitle>
+          ({translate('pages.blocks.totalBlocks', { total: formatNumber(total) })})
+        </Styles.SubTitle>
+      ) : null}
     </Styles.TitleWrapper>
   );
 
@@ -108,7 +113,7 @@ const Blocks = () => {
         rows={swrData ? transformTableData(swrData, isMobile) : []}
         filters={blocksPeriodFilters}
         dropdownFilters={blocksFilters}
-        dropdownLabel="Ticket type:"
+        dropdownLabel={translate('pages.blocks.ticketType')}
         title={getMovementTransactionsTitle()}
         columns={columns}
         tableHeight={isMobile ? 750 : 650}

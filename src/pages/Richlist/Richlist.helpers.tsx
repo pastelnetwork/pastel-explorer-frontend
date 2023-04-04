@@ -9,6 +9,7 @@ import * as ROUTES from '@utils/constants/routes';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { IRichlist } from '@utils/types/IRichlists';
 import { getCurrencyName } from '@utils/appInfo';
+import { translate } from '@utils/helpers/i18n';
 import { ReactComponent as CrownIcon } from '@assets/icons/crown.svg';
 import { ReactComponent as CrownPolygonIcon1 } from '@assets/icons/crown-polygon-1.svg';
 import { ReactComponent as CrownPolygonIcon2 } from '@assets/icons/crown-polygon-2.svg';
@@ -25,10 +26,10 @@ const LIST_DIVIDERS = [
 ];
 
 export const balanceHeaders: Array<HeaderType> = [
-  { id: 1, header: 'Rank', key: 'rank' },
-  { id: 2, header: 'Address', key: 'address' },
-  { id: 3, header: `Balance (${getCurrencyName()})`, key: 'amount' },
-  { id: 4, header: 'Percentage', key: 'percentage' },
+  { id: 1, header: 'pages.richlist.rank', key: 'rank' },
+  { id: 2, header: 'pages.richlist.address', key: 'address' },
+  { id: 3, header: `pages.richlist.balance`, key: 'amount' },
+  { id: 4, header: 'pages.richlist.percentage', key: 'percentage' },
 ];
 
 export const generateBalanceTable = (list: Array<IRichlist>, coinSupply: number) => {
@@ -122,7 +123,9 @@ const generateWealthDistributionItem = (
             </Styles.InfoValue>
           </Styles.ValueWrapper>
           <Styles.PercentageWrapper>
-            <Styles.PercentageTitle>Percentage</Styles.PercentageTitle>
+            <Styles.PercentageTitle>
+              {translate('pages.richlist.percentage')}
+            </Styles.PercentageTitle>
             <Styles.PercentageValue>
               {formatNumber(percentage, { decimalsLength: 2 })}%
             </Styles.PercentageValue>
@@ -137,7 +140,9 @@ export const generateWealthDistributionData = (list: IRichlist[], coinSupply: nu
   const newList = list.sort((a, b) => a.rank - b.rank);
   const dividedLists = LIST_DIVIDERS.map(([firstDivider, lastDivider]) => {
     const currentWealthDistributionList = newList.slice(firstDivider, lastDivider);
-    const rowLabel = `Top ${firstDivider + 1}-${lastDivider}`;
+    const rowLabel = translate('pages.richlist.top', {
+      rank: `${firstDivider + 1}-${lastDivider}`,
+    });
     return generateWealthDistributionItem(
       currentWealthDistributionList,
       rowLabel,

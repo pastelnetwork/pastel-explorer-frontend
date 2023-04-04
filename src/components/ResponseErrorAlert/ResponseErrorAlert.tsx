@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setResponseError } from '@redux/actions/responseErrorsActions';
 import { AppStateType } from '@redux/reducers';
 
+import { translate } from '@utils/helpers/i18n';
 import AlertComponent from '@components/Alert/Alert';
 
 const ResponseErrorAlert = () => {
@@ -18,8 +19,8 @@ const ResponseErrorAlert = () => {
   return (
     <AlertComponent
       isOpen={error}
-      title="There was a problem with the query"
-      message={message || 'Not all data will be visible. Please try refreshing the page.'}
+      title={translate('components.responseErrorAlert.title')}
+      message={message || translate('components.responseErrorAlert.content')}
       severity="error"
       outsideClickClose={false}
       onClose={handleClose}

@@ -13,6 +13,7 @@ import * as URLS from '@utils/constants/urls';
 import { getCurrencyName } from '@utils/appInfo';
 import { useDeferredData } from '@utils/helpers/useFetch/useFetch';
 import { TLineChartData, IHashRateResponse } from '@utils/types/IStatistics';
+import { translate } from '@utils/helpers/i18n';
 
 import * as SummaryStyles from '@components/Summary/Summary.styles';
 import * as Styles from '@pages/CascadeAndSenseStatistics/CascadeAndSenseStatistics.styles';
@@ -54,7 +55,7 @@ const IncomingTransactions: React.FC<IIncomingTransactions> = ({ blockElements }
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
           <SummaryStyles.Typography variant="h6">
-            Incoming transactions ({getCurrencyName()})
+            {translate('pages.statistics.incomingTransactions', { currency: getCurrencyName() })}
           </SummaryStyles.Typography>
         </SummaryStyles.ValueWrapper>
         <SummaryStyles.PercentageWrapper>
@@ -71,13 +72,17 @@ const IncomingTransactions: React.FC<IIncomingTransactions> = ({ blockElements }
       <StatisticsStyles.ChartSection>
         {isLoading ? (
           <StatisticsStyles.Loader>
-            <StatisticsStyles.LoadingText>Loading data...</StatisticsStyles.LoadingText>
+            <StatisticsStyles.LoadingText>
+              {translate('common.loadingData')}
+            </StatisticsStyles.LoadingText>
           </StatisticsStyles.Loader>
         ) : null}
         {!chartData ? (
           <>
             <Skeleton animation="wave" variant="rect" height={300} />
-            <StatisticsStyles.LoadingText>Loading data...</StatisticsStyles.LoadingText>
+            <StatisticsStyles.LoadingText>
+              {translate('common.loadingData')}
+            </StatisticsStyles.LoadingText>
           </>
         ) : (
           <LineChart

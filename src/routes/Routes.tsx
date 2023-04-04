@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Route, Switch, RouteComponentProps } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
+import { TOptions, StringMap } from 'i18next';
 
 import DashboardLayout from '@layouts/Dashboard/Dashboard';
 import Page404 from '@pages/404/404';
-
+import { getCurrencyName } from '@utils/appInfo';
 import { RouteType } from '@utils/types/routes';
 import ScrollToTop from '@utils/helpers/scrollToTop/scrollToTop';
 
@@ -12,8 +14,12 @@ import { pageRoutes } from './index';
 
 import '@utils/perfect-scrollbar.css';
 
-const childRoutes = (Layout: React.ElementType, routes: Array<RouteType>) =>
-  routes.map(({ component: Component, guard, children, path, id, seoTitle = '' }) => {
+const childRoutes = (
+  Layout: React.ElementType,
+  routes: Array<RouteType>,
+  t: (_key: string, _option?: TOptions<StringMap>) => string,
+) => {
+  return routes.map(({ component: Component, guard, children, path, id, seoTitle = '' }) => {
     const Guard = guard || React.Fragment;
 
     if (children) {
@@ -29,7 +35,11 @@ const childRoutes = (Layout: React.ElementType, routes: Array<RouteType>) =>
             render={(props: RouteComponentProps) => (
               <Layout>
                 <ChildrenGuard>
-                  <Helmet title={element.seoTitle || seoTitle} />
+                  <Helmet
+                    title={t(`${element.seoTitle || seoTitle}.message`, {
+                      currency: getCurrencyName(),
+                    })}
+                  />
                   <ElementComponent {...props} />
                 </ChildrenGuard>
               </Layout>
@@ -48,7 +58,11 @@ const childRoutes = (Layout: React.ElementType, routes: Array<RouteType>) =>
           render={props => (
             <Layout>
               <Guard>
-                <Helmet title={seoTitle} />
+                <Helmet
+                  title={t(`${seoTitle}.message`, {
+                    currency: getCurrencyName(),
+                  })}
+                />
                 <Component {...props} />
               </Guard>
             </Layout>
@@ -59,15 +73,19 @@ const childRoutes = (Layout: React.ElementType, routes: Array<RouteType>) =>
 
     return null;
   });
+};
 
-const Routes: React.FC = () => (
-  <Router>
-    <ScrollToTop />
-    <Switch>
-      {childRoutes(DashboardLayout, pageRoutes)}
-      <Route render={() => <Page404 />} />
-    </Switch>
-  </Router>
-);
+const Routes: React.FC = () => {
+  const { t } = useTranslation();
+  return (
+    <Router>
+      <ScrollToTop />
+      <Switch>
+        {childRoutes(DashboardLayout, pageRoutes, t)}
+        <Route render={() => <Page404 />} />
+      </Switch>
+    </Router>
+  );
+};
 
 export default Routes;

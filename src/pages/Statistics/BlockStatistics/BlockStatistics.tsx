@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/styles';
 import { TAppTheme } from '@theme/index';
 import * as ROUTES from '@utils/constants/routes';
 import { BlockUnconfirmed } from '@utils/types/ITransactions';
+import { translate } from '@utils/helpers/i18n';
 
 import BlockVisualization from './BlockVisualization/BlockVisualization';
 import { ITransformBlocksData } from './BlockStatistics.helpers';
@@ -54,12 +55,20 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
       return (
         <Grid item>
           <BlockVisualization
-            title="Mempool:"
-            height={<span style={{ fontSize: 14 }}>Pending Block</span>}
+            title={translate('pages.statistics.mempool')}
+            height={
+              <span style={{ fontSize: 14 }}>{translate('pages.statistics.pendingBlock')}</span>
+            }
             className="block-unconfirmed"
-            size={`${(size / 1024).toFixed(2)} kB`}
-            transactionCount={`${txsCount} ${txsCount > 1 ? 'transactions' : 'transaction'}`}
-            minutesAgo={`In ~${blocksUnconfirmed.length * 10} minutes`}
+            size={translate('pages.statistics.size', { size: (size / 1024).toFixed(2) })}
+            transactionCount={
+              txsCount > 1
+                ? translate('pages.statistics.transactions', { txsCount })
+                : translate('pages.statistics.transaction', { txsCount })
+            }
+            minutesAgo={translate('pages.statistics.blocksUnconfirmedTime', {
+              time: blocksUnconfirmed.length * 10,
+            })}
           />
         </Grid>
       );
@@ -71,7 +80,7 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
   return (
     <>
       <Styles.BlockWrapper>
-        <Styles.BlockTitle>Blocks Statistics</Styles.BlockTitle>
+        <Styles.BlockTitle>{translate('pages.statistics.blocksStatistics')}</Styles.BlockTitle>
         <Styles.GridStyle classes={{ root: classes.wrapper }} container>
           {blockElements?.length ? (
             <Styles.GridBlocksStatisticsRoot
@@ -111,7 +120,7 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
             <Styles.ChartSection>
               <>
                 <Skeleton animation="wave" variant="rect" height={207} />
-                <Styles.LoadingText>Loading data...</Styles.LoadingText>
+                <Styles.LoadingText>{translate('common.loadingData')}</Styles.LoadingText>
               </>
             </Styles.ChartSection>
           )}

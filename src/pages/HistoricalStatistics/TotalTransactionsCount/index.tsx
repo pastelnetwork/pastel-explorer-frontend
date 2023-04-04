@@ -6,8 +6,9 @@ import { periods, info, cacheList } from '@utils/constants/statistics';
 import { TLineChartData } from '@utils/types/IStatistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
-import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout/HistoricalStatisticsLayout';
 import useTotalTransactionCount from '@hooks/useTotalTransactionCount';
+import { translate } from '@utils/helpers/i18n';
 
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
@@ -58,12 +59,15 @@ function TotalTransactionCount() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Total Transaction Count">
+    <HistoricalStatisticsLayout
+      currentBgColor={currentBgColor}
+      title={translate('pages.historicalStatistics.totalTransactionCount')}
+    >
       <EChartsLineChart
         chartName="totalTransactionCount"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title="Total Transaction Count"
+        title={translate('pages.historicalStatistics.totalTransactionCount')}
         info={info}
         offset={1}
         period={period}

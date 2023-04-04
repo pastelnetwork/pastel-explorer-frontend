@@ -1,6 +1,7 @@
 import { getCurrentUnixTimestamp } from '@utils/helpers/date/date';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { IBlock } from '@utils/types/IBlocks';
+import { translate } from '@utils/helpers/i18n';
 
 export interface ITransformBlocksData {
   id: string;
@@ -20,8 +21,11 @@ export const transformBlocksData = (
       id,
       transactionCount: `${transactionCount} transaction${transactionCount === 1 ? '' : 's'}`,
       height: formatNumber(height),
-      size: `${(size / 1024).toFixed(2)} kB`,
-      minutesAgo: `${minutesAgo} minute${minutesAgo === 1 ? '' : 's'} ago`,
+      size: translate('pages.statistics.size', { size: (size / 1024).toFixed(2) }),
+      minutesAgo:
+        minutesAgo === 1
+          ? translate('pages.statistics.minuteAgo', { minutesAgo })
+          : translate('pages.statistics.minutesAgo', { minutesAgo }),
     };
   });
 };

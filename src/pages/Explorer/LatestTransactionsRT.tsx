@@ -24,6 +24,8 @@ import { AppThunkDispatch } from '@redux/types';
 import { useTransactionLatestTransactions } from '@redux/hooks/transactionsHooks';
 import { ITransaction } from '@utils/types/ITransactions';
 import { TRANSACTION_DETAILS } from '@utils/constants/routes';
+import { translate } from '@utils/helpers/i18n';
+
 import { Link } from '@components/Link/Link.styles';
 import { getCurrencyName } from '@utils/appInfo';
 import { formatAddress } from '@utils/helpers/format';
@@ -65,10 +67,10 @@ function LatestTransactions() {
   return (
     <Styles.BlockWrapper className="mt-24 latest-transactions-wrapper">
       <Styles.BlockTitle className="latest-blocks">
-        Latest Transactions (Live)
+        {translate('pages.explorer.latestTransactionsLive')}
         <Link to="/movement" className="view-all">
           <Typography align="center" className={classes.viewAll}>
-            View all <ArrowForwardIos />
+            {translate('pages.explorer.viewAll')} <ArrowForwardIos />
           </Typography>
         </Link>
       </Styles.BlockTitle>
@@ -76,19 +78,21 @@ function LatestTransactions() {
         <Table aria-label="customized table" className="custom-table latest-transactions">
           <TableHead className="table__row-header">
             <TableRow>
-              <StyledTableCell className="th-block">Block</StyledTableCell>
-              <StyledTableCell>TXID</StyledTableCell>
+              <StyledTableCell className="th-block">
+                {translate('pages.explorer.block')}
+              </StyledTableCell>
+              <StyledTableCell>{translate('pages.explorer.txId')}</StyledTableCell>
               <StyledTableCell className="th-amount" align="right">
-                Amount({getCurrencyName()})
+                {translate('pages.explorer.amount', { currency: getCurrencyName() })}
               </StyledTableCell>
               <StyledTableCell className="th-recipents" align="right">
-                Recipents
+                {translate('pages.explorer.recipents')}
               </StyledTableCell>
               <StyledTableCell className="th-amount" align="right">
-                Tickets
+                {translate('pages.explorer.tickets')}
               </StyledTableCell>
               <StyledTableCell className="th-fee" align="right">
-                Fee
+                {translate('pages.explorer.fee')}
               </StyledTableCell>
             </TableRow>
           </TableHead>
@@ -110,8 +114,8 @@ function LatestTransactions() {
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       {tx.isNonStandard ? (
-                        <Tooltip title="Because the transaction is shielded, the amount sent is unknown.">
-                          <span>Unknown</span>
+                        <Tooltip title={translate('pages.explorer.shieldedTransactionTooltip')}>
+                          <span>{translate('common.unknown')}</span>
                         </Tooltip>
                       ) : (
                         <>{(+tx.totalAmount.toFixed(2)).toLocaleString('en')}</>

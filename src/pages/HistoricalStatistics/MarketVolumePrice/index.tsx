@@ -6,9 +6,10 @@ import { periods, info, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import { TMultiLineChartData } from '@utils/types/IStatistics';
-import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout/HistoricalStatisticsLayout';
 import useMarketVolumePrice from '@hooks/useMarketVolumePrice';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
+import { translate } from '@utils/helpers/i18n';
 
 import { EChartsMultiLineChart } from '../Chart/EChartsMultiLineChart';
 
@@ -55,20 +56,20 @@ function MarketVolumePrice() {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title="Market Price and Volume ($USD)"
+      title={translate('pages.historicalStatistics.marketPriceAndVolume')}
     >
       <EChartsMultiLineChart
         chartName="marketVolumePrice"
         dataX={transformLineChartData?.dataX}
         dataY1={transformLineChartData?.dataY1}
         dataY2={transformLineChartData?.dataY2}
-        yaxisName="Price ($USD)"
-        yaxisName1="Volume ($USD)"
-        seriesName="Price"
-        seriesName1="Vol 24h"
+        yaxisName={translate('pages.historicalStatistics.priceUSD')}
+        yaxisName1={translate('pages.historicalStatistics.volumeUSD')}
+        seriesName={translate('pages.historicalStatistics.price')}
+        seriesName1={translate('pages.historicalStatistics.vol24h')}
         fixedNum={5}
         fixedNum1={2}
-        title="Market Price and Volume ($USD)"
+        title={translate('pages.historicalStatistics.marketPriceAndVolume')}
         info={info}
         offset={0.0001}
         period={period}

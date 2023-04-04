@@ -2,6 +2,8 @@ import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
 // application
 import { statistics } from '@utils/constants/statistics';
+import { translate } from '@utils/helpers/i18n';
+import { getCurrencyName } from '@utils/appInfo';
 
 import * as Styles from './StatisticsOvertime.styles';
 
@@ -14,7 +16,7 @@ const Statistics = () => {
             <Grid item key={id} className="card-item" xs={12} sm={6} lg={4} xl={3}>
               <Styles.CardItem>
                 <Styles.BlockTitle>
-                  <Link to={url}>{title}</Link>
+                  <Link to={url}>{translate(title, { currency: getCurrencyName() })}</Link>
                 </Styles.BlockTitle>
                 <Styles.ChartImage>
                   <Link to={url}>

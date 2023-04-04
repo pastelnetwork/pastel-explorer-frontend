@@ -12,6 +12,7 @@ import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
 import useSenseDetails from '@hooks/useSenseDetails';
 import { getParameterByName } from '@utils/helpers/url';
+import { translate } from '@utils/helpers/i18n';
 
 import * as ChartStyles from '@pages/HistoricalStatistics/Chart/Chart.styles';
 import PastelData from './PastelData';
@@ -50,22 +51,25 @@ export const BlockItemLayout: React.FC<IBlockItemLayout> = ({
   );
 };
 
-const csvHeaders = [
-  { key: 'rank', label: 'Rank' },
-  { key: 'image', label: 'Thumbnail' },
-  { key: 'imageHash', label: 'Image Hash' },
-  { key: 'dateTimeAdded', label: 'Date-Time Added' },
-  { key: 'matchType', label: 'Match Type' },
-  { key: 'finalDupeProbability', label: 'Dupe Probability' },
-  { key: 'cosineSimilarity', label: 'Cosine Similarity' },
-  { key: 'cosineGain', label: 'Cosine Gain' },
-  { key: 'hoeffdingDependency', label: 'Hoeffding’s Dependency' },
-  { key: 'hoeffdingGain', label: 'Hoeffding Gain' },
-  { key: 'hilbertSchmidtInformationCriteria', label: 'Hilbert Schmidt Information Criteria' },
-  { key: 'hilbertSchmidtGain', label: 'Hilbert Schmidt Gain' },
-];
-
 const SenseDetails: React.FC = () => {
+  const csvHeaders = [
+    { key: 'rank', label: translate('pages.senseDetails.rank') },
+    { key: 'image', label: translate('pages.senseDetails.thumbnail') },
+    { key: 'imageHash', label: translate('pages.senseDetails.imageHash') },
+    { key: 'dateTimeAdded', label: translate('pages.senseDetails.dateTimeAdded') },
+    { key: 'matchType', label: translate('pages.senseDetails.matchType') },
+    { key: 'finalDupeProbability', label: translate('pages.senseDetails.dupeProbability') },
+    { key: 'cosineSimilarity', label: translate('pages.senseDetails.cosineSimilarity') },
+    { key: 'cosineGain', label: translate('pages.senseDetails.cosineGain') },
+    { key: 'hoeffdingDependency', label: translate('pages.senseDetails.hoeffdingsDependency') },
+    { key: 'hoeffdingGain', label: translate('pages.senseDetails.hoeffdingGain') },
+    {
+      key: 'hilbertSchmidtInformationCriteria',
+      label: translate('pages.senseDetails.hilbertSchmidtInformationCriteria'),
+    },
+    { key: 'hilbertSchmidtGain', label: translate('pages.senseDetails.hilbertSchmidtGain') },
+  ];
+
   const downloadRef = useRef(null);
   const id = getParameterByName('hash');
   const txid = getParameterByName('txid');
@@ -129,20 +133,21 @@ const SenseDetails: React.FC = () => {
         <TransactionStyles.TransactionDesc item className="alert-wrapper">
           <TransactionStyles.ViewTransactionRawMuiAlert severity="info">
             <AlertTitle className="alert-title">
-              Image File Hash: <span className="image-file-hash">{sense.imageFileHash}</span>{' '}
+              {translate('pages.senseDetails.imageFileHash')}:{' '}
+              <span className="image-file-hash">{sense.imageFileHash}</span>{' '}
               <span>
                 (
                 <Styles.RawDataWrapper>
                   <CopyButton copyText={JSON.parse(getRawData())} />
                   <Styles.ViewTransactionRaw type="button" onClick={toggleOpenRawData}>
-                    View Sense Raw Data
+                    {translate('pages.senseDetails.viewSenseRawData')}
                   </Styles.ViewTransactionRaw>
                 </Styles.RawDataWrapper>
                 )
               </span>
             </AlertTitle>
             <AlertTitle className="alert-title">
-              Ticket Detail:{' '}
+              {translate('pages.senseDetails.ticketDetail')}:{' '}
               <RouterLink
                 route={`${ROUTES.TRANSACTION_DETAILS}/${sense.transactionHash}`}
                 value={sense.transactionHash}
@@ -154,7 +159,7 @@ const SenseDetails: React.FC = () => {
         </TransactionStyles.TransactionDesc>
         <Styles.ImagesWrapper>
           <BlockItemLayout
-            title="Pastel Data"
+            title={translate('pages.senseDetails.pastelData')}
             className={`pastel-data ${!sense?.pastelIdOfSubmitter ? 'min-height-725' : ''}`}
           >
             <PastelData
@@ -170,26 +175,32 @@ const SenseDetails: React.FC = () => {
             />
           </BlockItemLayout>
           <Box className="summary-group">
-            <BlockItemLayout title="Summary" className="summary">
+            <BlockItemLayout title={translate('pages.senseDetails.summary')} className="summary">
               <Summary
                 isLikelyDupe={sense?.isLikelyDupe}
                 senseVersion={sense?.dupeDetectionSystemVersion}
               />
             </BlockItemLayout>
-            <BlockItemLayout title="Open NSFW" className="open-nsfw">
+            <BlockItemLayout title={translate('pages.senseDetails.openNSFW')} className="open-nsfw">
               <OpenNSFW openNSFWScore={sense?.openNsfwScore} />
             </BlockItemLayout>
-            <BlockItemLayout title="Rareness Score" className="rareness-score">
+            <BlockItemLayout
+              title={translate('pages.senseDetails.rarenessScore')}
+              className="rareness-score"
+            >
               <RarenessScore rarenessScore={sense?.rarenessScore} />
             </BlockItemLayout>
             <Box className="analytics-group">
               <BlockItemLayout
-                title="Prevalence of Similar Images"
+                title={translate('pages.senseDetails.prevalenceOfSimilarImages')}
                 className="prevalence-of-similar-images"
               >
                 <PrevalenceOfSimilarImages data={sense?.prevalenceOfSimilarImagesData} />
               </BlockItemLayout>
-              <BlockItemLayout title="Category Probabilities" className="category-probabilities">
+              <BlockItemLayout
+                title={translate('pages.senseDetails.categoryProbabilities')}
+                className="category-probabilities"
+              >
                 <CategoryProbabilities data={sense?.alternativeNsfwScores} />
               </BlockItemLayout>
             </Box>
@@ -199,7 +210,7 @@ const SenseDetails: React.FC = () => {
             customTitle={
               <Styles.TitleWrapper>
                 <TableStyles.BlockTitle>
-                  Top-10 Most Similar Registered Images on Pastel When Submitted
+                  {translate('pages.senseDetails.top10MostSimilarRegisteredImages')}
                 </TableStyles.BlockTitle>
                 <ChartStyles.CSVLinkButton
                   data={getCsvData()}
@@ -208,7 +219,7 @@ const SenseDetails: React.FC = () => {
                   separator=","
                   ref={downloadRef}
                 >
-                  Export to CSV
+                  {translate('pages.senseDetails.exportToCSV')}
                 </ChartStyles.CSVLinkButton>
               </Styles.TitleWrapper>
             }
@@ -218,19 +229,19 @@ const SenseDetails: React.FC = () => {
             <SimilarRegisteredImages rarenessScoresTable={sense?.rarenessScoresTable} />
           </BlockItemLayout>
           <BlockItemLayout
-            title="Rare on the Internet Results Graph"
+            title={translate('pages.senseDetails.rareOnTheInternetResultsGraph')}
             className="rare-on-the-internet-results-graph"
           >
             <RareOnTheInternetResultsGraph data={sense?.internetRareness} />
           </BlockItemLayout>
           <BlockItemLayout
-            title="Rare on the Internet, Alternative Results"
+            title={translate('pages.senseDetails.rareOnTheInternetAlternativeResults')}
             className="rare-on-the-internet-alternative-results"
           >
             <RareOnTheInternetAlternativeResults data={sense?.internetRareness} />
           </BlockItemLayout>
           <BlockItemLayout
-            title="Fingerprint Vector Heatmap"
+            title={translate('pages.senseDetails.fingerprintVectorHeatmap')}
             className="fingerprint-vector-heatmap"
           >
             <FingerprintVectorHeatmap
@@ -250,16 +261,16 @@ const SenseDetails: React.FC = () => {
       <Grid container justify="center" alignItems="center" direction="column" spacing={2}>
         <Grid item>
           <Typography component="h1" variant="h1" align="center" gutterBottom>
-            404
+            {translate('pages.senseDetails.404')}
           </Typography>
         </Grid>
       </Grid>
       <Typography component="h2" variant="h5" align="center" gutterBottom>
-        Sense not found.
+        {translate('pages.senseDetails.senseNotFound')}
       </Typography>
       {!txid && matchType === 'seedimage' ? (
         <Typography component="h3" variant="body1" align="center" gutterBottom>
-          This is one of the 12 seed images used to initialize the Sense system.
+          {translate('pages.senseDetails.seedImagesInfo')}
         </Typography>
       ) : null}
     </Styles.Wrapper>

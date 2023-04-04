@@ -1,4 +1,5 @@
 import { Grid } from '@material-ui/core';
+import format from 'date-fns/format';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import CopyButton from '@components/CopyButton/CopyButton';
@@ -9,13 +10,16 @@ import * as ROUTES from '@utils/constants/routes';
 import { formattedDate } from '@utils/helpers/date/date';
 import { IAddressData, IAddress } from '@utils/types/IAddress';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import { getCurrencyName } from '@utils/appInfo';
 import { formatAddress } from '@utils/helpers/format';
+import { TChartStatisticsResponse } from '@utils/types/IStatistics';
+import { translate } from '@utils/helpers/i18n';
+import { isPastelBurnAddress } from '@utils/appInfo';
 
 import {
   ADDRESS_TRANSACTION_TIMESTAMP_KEY,
   ADDRESS_TRANSACTION_HASH_KEY,
   ADDRESS_TRANSACTION_AMOUNT_KEY,
+  ADDRESS_TRANSACTION_DIRECTION_KEY,
 } from './AddressDetails.columns';
 
 export const DEFAULT_ADDRESS_DATA: IAddress = {
@@ -31,9 +35,9 @@ export const DATA_DEFAULT_SORT = 'DESC';
 
 export const generateLatestTransactions = (
   transactionsList: Array<IAddressData>,
-  isMobile: boolean,
+  address: string,
 ): RowsProps[] =>
-  transactionsList.map(({ amount, timestamp, transactionHash }) => ({
+  transactionsList.map(({ amount, timestamp, transactionHash, direction }) => ({
     [ADDRESS_TRANSACTION_TIMESTAMP_KEY]: formattedDate(timestamp, {
       dayName: false,
     }),
@@ -42,12 +46,27 @@ export const generateLatestTransactions = (
         <CopyButton copyText={transactionHash} />
         <RouterLink
           route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
-          value={isMobile ? formatAddress(transactionHash) : transactionHash}
+          value={formatAddress(transactionHash, 15, -4)}
           textSize="large"
           title={transactionHash}
           className="transaction-hash-link"
         />
       </Grid>
+    ),
+    [ADDRESS_TRANSACTION_DIRECTION_KEY]: (
+      <div
+        className={`direction-status ${direction.toLowerCase()} ${
+          isPastelBurnAddress(address) ? 'burned' : ''
+        }`}
+      >
+        {direction === 'Outgoing'
+          ? translate('pages.addressDetails.balanceHistory.sent')
+          : translate(
+              `pages.addressDetails.balanceHistory.${
+                isPastelBurnAddress(address) ? 'burned' : 'received'
+              }`,
+            )}
+      </div>
     ),
     [ADDRESS_TRANSACTION_AMOUNT_KEY]: formatNumber(amount, { decimalsLength: 2 }),
   }));
@@ -71,7 +90,50 @@ export const generateAddressSummary = ({
 };
 
 export const addressHeaders: Array<HeaderType> = [
-  { id: 1, header: `Total Sent (${getCurrencyName()})` },
-  { id: 2, header: `Total Received (${getCurrencyName()})` },
-  { id: 3, header: `Balance (${getCurrencyName()})` },
+  { id: 1, header: 'pages.addressDetails.totalSent' },
+  { id: 2, header: 'pages.addressDetails.totalReceived' },
+  { id: 3, header: 'pages.addressDetails.balance' },
 ];
+
+export const transformChartData = (data: TChartStatisticsResponse[] | null) => {
+  const dataX: string[] = [];
+  const dataY: number[] = [];
+  if (data?.length) {
+    data.forEach(item => {
+      if (item.time) {
+        dataX.push(format(item.time, 'MM/dd/yyyy'));
+        dataY.push(item.value);
+      }
+    });
+
+    const nowHour = format(new Date(), 'MM/dd/yyyy');
+    const targetHour = format(new Date(dataX[dataX.length - 1]), 'MM/dd/yyyy');
+    if (nowHour !== targetHour) {
+      dataX.push(format(new Date(), 'MM/dd/yyyy'));
+      dataY.push(dataY[dataY.length - 1]);
+    }
+  }
+
+  return {
+    dataX,
+    dataY,
+  };
+};
+
+export const transformDirectionChartData = (data: TChartStatisticsResponse[] | null) => {
+  const dataX: string[] = [];
+  const dataY: number[] = [];
+  if (data?.length) {
+    data.forEach(item => {
+      if (item.time) {
+        dataX.push(item.time.toString());
+        dataY.push(item.value);
+      }
+    });
+  }
+
+  return {
+    dataX,
+    dataY,
+  };
+};

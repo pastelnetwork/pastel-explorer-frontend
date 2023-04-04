@@ -9,6 +9,7 @@ import { defaultFilters } from '@utils/constants/filter';
 import { getFilterState } from '@redux/reducers/filterReducer';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import useMovement from '@hooks/useMovement';
+import { translate } from '@utils/helpers/i18n';
 
 import * as Styles from './Movement.styles';
 
@@ -88,8 +89,12 @@ const Movement: React.FC = () => {
 
   const getMovementTransactionsTitle = () => (
     <Styles.TitleWrapper>
-      <Styles.Title>Transactions List</Styles.Title>{' '}
-      {total > 0 ? <Styles.SubTitle>(Total {formatNumber(total)} txs)</Styles.SubTitle> : null}
+      <Styles.Title>{translate('pages.movement.transactionsList')}</Styles.Title>{' '}
+      {total > 0 ? (
+        <Styles.SubTitle>
+          ({translate('pages.movement.transactionsList', { total: formatNumber(total) })})
+        </Styles.SubTitle>
+      ) : null}
     </Styles.TitleWrapper>
   );
 

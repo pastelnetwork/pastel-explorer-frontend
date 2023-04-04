@@ -21,6 +21,7 @@ import {
 import { useSortData } from '@utils/hooks';
 import useCurrentStats from '@hooks/useCurrentStats';
 import useTransactionDetails from '@hooks/useTransactionDetails';
+import { translate } from '@utils/helpers/i18n';
 
 import * as Styles from './TransactionDetails.styles';
 import {
@@ -150,7 +151,7 @@ const TransactionDetails = () => {
 
   return transaction ? (
     <Styles.Wrapper>
-      <Header title="Transaction Details" />
+      <Header title={translate('pages.transactionDetails.transactionDetails')} />
       <Grid container direction="column">
         <Styles.TransactionDesc item>
           {generateTableTitle(transaction, toggleOpenRawData)}
@@ -169,7 +170,7 @@ const TransactionDetails = () => {
             className="transaction"
             blockWrapperClassName="transaction-wrapper"
             tableWrapperClassName="none-border-radius-top"
-            title="Overview"
+            title={translate('pages.transactionDetails.overview')}
           />
         </Styles.GridStyle>
         <Styles.GridStyle item>
@@ -182,7 +183,7 @@ const TransactionDetails = () => {
                   generateCoinbaseInfo(transaction.totalAmount)
                 ) : (
                   <Table
-                    title="Input Addresses"
+                    title={translate('pages.transactionDetails.inputAddresses')}
                     headers={addressHeaders}
                     handleClickSort={handleClickSort}
                     rows={generateTransactionEvents(transactionEvents, 'Outgoing')}
@@ -194,7 +195,7 @@ const TransactionDetails = () => {
               </Styles.LeftColumn>
               <Styles.RightColumn>
                 <Table
-                  title="Recipients"
+                  title={translate('pages.transactionDetails.recipients')}
                   headers={addressHeaders}
                   rows={generateTransactionEvents(transactionEvents, 'Incoming')}
                   handleClickSort={handleClickSort}

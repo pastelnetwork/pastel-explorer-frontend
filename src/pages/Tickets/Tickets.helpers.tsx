@@ -12,6 +12,7 @@ import { TicketsList, TTicketType } from '@utils/types/ITransactions';
 import { TAppTheme } from '@theme/index';
 import * as TicketsStyles from '@components/Ticket/Ticket.styles';
 import { getTicketTitle } from '@components/Ticket';
+import { translate } from '@utils/helpers/i18n';
 
 export const DATA_LIMIT = 15;
 
@@ -47,34 +48,38 @@ export const cascadeColumns = [
   {
     width: 80,
     flexGrow: 1,
-    label: 'txID',
+    label: 'pages.tickets.txID',
     dataKey: TXID_KEY,
     disableSort: true,
     className: 'txID',
+    dataTitle: 'pages.tickets.txID',
   },
   {
     width: 120,
     flexGrow: 1,
-    label: 'Status',
+    label: 'pages.tickets.status',
     dataKey: STATUS_KEY,
     disableSort: true,
     className: 'status',
+    dataTitle: 'pages.tickets.status',
   },
   {
     width: 60,
     flexGrow: 1,
-    label: 'Fee',
+    label: 'pages.tickets.fee',
     dataKey: FEE_KEY,
     disableSort: true,
     className: 'fee',
+    dataTitle: 'pages.tickets.fee',
   },
   {
     width: 160,
     flexGrow: 1,
-    label: 'Timestamp',
+    label: 'pages.tickets.timestamp',
     dataKey: TIMESTAMP_KEY,
     disableSort: true,
     className: 'timestamp',
+    dataTitle: 'pages.tickets.timestamp',
   },
 ];
 
@@ -97,7 +102,9 @@ export const transformCascadeData = (cascade: TicketsList[]) =>
           <TicketsStyles.ActionRegistrationTicketStatus
             className={`space-nowrap ${activation_ticket ? 'active' : ''}`}
           >
-            {activation_ticket ? 'Activated' : 'Not Yet Activated'}
+            {activation_ticket
+              ? translate('pages.tickets.activated')
+              : translate('pages.tickets.notYetActivated')}
           </TicketsStyles.ActionRegistrationTicketStatus>
         </>
       ),
@@ -114,34 +121,38 @@ export const senseColumns = [
   {
     width: 80,
     flexGrow: 1,
-    label: 'txID',
+    label: 'pages.tickets.txID',
     dataKey: TXID_KEY,
     disableSort: true,
     className: 'txID',
+    dataTitle: 'pages.tickets.txID',
   },
   {
     width: 155,
     flexGrow: 1,
-    label: 'Status',
+    label: 'pages.tickets.status',
     dataKey: STATUS_KEY,
     disableSort: true,
     className: 'status',
+    dataTitle: 'pages.tickets.status',
   },
   {
     width: 50,
     flexGrow: 1,
-    label: 'Fee',
+    label: 'pages.tickets.fee',
     dataKey: FEE_KEY,
     disableSort: true,
     className: 'fee',
+    dataTitle: 'pages.tickets.fee',
   },
   {
     width: 160,
     flexGrow: 1,
-    label: 'Timestamp',
+    label: 'pages.tickets.timestamp',
     dataKey: TIMESTAMP_KEY,
     disableSort: true,
     className: 'timestamp',
+    dataTitle: 'pages.tickets.timestamp',
   },
 ];
 
@@ -164,14 +175,16 @@ export const transformSenseData = (sense: TicketsList[]) =>
           <TicketsStyles.ActionRegistrationTicketStatus
             className={`space-nowrap ${activation_ticket ? 'active' : ''}`}
           >
-            {activation_ticket ? 'Activated' : 'Not Yet Activated'}
+            {activation_ticket
+              ? translate('pages.tickets.activated')
+              : translate('pages.tickets.notYetActivated')}
           </TicketsStyles.ActionRegistrationTicketStatus>
           {activation_ticket ? (
             <span className="view-detail">
               (
               <RouterLink
                 route={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${imageHash}`}
-                value="Sense detail"
+                value={translate('pages.tickets.senseDetail')}
                 title={imageHash}
                 className="address-link"
               />
@@ -193,34 +206,38 @@ export const pastelIdColumns = [
   {
     width: 80,
     flexGrow: 1,
-    label: 'txID',
+    label: 'pages.tickets.txID',
     dataKey: TXID_KEY,
     disableSort: true,
     className: 'txID',
+    dataTitle: 'pages.tickets.txID',
   },
   {
     width: 80,
     flexGrow: 1,
-    label: 'PastelID',
+    label: 'pages.tickets.pastelID',
     dataKey: PASTEL_ID_KEY,
     disableSort: true,
     className: 'pastelID',
+    dataTitle: 'pages.tickets.pastelID',
   },
   {
     width: 35,
     flexGrow: 1,
-    label: 'ID Type',
+    label: 'pages.tickets.idType',
     dataKey: ID_TYPE_KEY,
     disableSort: true,
     className: 'idType',
+    dataTitle: 'pages.tickets.idType',
   },
   {
     width: 160,
     flexGrow: 1,
-    label: 'Timestamp',
+    label: 'pages.tickets.timestamp',
     dataKey: TIMESTAMP_KEY,
     disableSort: true,
     className: 'timestamp',
+    dataTitle: 'pages.tickets.timestamp',
   },
 ];
 
@@ -257,34 +274,38 @@ export const otherColumns = [
   {
     width: 80,
     flexGrow: 1,
-    label: 'txID',
+    label: 'pages.tickets.txID',
     dataKey: TXID_KEY,
     disableSort: true,
     className: 'txID',
+    dataTitle: 'pages.tickets.txID',
   },
   {
     width: 140,
     flexGrow: 1,
-    label: 'Type',
+    label: 'pages.tickets.type',
     dataKey: TYPE_KEY,
     disableSort: true,
     className: 'type',
+    dataTitle: 'pages.tickets.type',
   },
   {
     width: 10,
     flexGrow: 1,
-    label: 'Version',
+    label: 'pages.tickets.version',
     dataKey: VERSION_KEY,
     disableSort: true,
     className: 'version',
+    dataTitle: 'pages.tickets.version',
   },
   {
     width: 140,
     flexGrow: 1,
-    label: 'Timestamp',
+    label: 'pages.tickets.timestamp',
     dataKey: TIMESTAMP_KEY,
     disableSort: true,
     className: 'timestamp',
+    dataTitle: 'pages.tickets.timestamp',
   },
 ];
 

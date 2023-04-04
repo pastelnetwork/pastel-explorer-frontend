@@ -2,6 +2,7 @@ import Box from '@material-ui/core/Box';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
+import { translate } from '@utils/helpers/i18n';
 
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
 
@@ -34,7 +35,7 @@ const PastelData: React.FC<IPastelData> = ({
     <Box>
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>
-          Pastel Block Hash When Request Submitted:
+          {translate('pages.senseDetails.blockHash')}:
         </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent className="break-all">
           <RouterLink
@@ -47,7 +48,7 @@ const PastelData: React.FC<IPastelData> = ({
       </Styles.ContentItem>
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>
-          Pastel Block Height When Request Submitted
+          {translate('pages.senseDetails.blockHeight')}:
         </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent>
           <RouterLink
@@ -59,13 +60,17 @@ const PastelData: React.FC<IPastelData> = ({
         </TicketStyles.TicketContent>
       </Styles.ContentItem>
       <Styles.ContentItem>
-        <TicketStyles.TicketTitle>UTC Timestamp When Request Submitted</TicketStyles.TicketTitle>
+        <TicketStyles.TicketTitle>
+          {translate('pages.senseDetails.utcTimestampWhenRequestSubmitted')}
+        </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent>
           {utcTimestampWhenRequestSubmitted}&nbsp;
         </TicketStyles.TicketContent>
       </Styles.ContentItem>
       <Styles.ContentItem>
-        <TicketStyles.TicketTitle>PastelID of Submitter</TicketStyles.TicketTitle>
+        <TicketStyles.TicketTitle>
+          {translate('pages.senseDetails.pastelIdOfSubmitter')}:
+        </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent className="break-all">
           <RouterLink
             route={`${ROUTES.PASTEL_ID_DETAILS}/${pastelIdOfSubmitter}`}
@@ -77,32 +82,46 @@ const PastelData: React.FC<IPastelData> = ({
         </TicketStyles.TicketContent>
       </Styles.ContentItem>
       <Styles.ContentItem>
-        <TicketStyles.TicketTitle>PastelID of Registering Supernode 1</TicketStyles.TicketTitle>
+        <TicketStyles.TicketTitle>
+          {translate('pages.senseDetails.pastelIdOfRegisteringSupernode1')}:
+        </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent className="break-all">
           {pastelIdOfRegisteringSupernode1}&nbsp;
         </TicketStyles.TicketContent>
       </Styles.ContentItem>
       <Styles.ContentItem>
-        <TicketStyles.TicketTitle>PastelID of Registering Supernode 2</TicketStyles.TicketTitle>
+        <TicketStyles.TicketTitle>
+          {translate('pages.senseDetails.pastelIdOfRegisteringSupernode2')}:
+        </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent className="break-all">
           {pastelIdOfRegisteringSupernode2}&nbsp;
         </TicketStyles.TicketContent>
       </Styles.ContentItem>
       <Styles.ContentItem>
-        <TicketStyles.TicketTitle>PastelID of Registering Supernode 3</TicketStyles.TicketTitle>
+        <TicketStyles.TicketTitle>
+          {translate('pages.senseDetails.pastelIdOfRegisteringSupernode3')}:
+        </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent className="break-all">
           {pastelIdOfRegisteringSupernode3}&nbsp;
         </TicketStyles.TicketContent>
       </Styles.ContentItem>
       <Styles.ContentItem>
-        <TicketStyles.TicketTitle>Is Pastel OpenAPI Request</TicketStyles.TicketTitle>
+        <TicketStyles.TicketTitle>
+          {translate('pages.senseDetails.isPastelOpenapiRequest')}
+        </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent>
-          {isPastelOpenapiRequest === 1 ? 'True' : 'False'}
+          {isPastelOpenapiRequest === 1
+            ? translate('pages.senseDetails.true')
+            : translate('pages.senseDetails.false')}
         </TicketStyles.TicketContent>
       </Styles.ContentItem>
       <Styles.ContentItem>
-        <TicketStyles.TicketTitle>OpenAPI Subset String</TicketStyles.TicketTitle>
-        <TicketStyles.TicketContent>{openApiSubsetIdString || 'NA'}</TicketStyles.TicketContent>
+        <TicketStyles.TicketTitle>
+          {translate('pages.senseDetails.openApiSubsetIdString')}:
+        </TicketStyles.TicketTitle>
+        <TicketStyles.TicketContent>
+          {openApiSubsetIdString || translate('common.na')}
+        </TicketStyles.TicketContent>
       </Styles.ContentItem>
     </Box>
   );

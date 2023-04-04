@@ -10,6 +10,7 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { formattedDate } from '@utils/helpers/date/date';
 import { ITransaction } from '@utils/types/ITransactions';
 import { formatAddress } from '@utils/helpers/format';
+import { translate } from '@utils/helpers/i18n';
 
 import * as Styles from './LatestTransactions.styles';
 
@@ -63,9 +64,7 @@ export const transformTransactionsData = (transactions: Array<ITransaction>) =>
         [AMOUNT_KEY]: (
           <Tooltip
             title={
-              isNonStandard
-                ? 'Because the transaction is shielded, the amount sent is unknown.'
-                : totalAmount
+              isNonStandard ? translate('pages.explorer.shieldedTransactionTooltip') : totalAmount
             }
             arrow
           >

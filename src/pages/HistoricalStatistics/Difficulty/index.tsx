@@ -7,8 +7,9 @@ import { periods, info, cacheList } from '@utils/constants/statistics';
 import { TLineChartData } from '@utils/types/IStatistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
-import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout/HistoricalStatisticsLayout';
 import useDifficulty from '@hooks/useDifficulty';
+import { translate } from '@utils/helpers/i18n';
 
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
@@ -52,12 +53,15 @@ function Difficulty() {
   };
 
   return (
-    <HistoricalStatisticsLayout currentBgColor={currentBgColor} title="Difficulty">
+    <HistoricalStatisticsLayout
+      currentBgColor={currentBgColor}
+      title={translate('pages.historicalStatistics.difficulty')}
+    >
       <EChartsLineChart
         chartName="difficulty"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title="Network Difficulty"
+        title={translate('pages.historicalStatistics.networkDifficulty')}
         period={period}
         info={info}
         offset={100000}

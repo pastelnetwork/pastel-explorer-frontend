@@ -11,6 +11,7 @@ import { INetworkSupernodes } from '@utils/types/INetwork';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { Dropdown, OptionsProps } from '@components/Dropdown/Dropdown';
 import useSupernodes from '@hooks/useSupernodes';
+import { translate } from '@utils/helpers/i18n';
 
 import { columns, SUPERNODE_LAST_PAID_KEY } from './Supernodes.columns';
 import { transformSupernodesData, DATA_DEFAULT_SORT, STATUS_LIST } from './Supernodes.helpers';
@@ -108,7 +109,7 @@ const Supernodes: React.FC = () => {
       }
       return results.push({
         value: item.value,
-        name: `${item.name} (${total})`,
+        name: `${translate(item.name)} (${total})`,
       });
     });
 
@@ -118,10 +119,14 @@ const Supernodes: React.FC = () => {
   const getSupernodeTitle = () => (
     <Styles.TitleContainer>
       <Styles.TitleWrapper>
-        <Styles.Title>Supernode List</Styles.Title>{' '}
+        <Styles.Title>{translate('pages.supernodes.supernodeList')}</Styles.Title>{' '}
         {supernodes.length > 0 ? (
           <Styles.SubTitle>
-            (Total {formatNumber(originalSupernodes.length)} Supernodes)
+            (
+            {translate('pages.supernodes.totalSupernodes', {
+              total: formatNumber(originalSupernodes.length),
+            })}
+            )
           </Styles.SubTitle>
         ) : null}
       </Styles.TitleWrapper>
@@ -130,7 +135,7 @@ const Supernodes: React.FC = () => {
           value={status}
           onChange={handleChange}
           options={generateStatusOptions()}
-          label="Supernode's status"
+          label={translate('pages.supernodes.supernodeStatus')}
         />
       </Styles.FilterBlock>
     </Styles.TitleContainer>

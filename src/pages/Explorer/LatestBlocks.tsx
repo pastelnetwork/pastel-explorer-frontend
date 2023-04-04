@@ -20,6 +20,8 @@ import { AppThunkDispatch } from '@redux/types';
 import { useBlockLatestBlocks } from '@redux/hooks/blocksHooks';
 import Skeleton from '@material-ui/lab/Skeleton';
 import * as ROUTES from '@utils/constants/routes';
+import { translate } from '@utils/helpers/i18n';
+
 import { Link } from '@components/Link/Link.styles';
 import RouterLink from '@components/RouterLink/RouterLink';
 import { formatAddress } from '@utils/helpers/format';
@@ -65,10 +67,10 @@ function LatestBlocks() {
   return (
     <Styles.BlockWrapper className="mt-24 latest-blocks-wrapper">
       <Styles.BlockTitle className="latest-blocks">
-        Latest Blocks (Live)
+        {translate('pages.explorer.latestBlocksLive')}
         <Link to="/blocks" className="view-all">
           <Typography align="center" className={classes.viewAll}>
-            View all <ArrowForwardIos />
+            {translate('pages.explorer.viewAll')} <ArrowForwardIos />
           </Typography>
         </Link>
       </Styles.BlockTitle>
@@ -76,16 +78,18 @@ function LatestBlocks() {
         <Table aria-label="customized table" className="custom-table latest-blocks">
           <TableHead>
             <TableRow className="table__row-header">
-              <StyledTableCell className="th-block">Block</StyledTableCell>
-              <StyledTableCell>Hash</StyledTableCell>
+              <StyledTableCell className="th-block">
+                {translate('pages.explorer.block')}{' '}
+              </StyledTableCell>
+              <StyledTableCell>{translate('pages.explorer.hash')}</StyledTableCell>
               <StyledTableCell align="right" className="th-txs">
-                TXs
+                {translate('pages.explorer.txs')}
               </StyledTableCell>
               <StyledTableCell align="right" className="th-size">
-                Size(kB)
+                {translate('pages.explorer.size')}
               </StyledTableCell>
               <StyledTableCell align="right" className="th-timestamp">
-                Timestamp
+                {translate('pages.explorer.timestamp')}
               </StyledTableCell>
             </TableRow>
           </TableHead>

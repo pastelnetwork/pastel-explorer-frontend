@@ -3,6 +3,8 @@ import * as React from 'react';
 import { Tooltip } from '@material-ui/core';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 
+import { translate } from '@utils/helpers/i18n';
+
 import * as Styles from './CopyButton.styles';
 
 interface CopyButtonProps {
@@ -10,17 +12,19 @@ interface CopyButtonProps {
 }
 
 const CopyButton: React.FC<CopyButtonProps> = ({ copyText }) => {
-  const [tooltipText, setTooltipText] = React.useState('Copy to clipboard');
+  const [tooltipText, setTooltipText] = React.useState(
+    translate('components.copyButton.copyToClipboard'),
+  );
   const handleTextCopy = () => {
     navigator.clipboard.writeText(copyText);
-    setTooltipText('Copied!');
+    setTooltipText(translate('components.copyButton.copied'));
   };
 
   return (
     <Tooltip
       title={tooltipText}
       arrow
-      onOpen={() => setTooltipText('Copy to clipboard')}
+      onOpen={() => setTooltipText(translate('components.copyButton.copyToClipboard'))}
       enterNextDelay={500}
     >
       <Styles.IconButton onClick={handleTextCopy} className="copy-icon">

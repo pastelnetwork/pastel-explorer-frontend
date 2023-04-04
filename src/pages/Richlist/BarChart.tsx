@@ -6,6 +6,7 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { getCurrencyName } from '@utils/appInfo';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import themeVariant from '@theme/variants';
+import { translate } from '@utils/helpers/i18n';
 
 import { WealthDistributionProps } from './Richlist';
 
@@ -57,7 +58,9 @@ export const BarChart = ({ data }: BarChartProps): JSX.Element => {
       formatter: (params: TTooltipParams) => {
         return `<div>
           <div class="tooltip-title">${params.name}</div>
-          <div class="tooltip-amount">Amount (${getCurrencyName()}): ${formatNumber(params.value, {
+          <div class="tooltip-amount">${translate('pages.richlist.amount', {
+            currency: getCurrencyName(),
+          })}: ${formatNumber(params.value, {
           decimalsLength: 2,
         })}</div>
         </div>`;

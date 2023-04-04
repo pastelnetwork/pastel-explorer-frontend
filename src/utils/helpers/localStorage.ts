@@ -39,12 +39,11 @@ export const readCacheValue = (key: string, isMicroseconds = false) => {
         )
       : initialValue;
     if (
-      differenceInHours(Date.now(), isMicroseconds ? result.lastDate * 1000 : result.lastDate) > 4
+      differenceInHours(Date.now(), isMicroseconds ? result?.lastDate * 1000 : result?.lastDate) > 4
     ) {
       return initialValue;
     }
-
-    return result.currentCache;
+    return result?.currentCache || initialValue;
   } catch (error) {
     console.warn(`Error reading localStorage key “${key}”:`, error);
     return initialValue;
@@ -84,7 +83,9 @@ export const setCacheValue = (key: string, value: string) => {
     window.localStorage.setItem(HISTORICAL_STATISTICS_LOCAL_STORAGE, JSON.stringify(items));
     window.localStorage.setItem(key, JSON.stringify(content));
     window.localStorage.setItem(CLUSTER_URL_LOCAL_STORAGE, clusterUrl);
+    return true;
   } catch (error) {
     console.warn(`Error setting localStorage key “${key}”:`, error);
+    return false;
   }
 };

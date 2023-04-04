@@ -6,6 +6,7 @@ import * as ROUTES from '@utils/constants/routes';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import useTickets from '@hooks/useTickets';
 import InfinityTable from '@components/InfinityTable/InfinityTable';
+import { translate } from '@utils/helpers/i18n';
 
 import { otherColumns, transformOtherData, DATA_LIMIT } from './Tickets.helpers';
 import * as Styles from './Tickets.styles';
@@ -26,10 +27,14 @@ const Other: React.FC<IOtherProps> = ({ isMobile }) => {
   const getTitle = () => {
     return (
       <Styles.BlockTitle className="latest-blocks">
-        Other tickets (Total {formatNumber(total)} tickets)
+        {translate('pages.tickets.otherTickets')} (
+        {total > 1
+          ? translate('pages.tickets.totalTickets', { total: formatNumber(total) })
+          : translate('pages.tickets.totalTicket', { total: formatNumber(total) })}
+        )
         <Link to={`${ROUTES.TICKETS_TYPE}/other`} className="view-all">
           <Typography align="center" className="p-16">
-            View all <ArrowForwardIos />
+            {translate('pages.tickets.viewAll')} <ArrowForwardIos />
           </Typography>
         </Link>
       </Styles.BlockTitle>

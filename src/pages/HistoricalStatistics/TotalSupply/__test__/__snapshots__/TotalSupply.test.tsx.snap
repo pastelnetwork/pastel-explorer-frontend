@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pages/HistoricalStatistics/TotalSupply renders correctly 1`] = `ShallowWrapper {}`;

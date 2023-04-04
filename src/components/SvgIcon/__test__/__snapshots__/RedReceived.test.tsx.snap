@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/SvgIcon/Received renders correctly 1`] = `ShallowWrapper {}`;
+
+exports[`components/SvgIcon/Received/RedReceived renders correctly 1`] = `ShallowWrapper {}`;

@@ -5,9 +5,10 @@ import { periods, info, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import { TLineChartData } from '@utils/types/IStatistics';
-import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout/HistoricalStatisticsLayout';
 import { getCurrencyName } from '@utils/appInfo';
 import usePercentOfPSLStaked from '@hooks/usePercentOfPSLStaked';
+import { translate } from '@utils/helpers/i18n';
 
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
@@ -53,13 +54,17 @@ function PercentOfPSLStaked() {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title={`% of ${getCurrencyName()} Staked`}
+      title={translate('pages.historicalStatistics.percentOfPSLStaked', {
+        currency: getCurrencyName(),
+      })}
     >
       <EChartsLineChart
         chartName="percentOfPSLStaked"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title={`% of ${getCurrencyName()} Staked`}
+        title={translate('pages.historicalStatistics.percentOfPSLStaked', {
+          currency: getCurrencyName(),
+        })}
         info={info}
         period={period}
         offset={0.004}

@@ -38,8 +38,9 @@ import {
   getTicketTitle,
 } from '@components/Ticket';
 import { Dropdown } from '@components/Dropdown/Dropdown';
-import Pagination from '@components/Pagination';
+import Pagination from '@components/Pagination/Pagination';
 import { getBaseURL } from '@utils/constants/statistics';
+import { translate } from '@utils/helpers/i18n';
 
 import * as TableStyles from '@components/Table/Table.styles';
 import * as BlockDetailsStyles from '@pages/Details/BlockDetails/BlockDetails.styles';
@@ -87,7 +88,9 @@ const TicketsList: React.FC<ITicketsList> = ({
       <>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
-            <TicketStyles.TicketTitle>Sense Output Details:</TicketStyles.TicketTitle>
+            <TicketStyles.TicketTitle>
+              {translate('pages.pastelIdDetails.senseOutputDetails')}:
+            </TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
             <TicketStyles.TicketContent>
@@ -107,7 +110,9 @@ const TicketsList: React.FC<ITicketsList> = ({
         </Grid>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
-            <TicketStyles.TicketTitle>Image Hash:</TicketStyles.TicketTitle>
+            <TicketStyles.TicketTitle>
+              {translate('pages.pastelIdDetails.imageHash')}:
+            </TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
             <TicketStyles.TicketContent>
@@ -122,7 +127,9 @@ const TicketsList: React.FC<ITicketsList> = ({
         </Grid>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
-            <TicketStyles.TicketTitle>Sense Version:</TicketStyles.TicketTitle>
+            <TicketStyles.TicketTitle>
+              {translate('pages.pastelIdDetails.senseVersion')}:
+            </TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
             <TicketStyles.TicketContent>
@@ -205,14 +212,14 @@ const TicketsList: React.FC<ITicketsList> = ({
     const results = [
       {
         value: TICKET_TYPE_OPTIONS[0].value,
-        name: `${TICKET_TYPE_OPTIONS[0].name}(${totalAllTickets})`,
+        name: `${translate(TICKET_TYPE_OPTIONS[0].name)}(${totalAllTickets})`,
       },
     ];
     for (let i = 0; i < ticketsTypeList.length; i += 1) {
       const item = TICKET_TYPE_OPTIONS.find(ticket => ticket.value === ticketsTypeList[i].type);
       results.push({
         value: ticketsTypeList[i].type,
-        name: `${item?.name}(${ticketsTypeList[i].total})`,
+        name: `${translate(item?.name || '')}(${ticketsTypeList[i].total})`,
       });
     }
     return results;
@@ -223,9 +230,13 @@ const TicketsList: React.FC<ITicketsList> = ({
       <TableStyles.BlockWrapper className="mb-12">
         <Styles.BlockWrapper>
           <Styles.BlockTitle>
-            Tickets Created Using this PastelID{' '}
+            {translate('pages.pastelIdDetails.ticketsCreatedUsingThisPastelID')}{' '}
             <Styles.SubTitle>
-              (Total {totalTickets} {totalTickets > 1 ? 'Tickets' : 'Ticket'})
+              (
+              {totalTickets > 1
+                ? translate('pages.pastelIdDetails.totalTickets', { totalTickets })
+                : translate('pages.pastelIdDetails.totalTicket', { totalTickets })}
+              )
             </Styles.SubTitle>
           </Styles.BlockTitle>
           <Styles.FilterBlock>
@@ -233,7 +244,7 @@ const TicketsList: React.FC<ITicketsList> = ({
               value={ticketType}
               onChange={handleTicketTypeChange}
               options={getTicketsTypeOptions()}
-              label="Ticket Type"
+              label={translate('pages.pastelIdDetails.ticketType')}
             />
           </Styles.FilterBlock>
         </Styles.BlockWrapper>
@@ -251,7 +262,9 @@ const TicketsList: React.FC<ITicketsList> = ({
             >
               <Grid container spacing={3}>
                 <Grid item xs={4} sm={3} className="max-w-355">
-                  <TicketStyles.TicketTitle>TXID:</TicketStyles.TicketTitle>
+                  <TicketStyles.TicketTitle>
+                    {translate('pages.pastelIdDetails.txId')}:
+                  </TicketStyles.TicketTitle>
                 </Grid>
                 <Grid item xs={8} sm={9}>
                   <TicketStyles.TicketContent>
@@ -266,7 +279,9 @@ const TicketsList: React.FC<ITicketsList> = ({
               </Grid>
               <Grid container spacing={3}>
                 <Grid item xs={4} sm={3} className="max-w-355">
-                  <TicketStyles.TicketTitle>Type:</TicketStyles.TicketTitle>
+                  <TicketStyles.TicketTitle>
+                    {translate('pages.pastelIdDetails.type')}:
+                  </TicketStyles.TicketTitle>
                 </Grid>
                 <Grid item xs={8} sm={9}>
                   <TicketStyles.TicketContent>
@@ -279,7 +294,7 @@ const TicketsList: React.FC<ITicketsList> = ({
           ))}
           {!data.length && !isLoading ? (
             <BlockDetailsStyles.GridStyle className="table__row">
-              <TicketStyles.TicketTitle>No data</TicketStyles.TicketTitle>
+              <TicketStyles.TicketTitle>{translate('common.noData')}</TicketStyles.TicketTitle>
             </BlockDetailsStyles.GridStyle>
           ) : null}
         </Box>

@@ -1,15 +1,15 @@
 export const footerMenu = [
   {
     id: 'pastelEcosystem',
-    title: 'Pastel Ecosystem',
+    title: 'components.footer.pastelEcosystem',
     children: [
       {
-        name: 'Pastel.network',
+        name: 'components.footer.pastelNetwork',
         path: 'https://pastel.network/',
         target: '_blank',
       },
       {
-        name: 'Wallet',
+        name: 'components.footer.wallet',
         path: 'https://pastel.network/wallet/',
         target: '_blank',
       },
@@ -17,15 +17,15 @@ export const footerMenu = [
   },
   {
     id: 'developers',
-    title: 'Developers',
+    title: 'components.footer.developers',
     children: [
       {
-        name: 'Github',
+        name: 'components.footer.github',
         path: 'https://github.com/pastelnetwork',
         target: '_blank',
       },
       {
-        name: 'Documentation',
+        name: 'components.footer.documentation',
         path: 'https://docs.pastel.network',
         target: '_blank',
       },

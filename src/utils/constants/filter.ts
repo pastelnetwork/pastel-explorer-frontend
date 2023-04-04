@@ -1,18 +1,18 @@
 export const defaultFilters = [
   {
-    name: '24H',
+    name: 'constants.filters.24H',
     value: '1d',
   },
   {
-    name: '1W',
+    name: 'constants.filters.1W',
     value: '7d',
   },
   {
-    name: '1M',
+    name: 'constants.filters.1M',
     value: '30d',
   },
   {
-    name: 'All',
+    name: 'constants.filters.all',
     value: 'all',
   },
   // {
@@ -27,78 +27,78 @@ export const defaultFilters = [
 
 export const blocksPeriodFilters = [
   {
-    name: '24H',
+    name: 'constants.filters.24H',
     value: '1d',
   },
   {
-    name: '1W',
+    name: 'constants.filters.1W',
     value: '7d',
   },
   {
-    name: '1M',
+    name: 'constants.filters.1M',
     value: '30d',
   },
   {
-    name: '2M',
+    name: 'constants.filters.2M',
     value: '60d',
   },
   {
-    name: 'All',
+    name: 'constants.filters.all',
     value: 'all',
   },
 ];
 
 export const blocksFilters = [
   {
-    name: 'Pastel ID Registration Ticket',
+    name: 'constants.filters.pastelid',
     value: 'pastelid',
   },
   {
-    name: 'User Name Change Ticket',
+    name: 'constants.filters.usernameChange',
     value: 'username-change',
   },
   {
-    name: 'NFT Registration Ticket',
+    name: 'constants.filters.nftReg',
     value: 'nft-reg',
   },
   {
-    name: 'NFT Activation Ticket',
+    name: 'constants.filters.nftAct',
     value: 'nft-act',
   },
   {
-    name: 'NFT Collection Registration Ticket',
+    name: 'constants.filters.nftCollectionReg',
     value: 'nft-collection-reg',
   },
   {
-    name: 'NFT Collection Activation Ticket',
+    name: 'constants.filters.nftCollectionAct',
     value: 'nft-collection-act',
   },
   {
-    name: 'NFT Royalty Ticket',
+    name: 'constants.filters.nftRoyalty',
     value: 'nft-royalty',
   },
   {
-    name: 'Action Registration Ticket (Cascade)',
+    name: 'constants.filters.cascade',
     value: 'cascade',
   },
   {
-    name: 'Action Registration Ticket (Sense)',
+    name: 'constants.filters.sense',
     value: 'sense',
   },
   {
-    name: 'Action Activation Ticket',
+    name: 'constants.filters.actionAct',
     value: 'action-act',
   },
   {
-    name: 'Offer Ticket',
+    name: 'constants.filters.offer',
     value: 'offer',
   },
   {
-    name: 'Accept Ticket',
+    name: 'constants.filters.accept',
     value: 'accept',
   },
   {
-    name: 'Transfer Ticket',
+    name: 'constants.filters.transfer',
     value: 'transfer',
   },
 ];

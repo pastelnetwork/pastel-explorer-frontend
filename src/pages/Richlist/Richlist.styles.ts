@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import { Grid } from '@material-ui/core';
 
-import { getCurrencyName } from '@utils/appInfo';
-
 export const GridWrapper = styled(Grid)`
   .MuiTableCell-root {
     &.MuiTableCell-body {
@@ -61,40 +59,36 @@ export const Wrapper = styled.div`
           display: flex;
           border-bottom: 0;
 
-          &:before {
-            position: relative;
-            min-width: 100px;
-            display: inline-block;
-            font-weight: 600;
-            font-size: 16px;
-            color: ${props => props.theme.table.label};
+          &.cell-content {
+            &:before {
+              content: attr(data-title);
+              position: relative;
+              min-width: 100px;
+              display: inline-block;
+              font-weight: 600;
+              font-size: 16px;
+              color: ${props => props.theme.table.label};
+            }
           }
 
           &:nth-child(1) {
             &:before {
-              content: 'Rank';
               margin-right: 8px;
             }
           }
 
           &:nth-child(2) {
             padding-left: 16px;
-
-            &:before {
-              content: 'Address';
-            }
           }
 
           &:nth-child(3) {
             &:before {
-              content: 'Balance (${getCurrencyName()})';
               margin-right: 8px;
             }
           }
 
           &:nth-child(4) {
             &:before {
-              content: 'Percentage';
               margin-right: 8px;
             }
           }

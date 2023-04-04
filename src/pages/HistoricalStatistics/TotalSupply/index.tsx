@@ -5,9 +5,10 @@ import { periods, info, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import { TLineChartData } from '@utils/types/IStatistics';
-import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout';
+import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout/HistoricalStatisticsLayout';
 import { getCurrencyName } from '@utils/appInfo';
 import useTotalSupply from '@hooks/useTotalSupply';
+import { translate } from '@utils/helpers/i18n';
 
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
@@ -53,13 +54,13 @@ function TotalSupply() {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title={`Total Supply (${getCurrencyName()})`}
+      title={translate('pages.historicalStatistics.totalSupply', { currency: getCurrencyName() })}
     >
       <EChartsLineChart
         chartName="totalSupply"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title={`Total Supply (${getCurrencyName()})`}
+        title={translate('pages.historicalStatistics.totalSupply', { currency: getCurrencyName() })}
         info={info}
         period={period}
         offset={10000000}

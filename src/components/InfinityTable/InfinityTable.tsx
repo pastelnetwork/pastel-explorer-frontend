@@ -16,6 +16,8 @@ import { ArrowDropDown, ArrowDropUp } from '@material-ui/icons';
 import { useGetThemeMode } from '@redux/reducers/appThemeReducer';
 import themeVariant from '@theme/variants';
 import { TFilter } from '@utils/types/IFilter';
+import { translate } from '@utils/helpers/i18n';
+import { getCurrencyName } from '@utils/appInfo';
 import Filters from './Filters';
 
 import * as Styles from './InfinityTable.styles';
@@ -43,6 +45,7 @@ interface IInfinityTableComponentProps {
     flexGrow: number;
     label: string;
     dataKey: string;
+    dataTitle?: string;
     disableSort: boolean;
   }>;
   filters?: TFilter[];
@@ -71,6 +74,8 @@ interface IInfinityTableComponentProps {
   };
 }
 
+type ITableCellRendererProps = TableCellProps & { dataTitle?: string };
+
 const noRowsRenderer = () => <Styles.EmptyData />;
 const headerRenderer = ({
   label,
@@ -85,14 +90,24 @@ const headerRenderer = ({
 
   return (
     <Styles.HeaderCell component="div" variant="head" $disabledSort={Boolean(disableSort)}>
-      {label}
+      {translate(label as string, { currency: getCurrencyName() })}
       {showSort && renderSortIcon()}
     </Styles.HeaderCell>
   );
 };
-const TableCellRenderer = ({ cellData }: TableCellProps) => (
-  <Styles.Cell component="div">{cellData}</Styles.Cell>
+const TableCellRenderer = ({ cellData, dataTitle }: ITableCellRendererProps) => (
+  <Styles.Cell
+    component="div"
+    data-title={dataTitle ? translate(dataTitle, { currency: getCurrencyName() }) : undefined}
+    className="cell-content"
+  >
+    {cellData}
+  </Styles.Cell>
 );
+
+TableCellRenderer.defaultProps = {
+  dataTitle: undefined,
+};
 
 const getOverscanIndices = ({ cellCount }: OverscanIndicesGetterParams) => ({
   overscanStartIndex: 0,
@@ -202,7 +217,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
           </Styles.Loader>
         ) : null}
         {!isLoading ? (
-          <Styles.TableWrapper className={`${rows.length ? '' : 'empty-table'}`}>
+          <Styles.TableWrapper className={`table-wrapper ${rows.length ? '' : 'empty-table'}`}>
             <AutoSizer disableHeight>
               {({ width }) => (
                 <div style={{ width }}>
@@ -222,7 +237,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
                     onScroll={handleReachBottom}
                     overscanIndicesGetter={renderAllRows ? getOverscanIndices : undefined}
                   >
-                    {columns.map(({ dataKey, ...other }, index) => (
+                    {columns.map(({ dataKey, dataTitle, ...other }, index) => (
                       <Column
                         key={dataKey}
                         headerRenderer={headerProps =>
@@ -231,7 +246,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
                             columnIndex: index,
                           })
                         }
-                        cellRenderer={TableCellRenderer}
+                        cellRenderer={props => TableCellRenderer({ ...props, dataTitle })}
                         dataKey={dataKey}
                         {...other}
                       />

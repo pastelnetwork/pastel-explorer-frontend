@@ -4,6 +4,7 @@ import parse from 'html-react-parser';
 import { TChartParams } from '@utils/types/IStatistics';
 import { decompress_zstd_compressed_data_func } from '@utils/helpers/encryption';
 import { TCurrentNode, TEdges } from '@utils/types/ITransactions';
+import { translate } from '@utils/helpers/i18n';
 
 import * as Styles from './SenseDetails.styles';
 
@@ -67,15 +68,17 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
               <div class="tooltip-url">${item.original_url}</div>
               <div class="tooltip-content-wrapper">
                 <div class="tooltip-item">
-                  <div class="label">Result Ranking:</div>
+                  <div class="label">${translate('pages.senseDetails.resultRanking')}:</div>
                   <div class="value">${item.search_result_ranking}</div>
                 </div>
                 <div class="tooltip-item">
-                  <div class="label">Original Image Resolution:</div>
+                  <div class="label">${translate(
+                    'pages.senseDetails.originalImageResolution',
+                  )}:</div>
                   <div class="value">${parse(item.resolution_string)}</div>
                 </div>
                 <div class="tooltip-item">
-                  <div class="label">Image Date:</div>
+                  <div class="label">${translate('pages.senseDetails.imageDate')}:</div>
                   <div class="value">${item.date_string}</div>
                 </div>
               </div>

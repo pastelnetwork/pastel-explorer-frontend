@@ -145,6 +145,7 @@ export type TChartParams = {
   value: number;
   seriesName: string;
   seriesIndex: number;
+  percent: number;
 };
 
 export type TMinMaxChartData = {

@@ -11,11 +11,18 @@ import {
   PeriodTypes,
   generateXAxisInterval,
   generateXAxisIntervalForScatterChart,
+  balanceHistoryXAxisInterval,
   TGranularity,
   getYAxisLabel,
   convertYAxisLabel,
 } from '@utils/helpers/statisticsLib';
 import { TChartParams } from '@utils/types/IStatistics';
+import { translate } from '@utils/helpers/i18n';
+
+type TAxisPointerProps = {
+  axisDimension: string;
+  value: number;
+};
 
 type TChartOption = {
   [index: string]: EChartsOption;
@@ -198,7 +205,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
               <div class="tooltip-value">${params[0].marker} ${formatNumber(
             params[0].value / 1000000,
             { decimalsLength: 2 },
-          )} MSol/S</div>
+          )} ${translate('chartOptions.mSolS')}</div>
             </div>
           `;
         },
@@ -291,7 +298,9 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             html += `
               <div class="tooltip-item">
                 <div class="item-label">${item.marker} ${item.seriesName}:</div>
-                <div class="item-value">${formatNumber(item.value)} bytes</div>
+                <div class="item-value">${formatNumber(item.value)} ${translate(
+              'chartOptions.bytes',
+            )}</div>
               </div>
             `;
           });
@@ -306,7 +315,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       legend: {
         top: 10,
         right: 10,
-        data: ['Traffic received', 'Traffic sent'],
+        data: [translate('chartOptions.trafficReceived'), translate('chartOptions.trafficSent')],
         textStyle: {
           color: theme?.color,
         },
@@ -363,7 +372,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       series: [
         {
-          name: 'Traffic received',
+          name: translate('chartOptions.trafficReceived'),
           type: 'line',
           lineStyle: {
             width: 2,
@@ -376,7 +385,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           zlevel: 2,
         },
         {
-          name: 'Traffic sent',
+          name: translate('chartOptions.trafficSent'),
           type: 'line',
           lineStyle: {
             width: 2,
@@ -414,7 +423,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
               )}</div>
               <div class="item-value">${params[0].marker} ${formatNumber(params[0].value, {
             decimalsLength: 2,
-          })} kB</div>
+          })} ${translate('chartOptions.kB')}</div>
             </div>
           `;
         },
@@ -505,16 +514,16 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       tooltip: {
         trigger: 'axis',
         formatter(params: TChartParams[]) {
-          let label = 'Average per hour: ';
+          let label = translate('chartOptions.averagePerHour');
           switch (granularity) {
             case '1d':
-              label = 'Average per day: ';
+              label = translate('chartOptions.averagePerDay');
               break;
             case '30d':
-              label = 'Average per month: ';
+              label = translate('chartOptions.averagePerMonth');
               break;
             case '1y':
-              label = 'Average per year: ';
+              label = translate('chartOptions.averagePerYear');
               break;
             default:
               break;
@@ -530,7 +539,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             {
               decimalsLength: 5,
             },
-          )} MB</div>
+          )} ${translate('chartOptions.mb')}</div>
             </div>
           `;
         },
@@ -1021,7 +1030,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
               )}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
             decimalsLength: 2,
-          })} MB</div>
+          })} ${translate('chartOptions.mb')}</div>
             </div>
           `;
         },
@@ -1467,8 +1476,12 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             formatter(params: TTxInBlock) {
               return `
                 <div class="tooltip-item-wrapper">
-                  <div class="item-label">block id: ${params.value[0]}</div>
-                  <div class="tooltip-data-date">count: ${params.value[1]}</div>
+                  <div class="item-label">${translate('chartOptions.blockId')}: ${
+                params.value[0]
+              }</div>
+                  <div class="tooltip-data-date">${translate('chartOptions.count')}: ${
+                params.value[1]
+              }</div>
                 </div>
               `;
             },
@@ -1551,7 +1564,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       series: {
         type: 'line',
-        name: 'Accounts',
+        name: translate('chartOptions.accounts'),
         data: dataY,
         showSymbol: false,
         areaStyle: {
@@ -1642,7 +1655,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       series: {
         type: 'line',
-        name: `Total Supply (${getCurrencyName()})`,
+        name: translate('chartOptions.totalSupply', { currency: getCurrencyName() }),
         data: dataY,
         showSymbol: false,
         areaStyle: {
@@ -1737,7 +1750,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       series: {
         type: 'line',
-        name: `Circulating Supply (${getCurrencyName()})`,
+        name: translate('chartOptions.circulatingSupply', { currency: getCurrencyName() }),
         data: dataY,
         showSymbol: false,
         areaStyle: {
@@ -1835,7 +1848,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       series: {
         type: 'bar',
         sampling: 'lttb',
-        name: `% of ${getCurrencyName()} Staked`,
+        name: translate('chartOptions.percentOfPSLStaked', { currency: getCurrencyName() }),
         data: dataY?.map((d: number) => parseFloat((d * 100).toString())),
         showSymbol: false,
       },
@@ -2052,8 +2065,22 @@ type TSizeProps = {
 };
 
 export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOption {
-  const { theme, dataX, dataY, dataY1, chartName, minY, maxY, darkMode } = args;
+  const {
+    theme,
+    dataX,
+    dataY,
+    dataY1,
+    chartName,
+    minY,
+    maxY,
+    darkMode,
+    period,
+    width,
+    seriesName,
+    chartColor,
+  } = args;
   const blueColor = darkMode ? '#1fbfff' : '#5470c6';
+  const seriesLabelColor = darkMode ? '#fff' : '#000';
   const chartOptions: TChartOption = {
     gigaHashPerSec: {
       backgroundColor: theme?.backgroundColor,
@@ -2101,7 +2128,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: 'Network (MH/s): ',
+        name: translate('chartOptions.network'),
         type: 'line',
         data: dataY,
         showSymbol: false,
@@ -2178,7 +2205,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: 'Difficulty: ',
+        name: translate('chartOptions.difficulty'),
         type: 'line',
         showSymbol: false,
         data: dataY,
@@ -2240,7 +2267,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: `Coin Supply (${getCurrencyName()}): `,
+        name: translate('chartOptions.coinSupply', { currency: getCurrencyName() }),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -2304,7 +2331,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: 'Accounts: ',
+        name: translate('chartOptions.accountsSeriesName'),
         type: 'line',
         data: dataY,
         showSymbol: false,
@@ -2372,7 +2399,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: `Transactions (avg/s): `,
+        name: translate('chartOptions.avgTransactionsPerSecond'),
         type: 'line',
         data: dataY,
         showSymbol: false,
@@ -2440,7 +2467,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: 'Average Block Size (Bytes): ',
+        name: translate('chartOptions.avgBlockSizeLast24Hour'),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -2508,7 +2535,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: 'Transactions (avg/block): ',
+        name: translate('chartOptions.avgTransactionPerBlockLast24Hour'),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -2577,7 +2604,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: 'Transaction Fee (in USD): ',
+        name: translate('chartOptions.avgTransactionFeeLast24Hour'),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -2639,7 +2666,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: 'Mempool Size (kB): ',
+        name: translate('chartOptions.memPoolSize'),
         type: 'line',
         sampling: 'lttb',
         lineStyle: {
@@ -2722,7 +2749,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: `Circulating Supply (${getCurrencyName()}): `,
+        name: translate('chartOptions.circulatingSupplySeriesName', {
+          currency: getCurrencyName(),
+        }),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -2792,7 +2821,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         min: 0,
       },
       series: {
-        name: `% of ${getCurrencyName()} Staked: `,
+        name: translate('chartOptions.percentPSLStaked', { currency: getCurrencyName() }),
         type: 'bar',
         data: dataY?.map((d: number) => parseFloat((d * 100).toString())),
       },
@@ -2821,7 +2850,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           for (let i = 0; i < params.length; i += 1) {
             html += `<div>${params[i].marker} ${params[i].seriesName}: ${
               params[i].value ? formatNumber(params[i].value, { decimalsLength: 2 }) : '0'
-            } MB</div>`;
+            } ${translate('chartOptions.mb')}</div>`;
           }
           return `
             <div>
@@ -2856,13 +2885,13 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       ],
       series: [
         {
-          name: 'Highest size of NFT stored',
+          name: translate('chartOptions.highestSizeOfNFTStored'),
           type: 'bar',
           data: dataY,
           color: '#cd6661',
         },
         {
-          name: 'Average size of NFT stored',
+          name: translate('chartOptions.averageSizeOfNFTStored'),
           type: 'line',
           data: dataY1,
           color: !darkMode ? '#2f2a03' : theme?.color,
@@ -2922,13 +2951,13 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       ],
       series: [
         {
-          name: 'Highest rareness score',
+          name: translate('chartOptions.HighestRarenessScore'),
           type: 'bar',
           data: dataY,
           color: blueColor,
         },
         {
-          name: 'Average rareness score',
+          name: translate('chartOptions.averageRarenessScore'),
           type: 'line',
           data: dataY1,
           color: !darkMode ? '#2f2a03' : theme?.color,
@@ -2956,7 +2985,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           return `<div style="text-align: left">${params[0].axisValue}</div>${params[0].marker} ${
             params[0].seriesName
           }:&nbsp;${params[0].data ? formatNumber(params[0].data) : '0'} ${
-            params[0].data > 1 ? 'requests' : 'request'
+            params[0].data > 1
+              ? translate('chartOptions.requests')
+              : translate('chartOptions.request')
           }`;
         },
       },
@@ -2982,7 +3013,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
-        name: 'Cascade Requests',
+        name: translate('chartOptions.cascadeRequests'),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -3021,7 +3052,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           return `<div style="text-align: left">${params[0].axisValue}</div>${params[0].marker} ${
             params[0].seriesName
           }:&nbsp;${params[0].data ? formatNumber(params[0].data) : '0'} ${
-            params[0].data > 1 ? 'requests' : 'request'
+            params[0].data > 1
+              ? translate('chartOptions.requests')
+              : translate('chartOptions.request')
           }`;
         },
       },
@@ -3047,7 +3080,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
-        name: 'Sense Requests',
+        name: translate('chartOptions.senseRequests'),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -3085,7 +3118,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         formatter: (params: TToolTipParamsProps[]) => {
           return `<div style="text-align: left">${params[0].axisValue}</div>${params[0].marker} ${
             params[0].seriesName
-          }:&nbsp;${params[0].data ? formatNumber(params[0].data, { decimalsLength: 2 }) : '0'} MB`;
+          }:&nbsp;${
+            params[0].data ? formatNumber(params[0].data, { decimalsLength: 2 }) : '0'
+          } ${translate('chartOptions.mb')}`;
         },
       },
       xAxis: {
@@ -3110,7 +3145,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
-        name: 'Total data stored',
+        name: translate('chartOptions.totalDataStored'),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -3173,7 +3208,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
-        name: 'Total fingerprints',
+        name: translate('chartOptions.totalFingerprints'),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -3214,7 +3249,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
               <div class="item-label">${params[0].axisValue}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
             decimalsLength: 2,
-          })} kB</div>
+          })} ${translate('chartOptions.kb')}</div>
             </div>
           `;
         },
@@ -3284,7 +3319,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
               <div class="item-label">${params[0].axisValue}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
             decimalsLength: 3,
-          })} MSol/S</div>
+          })} ${translate('chartOptions.mSolS')}</div>
             </div>
           `;
         },
@@ -3499,6 +3534,418 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             },
           ]),
         },
+      },
+      animation: false,
+    },
+    balanceHistory: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: [chartColor || blueColor],
+      grid: {
+        top: 10,
+        right: 0,
+        bottom: 20,
+        left: 0,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            formatter: (param: TAxisPointerProps) => {
+              if (param.axisDimension === 'x') {
+                return param.value;
+              }
+
+              return `${formatNumber(param.value, { decimalsLength: 2 })} ${getCurrencyName()}`;
+            },
+          },
+        },
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `<div style="text-align: left">${params[0].axisValue}</div>${params[0].marker} ${
+            params[0].seriesName
+          }:&nbsp;${
+            params[0].data ? formatNumber(params[0].data, { decimalsLength: 2 }) : '0'
+          } ${getCurrencyName()}`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        boundaryGap: false,
+        axisLabel: {
+          show: true,
+          formatter(value: string) {
+            return value ? generateXAxisLabel(new Date(value), period, false) : null;
+          },
+          showMaxLabel: false,
+          showMinLabel: true,
+          interval: balanceHistoryXAxisInterval(dataX, width),
+          align: 'left',
+        },
+        axisLine: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+        name: dataX?.length
+          ? generateXAxisLabel(new Date(dataX[dataX.length - 1]), period, false)
+          : '',
+        nameGap: 0,
+        nameLocation: 'end',
+        nameTextStyle: {
+          align: 'right',
+          verticalAlign: 'top',
+          padding: [8, 2, 0, 0],
+        },
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        max: maxY,
+        interval: (maxY - minY) / 5,
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+      },
+      series: {
+        name: translate(seriesName || 'pages.addressDetails.balanceHistory.balance') || '',
+        type: 'line',
+        sampling: 'lttb',
+        data: dataY,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: chartColor || blueColor,
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor || '#fff',
+            },
+          ]),
+        },
+        showSymbol: false,
+      },
+      animation: false,
+    },
+    directionOutgoing: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#E94830'],
+      grid: {
+        top: 10,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            formatter: (param: TAxisPointerProps) => {
+              if (param.axisDimension === 'x') {
+                return format(Number(param.value), 'MM/yyyy');
+              }
+
+              return `${formatNumber(param.value, { decimalsLength: 2 })} ${getCurrencyName()}`;
+            },
+          },
+        },
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `<div style="text-align: left">${format(
+            Number(params[0].axisValue),
+            'MM/yyyy',
+          )}</div>${params[0].marker} ${params[0].seriesName}:&nbsp;${
+            params[0].data ? formatNumber(params[0].value, { decimalsLength: 2 }) : '0'
+          } ${getCurrencyName()}`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+      },
+      yAxis: {
+        type: 'value',
+        min: 0,
+        max: maxY,
+        interval: maxY / 5,
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+      },
+      series: {
+        name: translate('pages.addressDetails.balanceHistory.sentByMonth') || '',
+        type: 'bar',
+        data: dataY?.map((d, index) => {
+          return {
+            value: d,
+            label: {
+              show: true,
+              fontSize: 10,
+              rotate: 90,
+              position: 'insideBottom',
+              align: 'left',
+              verticalAlign: 'middle',
+              distance: 10,
+              color: seriesLabelColor,
+              formatter: () => {
+                return dataX ? format(Number(dataX[index]), 'MM/yyyy') : '';
+              },
+            },
+          };
+        }),
+        showBackground: true,
+        backgroundStyle: {
+          color: 'rgba(180, 180, 180, 0.2)',
+        },
+      },
+      animation: false,
+    },
+    directionIncoming: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: [chartColor || '#219653'],
+      grid: {
+        top: 10,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            formatter: (param: TAxisPointerProps) => {
+              if (param.axisDimension === 'x') {
+                return format(Number(param.value), 'MM/yyyy');
+              }
+
+              return `${formatNumber(param.value, { decimalsLength: 2 })} ${getCurrencyName()}`;
+            },
+          },
+        },
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `<div style="text-align: left">${format(
+            Number(params[0].axisValue),
+            'MM/yyyy',
+          )}</div>${params[0].marker} ${params[0].seriesName}:&nbsp;${
+            params[0].data ? formatNumber(params[0].value, { decimalsLength: 2 }) : '0'
+          } ${getCurrencyName()}`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+      },
+      yAxis: {
+        type: 'value',
+        min: 0,
+        max: maxY,
+        interval: maxY / 5,
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+      },
+      series: {
+        name: translate(seriesName || 'pages.addressDetails.balanceHistory.receivedByMonth') || '',
+        type: 'bar',
+        data: dataY?.map((d, index) => {
+          return {
+            value: d,
+            label: {
+              show: true,
+              fontSize: 10,
+              rotate: 90,
+              position: 'insideBottom',
+              align: 'left',
+              verticalAlign: 'middle',
+              distance: 10,
+              color: seriesLabelColor,
+              formatter: () => {
+                return dataX ? format(Number(dataX[index]), 'MM/yyyy') : '';
+              },
+            },
+          };
+        }),
+        showBackground: true,
+        backgroundStyle: {
+          color: 'rgba(180, 180, 180, 0.2)',
+        },
+      },
+      animation: false,
+    },
+    totalBurned: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: [chartColor || blueColor],
+      grid: {
+        top: 10,
+        right: 0,
+        bottom: 20,
+        left: 0,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            formatter: (param: TAxisPointerProps) => {
+              if (param.axisDimension === 'x') {
+                return param.value;
+              }
+
+              return `${formatNumber(param.value, { decimalsLength: 2 })} ${getCurrencyName()}`;
+            },
+          },
+        },
+        formatter: (params: TToolTipParamsProps[]) => {
+          return `<div style="text-align: left">${params[0].axisValue}</div>${params[0].marker} ${
+            params[0].seriesName
+          }:&nbsp;${
+            params[0].data ? formatNumber(params[0].data, { decimalsLength: 2 }) : '0'
+          } ${getCurrencyName()}`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        boundaryGap: false,
+        axisLabel: {
+          show: true,
+          formatter(value: string) {
+            return value ? generateXAxisLabel(new Date(value), period, false) : null;
+          },
+          showMaxLabel: false,
+          showMinLabel: true,
+          interval: balanceHistoryXAxisInterval(dataX, width),
+          align: 'left',
+        },
+        axisLine: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+        name: dataX?.length
+          ? generateXAxisLabel(new Date(dataX[dataX.length - 1]), period, false)
+          : '',
+        nameGap: 0,
+        nameLocation: 'end',
+        nameTextStyle: {
+          align: 'right',
+          verticalAlign: 'top',
+          padding: [8, 2, 0, 0],
+        },
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        max: maxY,
+        interval: (maxY - minY) / 5,
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+      },
+      series: {
+        name: translate('pages.burned.totalBurned', { currency: getCurrencyName() }) || '',
+        type: 'line',
+        sampling: 'lttb',
+        data: dataY,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: chartColor || blueColor,
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor || '#fff',
+            },
+          ]),
+        },
+        showSymbol: false,
       },
       animation: false,
     },

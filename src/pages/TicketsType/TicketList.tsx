@@ -49,9 +49,10 @@ import * as BlockDetailsStyles from '@pages/Details/BlockDetails/BlockDetails.st
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
 import * as Styles from '@pages/Details/PastelIdDetails/PastelIdDetails.styles';
 import * as FilterStyles from '@components/InfinityTable/InfinityTable.styles';
-import DateTimePicker from '@components/DateTimePicker';
+import DateTimePicker from '@components/DateTimePicker/DateTimePicker';
 import { blocksPeriodFilters } from '@utils/constants/filter';
 import { TAppTheme } from '@theme/index';
+import { translate } from '@utils/helpers/i18n';
 
 import { TICKET_TYPE_OPTIONS, TICKET_STATUS_OPTIONS } from './TicketsType.helpers';
 
@@ -128,7 +129,9 @@ const TicketsList: React.FC<ITicketsList> = ({
       <>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
-            <TicketStyles.TicketTitle>Sense Output Details:</TicketStyles.TicketTitle>
+            <TicketStyles.TicketTitle>
+              {translate('pages.ticketsType.senseOutputDetails')}:
+            </TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
             <TicketStyles.TicketContent>
@@ -148,7 +151,9 @@ const TicketsList: React.FC<ITicketsList> = ({
         </Grid>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
-            <TicketStyles.TicketTitle>Image Hash:</TicketStyles.TicketTitle>
+            <TicketStyles.TicketTitle>
+              {translate('pages.ticketsType.imageHash')}:
+            </TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
             <TicketStyles.TicketContent>
@@ -163,7 +168,9 @@ const TicketsList: React.FC<ITicketsList> = ({
         </Grid>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
-            <TicketStyles.TicketTitle>Sense Version:</TicketStyles.TicketTitle>
+            <TicketStyles.TicketTitle>
+              {translate('pages.ticketsType.senseVersion')}:
+            </TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
             <TicketStyles.TicketContent>
@@ -243,19 +250,22 @@ const TicketsList: React.FC<ITicketsList> = ({
 
   const getTitle = () => {
     const ticket = TICKET_TYPE_OPTIONS.find(t => t.value === ticketType);
-    return ticket?.name || 'Other tickets';
+    return translate(ticket?.name || '') || translate('pages.ticketsType.otherTickets');
   };
 
   const getDropdownOptions = () => {
     const result = [];
     if (ticketType === 'other') {
       result.push({
-        name: 'Other tickets',
+        name: translate('pages.ticketsType.otherTickets'),
         value: 'other',
       });
     }
 
-    return [...result, ...TICKET_TYPE_OPTIONS];
+    return [
+      ...result,
+      ...TICKET_TYPE_OPTIONS.map(item => ({ ...item, name: translate(item.name) })),
+    ];
   };
 
   const handleStatusChange = (
@@ -268,6 +278,13 @@ const TicketsList: React.FC<ITicketsList> = ({
     }
   };
 
+  const getStatusOptions = () => {
+    return TICKET_STATUS_OPTIONS.map(option => ({
+      ...option,
+      name: translate(option.name),
+    }));
+  };
+
   return (
     <BlockDetailsStyles.GridStyle item>
       <TableStyles.BlockWrapper className="mb-12 min-h-60vh">
@@ -275,7 +292,11 @@ const TicketsList: React.FC<ITicketsList> = ({
           <Styles.BlockTitle>
             {getTitle()}{' '}
             <Styles.SubTitle>
-              (Total {formatNumber(totalTickets)} {totalTickets > 1 ? 'tickets' : 'ticket'})
+              (
+              {totalTickets > 1
+                ? translate('pages.ticketsType.totalTickets', { total: formatNumber(totalTickets) })
+                : translate('pages.ticketsType.totalTicket', { total: formatNumber(totalTickets) })}
+              )
             </Styles.SubTitle>
           </Styles.BlockTitle>
           <Styles.FilterBlock>
@@ -284,15 +305,15 @@ const TicketsList: React.FC<ITicketsList> = ({
                 value={ticketType}
                 onChange={handleTicketTypeChange}
                 options={getDropdownOptions()}
-                label="Ticket Type:"
+                label={translate('pages.ticketsType.ticketType')}
                 classNameWrapper="dropdown-ticket-type"
               />
               {['sense', 'cascade'].includes(ticketType) ? (
                 <Dropdown
                   value={selectedStatus}
                   onChange={handleStatusChange}
-                  options={TICKET_STATUS_OPTIONS}
-                  label="Status:"
+                  options={getStatusOptions()}
+                  label={translate('pages.ticketsType.status')}
                   classNameWrapper="dropdown-status"
                 />
               ) : null}
@@ -312,7 +333,7 @@ const TicketsList: React.FC<ITicketsList> = ({
                       value={value}
                       onClick={handleSelectTime}
                     >
-                      {name}
+                      {translate(name)}
                     </Button>
                   </MenuItem>
                 ))}
@@ -338,7 +359,9 @@ const TicketsList: React.FC<ITicketsList> = ({
             >
               <Grid container spacing={3}>
                 <Grid item xs={4} sm={3} className="max-w-355">
-                  <TicketStyles.TicketTitle>TXID:</TicketStyles.TicketTitle>
+                  <TicketStyles.TicketTitle>
+                    {translate('pages.ticketsType.txId')}:
+                  </TicketStyles.TicketTitle>
                 </Grid>
                 <Grid item xs={8} sm={9}>
                   <TicketStyles.TicketContent>
@@ -353,7 +376,9 @@ const TicketsList: React.FC<ITicketsList> = ({
               </Grid>
               <Grid container spacing={3}>
                 <Grid item xs={4} sm={3} className="max-w-355">
-                  <TicketStyles.TicketTitle>Type:</TicketStyles.TicketTitle>
+                  <TicketStyles.TicketTitle>
+                    {translate('pages.ticketsType.type')}:
+                  </TicketStyles.TicketTitle>
                 </Grid>
                 <Grid item xs={8} sm={9}>
                   <TicketStyles.TicketContent>
@@ -366,7 +391,7 @@ const TicketsList: React.FC<ITicketsList> = ({
           ))}
           {!data.length && !isLoading ? (
             <BlockDetailsStyles.GridStyle className="table__row">
-              <TicketStyles.TicketTitle>No data</TicketStyles.TicketTitle>
+              <TicketStyles.TicketTitle>{translate('common.noData')}</TicketStyles.TicketTitle>
             </BlockDetailsStyles.GridStyle>
           ) : null}
         </Box>

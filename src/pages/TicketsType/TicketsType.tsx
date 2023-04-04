@@ -30,6 +30,7 @@ type TPastelIdDetailsRef = {
 const LIMIT = 6;
 
 const TicketsType: React.FC = () => {
+  let targetHeight = 0;
   const { type } = useParams<ParamTypes>();
   const fetchParams = useRef<TPastelIdDetailsRef>({
     offset: 0,
@@ -74,9 +75,10 @@ const TicketsType: React.FC = () => {
     const clientHeight = list?.clientHeight || 0;
     const offsetTop = list?.offsetTop || 0;
     if (
-      window.scrollY + window.innerHeight >= clientHeight / 2 + offsetTop &&
+      window.scrollY + window.innerHeight >= clientHeight / 2 + offsetTop + targetHeight &&
       fetchParams.current.offset <= fetchParams.current.totalTickets
     ) {
+      targetHeight = clientHeight / 2;
       fetchParams.current.offset += LIMIT;
       fetchParams.current.size += 1;
       setSize(fetchParams.current.size);

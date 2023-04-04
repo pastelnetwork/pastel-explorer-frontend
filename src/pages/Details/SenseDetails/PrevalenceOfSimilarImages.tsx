@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { sense_chart_colors } from '@utils/constants/statistics';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { TChartParams } from '@utils/types/IStatistics';
+import { translate } from '@utils/helpers/i18n';
 
 import * as Styles from './SenseDetails.styles';
 
@@ -47,7 +48,9 @@ const PrevalenceOfSimilarImages: React.FC<IPrevalenceOfSimilarImages> = ({ data 
           <div class="tooltip-wrapper max-w-280">
             <div class="tooltip-label">${params[0].axisValue}</div>
             <div class="tooltip-value">
-              ${params[0].marker} % of Top-10 Most<br>SimilarImages with Dupe<br>Probability Above: ${params[0].value}
+              ${params[0].marker} ${translate('pages.senseDetails.top10SimilarImages')}: ${
+          params[0].value
+        }
             </div>
           </div>
         `;

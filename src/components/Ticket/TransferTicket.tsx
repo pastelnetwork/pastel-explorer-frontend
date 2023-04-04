@@ -5,6 +5,7 @@ import RouterLink from '@components/RouterLink/RouterLink';
 import { ITransferTicket } from '@utils/types/ITransactions';
 import * as ROUTES from '@utils/constants/routes';
 import { formatFullDate } from '@utils/helpers/date/date';
+import { translate } from '@utils/helpers/i18n';
 
 import Signatures from './Signatures';
 import * as Styles from './Ticket.styles';
@@ -18,7 +19,9 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
     <Box>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Pastel OpenAPI Ticket Version Number:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.transferTicket.version')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>{ticket.version}</Styles.TicketContent>
@@ -26,7 +29,9 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Pastel ID:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.transferTicket.pastelID')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
@@ -42,7 +47,9 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
       <Signatures signature={ticket.signature} />
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Offer txid:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.transferTicket.offerTxid')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
@@ -57,7 +64,9 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Accept txid:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.transferTicket.acceptTxId')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
@@ -72,7 +81,9 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Item txid:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.transferTicket.itemTxId')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
@@ -87,7 +98,9 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Registration txid:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.transferTicket.registrationTxId')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
@@ -102,7 +115,9 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>Copy serial nr:</Styles.TicketTitle>
+          <Styles.TicketTitle>
+            {translate('components.ticket.transferTicket.copySerialNr')}
+          </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>{ticket.copy_serial_nr}</Styles.TicketContent>
@@ -111,7 +126,9 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket }) => {
       {ticket.transactionTime ? (
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
-            <Styles.TicketTitle>Timestamp:</Styles.TicketTitle>
+            <Styles.TicketTitle>
+              {translate('components.ticket.transferTicket.timestamp')}
+            </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
             <Styles.TicketContent>

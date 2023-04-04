@@ -1,4 +1,5 @@
 import { TTicketType } from '@utils/types/ITransactions';
+import { translate } from '@utils/helpers/i18n';
 
 import PastelIDRegistrationTicket from './PastelIDRegistrationTicket';
 import UserNameChangeTicket from './UserNameChangeTicket';
@@ -17,29 +18,29 @@ import TicketDetail from './TicketDetail';
 const getTicketTitle = (type: TTicketType) => {
   switch (type) {
     case 'pastelid':
-      return 'Pastel ID Registration Ticket';
+      return translate('components.ticket.ticketsTitle.pastelid');
     case 'username-change':
-      return 'User Name Change Ticket';
+      return translate('components.ticket.ticketsTitle.usernameChange');
     case 'nft-reg':
-      return 'NFT Registration Ticket';
+      return translate('components.ticket.ticketsTitle.nftReg');
     case 'nft-act':
-      return 'NFT Activation Ticket';
+      return translate('components.ticket.ticketsTitle.nftAct');
     case 'nft-collection-reg':
-      return 'NFT Collection Registration Ticket';
+      return translate('components.ticket.ticketsTitle.nftCollectionReg');
     case 'nft-collection-act':
-      return 'NFT Collection Activation Ticket';
+      return translate('components.ticket.ticketsTitle.nftCollectionAct');
     case 'nft-royalty':
-      return 'NFT Royalty Ticket';
+      return translate('components.ticket.ticketsTitle.nftRoyalty');
     case 'action-reg':
-      return 'Action Registration Ticket';
+      return translate('components.ticket.ticketsTitle.actionReg');
     case 'action-act':
-      return 'Action Activation Ticket';
+      return translate('components.ticket.ticketsTitle.actionAct');
     case 'offer':
-      return 'Offer Ticket';
+      return translate('components.ticket.ticketsTitle.offer');
     case 'accept':
-      return 'Accept Ticket';
+      return translate('components.ticket.ticketsTitle.accept');
     case 'transfer':
-      return 'Transfer Ticket';
+      return translate('components.ticket.ticketsTitle.transfer');
     default:
       return '';
   }
