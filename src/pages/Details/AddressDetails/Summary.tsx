@@ -75,7 +75,7 @@ const Summary: React.FC<ISummaryProps> = ({ id, onChange, selectedChart, isBalan
             {isLoading ? (
               <Skeleton animation="wave" variant="text" />
             ) : (
-              formatNumber(outgoingSum * -1, { decimalsLength: 2 })
+              formatNumber(outgoingSum > 0 ? outgoingSum * -1 : 0, { decimalsLength: 2 })
             )}
           </Styles.SummaryValue>
         </Styles.ItemWrapper>
