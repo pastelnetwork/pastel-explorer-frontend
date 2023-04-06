@@ -17,6 +17,12 @@ interface IAddressDetails {
   incomingSum: number;
 }
 
+export type TBalanceHistory = {
+  balance: TChartStatisticsResponse[];
+  received: TChartStatisticsResponse[];
+  sent: TChartStatisticsResponse[];
+};
+
 export default function useAddressDetails(id: string) {
   const { data, isLoading, error } = useSWR<IAddressDetails>(
     `${URLS.ADDRESS_URL}/${id}`,
@@ -38,21 +44,13 @@ export function useBalanceHistory(id: string, period: string) {
     incoming: Array<TChartStatisticsResponse>;
     outgoing: Array<TChartStatisticsResponse>;
   }>(() => `${URLS.BALANCE_HISTORY_URL}/${id}?period=${period}`, axiosGet, SWR_OPTIONS);
-  const balanceHistory = window.localStorage.getItem(`explorer${id}`);
-  if (!balanceHistory && data) {
-    window.localStorage.setItem(
-      `explorer${id}`,
-      JSON.stringify({
-        balance: data[0].data,
-        received: data[0].incoming,
-        sent: data[0].outgoing,
-      }),
-    );
-  }
+
   return {
-    balance: data ? data[0].data : [],
-    incoming: data ? data[0].incoming : [],
-    outgoing: data ? data[0].outgoing : [],
+    data: {
+      balance: data ? data[0].data : [],
+      received: data ? data[0].incoming : [],
+      sent: data ? data[0].outgoing : [],
+    },
     isLoading,
   };
 }

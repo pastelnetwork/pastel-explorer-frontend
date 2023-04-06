@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import { Skeleton } from '@material-ui/lab';
 
 import { TMiningInfo, TLineChartData } from '@utils/types/IStatistics';
@@ -9,10 +9,11 @@ import {
 } from '@utils/helpers/statisticsLib';
 import * as URLS from '@utils/constants/urls';
 import { useDeferredData } from '@utils/helpers/useFetch/useFetch';
-import { periods } from '@utils/constants/statistics';
+import { periods, cacheList } from '@utils/constants/statistics';
 import { LineChart } from '@components/Summary/LineChart';
 import { Dropdown } from '@components/Dropdown/Dropdown';
 import { translate } from '@utils/helpers/i18n';
+import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 
 import * as SummaryStyles from '@components/Summary/Summary.styles';
 import * as Styles from '@pages/CascadeAndSenseStatistics/CascadeAndSenseStatistics.styles';
@@ -25,13 +26,43 @@ interface NetworkStatistics {
 
 const NetworkStatistics: React.FC<NetworkStatistics> = ({ blockElements }) => {
   const [period, setPeriod] = useState(periods[2][0]);
-  const { isLoading, data: chartData } = useDeferredData<{ data: TMiningInfo[] }, TLineChartData>(
+  const [chartData, setChartData] = useState<TLineChartData | null>(null);
+  const [isLoading, setLoading] = useState(false);
+  const networkStatisticsData = useDeferredData<{ data: TMiningInfo[] }, TLineChartData>(
     { method: 'get', url: `${URLS.GET_STATISTICS_HASHRATE}?period=${period}` },
     ({ data }) => transformHashrateInfo(data.sort((a, b) => a.timestamp - b.timestamp)),
     undefined,
     undefined,
     [period, blockElements],
   );
+
+  useEffect(() => {
+    let currentCache = readCacheValue(cacheList.statisticsHashrate) || {};
+    if (currentCache[period]) {
+      setChartData(currentCache[period].parseData as TLineChartData);
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+    if (!networkStatisticsData.isLoading && networkStatisticsData.data) {
+      const parseData = networkStatisticsData.data;
+      setChartData(parseData);
+      currentCache = {
+        ...currentCache,
+        [period]: {
+          parseData,
+        },
+      };
+      setCacheValue(
+        cacheList.statisticsHashrate,
+        JSON.stringify({
+          currentCache,
+          lastDate: Date.now(),
+        }),
+      );
+      setLoading(false);
+    }
+  }, [period, networkStatisticsData.isLoading]);
 
   const handleDropdownChange = (
     event: ChangeEvent<{

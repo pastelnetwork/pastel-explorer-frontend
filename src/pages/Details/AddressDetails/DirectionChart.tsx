@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -9,6 +9,8 @@ import { translate } from '@utils/helpers/i18n';
 import { periods } from '@utils/constants/statistics';
 import { PeriodTypes } from '@utils/helpers/statisticsLib';
 import { isPastelBurnAddress } from '@utils/appInfo';
+import { TLineChartData } from '@utils/types/IStatistics';
+import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 
 import * as ChartStyles from '@pages/HistoricalStatistics/Chart/Chart.styles';
 
@@ -36,8 +38,39 @@ const DirectionItem: React.FC<IDirectionItemProps> = ({
   seriesName,
   chartColor,
 }) => {
+  const cacheName = `explorer${direction}${id}`;
   const [period, setPeriod] = useState<PeriodTypes>(periods[10][0]);
-  const { data, isLoading } = useDirection(id, period, direction);
+  const [chartData, setChartData] = useState<TLineChartData | null>(null);
+  const [isLoading, setLoading] = useState(false);
+  const swrData = useDirection(id, period, direction);
+
+  useEffect(() => {
+    let currentCache = readCacheValue(cacheName) || {};
+    if (currentCache[period]) {
+      setChartData(currentCache[period].parseData as TLineChartData);
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+    if (!swrData.isLoading && swrData.data) {
+      const parseData = transformDirectionChartData(swrData.data);
+      setChartData(parseData);
+      currentCache = {
+        ...currentCache,
+        [period]: {
+          parseData,
+        },
+      };
+      setCacheValue(
+        cacheName,
+        JSON.stringify({
+          currentCache,
+          lastDate: Date.now(),
+        }),
+      );
+      setLoading(false);
+    }
+  }, [period, swrData.isLoading]);
 
   const handlePeriodChange = (_period: string) => {
     setPeriod(_period as PeriodTypes);
@@ -49,7 +82,6 @@ const DirectionItem: React.FC<IDirectionItemProps> = ({
     }
     return '';
   };
-  const chartData = transformDirectionChartData(data);
 
   return (
     <Styles.ChartItem>
@@ -80,8 +112,8 @@ const DirectionItem: React.FC<IDirectionItemProps> = ({
         ) : (
           <LineChart
             chartName={chartName}
-            dataX={chartData.dataX}
-            dataY={chartData.dataY}
+            dataX={chartData?.dataX}
+            dataY={chartData?.dataY}
             offset={0}
             disableClick
             className="line-chart"

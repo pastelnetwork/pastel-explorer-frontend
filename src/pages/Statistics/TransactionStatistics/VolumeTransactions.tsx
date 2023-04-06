@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import { Skeleton } from '@material-ui/lab';
 
 import {
@@ -9,11 +9,12 @@ import {
 import * as URLS from '@utils/constants/urls';
 import { TLineChartData, IHashRateResponse } from '@utils/types/IStatistics';
 import { useDeferredData } from '@utils/helpers/useFetch/useFetch';
-import { periods } from '@utils/constants/statistics';
+import { periods, cacheList } from '@utils/constants/statistics';
 import { getCurrencyName } from '@utils/appInfo';
 import { LineChart } from '@components/Summary/LineChart';
 import { Dropdown } from '@components/Dropdown/Dropdown';
 import { translate } from '@utils/helpers/i18n';
+import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 
 import * as SummaryStyles from '@components/Summary/Summary.styles';
 import * as Styles from '@pages/CascadeAndSenseStatistics/CascadeAndSenseStatistics.styles';
@@ -27,13 +28,43 @@ interface IVolumeTransactions {
 
 const VolumeTransactions: React.FC<IVolumeTransactions> = ({ blockElements }) => {
   const [period, setPeriod] = useState<PeriodTypes>(periods[2][0]);
-  const { isLoading, data: chartData } = useDeferredData<IHashRateResponse, TLineChartData>(
+  const [chartData, setChartData] = useState<TLineChartData | null>(null);
+  const [isLoading, setLoading] = useState(false);
+  const volumeTransactionsData = useDeferredData<IHashRateResponse, TLineChartData>(
     { method: 'get', url: `${URLS.VOLUME_TRANSACTION_URL}`, params: { period } },
     res => transformChartData(res, true),
     undefined,
     undefined,
     [period, blockElements],
   );
+
+  useEffect(() => {
+    let currentCache = readCacheValue(cacheList.volumeTransactions) || {};
+    if (currentCache[period]) {
+      setChartData(currentCache[period].parseData as TLineChartData);
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+    if (!volumeTransactionsData.isLoading && volumeTransactionsData.data) {
+      const parseData = volumeTransactionsData.data;
+      setChartData(parseData);
+      currentCache = {
+        ...currentCache,
+        [period]: {
+          parseData,
+        },
+      };
+      setCacheValue(
+        cacheList.volumeTransactions,
+        JSON.stringify({
+          currentCache,
+          lastDate: Date.now(),
+        }),
+      );
+      setLoading(false);
+    }
+  }, [period, volumeTransactionsData.isLoading]);
 
   const handleDropdownChange = (
     event: ChangeEvent<{

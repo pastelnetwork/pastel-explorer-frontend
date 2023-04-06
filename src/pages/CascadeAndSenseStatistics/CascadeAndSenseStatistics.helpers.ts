@@ -2,6 +2,12 @@ import format from 'date-fns/format';
 
 import { TAverageRarenessScoreData, TCascadeAndSenseData } from '@utils/types/IStatistics';
 
+export type TMultiLineChartData = {
+  dataX: string[];
+  dataY: number[];
+  dataY1: number[];
+};
+
 export const transformAverageRarenessScoreOfNFTsOnSenseChartData = (
   data: TAverageRarenessScoreData[] | null,
   range = 1,

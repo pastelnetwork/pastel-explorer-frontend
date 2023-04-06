@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Skeleton } from '@material-ui/lab';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
@@ -9,13 +9,15 @@ import { RedReceived } from '@components/SvgIcon/Received';
 import { translate } from '@utils/helpers/i18n';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { getCurrencyName } from '@utils/appInfo';
-import { periods } from '@utils/constants/statistics';
+import { periods, cacheList } from '@utils/constants/statistics';
 import { PeriodTypes } from '@utils/helpers/statisticsLib';
 import { useBurnedByMonth, useSummary } from '@hooks/useBurned';
 import {
   transformChartData,
   transformDirectionChartData,
 } from '@pages/Details/AddressDetails/AddressDetails.helpers';
+import { TLineChartData } from '@utils/types/IStatistics';
+import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 
 import * as TableStyles from '@components/Table/Table.styles';
 import * as AddressDetailsStyles from '@pages/Details/AddressDetails/AddressDetails.styles';
@@ -25,7 +27,37 @@ import * as Styles from './Burned.styles';
 
 const BurnedByMonth = () => {
   const [period, setPeriod] = useState<PeriodTypes>(periods[10][0]);
-  const { isLoading, data } = useBurnedByMonth(period);
+  const [chartData, setChartData] = useState<TLineChartData | null>(null);
+  const [isLoading, setLoading] = useState(false);
+  const swrData = useBurnedByMonth(period);
+
+  useEffect(() => {
+    let currentCache = readCacheValue(cacheList.burnedByMonth) || {};
+    if (currentCache[period]) {
+      setChartData(currentCache[period].parseData as TLineChartData);
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+    if (!swrData.isLoading && swrData.data) {
+      const parseData = transformDirectionChartData(swrData.data);
+      setChartData(parseData);
+      currentCache = {
+        ...currentCache,
+        [period]: {
+          parseData,
+        },
+      };
+      setCacheValue(
+        cacheList.burnedByMonth,
+        JSON.stringify({
+          currentCache,
+          lastDate: Date.now(),
+        }),
+      );
+      setLoading(false);
+    }
+  }, [period, swrData.isLoading]);
 
   const getActivePeriodButtonStyle = (_period: string): string => {
     if (period === _period) {
@@ -37,7 +69,6 @@ const BurnedByMonth = () => {
   const handlePeriodChange = (_period: string) => {
     setPeriod(_period as PeriodTypes);
   };
-  const chartData = transformDirectionChartData(data);
 
   return (
     <AddressDetailsStyles.ChartItem>
@@ -72,8 +103,8 @@ const BurnedByMonth = () => {
         ) : (
           <LineChart
             chartName="directionIncoming"
-            dataX={chartData.dataX}
-            dataY={chartData.dataY}
+            dataX={chartData?.dataX}
+            dataY={chartData?.dataY}
             offset={0}
             disableClick
             className="line-chart burned-by-month"
@@ -88,7 +119,41 @@ const BurnedByMonth = () => {
 
 const Summary = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<PeriodTypes>(periods[1][0]);
-  const { isLoading, data, totalBurned } = useSummary(selectedPeriod);
+  const [chartData, setChartData] = useState<TLineChartData | null>(null);
+  const [isLoading, setLoading] = useState(false);
+  const [totalBurned, setTotalBurned] = useState(0);
+  const swrData = useSummary(selectedPeriod);
+
+  useEffect(() => {
+    let currentCache = readCacheValue(cacheList.totalPSLBurned) || {};
+    if (currentCache[selectedPeriod]) {
+      setChartData(currentCache[selectedPeriod].parseData as TLineChartData);
+      setTotalBurned(currentCache[selectedPeriod]?.totalBurned || 0);
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+    if (!swrData.isLoading && swrData.data) {
+      const parseData = transformChartData(swrData.data);
+      setChartData(parseData);
+      setTotalBurned(swrData?.totalBurned || 0);
+      currentCache = {
+        ...currentCache,
+        [selectedPeriod]: {
+          parseData,
+          totalBurned: swrData?.totalBurned || 0,
+        },
+      };
+      setCacheValue(
+        cacheList.totalPSLBurned,
+        JSON.stringify({
+          currentCache,
+          lastDate: Date.now(),
+        }),
+      );
+      setLoading(false);
+    }
+  }, [selectedPeriod, swrData.isLoading]);
 
   const handlePeriodFilterChange = (value: PeriodTypes) => {
     setSelectedPeriod(value);
@@ -100,7 +165,6 @@ const Summary = () => {
     }
     return '';
   };
-  const chartData = transformChartData(data);
 
   return (
     <>
@@ -169,8 +233,8 @@ const Summary = () => {
               ) : (
                 <LineChart
                   chartName="totalBurned"
-                  dataX={chartData.dataX}
-                  dataY={chartData.dataY}
+                  dataX={chartData?.dataX}
+                  dataY={chartData?.dataY}
                   offset={0}
                   disableClick
                   className="line-chart"
