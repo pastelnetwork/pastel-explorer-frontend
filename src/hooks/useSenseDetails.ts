@@ -6,7 +6,7 @@ import { TSenseRequests } from '@utils/types/ITransactions';
 
 export default function useSenseDetails(id: string, txid: string) {
   const { data, isLoading } = useSWR<{ data: TSenseRequests }>(
-    `${URLS.SENSE_URL}?txid=${txid}&hash=${id}`,
+    `${URLS.SENSE_URL}?registration_ticket_txid=${txid}&media_file_hash=${id}`,
     axiosGet,
   );
 

@@ -6,7 +6,7 @@ import { MarketCoinRespone } from '@utils/types/IStatistics';
 
 export default function useMarketVolumePrice(period: string) {
   const { data, isLoading } = useSWRInfinite<{ data: MarketCoinRespone }>(
-    () => `${URLS.GET_STATISTICS_MARKET_PRICE}?period=${period}&chart=price`,
+    () => `${URLS.GET_STATISTICS_MARKET_PRICE}?period=${period}&chart_name=volume`,
     axiosGet,
   );
   return {

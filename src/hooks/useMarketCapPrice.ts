@@ -6,7 +6,7 @@ import { MarketCoinRespone } from '@utils/types/IStatistics';
 
 export default function useMarketCapPrice(period: string) {
   const { data, isLoading } = useSWRInfinite<{ data: MarketCoinRespone }>(
-    () => `${URLS.GET_STATISTICS_MARKET_PRICE}?period=${period}&chart=cap`,
+    () => `${URLS.GET_STATISTICS_MARKET_PRICE}?period=${period}&chart_name=cap`,
     axiosGet,
   );
   return {
