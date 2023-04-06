@@ -38,7 +38,17 @@ export function useBalanceHistory(id: string, period: string) {
     incoming: Array<TChartStatisticsResponse>;
     outgoing: Array<TChartStatisticsResponse>;
   }>(() => `${URLS.BALANCE_HISTORY_URL}/${id}?period=${period}`, axiosGet, SWR_OPTIONS);
-
+  const balanceHistory = window.localStorage.getItem(`explorer${id}`);
+  if (!balanceHistory && data) {
+    window.localStorage.setItem(
+      `explorer${id}`,
+      JSON.stringify({
+        balance: data[0].data,
+        received: data[0].incoming,
+        sent: data[0].outgoing,
+      }),
+    );
+  }
   return {
     balance: data ? data[0].data : [],
     incoming: data ? data[0].incoming : [],

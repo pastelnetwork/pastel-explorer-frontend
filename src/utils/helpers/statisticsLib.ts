@@ -28,6 +28,15 @@ import { translate } from '@utils/helpers/i18n';
 
 import { getCurrencyName } from '../appInfo';
 
+export const marketPeriodData = {
+  '30d': 30,
+  '60d': 60,
+  '180d': 180,
+  '1y': 365,
+};
+
+export type TPeriodDataTypes = '30d' | '60d' | '180d' | '1y';
+
 export type PeriodTypes =
   | '1h'
   | '24h'
