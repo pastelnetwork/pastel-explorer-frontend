@@ -3,8 +3,7 @@ import { Grid } from '@material-ui/core';
 
 import Table, { RowsProps } from '@components/Table/Table';
 import { IRichlist } from '@utils/types/IRichlists';
-import useCurrentStats from '@hooks/useCurrentStats';
-import useRichlist from '@hooks/useRichlist';
+import useRichlist, { useCoinSupply } from '@hooks/useRichlist';
 import { translate } from '@utils/helpers/i18n';
 
 import {
@@ -24,10 +23,9 @@ export type WealthDistributionProps = {
 };
 
 const Richlist: React.FC = () => {
-  const { currentStats, isCurrentStatsLoading } = useCurrentStats();
   const { data, isLoading } = useRichlist();
+  const { coinSupply } = useCoinSupply();
 
-  const [coinSupply, setCoinSupply] = useState(0);
   const [list, setList] = useState<IRichlist[]>([]);
   const [sort, setSort] = useState<{ sortBy: string | null; sortDirection: number }>({
     sortBy: null,
@@ -86,12 +84,6 @@ const Richlist: React.FC = () => {
       setList(newList);
     }
   }, [sort]);
-
-  useEffect(() => {
-    if (!isCurrentStatsLoading && currentStats) {
-      setCoinSupply(currentStats.coinSupply);
-    }
-  }, [isCurrentStatsLoading, currentStats]);
 
   return (
     <Styles.Wrapper>

@@ -19,8 +19,7 @@ import {
   TSenseRequests,
 } from '@utils/types/ITransactions';
 import { useSortData } from '@utils/hooks';
-import useCurrentStats from '@hooks/useCurrentStats';
-import useTransactionDetails from '@hooks/useTransactionDetails';
+import useTransactionDetails, { useUsdPrice } from '@hooks/useTransactionDetails';
 import { translate } from '@utils/helpers/i18n';
 
 import * as Styles from './TransactionDetails.styles';
@@ -39,24 +38,17 @@ interface ParamTypes {
 
 const TransactionDetails = () => {
   const { id } = useParams<ParamTypes>();
-  const { currentStats, isCurrentStatsLoading } = useCurrentStats();
+  const { usdPrice } = useUsdPrice();
   const { data, isLoading } = useTransactionDetails(id);
   const [transaction, setTransaction] = useState<ITransactionDetails | null>(null);
   const [tickets, setTickets] = useState<ITicket[]>([]);
   const [senses, setSenses] = useState<TSenseRequests[]>([]);
-  const [exchangeRate, setExchangeRate] = useState(0);
   const [openRawDataModal, setOpenRawDataModal] = useState(false);
 
   const toggleOpenRawData = () => setOpenRawDataModal(prevState => !prevState);
   const [transactionEvents, handleClickSort] = useSortData<TransactionEvent>({
     inititalData: transaction?.transactionEvents || null,
   });
-
-  useEffect(() => {
-    if (currentStats?.usdPrice) {
-      setExchangeRate(currentStats?.usdPrice);
-    }
-  }, [isCurrentStatsLoading]);
 
   useEffect(() => {
     if (data) {
@@ -103,7 +95,7 @@ const TransactionDetails = () => {
             ),
           },
           { id: 2, value: formatNumber(amount, { decimalsLength: 2 }) },
-          { id: 3, value: formatNumber(amount * exchangeRate, { decimalsLength: 2 }, '$') },
+          { id: 3, value: formatNumber(amount * usdPrice, { decimalsLength: 2 }, '$') },
         ],
       };
     });

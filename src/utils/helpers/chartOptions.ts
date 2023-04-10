@@ -3249,7 +3249,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
               <div class="item-label">${params[0].axisValue}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
             decimalsLength: 2,
-          })} ${translate('chartOptions.kb')}</div>
+          })} ${translate('chartOptions.kB')}</div>
             </div>
           `;
         },

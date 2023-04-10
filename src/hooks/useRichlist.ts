@@ -17,3 +17,11 @@ export default function useRichlist() {
     isLoading,
   };
 }
+
+export function useCoinSupply() {
+  const { data, isLoading } = useSWR<number>(URLS.GET_COIN_SUPPLY, axiosGet, SWR_OPTIONS);
+  return {
+    coinSupply: data || 0,
+    isLoading,
+  };
+}

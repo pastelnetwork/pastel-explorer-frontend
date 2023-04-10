@@ -1,25 +1,57 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import { Skeleton } from '@material-ui/lab';
 
 import { PeriodTypes, generatePeriodToDropdownOptions } from '@utils/helpers/statisticsLib';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import { periods } from '@utils/constants/statistics';
+import { periods, cacheList } from '@utils/constants/statistics';
 import { LineChart } from '@components/Summary/LineChart';
 import { Dropdown } from '@components/Dropdown/Dropdown';
 import themeVariant from '@theme/variants';
 import useAverageRarenessScoreOfNFTsOnSense from '@hooks/useAverageRarenessScoreOfNFTsOnSense';
 import { translate } from '@utils/helpers/i18n';
+import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import * as SummaryStyles from '@components/Summary/Summary.styles';
 import * as StatisticsStyles from '@pages/Statistics/Statistics.styles';
 
-import { transformAverageRarenessScoreOfNFTsOnSenseChartData } from './CascadeAndSenseStatistics.helpers';
+import {
+  transformAverageRarenessScoreOfNFTsOnSenseChartData,
+  TMultiLineChartData,
+} from './CascadeAndSenseStatistics.helpers';
 import * as Styles from './CascadeAndSenseStatistics.styles';
 
 const AverageRarenessScoreOfNFTsOnSense: React.FC = () => {
   const [period, setPeriod] = useState<PeriodTypes>(periods[7][2]);
-  const { data, isLoading, difference, currentValue } = useAverageRarenessScoreOfNFTsOnSense(
-    period,
-  );
+  const [chartData, setChartData] = useState<TMultiLineChartData | null>(null);
+  const [isLoading, setLoading] = useState(false);
+  const swrData = useAverageRarenessScoreOfNFTsOnSense(period);
+
+  useEffect(() => {
+    let currentCache = readCacheValue(cacheList.averageRarenessScoreOfNFTsOnSense) || {};
+    if (currentCache[period]) {
+      setChartData(currentCache[period].parseData as TMultiLineChartData);
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+    if (!swrData.isLoading && swrData.data) {
+      const parseData = transformAverageRarenessScoreOfNFTsOnSenseChartData(swrData.data);
+      setChartData(parseData);
+      currentCache = {
+        ...currentCache,
+        [period]: {
+          parseData,
+        },
+      };
+      setCacheValue(
+        cacheList.averageRarenessScoreOfNFTsOnSense,
+        JSON.stringify({
+          currentCache,
+          lastDate: Date.now(),
+        }),
+      );
+      setLoading(false);
+    }
+  }, [period, swrData.isLoading]);
 
   const handleDropdownChange = (
     event: ChangeEvent<{
@@ -30,7 +62,6 @@ const AverageRarenessScoreOfNFTsOnSense: React.FC = () => {
       setPeriod(event.target.value as PeriodTypes);
     }
   };
-  const chartData = transformAverageRarenessScoreOfNFTsOnSenseChartData(data);
 
   return (
     <SummaryStyles.Card className="cascade-sense-card average-rareness-score">
@@ -44,7 +75,9 @@ const AverageRarenessScoreOfNFTsOnSense: React.FC = () => {
               {isLoading ? (
                 <Skeleton animation="wave" variant="text" />
               ) : (
-                `${formatNumber(currentValue ? currentValue * 100 : 0, { decimalsLength: 2 })}%`
+                `${formatNumber(swrData.currentValue ? swrData.currentValue * 100 : 0, {
+                  decimalsLength: 2,
+                })}%`
               )}
             </SummaryStyles.Values>
           </SummaryStyles.Typography>
@@ -64,13 +97,15 @@ const AverageRarenessScoreOfNFTsOnSense: React.FC = () => {
               color="textSecondary"
               noWrap
               percentagecolor={`${
-                difference > 0 ? themeVariant.custom.green.success : themeVariant.custom.red.error
+                swrData.difference > 0
+                  ? themeVariant.custom.green.success
+                  : themeVariant.custom.red.error
               }`}
             >
               <span>
-                {`${difference > 0 ? '+' : ''}`}
-                {difference}%&nbsp;
-                {difference > 0 ? (
+                {`${swrData.difference > 0 ? '+' : ''}`}
+                {swrData.difference}%&nbsp;
+                {swrData.difference > 0 ? (
                   <svg
                     width="10"
                     height="10"

@@ -163,7 +163,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
       if (optionSelectedFromList.current || !value.length) return null;
       !loading && setLoading(true);
       searchData.length && setSearchData([]);
-      return fetchData({ params: { query: value } })
+      return fetchData({ params: { keyword: value } })
         .then(response => response && sortSearchData(response))
         .finally(() => setLoading(false));
     },
