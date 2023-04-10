@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import { Skeleton } from '@material-ui/lab';
 
 import {
@@ -8,12 +8,13 @@ import {
 } from '@utils/helpers/statisticsLib';
 import { LineChart } from '@components/Summary/LineChart';
 import { Dropdown } from '@components/Dropdown/Dropdown';
-import { periods } from '@utils/constants/statistics';
+import { periods, cacheList } from '@utils/constants/statistics';
 import * as URLS from '@utils/constants/urls';
 import { getCurrencyName } from '@utils/appInfo';
 import { useDeferredData } from '@utils/helpers/useFetch/useFetch';
 import { TLineChartData, IHashRateResponse } from '@utils/types/IStatistics';
 import { translate } from '@utils/helpers/i18n';
+import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 
 import * as SummaryStyles from '@components/Summary/Summary.styles';
 import * as Styles from '@pages/CascadeAndSenseStatistics/CascadeAndSenseStatistics.styles';
@@ -28,7 +29,9 @@ interface IIncomingTransactions {
 
 const IncomingTransactions: React.FC<IIncomingTransactions> = ({ blockElements }) => {
   const [period, setPeriod] = useState<PeriodTypes>(periods[2][0]);
-  const { isLoading, data: chartData } = useDeferredData<IHashRateResponse, TLineChartData>(
+  const [chartData, setChartData] = useState<TLineChartData | null>(null);
+  const [isLoading, setLoading] = useState(false);
+  const incomingTransactionsData = useDeferredData<IHashRateResponse, TLineChartData>(
     {
       method: 'get',
       url: URLS.INCOMING_TRANSACTION_URL,
@@ -39,6 +42,34 @@ const IncomingTransactions: React.FC<IIncomingTransactions> = ({ blockElements }
     undefined,
     [period, blockElements],
   );
+
+  useEffect(() => {
+    let currentCache = readCacheValue(cacheList.incomingTransactions) || {};
+    if (currentCache[period]) {
+      setChartData(currentCache[period].parseData as TLineChartData);
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+    if (!incomingTransactionsData.isLoading && incomingTransactionsData.data) {
+      const parseData = incomingTransactionsData.data;
+      setChartData(parseData);
+      currentCache = {
+        ...currentCache,
+        [period]: {
+          parseData,
+        },
+      };
+      setCacheValue(
+        cacheList.incomingTransactions,
+        JSON.stringify({
+          currentCache,
+          lastDate: Date.now(),
+        }),
+      );
+      setLoading(false);
+    }
+  }, [period, incomingTransactionsData.isLoading]);
 
   const handleDropdownChange = (
     event: ChangeEvent<{

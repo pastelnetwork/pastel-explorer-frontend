@@ -275,6 +275,18 @@ export const cacheList = {
   circulatingSupply: 'explorerCirculatingSupply',
   transactionInBlock: 'explorerTransactionInBlock',
   totalSupply: 'explorerTotalSupply',
+  averageRarenessScoreOfNFTsOnSense: 'explorerAverageRarenessScoreOfNFTsOnSense',
+  averageSizeOfNFTStoredOnCascade: 'explorerAverageSizeOfNFTStoredOnCascade',
+  totalFingerprintsOnSense: 'explorerTotalFingerprintsOnSense',
+  totalOfCascadeRequests: 'explorerTotalOfCascadeRequests',
+  totalOfSenseRequests: 'explorerTotalOfSenseRequests',
+  totalSizeOfDataStored: 'explorerTotalSizeOfDataStored',
+  totalPSLBurned: 'explorerTotalPSLBurned',
+  burnedByMonth: 'explorerBurnedByMonth',
+  volumeTransactions: 'explorerStatisticsVolumeTransactions',
+  incomingTransactions: 'explorerStatisticsIncomingTransactions',
+  statisticsHashrate: 'explorerStatisticsHashrate',
+  blockSizes: 'explorerStatisticsBlockSizes',
 };
 
 export const sense_chart_colors = [

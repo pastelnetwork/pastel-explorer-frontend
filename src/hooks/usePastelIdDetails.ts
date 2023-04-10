@@ -29,7 +29,7 @@ export default function usePastelIdDetails(
     blockHeight: number;
     registeredDate: number;
   }>(
-    `${URLS.PASTEL_ID_URL}/${id}?offset=${offset}&limit=${limit}&type=${type}${qUsername}`,
+    `${URLS.PASTEL_ID_URL}/${id}?offset=${offset}&limit=${limit}&ticket_type=${type}${qUsername}`,
     axiosGet,
     SWR_OPTIONS,
   );

@@ -1,12 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import subDays from 'date-fns/subDays';
+import format from 'date-fns/format';
 
 import { periods } from '@utils/constants/statistics';
 import { translate } from '@utils/helpers/i18n';
 import { LineChart } from '@components/Summary/LineChart';
-import { PeriodTypes } from '@utils/helpers/statisticsLib';
-import { useBalanceHistory } from '@hooks/useAddressDetails';
+import { PeriodTypes, TPeriodDataTypes, marketPeriodData } from '@utils/helpers/statisticsLib';
+import { useBalanceHistory, TBalanceHistory } from '@hooks/useAddressDetails';
 import { isPastelBurnAddress } from '@utils/appInfo';
+import { TChartStatisticsResponse, TLineChartData } from '@utils/types/IStatistics';
+import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 import * as ChartStyles from '@pages/HistoricalStatistics/Chart/Chart.styles';
 
 import Summary from './Summary';
@@ -18,13 +22,102 @@ interface IBalanceHistoryProps {
 }
 
 const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
+  const cacheName = `explorerBalanceHistory${id}`;
   const isBurnAddress = isPastelBurnAddress(id);
   const [selectedPeriod, setSelectedPeriod] = useState<PeriodTypes>(periods[1][4]);
+  const [period, setPeriod] = useState<PeriodTypes>(periods[1][4]);
   const [selectedChartType, setSelectedChartType] = useState('balance');
-  const { isLoading, balance, incoming, outgoing } = useBalanceHistory(id, selectedPeriod);
+  const [chartData, setChartData] = useState<TLineChartData | null>(null);
+  const [isLoading, setLoading] = useState(false);
+  const swrData = useBalanceHistory(id, period);
+
+  const getBalanceHistoryData = (
+    value: TPeriodDataTypes,
+    chartType: string,
+    balanceHistory: TBalanceHistory,
+  ): TChartStatisticsResponse[] => {
+    if (balanceHistory.balance) {
+      const balanceHistoryData = balanceHistory[
+        chartType as keyof TBalanceHistory
+      ] as TChartStatisticsResponse[];
+      const duration = marketPeriodData[value] ?? 0;
+      const target = subDays(new Date(), duration).valueOf();
+      const startBalanceHistoryData = balanceHistoryData.filter(b => b.time < target);
+      let startBalance = startBalanceHistoryData.length
+        ? startBalanceHistoryData[startBalanceHistoryData.length - 1].value
+        : 0;
+      if (value !== periods[1][4]) {
+        const data = balanceHistoryData.filter(b => b.time >= target);
+        if (chartType === 'balance') {
+          const result = [];
+          for (let i = duration - 1; i >= 0; i -= 1) {
+            const date = subDays(new Date(), i);
+            const item = data.find(d => format(d.time, 'yyyyMMdd') === format(date, 'yyyyMMdd'));
+            if (!item) {
+              result.push({
+                time: date.valueOf(),
+                value: startBalance,
+              });
+            } else {
+              result.push({
+                time: item.time,
+                value: item.value,
+              });
+              startBalance = item.value;
+            }
+          }
+          return result;
+        }
+        if (data.length) {
+          return data;
+        }
+        return [{ value: startBalance, time: target }];
+      }
+      return balanceHistory[chartType as keyof TBalanceHistory];
+    }
+
+    return [];
+  };
+
+  useEffect(() => {
+    let currentCache = readCacheValue(cacheName) || {};
+    if (currentCache[period]) {
+      setChartData(currentCache[period].parseData as TLineChartData);
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+    if (!swrData.isLoading && swrData.data) {
+      const parseData = transformChartData(
+        getBalanceHistoryData(selectedPeriod as TPeriodDataTypes, selectedChartType, swrData.data),
+      );
+      setChartData(parseData);
+      currentCache = {
+        ...currentCache,
+        [period]: {
+          parseData,
+        },
+      };
+      setCacheValue(
+        cacheName,
+        JSON.stringify({
+          currentCache,
+          lastDate: Date.now(),
+        }),
+      );
+      setLoading(false);
+    }
+  }, [period, swrData.isLoading]);
 
   const handlePeriodFilterChange = (value: PeriodTypes) => {
     setSelectedPeriod(value);
+    if (!period) {
+      setPeriod(value);
+    }
+    const parseData = transformChartData(
+      getBalanceHistoryData(value as TPeriodDataTypes, selectedChartType, swrData.data),
+    );
+    setChartData(parseData);
   };
 
   const getActivePeriodButtonStyle = (index: string): string => {
@@ -36,19 +129,11 @@ const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
 
   const handleChangeTypeChange = (_value: string) => {
     setSelectedChartType(_value);
+    const parseData = transformChartData(
+      getBalanceHistoryData(selectedPeriod as TPeriodDataTypes, _value, swrData.data),
+    );
+    setChartData(parseData);
   };
-
-  let chartData = transformChartData(balance);
-  switch (selectedChartType) {
-    case 'sent':
-      chartData = transformChartData(outgoing);
-      break;
-    case 'received':
-      chartData = transformChartData(incoming);
-      break;
-    default:
-      break;
-  }
 
   const getChartColor = () => {
     if (isBurnAddress) {
@@ -77,14 +162,14 @@ const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
         <ChartStyles.PeriodSelect className="period">
           <span>{translate('pages.historicalStatistics.period')}: </span>
           <div className="balance-history-period">
-            {periods[1].map(period => (
+            {periods[1].map(_period => (
               <ChartStyles.PeriodButton
-                className={`${getActivePeriodButtonStyle(period)} ${isLoading ? 'disable' : ''}`}
-                onClick={() => handlePeriodFilterChange(period)}
+                className={`${getActivePeriodButtonStyle(_period)} ${isLoading ? 'disable' : ''}`}
+                onClick={() => handlePeriodFilterChange(_period)}
                 type="button"
-                key={`button-filter-${period}`}
+                key={`button-filter-${_period}`}
               >
-                {period}
+                {_period}
               </ChartStyles.PeriodButton>
             ))}
           </div>
@@ -99,8 +184,8 @@ const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
         ) : (
           <LineChart
             chartName="balanceHistory"
-            dataX={chartData.dataX}
-            dataY={chartData.dataY}
+            dataX={chartData?.dataX}
+            dataY={chartData?.dataY}
             offset={0}
             disableClick
             className="line-chart"
