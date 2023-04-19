@@ -42,7 +42,7 @@ const ApiTicket: React.FC<IApiTicketProps> = ({ apiTicket, actionType }) => {
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{data.data_hash || 'NA'}</Styles.TicketContent>
+          <Styles.TicketContent>{data?.data_hash || translate('common.na')}</Styles.TicketContent>
         </Grid>
       </Grid>
       {actionType === 'sense' ? (
@@ -54,7 +54,9 @@ const ApiTicket: React.FC<IApiTicketProps> = ({ apiTicket, actionType }) => {
               </Styles.TicketTitle>
             </Grid>
             <Grid item xs={8} sm={9}>
-              <Styles.TicketContent>{data.dd_and_fingerprints_max}</Styles.TicketContent>
+              <Styles.TicketContent>
+                {data?.dd_and_fingerprints_max || translate('common.na')}
+              </Styles.TicketContent>
             </Grid>
           </Grid>
           <Grid container spacing={3}>
@@ -64,7 +66,9 @@ const ApiTicket: React.FC<IApiTicketProps> = ({ apiTicket, actionType }) => {
               </Styles.TicketTitle>
             </Grid>
             <Grid item xs={8} sm={9}>
-              <Styles.TicketContent>{data.dd_and_fingerprints_ic}</Styles.TicketContent>
+              <Styles.TicketContent>
+                {data?.dd_and_fingerprints_ic || translate('common.na')}
+              </Styles.TicketContent>
             </Grid>
           </Grid>
           <Grid container spacing={3}>
@@ -75,7 +79,7 @@ const ApiTicket: React.FC<IApiTicketProps> = ({ apiTicket, actionType }) => {
             </Grid>
             <Grid item xs={8} sm={9}>
               <Styles.TicketContent>
-                {data.dd_and_fingerprints_ids
+                {data?.dd_and_fingerprints_ids?.length
                   ? data.dd_and_fingerprints_ids.join(', ')
                   : translate('common.na')}
               </Styles.TicketContent>

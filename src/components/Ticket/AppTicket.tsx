@@ -175,7 +175,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          {data.dd_and_fingerprints_ic}
+          {data?.dd_and_fingerprints_ic || translate('common.na')}
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -185,7 +185,9 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{data.dd_and_fingerprints_max}</Styles.TicketContent>
+          <Styles.TicketContent>
+            {data?.dd_and_fingerprints_max || translate('common.na')}
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -196,7 +198,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-            {data.dd_and_fingerprints_ids
+            {data?.dd_and_fingerprints_ids?.length
               ? data.dd_and_fingerprints_ids.join(', ')
               : translate('common.na')}
           </Styles.TicketContent>
@@ -207,7 +209,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           <Styles.TicketTitle>{translate('components.ticket.apiTicket.rqIc')}</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{data.rq_ic}</Styles.TicketContent>
+          <Styles.TicketContent>{data?.rq_ic || translate('common.na')}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -215,7 +217,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           <Styles.TicketTitle>{translate('components.ticket.apiTicket.rqMax')}</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{data.rq_max}</Styles.TicketContent>
+          <Styles.TicketContent>{data?.rq_max || translate('common.na')}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -223,7 +225,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           <Styles.TicketTitle>{translate('components.ticket.apiTicket.rqOti')}</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{data.rq_oti}</Styles.TicketContent>
+          <Styles.TicketContent>{data?.rq_oti || translate('common.na')}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
