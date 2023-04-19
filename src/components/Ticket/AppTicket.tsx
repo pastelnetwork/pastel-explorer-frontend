@@ -165,7 +165,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{data.total_copies}</Styles.TicketContent>
+          <Styles.TicketContent>{data?.total_copies || 0}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>

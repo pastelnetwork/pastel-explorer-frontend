@@ -162,7 +162,7 @@ const NFTCollectionTicket: React.FC<INFTCollectionTicketProps> = ({ nftTicket })
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{nft.royalty}</Styles.TicketContent>
+          <Styles.TicketContent>{nft?.royalty || '0'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -172,7 +172,7 @@ const NFTCollectionTicket: React.FC<INFTCollectionTicketProps> = ({ nftTicket })
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{nft.green?.toString()}</Styles.TicketContent>
+          <Styles.TicketContent>{nft?.green?.toString() || 'false'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <AppTicket appTicket={nft.app_ticket} />
@@ -286,7 +286,7 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{ticket.nft_copy_count}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket?.nft_copy_count || '0'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -296,7 +296,7 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{ticket.royalty}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket?.royalty || '0'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -307,7 +307,7 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-            {ticket.royalty_address ? (
+            {ticket?.royalty_address ? (
               <RouterLink
                 route={`${ROUTES.ADDRESS_DETAILS}/${ticket.royalty_address}`}
                 value={ticket.royalty_address}
@@ -327,7 +327,7 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{ticket.green?.toString()}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket?.green?.toString() || 'false'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>

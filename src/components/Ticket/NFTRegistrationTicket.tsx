@@ -110,7 +110,7 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{nft.copies}</Styles.TicketContent>
+          <Styles.TicketContent>{nft?.copies || '0'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -120,7 +120,7 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{nft.royalty}</Styles.TicketContent>
+          <Styles.TicketContent>{nft?.royalty || '0'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -130,10 +130,10 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{nft.green?.toString()}</Styles.TicketContent>
+          <Styles.TicketContent>{nft?.green?.toString() || 'false'}</Styles.TicketContent>
         </Grid>
       </Grid>
-      {nft.nft_collection_txid ? (
+      {nft?.nft_collection_txid ? (
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
@@ -188,7 +188,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({ ticket }
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-            {ticket.creator_height ? (
+            {ticket?.creator_height ? (
               <RouterLink
                 route={`${ROUTES.BLOCK_DETAILS}/${ticket.creator_height}`}
                 value={ticket.creator_height}
@@ -208,7 +208,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({ ticket }
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{ticket.version}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket?.version}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -218,7 +218,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({ ticket }
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{ticket.key || translate('common.na')}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket?.key || translate('common.na')}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -228,7 +228,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({ ticket }
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{ticket.label || translate('common.na')}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket?.label || translate('common.na')}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -238,7 +238,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({ ticket }
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{ticket.total_copies}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket?.total_copies || '0'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -248,7 +248,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({ ticket }
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{ticket.royalty}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket?.royalty || '0'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -259,7 +259,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({ ticket }
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-            {ticket.royalty_address || translate('common.na')}
+            {ticket?.royalty_address || translate('common.na')}
           </Styles.TicketContent>
         </Grid>
       </Grid>
@@ -270,7 +270,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({ ticket }
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{ticket.green?.toString()}</Styles.TicketContent>
+          <Styles.TicketContent>{ticket?.green?.toString() || 'false'}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
