@@ -176,6 +176,8 @@ export interface INftRegistrationTicket {
   green: boolean;
   storage_fee: number;
   transactionTime: number;
+  activation_ticket: string;
+  activation_txId: string;
 }
 
 export interface INftActivationTicket {
@@ -206,6 +208,8 @@ export interface INftCollectionRegistrationTicket {
   green: boolean;
   storage_fee: number;
   transactionTime: number;
+  activation_ticket: string;
+  activation_txId: string;
 }
 
 export interface INftCollectionTicket {

@@ -295,11 +295,11 @@
     "ticket": {
       "ticketsTitle": {
         "pastelid": {
-          "message": "Pastel ID Registration Ticket",
+          "message": "PastelID Registration Ticket",
           "description": "Used for the ticket title component"
         },
         "usernameChange": {
-          "message": "User Name Change Ticket",
+          "message": "Username Change Ticket",
           "description": "Used for the ticket title component"
         },
         "nftReg": {
@@ -2265,12 +2265,12 @@
         "message": "View all",
         "description": "Used for the Tickets page"
       },
-      "otherTickets": {
-        "message": "Other tickets",
+      "pastelNFTTickets": {
+        "message": "Pastel NFT Tickets",
         "description": "Used for the Tickets page"
       },
-      "pastelNFTTickets": {
-        "message": "Pastel NFT tickets",
+      "pastelIDAndUsernameTickets": {
+        "message": "PastelID and Username Tickets",
         "description": "Used for the Tickets page"
       },
       "senseTickets": {
@@ -2320,6 +2320,76 @@
       "version": {
         "message": "Version",
         "description": "Used for the Tickets page"
+      },
+      "offerTicketsAndTransferTickets": {
+        "message": "Offer Tickets and Transfer Tickets",
+        "description": "Used for the Tickets page"
+      },
+      "miscOtherTicketTypes": {
+        "message": "Misc. Other Ticket Types",
+        "description": "Used for the Tickets page"
+      },
+      "activationTXID": {
+        "message": "Activation TXID",
+        "description": "Used for the Tickets page"
+      },
+      "ticketsTitle": {
+        "pastelid": {
+          "message": "PastelID Registration",
+          "description": "Used for the Tickets page"
+        },
+        "usernameChange": {
+          "message": "Username Change",
+          "description": "Used for the Tickets page"
+        },
+        "nftReg": {
+          "message": "NFT Registration",
+          "description": "Used for the Tickets page"
+        },
+        "nftAct": {
+          "message": "NFT Activation",
+          "description": "Used for the Tickets page"
+        },
+        "nftCollectionReg": {
+          "message": "NFT Collection Registration",
+          "description": "Used for the Tickets page"
+        },
+        "nftCollectionAct": {
+          "message": "NFT Collection Activation",
+          "description": "Used for the Tickets page"
+        },
+        "nftRoyalty": {
+          "message": "NFT Royalty",
+          "description": "Used for the Tickets page"
+        },
+        "actionReg": {
+          "message": "Action Registration",
+          "description": "Used for the Tickets page"
+        },
+        "actionAct": {
+          "message": "Action Activation",
+          "description": "Used for the Tickets page"
+        },
+        "offer": {
+          "message": "Offer",
+          "description": "Used for the Tickets page"
+        },
+        "accept": {
+          "message": "Accept",
+          "description": "Used for the Tickets page"
+        },
+        "transfer": {
+          "message": "Transfer",
+          "description": "Used for the Tickets page"
+        },
+        "totalTickets": {
+          "message": "{{total}} tickets",
+          "description": "Used for the Tickets page"
+        },
+        "totalTicket": {
+          "message": "{{total}} ticket",
+          "description": "Used for the Tickets page"
+        }
       }
     },
     "ticketsType": {
@@ -2336,7 +2406,7 @@
         "description": "Used for the TicketsType page"
       },
       "otherTickets": {
-        "message": "Other tickets",
+        "message": "Misc. Other Ticket Types",
         "description": "Used for the TicketsType page"
       },
       "totalTickets": {
@@ -2426,6 +2496,18 @@
       "inactivated": {
         "message": "Not Yet Activated",
         "description": "Used for the TicketsType page"
+      },
+      "pastelNFTTickets": {
+        "message": "Pastel NFT Tickets",
+        "description": "Used for the Tickets page"
+      },
+      "pastelIDAndUsernameTickets": {
+        "message": "PastelID and Username Tickets",
+        "description": "Used for the Tickets page"
+      },
+      "offerTicketsAndTransferTickets": {
+        "message": "Offer Tickets and Transfer Tickets",
+        "description": "Used for the Tickets page"
       }
     },
     "burned": {

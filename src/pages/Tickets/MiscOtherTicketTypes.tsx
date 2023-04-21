@@ -7,27 +7,33 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import InfinityTable from '@components/InfinityTable/InfinityTable';
 import { translate } from '@utils/helpers/i18n';
 
-import { transformCascadeData, TTicketResponse } from './Tickets.helpers';
-import { cascadeColumns } from './Tickets.columns';
+import { transformOtherData, TTicketResponse } from './Tickets.helpers';
+import { otherTicketsColumns } from './Tickets.columns';
 import * as Styles from './Tickets.styles';
 
-interface ICascadeProps {
+interface IMiscOtherTicketTypesProps {
   isMobile: boolean;
   ticketsData: TTicketResponse;
 }
 
-const Cascade: React.FC<ICascadeProps> = ({ isMobile, ticketsData }) => {
+const MiscOtherTicketTypes: React.FC<IMiscOtherTicketTypesProps> = ({ isMobile, ticketsData }) => {
   const { data, total, isLoading, size, setSize } = ticketsData;
+
+  const handleFetchMoreMovements = (reachedTableBottom: boolean) => {
+    if (!reachedTableBottom) return null;
+    setSize(size + 1);
+    return true;
+  };
 
   const getTitle = () => {
     return (
       <Styles.BlockTitle className="latest-blocks">
-        {translate('pages.tickets.cascadeTickets')} (
+        {translate('pages.tickets.miscOtherTicketTypes')} (
         {total > 1
           ? translate('pages.tickets.totalTickets', { total: formatNumber(total) })
           : translate('pages.tickets.totalTicket', { total: formatNumber(total) })}
         )
-        <Link to={`${ROUTES.TICKETS_TYPE}/cascade`} className="view-all">
+        <Link to={`${ROUTES.TICKETS_TYPE}/other`} className="view-all">
           <Typography align="center" className="p-16">
             {translate('pages.tickets.viewAll')} <ArrowForwardIos />
           </Typography>
@@ -36,17 +42,11 @@ const Cascade: React.FC<ICascadeProps> = ({ isMobile, ticketsData }) => {
     );
   };
 
-  const handleFetchMoreMovements = (reachedTableBottom: boolean) => {
-    if (!reachedTableBottom) return null;
-    setSize(size + 1);
-    return true;
-  };
-
   return (
-    <Styles.CascadeContainer id="cascadeTickets">
+    <Styles.OtherTicketContainer id="miscOtherTicketTypes">
       <InfinityTable
-        rows={data ? transformCascadeData(data) : []}
-        columns={cascadeColumns}
+        rows={data ? transformOtherData(data) : []}
+        columns={otherTicketsColumns}
         tableHeight={495}
         title={getTitle()}
         onBottomReach={handleFetchMoreMovements}
@@ -55,8 +55,8 @@ const Cascade: React.FC<ICascadeProps> = ({ isMobile, ticketsData }) => {
         customLoading={isLoading}
         rowHeight={isMobile ? 140 : 50}
       />
-    </Styles.CascadeContainer>
+    </Styles.OtherTicketContainer>
   );
 };
 
-export default Cascade;
+export default MiscOtherTicketTypes;

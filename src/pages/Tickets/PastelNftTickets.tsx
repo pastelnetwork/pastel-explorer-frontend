@@ -4,19 +4,20 @@ import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
 import { Link } from '@components/Link/Link.styles';
 import * as ROUTES from '@utils/constants/routes';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import useTickets from '@hooks/useTickets';
 import InfinityTable from '@components/InfinityTable/InfinityTable';
 import { translate } from '@utils/helpers/i18n';
 
-import { pastelIdColumns, transformPastelIdData, DATA_LIMIT } from './Tickets.helpers';
+import { transformPastelNftTicketsData, TTicketResponse } from './Tickets.helpers';
+import { pastelNftTicketsColumns } from './Tickets.columns';
 import * as Styles from './Tickets.styles';
 
-interface IPastelNFTProps {
+interface IPastelNftTicketsProps {
   isMobile: boolean;
+  ticketsData: TTicketResponse;
 }
 
-const PastelNFT: React.FC<IPastelNFTProps> = ({ isMobile }) => {
-  const { data, total, isLoading, size, setSize } = useTickets('pastelid', DATA_LIMIT);
+const PastelNftTickets: React.FC<IPastelNftTicketsProps> = ({ isMobile, ticketsData }) => {
+  const { data, total, isLoading, size, setSize } = ticketsData;
 
   const handleFetchMoreMovements = (reachedTableBottom: boolean) => {
     if (!reachedTableBottom) return null;
@@ -32,7 +33,7 @@ const PastelNFT: React.FC<IPastelNFTProps> = ({ isMobile }) => {
           ? translate('pages.tickets.totalTickets', { total: formatNumber(total) })
           : translate('pages.tickets.totalTicket', { total: formatNumber(total) })}
         )
-        <Link to={`${ROUTES.TICKETS_TYPE}/pastelid`} className="view-all">
+        <Link to={`${ROUTES.TICKETS_TYPE}/pastel-nft`} className="view-all">
           <Typography align="center" className="p-16">
             {translate('pages.tickets.viewAll')} <ArrowForwardIos />
           </Typography>
@@ -42,20 +43,20 @@ const PastelNFT: React.FC<IPastelNFTProps> = ({ isMobile }) => {
   };
 
   return (
-    <Styles.PastelContainer>
+    <Styles.OtherTicketContainer id="pastelNFTTickets">
       <InfinityTable
-        rows={data ? transformPastelIdData(data) : []}
-        columns={pastelIdColumns}
+        rows={data ? transformPastelNftTicketsData(data) : []}
+        columns={pastelNftTicketsColumns}
         tableHeight={495}
         title={getTitle()}
         onBottomReach={handleFetchMoreMovements}
         className="data-table"
         headerBackground
         customLoading={isLoading}
-        rowHeight={isMobile ? 140 : 45}
+        rowHeight={isMobile ? 140 : 50}
       />
-    </Styles.PastelContainer>
+    </Styles.OtherTicketContainer>
   );
 };
 
-export default PastelNFT;
+export default PastelNftTickets;

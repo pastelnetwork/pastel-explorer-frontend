@@ -91,15 +91,15 @@ const PastelIDRegistrationTicket: React.FC<IPastelIDRegistrationTicketProps> = (
           </Styles.TicketContent>
         </Grid>
       </Grid>
-      <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>
-            {translate('components.ticket.pastelIDRegistrationTicket.pqKey')}
-          </Styles.TicketTitle>
-        </Grid>
-        <Grid item xs={8} sm={9}>
-          <Styles.TicketContent className="break-all view-more">
-            {ticket.pq_key ? (
+      {ticket?.pq_key ? (
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3} className="max-w-355">
+            <Styles.TicketTitle>
+              {translate('components.ticket.pastelIDRegistrationTicket.pqKey')}
+            </Styles.TicketTitle>
+          </Grid>
+          <Grid item xs={8} sm={9}>
+            <Styles.TicketContent className="break-all view-more">
               <>
                 {!isExpanded ? `${ticket.pq_key.substring(0, 200)}...` : ticket.pq_key}
                 <Styles.ButtonLink onClick={() => setIsExpanded(!isExpanded)}>
@@ -108,12 +108,10 @@ const PastelIDRegistrationTicket: React.FC<IPastelIDRegistrationTicketProps> = (
                     : translate('components.ticket.pastelIDRegistrationTicket.clickToSeeLess')}
                 </Styles.ButtonLink>
               </>
-            ) : (
-              translate('common.na')
-            )}
-          </Styles.TicketContent>
+            </Styles.TicketContent>
+          </Grid>
         </Grid>
-      </Grid>
+      ) : null}
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>

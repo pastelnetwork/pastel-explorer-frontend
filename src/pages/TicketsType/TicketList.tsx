@@ -249,6 +249,18 @@ const TicketsList: React.FC<ITicketsList> = ({
   };
 
   const getTitle = () => {
+    if (ticketType === 'pastelid-usename') {
+      return translate('pages.ticketsType.pastelIDAndUsernameTickets');
+    }
+    if (ticketType === 'offer-transfer') {
+      return translate('pages.ticketsType.offerTicketsAndTransferTickets');
+    }
+    if (ticketType === 'pastel-nft') {
+      return translate('pages.ticketsType.pastelNFTTickets');
+    }
+    if (ticketType === 'other') {
+      return translate('pages.ticketsType.otherTickets');
+    }
     const ticket = TICKET_TYPE_OPTIONS.find(t => t.value === ticketType);
     return translate(ticket?.name || '') || translate('pages.ticketsType.otherTickets');
   };
@@ -259,6 +271,21 @@ const TicketsList: React.FC<ITicketsList> = ({
       result.push({
         name: translate('pages.ticketsType.otherTickets'),
         value: 'other',
+      });
+    } else if (ticketType === 'pastelid-usename') {
+      result.push({
+        name: translate('pages.ticketsType.pastelIDAndUsernameTickets'),
+        value: 'pastelid-usename',
+      });
+    } else if (ticketType === 'pastel-nft') {
+      result.push({
+        name: translate('pages.ticketsType.pastelNFTTickets'),
+        value: 'pastel-nft',
+      });
+    } else if (ticketType === 'offer-transfer') {
+      result.push({
+        name: translate('pages.ticketsType.offerTicketsAndTransferTickets'),
+        value: 'offer-transfer',
       });
     }
 

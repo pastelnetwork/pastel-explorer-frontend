@@ -130,7 +130,7 @@ export const ButtonLink = styled.button`
 export const ActionRegistrationTicketStatus = styled.div`
   display: inline-flex;
   padding: 6px 10px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1;
   color: ${themeVariant.custom.white};
