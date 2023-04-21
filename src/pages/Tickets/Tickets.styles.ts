@@ -209,6 +209,7 @@ export const TicketSummaryBox = styled.a`
   border-radius: 10px;
   text-decoration: none;
   transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  border: 1px solid ${props => props.theme.palette.text.primary};
 
   &.offerTicketsAndTransferTickets {
     min-width: 240px;
@@ -219,7 +220,12 @@ export const TicketSummaryBox = styled.a`
   }
 
   &:hover {
-    background-color: ${props => props.theme.card.titleColor};
+    border-color: ${props => props.theme.sidebar.menu.active};
+
+    .ticket-summary-title,
+    .ticket-summary-value {
+      color: ${props => props.theme.sidebar.menu.active};
+    }
   }
 
   &:last-child {
@@ -233,6 +239,7 @@ export const TicketSummaryBox = styled.a`
     font-weight: 500;
     line-height: 1.25;
     white-space: nowrap;
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   }
 
   .ticket-summary-value {
@@ -242,6 +249,7 @@ export const TicketSummaryBox = styled.a`
     overflow: hidden;
     text-overflow: ellipsis;
     color: ${props => props.theme.card.color};
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   }
 
   @media screen and (max-width: 1200px) {
