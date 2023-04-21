@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Grid } from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
 
 import useTickets from '@hooks/useTickets';
 
@@ -9,7 +10,13 @@ import PastelIDAndUsernameTickets from './PastelIDAndUsernameTickets';
 import PastelNftTickets from './PastelNftTickets';
 import OfferAndTransferTickets from './OfferAndTransferTickets';
 import MiscOtherTicketTypes from './MiscOtherTicketTypes';
-import { ticketsSummary, DATA_LIMIT, getTotalTickets, TTicketResponse } from './Tickets.helpers';
+import {
+  ticketsSummary,
+  DATA_LIMIT,
+  getTotalTickets,
+  TTicketResponse,
+  isLoading,
+} from './Tickets.helpers';
 import * as Styles from './Tickets.styles';
 
 const Tickets: React.FC = () => {
@@ -37,13 +44,21 @@ const Tickets: React.FC = () => {
     };
   }, []);
 
-  const fields = {
+  const ticketData = {
     senseTickets: senseTicketData.total,
     cascadeTickets: cascadeTicketData.total,
     pastelIDAndUsernameTickets: pastelidUsenameTicketData.total,
     pastelNFTTickets: pastelNftTicketData.total,
     offerTicketsAndTransferTickets: offerTransferTicketData.total,
     miscOtherTicketTypes: otherTicketData.total,
+  };
+  const ticketLoading = {
+    senseTickets: senseTicketData.isLoading,
+    cascadeTickets: cascadeTicketData.isLoading,
+    pastelIDAndUsernameTickets: pastelidUsenameTicketData.isLoading,
+    pastelNFTTickets: pastelNftTicketData.isLoading,
+    offerTicketsAndTransferTickets: offerTransferTicketData.isLoading,
+    miscOtherTicketTypes: otherTicketData.isLoading,
   };
 
   return (
@@ -54,7 +69,13 @@ const Tickets: React.FC = () => {
             {ticketsSummary.map(item => (
               <Styles.TicketSummaryBox key={item.id} href={`#${item.id}`} className={item.id}>
                 <span className="ticket-summary-title">{item.name}</span>
-                <span className="ticket-summary-value">{getTotalTickets(item.id, fields)}</span>
+                <span className="ticket-summary-value">
+                  {isLoading(item.id, ticketLoading) ? (
+                    <Skeleton animation="wave" variant="text" />
+                  ) : (
+                    getTotalTickets(item.id, ticketData)
+                  )}
+                </span>
               </Styles.TicketSummaryBox>
             ))}
           </Styles.TicketSummaryContainer>

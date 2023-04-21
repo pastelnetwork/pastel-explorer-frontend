@@ -323,6 +323,10 @@ type TFields = {
   [key: string]: number;
 };
 
+type TLoadingFields = {
+  [key: string]: boolean | undefined;
+};
+
 export type TTicketResponse = {
   data: TicketsList[];
   total: number;
@@ -336,4 +340,8 @@ export const getTotalTickets = (field: string, fields: TFields) => {
   return total > 0
     ? translate('pages.tickets.ticketsTitle.totalTickets', { total: formatNumber(total) })
     : translate('pages.tickets.ticketsTitle.totalTicket', { total: formatNumber(total) });
+};
+
+export const isLoading = (field: string, fields: TLoadingFields) => {
+  return fields[field];
 };
