@@ -1,5 +1,4 @@
 import useSWRInfinite from 'swr/infinite';
-import useSWR from 'swr';
 
 import { TChartStatisticsResponse } from '@utils/types/IStatistics';
 import { SWR_OPTIONS } from '@utils/constants/statistics';
@@ -12,44 +11,28 @@ import { translate } from '@utils/helpers/i18n';
 import { SortDirectionsType } from '@components/InfinityTable/InfinityTable';
 import { DATA_FETCH_LIMIT } from '@pages/Details/AddressDetails/AddressDetails.helpers';
 
-interface IAddressDetails {
-  outgoingSum: number;
-  incomingSum: number;
-}
-
 export type TBalanceHistory = {
   balance: TChartStatisticsResponse[];
   received: TChartStatisticsResponse[];
   sent: TChartStatisticsResponse[];
 };
 
-export default function useAddressDetails(id: string) {
-  const { data, isLoading, error } = useSWR<IAddressDetails>(
-    `${URLS.ADDRESS_URL}/${id}`,
-    axiosGet,
-    SWR_OPTIONS,
-  );
-
-  return {
-    isLoading,
-    outgoingSum: data?.outgoingSum || 0,
-    incomingSum: data?.incomingSum || 0,
-    error,
-  };
-}
-
-export function useBalanceHistory(id: string, period: string) {
+export function useBalanceHistory(id: string) {
   const { data, isLoading } = useSWRInfinite<{
     data: Array<TChartStatisticsResponse>;
     incoming: Array<TChartStatisticsResponse>;
     outgoing: Array<TChartStatisticsResponse>;
-  }>(() => `${URLS.BALANCE_HISTORY_URL}/${id}?period=${period}`, axiosGet, SWR_OPTIONS);
+    totalReceived: number;
+    totalSent: number;
+  }>(() => `${URLS.BALANCE_HISTORY_URL}/${id}`, axiosGet, SWR_OPTIONS);
 
   return {
     data: {
       balance: data ? data[0].data : [],
       received: data ? data[0].incoming : [],
       sent: data ? data[0].outgoing : [],
+      totalReceived: data ? data[0].totalReceived : 0,
+      totalSent: data ? data[0].totalSent : 0,
     },
     isLoading,
   };

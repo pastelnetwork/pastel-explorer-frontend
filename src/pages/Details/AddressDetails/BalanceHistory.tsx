@@ -29,7 +29,7 @@ const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
   const [selectedChartType, setSelectedChartType] = useState('balance');
   const [chartData, setChartData] = useState<TLineChartData | null>(null);
   const [isLoading, setLoading] = useState(false);
-  const swrData = useBalanceHistory(id, period);
+  const swrData = useBalanceHistory(id);
 
   const getBalanceHistoryData = (
     value: TPeriodDataTypes,
@@ -149,7 +149,6 @@ const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
         return '#5470c6';
     }
   };
-
   return (
     <Styles.BalanceHistoryWrapper>
       <Styles.BalanceHistorySummaryWrapper>
@@ -157,14 +156,18 @@ const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
           id={id}
           onChange={handleChangeTypeChange}
           selectedChart={selectedChartType}
-          isBalanceLoading={isLoading}
+          isBalanceLoading={isLoading || swrData.isLoading}
+          outgoingSum={swrData?.data?.totalSent}
+          incomingSum={swrData?.data?.totalReceived}
         />
         <ChartStyles.PeriodSelect className="period">
           <span>{translate('pages.historicalStatistics.period')}: </span>
           <div className="balance-history-period">
             {periods[1].map(_period => (
               <ChartStyles.PeriodButton
-                className={`${getActivePeriodButtonStyle(_period)} ${isLoading ? 'disable' : ''}`}
+                className={`${getActivePeriodButtonStyle(_period)} ${
+                  isLoading || swrData.isLoading ? 'disable' : ''
+                }`}
                 onClick={() => handlePeriodFilterChange(_period)}
                 type="button"
                 key={`button-filter-${_period}`}
@@ -176,7 +179,7 @@ const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
         </ChartStyles.PeriodSelect>
       </Styles.BalanceHistorySummaryWrapper>
       <Styles.ChartWrapper>
-        {isLoading ? (
+        {isLoading || swrData.isLoading ? (
           <Styles.Loader>
             <CircularProgress size={40} />
             <Styles.LoadingText>{translate('common.loadingData')}</Styles.LoadingText>
