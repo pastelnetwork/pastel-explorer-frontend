@@ -67,10 +67,10 @@ export const getSimilarRegisteredImagesData = (rarenessScoresTable: string) => {
   let fancyGridData = [];
   for (let i = 0; i < Object.values(uncompressedRarenessScoresTable.image_hash).length; i += 1) {
     fancyGridData.push({
-      image: `data:image/jpeg;base64,${uncompressedRarenessScoresTable.thumbnail[i][0]}`,
+      image: `data:image/jpeg;base64,${uncompressedRarenessScoresTable.thumbnail[i]}`,
       imageHash: formatImageHash(uncompressedRarenessScoresTable.image_hash[i]),
       imageHashOriginal: uncompressedRarenessScoresTable.image_hash[i],
-      dateTimeAdded: uncompressedRarenessScoresTable.register_time[i][0],
+      dateTimeAdded: uncompressedRarenessScoresTable.register_time[i],
       likelyDupe: uncompressedRarenessScoresTable.is_likely_dupe[i],
       matchType: uncompressedRarenessScoresTable.match_type[i],
       finalDupeProbability: uncompressedRarenessScoresTable.final_dupe_probability[i],
