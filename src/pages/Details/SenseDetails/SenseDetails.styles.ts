@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Box from '@material-ui/core/Box';
+import MuiDialog from '@material-ui/core/Dialog';
 
 export const Wrapper = styled('div')`
   display: block;
@@ -88,12 +89,6 @@ export const Wrapper = styled('div')`
       vertical-align: bottom;
     }
 
-    .address-link {
-      max-width: 50%;
-      display: inline-block;
-      vertical-align: bottom;
-    }
-
     .alert-wrapper {
       width: 100%;
       overflow: hidden;
@@ -106,6 +101,10 @@ export const ContentWrapper = styled.div`
 
   &.no-spacing {
     padding: 0;
+  }
+
+  &.submitted-image-content {
+    padding: 5px;
   }
 `;
 
@@ -222,13 +221,71 @@ export const ImagesWrapper = styled(Box)`
     }
   }
 
-  .pastel-data {
+  .submitted-image {
     width: calc(40% - 20px);
     min-height: 650px;
     margin-right: 20px;
 
-    &.min-height-725 {
-      min-height: 725px;
+    &.min-height-650 {
+      min-height: 650px;
+    }
+
+    .submitted-image-wrapper {
+      width: 100%;
+      height: 580px;
+      overflow: hidden;
+      border-radius: 10px;
+
+      button {
+        display: block;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        cursor: zoom-in;
+      }
+
+      img {
+        position: relative;
+        left: 50%;
+        display: block;
+        width: auto;
+        height: 100%;
+        max-height: 100%;
+        transform: translateX(-50%);
+      }
+
+      .image-placeholder-wrapper {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+        padding-bottom: 30px;
+      }
+
+      .content {
+        max-width: 220px;
+        margin-top: -20px;
+        color: ${props => props.theme.sidebar.menu.default};
+        font-size: 40px;
+        text-align: center;
+        line-height: 1.1;
+
+        ${props => props.theme.breakpoints.down('sm')} {
+          font-size: 30px;
+        }
+      }
+
+      .image-placeholder {
+        font-size: 300px;
+        color: ${props => props.theme.table.hover};
+
+        ${props => props.theme.breakpoints.down('sm')} {
+          font-size: 200px;
+        }
+      }
     }
   }
 
@@ -277,27 +334,32 @@ export const ImagesWrapper = styled(Box)`
     margin-right: 20px;
   }
 
-  .similar-registered-images {
+  .similar-registered-images,
+  .pastel-data {
     width: 100%;
   }
 
   @media screen and (max-width: 1100px) {
-    .pastel-data,
+    .submitted-image,
     .summary-group {
       width: 100%;
     }
 
     .summary-group {
-      order: 1;
+      order: 2;
     }
 
-    .pastel-data {
+    .submitted-image {
       min-height: unset;
       margin-right: 0;
-      order: 2;
+      order: 1;
 
-      &.min-height-725 {
+      &.min-height-650 {
         min-height: unset;
+      }
+
+      .submitted-image-wrapper {
+        height: 350px;
       }
     }
 
@@ -315,6 +377,10 @@ export const ImagesWrapper = styled(Box)`
 
     .fingerprint-vector-heatmap {
       order: 6;
+    }
+
+    .pastel-data {
+      order: 7;
     }
   }
 
@@ -422,4 +488,20 @@ export const TitleWrapper = styled.div`
   align-items: center;
   background: ${props => props.theme.card.titleColor};
   padding-right: 16px;
+`;
+
+export const FullImageWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
+export const Dialog = styled(MuiDialog)`
+  .MuiDialog-paperScrollPaper {
+    max-width: 90vw;
+    max-height: 90vh;
+
+    img {
+      max-height: 89vh;
+    }
+  }
 `;

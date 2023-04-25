@@ -1586,6 +1586,18 @@
       "senseVersion": {
         "message": "Sense Version",
         "description": "Used for the SenseDetails page"
+      },
+      "submittedImage": {
+        "message": "Submitted Image",
+        "description": "Used for the SenseDetails page"
+      },
+      "viewFull": {
+        "message": "View full",
+        "description": "Used for the SenseDetails page"
+      },
+      "noImageAvailable": {
+        "message": "No image available",
+        "description": "Used for the SenseDetails page"
       }
     },
     "transactionDetails": {
