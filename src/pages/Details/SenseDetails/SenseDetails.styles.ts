@@ -271,7 +271,6 @@ export const ImagesWrapper = styled(Box)`
         flex-direction: column;
         justify-content: center;
         height: 100%;
-        padding-bottom: 30px;
       }
 
       .content {
