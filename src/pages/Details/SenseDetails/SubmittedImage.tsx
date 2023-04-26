@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import BrokenImageIcon from '@material-ui/icons/BrokenImage';
 
 import { translate } from '@utils/helpers/i18n';
 
+import imagePlaceholder from '@assets/images/no-image-placeholder.svg';
 import * as Styles from './SenseDetails.styles';
 
 interface ISubmittedImageProps {
@@ -32,20 +31,17 @@ const SubmittedImage: React.FC<ISubmittedImageProps> = ({ imageUrl, imageHash })
             onClick={handleClickOpen}
             title={translate('pages.senseDetails.viewFull')}
           >
-            <img src={imageUrl} alt={imageHash} />
+            <img src={`data:image/jpeg;base64,${imageUrl}`} alt={imageHash} />
           </button>
         ) : (
           <Box className="image-placeholder-wrapper">
-            <BrokenImageIcon className="image-placeholder" />
-            <Typography className="content">
-              {translate('pages.senseDetails.noImageAvailable')}
-            </Typography>
+            <img src={imagePlaceholder} alt={imageHash} className="no_submitted_image" />
           </Box>
         )}
       </Box>
       <Styles.Dialog onClose={handleClose} open={open}>
         <Styles.FullImageWrapper>
-          <img src={imageUrl} alt={imageHash} />
+          <img src={`data:image/jpeg;base64,${imageUrl}`} alt={imageHash} />
         </Styles.FullImageWrapper>
       </Styles.Dialog>
     </>

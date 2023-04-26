@@ -233,11 +233,15 @@ export const ImagesWrapper = styled(Box)`
     .submitted-image-wrapper {
       width: 100%;
       height: 580px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
       border-radius: 10px;
 
       button {
-        display: block;
+        position: relative;
+        display: inline-block;
         width: 100%;
         height: 100%;
         padding: 0;
@@ -247,13 +251,18 @@ export const ImagesWrapper = styled(Box)`
       }
 
       img {
-        position: relative;
-        left: 50%;
-        display: block;
-        width: auto;
-        height: 100%;
         max-height: 100%;
-        transform: translateX(-50%);
+        max-width: 100%;
+        width: auto;
+        height: auto;
+
+        &.no_submitted_image {
+          height: 200px;
+
+          ${props => props.theme.breakpoints.down(425)} {
+            height: 150px;
+          }
+        }
       }
 
       .image-placeholder-wrapper {
@@ -266,10 +275,10 @@ export const ImagesWrapper = styled(Box)`
       }
 
       .content {
-        max-width: 220px;
-        margin-top: -20px;
+        margin-top: -10px;
         color: ${props => props.theme.sidebar.menu.default};
-        font-size: 40px;
+        font-size: 30px;
+        font-size: 600;
         text-align: center;
         line-height: 1.1;
 
@@ -279,7 +288,7 @@ export const ImagesWrapper = styled(Box)`
       }
 
       .image-placeholder {
-        font-size: 300px;
+        font-size: 200px;
         color: ${props => props.theme.table.hover};
 
         ${props => props.theme.breakpoints.down('sm')} {
