@@ -35,7 +35,13 @@ export const marketPeriodData = {
   '1y': 365,
 };
 
+export const marketPeriodByMonthData = {
+  '1y': 12,
+  '2y': 24,
+};
+
 export type TPeriodDataTypes = '30d' | '60d' | '180d' | '1y';
+export type TPeriodByMonthDataTypes = '1y' | '2y';
 
 export type PeriodTypes =
   | '1h'

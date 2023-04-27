@@ -7,27 +7,36 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import InfinityTable from '@components/InfinityTable/InfinityTable';
 import { translate } from '@utils/helpers/i18n';
 
-import { transformCascadeData, TTicketResponse } from './Tickets.helpers';
-import { cascadeColumns } from './Tickets.columns';
+import { transformPastelIdData, TTicketResponse } from './Tickets.helpers';
+import { pastelIDAndUsernameTicketsColumns } from './Tickets.columns';
 import * as Styles from './Tickets.styles';
 
-interface ICascadeProps {
+interface IPastelIDAndUsernameTicketsProps {
   isMobile: boolean;
   ticketsData: TTicketResponse;
 }
 
-const Cascade: React.FC<ICascadeProps> = ({ isMobile, ticketsData }) => {
+const PastelIDAndUsernameTickets: React.FC<IPastelIDAndUsernameTicketsProps> = ({
+  isMobile,
+  ticketsData,
+}) => {
   const { data, total, isLoading, size, setSize } = ticketsData;
+
+  const handleFetchMoreMovements = (reachedTableBottom: boolean) => {
+    if (!reachedTableBottom) return null;
+    setSize(size + 1);
+    return true;
+  };
 
   const getTitle = () => {
     return (
       <Styles.BlockTitle className="latest-blocks">
-        {translate('pages.tickets.cascadeTickets')} (
+        {translate('pages.tickets.pastelIDAndUsernameTickets')} (
         {total > 1
           ? translate('pages.tickets.totalTickets', { total: formatNumber(total) })
           : translate('pages.tickets.totalTicket', { total: formatNumber(total) })}
         )
-        <Link to={`${ROUTES.TICKETS_TYPE}/cascade`} className="view-all">
+        <Link to={`${ROUTES.TICKETS_TYPE}/pastelid-usename`} className="view-all">
           <Typography align="center" className="p-16">
             {translate('pages.tickets.viewAll')} <ArrowForwardIos />
           </Typography>
@@ -36,17 +45,11 @@ const Cascade: React.FC<ICascadeProps> = ({ isMobile, ticketsData }) => {
     );
   };
 
-  const handleFetchMoreMovements = (reachedTableBottom: boolean) => {
-    if (!reachedTableBottom) return null;
-    setSize(size + 1);
-    return true;
-  };
-
   return (
-    <Styles.CascadeContainer id="cascadeTickets">
+    <Styles.PastelContainer id="pastelIDAndUsernameTickets">
       <InfinityTable
-        rows={data ? transformCascadeData(data) : []}
-        columns={cascadeColumns}
+        rows={data ? transformPastelIdData(data) : []}
+        columns={pastelIDAndUsernameTicketsColumns}
         tableHeight={495}
         title={getTitle()}
         onBottomReach={handleFetchMoreMovements}
@@ -55,8 +58,8 @@ const Cascade: React.FC<ICascadeProps> = ({ isMobile, ticketsData }) => {
         customLoading={isLoading}
         rowHeight={isMobile ? 140 : 50}
       />
-    </Styles.CascadeContainer>
+    </Styles.PastelContainer>
   );
 };
 
-export default Cascade;
+export default PastelIDAndUsernameTickets;

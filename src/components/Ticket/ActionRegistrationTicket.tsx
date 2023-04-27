@@ -81,48 +81,44 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket, actionType }) => {
           </Styles.TicketContent>
         </Grid>
       </Grid>
-      <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>
-            {translate('components.ticket.actionRegistrationTicket.blockNumber')}:
-          </Styles.TicketTitle>
-        </Grid>
-        <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>
-            {nft.blocknum ? (
+      {nft.blocknum ? (
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3} className="max-w-355">
+            <Styles.TicketTitle>
+              {translate('components.ticket.actionRegistrationTicket.blockNumber')}:
+            </Styles.TicketTitle>
+          </Grid>
+          <Grid item xs={8} sm={9}>
+            <Styles.TicketContent>
               <RouterLink
                 route={`${ROUTES.BLOCK_DETAILS}/${nft.blocknum}`}
                 value={nft.blocknum}
                 title={nft.blocknum?.toString()}
                 className="address-link"
               />
-            ) : (
-              translate('common.na')
-            )}
-          </Styles.TicketContent>
+            </Styles.TicketContent>
+          </Grid>
         </Grid>
-      </Grid>
-      <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>
-            {translate('components.ticket.actionRegistrationTicket.blockHash')}:
-          </Styles.TicketTitle>
-        </Grid>
-        <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>
-            {nft.block_hash ? (
+      ) : null}
+      {nft.block_hash ? (
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3} className="max-w-355">
+            <Styles.TicketTitle>
+              {translate('components.ticket.actionRegistrationTicket.blockHash')}:
+            </Styles.TicketTitle>
+          </Grid>
+          <Grid item xs={8} sm={9}>
+            <Styles.TicketContent>
               <RouterLink
                 route={`${ROUTES.BLOCK_DETAILS}/${nft.block_hash}`}
                 value={nft.block_hash}
                 title={nft.block_hash}
                 className="address-link"
               />
-            ) : (
-              translate('common.na')
-            )}
-          </Styles.TicketContent>
+            </Styles.TicketContent>
+          </Grid>
         </Grid>
-      </Grid>
+      ) : null}
       {nft.api_ticket ? (
         <Styles.Accordion
           expanded={isExpanded}
@@ -200,25 +196,23 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
               </Styles.TicketContent>
             </Styles.ActivationTicketItem>
           </Grid>
-          <Grid container spacing={3}>
-            <Styles.ActivationTicketItem className="item">
-              <Styles.TicketTitle className="mr-5">
-                {translate('components.ticket.actionRegistrationTicket.calledAt')}
-              </Styles.TicketTitle>
-              <Styles.TicketContent>
-                {ticket.called_at ? (
+          {ticket.called_at ? (
+            <Grid container spacing={3}>
+              <Styles.ActivationTicketItem className="item">
+                <Styles.TicketTitle className="mr-5">
+                  {translate('components.ticket.actionRegistrationTicket.calledAt')}
+                </Styles.TicketTitle>
+                <Styles.TicketContent>
                   <RouterLink
                     route={`${ROUTES.BLOCK_DETAILS}/${activationTicket.called_at}`}
                     value={activationTicket.called_at}
                     title={activationTicket.called_at?.toString()}
                     className="address-link small"
                   />
-                ) : (
-                  translate('common.na')
-                )}
-              </Styles.TicketContent>
-            </Styles.ActivationTicketItem>
-          </Grid>
+                </Styles.TicketContent>
+              </Styles.ActivationTicketItem>
+            </Grid>
+          ) : null}
           <Grid container spacing={3}>
             <Styles.ActivationTicketItem className="item">
               <Styles.TicketTitle className="mr-5">
@@ -242,25 +236,23 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
               </Styles.TicketContent>
             </Styles.ActivationTicketItem>
           </Grid>
-          <Grid container spacing={3}>
-            <Styles.ActivationTicketItem className="item">
-              <Styles.TicketTitle className="mr-5">
-                {translate('components.ticket.actionRegistrationTicket.regTxId')}
-              </Styles.TicketTitle>
-              <Styles.TicketContent>
-                {activationTicket.reg_txid ? (
+          {activationTicket.reg_txid ? (
+            <Grid container spacing={3}>
+              <Styles.ActivationTicketItem className="item">
+                <Styles.TicketTitle className="mr-5">
+                  {translate('components.ticket.actionRegistrationTicket.regTxId')}
+                </Styles.TicketTitle>
+                <Styles.TicketContent>
                   <RouterLink
                     route={`${ROUTES.TRANSACTION_DETAILS}/${activationTicket.reg_txid}`}
                     value={activationTicket.reg_txid}
                     title={activationTicket.reg_txid}
                     className="address-link small"
                   />
-                ) : (
-                  translate('common.na')
-                )}
-              </Styles.TicketContent>
-            </Styles.ActivationTicketItem>
-          </Grid>
+                </Styles.TicketContent>
+              </Styles.ActivationTicketItem>
+            </Grid>
+          ) : null}
           <Grid container spacing={3}>
             <Styles.ActivationTicketItem className="item">
               <Styles.TicketTitle className="mr-5">
@@ -343,47 +335,49 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
           <Styles.TicketContent>{ticket.version}</Styles.TicketContent>
         </Grid>
       </Grid>
-      <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>
-            {translate('components.ticket.actionRegistrationTicket.key')}
-          </Styles.TicketTitle>
+      {ticket?.key ? (
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3} className="max-w-355">
+            <Styles.TicketTitle>
+              {translate('components.ticket.actionRegistrationTicket.key')}
+            </Styles.TicketTitle>
+          </Grid>
+          <Grid item xs={8} sm={9}>
+            <Styles.TicketContent>{ticket.key}</Styles.TicketContent>
+          </Grid>
         </Grid>
-        <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{ticket.key || translate('common.na')}</Styles.TicketContent>
+      ) : null}
+      {ticket?.label ? (
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3} className="max-w-355">
+            <Styles.TicketTitle>
+              {translate('components.ticket.actionRegistrationTicket.txIdOfPreburn')}
+            </Styles.TicketTitle>
+          </Grid>
+          <Grid item xs={8} sm={9}>
+            <Styles.TicketContent>{ticket.label}</Styles.TicketContent>
+          </Grid>
         </Grid>
-      </Grid>
-      <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>
-            {translate('components.ticket.actionRegistrationTicket.txIdOfPreburn')}
-          </Styles.TicketTitle>
-        </Grid>
-        <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{ticket.label || translate('common.na')}</Styles.TicketContent>
-        </Grid>
-      </Grid>
-      <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>
-            {translate('components.ticket.actionRegistrationTicket.calledAt')}
-          </Styles.TicketTitle>
-        </Grid>
-        <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>
-            {ticket.called_at ? (
+      ) : null}
+      {ticket.called_at ? (
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3} className="max-w-355">
+            <Styles.TicketTitle>
+              {translate('components.ticket.actionRegistrationTicket.calledAt')}
+            </Styles.TicketTitle>
+          </Grid>
+          <Grid item xs={8} sm={9}>
+            <Styles.TicketContent>
               <RouterLink
                 route={`${ROUTES.BLOCK_DETAILS}/${ticket.called_at}`}
                 value={ticket.called_at}
                 title={ticket.called_at?.toString()}
                 className="address-link"
               />
-            ) : (
-              translate('common.na')
-            )}
-          </Styles.TicketContent>
+            </Styles.TicketContent>
+          </Grid>
         </Grid>
-      </Grid>
+      ) : null}
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>

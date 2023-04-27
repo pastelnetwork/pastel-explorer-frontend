@@ -47,27 +47,25 @@ const AcceptTicket: React.FC<IAcceptTicketProps> = ({ ticket }) => {
         </Grid>
       </Grid>
       <Signatures signature={ticket.signature} />
-      <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>
-            {translate('components.ticket.acceptTicket.offerTxId')}
-          </Styles.TicketTitle>
-        </Grid>
-        <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>
-            {ticket.offer_txid ? (
+      {ticket.offer_txid ? (
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3} className="max-w-355">
+            <Styles.TicketTitle>
+              {translate('components.ticket.acceptTicket.offerTxId')}
+            </Styles.TicketTitle>
+          </Grid>
+          <Grid item xs={8} sm={9}>
+            <Styles.TicketContent>
               <RouterLink
                 route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.offer_txid}`}
                 value={ticket.offer_txid}
                 title={ticket.offer_txid}
                 className="address-link"
               />
-            ) : (
-              translate('common.na')
-            )}
-          </Styles.TicketContent>
+            </Styles.TicketContent>
+          </Grid>
         </Grid>
-      </Grid>
+      ) : null}
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>

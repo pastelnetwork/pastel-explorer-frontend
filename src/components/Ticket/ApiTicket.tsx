@@ -35,52 +35,58 @@ const ApiTicket: React.FC<IApiTicketProps> = ({ apiTicket, actionType }) => {
 
   return (
     <Box>
-      <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>
-            {translate('components.ticket.apiTicket.dataHash')}
-          </Styles.TicketTitle>
+      {data?.data_hash ? (
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3} className="max-w-355">
+            <Styles.TicketTitle>
+              {translate('components.ticket.apiTicket.dataHash')}
+            </Styles.TicketTitle>
+          </Grid>
+          <Grid item xs={8} sm={9}>
+            <Styles.TicketContent>{data?.data_hash}</Styles.TicketContent>
+          </Grid>
         </Grid>
-        <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{data.data_hash || 'NA'}</Styles.TicketContent>
-        </Grid>
-      </Grid>
+      ) : null}
       {actionType === 'sense' ? (
         <>
-          <Grid container spacing={3}>
-            <Grid item xs={4} sm={3} className="max-w-355">
-              <Styles.TicketTitle>
-                {translate('components.ticket.apiTicket.ddAndFingerprintsMax')}
-              </Styles.TicketTitle>
+          {data?.dd_and_fingerprints_max ? (
+            <Grid container spacing={3}>
+              <Grid item xs={4} sm={3} className="max-w-355">
+                <Styles.TicketTitle>
+                  {translate('components.ticket.apiTicket.ddAndFingerprintsMax')}
+                </Styles.TicketTitle>
+              </Grid>
+              <Grid item xs={8} sm={9}>
+                <Styles.TicketContent>{data.dd_and_fingerprints_max}</Styles.TicketContent>
+              </Grid>
             </Grid>
-            <Grid item xs={8} sm={9}>
-              <Styles.TicketContent>{data.dd_and_fingerprints_max}</Styles.TicketContent>
+          ) : null}
+          {data?.dd_and_fingerprints_ic ? (
+            <Grid container spacing={3}>
+              <Grid item xs={4} sm={3} className="max-w-355">
+                <Styles.TicketTitle>
+                  {translate('components.ticket.apiTicket.ddAndFingerprintsIc')}
+                </Styles.TicketTitle>
+              </Grid>
+              <Grid item xs={8} sm={9}>
+                <Styles.TicketContent>{data.dd_and_fingerprints_ic}</Styles.TicketContent>
+              </Grid>
             </Grid>
-          </Grid>
-          <Grid container spacing={3}>
-            <Grid item xs={4} sm={3} className="max-w-355">
-              <Styles.TicketTitle>
-                {translate('components.ticket.apiTicket.ddAndFingerprintsIc')}
-              </Styles.TicketTitle>
+          ) : null}
+          {data?.dd_and_fingerprints_ids?.length ? (
+            <Grid container spacing={3}>
+              <Grid item xs={4} sm={3} className="max-w-355">
+                <Styles.TicketTitle>
+                  {translate('components.ticket.apiTicket.ddAndFingerprintsIds')}
+                </Styles.TicketTitle>
+              </Grid>
+              <Grid item xs={8} sm={9}>
+                <Styles.TicketContent>
+                  {data.dd_and_fingerprints_ids.join(', ')}
+                </Styles.TicketContent>
+              </Grid>
             </Grid>
-            <Grid item xs={8} sm={9}>
-              <Styles.TicketContent>{data.dd_and_fingerprints_ic}</Styles.TicketContent>
-            </Grid>
-          </Grid>
-          <Grid container spacing={3}>
-            <Grid item xs={4} sm={3} className="max-w-355">
-              <Styles.TicketTitle>
-                {translate('components.ticket.apiTicket.ddAndFingerprintsIds')}
-              </Styles.TicketTitle>
-            </Grid>
-            <Grid item xs={8} sm={9}>
-              <Styles.TicketContent>
-                {data.dd_and_fingerprints_ids
-                  ? data.dd_and_fingerprints_ids.join(', ')
-                  : translate('common.na')}
-              </Styles.TicketContent>
-            </Grid>
-          </Grid>
+          ) : null}
         </>
       ) : null}
     </Box>

@@ -1,6 +1,8 @@
 import styled from 'styled-components/macro';
 import { Grid } from '@material-ui/core';
 
+import themeVariant from '@theme/variants';
+
 export const TicketsContainer = styled.div`
   width: 100%;
 
@@ -29,6 +31,10 @@ export const TicketsContainer = styled.div`
     margin: 0;
   }
 
+  .table-wrapper {
+    overflow-x: hidden;
+  }
+
   .data-table {
     padding: 0;
 
@@ -38,8 +44,25 @@ export const TicketsContainer = styled.div`
     }
   }
 
+  .ReactVirtualized__Table__row {
+    svg {
+      color: ${themeVariant.custom.white};
+      font-size: 14px;
+    }
+
+    .action-ticket-status {
+      padding: 4px;
+      border-radius: 8px;
+    }
+  }
+
   .view-detail {
-    margin-left: 5px;
+    font-size: 14px;
+    margin-left: 0px;
+
+    .address-link {
+      font-size: 14px;
+    }
 
     ${props => props.theme.breakpoints.down(960)} {
       display: block;
@@ -87,7 +110,7 @@ export const TicketsContainer = styled.div`
         &:before {
           content: attr(data-title);
           position: relative;
-          width: 120px;
+          min-width: 130px;
           font-weight: 600;
           font-size: 16px;
           color: ${props => props.theme.table.label};
@@ -120,6 +143,10 @@ export const GirdStyle = styled(Grid)`
 
   &.right {
     padding-left: 6px;
+  }
+
+  &.full {
+    width: 100%;
   }
 
   ${props => props.theme.breakpoints.down(1024)} {
@@ -162,6 +189,107 @@ export const BlockTitle = styled.div`
         padding-right: 0;
         padding-left: 0;
       }
+    }
+  }
+`;
+
+export const TicketSummaryContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+`;
+
+export const TicketSummaryBox = styled.a`
+  display: block;
+  width: calc(100% / 6);
+  margin-right: 12px;
+  padding: 10px 25px;
+  box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
+  background-color: ${props => props.theme.sidebar.menu.background};
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  border: 1px solid ${props => props.theme.palette.text.primary};
+
+  &.offerTicketsAndTransferTickets {
+    min-width: 240px;
+  }
+
+  &.pastelIDAndUsernameTickets {
+    min-width: 225px;
+  }
+
+  &:hover {
+    border-color: ${props => props.theme.sidebar.menu.active};
+
+    .ticket-summary-title,
+    .ticket-summary-value {
+      color: ${props => props.theme.sidebar.menu.active};
+    }
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  .ticket-summary-title {
+    display: block;
+    color: ${props => props.theme.sidebar.menu.default};
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.25;
+    white-space: nowrap;
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  }
+
+  .ticket-summary-value {
+    margin-top: 3px;
+    font-size: 18px;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: ${props => props.theme.card.color};
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  }
+
+  @media screen and (max-width: 1200px) {
+    flex-wrap: wrap;
+    width: 32%;
+    margin-right: 10px;
+    margin-bottom: 10px;
+
+    &:nth-child(3) {
+      margin-right: 0;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 49%;
+    margin-bottom: 10px;
+
+    &:nth-child(3) {
+      margin-right: 10px;
+    }
+
+    &:nth-child(2n) {
+      margin-right: 0;
+    }
+
+    &.offerTicketsAndTransferTickets {
+      min-width: unset;
+    }
+
+    &.pastelIDAndUsernameTickets {
+      min-width: unset;
+    }
+  }
+
+  @media screen and (max-width: 525px) {
+    width: 100%;
+    margin-right: 0;
+
+    &:nth-child(3) {
+      margin-right: 0;
     }
   }
 `;

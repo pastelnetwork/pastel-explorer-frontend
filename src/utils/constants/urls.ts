@@ -15,7 +15,6 @@ export const GET_BLOCKS_CHARTS = 'v1/stats/historical-blocks-statistics';
 export const BLOCK_URL = 'v1/blocks';
 export const BLOCK_SIZE_URL = 'v1/stats/block-sizes';
 export const STATISTICS_BLOCK_URL = 'v1/stats/blocks-statistics';
-export const ADDRESS_URL = 'v1/addresses/balance';
 export const RICHLIST_URL = 'v1/addresses/rank/100';
 export const BALANCE_HISTORY_URL = 'v1/stats/balance-history';
 export const LATEST_TRANSACTIONS_URL = 'v1/addresses/latest-transactions';
