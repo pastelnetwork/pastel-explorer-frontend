@@ -13,7 +13,7 @@ export const ToolbarStyle = styled(Toolbar)`
 `;
 
 export const GridStyle = styled(Grid)`
-  max-width: 530px;
+  max-width: 362px;
 
   &.search-popup {
     display: none;
@@ -61,19 +61,17 @@ export const GridStyle = styled(Grid)`
     font-size: 13px;
   }
 
-  @media (max-width: 1424px) and (min-width: 900px) {
-    &.autocomplete-focus {
-      position: absolute;
-      right: 76px;
-      width: 55vw;
-      max-width: 74vw;
-      background: ${props => props.theme.sidebar.menu.background};
-      z-index: 100;
+  &.autocomplete-focus {
+    position: absolute;
+    right: 83px;
+    width: 620px;
+    max-width: 620px;
+    background: ${props => props.theme.sidebar.menu.background};
+    z-index: 100;
 
-      .label-input {
-        max-width: 100%;
-        width: auto;
-      }
+    .label-input {
+      max-width: 100%;
+      width: auto;
     }
   }
 
@@ -134,7 +132,7 @@ export const AppBar = styled(MuiAppBar)`
     }
 
     ${props => props.theme.breakpoints.up('lg')} {
-      max-width: 96%;
+      max-width: 94%;
     }
   }
 

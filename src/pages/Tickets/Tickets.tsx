@@ -67,7 +67,7 @@ const Tickets: React.FC = () => {
         <Styles.GirdStyle item className="full">
           <Styles.TicketSummaryContainer>
             {ticketsSummary.map(item => (
-              <Styles.TicketSummaryBox key={item.id} href={`#${item.id}`} className={item.id}>
+              <Styles.TicketSummaryBox key={item.id} to={item.link} className={item.id}>
                 <span className="ticket-summary-title">{item.name}</span>
                 <span className="ticket-summary-value">
                   {isLoading(item.id, ticketLoading) ? (

@@ -48,6 +48,7 @@ export const GET_BURNED_BY_MONTH = 'v1/stats/burned-by-month';
 export const GET_TOTAL_BURNED = 'v1/stats/total-burned';
 export const GET_COIN_SUPPLY = 'v1/current-stats/coin-supply';
 export const GET_USD_PRICE = 'v1/current-stats/usd-price';
+export const CASCADE_URL = 'v1/cascade';
 // External URLS
 export const TWITTER_URL = 'https://twitter.com/pastelnetwork';
 export const TELEGRAM_URL = 'https://t.me/PastelNetwork';

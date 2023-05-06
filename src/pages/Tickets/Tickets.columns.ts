@@ -7,6 +7,7 @@ export const ID_TYPE_KEY = 'id_type';
 export const VERSION_KEY = 'version';
 export const TYPE_KEY = 'type';
 export const ACTIVATION_TXID_KEY = 'activation_txid';
+export const COLLECTION_NAME = 'collectionName';
 
 export const cascadeColumns = [
   {
@@ -19,7 +20,7 @@ export const cascadeColumns = [
     dataTitle: 'pages.tickets.txID',
   },
   {
-    width: 60,
+    width: 110,
     flexGrow: 1,
     label: 'pages.tickets.status',
     dataKey: STATUS_KEY,
@@ -28,7 +29,7 @@ export const cascadeColumns = [
     dataTitle: 'pages.tickets.status',
   },
   {
-    width: 100,
+    width: 70,
     flexGrow: 1,
     label: 'pages.tickets.fee',
     dataKey: FEE_KEY,
@@ -37,7 +38,7 @@ export const cascadeColumns = [
     dataTitle: 'pages.tickets.fee',
   },
   {
-    width: 90,
+    width: 80,
     flexGrow: 1,
     label: 'pages.tickets.activationTXID',
     dataKey: ACTIVATION_TXID_KEY,
@@ -46,7 +47,7 @@ export const cascadeColumns = [
     dataTitle: 'pages.tickets.activationTXID',
   },
   {
-    width: 160,
+    width: 150,
     flexGrow: 1,
     label: 'pages.tickets.timestamp',
     dataKey: TIMESTAMP_KEY,
@@ -78,11 +79,11 @@ export const senseColumns = [
   {
     width: 80,
     flexGrow: 1,
-    label: 'pages.tickets.fee',
-    dataKey: FEE_KEY,
+    label: 'pages.tickets.collectionName',
+    dataKey: COLLECTION_NAME,
     disableSort: true,
     className: 'fee',
-    dataTitle: 'pages.tickets.fee',
+    dataTitle: 'pages.tickets.collectionName',
   },
   {
     width: 90,
@@ -223,7 +224,7 @@ export const offerAndTransferTicketsColumns = [
 
 export const pastelNftTicketsColumns = [
   {
-    width: 60,
+    width: 100,
     flexGrow: 1,
     label: 'pages.tickets.txID',
     dataKey: TXID_KEY,
@@ -232,7 +233,7 @@ export const pastelNftTicketsColumns = [
     dataTitle: 'pages.tickets.txID',
   },
   {
-    width: 50,
+    width: 40,
     flexGrow: 1,
     label: 'pages.tickets.status',
     dataKey: STATUS_KEY,
@@ -241,13 +242,13 @@ export const pastelNftTicketsColumns = [
     dataTitle: 'pages.tickets.status',
   },
   {
-    width: 180,
+    width: 120,
     flexGrow: 1,
-    label: 'pages.tickets.type',
-    dataKey: TYPE_KEY,
+    label: 'pages.tickets.collectionName',
+    dataKey: COLLECTION_NAME,
     disableSort: true,
-    className: 'type',
-    dataTitle: 'pages.tickets.type',
+    className: 'collectionName',
+    dataTitle: 'pages.tickets.collectionName',
   },
   {
     width: 100,
@@ -264,7 +265,7 @@ export const pastelNftTicketsColumns = [
     label: 'pages.tickets.timestamp',
     dataKey: TIMESTAMP_KEY,
     disableSort: true,
-    className: 'timestamp',
+    className: 'timestamp white-nowrap',
     dataTitle: 'pages.tickets.timestamp',
   },
 ];

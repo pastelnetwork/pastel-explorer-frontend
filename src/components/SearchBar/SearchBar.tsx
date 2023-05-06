@@ -32,12 +32,17 @@ import {
   BLOCKS_HEIGHTS_LABEL,
   SENSES_LABEL,
   PASTEL_ID_LABEL,
+  COLLECTION_LABEL,
+  CASCADE_LABEL,
   USERNAME,
+  COLLECTION,
+  CASCADE,
   TOptionsCategories,
   getRoute,
   collectData,
   collectUsernameData,
   TAutocompleteOptions,
+  collectCascadeData,
 } from './SearchBar.helpers';
 
 interface AppBarProps {
@@ -119,7 +124,6 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
 
   const sortSearchData = ({ data }: ISearchResponse) => {
     if (!data) return [];
-
     const groupedData = [
       ...collectData(
         data.address,
@@ -143,6 +147,11 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
       ),
       ...collectData(data.senses, SENSES_LABEL, translate(SENSES_TEXT_LABEL) as TOptionsCategories),
       ...collectData(
+        data.collectionNameList,
+        COLLECTION,
+        translate(COLLECTION_LABEL) as TOptionsCategories,
+      ),
+      ...collectData(
         data.pastelIds,
         PASTEL_ID_LABEL,
         translate(PASTEL_ID_TEXT_LABEL) as TOptionsCategories,
@@ -151,6 +160,11 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         data.usernameList,
         USERNAME,
         translate(USERNAME_TEXT_LABEL) as TOptionsCategories,
+      ),
+      ...collectCascadeData(
+        data.cascadeList,
+        CASCADE,
+        translate(CASCADE_LABEL) as TOptionsCategories,
       ),
     ];
 
@@ -239,6 +253,17 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
               <RouterLink
                 styles={{ padding: '6px 24px 6px 16px' }}
                 route={`${getRoute((option as TAutocompleteOptions).category)}?hash=${
+                  (option as TAutocompleteOptions).value
+                }`}
+                value={(option as TAutocompleteOptions).value}
+              />
+            );
+          }
+          if ((option as TAutocompleteOptions).category === CASCADE) {
+            return (
+              <RouterLink
+                styles={{ padding: '6px 24px 6px 16px' }}
+                route={`${getRoute((option as TAutocompleteOptions).category)}?txid=${
                   (option as TAutocompleteOptions).value
                 }`}
                 value={(option as TAutocompleteOptions).value}

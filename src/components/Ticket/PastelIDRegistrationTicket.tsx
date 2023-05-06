@@ -112,18 +112,20 @@ const PastelIDRegistrationTicket: React.FC<IPastelIDRegistrationTicketProps> = (
           </Grid>
         </Grid>
       ) : null}
-      <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>
-            {translate('components.ticket.pastelIDRegistrationTicket.timestamp')}
-          </Styles.TicketTitle>
+      {ticket?.timeStamp ? (
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3} className="max-w-355">
+            <Styles.TicketTitle>
+              {translate('components.ticket.pastelIDRegistrationTicket.timestamp')}
+            </Styles.TicketTitle>
+          </Grid>
+          <Grid item xs={8} sm={9}>
+            <Styles.TicketContent>
+              {formattedDate(Number(ticket.timeStamp), { dayName: false })}
+            </Styles.TicketContent>
+          </Grid>
         </Grid>
-        <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>
-            {formattedDate(Number(ticket.timeStamp), { dayName: false })}
-          </Styles.TicketContent>
-        </Grid>
-      </Grid>
+      ) : null}
     </Box>
   );
 };

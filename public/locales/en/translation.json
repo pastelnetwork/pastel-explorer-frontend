@@ -201,6 +201,10 @@
         "message": "Username",
         "description": "Used for the SearchBar component"
       },
+      "collection": {
+        "message": "Collection",
+        "description": "Used for the SearchBar component"
+      },
       "noResults": {
         "message": "No results containing all your search terms were found",
         "description": "Used for the SearchBar component"
@@ -210,7 +214,7 @@
         "description": "Used for the SearchBar component"
       },
       "inputSearchLabel": {
-        "message": "Search by Block Height, Block Hash, TxID, Address, PastelID, Username or Image File Hash",
+        "message": "Search by Block Height, Block Hash, TxID, Address, PastelID, Username, Cascade Filename or Image File Hash",
         "description": "Used for the SearchBar component"
       },
       "openSearch": {
@@ -224,6 +228,12 @@
       "switchMode": {
         "title": {
           "message": "Toggle light/dark theme",
+          "description": "Used for the SearchBar component"
+        }
+      },
+      "cascade": {
+        "title": {
+          "message": "Cascade Filename",
           "description": "Used for the SearchBar component"
         }
       }
@@ -487,6 +497,14 @@
         "apiTicket": {
           "message": "Api ticket",
           "description": "Used for the ActionRegistrationTicket component"
+        },
+        "collectionName": {
+          "message": "Collection",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "viewDetails": {
+          "message": "View details",
+          "description": "Used for the ActionRegistrationTicket component"
         }
       },
       "apiTicket": {
@@ -629,7 +647,7 @@
           "description": "Used for the NFTCollectionRegistrationTicket component"
         },
         "nftCollectionName": {
-          "message": "NFT collection name:",
+          "message": "NFT collection:",
           "description": "Used for the NFTCollectionRegistrationTicket component"
         },
         "creator": {
@@ -777,6 +795,10 @@
         "nftTicket": {
           "message": "NFT Ticket",
           "description": "Used for the NFTRegistrationTicket component"
+        },
+        "collectionName": {
+          "message": "Collection",
+          "description": "Used for the ActionRegistrationTicket component"
         }
       },
       "nftRoyaltyTicket": {
@@ -1500,7 +1522,7 @@
         "description": "Used for the SenseDetails page"
       },
       "ticketDetail": {
-        "message": "Ticket Detail",
+        "message": "Transaction detail",
         "description": "Used for the SenseDetails page"
       },
       "pastelData": {
@@ -2402,6 +2424,14 @@
           "message": "{{total}} ticket",
           "description": "Used for the Tickets page"
         }
+      },
+      "collectionName": {
+        "message": "Collection",
+        "description": "Used for the Tickets page"
+      },
+      "cascadeDetail": {
+        "message": "Cascade detail",
+        "description": "Used for the Tickets page"
       }
     },
     "ticketsType": {
@@ -2542,6 +2572,56 @@
       "address": {
         "message": "Address",
         "description": "Used for the CascadeAndSenseStatistics page"
+      }
+    },
+    "cascade": {
+      "dataHash": {
+        "message": "Data hash",
+        "description": "Used for the Cascade Details page"
+      },
+      "ticketDetail": {
+        "message": "Transaction detail",
+        "description": "Used for the Cascade Details page"
+      },
+      "fileInfo": {
+        "message": "File info",
+        "description": "Used for the Cascade Details page"
+      },
+      "rqIds": {
+        "message": "Rq ids",
+        "description": "Used for the Cascade Details page"
+      },
+      "404": {
+        "message": "404",
+        "description": "Used for the Cascade Details page"
+      },
+      "cascadeNotFound": {
+        "message": "Cascade not found",
+        "description": "Used for the Cascade Details page"
+      },
+      "makePubliclyAccessible": {
+        "message": "Make publicly accessible",
+        "description": "Used for the Cascade Details page"
+      },
+      "rqIc": {
+        "message": "Rq ic",
+        "description": "Used for the Cascade Details page"
+      },
+      "rqMax": {
+        "message": "Rq max",
+        "description": "Used for the Cascade Details page"
+      },
+      "rqOti": {
+        "message": "Rq oti",
+        "description": "Used for the Cascade Details page"
+      },
+      "fileSize": {
+        "message": "File size",
+        "description": "Used for the Cascade Details page"
+      },
+      "kb": {
+        "message": "KB",
+        "description": "Used for the Cascade Details page"
       }
     }
   },
@@ -2724,6 +2804,14 @@
     },
     "burned": {
       "message": "Burned",
+      "description": "Used for the routes"
+    },
+    "collectionDetails": {
+      "message": "Collection Details",
+      "description": "Used for the routes"
+    },
+    "cascadeDetails": {
+      "message": "Cascade Details",
       "description": "Used for the routes"
     }
   },

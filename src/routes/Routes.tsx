@@ -19,60 +19,62 @@ const childRoutes = (
   routes: Array<RouteType>,
   t: (_key: string, _option?: TOptions<StringMap>) => string,
 ) => {
-  return routes.map(({ component: Component, guard, children, path, id, seoTitle = '' }) => {
-    const Guard = guard || React.Fragment;
+  return routes.map(
+    ({ component: Component, guard, children, path, id, seoTitle = '', fluid = false }) => {
+      const Guard = guard || React.Fragment;
 
-    if (children) {
-      return children.map(element => {
-        const ChildrenGuard = element.guard || React.Fragment;
-        const ElementComponent = element.component || React.Fragment;
+      if (children) {
+        return children.map(element => {
+          const ChildrenGuard = element.guard || React.Fragment;
+          const ElementComponent = element.component || React.Fragment;
 
+          return (
+            <Route
+              key={id}
+              path={element.path}
+              exact
+              render={(props: RouteComponentProps) => (
+                <Layout fluid={fluid}>
+                  <ChildrenGuard>
+                    <Helmet
+                      title={t(`${element.seoTitle || seoTitle}.message`, {
+                        currency: getCurrencyName(),
+                      })}
+                    />
+                    <ElementComponent {...props} />
+                  </ChildrenGuard>
+                </Layout>
+              )}
+            />
+          );
+        });
+      }
+
+      if (Component) {
         return (
           <Route
             key={id}
-            path={element.path}
+            path={path}
             exact
-            render={(props: RouteComponentProps) => (
-              <Layout>
-                <ChildrenGuard>
+            render={props => (
+              <Layout fluid={fluid}>
+                <Guard>
                   <Helmet
-                    title={t(`${element.seoTitle || seoTitle}.message`, {
+                    title={t(`${seoTitle}.message`, {
                       currency: getCurrencyName(),
                     })}
                   />
-                  <ElementComponent {...props} />
-                </ChildrenGuard>
+                  <Component {...props} />
+                </Guard>
               </Layout>
             )}
           />
         );
-      });
-    }
+      }
 
-    if (Component) {
-      return (
-        <Route
-          key={id}
-          path={path}
-          exact
-          render={props => (
-            <Layout>
-              <Guard>
-                <Helmet
-                  title={t(`${seoTitle}.message`, {
-                    currency: getCurrencyName(),
-                  })}
-                />
-                <Component {...props} />
-              </Guard>
-            </Layout>
-          )}
-        />
-      );
-    }
-
-    return null;
-  });
+      return null;
+    },
+  );
 };
 
 const Routes: React.FC = () => {

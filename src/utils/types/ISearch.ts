@@ -7,5 +7,7 @@ export interface ISearchResponse {
     senses: Array<string>;
     pastelIds: Array<string>;
     usernameList: Array<{ pastelID: string; username: string }>;
+    collectionNameList: Array<string>;
+    cascadeList: Array<{ transactionHash: string; cascadeFileName: string }>;
   };
 }

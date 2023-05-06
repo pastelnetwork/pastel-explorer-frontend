@@ -178,6 +178,7 @@ export interface INftRegistrationTicket {
   transactionTime: number;
   activation_ticket: string;
   activation_txId: string;
+  collectionName?: string;
 }
 
 export interface INftActivationTicket {
@@ -263,6 +264,7 @@ export interface IActionRegistrationTicket {
   activation_txId: string;
   transactionTime: number;
   activationTicket: ITicket;
+  collectionName?: string;
 }
 
 export interface IActionTicket {
@@ -353,8 +355,8 @@ export type TTicketType =
   | 'username-change'
   | 'nft-reg'
   | 'nft-act'
-  | 'nft-collection-reg'
-  | 'nft-collection-act'
+  | 'collection-reg'
+  | 'collection-act'
   | 'nft-royalty'
   | 'action-reg'
   | 'action-act'
@@ -552,4 +554,39 @@ export type TicketsList = {
   activation_txId: string;
   id_type: string;
   type: string;
+  collectionName: string;
 };
+
+export type TCascade = {
+  height: number;
+  ticket: {
+    action_ticket: string;
+    action_type: string;
+    called_at: number;
+    key: string;
+    label: string;
+    signatures: ISignature;
+    storage_fee: number;
+    type: string;
+    version: number;
+  };
+  tx_info: {
+    compressed_size: number;
+    compression_ratio: string;
+    is_compressed: boolean;
+    size: number;
+  };
+  txid: string;
+};
+
+export interface ICascadeApiTicket {
+  data_hash: string;
+  file_name: string;
+  rq_ic: number;
+  rq_max: number;
+  rq_ids: string[];
+  rq_oti: string;
+  original_file_size_in_bytes: number;
+  file_type: string;
+  make_publicly_accessible: boolean;
+}

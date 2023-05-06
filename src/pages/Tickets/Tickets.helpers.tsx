@@ -26,6 +26,7 @@ import {
   VERSION_KEY,
   TYPE_KEY,
   ACTIVATION_TXID_KEY,
+  COLLECTION_NAME,
 } from './Tickets.columns';
 
 const getTicketTitle = (type: TTicketType) => {
@@ -38,9 +39,9 @@ const getTicketTitle = (type: TTicketType) => {
       return translate('pages.tickets.ticketsTitle.nftReg');
     case 'nft-act':
       return translate('pages.tickets.ticketsTitle.nftAct');
-    case 'nft-collection-reg':
+    case 'collection-reg':
       return translate('pages.tickets.ticketsTitle.nftCollectionReg');
-    case 'nft-collection-act':
+    case 'collection-act':
       return translate('pages.tickets.ticketsTitle.nftCollectionAct');
     case 'nft-royalty':
       return translate('pages.tickets.ticketsTitle.nftRoyalty');
@@ -88,14 +89,14 @@ export const transformCascadeData = (cascade: TicketsList[]) =>
         <>
           <RouterLink
             route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
-            value={formatAddress(transactionHash, 3, -3)}
+            value={formatAddress(transactionHash, 5, -5)}
             title={transactionHash}
             className="address-link"
           />
         </>
       ),
       [STATUS_KEY]: (
-        <>
+        <div className="sense-status">
           <Tooltip
             arrow
             title={
@@ -110,7 +111,19 @@ export const transformCascadeData = (cascade: TicketsList[]) =>
               {activation_ticket ? <DoneIcon /> : <CloseIcon />}
             </TicketsStyles.ActionRegistrationTicketStatus>
           </Tooltip>
-        </>
+          {activation_ticket ? (
+            <span className="view-detail nowrap">
+              (
+              <RouterLink
+                route={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}
+                value={translate('pages.tickets.cascadeDetail')}
+                title={transactionHash}
+                className="address-link"
+              />
+              )
+            </span>
+          ) : null}
+        </div>
       ),
       [FEE_KEY]: (
         <Box className="nowrap">
@@ -121,7 +134,7 @@ export const transformCascadeData = (cascade: TicketsList[]) =>
         <>
           <RouterLink
             route={`${ROUTES.TRANSACTION_DETAILS}/${activation_txId}`}
-            value={activation_txId ? formatAddress(activation_txId, 3, -3) : ''}
+            value={activation_txId ? formatAddress(activation_txId, 5, -5) : ''}
             title={activation_txId}
             className="address-link"
           />
@@ -133,14 +146,21 @@ export const transformCascadeData = (cascade: TicketsList[]) =>
 
 export const transformSenseData = (sense: TicketsList[]) =>
   sense.map(
-    ({ transactionHash, activation_ticket, fee, timestamp, imageHash, activation_txId }) => {
+    ({
+      transactionHash,
+      activation_ticket,
+      timestamp,
+      imageHash,
+      activation_txId,
+      collectionName,
+    }) => {
       return {
         id: transactionHash,
         [TXID_KEY]: (
           <>
             <RouterLink
               route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
-              value={formatAddress(transactionHash, 3, -3)}
+              value={formatAddress(transactionHash, 5, -5)}
               title={transactionHash}
               className="address-link"
             />
@@ -176,16 +196,23 @@ export const transformSenseData = (sense: TicketsList[]) =>
             ) : null}
           </div>
         ),
-        [FEE_KEY]: (
-          <Box className="nowrap">
-            {formatNumber(fee)} {getCurrencyName()}
-          </Box>
+        [COLLECTION_NAME]: (
+          <>
+            {collectionName ? (
+              <RouterLink
+                route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${collectionName}`}
+                value={collectionName}
+                title={collectionName}
+                className="address-link"
+              />
+            ) : null}
+          </>
         ),
         [ACTIVATION_TXID_KEY]: (
           <>
             <RouterLink
               route={`${ROUTES.TRANSACTION_DETAILS}/${activation_txId}`}
-              value={activation_txId ? formatAddress(activation_txId, 3, -3) : ''}
+              value={activation_txId ? formatAddress(activation_txId, 5, -5) : ''}
               title={activation_txId}
               className="address-link"
             />
@@ -204,7 +231,7 @@ export const transformPastelIdData = (data: TicketsList[]) =>
         <>
           <RouterLink
             route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
-            value={formatAddress(transactionHash, 6, -3)}
+            value={formatAddress(transactionHash, 5, -5)}
             title={transactionHash}
             className="address-link"
           />
@@ -233,7 +260,7 @@ export const transformOtherData = (data: TicketsList[]) =>
         <>
           <RouterLink
             route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
-            value={formatAddress(transactionHash, 8, -3)}
+            value={formatAddress(transactionHash, 5, -5)}
             title={transactionHash}
             className="address-link"
           />
@@ -246,14 +273,14 @@ export const transformOtherData = (data: TicketsList[]) =>
   });
 
 export const transformPastelNftTicketsData = (data: TicketsList[]) =>
-  data.map(({ transactionHash, type, timestamp, activation_ticket, activation_txId }) => {
+  data.map(({ transactionHash, timestamp, activation_ticket, activation_txId, collectionName }) => {
     return {
       id: transactionHash,
       [TXID_KEY]: (
         <>
           <RouterLink
             route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
-            value={formatAddress(transactionHash, 3, -3)}
+            value={formatAddress(transactionHash, 5, -5)}
             title={transactionHash}
             className="address-link"
           />
@@ -277,12 +304,23 @@ export const transformPastelNftTicketsData = (data: TicketsList[]) =>
           </Tooltip>
         </div>
       ),
-      [TYPE_KEY]: getTicketTitle(type as TTicketType),
+      [COLLECTION_NAME]: (
+        <>
+          {collectionName ? (
+            <RouterLink
+              route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${collectionName}`}
+              value={collectionName}
+              title={collectionName}
+              className="address-link"
+            />
+          ) : null}
+        </>
+      ),
       [ACTIVATION_TXID_KEY]: (
         <>
           <RouterLink
             route={`${ROUTES.TRANSACTION_DETAILS}/${activation_txId}`}
-            value={activation_txId ? formatAddress(activation_txId, 3, -3) : ''}
+            value={activation_txId ? formatAddress(activation_txId, 5, -5) : ''}
             title={activation_txId}
             className="address-link"
           />
@@ -296,26 +334,32 @@ export const ticketsSummary = [
   {
     id: 'senseTickets',
     name: translate('pages.tickets.senseTickets'),
+    link: `${ROUTES.TICKETS_TYPE}/sense`,
   },
   {
     id: 'cascadeTickets',
     name: translate('pages.tickets.cascadeTickets'),
+    link: `${ROUTES.TICKETS_TYPE}/cascade`,
   },
   {
     id: 'pastelIDAndUsernameTickets',
     name: translate('pages.tickets.pastelIDAndUsernameTickets'),
+    link: `${ROUTES.TICKETS_TYPE}/pastelid-usename`,
   },
   {
     id: 'pastelNFTTickets',
     name: translate('pages.tickets.pastelNFTTickets'),
+    link: `${ROUTES.TICKETS_TYPE}/pastel-nft`,
   },
   {
     id: 'offerTicketsAndTransferTickets',
     name: translate('pages.tickets.offerTicketsAndTransferTickets'),
+    link: `${ROUTES.TICKETS_TYPE}/offer-transfer`,
   },
   {
     id: 'miscOtherTicketTypes',
     name: translate('pages.tickets.miscOtherTicketTypes'),
+    link: `${ROUTES.TICKETS_TYPE}/other`,
   },
 ];
 

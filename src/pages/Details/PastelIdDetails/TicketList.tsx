@@ -168,11 +168,11 @@ const TicketsList: React.FC<ITicketsList> = ({
         return <NFTRegistrationTicket ticket={ticket as INftRegistrationTicket} />;
       case 'nft-act':
         return <NFTActivationTicket ticket={ticket as INftActivationTicket} />;
-      case 'nft-collection-reg':
+      case 'collection-reg':
         return (
           <NFTCollectionRegistrationTicket ticket={ticket as INftCollectionRegistrationTicket} />
         );
-      case 'nft-collection-act':
+      case 'collection-act':
         return <NFTCollectionActivationTicket ticket={ticket as INftCollectionActivationTicket} />;
       case 'nft-royalty':
         return <NFTRoyaltyTicket ticket={ticket as INftRoyaltyTicket} />;
@@ -182,6 +182,7 @@ const TicketsList: React.FC<ITicketsList> = ({
             ticket={ticket as IActionRegistrationTicket}
             senseInfo={renderSenseInfo(ticket as IActionRegistrationTicket, transactionHash)}
             showActivationTicket
+            transactionHash={transactionHash}
           />
         );
       case 'action-act':

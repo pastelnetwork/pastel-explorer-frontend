@@ -35,7 +35,7 @@ i18next.t = jest.fn().mockImplementation((...arg) => {
 
 describe('components/NFTCollectionRegistrationTicket', () => {
   const ticket = {
-    type: 'nft-collection-reg',
+    type: 'collection-reg',
     version: 1,
     nft_collection_ticket: '',
     permitted_users: ['permitted_users_1', 'permitted_users_2'],

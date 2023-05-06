@@ -1,0 +1,158 @@
+import styled from 'styled-components';
+
+export const Wrapper = styled.div`
+  display: block;
+
+  ${props => props.theme.breakpoints.down(1200)} {
+    .view-more {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  ${props => props.theme.breakpoints.down(768)} {
+    .MuiAlert-message {
+      .MuiTypography-root {
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    .address-link {
+      display: inline-block;
+      max-width: 68%;
+      margin-left: 5px;
+    }
+
+    .alert-wrapper,
+    .MuiAlert-message {
+      width: 100%;
+    }
+  }
+`;
+
+export const BlockWrapper = styled.div`
+  padding: 9px 16px;
+
+  &.no-spacing {
+    padding: 0;
+  }
+
+  &.submitted-image-content {
+    padding: 5px;
+  }
+`;
+
+export const ContentWrapper = styled.div`
+  width: 100%;
+
+  .file-info {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .rq-ids {
+    width: 100%;
+  }
+`;
+
+export const FileInfoWrapper = styled.div`
+  display: block;
+
+  .file-content-info {
+    width: calc(100% - 125px);
+  }
+
+  .w-full {
+    width: 100%;
+  }
+
+  .file-container {
+    display: flex;
+    align-items: flex-start;
+
+    .icon {
+      width: 100px;
+      margin-right: 25px;
+
+      img {
+        max-width: 100%;
+      }
+    }
+
+    .file_name {
+      max-width: 100%;
+      padding-right: 20px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 18px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .file_file {
+      font-size: 12px;
+      color: ${props => props.theme.sidebar.menu.default};
+    }
+  }
+
+  .mt-10 {
+    margin-top: 10px;
+  }
+
+  .rq-ids {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: solid 1px ${props => props.theme.table.hover};
+  }
+
+  ${props => props.theme.breakpoints.down(600)} {
+    .file-container {
+      .icon {
+        width: 80px;
+        margin-right: 15px;
+      }
+    }
+
+    .file-content-info {
+      width: calc(100% - 95px);
+    }
+  }
+`;
+
+export const RqIdsWrapper = styled.div`
+  display: block;
+
+  .list {
+    display: grid;
+    grid-auto-rows: minmax(0px, 1fr);
+    gap: 10px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  ${props => props.theme.breakpoints.up(1950)} {
+    .list {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  ${props => props.theme.breakpoints.down(1440)} {
+    .list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  ${props => props.theme.breakpoints.down(900)} {
+    .list {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+
+      li {
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+`;

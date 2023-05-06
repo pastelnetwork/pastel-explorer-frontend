@@ -29,6 +29,7 @@ interface IActionRegistrationTicketProps {
   ticket: IActionRegistrationTicket;
   senseInfo?: ReactNode;
   showActivationTicket?: boolean;
+  transactionHash?: string;
 }
 
 interface IActionTicketProps {
@@ -154,6 +155,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
   ticket,
   senseInfo,
   showActivationTicket,
+  transactionHash,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -284,6 +286,25 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
 
   return (
     <Box>
+      {ticket?.collectionName && ticket.action_type === 'sense' ? (
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3} className="max-w-355">
+            <Styles.TicketTitle>
+              {translate('components.ticket.actionRegistrationTicket.collectionName')}
+            </Styles.TicketTitle>
+          </Grid>
+          <Grid item xs={8} sm={9}>
+            <Styles.TicketContent>
+              <RouterLink
+                route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${ticket?.collectionName}`}
+                value={ticket?.collectionName}
+                title={ticket?.collectionName}
+                className="address-link small"
+              />
+            </Styles.TicketContent>
+          </Grid>
+        </Grid>
+      ) : null}
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
@@ -291,7 +312,22 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{ticket.action_type}</Styles.TicketContent>
+          <Styles.TicketContent>
+            {ticket.action_type}
+            {ticket.action_type === 'cascade' && transactionHash && ticket.activation_txId ? (
+              <>
+                {' '}
+                (
+                <RouterLink
+                  route={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}
+                  value={translate('components.ticket.actionRegistrationTicket.viewDetails')}
+                  title={ticket.activation_txId}
+                  className="address-link"
+                />
+                )
+              </>
+            ) : null}
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>

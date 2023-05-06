@@ -25,9 +25,9 @@ const getTicketTitle = (type: TTicketType) => {
       return translate('components.ticket.ticketsTitle.nftReg');
     case 'nft-act':
       return translate('components.ticket.ticketsTitle.nftAct');
-    case 'nft-collection-reg':
+    case 'collection-reg':
       return translate('components.ticket.ticketsTitle.nftCollectionReg');
-    case 'nft-collection-act':
+    case 'collection-act':
       return translate('components.ticket.ticketsTitle.nftCollectionAct');
     case 'nft-royalty':
       return translate('components.ticket.ticketsTitle.nftRoyalty');

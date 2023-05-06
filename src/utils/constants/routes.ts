@@ -39,3 +39,5 @@ export const CASCADE_AND_SENSE_STATISTICS = '/cascade-and-sense-statistics';
 export const SENSE_DETAILS = '/sense';
 export const PASTEL_ID_DETAILS = '/pastelid';
 export const PASTEL_BURN_ADDRESS = '/burned';
+export const COLLECTION_DETAILS_PAGE = '/collection';
+export const CASCADE_DETAILS = '/cascade';

@@ -1,5 +1,6 @@
 import styled from 'styled-components/macro';
 import { Grid } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
 
 import themeVariant from '@theme/variants';
 
@@ -54,6 +55,10 @@ export const TicketsContainer = styled.div`
       padding: 4px;
       border-radius: 8px;
     }
+  }
+
+  .white-nowrap {
+    white-space: nowrap;
   }
 
   .view-detail {
@@ -199,7 +204,7 @@ export const TicketSummaryContainer = styled.div`
   margin-bottom: 10px;
 `;
 
-export const TicketSummaryBox = styled.a`
+export const TicketSummaryBox = styled(RouterLink)`
   display: block;
   width: calc(100% / 6);
   margin-right: 12px;
