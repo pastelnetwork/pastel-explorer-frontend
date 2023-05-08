@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import { getSubHours } from '@utils/helpers/date/date';
 import useTicketsType from '@hooks/useTicketsType';
 import { ITicket } from '@utils/types/ITransactions';
 import { blocksPeriodFilters } from '@utils/constants/filter';
@@ -112,11 +113,14 @@ const TicketsType: React.FC = () => {
       startDate: 0,
       endDate: null,
     };
-    setCustomDateRange({
-      startDate: 0,
-      endDate: null,
-    });
+    let dateRange = null;
+    if (event.currentTarget.value !== 'all') {
+      dateRange = { startDate: getSubHours(event.currentTarget.value), endDate: Date.now() };
+    } else {
+      dateRange = { startDate: 0, endDate: null };
+    }
     setSelectedTime(event.currentTarget.value);
+    setCustomDateRange({ ...dateRange });
   };
 
   const handleStatusChange = (value: string) => {

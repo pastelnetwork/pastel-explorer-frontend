@@ -10,6 +10,7 @@ import { getFilterState } from '@redux/reducers/filterReducer';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import useBlocks from '@hooks/useBlocks';
 import { translate } from '@utils/helpers/i18n';
+import { getSubHours } from '@utils/helpers/date/date';
 
 import { columns } from './Blocks.columns';
 import { transformTableData, DATA_DEFAULT_SORT, DATA_FETCH_LIMIT } from './Blocks.helpers';
@@ -83,13 +84,17 @@ const Blocks = () => {
   useEffect(() => {
     if (filter.dateRange || filter.dropdownType) {
       swrSetSize(1);
+      let customDateRange = filter.customDateRange || { startDate: 0, endDate: null };
+      if (!filter.customDateRange?.startDate && filter.dateRange !== 'all') {
+        customDateRange = { startDate: getSubHours(filter.dateRange), endDate: Date.now() };
+      } else {
+        customDateRange = { startDate: 0, endDate: null };
+      }
       setParams({
         ...apiParams,
         period: filter.dateRange || apiParams.period || '',
         types: filter.dropdownType || apiParams.types || '',
-        customDateRange: filter.customDateRange?.startDate
-          ? filter.customDateRange
-          : { startDate: 0, endDate: null },
+        customDateRange,
       });
     }
   }, [filter.dateRange, filter.dropdownType, filter.customDateRange]);
