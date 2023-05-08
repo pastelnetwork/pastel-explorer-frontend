@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 
 import IOSSwitch from '@components/IOSSwitch/IOSSwitch';
 import { translate } from '@utils/helpers/i18n';
@@ -43,6 +45,8 @@ interface IFileInfo {
 }
 
 const FileInfo: React.FC<IFileInfo> = ({ data }) => {
+  const [opened, setOpened] = useState(false);
+
   if (!data) {
     return null;
   }
@@ -135,7 +139,7 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
         <Typography className="title">{translate('pages.cascade.raptorQParameters')}</Typography>
         <Box className="mt-10">
           <Grid container spacing={3}>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} sm={6} md={3}>
               <Box>
                 <TicketStyles.TicketTitle>
                   {translate('pages.cascade.rqIc')}:
@@ -143,7 +147,7 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
                 <TicketStyles.TicketContent>{data.rq_ic}</TicketStyles.TicketContent>
               </Box>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} sm={6} md={3}>
               <Box>
                 <TicketStyles.TicketTitle>
                   {translate('pages.cascade.rqMax')}:
@@ -151,7 +155,7 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
                 <TicketStyles.TicketContent>{data.rq_max}</TicketStyles.TicketContent>
               </Box>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} sm={6} md={3}>
               <Box>
                 <TicketStyles.TicketTitle>
                   {translate('pages.cascade.rqOti')}:
@@ -159,11 +163,26 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
                 <TicketStyles.TicketContent>{data.rq_oti}</TicketStyles.TicketContent>
               </Box>
             </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Box>
+                <TicketStyles.TicketTitle>
+                  {translate('pages.cascade.rqIds')}:
+                </TicketStyles.TicketTitle>
+                <TicketStyles.TicketContent
+                  className={`expand-more ${opened ? 'opened' : ''}`}
+                  onClick={() => setOpened(!opened)}
+                >
+                  {opened
+                    ? translate('pages.cascade.hideAllRqIds')
+                    : translate('pages.cascade.displayAllRqIds')}
+                  <ExpandMoreIcon />
+                </TicketStyles.TicketContent>
+              </Box>
+            </Grid>
           </Grid>
         </Box>
         <Box className="rq-ids">
-          <TicketStyles.TicketTitle>{translate('pages.cascade.rqIds')}:</TicketStyles.TicketTitle>
-          <RqIds data={data.rq_ids} />
+          <RqIds data={data.rq_ids} opened={opened} />
         </Box>
       </Box>
     </Styles.FileInfoWrapper>

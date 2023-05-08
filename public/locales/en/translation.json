@@ -2642,6 +2642,10 @@
       "hideAllRqIds": {
         "message": "Hide all RaptorQ Symbol IDs",
         "description": "Used for the Cascade Details page"
+      },
+      "allRqIds": {
+        "message": "All RaptorQ Symbol IDs",
+        "description": "Used for the Cascade Details page"
       }
     }
   },

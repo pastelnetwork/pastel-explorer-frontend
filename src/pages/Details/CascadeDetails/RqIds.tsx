@@ -1,6 +1,4 @@
-import { useState } from 'react';
 import Box from '@material-ui/core/Box';
-import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 
 import { translate } from '@utils/helpers/i18n';
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
@@ -9,25 +7,17 @@ import * as Styles from './CascadeDetails.styles';
 
 interface IRqIds {
   data?: string[];
+  opened: boolean;
 }
 
-const RqIds: React.FC<IRqIds> = ({ data }) => {
-  const [opened, setOpened] = useState(false);
-  if (!data) {
+const RqIds: React.FC<IRqIds> = ({ data, opened }) => {
+  if (!data || !opened) {
     return null;
   }
   return (
     <Styles.RqIdsWrapper>
       <Box>
-        <TicketStyles.TicketContent
-          className={`expand-more ${opened ? 'opened' : ''}`}
-          onClick={() => setOpened(!opened)}
-        >
-          {opened
-            ? translate('pages.cascade.hideAllRqIds')
-            : translate('pages.cascade.displayAllRqIds')}
-          <ExpandMoreIcon />
-        </TicketStyles.TicketContent>
+        <TicketStyles.TicketTitle>{translate('pages.cascade.allRqIds')}</TicketStyles.TicketTitle>
       </Box>
       {opened ? (
         <ul className="list">

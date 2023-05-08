@@ -125,20 +125,6 @@ export const FileInfoWrapper = styled.div`
       width: calc(100% - 95px);
     }
   }
-`;
-
-export const RqIdsWrapper = styled.div`
-  display: block;
-
-  .list {
-    display: grid;
-    grid-auto-rows: minmax(0px, 1fr);
-    gap: 10px;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    width: 100%;
-    padding-left: 0;
-    list-style: none;
-  }
 
   .expand-more {
     display: flex;
@@ -155,6 +141,24 @@ export const RqIdsWrapper = styled.div`
         transform: rotate(180deg);
       }
     }
+  }
+
+  .MuiSwitch-root {
+    opacity: 0.6;
+  }
+`;
+
+export const RqIdsWrapper = styled.div`
+  display: block;
+
+  .list {
+    display: grid;
+    grid-auto-rows: minmax(0px, 1fr);
+    gap: 10px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    padding-left: 0;
+    list-style: none;
   }
 
   ${props => props.theme.breakpoints.up(1950)} {
