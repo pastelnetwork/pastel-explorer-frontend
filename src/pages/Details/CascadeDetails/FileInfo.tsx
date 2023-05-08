@@ -2,6 +2,7 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
+import IOSSwitch from '@components/IOSSwitch/IOSSwitch';
 import { translate } from '@utils/helpers/i18n';
 
 import doc from '@assets/icons/filetypes/doc.svg';
@@ -101,12 +102,6 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
                     {translate('pages.cascade.kb')}
                   </TicketStyles.TicketContent>
                 </Box>
-                <Box className="mt-10">
-                  <TicketStyles.TicketTitle>
-                    {translate('pages.cascade.rqIc')}:
-                  </TicketStyles.TicketTitle>
-                  <TicketStyles.TicketContent>{data.rq_ic}</TicketStyles.TicketContent>
-                </Box>
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
                 <Box>
@@ -117,12 +112,6 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
                     {data.data_hash}
                   </TicketStyles.TicketContent>
                 </Box>
-                <Box className="mt-10">
-                  <TicketStyles.TicketTitle>
-                    {translate('pages.cascade.rqMax')}:
-                  </TicketStyles.TicketTitle>
-                  <TicketStyles.TicketContent>{data.rq_max}</TicketStyles.TicketContent>
-                </Box>
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
                 <Box>
@@ -130,23 +119,52 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
                     {translate('pages.cascade.makePubliclyAccessible')}:
                   </TicketStyles.TicketTitle>
                   <TicketStyles.TicketContent>
-                    {data.make_publicly_accessible?.toString()}
+                    <IOSSwitch
+                      checked={data.make_publicly_accessible}
+                      name="makePubliclyAccessible"
+                      disabled
+                    />
                   </TicketStyles.TicketContent>
-                </Box>
-                <Box className="mt-10">
-                  <TicketStyles.TicketTitle>
-                    {translate('pages.cascade.rqOti')}:
-                  </TicketStyles.TicketTitle>
-                  <TicketStyles.TicketContent>{data.rq_oti}</TicketStyles.TicketContent>
                 </Box>
               </Grid>
             </Grid>
           </Box>
         </Box>
       </Box>
-      <Box className="rq-ids">
-        <TicketStyles.TicketTitle>{translate('pages.cascade.rqIds')}:</TicketStyles.TicketTitle>
-        <RqIds data={data.rq_ids} />
+      <Box className="raptor-q-parameters">
+        <Typography className="title">{translate('pages.cascade.raptorQParameters')}</Typography>
+        <Box className="mt-10">
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={4}>
+              <Box>
+                <TicketStyles.TicketTitle>
+                  {translate('pages.cascade.rqIc')}:
+                </TicketStyles.TicketTitle>
+                <TicketStyles.TicketContent>{data.rq_ic}</TicketStyles.TicketContent>
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Box>
+                <TicketStyles.TicketTitle>
+                  {translate('pages.cascade.rqMax')}:
+                </TicketStyles.TicketTitle>
+                <TicketStyles.TicketContent>{data.rq_max}</TicketStyles.TicketContent>
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Box>
+                <TicketStyles.TicketTitle>
+                  {translate('pages.cascade.rqOti')}:
+                </TicketStyles.TicketTitle>
+                <TicketStyles.TicketContent>{data.rq_oti}</TicketStyles.TicketContent>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+        <Box className="rq-ids">
+          <TicketStyles.TicketTitle>{translate('pages.cascade.rqIds')}:</TicketStyles.TicketTitle>
+          <RqIds data={data.rq_ids} />
+        </Box>
       </Box>
     </Styles.FileInfoWrapper>
   );

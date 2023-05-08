@@ -14,9 +14,10 @@ import * as Styles from './Tickets.styles';
 interface ICascadeProps {
   isMobile: boolean;
   ticketsData: TTicketResponse;
+  innerWidth: number;
 }
 
-const Cascade: React.FC<ICascadeProps> = ({ isMobile, ticketsData }) => {
+const Cascade: React.FC<ICascadeProps> = ({ isMobile, ticketsData, innerWidth }) => {
   const { data, total, isLoading, size, setSize } = ticketsData;
 
   const getTitle = () => {
@@ -42,18 +43,29 @@ const Cascade: React.FC<ICascadeProps> = ({ isMobile, ticketsData }) => {
     return true;
   };
 
+  const getRowHeight = () => {
+    if (innerWidth < 600) {
+      return 320;
+    }
+
+    if (isMobile) {
+      return 180;
+    }
+    return 120;
+  };
+
   return (
     <Styles.CascadeContainer id="cascadeTickets">
       <InfinityTable
         rows={data ? transformCascadeData(data) : []}
         columns={cascadeColumns}
-        tableHeight={495}
+        tableHeight={innerWidth < 600 ? 800 : 600}
         title={getTitle()}
         onBottomReach={handleFetchMoreMovements}
-        className="data-table"
+        className="data-table tickets-table"
         headerBackground
         customLoading={isLoading}
-        rowHeight={isMobile ? 140 : 50}
+        rowHeight={getRowHeight()}
       />
     </Styles.CascadeContainer>
   );

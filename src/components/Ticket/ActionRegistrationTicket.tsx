@@ -286,7 +286,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
 
   return (
     <Box>
-      {ticket?.collectionName && ticket.action_type === 'sense' ? (
+      {ticket.action_type === 'sense' ? (
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
@@ -295,12 +295,16 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
           </Grid>
           <Grid item xs={8} sm={9}>
             <Styles.TicketContent>
-              <RouterLink
-                route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${ticket?.collectionName}`}
-                value={ticket?.collectionName}
-                title={ticket?.collectionName}
-                className="address-link small"
-              />
+              {ticket?.collectionName ? (
+                <RouterLink
+                  route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${ticket?.collectionName}`}
+                  value={ticket?.collectionName}
+                  title={ticket?.collectionName}
+                  className="address-link small"
+                />
+              ) : (
+                translate('common.na')
+              )}
             </Styles.TicketContent>
           </Grid>
         </Grid>

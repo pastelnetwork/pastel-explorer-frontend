@@ -71,7 +71,7 @@ export const FileInfoWrapper = styled.div`
     align-items: flex-start;
 
     .icon {
-      width: 100px;
+      width: 56px;
       margin-right: 25px;
 
       img {
@@ -99,10 +99,18 @@ export const FileInfoWrapper = styled.div`
     margin-top: 10px;
   }
 
-  .rq-ids {
+  .raptor-q-parameters {
     margin-top: 20px;
     padding-top: 10px;
     border-top: solid 1px ${props => props.theme.table.hover};
+
+    .title {
+      font-weight: 700;
+    }
+  }
+
+  .rq-ids {
+    margin-top: 10px;
   }
 
   ${props => props.theme.breakpoints.down(600)} {
@@ -130,6 +138,23 @@ export const RqIdsWrapper = styled.div`
     width: 100%;
     padding-left: 0;
     list-style: none;
+  }
+
+  .expand-more {
+    display: flex;
+    align-items: center;
+    color: ${props => props.theme.sidebar.menu.toggle.switch};
+    cursor: pointer;
+
+    svg {
+      transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    }
+
+    &.opened {
+      svg {
+        transform: rotate(180deg);
+      }
+    }
   }
 
   ${props => props.theme.breakpoints.up(1950)} {

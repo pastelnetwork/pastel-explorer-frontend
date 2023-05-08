@@ -2336,7 +2336,7 @@
         "description": "Used for the Tickets page"
       },
       "senseDetail": {
-        "message": "Sense detail",
+        "message": "View detail",
         "description": "Used for the Tickets page"
       },
       "pastelID": {
@@ -2431,6 +2431,14 @@
       },
       "cascadeDetail": {
         "message": "Cascade detail",
+        "description": "Used for the Tickets page"
+      },
+      "senseOutput": {
+        "message": "Sense Output",
+        "description": "Used for the Tickets page"
+      },
+      "cascadeOutput": {
+        "message": "Cascade Output",
         "description": "Used for the Tickets page"
       }
     },
@@ -2576,7 +2584,7 @@
     },
     "cascade": {
       "dataHash": {
-        "message": "Data hash",
+        "message": "Original Data SHA3-256 Hash",
         "description": "Used for the Cascade Details page"
       },
       "ticketDetail": {
@@ -2600,7 +2608,7 @@
         "description": "Used for the Cascade Details page"
       },
       "makePubliclyAccessible": {
-        "message": "Make publicly accessible",
+        "message": "Is Publicly Accessible",
         "description": "Used for the Cascade Details page"
       },
       "rqIc": {
@@ -2616,11 +2624,23 @@
         "description": "Used for the Cascade Details page"
       },
       "fileSize": {
-        "message": "File size",
+        "message": "Original File Size",
         "description": "Used for the Cascade Details page"
       },
       "kb": {
         "message": "KB",
+        "description": "Used for the Cascade Details page"
+      },
+      "raptorQParameters": {
+        "message": "RaptorQ Parameters",
+        "description": "Used for the Cascade Details page"
+      },
+      "displayAllRqIds": {
+        "message": "Display all RaptorQ Symbol IDs",
+        "description": "Used for the Cascade Details page"
+      },
+      "hideAllRqIds": {
+        "message": "Hide all RaptorQ Symbol IDs",
         "description": "Used for the Cascade Details page"
       }
     }

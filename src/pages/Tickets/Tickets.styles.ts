@@ -76,6 +76,34 @@ export const TicketsContainer = styled.div`
     }
   }
 
+  .tickets-table {
+    .ReactVirtualized__Table__headerRow {
+      display: none;
+    }
+
+    .bold {
+      font-weight: 700;
+    }
+
+    .title {
+      font-size: 15px;
+    }
+
+    .MuiGrid-spacing-xs-3 > .MuiGrid-item {
+      padding: 4px 6px;
+    }
+
+    .ticket-status {
+      display: flex;
+      align-items: center;
+
+      .action-ticket-status {
+        padding: 6px 10px;
+        border-radius: 4px;
+      }
+    }
+  }
+
   ${props => props.theme.breakpoints.down(1024)} {
     .ReactVirtualized__Grid,
     .ReactVirtualized__Table__headerRow {
@@ -122,11 +150,22 @@ export const TicketsContainer = styled.div`
         }
       }
     }
+
+    .tickets-table {
+      .ReactVirtualized__Table__rowColumn {
+        .cell-content {
+          &:before {
+            display: none;
+          }
+        }
+      }
+    }
   }
 `;
 
 export const SenseContainer = styled.div`
   width: 100%;
+  line-height: 1.25;
 `;
 
 export const CascadeContainer = styled.div`
@@ -202,6 +241,10 @@ export const TicketSummaryContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+
+  @media screen and (max-width: 1200px) {
+    flex-wrap: wrap;
+  }
 `;
 
 export const TicketSummaryBox = styled(RouterLink)`

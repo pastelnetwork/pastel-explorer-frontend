@@ -27,9 +27,11 @@ const Tickets: React.FC = () => {
   const pastelNftTicketData = useTickets('pastel-nft', DATA_LIMIT);
   const senseTicketData = useTickets('sense', DATA_LIMIT);
   const [isMobile, setMobileView] = useState(false);
+  const [innerWidth, setInnerWidth] = useState(0);
 
   const handleResize = () => {
     setMobileView(false);
+    setInnerWidth(window.innerWidth);
     if (window.innerWidth < 960) {
       setMobileView(true);
     }
@@ -83,10 +85,18 @@ const Tickets: React.FC = () => {
       </Grid>
       <Grid container spacing={6}>
         <Styles.GirdStyle item xs={12} lg={6} className="left">
-          <Sense isMobile={isMobile} ticketsData={senseTicketData as TTicketResponse} />
+          <Sense
+            isMobile={isMobile}
+            ticketsData={senseTicketData as TTicketResponse}
+            innerWidth={innerWidth}
+          />
         </Styles.GirdStyle>
         <Styles.GirdStyle item xs={12} lg={6} className="right">
-          <Cascade isMobile={isMobile} ticketsData={cascadeTicketData as TTicketResponse} />
+          <Cascade
+            isMobile={isMobile}
+            ticketsData={cascadeTicketData as TTicketResponse}
+            innerWidth={innerWidth}
+          />
         </Styles.GirdStyle>
       </Grid>
       <Grid container spacing={6}>
