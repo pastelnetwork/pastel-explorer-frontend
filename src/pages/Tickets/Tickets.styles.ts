@@ -28,6 +28,10 @@ export const TicketsContainer = styled.div`
     margin-top: 4px;
   }
 
+  .inline-block {
+    display: inline-block;
+  }
+
   .table-title {
     margin: 0;
   }
@@ -159,6 +163,26 @@ export const TicketsContainer = styled.div`
           }
         }
       }
+    }
+  }
+
+  ${props => props.theme.breakpoints.up(960)} {
+    .sense-col {
+      .MuiGrid-root {
+        max-width: 23%;
+        flex-basis: 23%;
+      }
+
+      .sense-output {
+        max-width: 31%;
+        flex-basis: 31%;
+      }
+    }
+  }
+
+  ${props => props.theme.breakpoints.down(600)} {
+    .hidden-sm {
+      display: none;
     }
   }
 `;

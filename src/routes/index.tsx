@@ -499,7 +499,6 @@ export const pageRoutes = [
 ];
 
 export const sidebarRoutes = [
-  explorerRoutes,
   movementRoutes,
   blocksRoutes,
   ticketsRoutes,

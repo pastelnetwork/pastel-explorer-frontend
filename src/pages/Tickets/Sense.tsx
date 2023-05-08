@@ -45,11 +45,11 @@ const Sense: React.FC<ISenseProps> = ({ isMobile, ticketsData, innerWidth }) => 
 
   const getRowHeight = () => {
     if (innerWidth < 600) {
-      return 320;
+      return 370;
     }
 
     if (isMobile) {
-      return 180;
+      return 210;
     }
     return 120;
   };

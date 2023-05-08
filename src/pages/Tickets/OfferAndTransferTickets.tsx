@@ -56,7 +56,7 @@ const OfferAndTransferTickets: React.FC<IOfferAndTransferTicketsProps> = ({
         className="data-table"
         headerBackground
         customLoading={isLoading}
-        rowHeight={isMobile ? 140 : 50}
+        rowHeight={isMobile ? 140 : 45}
       />
     </Styles.OtherTicketContainer>
   );

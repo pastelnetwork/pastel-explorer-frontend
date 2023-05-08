@@ -108,6 +108,14 @@ const TicketsType: React.FC = () => {
     setSize(1);
     fetchParams.current.size = 1;
     fetchParams.current.offset = 0;
+    fetchParams.current.defaultDateRange = {
+      startDate: 0,
+      endDate: null,
+    };
+    setCustomDateRange({
+      startDate: 0,
+      endDate: null,
+    });
     setSelectedTime(event.currentTarget.value);
   };
 

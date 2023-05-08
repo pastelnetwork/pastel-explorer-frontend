@@ -56,7 +56,7 @@ const PastelIDAndUsernameTickets: React.FC<IPastelIDAndUsernameTicketsProps> = (
         className="data-table"
         headerBackground
         customLoading={isLoading}
-        rowHeight={isMobile ? 140 : 50}
+        rowHeight={isMobile ? 140 : 45}
       />
     </Styles.PastelContainer>
   );
