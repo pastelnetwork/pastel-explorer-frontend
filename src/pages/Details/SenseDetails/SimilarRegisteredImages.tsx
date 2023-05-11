@@ -7,6 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Tooltip from '@material-ui/core/Tooltip';
+import InfoIcon from '@material-ui/icons/Info';
 
 import { TAppTheme } from '@theme/index';
 import { decompress_zstd_compressed_data_func } from '@utils/helpers/encryption';
@@ -15,6 +16,8 @@ import * as ROUTES from '@utils/constants/routes';
 import { translate } from '@utils/helpers/i18n';
 
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
+import imagePlaceholder from '@assets/images/no-image-placeholder.svg';
+
 import * as Styles from './SenseDetails.styles';
 
 export const StyledTableCell = withStyles((theme: TAppTheme) => ({
@@ -67,7 +70,9 @@ export const getSimilarRegisteredImagesData = (rarenessScoresTable: string) => {
   let fancyGridData = [];
   for (let i = 0; i < Object.values(uncompressedRarenessScoresTable.image_hash).length; i += 1) {
     fancyGridData.push({
-      image: `data:image/jpeg;base64,${uncompressedRarenessScoresTable.thumbnail[i]}`,
+      image: uncompressedRarenessScoresTable.thumbnail[i]
+        ? `data:image/jpeg;base64,${uncompressedRarenessScoresTable.thumbnail[i]}`
+        : null,
       imageHash: formatImageHash(uncompressedRarenessScoresTable.image_hash[i]),
       imageHashOriginal: uncompressedRarenessScoresTable.image_hash[i],
       dateTimeAdded: uncompressedRarenessScoresTable.register_time[i],
@@ -159,19 +164,12 @@ const SimilarRegisteredImages: React.FC<ISimilarRegisteredImages> = ({ rarenessS
                   </TicketStyles.TicketContent>
                 </StyledTableCell>
                 <StyledTableCell component="td" scope="row">
-                  <img src={item.image} alt={item.imageHashOriginal} />
+                  <img src={item.image || imagePlaceholder} alt={item.imageHashOriginal} />
                 </StyledTableCell>
                 <StyledTableCell component="td" scope="row">
                   <TicketStyles.TicketContent className="white-space-nowrap">
                     {item.matchType === 'Seed Image' ? (
-                      <RouterLink
-                        route={`${ROUTES.SENSE_DETAILS}?hash=${
-                          item.imageHashOriginal
-                        }&matchType=${item?.matchType?.replaceAll(' ', '')?.toLowerCase()}`}
-                        value={item.imageHash}
-                        title={item.imageHash}
-                        className="address-link"
-                      />
+                      <>{item.imageHash}</>
                     ) : (
                       <RouterLink
                         route={`${ROUTES.SENSE_DETAILS}?hash=${item.imageHashOriginal}`}
@@ -188,8 +186,17 @@ const SimilarRegisteredImages: React.FC<ISimilarRegisteredImages> = ({ rarenessS
                   </TicketStyles.TicketContent>
                 </StyledTableCell>
                 <StyledTableCell component="td" scope="row">
-                  <TicketStyles.TicketContent className="white-space-nowrap">
+                  <TicketStyles.TicketContent
+                    className={`white-space-nowrap ${
+                      item.matchType === 'Seed Image' ? 'inline-flex' : ''
+                    }`}
+                  >
                     {item.matchType}
+                    {item.matchType === 'Seed Image' ? (
+                      <Tooltip title={translate('pages.senseDetails.seedImagesInfo')}>
+                        <InfoIcon className="seed-images-info" />
+                      </Tooltip>
+                    ) : null}
                   </TicketStyles.TicketContent>
                 </StyledTableCell>
                 <StyledTableCell component="td" scope="row">

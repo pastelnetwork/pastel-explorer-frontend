@@ -340,6 +340,11 @@ export const ImagesWrapper = styled(Box)`
   .rare-on-the-internet-results-graph,
   .rare-on-the-internet-alternative-results {
     margin-right: 20px;
+    overflow: unset;
+
+    h4 {
+      border-radius: 10px 10px 0 0;
+    }
   }
 
   .similar-registered-images,
@@ -477,6 +482,17 @@ export const TableWrapper = styled.div`
 
   .white-space-nowrap {
     white-space: nowrap;
+  }
+
+  .seed-images-info {
+    color: ${props => props.theme.palette.text.primary};
+    margin-left: 5px;
+    font-size: 20px;
+  }
+
+  .inline-flex {
+    display: inline-flex;
+    align-items: center;
   }
 `;
 

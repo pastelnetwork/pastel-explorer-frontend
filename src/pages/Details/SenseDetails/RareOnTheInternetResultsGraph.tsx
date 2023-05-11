@@ -30,21 +30,27 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
         newData.rare_on_internet_graph_json_compressed_b64,
       );
       const keys = Object.keys(internetRarenessGraphData);
-      for (let i = 0; i < keys.length; i += 1) {
-        if (keys[i] === 'nodes') {
-          const keys2 = Object.keys(internetRarenessGraphData[keys[i]]);
-          const values2 = Object.values(internetRarenessGraphData[keys[i]]) as TCurrentNode[];
-          for (let j = 0; j < keys2.length; j += 1) {
-            const current_node: TCurrentNode = values2[j];
-            const current_node_size = 0.9 ** (current_node.search_result_ranking + 1) * 15;
-            current_node.node_size = current_node_size;
-            internetRarenessGraphData.nodes[keys2[j]] = current_node;
+      if (keys.length) {
+        for (let i = 0; i < keys.length; i += 1) {
+          if (keys[i] === 'nodes') {
+            const keys2 = Object.keys(internetRarenessGraphData[keys[i]]);
+            const values2 = Object.values(internetRarenessGraphData[keys[i]]) as TCurrentNode[];
+            for (let j = 0; j < keys2.length; j += 1) {
+              const current_node: TCurrentNode = values2[j];
+              const current_node_size = 0.9 ** (current_node.search_result_ranking + 1) * 15;
+              current_node.node_size = current_node_size;
+              internetRarenessGraphData.nodes[keys2[j]] = current_node;
+            }
           }
         }
+        return {
+          nodes: internetRarenessGraphData.nodes as TCurrentNode[],
+          edges: internetRarenessGraphData.links as TEdges[],
+        };
       }
       return {
-        nodes: internetRarenessGraphData.nodes as TCurrentNode[],
-        edges: internetRarenessGraphData.links as TEdges[],
+        nodes: [],
+        edges: [],
       };
     } catch (error) {
       return {
@@ -101,7 +107,7 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
           id: node.id,
           name: node.id,
           symbolSize: node.node_size,
-          symbol: `image://${node.img_src_string}`,
+          symbol: `image://${node?.img_src_string}`,
         })),
         edges,
         label: {

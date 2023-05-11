@@ -17,7 +17,6 @@ interface IPastelData {
   pastelIdOfRegisteringSupernode2: string;
   pastelIdOfRegisteringSupernode3: string;
   isPastelOpenapiRequest: number;
-  openApiSubsetIdString: string;
 }
 
 const PastelData: React.FC<IPastelData> = ({
@@ -29,7 +28,6 @@ const PastelData: React.FC<IPastelData> = ({
   pastelIdOfRegisteringSupernode2,
   pastelIdOfRegisteringSupernode3,
   isPastelOpenapiRequest,
-  openApiSubsetIdString,
 }) => {
   return (
     <Box>
@@ -113,14 +111,6 @@ const PastelData: React.FC<IPastelData> = ({
           {isPastelOpenapiRequest === 1
             ? translate('pages.senseDetails.true')
             : translate('pages.senseDetails.false')}
-        </TicketStyles.TicketContent>
-      </Styles.ContentItem>
-      <Styles.ContentItem>
-        <TicketStyles.TicketTitle>
-          {translate('pages.senseDetails.openApiSubsetIdString')}:
-        </TicketStyles.TicketTitle>
-        <TicketStyles.TicketContent>
-          {openApiSubsetIdString || translate('common.na')}
         </TicketStyles.TicketContent>
       </Styles.ContentItem>
     </Box>

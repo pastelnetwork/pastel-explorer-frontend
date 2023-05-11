@@ -85,10 +85,13 @@ const SenseDetails: React.FC = () => {
       return '';
     }
     const parseSenseData = JSON.parse(sense.rawData);
+    const rawSenseDataJson = JSON.parse(parseSenseData.raw_sense_data_json);
     return JSON.stringify(
       JSON.stringify({
         ...parseSenseData,
-        raw_sense_data_json: JSON.parse(parseSenseData.raw_sense_data_json),
+        raw_sense_data_json: {
+          ...rawSenseDataJson,
+        },
       }),
     );
   };
@@ -255,7 +258,6 @@ const SenseDetails: React.FC = () => {
               pastelIdOfRegisteringSupernode2={sense?.pastelIdOfRegisteringSupernode2}
               pastelIdOfRegisteringSupernode3={sense?.pastelIdOfRegisteringSupernode3}
               isPastelOpenapiRequest={sense?.isPastelOpenapiRequest}
-              openApiSubsetIdString={sense?.openApiSubsetIdString}
             />
           </BlockItemLayout>
         </Styles.ImagesWrapper>
@@ -271,9 +273,11 @@ const SenseDetails: React.FC = () => {
           </Typography>
         </Grid>
       </Grid>
-      <Typography component="h2" variant="h5" align="center" gutterBottom>
-        {translate('pages.senseDetails.senseNotFound')}
-      </Typography>
+      {matchType !== 'seedimage' ? (
+        <Typography component="h2" variant="h5" align="center" gutterBottom>
+          {translate('pages.senseDetails.senseNotFound')}
+        </Typography>
+      ) : null}
       {!txid && matchType === 'seedimage' ? (
         <Typography component="h3" variant="body1" align="center" gutterBottom>
           {translate('pages.senseDetails.seedImagesInfo')}
