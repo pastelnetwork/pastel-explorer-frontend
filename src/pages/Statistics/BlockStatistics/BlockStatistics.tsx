@@ -12,6 +12,7 @@ import { translate } from '@utils/helpers/i18n';
 
 import BlockVisualization from './BlockVisualization/BlockVisualization';
 import { ITransformBlocksData } from './BlockStatistics.helpers';
+import MempoolModal from './MempoolModal';
 
 import * as Styles from '../Statistics.styles';
 
@@ -42,6 +43,7 @@ interface IStatisticsBlocks {
 const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUnconfirmed }) => {
   const history = useHistory();
   const classes = useStyles();
+  const [openMempoolModal, setMempoolModal] = React.useState(false);
 
   const renderMempoolBlock = () => {
     if (blocksUnconfirmed?.length) {
@@ -69,6 +71,7 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
             minutesAgo={translate('pages.statistics.blocksUnconfirmedTime', {
               time: blocksUnconfirmed.length * 10,
             })}
+            clickHandler={() => setMempoolModal(!openMempoolModal)}
           />
         </Grid>
       );
@@ -126,6 +129,7 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
           )}
         </Styles.GridStyle>
       </Styles.BlockWrapper>
+      <MempoolModal open={openMempoolModal} onClose={() => setMempoolModal(!openMempoolModal)} />
     </>
   );
 };

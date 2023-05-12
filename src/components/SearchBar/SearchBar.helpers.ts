@@ -36,6 +36,8 @@ export type TAutocompleteOptions = {
   value: string;
   categoryText: string;
   pastelID: string;
+  alias: string;
+  transactionHash: string;
 };
 
 export const collectData = (
@@ -54,6 +56,18 @@ export const collectUsernameData = (
     category,
     categoryText,
     pastelID: item.pastelID,
+  }));
+
+export const collectCollectionData = (
+  data: Array<{ name: string; alias: string }>,
+  category: TOptionsCategories,
+  categoryText: TOptionsCategories,
+) =>
+  data?.map((item: { name: string; alias: string }) => ({
+    value: `${item.name}`,
+    category,
+    categoryText,
+    alias: item.alias,
   }));
 
 export const collectCascadeData = (

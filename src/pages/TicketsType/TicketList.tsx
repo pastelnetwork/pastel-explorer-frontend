@@ -206,7 +206,12 @@ const TicketsList: React.FC<ITicketsList> = ({
       case 'username-change':
         return <UserNameChangeTicket ticket={ticket as IUserNameChangeTicket} />;
       case 'nft-reg':
-        return <NFTRegistrationTicket ticket={ticket as INftRegistrationTicket} />;
+        return (
+          <NFTRegistrationTicket
+            ticket={ticket as INftRegistrationTicket}
+            transactionHash={transactionHash}
+          />
+        );
       case 'nft-act':
         return <NFTActivationTicket ticket={ticket as INftActivationTicket} />;
       case 'collection-reg':

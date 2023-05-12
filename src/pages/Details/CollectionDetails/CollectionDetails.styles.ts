@@ -2,11 +2,20 @@ import styled from 'styled-components';
 
 export const Wrapper = styled('div')`
   width: 100%;
+
+  .bold {
+    font-weight: 700;
+  }
 `;
 
 export const ContentWrapper = styled('div')`
   width: 100%;
   padding: 0 12px 20px;
+
+  .txt-id {
+    display: inline-block;
+    margin-left: 40px;
+  }
 `;
 
 export const SummaryWrapper = styled('div')`
@@ -98,9 +107,6 @@ export const SummaryWrapper = styled('div')`
 
     .label {
       margin-right: 8px;
-    }
-
-    .value {
       font-weight: 700;
     }
 
@@ -181,11 +187,22 @@ export const NFTsWrapper = styled('div')`
       background-color: ${props => props.theme.sidebar.text.primary};
     }
   }
+`;
 
+export const NFTsMainContent = styled('div')`
   .nft-content {
     display: flex;
     align-items: flex-start;
     padding-top: 30px;
+  }
+
+  .nft-link {
+    overflow: unset;
+    transition: transform 420ms cubic-bezier(0.165, 0.84, 0.44, 1);
+
+    &:hover {
+      transform: scale(1.05);
+    }
   }
 
   .nft-list {
@@ -207,6 +224,10 @@ export const NFTsWrapper = styled('div')`
       background-color: rgb(255, 255, 255);
       box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 15px;
       transition: box-shadow 0.25s ease-in-out 0s;
+
+      .bold {
+        font-weight: 700;
+      }
     }
 
     .image-box {
@@ -241,13 +262,27 @@ export const NFTsWrapper = styled('div')`
       padding: 10px;
     }
 
-    .card-title,
-    .card-price {
+    .card-title {
       font-weight: bold;
+      color: ${props => props.theme.palette.text.primary};
+    }
+
+    .label-box {
+      display: inline-block;
+      padding: 4px 12px;
+      font-size: 14px;
+      color: #fff;
+      background-color: #e85dd2;
+      border-radius: 15px;
+
+      &.nft {
+        background-color: #9f34e1;
+      }
     }
 
     .card-price {
       margin-top: 5px;
+      color: ${props => props.theme.palette.text.primary};
     }
 
     .card-last-sale {
@@ -576,4 +611,10 @@ export const ApplyButton = styled.button`
     padding: 8px 16px;
     font-size: 15px;
   }
+`;
+
+export const PaginationWrapper = styled('div')`
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px 0 10px;
 `;

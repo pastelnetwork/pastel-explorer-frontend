@@ -28,6 +28,20 @@ export const Wrapper = styled.div`
       width: 100%;
     }
   }
+
+  &.content-center-wrapper {
+    display: flex;
+    width: 100%;
+    height: 60vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
 `;
 
 export const BlockWrapper = styled.div`
@@ -141,10 +155,6 @@ export const FileInfoWrapper = styled.div`
         transform: rotate(180deg);
       }
     }
-  }
-
-  .MuiSwitch-root {
-    opacity: 0.6;
   }
 `;
 

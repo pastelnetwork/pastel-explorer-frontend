@@ -14,9 +14,14 @@ import * as Styles from './Tickets.styles';
 interface IPastelNftTicketsProps {
   isMobile: boolean;
   ticketsData: TTicketResponse;
+  innerWidth: number;
 }
 
-const PastelNftTickets: React.FC<IPastelNftTicketsProps> = ({ isMobile, ticketsData }) => {
+const PastelNftTickets: React.FC<IPastelNftTicketsProps> = ({
+  isMobile,
+  ticketsData,
+  innerWidth,
+}) => {
   const { data, total, isLoading, size, setSize } = ticketsData;
 
   const handleFetchMoreMovements = (reachedTableBottom: boolean) => {
@@ -42,18 +47,29 @@ const PastelNftTickets: React.FC<IPastelNftTicketsProps> = ({ isMobile, ticketsD
     );
   };
 
+  const getRowHeight = () => {
+    if (innerWidth < 600) {
+      return 370;
+    }
+
+    if (isMobile) {
+      return 210;
+    }
+    return 120;
+  };
+
   return (
     <Styles.OtherTicketContainer id="pastelNFTTickets">
       <InfinityTable
         rows={data ? transformPastelNftTicketsData(data) : []}
         columns={pastelNftTicketsColumns}
-        tableHeight={495}
+        tableHeight={innerWidth < 600 ? 800 : 610}
         title={getTitle()}
         onBottomReach={handleFetchMoreMovements}
-        className="data-table"
+        className="data-table tickets-table"
         headerBackground
         customLoading={isLoading}
-        rowHeight={isMobile ? 140 : 45}
+        rowHeight={getRowHeight()}
       />
     </Styles.OtherTicketContainer>
   );

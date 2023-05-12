@@ -232,10 +232,8 @@
         }
       },
       "cascade": {
-        "title": {
-          "message": "Cascade Filename",
-          "description": "Used for the SearchBar component"
-        }
+        "message": "Cascade Filename",
+        "description": "Used for the SearchBar component"
       }
     },
     "summary": {
@@ -713,6 +711,38 @@
         "timestamp": {
           "message": "Timestamp",
           "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "height": {
+          "message": "Height",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "collectionItemCopyCount": {
+          "message": "Collection item copy count",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "collectionName": {
+          "message": "Collection name",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "collectionTicketVersion": {
+          "message": "Collection ticket version",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "itemType": {
+          "message": "Item type",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "maxCollectionEntries": {
+          "message": "Max collection entries",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "listOfPastelidsOfAuthorizedContributors": {
+          "message": "List of PastelID of authorized contributors",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "collectionFinalAllowedBlockHeight": {
+          "message": "Collection final allowed block height",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
         }
       },
       "nftRegistrationTicket": {
@@ -798,6 +828,14 @@
         },
         "collectionName": {
           "message": "Collection",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "pastelNFTOutput": {
+          "message": "Pastel NFT Output",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "viewDetails": {
+          "message": "View Details",
           "description": "Used for the ActionRegistrationTicket component"
         }
       },
@@ -2106,6 +2144,22 @@
       "totalTxs": {
         "message": "Total {{total}} txs",
         "description": "Used for the Movement page"
+      },
+      "size": {
+        "message": "Size",
+        "description": "Used for the TransactionDetails page"
+      },
+      "fee": {
+        "message": "Fee ({{currency}})",
+        "description": "Used for the TransactionDetails page"
+      },
+      "kb": {
+        "message": "kB",
+        "description": "Used for the TransactionDetails page"
+      },
+      "mempool": {
+        "message": "Mempool",
+        "description": "Used for the TransactionDetails page"
       }
     },
     "richlist": {
@@ -2440,6 +2494,10 @@
       "cascadeOutput": {
         "message": "Cascade Output",
         "description": "Used for the Tickets page"
+      },
+      "pastelNFT": {
+        "message": "Pastel NFT Output",
+        "description": "Used for the Tickets page"
       }
     },
     "ticketsType": {
@@ -2647,6 +2705,290 @@
         "message": "All RaptorQ Symbol IDs",
         "description": "Used for the Cascade Details page"
       }
+    },
+    "collection": {
+      "404": {
+        "message": "404",
+        "description": "Used for the collection Details page"
+      },
+      "collectionNotFound": {
+        "message": "Collection not found",
+        "description": "Used for the collection Details page"
+      },
+      "by": {
+        "message": "By",
+        "description": "Used for the collection Details page"
+      },
+      "items": {
+        "message": "Items",
+        "description": "Used for the collection Details page"
+      },
+      "created": {
+        "message": "Created",
+        "description": "Used for the collection Details page"
+      },
+      "royalty": {
+        "message": "Royalty",
+        "description": "Used for the collection Details page"
+      },
+      "green": {
+        "message": "Green",
+        "description": "Used for the collection Details page"
+      },
+      "itemCopy": {
+        "message": "Item copy",
+        "description": "Used for the collection Details page"
+      },
+      "maxCollectionEntries": {
+        "message": "Max collection entries",
+        "description": "Used for the collection Details page"
+      },
+      "txID": {
+        "message": "txID",
+        "description": "Used for the collection Details page"
+      }
+    },
+    "nftDetails": {
+      "404": {
+        "message": "404",
+        "description": "Used for the NFT Details page"
+      },
+      "nftNotFound": {
+        "message": "NFT not found",
+        "description": "Used for the NFT Details page"
+      },
+      "viewCollection": {
+        "message": "View collection",
+        "description": "Used for the NFT Details page"
+      },
+      "event": {
+        "message": "Event",
+        "description": "Used for the NFT Details page"
+      },
+      "txID": {
+        "message": "txID",
+        "description": "Used for the NFT Details page"
+      },
+      "version": {
+        "message": "Version",
+        "description": "Used for the NFT Details page"
+      },
+      "pastelID": {
+        "message": "PastelID",
+        "description": "Used for the NFT Details page"
+      },
+      "timestamp": {
+        "message": "Timestamp",
+        "description": "Used for the NFT Details page"
+      },
+      "offer": {
+        "message": "Offer",
+        "description": "Used for the NFT Details page"
+      },
+      "accept": {
+        "message": "Accept",
+        "description": "Used for the NFT Details page"
+      },
+      "transfer": {
+        "message": "Transfer",
+        "description": "Used for the NFT Details page"
+      },
+      "submittedImage": {
+        "message": "Submitted Image",
+        "description": "Used for the NFT Details page"
+      },
+      "details": {
+        "message": "NFT Info",
+        "description": "Used for the NFT Details page"
+      },
+      "itemActivity": {
+        "message": "Item Activity",
+        "description": "Used for the NFT Details page"
+      },
+      "moreFromThisCollection": {
+        "message": "More From This Collection",
+        "description": "Used for the NFT Details page"
+      },
+      "by": {
+        "message": "By",
+        "description": "Used for the NFT Details page"
+      },
+      "creatorWrittenStatement": {
+        "message": "Creator written statement",
+        "description": "Used for the NFT Details page"
+      },
+      "nftKeyword": {
+        "message": "NFT keyword set",
+        "description": "Used for the NFT Details page"
+      },
+      "nftSeriesName": {
+        "message": "NFT series name",
+        "description": "Used for the NFT Details page"
+      },
+      "txIdOfPreburn": {
+        "message": "TXID of Preburn 20%",
+        "description": "Used for the NFT Details page"
+      },
+      "totalCopies": {
+        "message": "Total copies",
+        "description": "Used for the NFT Details page"
+      },
+      "royalty": {
+        "message": "Royalty",
+        "description": "Used for the NFT Details page"
+      },
+      "green": {
+        "message": "Green",
+        "description": "Used for the NFT Details page"
+      },
+      "originalFileSize": {
+        "message": "Original file size",
+        "description": "Used for the NFT Details page"
+      },
+      "kb": {
+        "message": "KB",
+        "description": "Used for the NFT Details page"
+      },
+      "dataHash": {
+        "message": "Data hash",
+        "description": "Used for the NFT Details page"
+      },
+      "creator": {
+        "message": "Creator Info",
+        "description": "Used for the NFT Details page"
+      },
+      "creatorWebsite": {
+        "message": "Creator website",
+        "description": "Used for the NFT Details page"
+      },
+      "creatorName": {
+        "message": "Creator name",
+        "description": "Used for the NFT Details page"
+      },
+      "video": {
+        "message": "NFT video",
+        "description": "Used for the NFT Details page"
+      },
+      "registration": {
+        "message": "Registration",
+        "description": "Used for the NFT Details page"
+      },
+      "activation": {
+        "message": "Activation",
+        "description": "Used for the NFT Details page"
+      },
+      "rqIc": {
+        "message": "Rq ic",
+        "description": "Used for the NFT Details page"
+      },
+      "rqMax": {
+        "message": "Rq max",
+        "description": "Used for the NFT Details page"
+      },
+      "rqOti": {
+        "message": "Rq oti",
+        "description": "Used for the NFT Details page"
+      },
+      "rqIds": {
+        "message": "Rq ids",
+        "description": "Used for the NFT Details page"
+      },
+      "raptorQParameters": {
+        "message": "RaptorQ Parameters",
+        "description": "Used for the NFT Details page"
+      },
+      "ddAndFingerprints": {
+        "message": "Dupe Detection and Fingerprints",
+        "description": "Used for the NFT Details page"
+      },
+      "ddAndFingerprintsIc": {
+        "message": "Dd and fingerprints ic",
+        "description": "Used for the NFT Details page"
+      },
+      "ddAndFingerprintsMax": {
+        "message": "Dd and fingerprints max",
+        "description": "Used for the NFT Details page"
+      },
+      "ddAndFingerprintsIds": {
+        "message": "Dd and fingerprints ids",
+        "description": "Used for the NFT Details page"
+      },
+      "hideAllDdAndFingerprints": {
+        "message": "Hide all Dd and fingerprints",
+        "description": "Used for the NFT Details page"
+      },
+      "displayAllDdAndFingerprints": {
+        "message": "Display all Dd and fingerprints",
+        "description": "Used for the NFT Details page"
+      },
+      "allDdAndFingerprints": {
+        "message": "All Dd and fingerprints",
+        "description": "Used for the NFT Details page"
+      },
+      "collection": {
+        "message": "Collection name",
+        "description": "Used for the NFT Details page"
+      },
+      "memberSince": {
+        "message": "Member since",
+        "description": "Used for the NFT Details page"
+      },
+      "nftType": {
+        "message": "NFT type",
+        "description": "Used for the NFT Details page"
+      },
+      "eventDetails": {
+        "message": "Event details",
+        "description": "Used for the NFT Details page"
+      },
+      "fileType": {
+        "message": "File type",
+        "description": "Used for the NFT Details page"
+      },
+      "isPubliclyAccessible": {
+        "message": "Is publicly accessible",
+        "description": "Used for the NFT Details page"
+      },
+      "fee": {
+        "message": "Fee",
+        "description": "Used for the NFT Details page"
+      },
+      "copyNumber": {
+        "message": "Copy number",
+        "description": "Used for the NFT Details page"
+      },
+      "askedPrice": {
+        "message": "Asked price",
+        "description": "Used for the NFT Details page"
+      },
+      "validAfter": {
+        "message": "Valid after",
+        "description": "Used for the NFT Details page"
+      },
+      "validBefore": {
+        "message": "Valid before",
+        "description": "Used for the NFT Details page"
+      },
+      "lockedRecipient": {
+        "message": "Locked recipient",
+        "description": "Used for the NFT Details page"
+      },
+      "offerTxId": {
+        "message": "Offer txID",
+        "description": "Used for the NFT Details page"
+      },
+      "acceptTxID": {
+        "message": "Accept txID",
+        "description": "Used for the NFT Details page"
+      },
+      "copySerialNr": {
+        "message": "Copy serial nr",
+        "description": "Used for the NFT Details page"
+      },
+      "price": {
+        "message": "Price",
+        "description": "Used for the NFT Details page"
+      }
     }
   },
   "routes": {
@@ -2836,6 +3178,10 @@
     },
     "cascadeDetails": {
       "message": "Cascade Details",
+      "description": "Used for the routes"
+    },
+    "nftDetails": {
+      "message": "NFT Details",
       "description": "Used for the routes"
     }
   },

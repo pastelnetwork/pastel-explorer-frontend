@@ -78,7 +78,7 @@ const OpenNSFW: React.FC<IOpenNSFWProps> = ({ openNSFWScore }) => {
           offsetCenter: [0, '80%'],
           fontWeight: 'normal',
           formatter(value: number) {
-            return (value * 100).toFixed(3);
+            return value.toFixed(3);
           },
         },
         title: {

@@ -11,6 +11,8 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import useBlocks from '@hooks/useBlocks';
 import { translate } from '@utils/helpers/i18n';
 import { getSubHours } from '@utils/helpers/date/date';
+import BlockStatistics from '@pages/Statistics/BlockStatistics/BlockStatistics';
+import useBlockStatistics from '@hooks/useBlockStatistics';
 
 import { columns } from './Blocks.columns';
 import { transformTableData, DATA_DEFAULT_SORT, DATA_FETCH_LIMIT } from './Blocks.helpers';
@@ -29,6 +31,7 @@ interface IBlocksDataRef {
 
 const Blocks = () => {
   const filter = useSelector(getFilterState);
+  const { blockElements, blocksUnconfirmed } = useBlockStatistics();
   const [apiParams, setParams] = useState<IBlocksDataRef>({
     sortBy: 'blockId',
     sortDirection: DATA_DEFAULT_SORT,
@@ -112,6 +115,9 @@ const Blocks = () => {
 
   return (
     <Styles.TableContainer item>
+      <Styles.BlockStatistics>
+        <BlockStatistics blockElements={blockElements} blocksUnconfirmed={blocksUnconfirmed} />
+      </Styles.BlockStatistics>
       <InfinityTable
         sortBy={apiParams.sortBy}
         sortDirection={apiParams.sortDirection}

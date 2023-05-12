@@ -43,6 +43,7 @@ import {
   collectUsernameData,
   TAutocompleteOptions,
   collectCascadeData,
+  collectCollectionData,
 } from './SearchBar.helpers';
 
 interface AppBarProps {
@@ -147,11 +148,6 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
       ),
       ...collectData(data.senses, SENSES_LABEL, translate(SENSES_TEXT_LABEL) as TOptionsCategories),
       ...collectData(
-        data.collectionNameList,
-        COLLECTION,
-        translate(COLLECTION_LABEL) as TOptionsCategories,
-      ),
-      ...collectData(
         data.pastelIds,
         PASTEL_ID_LABEL,
         translate(PASTEL_ID_TEXT_LABEL) as TOptionsCategories,
@@ -165,6 +161,11 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         data.cascadeList,
         CASCADE,
         translate(CASCADE_LABEL) as TOptionsCategories,
+      ),
+      ...collectCollectionData(
+        data.collectionNameList,
+        COLLECTION,
+        translate(COLLECTION_LABEL) as TOptionsCategories,
       ),
     ];
 
@@ -264,7 +265,18 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
               <RouterLink
                 styles={{ padding: '6px 24px 6px 16px' }}
                 route={`${getRoute((option as TAutocompleteOptions).category)}?txid=${
-                  (option as TAutocompleteOptions).value
+                  (option as TAutocompleteOptions).transactionHash
+                }`}
+                value={(option as TAutocompleteOptions).value}
+              />
+            );
+          }
+          if ((option as TAutocompleteOptions).category === COLLECTION) {
+            return (
+              <RouterLink
+                styles={{ padding: '6px 24px 6px 16px' }}
+                route={`${getRoute((option as TAutocompleteOptions).category)}/${
+                  (option as TAutocompleteOptions).alias
                 }`}
                 value={(option as TAutocompleteOptions).value}
               />

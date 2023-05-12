@@ -4,7 +4,6 @@ import { Grid } from '@material-ui/core';
 export const TableContainer = styled(Grid)`
   position: relative;
   box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
-  background: ${props => props.theme.sidebar.menu.background};
   border-radius: 10px;
   overflow: hidden;
 
@@ -118,4 +117,8 @@ export const SubTitle = styled.span`
   @media screen and (max-width: 340px) {
     font-size: 14px;
   }
+`;
+
+export const BlockStatistics = styled.div`
+  margin-bottom: 20px;
 `;

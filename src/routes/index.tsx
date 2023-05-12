@@ -67,6 +67,7 @@ const CollectionDetails = loadable(
   () => import('@pages/Details/CollectionDetails/CollectionDetails'),
 );
 const CascadeDetails = loadable(() => import('@pages/Details/CascadeDetails/CascadeDetails'));
+const NftDetails = loadable(() => import('@pages/Details/NftDetails/NftDetails'));
 
 const explorerRoutes = {
   id: 'routes.explorer',
@@ -439,7 +440,7 @@ const burnedRoutes = {
 
 const collectionDetailsRoutes = {
   id: 'routes.collectionDetails',
-  path: `${ROUTES.COLLECTION_DETAILS_PAGE}/:collectionName`,
+  path: `${ROUTES.COLLECTION_DETAILS_PAGE}/:id`,
   icon: <LocalAtmIcon />,
   component: CollectionDetails,
   seoTitle: 'routes.collectionDetails',
@@ -453,6 +454,15 @@ const cascadeDetailsRoutes = {
   icon: <LocalAtmIcon />,
   component: CascadeDetails,
   seoTitle: 'routes.cascadeDetails',
+  children: null,
+};
+
+const nftDetailsRoutes = {
+  id: 'routes.nftDetails',
+  path: ROUTES.NFT_DETAILS,
+  icon: <LocalAtmIcon />,
+  component: NftDetails,
+  seoTitle: 'routes.nftDetails',
   children: null,
 };
 
@@ -496,6 +506,7 @@ export const pageRoutes = [
   burnedRoutes,
   collectionDetailsRoutes,
   cascadeDetailsRoutes,
+  nftDetailsRoutes,
 ];
 
 export const sidebarRoutes = [

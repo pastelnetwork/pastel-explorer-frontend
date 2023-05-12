@@ -297,7 +297,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
             <Styles.TicketContent>
               {ticket?.collectionName ? (
                 <RouterLink
-                  route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${ticket?.collectionName}`}
+                  route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${ticket?.collectionAlias}`}
                   value={ticket?.collectionName}
                   title={ticket?.collectionName}
                   className="address-link small"

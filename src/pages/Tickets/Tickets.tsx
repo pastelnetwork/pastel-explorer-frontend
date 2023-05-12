@@ -110,6 +110,7 @@ const Tickets: React.FC = () => {
           <PastelNftTickets
             isMobile={isMobile}
             ticketsData={pastelNftTicketData as TTicketResponse}
+            innerWidth={innerWidth}
           />
         </Styles.GirdStyle>
       </Grid>

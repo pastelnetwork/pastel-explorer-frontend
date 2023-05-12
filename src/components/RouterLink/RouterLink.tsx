@@ -6,7 +6,7 @@ import * as Styles from './RouterLink.styles';
 
 interface RouterLinkProps {
   route: string;
-  value: string | number;
+  value: string | number | React.ReactNode;
   textSize?: 'normal' | 'large';
   styles?: Partial<CSSProperties>;
   title?: string;

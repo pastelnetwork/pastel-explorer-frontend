@@ -13,38 +13,54 @@ const IOSSwitch = withStyles((theme: Theme) =>
   createStyles({
     root: {
       width: 34,
-      height: 18,
+      height: 19,
       padding: 0,
-      margin: theme.spacing(1),
+      margin: 0,
     },
     switchBase: {
-      padding: 1,
+      padding: 0,
       '&$checked': {
         transform: 'translateX(16px)',
         color: theme.palette.common.white,
         '& + $track': {
-          backgroundColor: '#34a1ff',
+          backgroundColor: '#0d6efd',
+          borderColor: '#0d6efd',
           opacity: 1,
           border: 'none',
         },
       },
       '&$focusVisible $thumb': {
-        color: '#34a1ff',
+        color: '#0d6efd',
         border: '6px solid #fff',
       },
       '& $thumb': {
-        backgroundColor: '#dbdbdb',
+        backgroundColor: '#BFBFBF',
       },
       '&$checked $thumb': {
         backgroundColor: '#fff',
       },
+      '&.Mui-disabled + $track': {
+        'pointer-events': 'none',
+        filter: 'none',
+        opacity: '0.5 !important',
+        backgroundColor: 'transparent',
+        border: '1px solid #dee2e6',
+      },
+      '&.Mui-disabled $thumb': {
+        backgroundColor: '#DFDFDF',
+      },
+      '&.Mui-disabled.Mui-checked $thumb': {
+        opacity: 1,
+        backgroundColor: '#fff',
+      },
     },
     thumb: {
-      width: 16,
-      height: 16,
+      width: 15,
+      height: 15,
+      margin: 2,
     },
     track: {
-      borderRadius: 18 / 2,
+      borderRadius: 19 / 2,
       backgroundColor: theme.palette.grey[50],
       opacity: 1,
       transition: theme.transitions.create(['background-color', 'border']),

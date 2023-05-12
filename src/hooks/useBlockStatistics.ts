@@ -1,14 +1,16 @@
 import { useEffect, useState, useContext } from 'react';
+import useSWR from 'swr';
 
 import { SocketContext } from '@context/socket';
-import { useFetch } from '@utils/helpers/useFetch/useFetch';
+import { useFetch, axiosGet } from '@utils/helpers/useFetch/useFetch';
+import { SWR_OPTIONS } from '@utils/constants/statistics';
 import * as URLS from '@utils/constants/urls';
 import { IBlock } from '@utils/types/IBlocks';
 import {
   transformBlocksData,
   ITransformBlocksData,
 } from '@pages/Statistics/BlockStatistics/BlockStatistics.helpers';
-import { BlockUnconfirmed } from '@utils/types/ITransactions';
+import { BlockUnconfirmed, IMempool } from '@utils/types/ITransactions';
 
 const BLOCK_ELEMENTS_COUNT = 8;
 
@@ -52,5 +54,17 @@ export default function useBlockStatistics() {
   return {
     blockElements,
     blocksUnconfirmed,
+  };
+}
+
+export function useMempool() {
+  const { data, isLoading } = useSWR<{ data: IMempool[] }>(
+    URLS.GET_MEMPOOL_URL,
+    axiosGet,
+    SWR_OPTIONS,
+  );
+  return {
+    mempools: data?.data,
+    isLoading,
   };
 }
