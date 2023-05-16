@@ -641,12 +641,37 @@ export type TItemActivity = {
 };
 
 export interface INftDetails {
-  rawData: string;
-  otherData: string;
   transactionHash: string;
   transactionTime: number;
   memberSince: number;
   username: string;
+  total_copies: number;
+  royalty: number;
+  green: number;
+  storage_fee: number;
+  author: string;
+  collection_txid: string;
+  collection_name: string;
+  collection_alias: string;
+  creator_name: string;
+  creator_website: string;
+  creator_written_statement: string;
+  nft_title: string;
+  nft_type: string;
+  nft_series_name: string;
+  nft_creation_video_youtube_url: string;
+  nft_keyword_set: string;
+  data_hash: string;
+  original_file_size_in_bytes: number;
+  file_type: string;
+  make_publicly_accessible: number;
+  dd_and_fingerprints_ic: number;
+  dd_and_fingerprints_max: number;
+  dd_and_fingerprints_ids: string;
+  rq_ic: number;
+  rq_max: number;
+  rq_oti: string;
+  image: string;
 }
 
 export interface IMempool {

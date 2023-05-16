@@ -20,10 +20,11 @@ import DdAndFingerprints from './DdAndFingerprints';
 import * as Styles from './NftDetails.styles';
 
 interface IBlockItemLayout {
-  title: string;
+  title: string | React.ReactNode;
   children: React.ReactNode;
   className?: string;
   childrenClassName?: string;
+  titleClassName?: string;
 }
 
 export const BlockLayout: React.FC<IBlockItemLayout> = ({
@@ -31,10 +32,11 @@ export const BlockLayout: React.FC<IBlockItemLayout> = ({
   children,
   className = '',
   childrenClassName = '',
+  titleClassName = '',
 }) => {
   return (
     <TableStyles.BlockWrapper className={`mb-20 ${className}`}>
-      <TableStyles.BlockTitle>{title}</TableStyles.BlockTitle>
+      <TableStyles.BlockTitle className={titleClassName}>{title}</TableStyles.BlockTitle>
       <Styles.ContentWrapper className={childrenClassName}>{children}</Styles.ContentWrapper>
     </TableStyles.BlockWrapper>
   );
@@ -54,23 +56,74 @@ const NftDetails = () => {
     );
   }
 
+  const handleDownloadFile = () => {
+    if (nftData?.image) {
+      const a = document.createElement('a');
+      a.href = `data:image/png;base64,${nftData.image}`;
+      a.download = 'Image.png';
+      a.click();
+    }
+  };
+
+  const getSummaryTitle = () => {
+    if (!nftData?.makePubliclyAccessible || nftData?.image) {
+      // return translate('pages.nftDetails.details');
+    }
+    return (
+      <Styles.SummaryTitleWrapper>
+        {translate('pages.nftDetails.details')}
+        <Styles.DownloadButton type="button" onClick={handleDownloadFile}>
+          {translate('pages.nftDetails.downloadThisFile')}
+        </Styles.DownloadButton>
+      </Styles.SummaryTitleWrapper>
+    );
+  };
+
   return nftData ? (
     <Styles.Wrapper>
       <Grid container direction="column" spacing={2}>
-        <NftInfo
-          className="hidden-desktop"
-          collectionName={nftData.collectionName}
-          collectionAlias={nftData.collectionAlias}
-          nftTitle={nftData.nftTitle}
-          creator={nftData.author}
-          username={nftData.username}
-          txId={nftData.transactionHash}
-          creatorName={nftData.creatorName}
-        />
         <Styles.MainWrapper>
           <Box className="submitted-image-creator-section">
             <Box className="submitted-image">
               <SubmittedImage img={nftData.image} alt={nftData.nftTitle} />
+            </Box>
+            <Box className="nft-data hidden-desktop">
+              <NftInfo
+                collectionName={nftData.collectionName}
+                collectionAlias={nftData.collectionAlias}
+                nftTitle={nftData.nftTitle}
+                creator={nftData.author}
+                username={nftData.username}
+                txId={nftData.transactionHash}
+                creatorName={nftData.creatorName}
+              />
+              <BlockLayout
+                title={getSummaryTitle()}
+                className="nft-summary"
+                titleClassName="summary-title-block"
+              >
+                <NftSummary
+                  nftSeriesName={nftData.nftSeriesName}
+                  royalty={nftData.royalty}
+                  nftKeyword={nftData.nftKeywordSet}
+                  green={nftData.green}
+                  video={nftData.nftCreationVideoYoutubeUrl}
+                  originalFileSize={nftData.originalFileSizeInBytes}
+                  nftType={nftData.nftType}
+                  dataHash={nftData.dataDash}
+                  fileType={nftData.fileType}
+                  isPubliclyAccessible={nftData.makePubliclyAccessible}
+                  totalCopies={nftData.totalCopies}
+                  timestamp={nftData.transactionTime}
+                />
+              </BlockLayout>
+              <BlockLayout title={translate('pages.nftDetails.creator')} className="creator">
+                <Creator
+                  writtenStatement={nftData.creatorWrittenStatement}
+                  memberSince={nftData.memberSince}
+                  website={nftData.creatorWebsite}
+                />
+              </BlockLayout>
             </Box>
             <BlockLayout
               title={translate('pages.nftDetails.raptorQParameters')}
@@ -79,9 +132,8 @@ const NftDetails = () => {
               <RaptorQParameters rqIc={nftData.rqIc} rqMax={nftData.rqMax} rqOti={nftData.rqOti} />
             </BlockLayout>
           </Box>
-          <Box className="nft-data">
+          <Box className="nft-data hidden-mobile">
             <NftInfo
-              className="hidden-mobile"
               collectionName={nftData.collectionName}
               collectionAlias={nftData.collectionAlias}
               nftTitle={nftData.nftTitle}
@@ -90,7 +142,11 @@ const NftDetails = () => {
               txId={nftData.transactionHash}
               creatorName={nftData.creatorName}
             />
-            <BlockLayout title={translate('pages.nftDetails.details')} className="nft-summary">
+            <BlockLayout
+              title={getSummaryTitle()}
+              className="nft-summary"
+              titleClassName="summary-title-block"
+            >
               <NftSummary
                 nftSeriesName={nftData.nftSeriesName}
                 royalty={nftData.royalty}

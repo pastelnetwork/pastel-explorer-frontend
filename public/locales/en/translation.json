@@ -2988,6 +2988,10 @@
       "price": {
         "message": "Price",
         "description": "Used for the NFT Details page"
+      },
+      "downloadThisFile": {
+        "message": "Download this File",
+        "description": "Used for the NFT Details page"
       }
     }
   },

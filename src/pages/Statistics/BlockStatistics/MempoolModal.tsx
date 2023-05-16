@@ -153,7 +153,7 @@ const MempoolModal: React.FC<IMempoolModal> = ({ open, onClose }) => {
                           data-title={`${translate('pages.movement.timestamp')}:`}
                           className="cell-content"
                         >
-                          <TimeAgo date={mempool.timestamp * 1000} />
+                          <TimeAgo date={mempool.timestamp * 1000} live={false} />
                         </TableStyles.RowCell>
                       </TableRow>
                     );

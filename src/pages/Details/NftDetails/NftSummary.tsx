@@ -130,7 +130,7 @@ const NftSummary: React.FC<INftSummary> = ({
             <TicketStyles.TicketTitle>
               {translate('pages.nftDetails.dataHash')}
             </TicketStyles.TicketTitle>
-            <TicketStyles.TicketContent>
+            <TicketStyles.TicketContent className="read-more">
               {dataHash || translate('common.na')}
             </TicketStyles.TicketContent>
           </Styles.ContentItem>

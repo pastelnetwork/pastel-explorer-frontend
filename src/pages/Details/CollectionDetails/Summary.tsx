@@ -54,18 +54,20 @@ const Summary: React.FC<ISummary> = ({ collection, totalItems }) => {
         </Box>
         <Typography component="h2">{collection?.name}</Typography>
         <Box>
-          <Box className="mt-5">
-            <Typography component="span" className="bold">
-              {translate('pages.collection.by')}:
-            </Typography>{' '}
-            <Typography component="span">
-              <RouterLink
-                route={`${ROUTES.PASTEL_ID_DETAILS}/${collection?.creator}`}
-                value={getCreator()}
-                title={collection?.username || collection?.creator}
-                className="address-link"
-              />
-            </Typography>
+          <Box className="mt-5 creator-info">
+            <Box className="create-by">
+              <Typography component="span" className="bold">
+                {translate('pages.collection.by')}:
+              </Typography>{' '}
+              <Typography component="span">
+                <RouterLink
+                  route={`${ROUTES.PASTEL_ID_DETAILS}/${collection?.creator}`}
+                  value={getCreator()}
+                  title={collection?.username || collection?.creator}
+                  className="address-link"
+                />
+              </Typography>
+            </Box>
             <Box className="txt-id">
               <Typography component="span" className="bold">
                 {translate('pages.collection.txID')}:
@@ -78,60 +80,58 @@ const Summary: React.FC<ISummary> = ({ collection, totalItems }) => {
               />
             </Box>
           </Box>
-          <Box className="mt-5">
-            <ul className="info-list">
-              <li>
-                <Typography component="span" className="label">
-                  {translate('pages.collection.items')}
-                </Typography>
-                <Typography component="span" className="value">
-                  {formatNumber(totalItems)}
-                </Typography>
-              </li>
-              <li>
-                <Typography component="span" className="label">
-                  {translate('pages.collection.created')}
-                </Typography>
-                <Typography component="span" className="value">
-                  {collection?.transactionTime
-                    ? format(collection?.transactionTime, 'dd MMM yyyy')
-                    : translate('common.na')}
-                </Typography>
-              </li>
-              <li>
-                <Typography component="span" className="label">
-                  {translate('pages.collection.royalty')}
-                </Typography>
-                <Typography component="span" className="value">
-                  {collection?.royalty}%
-                </Typography>
-              </li>
-              <li>
-                <Typography component="span" className="label">
-                  {translate('pages.collection.green')}
-                </Typography>
-                <Typography component="span" className="value">
-                  <IOSSwitch checked={collection?.green} name="green" disabled />
-                </Typography>
-              </li>
-              <li>
-                <Typography component="span" className="label">
-                  {translate('pages.collection.itemCopy')}
-                </Typography>
-                <Typography component="span" className="value">
-                  {collection?.item_copy_count}
-                </Typography>
-              </li>
-              <li>
-                <Typography component="span" className="label">
-                  {translate('pages.collection.maxCollectionEntries')}
-                </Typography>
-                <Typography component="span" className="value">
-                  {collection?.max_collection_entries}
-                </Typography>
-              </li>
-            </ul>
-          </Box>
+          <ul className="info-list">
+            <li>
+              <Typography component="span" className="label">
+                {translate('pages.collection.items')}
+              </Typography>
+              <Typography component="span" className="value">
+                {formatNumber(totalItems)}
+              </Typography>
+            </li>
+            <li>
+              <Typography component="span" className="label">
+                {translate('pages.collection.created')}
+              </Typography>
+              <Typography component="span" className="value">
+                {collection?.transactionTime
+                  ? format(collection?.transactionTime, 'dd MMM yyyy')
+                  : translate('common.na')}
+              </Typography>
+            </li>
+            <li>
+              <Typography component="span" className="label">
+                {translate('pages.collection.royalty')}
+              </Typography>
+              <Typography component="span" className="value">
+                {collection?.royalty}%
+              </Typography>
+            </li>
+            <li>
+              <Typography component="span" className="label">
+                {translate('pages.collection.green')}
+              </Typography>
+              <Typography component="span" className="value">
+                <IOSSwitch checked={collection?.green} name="green" disabled />
+              </Typography>
+            </li>
+            <li>
+              <Typography component="span" className="label">
+                {translate('pages.collection.itemCopy')}
+              </Typography>
+              <Typography component="span" className="value">
+                {collection?.item_copy_count}
+              </Typography>
+            </li>
+            <li>
+              <Typography component="span" className="label">
+                {translate('pages.collection.maxCollectionEntries')}
+              </Typography>
+              <Typography component="span" className="value">
+                {collection?.max_collection_entries}
+              </Typography>
+            </li>
+          </ul>
         </Box>
       </Styles.ContentWrapper>
     </Styles.SummaryWrapper>

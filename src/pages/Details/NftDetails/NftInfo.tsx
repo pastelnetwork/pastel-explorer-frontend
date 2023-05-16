@@ -46,15 +46,17 @@ const NftInfo: React.FC<INftInfo> = ({
         {nftTitle}
       </Typography>
       <Box className="created-by">
-        <TicketStyles.TicketTitle as="span">
-          {translate('pages.nftDetails.by')}:
-        </TicketStyles.TicketTitle>{' '}
-        <RouterLink
-          route={`${ROUTES.PASTEL_ID_DETAILS}/${creator}`}
-          value={getCreator()}
-          title={username || creator}
-          className="address-link"
-        />
+        <Box component="span">
+          <TicketStyles.TicketTitle as="span">
+            {translate('pages.nftDetails.by')}:
+          </TicketStyles.TicketTitle>{' '}
+          <RouterLink
+            route={`${ROUTES.PASTEL_ID_DETAILS}/${creator}`}
+            value={getCreator()}
+            title={username || creator}
+            className="address-link"
+          />
+        </Box>
         <Box className="txt-id">
           <TicketStyles.TicketTitle as="span">
             {translate('pages.nftDetails.txID')}:

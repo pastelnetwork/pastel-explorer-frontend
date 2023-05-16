@@ -46,38 +46,36 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
   const [openMempoolModal, setMempoolModal] = React.useState(false);
 
   const renderMempoolBlock = () => {
-    if (blocksUnconfirmed?.length) {
-      const size = blocksUnconfirmed.reduce((a, b) => {
+    const size =
+      blocksUnconfirmed?.reduce((a, b) => {
         return a + b.size;
-      }, 0);
-      const txsCount = blocksUnconfirmed.reduce((a, b) => {
+      }, 0) || 0;
+    const txsCount =
+      blocksUnconfirmed?.reduce((a, b) => {
         return a + b.txsCount;
-      }, 0);
+      }, 0) || 0;
 
-      return (
-        <Grid item>
-          <BlockVisualization
-            title={translate('pages.statistics.mempool')}
-            height={
-              <span style={{ fontSize: 14 }}>{translate('pages.statistics.pendingBlock')}</span>
-            }
-            className="block-unconfirmed"
-            size={translate('pages.statistics.size', { size: (size / 1024).toFixed(2) })}
-            transactionCount={
-              txsCount > 1
-                ? translate('pages.statistics.transactions', { txsCount })
-                : translate('pages.statistics.transaction', { txsCount })
-            }
-            minutesAgo={translate('pages.statistics.blocksUnconfirmedTime', {
-              time: blocksUnconfirmed.length * 10,
-            })}
-            clickHandler={() => setMempoolModal(!openMempoolModal)}
-          />
-        </Grid>
-      );
-    }
-
-    return null;
+    return (
+      <Grid item>
+        <BlockVisualization
+          title={translate('pages.statistics.mempool')}
+          height={
+            <span style={{ fontSize: 14 }}>{translate('pages.statistics.pendingBlock')}</span>
+          }
+          className="block-unconfirmed"
+          size={translate('pages.statistics.size', { size: size ? (size / 1024).toFixed(2) : 0 })}
+          transactionCount={
+            txsCount > 1
+              ? translate('pages.statistics.transactions', { txsCount })
+              : translate('pages.statistics.transaction', { txsCount })
+          }
+          minutesAgo={translate('pages.statistics.blocksUnconfirmedTime', {
+            time: blocksUnconfirmed ? blocksUnconfirmed.length * 10 : 0,
+          })}
+          clickHandler={() => (txsCount ? setMempoolModal(!openMempoolModal) : null)}
+        />
+      </Grid>
+    );
   };
 
   return (

@@ -49,9 +49,9 @@ export const GET_TOTAL_BURNED = 'v1/stats/total-burned';
 export const GET_COIN_SUPPLY = 'v1/current-stats/coin-supply';
 export const GET_USD_PRICE = 'v1/current-stats/usd-price';
 export const CASCADE_URL = 'v1/cascade';
-export const GET_COLLECTION_DETAILS_URL = 'v1/collection';
-export const GET_NFT_DETAILS_URL = 'v1/tickets/nft-details';
-export const GET_ITEM_ACTIVITY_OF_NFT_DETAILS_URL = 'v1/tickets/nft-details/item-activity';
+export const GET_COLLECTION_DETAILS_URL = 'v1/collections';
+export const GET_NFT_DETAILS_URL = 'v1/nfts/details';
+export const GET_ITEM_ACTIVITY_OF_NFT_DETAILS_URL = 'v1/nfts/item-activity';
 export const GET_MEMPOOL_URL = 'v1/transactions/mempool';
 // External URLS
 export const TWITTER_URL = 'https://twitter.com/pastelnetwork';

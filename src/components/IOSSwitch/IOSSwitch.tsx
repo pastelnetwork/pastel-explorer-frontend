@@ -46,6 +46,9 @@ const IOSSwitch = withStyles((theme: Theme) =>
         backgroundColor: 'transparent',
         border: '1px solid #dee2e6',
       },
+      '&.Mui-disabled.Mui-checked + $track': {
+        opacity: '0.3 !important',
+      },
       '&.Mui-disabled $thumb': {
         backgroundColor: '#DFDFDF',
       },

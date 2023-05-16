@@ -45,7 +45,7 @@ const ItemActivity = () => {
         return (
           <>
             <Styles.ContentItem>
-              <TicketStyles.TicketTitle as="span">
+              <TicketStyles.TicketTitle as="span" className="event-details-title">
                 {translate('pages.nftDetails.offerTxId')}:{' '}
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
@@ -64,7 +64,7 @@ const ItemActivity = () => {
               </TicketStyles.TicketContent>
             </Styles.ContentItem>
             <Styles.ContentItem>
-              <TicketStyles.TicketTitle as="span">
+              <TicketStyles.TicketTitle as="span" className="event-details-title">
                 {translate('pages.nftDetails.acceptTxID')}:{' '}
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
@@ -83,7 +83,7 @@ const ItemActivity = () => {
               </TicketStyles.TicketContent>
             </Styles.ContentItem>
             <Styles.ContentItem>
-              <TicketStyles.TicketTitle as="span">
+              <TicketStyles.TicketTitle as="span" className="event-details-title">
                 {translate('pages.nftDetails.copySerialNr')}:{' '}
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
@@ -96,7 +96,7 @@ const ItemActivity = () => {
         return (
           <>
             <Styles.ContentItem>
-              <TicketStyles.TicketTitle as="span">
+              <TicketStyles.TicketTitle as="span" className="event-details-title">
                 {translate('pages.nftDetails.offerTxId')}:{' '}
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
@@ -113,7 +113,7 @@ const ItemActivity = () => {
               </TicketStyles.TicketContent>
             </Styles.ContentItem>
             <Styles.ContentItem>
-              <TicketStyles.TicketTitle as="span">
+              <TicketStyles.TicketTitle as="span" className="event-details-title">
                 {translate('pages.nftDetails.price')}:{' '}
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
@@ -126,7 +126,7 @@ const ItemActivity = () => {
         return (
           <>
             <Styles.ContentItem>
-              <TicketStyles.TicketTitle as="span">
+              <TicketStyles.TicketTitle as="span" className="event-details-title">
                 {translate('pages.nftDetails.copyNumber')}:{' '}
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
@@ -134,7 +134,7 @@ const ItemActivity = () => {
               </TicketStyles.TicketContent>
             </Styles.ContentItem>
             <Styles.ContentItem>
-              <TicketStyles.TicketTitle as="span">
+              <TicketStyles.TicketTitle as="span" className="event-details-title">
                 {translate('pages.nftDetails.askedPrice')}:{' '}
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
@@ -142,7 +142,7 @@ const ItemActivity = () => {
               </TicketStyles.TicketContent>
             </Styles.ContentItem>
             <Styles.ContentItem>
-              <TicketStyles.TicketTitle as="span">
+              <TicketStyles.TicketTitle as="span" className="event-details-title">
                 {translate('pages.nftDetails.validAfter')}:{' '}
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
@@ -150,7 +150,7 @@ const ItemActivity = () => {
               </TicketStyles.TicketContent>
             </Styles.ContentItem>
             <Styles.ContentItem>
-              <TicketStyles.TicketTitle as="span">
+              <TicketStyles.TicketTitle as="span" className="event-details-title">
                 {translate('pages.nftDetails.validBefore')}:{' '}
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
@@ -158,7 +158,7 @@ const ItemActivity = () => {
               </TicketStyles.TicketContent>
             </Styles.ContentItem>
             <Styles.ContentItem>
-              <TicketStyles.TicketTitle as="span">
+              <TicketStyles.TicketTitle as="span" className="event-details-title">
                 {translate('pages.nftDetails.lockedRecipient')}:{' '}
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
@@ -181,7 +181,7 @@ const ItemActivity = () => {
       case 'nft-act':
         return (
           <Styles.ContentItem>
-            <TicketStyles.TicketTitle as="span">
+            <TicketStyles.TicketTitle as="span" className="event-details-title">
               {translate('pages.nftDetails.fee')}:{' '}
             </TicketStyles.TicketTitle>
             <TicketStyles.TicketContent as="span">
@@ -192,7 +192,7 @@ const ItemActivity = () => {
       default:
         return (
           <Styles.ContentItem>
-            <TicketStyles.TicketTitle as="span">
+            <TicketStyles.TicketTitle as="span" className="event-details-title">
               {translate('pages.nftDetails.fee')}:{' '}
             </TicketStyles.TicketTitle>
             <TicketStyles.TicketContent as="span">
@@ -244,13 +244,13 @@ const ItemActivity = () => {
               {data.map(item => (
                 <TableRow className="table__row" key={item.transactionHash}>
                   <TableStyles.RowCell
-                    data-title={translate('pages.nftDetails.event')}
+                    data-title={`${translate('pages.nftDetails.event')}:`}
                     className="cell-content"
                   >
                     {getActivityType(item.ticket.type)}
                   </TableStyles.RowCell>
                   <TableStyles.RowCell
-                    data-title={translate('pages.nftDetails.txID')}
+                    data-title={`${translate('pages.nftDetails.txID')}:`}
                     className="cell-content"
                   >
                     <RouterLink
@@ -261,16 +261,16 @@ const ItemActivity = () => {
                     />
                   </TableStyles.RowCell>
                   <TableStyles.RowCell
-                    data-title={translate('pages.nftDetails.version')}
+                    data-title={`${translate('pages.nftDetails.version')}:`}
                     className="cell-content"
                   >
                     {item.ticket.version}
                   </TableStyles.RowCell>
-                  <TableStyles.RowCell data-title="" className="cell-content">
+                  <TableStyles.RowCell data-title="" className="cell-content event-details">
                     {getEventDetails(item)}
                   </TableStyles.RowCell>
                   <TableStyles.RowCell
-                    data-title={translate('pages.nftDetails.timestamp')}
+                    data-title={`${translate('pages.nftDetails.timestamp')}:`}
                     className="cell-content"
                   >
                     {formatFullDate(item.transactionTime, { dayName: false })}

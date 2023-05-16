@@ -94,10 +94,22 @@ export const SummaryWrapper = styled('div')`
     font-weight: 700;
   }
 
+  .creator-info {
+    display: flex;
+
+    ${props => props.theme.breakpoints.down(425)} {
+      flex-direction: column;
+
+      .txt-id {
+        margin-left: 0;
+      }
+    }
+  }
+
   .info-list {
     display: flex;
     width: 100%;
-    margin: 0;
+    margin: 20px 0 0;
     padding: 0;
     list-style: none;
 
@@ -110,12 +122,24 @@ export const SummaryWrapper = styled('div')`
       font-weight: 700;
     }
 
-    ${props => props.theme.breakpoints.down(640)} {
+    ${props => props.theme.breakpoints.down(900)} {
       flex-wrap: wrap;
 
       li {
-        width: 50%;
+        width: calc(100% / 3);
         margin-right: 0;
+      }
+    }
+
+    ${props => props.theme.breakpoints.down(570)} {
+      li {
+        width: 50%;
+      }
+    }
+
+    ${props => props.theme.breakpoints.down(425)} {
+      li {
+        width: 100%;
       }
     }
   }

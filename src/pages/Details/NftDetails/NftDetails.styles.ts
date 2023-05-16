@@ -5,10 +5,6 @@ export const Wrapper = styled.div`
   display: block;
   width: 100%;
 
-  .hidden-desktop {
-    display: none;
-  }
-
   .expand-more {
     display: flex;
     align-items: center;
@@ -67,9 +63,20 @@ export const MainWrapper = styled.div`
     padding: 0;
   }
 
+  .read-more {
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
   .submitted-image-creator-section {
     width: calc(28% - 20px);
+    min-width: 380px;
     margin-right: 20px;
+  }
+
+  .nft-data {
+    width: 72%;
+    max-width: calc(100% - 400px);
   }
 
   .submitted-image {
@@ -80,10 +87,6 @@ export const MainWrapper = styled.div`
 
   .submitted-image-content {
     height: 92%;
-  }
-
-  .nft-data {
-    width: 72%;
   }
 
   .nft-summary,
@@ -110,6 +113,52 @@ export const MainWrapper = styled.div`
   .more-items {
     width: 100%;
     margin-bottom: 20px;
+  }
+
+  .hidden-desktop {
+    display: none;
+  }
+
+  .summary-title-block {
+    padding: 12px 16px;
+  }
+
+  ${props => props.theme.breakpoints.down(1024)} {
+    .hidden-desktop {
+      display: block;
+    }
+
+    .hidden-mobile {
+      display: none;
+    }
+
+    .submitted-image-creator-section,
+    .nft-data {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .submitted-image-creator-section {
+      margin-right: 0;
+    }
+  }
+
+  ${props => props.theme.breakpoints.down(680)} {
+    .submitted-image-creator-section {
+      min-width: unset;
+    }
+
+    .submitted-image {
+      height: 350px;
+    }
+
+    .nft-info {
+      .txt-id {
+        display: block;
+        margin-left: 0;
+        margin-top: 5px;
+      }
+    }
   }
 `;
 
@@ -173,6 +222,15 @@ export const SubmittedImageWrapper = styled.div`
       margin-top: 90px;
     }
   }
+
+  ${props => props.theme.breakpoints.down(680)} {
+    &.image-placeholder {
+      img {
+        max-width: 85%;
+        margin-top: 62px;
+      }
+    }
+  }
 `;
 
 export const ItemActivityWrapper = styled.div`
@@ -205,10 +263,76 @@ export const ItemActivityWrapper = styled.div`
       vertical-align: bottom;
     }
   }
+
+  ${props => props.theme.breakpoints.down(1024)} {
+    .activities-table {
+      .table__row-header {
+        display: none;
+      }
+
+      .table__row {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        td {
+          display: flex;
+          align-items: center;
+          width: 100%;
+
+          &:before {
+            content: attr(data-title);
+            position: relative;
+            min-width: 90px;
+            padding-right: 0;
+            font-weight: 600;
+            font-size: 16px;
+            color: ${props => props.theme.table.label};
+          }
+
+          &.event-details {
+            .event-details-title {
+              display: inline-block;
+              min-width: 90px;
+            }
+
+            &:before {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
 `;
 
 export const PaginationWrapper = styled('div')`
   display: flex;
   justify-content: flex-end;
   margin: 20px 0 10px;
+`;
+
+export const DownloadButton = styled.button`
+  padding: 8px 25px;
+  background: ${props => props.theme.sidebar.menu.toggle.switch};
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: 'Gill Sans';
+  cursor: pointer;
+  border-radius: 10px;
+  border: 0;
+  outline: none;
+  transition: all 0.5s ease;
+
+  &:hover {
+    background: ${props => props.theme.sidebar.menu.toggle.hover};
+  }
+`;
+
+export const SummaryTitleWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 `;
