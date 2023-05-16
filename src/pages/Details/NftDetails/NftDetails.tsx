@@ -67,7 +67,7 @@ const NftDetails = () => {
 
   const getSummaryTitle = () => {
     if (!nftData?.makePubliclyAccessible || nftData?.image) {
-      // return translate('pages.nftDetails.details');
+      return translate('pages.nftDetails.details');
     }
     return (
       <Styles.SummaryTitleWrapper>
