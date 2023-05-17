@@ -3,8 +3,9 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
+import CloseIcon from '@material-ui/icons/Close';
+import DoneIcon from '@material-ui/icons/Done';
 
-import IOSSwitch from '@components/IOSSwitch/IOSSwitch';
 import { translate } from '@utils/helpers/i18n';
 
 import doc from '@assets/icons/filetypes/doc.svg';
@@ -123,11 +124,13 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
                     {translate('pages.cascade.makePubliclyAccessible')}:
                   </TicketStyles.TicketTitle>
                   <TicketStyles.TicketContent>
-                    <IOSSwitch
-                      checked={data.make_publicly_accessible}
-                      name="makePubliclyAccessible"
-                      disabled
-                    />
+                    <TicketStyles.ActionRegistrationTicketStatus
+                      className={`space-nowrap action-ticket-status ${
+                        data.make_publicly_accessible ? 'active' : ''
+                      }`}
+                    >
+                      {data.make_publicly_accessible ? <DoneIcon /> : <CloseIcon />}
+                    </TicketStyles.ActionRegistrationTicketStatus>
                   </TicketStyles.TicketContent>
                 </Box>
               </Grid>

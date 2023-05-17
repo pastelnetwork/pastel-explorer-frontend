@@ -3,12 +3,21 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   display: block;
 
+  .action-ticket-status {
+    padding: 4px;
+
+    svg {
+      font-size: 14px;
+    }
+  }
+
   ${props => props.theme.breakpoints.down(1200)} {
     .view-more {
       overflow: hidden;
       text-overflow: ellipsis;
     }
   }
+
   ${props => props.theme.breakpoints.down(768)} {
     .MuiAlert-message {
       .MuiTypography-root {
