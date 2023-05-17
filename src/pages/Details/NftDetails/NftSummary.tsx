@@ -56,7 +56,9 @@ const NftSummary: React.FC<INftSummary> = ({
             <TicketStyles.TicketTitle>
               {translate('pages.nftDetails.royalty')}
             </TicketStyles.TicketTitle>
-            <TicketStyles.TicketContent>{royalty || 0}</TicketStyles.TicketContent>
+            <TicketStyles.TicketContent>
+              {royalty ? parseFloat(royalty.toFixed(2)) : 0}
+            </TicketStyles.TicketContent>
           </Styles.ContentItem>
         </Grid>
       </Grid>

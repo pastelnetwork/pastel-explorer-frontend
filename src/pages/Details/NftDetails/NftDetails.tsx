@@ -66,13 +66,14 @@ const NftDetails = () => {
   };
 
   const getSummaryTitle = () => {
-    if (!nftData?.makePubliclyAccessible || nftData?.image) {
+    if (!nftData.makePubliclyAccessible) {
       return translate('pages.nftDetails.details');
     }
+
     return (
       <Styles.SummaryTitleWrapper>
         {translate('pages.nftDetails.details')}
-        <Styles.DownloadButton type="button" onClick={handleDownloadFile}>
+        <Styles.DownloadButton type="button" onClick={handleDownloadFile} disabled={!nftData.image}>
           {translate('pages.nftDetails.downloadThisFile')}
         </Styles.DownloadButton>
       </Styles.SummaryTitleWrapper>
@@ -100,7 +101,7 @@ const NftDetails = () => {
               <BlockLayout
                 title={getSummaryTitle()}
                 className="nft-summary"
-                titleClassName="summary-title-block"
+                titleClassName={nftData.makePubliclyAccessible ? 'summary-title-block' : ''}
               >
                 <NftSummary
                   nftSeriesName={nftData.nftSeriesName}
@@ -145,7 +146,7 @@ const NftDetails = () => {
             <BlockLayout
               title={getSummaryTitle()}
               className="nft-summary"
-              titleClassName="summary-title-block"
+              titleClassName={nftData.makePubliclyAccessible ? 'summary-title-block' : ''}
             >
               <NftSummary
                 nftSeriesName={nftData.nftSeriesName}

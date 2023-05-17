@@ -226,7 +226,6 @@ export const SubmittedImageWrapper = styled.div`
   ${props => props.theme.breakpoints.down(680)} {
     &.image-placeholder {
       img {
-        max-width: 85%;
         margin-top: 62px;
       }
     }
@@ -327,6 +326,12 @@ export const DownloadButton = styled.button`
 
   &:hover {
     background: ${props => props.theme.sidebar.menu.toggle.hover};
+  }
+
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.8;
+    background: ${props => props.theme.sidebar.menu.default};
   }
 `;
 
