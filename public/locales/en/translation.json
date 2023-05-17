@@ -2990,7 +2990,7 @@
         "description": "Used for the NFT Details page"
       },
       "downloadThisFile": {
-        "message": "Download this File",
+        "message": "Download File",
         "description": "Used for the NFT Details page"
       }
     }

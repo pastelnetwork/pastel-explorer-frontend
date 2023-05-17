@@ -123,6 +123,14 @@ export const MainWrapper = styled.div`
     padding: 12px 16px;
   }
 
+  .action-ticket-status {
+    padding: 4px;
+
+    svg {
+      font-size: 14px;
+    }
+  }
+
   ${props => props.theme.breakpoints.down(1024)} {
     .hidden-desktop {
       display: block;
