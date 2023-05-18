@@ -94,8 +94,24 @@ export const MainWrapper = styled.div`
     width: 100%;
   }
 
+  .nft-creator-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .share-icon {
+      width: 40px;
+      height: 40px;
+      padding: 8px;
+
+      svg {
+        font-size: 20px;
+      }
+    }
+  }
+
   .nft-info {
-    margin-bottom: 20px;
+    margin-bottom: 6px;
 
     .title {
       margin: 0;

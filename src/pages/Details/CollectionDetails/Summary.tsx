@@ -2,6 +2,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import format from 'date-fns/format';
 
+import Share from '@components/Share/Share';
 import IOSSwitch from '@components/IOSSwitch/IOSSwitch';
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
@@ -54,30 +55,35 @@ const Summary: React.FC<ISummary> = ({ collection, totalItems }) => {
         </Box>
         <Typography component="h2">{collection?.name}</Typography>
         <Box>
-          <Box className="mt-5 creator-info">
-            <Box className="create-by">
-              <Typography component="span" className="bold">
-                {translate('pages.collection.by')}:
-              </Typography>{' '}
-              <Typography component="span">
+          <Box className="mt-5 collection-info">
+            <Box className="creator-info">
+              <Box className="create-by">
+                <Typography component="span" className="bold">
+                  {translate('pages.collection.by')}:
+                </Typography>{' '}
+                <Typography component="span">
+                  <RouterLink
+                    route={`${ROUTES.PASTEL_ID_DETAILS}/${collection?.creator}`}
+                    value={getCreator()}
+                    title={collection?.username || collection?.creator}
+                    className="address-link"
+                  />
+                </Typography>
+              </Box>
+              <Box className="txt-id">
+                <Typography component="span" className="bold">
+                  {translate('pages.collection.txID')}:
+                </Typography>{' '}
                 <RouterLink
-                  route={`${ROUTES.PASTEL_ID_DETAILS}/${collection?.creator}`}
-                  value={getCreator()}
-                  title={collection?.username || collection?.creator}
+                  route={`${ROUTES.TRANSACTION_DETAILS}/${collection?.transactionHash}`}
+                  value={formatAddress(collection?.transactionHash || '', 5, -5)}
+                  title={collection?.transactionHash}
                   className="address-link"
                 />
-              </Typography>
+              </Box>
             </Box>
-            <Box className="txt-id">
-              <Typography component="span" className="bold">
-                {translate('pages.collection.txID')}:
-              </Typography>{' '}
-              <RouterLink
-                route={`${ROUTES.TRANSACTION_DETAILS}/${collection?.transactionHash}`}
-                value={formatAddress(collection?.transactionHash || '', 5, -5)}
-                title={collection?.transactionHash}
-                className="address-link"
-              />
+            <Box>
+              <Share shareUrl={document.location.href} />
             </Box>
           </Box>
           <ul className="info-list">

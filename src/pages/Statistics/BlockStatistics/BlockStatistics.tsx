@@ -127,7 +127,9 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
           )}
         </Styles.GridStyle>
       </Styles.BlockWrapper>
-      <MempoolModal open={openMempoolModal} onClose={() => setMempoolModal(!openMempoolModal)} />
+      {openMempoolModal ? (
+        <MempoolModal open onClose={() => setMempoolModal(!openMempoolModal)} />
+      ) : null}
     </>
   );
 };

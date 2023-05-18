@@ -94,6 +94,12 @@ export const SummaryWrapper = styled('div')`
     font-weight: 700;
   }
 
+  .collection-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   .creator-info {
     display: flex;
 

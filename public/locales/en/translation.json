@@ -1041,6 +1041,28 @@
         "message": "Historical statistic",
         "description": "Used for the HistoricalStatisticsLayout component"
       }
+    },
+    "share": {
+      "share": {
+        "message": "Share",
+        "description": "Used for the Share component"
+      },
+      "copyLink": {
+        "message": "Copy link",
+        "description": "Used for the Share component"
+      },
+      "shareOnFacebook": {
+        "message": "Share on Facebook",
+        "description": "Used for the Share component"
+      },
+      "shareOnTwitter": {
+        "message": "Share on Twitter",
+        "description": "Used for the Share component"
+      },
+      "copied": {
+        "message": "Copied",
+        "description": "Used for the Share component"
+      }
     }
   },
   "pages": {
