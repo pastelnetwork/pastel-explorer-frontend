@@ -81,11 +81,6 @@ const useStyles = makeStyles((theme: TAppTheme) => ({
     border: 0,
     borderRadius: 4,
   },
-  popper: {
-    '&:last-child': {
-      display: 'none',
-    },
-  },
 }));
 
 let isClicked = false;
@@ -105,7 +100,6 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
   const [forceShowSearchInput, setForceShowSearchInput] = React.useState(false);
   const [isInputFocus, setInputFocus] = React.useState(false);
   const [noResult, setNoResult] = React.useState(false);
-  const [innerWidth, setInnerWidth] = React.useState(0);
 
   const handleShowSearchInput = () => {
     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -117,7 +111,6 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
     } else if (!forceShowSearchInput) {
       setShowSearchInput(true);
     }
-    setInnerWidth(window.innerWidth);
   };
 
   React.useEffect(() => {
@@ -126,7 +119,6 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
       setShowSearchInput(true);
       setForceShowSearchInput(true);
     }
-    setInnerWidth(window.innerWidth);
 
     window.addEventListener('scroll', handleShowSearchInput);
     window.addEventListener('resize', handleShowSearchInput);
@@ -253,7 +245,6 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         classes={{
           option: classes.option,
           paper: classes.listboxOptions,
-          popper: classes.popper,
         }}
         filterOptions={filterOptions}
         groupBy={option => (option as TAutocompleteOptions).categoryText}
@@ -484,7 +475,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
           alignItems="center"
           wrap="nowrap"
         >
-          {innerWidth >= 600 ? renderSearchContent() : null}
+          {renderSearchContent()}
         </Styles.GridStyle>
         <Styles.IconButton
           className="search-icon"
@@ -510,7 +501,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         <ChooseCluster />
       </Styles.ToolbarStyle>
       <Styles.GridStyle className="search-popup" container alignItems="center" wrap="nowrap">
-        {innerWidth < 600 ? renderSearchContent() : null}
+        {renderFakeInput()}
       </Styles.GridStyle>
     </Styles.AppBar>
   );

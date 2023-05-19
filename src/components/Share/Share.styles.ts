@@ -75,9 +75,7 @@ export const ShareItem = styled.li`
       width: 24px;
       height: 24px;
       margin-right: 8px;
-    }
 
-    .share-icon {
       svg {
         font-size: 24px;
         width: 24px;
@@ -85,7 +83,7 @@ export const ShareItem = styled.li`
         border-radius: 50%;
 
         rect {
-          fill: #34a1ff;
+          fill: ${props => props.theme.sidebar.menu.toggle.switch};
         }
       }
     }
@@ -99,7 +97,7 @@ export const ShareItem = styled.li`
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #34a1ff;
+        background: ${props => props.theme.sidebar.menu.toggle.switch};
         border-radius: 50%;
 
         svg {
