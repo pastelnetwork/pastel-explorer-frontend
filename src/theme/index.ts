@@ -102,6 +102,9 @@ export const themeLight = createMuiTheme(
     filter: {
       border: 'rgba(0, 0, 0, 0.12)',
       background: '#B9BFCB',
+      footer: 'linear-gradient(270deg, rgb(210, 226, 255) 0%, rgb(234, 244, 255) 100%)',
+      group: '#FAFBFC',
+      text: '#2D3748',
     },
     card: {
       color: '#4A5568',
@@ -236,6 +239,9 @@ export const themeDark = createMuiTheme(
     filter: {
       border: 'rgb(35, 38, 48)',
       background: 'rgb(35, 38, 48)',
+      footer: '#00d0978f',
+      group: '#434a52',
+      text: '#A0AEC0',
     },
     card: {
       color: '#fff',

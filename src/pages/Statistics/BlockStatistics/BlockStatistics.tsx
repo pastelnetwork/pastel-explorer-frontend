@@ -54,6 +54,10 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
       blocksUnconfirmed?.reduce((a, b) => {
         return a + b.txsCount;
       }, 0) || 0;
+    const ticketsCount =
+      blocksUnconfirmed?.reduce((a, b) => {
+        return a + b.ticketsTotal;
+      }, 0) || 0;
 
     return (
       <Grid item>
@@ -68,6 +72,11 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
             txsCount > 1
               ? translate('pages.statistics.transactions', { txsCount })
               : translate('pages.statistics.transaction', { txsCount })
+          }
+          ticketsCount={
+            ticketsCount > 1
+              ? translate('pages.statistics.tickets', { ticketsCount })
+              : translate('pages.statistics.ticket', { ticketsCount })
           }
           minutesAgo={translate('pages.statistics.blocksUnconfirmedTime', {
             time: blocksUnconfirmed ? blocksUnconfirmed.length * 10 : 0,
@@ -105,7 +114,7 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
               </Grid>
               {blockElements
                 .slice(1, 8)
-                .map(({ id, height, size, transactionCount, minutesAgo }) => (
+                .map(({ id, height, size, transactionCount, minutesAgo, ticketsCount }) => (
                   <Grid item key={id}>
                     <BlockVisualization
                       clickHandler={() => history.push(`${ROUTES.BLOCK_DETAILS}/${id}`)}
@@ -113,6 +122,7 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
                       size={size}
                       transactionCount={transactionCount}
                       minutesAgo={minutesAgo}
+                      ticketsCount={ticketsCount}
                     />
                   </Grid>
                 ))}

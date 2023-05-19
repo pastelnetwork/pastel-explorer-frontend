@@ -26,13 +26,14 @@ export const IconWrapper = styled.button`
   cursor: pointer;
   transition: all 0.2s ease 0s;
   border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 10px;
 
   svg {
     font-size: 24px;
   }
 
   &:hover {
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 10px;
+    background-color: ${props => props.theme.sidebar.menu.toggle.background};
   }
 `;
 

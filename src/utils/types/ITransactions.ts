@@ -12,6 +12,7 @@ export interface BlockUnconfirmed {
   size: number;
   height: string | number;
   txsCount: number;
+  ticketsTotal: number;
 }
 
 export interface ITransaction {

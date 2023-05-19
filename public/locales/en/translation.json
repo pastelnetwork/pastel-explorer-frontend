@@ -174,27 +174,27 @@
     },
     "searchBar": {
       "addresses": {
-        "message": "Addresses",
+        "message": "Address",
         "description": "Used for the SearchBar component"
       },
       "blocksHeights": {
-        "message": "Blocks Heights",
+        "message": "Block Height",
         "description": "Used for the SearchBar component"
       },
       "blocksIds": {
-        "message": "Blocks Ids",
+        "message": "Block Hash",
         "description": "Used for the SearchBar component"
       },
       "transactions": {
-        "message": "Transactions",
+        "message": "Transaction",
         "description": "Used for the SearchBar component"
       },
       "senses": {
-        "message": "Senses",
+        "message": "Sense",
         "description": "Used for the SearchBar component"
       },
       "pastelID": {
-        "message": "Pastel ID",
+        "message": "PastelID",
         "description": "Used for the SearchBar component"
       },
       "username": {
@@ -232,7 +232,35 @@
         }
       },
       "cascade": {
-        "message": "Cascade Filename",
+        "message": "Cascade",
+        "description": "Used for the SearchBar component"
+      },
+      "search": {
+        "message": "Search",
+        "description": "Used for the SearchBar component"
+      },
+      "searchBy": {
+        "message": "Search by",
+        "description": "Used for the SearchBar component"
+      },
+      "txID": {
+        "message": "TxID",
+        "description": "Used for the SearchBar component"
+      },
+      "cascadeFilename": {
+        "message": "Cascade (Filename)",
+        "description": "Used for the SearchBar component"
+      },
+      "senseImageHash": {
+        "message": "Sense (Image Hash)",
+        "description": "Used for the SearchBar component"
+      },
+      "findMore": {
+        "message": "Want to find more?",
+        "description": "Used for the SearchBar component"
+      },
+      "connectCommunity": {
+        "message": "Connect with our community!",
         "description": "Used for the SearchBar component"
       }
     },
@@ -2281,6 +2309,14 @@
       },
       "filterLabelMax": {
         "message": "Max",
+        "description": "Used for the Statistics page"
+      },
+      "ticket": {
+        "message": "{{ticketsCount}} ticket",
+        "description": "Used for the Statistics page"
+      },
+      "tickets": {
+        "message": "{{ticketsCount}} tickets",
         "description": "Used for the Statistics page"
       }
     },
