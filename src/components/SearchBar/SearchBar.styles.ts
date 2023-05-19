@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+import Paper from '@material-ui/core/Paper';
 
 import {
   AppBar as MuiAppBar,
@@ -295,7 +296,7 @@ export const FakeInput = styled.button`
   width: 100%;
   text-align: left;
   border: 1px solid ${props => props.theme.sidebar.menu.default};
-  color: ${props => props.theme.filter.text};
+  color: ${props => props.theme.sidebar.menu.default};
   position: relative;
   border-radius: 5px;
   background: transparent;
@@ -429,7 +430,20 @@ export const EmptyBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 170px;
+  min-height: 182px;
   font-size: 16px;
   font-weight: 600;
+  background: ${props => props.theme.sidebar.menu.background};
+`;
+
+export const PaperComponentWrapper = styled(Paper)`
+  background: ${props => props.theme.sidebar.menu.background};
+
+  .MuiAutocomplete-listbox {
+    padding: 0;
+
+    .MuiAutocomplete-groupLabel {
+      background: ${props => props.theme.filter.group};
+    }
+  }
 `;

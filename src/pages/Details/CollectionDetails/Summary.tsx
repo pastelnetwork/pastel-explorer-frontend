@@ -53,7 +53,10 @@ const Summary: React.FC<ISummary> = ({ collection, totalItems }) => {
             <img src={avatar} alt="avatar" />
           </Box>
         </Box>
-        <Typography component="h2">{collection?.name}</Typography>
+        <Box className="header">
+          <Typography component="h2">{collection?.name}</Typography>
+          <Share className="share-icon" shareUrl={document.location.href} />
+        </Box>
         <Box>
           <Box className="mt-5 collection-info">
             <Box className="creator-info">
@@ -81,9 +84,6 @@ const Summary: React.FC<ISummary> = ({ collection, totalItems }) => {
                   className="address-link"
                 />
               </Box>
-            </Box>
-            <Box>
-              <Share shareUrl={document.location.href} />
             </Box>
           </Box>
           <ul className="info-list">

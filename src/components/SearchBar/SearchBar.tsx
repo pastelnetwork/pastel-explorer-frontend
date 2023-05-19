@@ -7,7 +7,6 @@ import { Grid, Hidden, Theme, TextField, CircularProgress, makeStyles } from '@m
 import { Menu as MenuIcon, Search as SearchIcon } from '@material-ui/icons';
 import MuiAutocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import Box from '@material-ui/core/Box';
-import Paper from '@material-ui/core/Paper';
 import CancelIcon from '@material-ui/icons/Cancel';
 
 import Social from '@components/Social/Social';
@@ -106,6 +105,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
   const [forceShowSearchInput, setForceShowSearchInput] = React.useState(false);
   const [isInputFocus, setInputFocus] = React.useState(false);
   const [noResult, setNoResult] = React.useState(false);
+  const [innerWidth, setInnerWidth] = React.useState(0);
 
   const handleShowSearchInput = () => {
     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -117,6 +117,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
     } else if (!forceShowSearchInput) {
       setShowSearchInput(true);
     }
+    setInnerWidth(window.innerWidth);
   };
 
   React.useEffect(() => {
@@ -125,6 +126,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
       setShowSearchInput(true);
       setForceShowSearchInput(true);
     }
+    setInnerWidth(window.innerWidth);
 
     window.addEventListener('scroll', handleShowSearchInput);
     window.addEventListener('resize', handleShowSearchInput);
@@ -358,10 +360,10 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
           />
         )}
         PaperComponent={({ children }) => (
-          <Paper>
+          <Styles.PaperComponentWrapper>
             {loading ? <Styles.EmptyBox>{children}</Styles.EmptyBox> : children}
             {renderSearchFooter()}
-          </Paper>
+          </Styles.PaperComponentWrapper>
         )}
       />
     </Styles.AutocompleteWrapper>
@@ -482,7 +484,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
           alignItems="center"
           wrap="nowrap"
         >
-          {renderSearchContent()}
+          {innerWidth >= 600 ? renderSearchContent() : null}
         </Styles.GridStyle>
         <Styles.IconButton
           className="search-icon"
@@ -508,7 +510,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         <ChooseCluster />
       </Styles.ToolbarStyle>
       <Styles.GridStyle className="search-popup" container alignItems="center" wrap="nowrap">
-        {renderSearchContent()}
+        {innerWidth < 600 ? renderSearchContent() : null}
       </Styles.GridStyle>
     </Styles.AppBar>
   );

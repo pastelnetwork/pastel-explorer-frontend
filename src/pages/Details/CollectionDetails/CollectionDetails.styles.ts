@@ -21,6 +21,19 @@ export const ContentWrapper = styled('div')`
 export const SummaryWrapper = styled('div')`
   width: 100%;
 
+  .header {
+    display: flex;
+    justify-content: space-between;
+
+    h2 {
+      padding-right: 10px;
+    }
+  }
+
+  .share-icon {
+    margin-right: 20px;
+  }
+
   .banner {
     position: relative;
     max-height: 320px;

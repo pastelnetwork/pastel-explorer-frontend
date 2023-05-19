@@ -90,6 +90,7 @@ export const themeLight = createMuiTheme(
       main: '#3F9AF7',
       hover: '#0E80F5',
       pressed: '#0971DC',
+      shareIcon: 'transparent',
     },
     table: {
       header: '#fff',
@@ -227,6 +228,7 @@ export const themeDark = createMuiTheme(
       main: '#00D097',
       hover: '#00C28D',
       pressed: '#00B282',
+      shareIcon: '#FCFCFD',
     },
     table: {
       header: '#4A5568',

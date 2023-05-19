@@ -43,53 +43,53 @@ const NftInfo: React.FC<INftInfo> = ({
 
   return (
     <Box className={`nft-info ${className}`}>
-      <Typography component="h2" className="title">
-        {nftTitle}
-      </Typography>
-      <Box className="nft-creator-info">
-        <Box className="created-by">
-          <Box component="span">
-            <TicketStyles.TicketTitle as="span">
-              {translate('pages.nftDetails.by')}:
-            </TicketStyles.TicketTitle>{' '}
-            <RouterLink
-              route={`${ROUTES.PASTEL_ID_DETAILS}/${creator}`}
-              value={getCreator()}
-              title={username || creator}
-              className="address-link"
-            />
-          </Box>
-          <Box className="txt-id">
-            <TicketStyles.TicketTitle as="span">
-              {translate('pages.nftDetails.txID')}:
-            </TicketStyles.TicketTitle>{' '}
-            <RouterLink
-              route={`${ROUTES.TRANSACTION_DETAILS}/${txId}`}
-              value={formatAddress(txId || '', 5, -5)}
-              title={txId}
-              className="address-link"
-            />
-          </Box>
-          <Box className="txt-id">
-            <TicketStyles.TicketTitle as="span">
-              {translate('pages.nftDetails.collection')}:
-            </TicketStyles.TicketTitle>{' '}
-            {collectionName ? (
+      <Box>
+        <Typography component="h2" className="title">
+          {nftTitle}
+        </Typography>
+        <Box className="nft-creator-info">
+          <Box className="created-by">
+            <Box component="span">
+              <TicketStyles.TicketTitle as="span">
+                {translate('pages.nftDetails.by')}:
+              </TicketStyles.TicketTitle>{' '}
               <RouterLink
-                route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${collectionAlias}`}
-                value={collectionName}
-                title={collectionName}
+                route={`${ROUTES.PASTEL_ID_DETAILS}/${creator}`}
+                value={getCreator()}
+                title={username || creator}
                 className="address-link"
               />
-            ) : (
-              translate('common.na')
-            )}
+            </Box>
+            <Box className="txt-id">
+              <TicketStyles.TicketTitle as="span">
+                {translate('pages.nftDetails.txID')}:
+              </TicketStyles.TicketTitle>{' '}
+              <RouterLink
+                route={`${ROUTES.TRANSACTION_DETAILS}/${txId}`}
+                value={formatAddress(txId || '', 5, -5)}
+                title={txId}
+                className="address-link"
+              />
+            </Box>
+            <Box className="txt-id">
+              <TicketStyles.TicketTitle as="span">
+                {translate('pages.nftDetails.collection')}:
+              </TicketStyles.TicketTitle>{' '}
+              {collectionName ? (
+                <RouterLink
+                  route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${collectionAlias}`}
+                  value={collectionName}
+                  title={collectionName}
+                  className="address-link"
+                />
+              ) : (
+                translate('common.na')
+              )}
+            </Box>
           </Box>
         </Box>
-        <Box>
-          <Share shareUrl={document.location.href} className="share-icon" />
-        </Box>
       </Box>
+      <Share shareUrl={document.location.href} className="share-icon" />
     </Box>
   );
 };

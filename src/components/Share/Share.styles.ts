@@ -16,20 +16,22 @@ export const PopoverWrapper = styled(Popover)`
 
 export const IconWrapper = styled.button`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  width: 48px;
-  height: 48px;
-  padding: 12px;
+  width: 36px;
+  height: 36px;
+  padding: 0;
   border: 0;
   background: transparent;
   cursor: pointer;
   transition: all 0.2s ease 0s;
   border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 10px;
+  border: 1px solid ${props => props.theme.link.shareIcon};
 
   svg {
-    font-size: 24px;
+    font-size: 18px;
+    color: ${props => props.theme.palette.text.primary};
   }
 
   &:hover {
@@ -66,7 +68,7 @@ export const ShareItem = styled.li`
     cursor: pointer;
 
     &:hover {
-      background-color: rgb(242, 244, 245) !important;
+      background-color: ${props => props.theme.table.odd} !important;
     }
 
     .share-icon {
@@ -86,6 +88,10 @@ export const ShareItem = styled.li`
           fill: #34a1ff;
         }
       }
+    }
+
+    .share-text {
+      color: ${props => props.theme.palette.text.primary};
     }
 
     &.copy-button {

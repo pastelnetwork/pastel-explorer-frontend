@@ -98,20 +98,12 @@ export const MainWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    .share-icon {
-      width: 40px;
-      height: 40px;
-      padding: 8px;
-
-      svg {
-        font-size: 20px;
-      }
-    }
   }
 
   .nft-info {
     margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
 
     .title {
       margin: 0;
@@ -122,6 +114,11 @@ export const MainWrapper = styled.div`
     .txt-id {
       display: inline-block;
       margin-left: 40px;
+    }
+
+    .share-icon {
+      margin-top: 10px;
+      margin-right: 20px;
     }
   }
 
@@ -181,6 +178,10 @@ export const MainWrapper = styled.div`
         display: block;
         margin-left: 0;
         margin-top: 5px;
+      }
+
+      .share-icon {
+        margin-right: 10px;
       }
     }
   }
