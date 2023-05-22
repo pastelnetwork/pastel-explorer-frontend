@@ -80,7 +80,7 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
           }
           if (item?.misc_related_images_as_b64_strings) {
             let src = item.misc_related_images_as_b64_strings;
-            if (src.indexOf('data:image/jpeg;base64') === -1) {
+            if (src.indexOf(';base64') === -1) {
               src = `data:image/jpeg;base64,${item.misc_related_images_as_b64_strings}`;
             }
             relatedImagesB64Strings = `<div class="tooltip-item">
