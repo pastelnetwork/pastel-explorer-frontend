@@ -548,6 +548,8 @@ export type TCurrentNode = {
   img_src: string;
   img_alt: string;
   text_strings_on_page: string;
+  misc_related_images_urls?: string;
+  misc_related_images_as_b64_strings?: string;
 };
 
 export type TCurrentNodeEdges = {

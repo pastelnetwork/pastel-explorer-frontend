@@ -164,6 +164,11 @@ export const ContentItem = styled.div`
         white-space: break-spaces;
       }
     }
+
+    .tooltip-image {
+      max-width: 80px;
+      max-height: 80px;
+    }
   }
 `;
 

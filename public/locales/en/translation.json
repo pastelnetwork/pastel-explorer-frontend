@@ -1708,6 +1708,14 @@
       "noImageAvailable": {
         "message": "No image available",
         "description": "Used for the SenseDetails page"
+      },
+      "relatedImagesUrls": {
+        "message": "Related Images Urls",
+        "description": "Used for the SenseDetails page"
+      },
+      "relatedImagesB64Strings": {
+        "message": "Related Images B64 Strings",
+        "description": "Used for the SenseDetails page"
       }
     },
     "transactionDetails": {

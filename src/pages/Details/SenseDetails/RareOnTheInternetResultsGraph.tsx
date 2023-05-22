@@ -68,6 +68,33 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
       formatter(params: TChartParams) {
         const item = nodes.find(i => i.id === parseInt(params.name, 10));
         if (item) {
+          let relatedImagesUrls = '';
+          let relatedImagesB64Strings = '';
+          if (item?.misc_related_images_urls) {
+            relatedImagesUrls = `<div class="tooltip-item">
+            <div class="label">${translate('pages.senseDetails.relatedImagesUrls')}:</div>
+            <div class="value"><img class="tooltip-image" src="${
+              item.misc_related_images_urls
+            }" /></div>
+          </div>`;
+          }
+          if (item?.misc_related_images_as_b64_strings) {
+            let src = item.misc_related_images_as_b64_strings;
+            if (src.indexOf('data:image/jpeg;base64') === -1) {
+              src = `data:image/jpeg;base64,${item.misc_related_images_as_b64_strings}`;
+            }
+            relatedImagesB64Strings = `<div class="tooltip-item">
+            <div class="label">${translate('pages.senseDetails.relatedImagesB64Strings')}:</div>
+            <div class="value"><img class="tooltip-image" src="${src}" /></div>
+          </div>`;
+          }
+          let dateString = '';
+          if (item?.date_string) {
+            dateString = `<div class="tooltip-item">
+            <div class="label">${translate('pages.senseDetails.imageDate')}:</div>
+            <div class="value">${item.date_string}</div>
+          </div>`;
+          }
           return `
             <div class="tooltip-wrapper max-w-280">
               <div class="tooltip-name">${item.title}</div>
@@ -75,18 +102,17 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
               <div class="tooltip-content-wrapper">
                 <div class="tooltip-item">
                   <div class="label">${translate('pages.senseDetails.resultRanking')}:</div>
-                  <div class="value">${item.search_result_ranking}</div>
+                  <div class="value">${item.search_result_ranking}&nbsp;</div>
                 </div>
                 <div class="tooltip-item">
                   <div class="label">${translate(
                     'pages.senseDetails.originalImageResolution',
                   )}:</div>
-                  <div class="value">${parse(item.resolution_string)}</div>
+                  <div class="value">${parse(item.resolution_string)}&nbsp;</div>
                 </div>
-                <div class="tooltip-item">
-                  <div class="label">${translate('pages.senseDetails.imageDate')}:</div>
-                  <div class="value">${item.date_string}</div>
-                </div>
+                ${dateString}
+                ${relatedImagesUrls}
+                ${relatedImagesB64Strings}
               </div>
             </div>
           `;
