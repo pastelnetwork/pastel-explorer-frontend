@@ -169,6 +169,11 @@ export const AutocompleteWrapper = styled(Grid)`
     .cancel-icon {
       font-size: 20px;
       color: #b9bfcb;
+      transition: all 0.5s ease;
+
+      &:hover {
+        color: ${props => props.theme.sidebar.menu.toggle.switch};
+      }
     }
   }
 

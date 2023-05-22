@@ -234,6 +234,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
   const handleCloseSearch = () => {
     setAnchorEl(null);
     setNoResult(false);
+    setSearchData([]);
   };
 
   const renderSearchInput = () => (
@@ -378,6 +379,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
   };
 
   const handleFakeButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setSearchData([]);
     setAnchorEl(event.currentTarget);
     setNoResult(false);
   };
