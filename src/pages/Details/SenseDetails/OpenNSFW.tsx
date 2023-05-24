@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { translate } from '@utils/helpers/i18n';
 
+import EmptyOverlay from './EmptyOverlay';
 import * as Styles from './SenseDetails.styles';
 
 interface IOpenNSFWProps {
@@ -98,10 +99,11 @@ const OpenNSFW: React.FC<IOpenNSFWProps> = ({ openNSFWScore }) => {
 
   return (
     <Styles.OpenNSFWChartWrapper>
-      <Styles.OpenNSFWContent>
+      <Styles.OpenNSFWContent className={!openNSFWScore ? 'empty' : ''}>
         <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '200px' }} />
         <Styles.OpenNSFWChartOverlay />
       </Styles.OpenNSFWContent>
+      <EmptyOverlay isShow={!openNSFWScore} />
     </Styles.OpenNSFWChartWrapper>
   );
 };

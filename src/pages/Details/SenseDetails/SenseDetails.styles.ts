@@ -188,6 +188,10 @@ export const OpenNSFWChartWrapper = styled.div`
 
 export const OpenNSFWContent = styled.div`
   margin: 15px 0;
+
+  &.empty {
+    opacity: 0.2;
+  }
 `;
 
 export const OpenNSFWChartOverlay = styled.div`
