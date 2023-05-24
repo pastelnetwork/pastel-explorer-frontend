@@ -70,7 +70,16 @@ export const StyledTableRow = withStyles((theme: TAppTheme) => ({
   },
 }))(TableRow);
 
-export const transformCascadeData = (cascade: TicketsList[]) =>
+const getStorageFee = (pslPrice: number, usdPrice: number) => {
+  if (pslPrice && usdPrice) {
+    return ` (${formatNumber(pslPrice * usdPrice, { decimalsLength: 2 })} ${translate(
+      'common.usd',
+    )})`;
+  }
+  return ` (0 ${translate('common.usd')})`;
+};
+
+export const transformCascadeData = (cascade: TicketsList[], usdPrice: number) =>
   cascade.map(({ transactionHash, activation_ticket, fee, timestamp, activation_txId }) => {
     return {
       id: transactionHash,
@@ -148,7 +157,7 @@ export const transformCascadeData = (cascade: TicketsList[]) =>
             <Grid item xs={12} sm={6} md={4}>
               <Box className="title">{translate('pages.tickets.fee')}</Box>
               <Box className="bold">
-                {formatNumber(fee)} {getCurrencyName()}
+                {formatNumber(fee)} {getCurrencyName()} {getStorageFee(fee, usdPrice)}
               </Box>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
@@ -163,7 +172,7 @@ export const transformCascadeData = (cascade: TicketsList[]) =>
     };
   });
 
-export const transformSenseData = (sense: TicketsList[]) =>
+export const transformSenseData = (sense: TicketsList[], usdPrice: number) =>
   sense.map(
     ({
       transactionHash,
@@ -271,7 +280,7 @@ export const transformSenseData = (sense: TicketsList[]) =>
               <Grid item xs={12} sm={6} md={3}>
                 <Box className="title">{translate('pages.tickets.fee')}</Box>
                 <Box className="bold">
-                  {formatNumber(fee)} {getCurrencyName()}
+                  {formatNumber(fee)} {getCurrencyName()} {getStorageFee(fee, usdPrice)}
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6} md={3} className="hidden-sm">

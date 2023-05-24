@@ -20,6 +20,7 @@ import * as ROUTES from '@utils/constants/routes';
 import { formatFullDate } from '@utils/helpers/date/date';
 import { translate } from '@utils/helpers/i18n';
 
+import { useStorageFee } from './Ticket.helpers';
 import ApiTicket from './ApiTicket';
 import Signatures from './Signatures';
 import { getTicketTitle } from './index';
@@ -157,6 +158,10 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
   showActivationTicket,
   transactionHash,
 }) => {
+  const { storageFee: activationTicketStorageFee } = useStorageFee(
+    (ticket.activationTicket.data.ticket as IActionActivationTicket)?.storage_fee,
+  );
+  const { storageFee } = useStorageFee(ticket.storage_fee);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const renderActivationTicket = () => {
@@ -263,7 +268,8 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
                 })}
               </Styles.TicketTitle>
               <Styles.TicketContent>
-                {formatNumber(activationTicket.storage_fee)} {getCurrencyName()}
+                {formatNumber(activationTicket.storage_fee)} {getCurrencyName()}{' '}
+                {activationTicketStorageFee}
               </Styles.TicketContent>
             </Styles.ActivationTicketItem>
           </Grid>
@@ -428,7 +434,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-            {formatNumber(ticket.storage_fee)} {getCurrencyName()}
+            {formatNumber(ticket.storage_fee)} {getCurrencyName()} {storageFee}
           </Styles.TicketContent>
         </Grid>
       </Grid>

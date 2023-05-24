@@ -13,15 +13,17 @@ import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
 import * as TableStyles from '@components/Table/Table.styles';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
+import * as NftDetailsStyles from '@pages/Details/NftDetails/NftDetails.styles';
 
 import FileInfo from './FileInfo';
 import * as Styles from './CascadeDetails.styles';
 
 interface IBlockItemLayout {
-  title: string;
+  title: React.ReactNode;
   children: React.ReactNode;
   className?: string;
   childrenClassName?: string;
+  titleClassName?: string;
   customTitle?: React.ReactNode;
 }
 
@@ -30,11 +32,16 @@ export const BlockItemLayout: React.FC<IBlockItemLayout> = ({
   children,
   className = '',
   childrenClassName = '',
+  titleClassName = '',
   customTitle,
 }) => {
   return (
     <TableStyles.BlockWrapper className={`mb-20 ${className}`}>
-      {!customTitle ? <TableStyles.BlockTitle>{title}</TableStyles.BlockTitle> : customTitle}
+      {!customTitle ? (
+        <TableStyles.BlockTitle className={titleClassName}>{title}</TableStyles.BlockTitle>
+      ) : (
+        customTitle
+      )}
       <Styles.BlockWrapper className={childrenClassName}>{children}</Styles.BlockWrapper>
     </TableStyles.BlockWrapper>
   );
@@ -78,7 +85,36 @@ const CascadeDetails = () => {
     const apiTicket = decodeApiTicket(parseActionTicket.api_ticket) as ICascadeApiTicket;
     return {
       ...apiTicket,
+      caller: parseActionTicket.caller,
     };
+  };
+
+  const handleDownloadFile = () => {
+    const pastelId = getCascadeInfo()?.caller;
+    if (pastelId && txid) {
+      const url = `${process.env.REACT_APP_EXPLORER_OPENNODE_API_URL}/openapi/cascade/download?pid=${pastelId}&txid=${txid}`;
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  const getSummaryTitle = () => {
+    const cascadeInfo = getCascadeInfo();
+    if (!cascadeInfo?.make_publicly_accessible) {
+      return translate('pages.cascade.fileInfo');
+    }
+
+    return (
+      <NftDetailsStyles.SummaryTitleWrapper>
+        {translate('pages.cascade.fileInfo')}
+        <NftDetailsStyles.DownloadButton
+          type="button"
+          onClick={handleDownloadFile}
+          disabled={!cascadeInfo.file_name}
+        >
+          {translate('pages.nftDetails.downloadThisFile')}
+        </NftDetailsStyles.DownloadButton>
+      </NftDetailsStyles.SummaryTitleWrapper>
+    );
   };
 
   return cascadeData ? (
@@ -98,7 +134,13 @@ const CascadeDetails = () => {
           </TransactionStyles.ViewTransactionRawMuiAlert>
         </TransactionStyles.TransactionDesc>
         <Styles.ContentWrapper>
-          <BlockItemLayout title={translate('pages.cascade.fileInfo')} className="file-info">
+          <BlockItemLayout
+            title={getSummaryTitle()}
+            className="file-info"
+            titleClassName={
+              getCascadeInfo()?.make_publicly_accessible ? 'file-info-title-block' : ''
+            }
+          >
             <FileInfo data={getCascadeInfo()} />
           </BlockItemLayout>
         </Styles.ContentWrapper>

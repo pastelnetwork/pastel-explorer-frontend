@@ -119,6 +119,14 @@ export const ContentItem = styled.div`
     min-height: 400px;
   }
 
+  &.prevalence-of-similar-images-chart {
+    position: relative;
+
+    .empty {
+      opacity: 0.2;
+    }
+  }
+
   .tooltip-wrapper {
     font-size: 14px;
 
@@ -478,10 +486,56 @@ export const TableWrapper = styled.div`
     }
   }
 
-  .table__row {
-    img {
-      width: 64px;
-      height: 64px;
+  .custom-table {
+    .table__row {
+      height: 95px;
+
+      img {
+        width: 64px;
+        height: 64px;
+      }
+
+      &,
+      p,
+      img,
+      .progress-bar-item {
+        transition: all 0.3s ease;
+        transform-origin: center;
+        transition-duration: 0.4s;
+      }
+
+      &.active {
+        height: 126px;
+
+        img {
+          transform: scale(1.5, 1.5);
+        }
+
+        p {
+          font-size: 20px;
+        }
+
+        .progress-bar-item {
+          height: 28px;
+        }
+      }
+
+      &.prev_row_active,
+      &.next_row_active {
+        height: 110px;
+
+        img {
+          transform: scale(1.2, 1.2);
+        }
+
+        p {
+          font-size: 18px;
+        }
+
+        .progress-bar-item {
+          height: 20px;
+        }
+      }
     }
   }
 
@@ -533,4 +587,24 @@ export const Dialog = styled(MuiDialog)`
       max-height: 89vh;
     }
   }
+`;
+
+export const EmptyOverlay = styled.div`
+  position: absolute;
+  top: -9px;
+  left: -16px;
+  right: -16px;
+  bottom: -14px;
+  display: block;
+  background: ${props => props.theme.sense.overlay};
+`;
+
+export const EmptyData = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 22px;
+  font-weight: 700;
 `;

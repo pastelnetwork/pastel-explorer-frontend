@@ -23,6 +23,10 @@
     "noData": {
       "message": "No data",
       "description": "Used for the common"
+    },
+    "usd": {
+      "message": "USD",
+      "description": "Used for the common"
     }
   },
   "components": {

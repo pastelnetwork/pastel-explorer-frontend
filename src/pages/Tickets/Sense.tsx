@@ -15,9 +15,10 @@ interface ISenseProps {
   isMobile: boolean;
   ticketsData: TTicketResponse;
   innerWidth: number;
+  usdPrice: number;
 }
 
-const Sense: React.FC<ISenseProps> = ({ isMobile, ticketsData, innerWidth }) => {
+const Sense: React.FC<ISenseProps> = ({ isMobile, ticketsData, innerWidth, usdPrice }) => {
   const { data, total, isLoading, size, setSize } = ticketsData;
 
   const handleFetchMoreMovements = (reachedTableBottom: boolean) => {
@@ -57,7 +58,7 @@ const Sense: React.FC<ISenseProps> = ({ isMobile, ticketsData, innerWidth }) => 
   return (
     <Styles.SenseContainer id="senseTickets">
       <InfinityTable
-        rows={data ? transformSenseData(data) : []}
+        rows={data ? transformSenseData(data, usdPrice) : []}
         columns={senseColumns}
         tableHeight={innerWidth < 600 ? 800 : 600}
         title={getTitle()}

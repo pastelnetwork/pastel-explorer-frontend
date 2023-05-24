@@ -160,6 +160,9 @@ export const themeLight = createMuiTheme(
         800: '#2D3748',
       },
     },
+    sense: {
+      overlay: 'rgb(255 255 255 / 20%)',
+    },
   },
 );
 
@@ -296,6 +299,9 @@ export const themeDark = createMuiTheme(
         300: '#C4C4C4',
         800: '#F8F8FA',
       },
+    },
+    sense: {
+      overlay: 'rgb(0 0 0 / 20%)',
     },
   },
 );

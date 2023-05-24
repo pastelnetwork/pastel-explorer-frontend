@@ -14,6 +14,8 @@ interface IPrevalenceOfSimilarImages {
   };
 }
 
+const defaultData = [0.5, 0.15, 0.33];
+
 const PrevalenceOfSimilarImages: React.FC<IPrevalenceOfSimilarImages> = ({ data }) => {
   const { darkMode } = useSelector(getThemeState);
   if (!data) {
@@ -23,11 +25,12 @@ const PrevalenceOfSimilarImages: React.FC<IPrevalenceOfSimilarImages> = ({ data 
   const keys = Object.keys(data);
   const seriesData = [];
   const xAxisData = [];
+  const hasValue = !!values.reduce((total, currentItem) => total + currentItem, 0);
   for (let i = 0; i < values.length; i += 1) {
     seriesData.push({
-      value: values[i],
+      value: hasValue ? values[i] : defaultData[i],
       itemStyle: {
-        color: sense_chart_colors[i] || sense_chart_colors[0],
+        color: !hasValue ? '#ddd' : sense_chart_colors[i] || sense_chart_colors[0],
       },
     });
     xAxisData.push(keys[i]);
@@ -94,8 +97,15 @@ const PrevalenceOfSimilarImages: React.FC<IPrevalenceOfSimilarImages> = ({ data 
   };
 
   return (
-    <Styles.ContentItem>
-      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '240px' }} />
+    <Styles.ContentItem className="prevalence-of-similar-images-chart">
+      <div className={!hasValue ? 'empty' : ''}>
+        <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '240px' }} />
+      </div>
+      {!hasValue ? (
+        <Styles.EmptyOverlay>
+          <Styles.EmptyData>{translate('common.noData')}</Styles.EmptyData>
+        </Styles.EmptyOverlay>
+      ) : null}
     </Styles.ContentItem>
   );
 };

@@ -15,9 +15,10 @@ interface ICascadeProps {
   isMobile: boolean;
   ticketsData: TTicketResponse;
   innerWidth: number;
+  usdPrice: number;
 }
 
-const Cascade: React.FC<ICascadeProps> = ({ isMobile, ticketsData, innerWidth }) => {
+const Cascade: React.FC<ICascadeProps> = ({ isMobile, ticketsData, innerWidth, usdPrice }) => {
   const { data, total, isLoading, size, setSize } = ticketsData;
 
   const getTitle = () => {
@@ -57,7 +58,7 @@ const Cascade: React.FC<ICascadeProps> = ({ isMobile, ticketsData, innerWidth })
   return (
     <Styles.CascadeContainer id="cascadeTickets">
       <InfinityTable
-        rows={data ? transformCascadeData(data) : []}
+        rows={data ? transformCascadeData(data, usdPrice) : []}
         columns={cascadeColumns}
         tableHeight={innerWidth < 600 ? 800 : 600}
         title={getTitle()}

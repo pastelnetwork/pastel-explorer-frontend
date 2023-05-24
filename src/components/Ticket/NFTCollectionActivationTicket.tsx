@@ -9,6 +9,7 @@ import * as ROUTES from '@utils/constants/routes';
 import { formatFullDate } from '@utils/helpers/date/date';
 import { translate } from '@utils/helpers/i18n';
 
+import { useStorageFee } from './Ticket.helpers';
 import Signatures from './Signatures';
 import * as Styles from './Ticket.styles';
 
@@ -19,6 +20,7 @@ interface INFTCollectionActivationTicketProps {
 const NFTCollectionActivationTicket: React.FC<INFTCollectionActivationTicketProps> = ({
   ticket,
 }) => {
+  const { storageFee } = useStorageFee(ticket?.storage_fee);
   return (
     <Box>
       {ticket?.creator_height ? (
@@ -97,7 +99,7 @@ const NFTCollectionActivationTicket: React.FC<INFTCollectionActivationTicketProp
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-            {formatNumber(ticket.storage_fee)} {getCurrencyName()}
+            {formatNumber(ticket.storage_fee)} {getCurrencyName()} {storageFee}
           </Styles.TicketContent>
         </Grid>
       </Grid>

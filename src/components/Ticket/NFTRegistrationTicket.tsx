@@ -15,6 +15,7 @@ import { formatAddress } from '@utils/helpers/format';
 import { formatFullDate } from '@utils/helpers/date/date';
 import { translate } from '@utils/helpers/i18n';
 
+import { useStorageFee } from './Ticket.helpers';
 import Signatures from './Signatures';
 import AppTicket from './AppTicket';
 import * as Styles from './Ticket.styles';
@@ -179,6 +180,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
   ticket,
   transactionHash,
 }) => {
+  const { storageFee } = useStorageFee(ticket?.storage_fee);
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -362,7 +364,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-            {formatNumber(ticket.storage_fee)} {getCurrencyName()}
+            {formatNumber(ticket.storage_fee)} {getCurrencyName()} {storageFee}
           </Styles.TicketContent>
         </Grid>
       </Grid>

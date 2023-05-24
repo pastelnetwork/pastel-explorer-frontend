@@ -76,6 +76,10 @@ export const ContentWrapper = styled.div`
   .rq-ids {
     width: 100%;
   }
+
+  .file-info-title-block {
+    padding: 12px 16px;
+  }
 `;
 
 export const FileInfoWrapper = styled.div`

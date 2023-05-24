@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 
+import { useUsdPrice } from '@hooks/useTransactionDetails';
 import useTickets from '@hooks/useTickets';
 
 import Sense from './Sense';
@@ -20,6 +21,7 @@ import {
 import * as Styles from './Tickets.styles';
 
 const Tickets: React.FC = () => {
+  const { usdPrice } = useUsdPrice();
   const otherTicketData = useTickets('other', DATA_LIMIT);
   const cascadeTicketData = useTickets('cascade', DATA_LIMIT);
   const offerTransferTicketData = useTickets('offer-transfer', DATA_LIMIT);
@@ -89,6 +91,7 @@ const Tickets: React.FC = () => {
             isMobile={isMobile}
             ticketsData={senseTicketData as TTicketResponse}
             innerWidth={innerWidth}
+            usdPrice={usdPrice}
           />
         </Styles.GirdStyle>
         <Styles.GirdStyle item xs={12} lg={6} className="right">
@@ -96,6 +99,7 @@ const Tickets: React.FC = () => {
             isMobile={isMobile}
             ticketsData={cascadeTicketData as TTicketResponse}
             innerWidth={innerWidth}
+            usdPrice={usdPrice}
           />
         </Styles.GirdStyle>
       </Grid>

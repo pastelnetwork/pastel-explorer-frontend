@@ -18,6 +18,13 @@ export default function useTransactionDetails(id: string) {
 
 export function useUsdPrice() {
   const { data, isLoading } = useSWR<number>(URLS.GET_USD_PRICE, axiosGet, SWR_OPTIONS);
+  if (process.env.REACT_APP_EXPLORER_DEFAULT_CURRENCY_NAME !== 'PSL') {
+    return {
+      usdPrice: 0,
+      isLoading: true,
+    };
+  }
+
   return {
     usdPrice: data || 0,
     isLoading,
