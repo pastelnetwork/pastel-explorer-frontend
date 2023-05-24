@@ -6,6 +6,7 @@ import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { TChartParams } from '@utils/types/IStatistics';
 import { translate } from '@utils/helpers/i18n';
 
+import EmptyOverlay from './EmptyOverlay';
 import * as Styles from './SenseDetails.styles';
 
 interface IPrevalenceOfSimilarImages {
@@ -101,11 +102,7 @@ const PrevalenceOfSimilarImages: React.FC<IPrevalenceOfSimilarImages> = ({ data 
       <div className={!hasValue ? 'empty' : ''}>
         <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '240px' }} />
       </div>
-      {!hasValue ? (
-        <Styles.EmptyOverlay>
-          <Styles.EmptyData>{translate('common.noData')}</Styles.EmptyData>
-        </Styles.EmptyOverlay>
-      ) : null}
+      <EmptyOverlay isShow={!hasValue} />
     </Styles.ContentItem>
   );
 };

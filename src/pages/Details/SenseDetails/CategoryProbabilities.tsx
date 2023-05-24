@@ -7,11 +7,14 @@ import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { TChartParams } from '@utils/types/IStatistics';
 import { translate } from '@utils/helpers/i18n';
 
+import EmptyOverlay from './EmptyOverlay';
 import * as Styles from './SenseDetails.styles';
 
 interface ICategoryProbabilities {
   data: string;
 }
+
+const defaultData = [0.89251506, 0.04555976, 0.025467375, 0.02505211, 0.011405675];
 
 const CategoryProbabilities: React.FC<ICategoryProbabilities> = ({ data }) => {
   const { darkMode } = useSelector(getThemeState);
@@ -23,18 +26,19 @@ const CategoryProbabilities: React.FC<ICategoryProbabilities> = ({ data }) => {
   const keys = Object.keys(newData);
   const xAxisData = [];
   const seriesData = [];
+  const hasValue = !!values.reduce((total, currentItem) => total + currentItem, 0);
   for (let i = 0; i < keys.length; i += 1) {
     xAxisData.push(keys[i]);
     seriesData.push({
-      value: values[i],
+      value: hasValue ? values[i] : defaultData[i],
       itemStyle: {
-        color: sense_chart_colors[i] || sense_chart_colors[0],
+        color: !hasValue ? '#ddd' : sense_chart_colors[i] || sense_chart_colors[0],
       },
     });
   }
 
   const min = 0;
-  const max = getMinMax(values)[1] * 1.5;
+  const max = getMinMax(hasValue ? values : defaultData)[1] * 1.5;
   const options = {
     grid: {
       top: 30,
@@ -91,10 +95,12 @@ const CategoryProbabilities: React.FC<ICategoryProbabilities> = ({ data }) => {
       data: seriesData,
     },
   };
-
   return (
-    <Styles.ContentItem>
-      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '240px' }} />
+    <Styles.ContentItem className="chart-section">
+      <div className={!hasValue ? 'empty' : ''}>
+        <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '240px' }} />
+      </div>
+      <EmptyOverlay isShow={!hasValue} />
     </Styles.ContentItem>
   );
 };

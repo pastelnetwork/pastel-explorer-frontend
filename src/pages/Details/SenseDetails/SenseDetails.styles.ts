@@ -119,7 +119,8 @@ export const ContentItem = styled.div`
     min-height: 400px;
   }
 
-  &.prevalence-of-similar-images-chart {
+  &.prevalence-of-similar-images-chart,
+  &.chart-section {
     position: relative;
 
     .empty {
