@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 
+import { rarenessScoreColors, rarenessScoreData } from './mockup';
 import EmptyOverlay from './EmptyOverlay';
 import * as Styles from './SenseDetails.styles';
 
@@ -24,11 +25,13 @@ const RarenessScore: React.FC<IRarenessScore> = ({ rarenessScore }) => {
         axisLine: {
           lineStyle: {
             width: 30,
-            color: [
-              [0.34, '#F4664A'],
-              [0.66, '#FAAD14'],
-              [1, '#30BF78'],
-            ],
+            color: !rarenessScore
+              ? rarenessScoreColors
+              : [
+                  [0.34, '#F4664A'],
+                  [0.66, '#FAAD14'],
+                  [1, '#30BF78'],
+                ],
           },
         },
         anchor: {
@@ -85,7 +88,7 @@ const RarenessScore: React.FC<IRarenessScore> = ({ rarenessScore }) => {
         },
         data: [
           {
-            value: rarenessScore || 0,
+            value: rarenessScore || rarenessScoreData,
           },
         ],
       },

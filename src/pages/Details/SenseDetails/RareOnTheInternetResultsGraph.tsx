@@ -133,18 +133,12 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
         type: 'graph',
         layout: 'force',
         animation: false,
-        data: !nodes.length
-          ? rareOnTheInternetResultsGraphData.nodes.map(node => ({
-              id: node.id,
-              name: node.id,
-              symbolSize: node.node_size,
-            }))
-          : nodes.map(node => ({
-              id: node.id,
-              name: node.id,
-              symbolSize: node.node_size,
-              symbol: `image://${node?.img_src_string}`,
-            })),
+        data: (!nodes.length ? rareOnTheInternetResultsGraphData.nodes : nodes).map(node => ({
+          id: node.id,
+          name: node.id,
+          symbolSize: node.node_size,
+          symbol: `image://${node?.img_src_string}`,
+        })),
         edges: !nodes.length ? rareOnTheInternetResultsGraphData.edges : edges,
         label: {
           show: false,
@@ -156,8 +150,7 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
           },
         },
         force: {
-          repulsion: 3000,
-          edgeLength: 100,
+          edgeLength: 200,
         },
       },
     ],

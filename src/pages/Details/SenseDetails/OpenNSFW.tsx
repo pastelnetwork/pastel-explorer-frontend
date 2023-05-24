@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { translate } from '@utils/helpers/i18n';
 
+import { openNSFWColors, openNSFWScoreData } from './mockup';
 import EmptyOverlay from './EmptyOverlay';
 import * as Styles from './SenseDetails.styles';
 
@@ -23,11 +24,13 @@ const OpenNSFW: React.FC<IOpenNSFWProps> = ({ openNSFWScore }) => {
         axisLine: {
           lineStyle: {
             width: 20,
-            color: [
-              [0.66, darkMode ? '#2D3748' : '#fff'],
-              [0.8, '#FAAD14'],
-              [1, '#DC3912'],
-            ],
+            color: !openNSFWScore
+              ? openNSFWColors
+              : [
+                  [0.66, darkMode ? '#2D3748' : '#fff'],
+                  [0.8, '#FAAD14'],
+                  [1, '#DC3912'],
+                ],
           },
         },
         anchor: {
@@ -35,9 +38,9 @@ const OpenNSFW: React.FC<IOpenNSFWProps> = ({ openNSFWScore }) => {
           size: 20,
           showAbove: true,
           itemStyle: {
-            borderColor: '#666666',
+            borderColor: !openNSFWScore ? '#ddd' : '#666666',
             borderWidth: 1,
-            color: '#4684EE',
+            color: !openNSFWScore ? '#ddd' : '#4684EE',
           },
         },
         pointer: {
@@ -45,7 +48,7 @@ const OpenNSFW: React.FC<IOpenNSFWProps> = ({ openNSFWScore }) => {
           length: '100%',
           width: 7,
           itemStyle: {
-            color: '#E47257',
+            color: !openNSFWScore ? '#ddd' : '#E47257',
           },
         },
         axisTick: {
@@ -89,7 +92,7 @@ const OpenNSFW: React.FC<IOpenNSFWProps> = ({ openNSFWScore }) => {
         },
         data: [
           {
-            value: openNSFWScore || 0,
+            value: openNSFWScore || openNSFWScoreData,
             name: translate('pages.senseDetails.nsfw'),
           },
         ],

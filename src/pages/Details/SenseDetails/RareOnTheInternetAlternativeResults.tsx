@@ -120,18 +120,14 @@ const RareOnTheInternetAlternativeResults: React.FC<IRareOnTheInternetAlternativ
       {
         type: 'graph',
         layout: 'force',
-        data: !internetRarenessAlternativeGraphData.length
-          ? rareOnTheInternetAlternativeResultsData.nodes.map(node => ({
-              id: node.id,
-              name: node.id,
-              symbolSize: node.node_size,
-            }))
-          : internetRarenessAlternativeGraphData.map(node => ({
-              id: node.id,
-              name: node.id,
-              symbolSize: node.node_size,
-              symbol: `image://data:image/jpg;base64,${node.image_base64_string}`,
-            })),
+        data: (!internetRarenessAlternativeGraphData.length
+          ? rareOnTheInternetAlternativeResultsData.nodes
+          : internetRarenessAlternativeGraphData
+        ).map(node => ({
+          id: node.id,
+          name: node.id,
+          symbol: `image://data:image/jpg;base64,${node.image_base64_string}`,
+        })),
         edges: !internetRarenessAlternativeGraphData.length
           ? rareOnTheInternetAlternativeResultsData.edges
           : edgesData,
@@ -145,8 +141,7 @@ const RareOnTheInternetAlternativeResults: React.FC<IRareOnTheInternetAlternativ
         },
         roam: true,
         force: {
-          repulsion: 3000,
-          edgeLength: 100,
+          edgeLength: 200,
         },
       },
     ],

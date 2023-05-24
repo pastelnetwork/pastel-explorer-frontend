@@ -7,14 +7,13 @@ import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { TChartParams } from '@utils/types/IStatistics';
 import { translate } from '@utils/helpers/i18n';
 
+import { categoryProbabilitiesData } from './mockup';
 import EmptyOverlay from './EmptyOverlay';
 import * as Styles from './SenseDetails.styles';
 
 interface ICategoryProbabilities {
   data: string;
 }
-
-const defaultData = [0.89251506, 0.04555976, 0.025467375, 0.02505211, 0.011405675];
 
 const CategoryProbabilities: React.FC<ICategoryProbabilities> = ({ data }) => {
   const { darkMode } = useSelector(getThemeState);
@@ -30,7 +29,7 @@ const CategoryProbabilities: React.FC<ICategoryProbabilities> = ({ data }) => {
   for (let i = 0; i < keys.length; i += 1) {
     xAxisData.push(keys[i]);
     seriesData.push({
-      value: hasValue ? values[i] : defaultData[i],
+      value: hasValue ? values[i] : categoryProbabilitiesData[i],
       itemStyle: {
         color: !hasValue ? '#ddd' : sense_chart_colors[i] || sense_chart_colors[0],
       },
@@ -38,7 +37,7 @@ const CategoryProbabilities: React.FC<ICategoryProbabilities> = ({ data }) => {
   }
 
   const min = 0;
-  const max = getMinMax(hasValue ? values : defaultData)[1] * 1.5;
+  const max = getMinMax(hasValue ? values : categoryProbabilitiesData)[1] * 1.5;
   const options = {
     grid: {
       top: 30,
