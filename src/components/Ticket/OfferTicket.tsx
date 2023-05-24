@@ -9,6 +9,7 @@ import { getCurrencyName } from '@utils/appInfo';
 import { formatFullDate } from '@utils/helpers/date/date';
 import { translate } from '@utils/helpers/i18n';
 
+import { useStorageFee } from './Ticket.helpers';
 import Signatures from './Signatures';
 import * as Styles from './Ticket.styles';
 
@@ -17,6 +18,7 @@ interface IOfferTicketProps {
 }
 
 const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket }) => {
+  const { storageFee } = useStorageFee(ticket.asked_price);
   return (
     <Box>
       <Grid container spacing={3}>
@@ -82,7 +84,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket }) => {
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-            {formatNumber(ticket.asked_price)} {getCurrencyName()}
+            {formatNumber(ticket.asked_price)} {getCurrencyName()} {storageFee}
           </Styles.TicketContent>
         </Grid>
       </Grid>
