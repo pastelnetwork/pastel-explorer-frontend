@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 
+import EmptyOverlay from './EmptyOverlay';
 import * as Styles from './SenseDetails.styles';
 
 interface IRarenessScore {
@@ -92,10 +93,11 @@ const RarenessScore: React.FC<IRarenessScore> = ({ rarenessScore }) => {
   };
 
   return (
-    <Styles.ContentItem>
-      <Styles.RarenessScoreContent>
+    <Styles.ContentItem className="chart-section">
+      <Styles.RarenessScoreContent className={!rarenessScore ? 'empty' : ''}>
         <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '190px' }} />
       </Styles.RarenessScoreContent>
+      <EmptyOverlay isShow={!rarenessScore} />
     </Styles.ContentItem>
   );
 };
