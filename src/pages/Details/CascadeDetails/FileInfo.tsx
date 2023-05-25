@@ -7,6 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
 
 import { translate } from '@utils/helpers/i18n';
+import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 
 import doc from '@assets/icons/filetypes/doc.svg';
 import gif from '@assets/icons/filetypes/gif.svg';
@@ -103,7 +104,7 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
                     {translate('pages.cascade.fileSize')}:
                   </TicketStyles.TicketTitle>
                   <TicketStyles.TicketContent>
-                    {(data.original_file_size_in_bytes / 1024).toFixed(2)}{' '}
+                    {formatNumber(data.original_file_size_in_bytes / 1024, { decimalsLength: 2 })}{' '}
                     {translate('pages.cascade.kb')}
                   </TicketStyles.TicketContent>
                 </Box>
