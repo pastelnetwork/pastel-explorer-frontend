@@ -2774,6 +2774,18 @@
       "allRqIds": {
         "message": "All RaptorQ Symbol IDs",
         "description": "Used for the Cascade Details page"
+      },
+      "downloading": {
+        "message": "Downloading...",
+        "description": "Used for the Cascade Details page"
+      },
+      "downloadFailedNetworkError": {
+        "message": "Download Failed Network Error",
+        "description": "Used for the Cascade Details page"
+      },
+      "downloadInfo": {
+        "message": "Please be patient while the file is assembled from the network... this can take up to 2 minutes",
+        "description": "Used for the Cascade Details page"
       }
     },
     "collection": {

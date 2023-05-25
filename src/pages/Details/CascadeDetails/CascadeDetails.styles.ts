@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import Alert from '@material-ui/lab/Alert';
+import Snackbar from '@material-ui/core/Snackbar';
 
 export const Wrapper = styled.div`
   display: block;
@@ -206,5 +208,25 @@ export const RqIdsWrapper = styled.div`
         text-overflow: ellipsis;
       }
     }
+  }
+`;
+
+export const SnackbarContent = styled.div`
+  max-width: 300px;
+`;
+
+export const AlterDownload = styled(Alert)`
+  .MuiAlert-icon,
+  .MuiAlert-message {
+    padding: 0;
+  }
+`;
+
+export const SnackbarDownloading = styled(Snackbar)`
+  .MuiSnackbarContent-root {
+    min-width: unset;
+  }
+  .MuiSnackbarContent-message {
+    padding: 0;
   }
 `;

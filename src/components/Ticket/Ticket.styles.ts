@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 import MuiAccordion from '@material-ui/core/Accordion';
 import Grid from '@material-ui/core/Grid';
 
@@ -9,7 +10,7 @@ export const TicketTitle = styled(Typography)`
   font-weight: 600;
 `;
 
-export const TicketContent = styled(Typography)`
+export const TicketContent = styled(Box)`
   &.capitalize {
     text-transform: capitalize;
   }

@@ -1,8 +1,11 @@
+import { useEffect, useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { decode } from 'js-base64';
 import AlertTitle from '@material-ui/lab/AlertTitle';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 
 import { translate } from '@utils/helpers/i18n';
 import * as ascii85 from '@utils/helpers/ascii85';
@@ -11,6 +14,7 @@ import { getParameterByName } from '@utils/helpers/url';
 import { IActionTicket, ICascadeApiTicket } from '@utils/types/ITransactions';
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
+import { axiosInstance } from '@utils/helpers/useFetch/useFetch';
 import * as TableStyles from '@components/Table/Table.styles';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 import * as NftDetailsStyles from '@pages/Details/NftDetails/NftDetails.styles';
@@ -48,8 +52,24 @@ export const BlockItemLayout: React.FC<IBlockItemLayout> = ({
 };
 
 const CascadeDetails = () => {
+  const [status, setStatus] = useState('');
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const txid = getParameterByName('txid');
   const { cascadeData, isLoading } = useCascadeDetails(txid);
+
+  const handleReloadPage = (e: BeforeUnloadEvent) => {
+    if (status === 'downloading') {
+      e.preventDefault();
+      e.returnValue = '';
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', handleReloadPage);
+    return () => {
+      window.removeEventListener('beforeunload', handleReloadPage);
+    };
+  }, [status]);
 
   if (isLoading) {
     return (
@@ -85,15 +105,30 @@ const CascadeDetails = () => {
     const apiTicket = decodeApiTicket(parseActionTicket.api_ticket) as ICascadeApiTicket;
     return {
       ...apiTicket,
-      caller: parseActionTicket.caller,
     };
   };
 
   const handleDownloadFile = () => {
-    const pastelId = getCascadeInfo()?.caller;
-    if (pastelId && txid) {
-      const url = `${process.env.REACT_APP_EXPLORER_OPENNODE_API_URL}/openapi/cascade/download?pid=${pastelId}&txid=${txid}`;
-      window.open(url, '_blank', 'noopener,noreferrer');
+    const fileType = getCascadeInfo()?.file_type;
+    const fileName = getCascadeInfo()?.file_name;
+
+    if (fileName && fileType && txid) {
+      setOpenSnackbar(true);
+      setStatus('downloading');
+      const url = `${process.env.REACT_APP_EXPLORER_OPENNODE_API_URL}/get_publicly_accessible_cascade_file_by_registration_ticket_txid/${txid}`;
+      const link = document.createElement('a');
+      link.target = '_blank';
+      link.download = fileName;
+      axiosInstance
+        .get(url, { responseType: 'blob' })
+        .then(res => {
+          link.href = URL.createObjectURL(new Blob([res.data], { type: fileType }));
+          link.click();
+          setStatus('done');
+        })
+        .catch(() => {
+          setStatus('error');
+        });
     }
   };
 
@@ -109,7 +144,7 @@ const CascadeDetails = () => {
         <NftDetailsStyles.DownloadButton
           type="button"
           onClick={handleDownloadFile}
-          disabled={!cascadeInfo.file_name}
+          disabled={!cascadeInfo.file_name || status === 'downloading'}
         >
           {translate('pages.nftDetails.downloadThisFile')}
         </NftDetailsStyles.DownloadButton>
@@ -145,6 +180,36 @@ const CascadeDetails = () => {
           </BlockItemLayout>
         </Styles.ContentWrapper>
       </Grid>
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={openSnackbar}
+        onClose={() => setOpenSnackbar(false)}
+        autoHideDuration={7000}
+      >
+        <Alert elevation={6} variant="filled" severity="info">
+          <Styles.SnackbarContent>{translate('pages.cascade.downloadInfo')}</Styles.SnackbarContent>
+        </Alert>
+      </Snackbar>
+      <Styles.SnackbarDownloading
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        open={status === 'downloading'}
+        message={translate('pages.cascade.downloading')}
+      />
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={status === 'error'}
+        onClose={() => setStatus('')}
+        autoHideDuration={7000}
+      >
+        <Styles.AlterDownload
+          elevation={6}
+          variant="filled"
+          severity="error"
+          onClose={() => setStatus('')}
+        >
+          {translate('pages.cascade.downloadFailedNetworkError')}
+        </Styles.AlterDownload>
+      </Snackbar>
     </Styles.Wrapper>
   ) : (
     <Styles.Wrapper className="content-center-wrapper">
