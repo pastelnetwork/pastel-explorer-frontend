@@ -146,7 +146,9 @@ const CascadeDetails = () => {
           onClick={handleDownloadFile}
           disabled={!cascadeInfo.file_name || status === 'downloading'}
         >
-          {translate('pages.nftDetails.downloadThisFile')}
+          {status === 'downloading'
+            ? translate('pages.cascade.downloading')
+            : translate('pages.nftDetails.downloadThisFile')}
         </NftDetailsStyles.DownloadButton>
       </NftDetailsStyles.SummaryTitleWrapper>
     );
@@ -190,11 +192,6 @@ const CascadeDetails = () => {
           <Styles.SnackbarContent>{translate('pages.cascade.downloadInfo')}</Styles.SnackbarContent>
         </Alert>
       </Snackbar>
-      <Styles.SnackbarDownloading
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        open={status === 'downloading'}
-        message={translate('pages.cascade.downloading')}
-      />
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={status === 'error'}
