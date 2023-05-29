@@ -187,7 +187,9 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
             <RouterLink
-              route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${ticket?.otherData?.collectionAlias}`}
+              route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${
+                ticket?.otherData?.collectionAlias || ticket?.collectionAlias
+              }`}
               value={ticket?.collection_ticket?.collection_name}
               title={ticket?.collection_ticket?.collection_name}
               className="address-link"

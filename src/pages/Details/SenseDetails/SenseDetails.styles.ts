@@ -501,7 +501,7 @@ export const TableWrapper = styled.div`
       }
 
       &,
-      p,
+      div,
       img,
       .progress-bar-item {
         transition: all 0.3s ease;
@@ -516,7 +516,7 @@ export const TableWrapper = styled.div`
           transform: scale(1.5, 1.5);
         }
 
-        p {
+        div {
           font-size: 20px;
         }
 
@@ -533,7 +533,7 @@ export const TableWrapper = styled.div`
           transform: scale(1.2, 1.2);
         }
 
-        p {
+        div {
           font-size: 18px;
         }
 

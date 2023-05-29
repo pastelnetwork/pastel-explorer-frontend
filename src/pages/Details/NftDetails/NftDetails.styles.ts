@@ -101,7 +101,7 @@ export const MainWrapper = styled.div`
   }
 
   .nft-info {
-    margin-bottom: 6px;
+    margin-bottom: 26px;
     display: flex;
     justify-content: space-between;
 
@@ -189,6 +189,10 @@ export const MainWrapper = styled.div`
 
 export const ContentWrapper = styled.div`
   padding: 9px 16px;
+
+  &.relative {
+    position: relative;
+  }
 `;
 
 export const ContentItem = styled.div`
@@ -365,4 +369,18 @@ export const SummaryTitleWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+`;
+
+export const LoadingWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background: rgba(1, 1, 1, 0.2);
+`;
+
+export const LoadingSection = styled.div`
+  min-height: 160px;
 `;

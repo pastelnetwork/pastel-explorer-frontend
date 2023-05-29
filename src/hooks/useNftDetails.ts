@@ -2,7 +2,7 @@ import useSWR from 'swr';
 
 import { axiosGet } from '@utils/helpers/useFetch/useFetch';
 import * as URLS from '@utils/constants/urls';
-import { INftDetails, TItemActivity } from '@utils/types/ITransactions';
+import { INftDetails, TItemActivity, ICollectionItem } from '@utils/types/ITransactions';
 import { SWR_OPTIONS } from '@utils/constants/statistics';
 
 export default function useNftDetails(txid: string) {
@@ -68,6 +68,19 @@ export function useItemActivity(txid: string, offset: number, limit: number) {
   return {
     data: data?.items || null,
     totalItems: data?.totalItems || 0,
+    isLoading,
+  };
+}
+
+export function useCollectionRelated(txid: string, collectionId: string) {
+  const { data, isLoading } = useSWR<{ items: ICollectionItem[] }>(
+    `${URLS.GET_COLLECTION_RELATED}?txId=${txid}&collection_id=${collectionId}&limit=12`,
+    axiosGet,
+    SWR_OPTIONS,
+  );
+
+  return {
+    data: data?.items || null,
     isLoading,
   };
 }

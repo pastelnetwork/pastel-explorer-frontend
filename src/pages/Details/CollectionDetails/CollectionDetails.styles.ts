@@ -239,6 +239,12 @@ export const NFTsMainContent = styled('div')`
     padding-top: 30px;
   }
 
+  .no-data {
+    margin: 20px 0;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
   .nft-link {
     overflow: unset;
     transition: transform 420ms cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -660,4 +666,14 @@ export const PaginationWrapper = styled('div')`
   display: flex;
   justify-content: flex-end;
   margin: 20px 0 10px;
+`;
+
+export const LoadingWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background: rgba(1, 1, 1, 0.2);
 `;

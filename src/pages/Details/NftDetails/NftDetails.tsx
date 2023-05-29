@@ -188,12 +188,15 @@ const NftDetails = () => {
               ddAndFingerprintsIds={nftData.ddAndFingerprintsIds}
             />
           </BlockLayout>
-          <BlockLayout
-            title={translate('pages.nftDetails.moreFromThisCollection')}
-            className="more-items"
-          >
-            <MoreItems />
-          </BlockLayout>
+          {nftData.collectionAlias ? (
+            <BlockLayout
+              title={translate('pages.nftDetails.moreFromThisCollection')}
+              className="more-items"
+              childrenClassName="relative"
+            >
+              <MoreItems collectionId={nftData.collectionAlias} />
+            </BlockLayout>
+          ) : null}
         </Styles.MainWrapper>
       </Grid>
     </Styles.Wrapper>

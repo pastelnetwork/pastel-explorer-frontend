@@ -53,6 +53,8 @@ export const GET_COLLECTION_DETAILS_URL = 'v1/collections';
 export const GET_NFT_DETAILS_URL = 'v1/nfts/details';
 export const GET_ITEM_ACTIVITY_OF_NFT_DETAILS_URL = 'v1/nfts/item-activity';
 export const GET_MEMPOOL_URL = 'v1/transactions/mempool';
+export const GET_COLLECTION_ITEMS = 'v1/collections/items';
+export const GET_COLLECTION_RELATED = 'v1/collections/related';
 // External URLS
 export const TWITTER_URL = 'https://twitter.com/pastelnetwork';
 export const TELEGRAM_URL = 'https://t.me/PastelNetwork';

@@ -1,10 +1,12 @@
 import useSWR from 'swr';
+import useSWRInfinite from 'swr/infinite';
 
 import { axiosGet } from '@utils/helpers/useFetch/useFetch';
 import * as URLS from '@utils/constants/urls';
-import { ICollectionDetail } from '@utils/types/ITransactions';
+import { ICollectionDetail, ICollectionItem } from '@utils/types/ITransactions';
 import { SWR_OPTIONS } from '@utils/constants/statistics';
-import { mockup } from '@pages/Details/CollectionDetails/mockup';
+
+export const DATA_FETCH_LIMIT = 18;
 
 export default function useCollectionDetails(id: string) {
   const { data, isLoading } = useSWR<{ collection: ICollectionDetail }>(
@@ -14,7 +16,31 @@ export default function useCollectionDetails(id: string) {
   );
   return {
     collection: data?.collection,
-    items: mockup,
     isLoading,
+  };
+}
+
+export function useCollectionItems(id: string) {
+  const { data, isLoading, size, setSize } = useSWRInfinite(
+    index =>
+      `${URLS.GET_COLLECTION_ITEMS}?collection_id=${id}*offset=${
+        index * DATA_FETCH_LIMIT
+      }&limit=${DATA_FETCH_LIMIT}`,
+    axiosGet,
+    SWR_OPTIONS,
+  );
+  const isLoadingMore = isLoading || (size > 0 && data && typeof data[size - 1] === 'undefined');
+  const newData: ICollectionItem[] = [];
+  if (data?.[0]?.items?.length) {
+    for (let i = 0; i < data[0].items.length; i += 1) {
+      newData.push(...data[0].items[i].data);
+    }
+  }
+  return {
+    items: newData?.length ? newData : null,
+    totalItems: data?.[0]?.totalItems || 0,
+    isLoadingMore,
+    swrSize: size,
+    swrSetSize: setSize,
   };
 }

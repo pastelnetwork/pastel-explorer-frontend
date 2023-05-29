@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { translate } from '@utils/helpers/i18n';
-import useCollectionDetails from '@hooks/useCollectionDetails';
+import useCollectionDetails, { useCollectionItems } from '@hooks/useCollectionDetails';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 
 import Summary from './Summary';
@@ -18,7 +18,8 @@ interface IParamTypes {
 
 const CollectionDetails = () => {
   const { id } = useParams<IParamTypes>();
-  const { collection, items, isLoading } = useCollectionDetails(id);
+  const { collection, isLoading } = useCollectionDetails(id);
+  const { items, isLoadingMore, totalItems, swrSetSize, swrSize } = useCollectionItems(id);
 
   if (isLoading) {
     return (
@@ -33,7 +34,13 @@ const CollectionDetails = () => {
   return collection ? (
     <Styles.Wrapper>
       <Summary collection={collection} totalItems={items?.length || 0} />
-      <NFTs data={items} />
+      <NFTs
+        data={items}
+        totalItems={totalItems}
+        isLoading={isLoadingMore}
+        setSize={swrSetSize}
+        currentPage={swrSize}
+      />
     </Styles.Wrapper>
   ) : (
     <Styles.Wrapper className="content-center-wrapper">

@@ -217,6 +217,7 @@ export interface INftCollectionRegistrationTicket {
   transactionTime: number;
   activation_ticket: string;
   activation_txId: string;
+  collectionAlias: string;
   collection_ticket: {
     app_ticket: string;
     block_hash: string;
@@ -686,4 +687,13 @@ export interface IMempool {
   size: number;
   fee: number;
   tickets?: string;
+}
+
+export interface ICollectionItem {
+  id: string;
+  title: string;
+  src: string;
+  type: string;
+  txid: string;
+  timestamp: number;
 }
