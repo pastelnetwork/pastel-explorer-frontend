@@ -148,21 +148,20 @@ const SimilarRegisteredImageRow: React.FC<ISimilarRegisteredImageRow> = ({
         background: item.likelyDupe ? 'linear-gradient(to bottom, #d9a7c7, #f4dae5)' : undefined,
       }}
     >
-      <StyledTableCell component="td" scope="row">
-        <TicketStyles.TicketContent className="white-space-nowrap">
-          {index + 1}
-        </TicketStyles.TicketContent>
+      <StyledTableCell component="td" scope="row" align="center">
+        <TicketStyles.TicketContent>{index + 1}</TicketStyles.TicketContent>
       </StyledTableCell>
       <StyledTableCell
         component="td"
         scope="row"
         onMouseEnter={toggleHover}
         onMouseLeave={toggleHover}
+        className="image-row"
       >
         <img src={item.image || imagePlaceholder} alt={item.imageHashOriginal} />
       </StyledTableCell>
       <StyledTableCell component="td" scope="row">
-        <TicketStyles.TicketContent className="white-space-nowrap">
+        <TicketStyles.TicketContent>
           {item.matchType === 'Seed Image' ? (
             <>{item.imageHash}</>
           ) : (
@@ -176,9 +175,7 @@ const SimilarRegisteredImageRow: React.FC<ISimilarRegisteredImageRow> = ({
         </TicketStyles.TicketContent>
       </StyledTableCell>
       <StyledTableCell component="td" scope="row">
-        <TicketStyles.TicketContent className="white-space-nowrap">
-          {item.dateTimeAdded}
-        </TicketStyles.TicketContent>
+        <TicketStyles.TicketContent>{item.dateTimeAdded}</TicketStyles.TicketContent>
       </StyledTableCell>
       <StyledTableCell component="td" scope="row">
         <TicketStyles.TicketContent
@@ -193,7 +190,7 @@ const SimilarRegisteredImageRow: React.FC<ISimilarRegisteredImageRow> = ({
         </TicketStyles.TicketContent>
       </StyledTableCell>
       <StyledTableCell component="td" scope="row">
-        <TicketStyles.TicketContent className="white-space-nowrap">
+        <TicketStyles.TicketContent>
           {(item.finalDupeProbability * 100).toFixed(2)}%
         </TicketStyles.TicketContent>
       </StyledTableCell>
@@ -201,34 +198,24 @@ const SimilarRegisteredImageRow: React.FC<ISimilarRegisteredImageRow> = ({
         <ProgressBar value={parseFloat((item.finalDupeProbability * 100).toFixed(2))} />
       </StyledTableCell>
       <StyledTableCell component="td" scope="row">
-        <TicketStyles.TicketContent className="white-space-nowrap">
-          {item.cosineSimilarity}
-        </TicketStyles.TicketContent>
+        <TicketStyles.TicketContent>{item.cosineSimilarity}</TicketStyles.TicketContent>
       </StyledTableCell>
       <StyledTableCell component="td" scope="row">
-        <TicketStyles.TicketContent className="white-space-nowrap">
-          {item.cosineGain}
-        </TicketStyles.TicketContent>
+        <TicketStyles.TicketContent>{item.cosineGain}</TicketStyles.TicketContent>
       </StyledTableCell>
       <StyledTableCell component="td" scope="row">
-        <TicketStyles.TicketContent className="white-space-nowrap">
-          {item.hoeffdingDependency}
-        </TicketStyles.TicketContent>
+        <TicketStyles.TicketContent>{item.hoeffdingDependency}</TicketStyles.TicketContent>
       </StyledTableCell>
       <StyledTableCell component="td" scope="row">
-        <TicketStyles.TicketContent className="white-space-nowrap">
-          {item.hoeffdingGain}
-        </TicketStyles.TicketContent>
+        <TicketStyles.TicketContent>{item.hoeffdingGain}</TicketStyles.TicketContent>
       </StyledTableCell>
       <StyledTableCell component="td" scope="row">
-        <TicketStyles.TicketContent className="white-space-nowrap">
+        <TicketStyles.TicketContent>
           {item.hilbertSchmidtInformationCriteria}
         </TicketStyles.TicketContent>
       </StyledTableCell>
       <StyledTableCell component="td" scope="row">
-        <TicketStyles.TicketContent className="white-space-nowrap">
-          {item.hilbertSchmidtGain}
-        </TicketStyles.TicketContent>
+        <TicketStyles.TicketContent>{item.hilbertSchmidtGain}</TicketStyles.TicketContent>
       </StyledTableCell>
     </StyledTableRow>
   );
@@ -246,7 +233,7 @@ const SimilarRegisteredImages: React.FC<ISimilarRegisteredImages> = ({ rarenessS
         <Table aria-label="customized table" className="custom-table latest-transactions">
           <TableHead className="table__row-header">
             <TableRow>
-              <StyledTableCell component="th" className="rank">
+              <StyledTableCell component="th" className="rank" align="center">
                 {translate('pages.senseDetails.rank')}
               </StyledTableCell>
               <StyledTableCell component="th" className="thumbnail">
@@ -264,7 +251,7 @@ const SimilarRegisteredImages: React.FC<ISimilarRegisteredImages> = ({ rarenessS
               <StyledTableCell component="th" className="dupeProbability">
                 {translate('pages.senseDetails.dupeProbability')}
               </StyledTableCell>
-              <StyledTableCell component="th" className="dupeProbability">
+              <StyledTableCell component="th" className="dupeProbability chart">
                 {translate('pages.senseDetails.dupeProbability')}
               </StyledTableCell>
               <StyledTableCell component="th" className="cosineSimilarity">

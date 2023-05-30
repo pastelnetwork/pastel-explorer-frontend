@@ -492,6 +492,63 @@ export const TableWrapper = styled.div`
   }
 
   .custom-table {
+    .image-row {
+      text-align: center;
+      vertical-align: middle;
+    }
+    .rank {
+      min-width: 65px;
+      max-width: 65px;
+    }
+    .thumbnail {
+      min-width: 120px;
+      max-width: 120px;
+    }
+    .imageHash {
+      min-width: 150px;
+      max-width: 150px;
+    }
+    .dateTimeAdded {
+      min-width: 206px;
+      max-width: 206px;
+    }
+    .matchType {
+      min-width: 148px;
+      max-width: 148px;
+    }
+    .dupeProbability {
+      min-width: 140px;
+      max-width: 140px;
+    }
+    .dupeProbability.chart {
+      min-width: 140px;
+      max-width: 140px;
+    }
+    .cosineSimilarity {
+      min-width: 150px;
+      max-width: 150px;
+    }
+    .cosineGain {
+      min-width: 150px;
+      max-width: 150px;
+    }
+    .hoeffdingsDependency {
+      min-width: 190px;
+      max-width: 190px;
+    }
+    .hoeffdingGain {
+      min-width: 130px;
+      max-width: 130px;
+    }
+    .hilbertSchmidtInformationCriteria {
+      min-width: 265px;
+      max-width: 265px;
+    }
+    .hilbertSchmidtGain {
+      min-width: 166px;
+      max-width: 166px;
+    }
+
     .table__row {
       height: 95px;
 
@@ -500,23 +557,32 @@ export const TableWrapper = styled.div`
         height: 64px;
       }
 
-      &,
-      div,
-      img,
-      .progress-bar-item {
+      img {
         transition: all 0.3s ease;
         transform-origin: center;
         transition-duration: 0.4s;
       }
 
+      &,
+      div,
+      p,
+      a,
+      .progress-bar-item {
+        transition: all 0.15s ease;
+        transform-origin: center;
+        transition-duration: 0.3s;
+      }
+
       &.active {
-        height: 126px;
+        height: 142px;
 
         img {
-          transform: scale(1.5, 1.5);
+          transform: scale(2);
         }
 
-        div {
+        div,
+        a,
+        p {
           font-size: 20px;
         }
 
@@ -530,10 +596,12 @@ export const TableWrapper = styled.div`
         height: 110px;
 
         img {
-          transform: scale(1.2, 1.2);
+          transform: scale(1.5);
         }
 
-        div {
+        div,
+        a,
+        p {
           font-size: 18px;
         }
 
