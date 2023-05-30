@@ -3,6 +3,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import format from 'date-fns/format';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -105,7 +106,9 @@ export const NFTsContent: React.FC<INFTsContent> = ({ data }) => {
   if (!data) {
     return (
       <Styles.NFTsMainContent>
-        <Box className="no-data">{translate('common.noData')}</Box>
+        <Typography component="h4" variant="h4" align="center" gutterBottom className="no-data">
+          {translate('common.noData')}
+        </Typography>
       </Styles.NFTsMainContent>
     );
   }

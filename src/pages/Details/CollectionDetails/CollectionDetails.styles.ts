@@ -123,6 +123,14 @@ export const SummaryWrapper = styled('div')`
     align-items: center;
   }
 
+  .action-ticket-status {
+    padding: 4px;
+
+    svg {
+      font-size: 14px;
+    }
+  }
+
   .creator-info {
     display: flex;
 
@@ -251,9 +259,13 @@ export const NFTsMainContent = styled('div')`
   }
 
   .no-data {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
     margin: 20px 0;
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 22px;
+    font-weight: 700;
   }
 
   .nft-link {
