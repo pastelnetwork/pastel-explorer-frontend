@@ -10,14 +10,17 @@ import { translate } from '@utils/helpers/i18n';
 import { ICollectionDetail } from '@utils/types/ITransactions';
 import { formatAddress } from '@utils/helpers/format';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import banner from '@assets/images/mockup/banner.avif';
-import avatar from '@assets/images/mockup/avatar.png';
+import banner from '@assets/images/placeholder-banner.png';
 
 import * as Styles from './CollectionDetails.styles';
 
 interface IBanner {
   src: string;
   alt: string;
+}
+
+interface IAvatar {
+  text: string;
 }
 
 interface ISummary {
@@ -35,6 +38,14 @@ const Banner: React.FC<IBanner> = ({ src, alt }) => {
   );
 };
 
+const Avatar: React.FC<IAvatar> = ({ text }) => {
+  return (
+    <Box className="avatar-box">
+      <Box className="avatar-img">{text.charAt(0)}</Box>
+    </Box>
+  );
+};
+
 const Summary: React.FC<ISummary> = ({ collection, totalItems }) => {
   const getCreator = () => {
     if (collection?.username) {
@@ -48,11 +59,7 @@ const Summary: React.FC<ISummary> = ({ collection, totalItems }) => {
     <Styles.SummaryWrapper>
       <Banner src={banner} alt="Banner" />
       <Styles.ContentWrapper>
-        <Box className="avatar-box">
-          <Box className="avatar-img">
-            <img src={avatar} alt="avatar" />
-          </Box>
-        </Box>
+        <Avatar text={collection?.username || collection?.name || ''} />
         <Box className="header">
           <Typography component="h2">{collection?.name}</Typography>
           <Share className="share-icon" shareUrl={document.location.href} />

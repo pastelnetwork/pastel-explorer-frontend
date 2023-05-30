@@ -74,6 +74,16 @@ export const SummaryWrapper = styled('div')`
       border-radius: 10px;
       border: 6px solid ${props => props.theme.palette.background.default};
       overflow: hidden;
+      background-image: linear-gradient(135deg, #ffcf14, #ee8fff, #38deff);
+      font-size: 110px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Poppins, sans-serif;
+      text-transform: uppercase;
     }
 
     img {
@@ -186,6 +196,7 @@ export const SummaryWrapper = styled('div')`
       .avatar-img {
         width: 90px;
         height: 90px;
+        font-size: 50px;
       }
     }
   }
