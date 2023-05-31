@@ -1,8 +1,6 @@
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import format from 'date-fns/format';
-import CloseIcon from '@material-ui/icons/Close';
-import DoneIcon from '@material-ui/icons/Done';
 
 import Share from '@components/Share/Share';
 import RouterLink from '@components/RouterLink/RouterLink';
@@ -11,7 +9,6 @@ import { translate } from '@utils/helpers/i18n';
 import { ICollectionDetail } from '@utils/types/ITransactions';
 import { formatAddress } from '@utils/helpers/format';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import * as TicketStyles from '@components/Ticket/Ticket.styles';
 import banner from '@assets/images/placeholder-banner.png';
 
 import * as Styles from './CollectionDetails.styles';
@@ -120,20 +117,6 @@ const Summary: React.FC<ISummary> = ({ collection, totalItems }) => {
               </Typography>
               <Typography component="span" className="value">
                 {collection?.royalty}%
-              </Typography>
-            </li>
-            <li>
-              <Typography component="span" className="label">
-                {translate('pages.collection.green')}
-              </Typography>
-              <Typography component="span" className="value">
-                <TicketStyles.ActionRegistrationTicketStatus
-                  className={`space-nowrap action-ticket-status ${
-                    collection?.green ? 'active' : ''
-                  }`}
-                >
-                  {collection?.green ? <DoneIcon /> : <CloseIcon />}
-                </TicketStyles.ActionRegistrationTicketStatus>
               </Typography>
             </li>
             <li>
