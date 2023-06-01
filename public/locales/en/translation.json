@@ -350,6 +350,10 @@
           "message": "NFT Activation Ticket",
           "description": "Used for the ticket title component"
         },
+        "senseCollectionRegistrationTicket": {
+          "message": "Sense Collection Registration Ticket",
+          "description": "Used for the ticket title component"
+        },
         "nftCollectionReg": {
           "message": "NFT Collection Registration Ticket",
           "description": "Used for the ticket title component"

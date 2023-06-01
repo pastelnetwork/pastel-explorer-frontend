@@ -255,7 +255,11 @@ const TicketsList: React.FC<ITicketsList> = ({ data, senses, showActivationTicke
                 </Grid>
                 <Grid item xs={8} sm={9}>
                   <TicketStyles.TicketContent>
-                    {getTicketTitle(ticket.type as TTicketType)}
+                    {getTicketTitle(
+                      ticket.type as TTicketType,
+                      (ticket.data.ticket as INftCollectionRegistrationTicket)?.collection_ticket
+                        ?.item_type,
+                    )}
                   </TicketStyles.TicketContent>
                 </Grid>
               </Grid>
