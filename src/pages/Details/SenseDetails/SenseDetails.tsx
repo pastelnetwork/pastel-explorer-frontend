@@ -85,11 +85,11 @@ const SenseDetails: React.FC = () => {
       return '';
     }
     const parseSenseData = JSON.parse(sense.rawData);
-    const rawSenseDataJson = JSON.parse(parseSenseData.raw_sense_data_json);
+    const rawSenseDataJson = JSON.parse(parseSenseData.raw_dd_service_data_json);
     return JSON.stringify(
       JSON.stringify({
         ...parseSenseData,
-        raw_sense_data_json: {
+        raw_dd_service_data_json: {
           ...rawSenseDataJson,
         },
       }),

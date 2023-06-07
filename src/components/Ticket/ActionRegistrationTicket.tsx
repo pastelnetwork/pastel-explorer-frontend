@@ -159,7 +159,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
   transactionHash,
 }) => {
   const { storageFee: activationTicketStorageFee } = useStorageFee(
-    (ticket.activationTicket.data.ticket as IActionActivationTicket)?.storage_fee,
+    (ticket.activationTicket?.data?.ticket as IActionActivationTicket)?.storage_fee,
   );
   const { storageFee } = useStorageFee(ticket.storage_fee);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -169,7 +169,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
       return null;
     }
 
-    const activationTicket = ticket.activationTicket.data.ticket as IActionActivationTicket;
+    const activationTicket = ticket.activationTicket?.data?.ticket as IActionActivationTicket;
     return (
       <Grid container spacing={3}>
         <Grid item xs={12} sm={3} className="max-w-355">
