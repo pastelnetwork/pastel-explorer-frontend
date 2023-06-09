@@ -873,6 +873,10 @@
         "viewDetails": {
           "message": "View Details",
           "description": "Used for the ActionRegistrationTicket component"
+        },
+        "PastelNFTImage": {
+          "message": "Pastel NFT Image",
+          "description": "Used for the ActionRegistrationTicket component"
         }
       },
       "nftRoyaltyTicket": {
@@ -1152,6 +1156,10 @@
       "ticketType": {
         "message": "Ticket type:",
         "description": "Used for the Blocks page"
+      },
+      "size": {
+        "message": "Size (kB):",
+        "description": "Used for the Blocks page"
       }
     },
     "cascadeAndSenseStatistics": {
@@ -1351,6 +1359,10 @@
       },
       "senseOutputDetails": {
         "message": "Sense Output Details:",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "cascadeFileType": {
+        "message": "File type:",
         "description": "Used for the CascadeAndSenseStatistics page"
       },
       "imageHash": {

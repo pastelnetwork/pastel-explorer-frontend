@@ -220,3 +220,11 @@ export const AlterDownload = styled(Alert)`
     padding: 0;
   }
 `;
+
+export const Img = styled.img`
+  width: 56px;
+
+  ${props => props.theme.breakpoints.down(600)} {
+    width: 80px;
+  }
+`;

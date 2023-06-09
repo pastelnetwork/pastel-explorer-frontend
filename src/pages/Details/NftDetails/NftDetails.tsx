@@ -81,7 +81,7 @@ const NftDetails = () => {
   };
 
   return nftData ? (
-    <Styles.Wrapper>
+    <Styles.Wrapper className="nft-main-content">
       <Grid container direction="column" spacing={2}>
         <Styles.MainWrapper>
           <Box className="submitted-image-creator-section">

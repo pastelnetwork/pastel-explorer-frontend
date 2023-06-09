@@ -132,7 +132,7 @@ const Blocks = () => {
         onHeaderClick={handleSort}
         className="block-list-table"
         headerBackground
-        rowHeight={isMobile ? 180 : 45}
+        rowHeight={isMobile ? 200 : 45}
         customLoading={isLoading}
         showDateTimePicker
         dateRange={filter.customDateRange}

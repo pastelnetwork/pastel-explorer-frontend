@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { decode } from 'js-base64';
+import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -210,18 +211,15 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.nftRegistrationTicket.pastelNFTOutput')}
+              {translate('components.ticket.nftRegistrationTicket.PastelNFTImage')}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
             <Styles.TicketContent>
-              {transactionHash ? (
-                <RouterLink
-                  route={`${ROUTES.NFT_DETAILS}?txid=${transactionHash}`}
-                  value={translate('components.ticket.nftRegistrationTicket.viewDetails')}
-                  title={transactionHash}
-                  className="address-link"
-                />
+              {ticket?.image ? (
+                <Link to={`${ROUTES.NFT_DETAILS}?txid=${transactionHash}`}>
+                  <img src={ticket?.image} alt={transactionHash} className="sense-img" />
+                </Link>
               ) : (
                 translate('common.na')
               )}

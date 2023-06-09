@@ -184,6 +184,7 @@ export interface INftRegistrationTicket {
   activation_txId: string;
   collectionName?: string;
   collectionAlias?: string;
+  image?: string;
 }
 
 export interface INftActivationTicket {

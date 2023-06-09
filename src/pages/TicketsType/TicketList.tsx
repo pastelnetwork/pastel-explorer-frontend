@@ -5,6 +5,7 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import makeStyles from '@material-ui/styles/makeStyles';
+import { decode } from 'js-base64';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
@@ -25,6 +26,7 @@ import {
   ITransferTicket,
   TTicketType,
   TSenseRequests,
+  ICascadeApiTicket,
 } from '@utils/types/ITransactions';
 import {
   PastelIDRegistrationTicket,
@@ -53,6 +55,8 @@ import DateTimePicker from '@components/DateTimePicker/DateTimePicker';
 import { blocksPeriodFilters } from '@utils/constants/filter';
 import { TAppTheme } from '@theme/index';
 import { translate } from '@utils/helpers/i18n';
+import * as ascii85 from '@utils/helpers/ascii85';
+import { getFileIcon } from '@pages/Details/CascadeDetails/CascadeDetails.helpers';
 
 import { TICKET_TYPE_OPTIONS, TICKET_STATUS_OPTIONS } from './TicketsType.helpers';
 
@@ -114,15 +118,49 @@ const TicketsList: React.FC<ITicketsList> = ({
   onDateRangeApply,
   defaultDateRange,
 }) => {
+  const decodeApiTicket = (apiTicket: string) => {
+    let result = null;
+    try {
+      result = JSON.parse(decode(apiTicket)) as ICascadeApiTicket;
+    } catch {
+      try {
+        result = ascii85.decode(apiTicket) as ICascadeApiTicket;
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    return result;
+  };
   const classes = useStyles();
 
   const renderSenseInfo = (ticket: IActionRegistrationTicket, transactionHash: string) => {
-    if (ticket.action_type !== 'sense' || !ticket.activation_ticket) {
+    if (['sense', 'cascade'].indexOf(ticket.action_type) === -1 || !ticket.activation_ticket) {
       return null;
     }
     const sense = senses?.find(s => s.transactionHash === transactionHash);
     if (!sense) {
-      return null;
+      const actionTicket = ticket?.action_ticket;
+      const parseActionTicket = JSON.parse(decode(actionTicket)) as IActionTicket;
+      const apiTicket = decodeApiTicket(parseActionTicket.api_ticket) as ICascadeApiTicket;
+      return (
+        <>
+          <Grid container spacing={3}>
+            <Grid item xs={4} sm={3} className="max-w-355">
+              <TicketStyles.TicketTitle>
+                {translate('pages.blockDetails.cascadeFileType')}
+              </TicketStyles.TicketTitle>
+            </Grid>
+            <Grid item xs={8} sm={9}>
+              <TicketStyles.TicketContent>
+                <Link to={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}>
+                  {getFileIcon(apiTicket.file_type)}
+                </Link>
+              </TicketStyles.TicketContent>
+            </Grid>
+          </Grid>
+        </>
+      );
     }
 
     return (
