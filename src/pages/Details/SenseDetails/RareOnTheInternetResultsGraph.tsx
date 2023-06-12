@@ -64,6 +64,20 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
   };
   const { nodes, edges } = processRareOnInternetDataFunc();
 
+  const getSymbol = (node: TCurrentNode) => {
+    if (node?.misc_related_images_as_b64_strings) {
+      let src = node.misc_related_images_as_b64_strings;
+      if (src.indexOf(';base64') === -1) {
+        src = `data:image/jpeg;base64,${node.misc_related_images_as_b64_strings}`;
+      }
+      return `image://${src}`;
+    }
+    if (node?.misc_related_images_urls) {
+      return `image://${node?.misc_related_images_urls}`;
+    }
+    return `image://${node?.img_src_string}`;
+  };
+
   const options = {
     animationDurationUpdate: 1500,
     animationEasingUpdate: 'quinticInOut',
@@ -73,25 +87,24 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
         const item = nodes.find(i => i.id === parseInt(params.name, 10));
         if (item) {
           let relatedImagesUrls = '';
-          let relatedImagesB64Strings = '';
           if (item?.misc_related_images_urls) {
             relatedImagesUrls = `<div class="tooltip-item">
-            <div class="label">${translate('pages.senseDetails.relatedImagesUrls')}:</div>
+            <div class="label">${translate('pages.senseDetails.relatedImages')}:</div>
             <div class="value"><img class="tooltip-image" src="${
               item.misc_related_images_urls
             }" /></div>
           </div>`;
-          }
-          if (item?.misc_related_images_as_b64_strings) {
+          } else if (item?.misc_related_images_as_b64_strings) {
             let src = item.misc_related_images_as_b64_strings;
             if (src.indexOf(';base64') === -1) {
               src = `data:image/jpeg;base64,${item.misc_related_images_as_b64_strings}`;
             }
-            relatedImagesB64Strings = `<div class="tooltip-item">
-            <div class="label">${translate('pages.senseDetails.relatedImagesB64Strings')}:</div>
+            relatedImagesUrls = `<div class="tooltip-item">
+            <div class="label">${translate('pages.senseDetails.relatedImages')}:</div>
             <div class="value"><img class="tooltip-image" src="${src}" /></div>
           </div>`;
           }
+
           let dateString = '';
           if (item?.date_string) {
             dateString = `<div class="tooltip-item">
@@ -116,7 +129,6 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
                 </div>
                 ${dateString}
                 ${relatedImagesUrls}
-                ${relatedImagesB64Strings}
               </div>
             </div>
           `;
@@ -137,7 +149,7 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
           id: node.id,
           name: node.id,
           symbolSize: node.node_size,
-          symbol: `image://${node?.img_src_string}`,
+          symbol: getSymbol(node as TCurrentNode),
         })),
         edges: !nodes.length ? rareOnTheInternetResultsGraphData.edges : edges,
         label: {
