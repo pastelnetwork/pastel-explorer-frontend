@@ -15,6 +15,7 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { formatAddress } from '@utils/helpers/format';
 import { formatFullDate } from '@utils/helpers/date/date';
 import { translate } from '@utils/helpers/i18n';
+import noImagePlaceholder from '@assets/images/no-image-placeholder.svg';
 
 import { useStorageFee } from './Ticket.helpers';
 import Signatures from './Signatures';
@@ -207,26 +208,6 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
           </Styles.TicketContent>
         </Grid>
       </Grid>
-      {ticket?.activation_ticket ? (
-        <Grid container spacing={3}>
-          <Grid item xs={4} sm={3} className="max-w-355">
-            <Styles.TicketTitle>
-              {translate('components.ticket.nftRegistrationTicket.PastelNFTImage')}
-            </Styles.TicketTitle>
-          </Grid>
-          <Grid item xs={8} sm={9}>
-            <Styles.TicketContent>
-              {ticket?.image ? (
-                <Link to={`${ROUTES.NFT_DETAILS}?txid=${transactionHash}`}>
-                  <img src={ticket?.image} alt={transactionHash} className="sense-img" />
-                </Link>
-              ) : (
-                translate('common.na')
-              )}
-            </Styles.TicketContent>
-          </Grid>
-        </Grid>
-      ) : null}
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
@@ -257,6 +238,26 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
           </Styles.StatusWrapper>
         </Grid>
       </Grid>
+      {ticket?.activation_ticket ? (
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3} className="max-w-355">
+            <Styles.TicketTitle>
+              {translate('components.ticket.nftRegistrationTicket.PastelNFTImage')}
+            </Styles.TicketTitle>
+          </Grid>
+          <Grid item xs={8} sm={9}>
+            <Styles.TicketContent>
+              <Link to={`${ROUTES.NFT_DETAILS}?txid=${transactionHash}`}>
+                <img
+                  src={ticket?.image || noImagePlaceholder}
+                  alt={transactionHash}
+                  className={`sense-img ${!ticket?.image ? 'placeholder' : ''}`}
+                />
+              </Link>
+            </Styles.TicketContent>
+          </Grid>
+        </Grid>
+      ) : null}
       {ticket?.creator_height ? (
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">

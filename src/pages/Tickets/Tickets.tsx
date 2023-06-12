@@ -115,6 +115,7 @@ const Tickets: React.FC = () => {
             isMobile={isMobile}
             ticketsData={pastelNftTicketData as TTicketResponse}
             innerWidth={innerWidth}
+            usdPrice={usdPrice}
           />
         </Styles.GirdStyle>
       </Grid>

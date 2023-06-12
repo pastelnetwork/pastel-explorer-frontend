@@ -14,7 +14,15 @@ export default function useSupernodes() {
   );
 
   return {
-    masternodes: data?.masternodes,
+    masternodes: data?.masternodes?.sort((a, b) => {
+      if (a.masternodeRank < 0) {
+        return 1;
+      }
+      if (b.masternodeRank < 0) {
+        return -1;
+      }
+      return a.masternodeRank - b.masternodeRank;
+    }),
     isLoading,
   };
 }

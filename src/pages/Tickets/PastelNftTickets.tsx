@@ -15,12 +15,14 @@ interface IPastelNftTicketsProps {
   isMobile: boolean;
   ticketsData: TTicketResponse;
   innerWidth: number;
+  usdPrice: number;
 }
 
 const PastelNftTickets: React.FC<IPastelNftTicketsProps> = ({
   isMobile,
   ticketsData,
   innerWidth,
+  usdPrice,
 }) => {
   const { data, total, isLoading, size, setSize } = ticketsData;
 
@@ -61,7 +63,7 @@ const PastelNftTickets: React.FC<IPastelNftTicketsProps> = ({
   return (
     <Styles.OtherTicketContainer id="pastelNFTTickets">
       <InfinityTable
-        rows={data ? transformPastelNftTicketsData(data) : []}
+        rows={data ? transformPastelNftTicketsData(data, usdPrice) : []}
         columns={pastelNftTicketsColumns}
         tableHeight={innerWidth < 600 ? 800 : 610}
         title={getTitle()}

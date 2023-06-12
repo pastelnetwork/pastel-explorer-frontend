@@ -7,6 +7,46 @@ import themeVariant from '@theme/variants';
 export const TicketsContainer = styled.div`
   width: 100%;
 
+  .read-more {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .mr-10 {
+    margin-right: 10px;
+  }
+
+  .cascade-image {
+    width: 48px;
+
+    img {
+      width: 48px;
+      max-height: 48px;
+    }
+  }
+
+  .nft-image {
+    width: 48px;
+    margin-left: 10px;
+
+    img {
+      width: 48px;
+      max-height: 48px;
+    }
+  }
+
+  .sense-img {
+    width: 48px;
+    max-height: 48px;
+  }
+
+  .thumbnail-box {
+    display: flex;
+  }
+
   .p-16 {
     padding: 16px;
   }

@@ -585,6 +585,9 @@ export type TicketsList = {
   type: string;
   collectionName: string;
   collectionAlias: string;
+  fileType: string;
+  fileName: string;
+  image?: string;
 };
 
 export type TCascade = {

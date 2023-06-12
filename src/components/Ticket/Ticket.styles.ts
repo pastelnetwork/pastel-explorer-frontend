@@ -48,8 +48,10 @@ export const TicketContent = styled(Box)`
     height: 200px;
     transition: all 0.3s ease-in-out;
 
-    &:hover {
-      transform: scale(2);
+    &:not(.placeholder) {
+      &:hover {
+        transform: scale(2);
+      }
     }
   }
 

@@ -1158,7 +1158,7 @@
         "description": "Used for the Blocks page"
       },
       "size": {
-        "message": "Size (kB):",
+        "message": "Size (kB)",
         "description": "Used for the Blocks page"
       }
     },
@@ -2373,6 +2373,10 @@
         "message": "Last paid",
         "description": "Used for the Supernodes page"
       },
+      "lastPaidBlock": {
+        "message": "Last paid block",
+        "description": "Used for the Supernodes page"
+      },
       "all": {
         "message": "ALL",
         "description": "Used for the Supernodes page"
@@ -2419,6 +2423,30 @@
       },
       "supernodeStatus": {
         "message": "Supernode's status",
+        "description": "Used for the Supernodes page"
+      },
+      "snPastelIdPubkey": {
+        "message": "Sn PastelId Pubkey",
+        "description": "Used for the Supernodes page"
+      },
+      "rankAsOfBlockHeight": {
+        "message": "Rank as of block height",
+        "description": "Used for the Supernodes page"
+      },
+      "protocolVersion": {
+        "message": "Protocol version",
+        "description": "Used for the Supernodes page"
+      },
+      "rank": {
+        "message": "Rank",
+        "description": "Used for the Supernodes page"
+      },
+      "dateTimeLastSeen": {
+        "message": "Last seen",
+        "description": "Used for the Supernodes page"
+      },
+      "activeSeconds": {
+        "message": "Active seconds",
         "description": "Used for the Supernodes page"
       }
     },
@@ -2583,6 +2611,10 @@
       },
       "pastelNFT": {
         "message": "Pastel NFT Output",
+        "description": "Used for the Tickets page"
+      },
+      "fileName": {
+        "message": "File name",
         "description": "Used for the Tickets page"
       }
     },
