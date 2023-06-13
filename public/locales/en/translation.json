@@ -2188,6 +2188,10 @@
       "transactionsPerSecond": {
         "message": "Transactions Per Second",
         "description": "Used for the HistoricalStatistics page"
+      },
+      "feeSchedule": {
+        "message": "Fee Schedule",
+        "description": "Used for the HistoricalStatistics page"
       }
     },
     "movement": {
@@ -3321,6 +3325,10 @@
     "nftDetails": {
       "message": "NFT Details",
       "description": "Used for the routes"
+    },
+    "feeSchedule": {
+      "message": "Fee Schedule",
+      "description": "Used for the routes"
     }
   },
   "chartOptions": {
@@ -3667,6 +3675,10 @@
       },
       "btcPrice": {
         "message": "BTC Price",
+        "description": "Used for the constants"
+      },
+      "feeSchedule": {
+        "message": "Fee Schedule",
         "description": "Used for the constants"
       }
     }

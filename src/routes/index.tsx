@@ -68,6 +68,7 @@ const CollectionDetails = loadable(
 );
 const CascadeDetails = loadable(() => import('@pages/Details/CascadeDetails/CascadeDetails'));
 const NftDetails = loadable(() => import('@pages/Details/NftDetails/NftDetails'));
+const FeeSchedule = loadable(() => import('@pages/HistoricalStatistics/FeeSchedule'));
 
 const explorerRoutes = {
   id: 'routes.explorer',
@@ -395,6 +396,15 @@ const accountsStatisticsRoutes = {
   children: null,
 };
 
+const feeScheduleStatisticsRoutes = {
+  id: 'feeSchedule',
+  path: ROUTES.STATISTICS_FEE_SCHEDULE,
+  component: FeeSchedule,
+  icon: null,
+  seoTitle: 'routes.feeSchedule',
+  children: null,
+};
+
 const senseDetailsRoutes = {
   id: 'routes.senseDetails',
   path: ROUTES.SENSE_DETAILS,
@@ -507,6 +517,7 @@ export const pageRoutes = [
   collectionDetailsRoutes,
   cascadeDetailsRoutes,
   nftDetailsRoutes,
+  feeScheduleStatisticsRoutes,
 ];
 
 export const sidebarRoutes = [

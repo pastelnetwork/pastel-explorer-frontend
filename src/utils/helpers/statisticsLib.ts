@@ -19,6 +19,7 @@ import {
   THashrateChartData,
   TMinMaxChartData,
   MarketCoinRespone,
+  TFeeSchedule,
 } from '@utils/types/IStatistics';
 import { IBlock } from '@utils/types/IBlocks';
 import { formattedDate } from '@utils/helpers/date/date';
@@ -894,3 +895,32 @@ export const balanceHistoryXAxisInterval = (dataX?: string[], width?: number) =>
 
   return Math.floor(dataX.length / 8);
 };
+
+export function transformFeeSchedule(
+  trans: TFeeSchedule[],
+  period: PeriodTypes,
+  timestamp: string,
+): TLineChartData {
+  const dataX: string[] = [];
+  const dataY: number[] = [];
+  for (let i = 0; i < trans.length; i += 1) {
+    const fee = Number(trans[i].value);
+    if (fee) {
+      dataY.push(fee);
+      dataX.push(new Date(trans[i].time).toLocaleString());
+    }
+  }
+  if (
+    period === '24h' &&
+    !timestamp &&
+    trans.length &&
+    checkValidateData(trans[trans.length - 1]?.time)
+  ) {
+    dataX.push(new Date().toLocaleString());
+    dataY.push(dataY[dataY.length - 1]);
+  }
+  return {
+    dataX,
+    dataY,
+  };
+}
