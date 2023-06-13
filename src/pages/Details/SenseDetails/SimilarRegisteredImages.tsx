@@ -83,6 +83,17 @@ export const getSimilarRegisteredImagesData = (rarenessScoresTable: string) => {
     return [];
   }
   const uncompressedRarenessScoresTable = decompress_zstd_compressed_data_func(rarenessScoresTable);
+
+  const getRegisterTime = (value: string | Array<string[]>) => {
+    try {
+      if (value?.length) {
+        return value[0][0];
+      }
+      return value?.toString()?.split('.')[0];
+    } catch {
+      return '';
+    }
+  };
   let fancyGridData = [];
   for (let i = 0; i < Object.values(uncompressedRarenessScoresTable.image_hash).length; i += 1) {
     fancyGridData.push({
@@ -91,7 +102,7 @@ export const getSimilarRegisteredImagesData = (rarenessScoresTable: string) => {
         : null,
       imageHash: formatImageHash(uncompressedRarenessScoresTable.image_hash[i]),
       imageHashOriginal: uncompressedRarenessScoresTable.image_hash[i],
-      dateTimeAdded: uncompressedRarenessScoresTable.register_time[i]?.split('.')[0],
+      dateTimeAdded: getRegisterTime(uncompressedRarenessScoresTable.register_time[i]),
       likelyDupe: uncompressedRarenessScoresTable.is_likely_dupe[i],
       matchType: uncompressedRarenessScoresTable.match_type[i],
       finalDupeProbability: uncompressedRarenessScoresTable.final_dupe_probability[i],

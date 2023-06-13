@@ -52,7 +52,7 @@
     "js-base64": "3.7.3",
     "jss": "10.6.0",
     "lodash.debounce": "4.0.8",
-    "lzutf8": "0.6.3",
+    "lz-string": "1.5.0",
     "polished": "4.1.2",
     "react": "17.0.2",
     "react-csv": "2.0.3",

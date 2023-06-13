@@ -1,4 +1,4 @@
-import LZUTF8 from 'lzutf8';
+import LZString from 'lz-string';
 import differenceInHours from 'date-fns/differenceInHours';
 
 import { DEFAULT_API_URL } from '@utils/constants/urls';
@@ -31,13 +31,7 @@ export const readCacheValue = (key: string, isMicroseconds = false) => {
     }
 
     const item = window.localStorage.getItem(key);
-    const result = item
-      ? JSON.parse(
-          LZUTF8.decompress(JSON.parse(item), {
-            inputEncoding: 'Base64',
-          }),
-        )
-      : initialValue;
+    const result = item ? JSON.parse(LZString.decompress(JSON.parse(item))) : initialValue;
     if (
       differenceInHours(Date.now(), isMicroseconds ? result?.lastDate * 1000 : result?.lastDate) > 4
     ) {
@@ -57,9 +51,7 @@ export const setCacheValue = (key: string, value: string) => {
   try {
     let items: string[] = [];
     const localHS = window.localStorage.getItem(HISTORICAL_STATISTICS_LOCAL_STORAGE);
-    const content = LZUTF8.compress(value, {
-      outputEncoding: 'Base64',
-    });
+    const content = LZString.compress(value);
     const clusterUrl = getCurrentCluster();
     if (localHS) {
       items = JSON.parse(localHS);
@@ -88,4 +80,38 @@ export const setCacheValue = (key: string, value: string) => {
     console.warn(`Error setting localStorage key “${key}”:`, error);
     return false;
   }
+};
+
+export const getLocalStorageItem = (key: string) => {
+  try {
+    if (typeof window === 'undefined') {
+      return null;
+    }
+    const item = window.localStorage.getItem(key);
+    if (item) {
+      return JSON.parse(LZString.decompress(JSON.parse(item)));
+    }
+    return null;
+  } catch (error) {
+    console.warn(error);
+    return null;
+  }
+};
+
+export const setLocalStorageItem = (key: string, value: string) => {
+  try {
+    if (typeof window === 'undefined') {
+      return false;
+    }
+    const content = LZString.compress(value);
+    window.localStorage.setItem(key, JSON.stringify(content));
+    return true;
+  } catch (error) {
+    console.warn(error);
+    return false;
+  }
+};
+
+export const removeLocalStorageItem = (key: string) => {
+  window.localStorage.removeItem(key);
 };
