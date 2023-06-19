@@ -17,6 +17,7 @@ interface IPastelData {
   pastelIdOfRegisteringSupernode2: string;
   pastelIdOfRegisteringSupernode3: string;
   isPastelOpenapiRequest: number;
+  currentOwnerPastelID: string;
 }
 
 const PastelData: React.FC<IPastelData> = ({
@@ -28,9 +29,38 @@ const PastelData: React.FC<IPastelData> = ({
   pastelIdOfRegisteringSupernode2,
   pastelIdOfRegisteringSupernode3,
   isPastelOpenapiRequest,
+  currentOwnerPastelID,
 }) => {
   return (
     <Box>
+      <Styles.ContentItem>
+        <TicketStyles.TicketTitle>
+          {translate('pages.senseDetails.creatorPastelID')}:
+        </TicketStyles.TicketTitle>
+        <TicketStyles.TicketContent className="break-all">
+          <RouterLink
+            route={`${ROUTES.PASTEL_ID_DETAILS}/${pastelIdOfSubmitter}`}
+            value={pastelIdOfSubmitter}
+            title={pastelIdOfSubmitter}
+            className="address-link"
+          />
+          &nbsp;
+        </TicketStyles.TicketContent>
+      </Styles.ContentItem>
+      <Styles.ContentItem>
+        <TicketStyles.TicketTitle>
+          {translate('pages.senseDetails.currentOwnerPastelID')}:
+        </TicketStyles.TicketTitle>
+        <TicketStyles.TicketContent className="break-all">
+          <RouterLink
+            route={`${ROUTES.PASTEL_ID_DETAILS}/${currentOwnerPastelID || pastelIdOfSubmitter}`}
+            value={currentOwnerPastelID || pastelIdOfSubmitter}
+            title={currentOwnerPastelID || pastelIdOfSubmitter}
+            className="address-link"
+          />
+          &nbsp;
+        </TicketStyles.TicketContent>
+      </Styles.ContentItem>
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>
           {translate('pages.senseDetails.blockHash')}:
@@ -63,20 +93,6 @@ const PastelData: React.FC<IPastelData> = ({
         </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent>
           {utcTimestampWhenRequestSubmitted}&nbsp;
-        </TicketStyles.TicketContent>
-      </Styles.ContentItem>
-      <Styles.ContentItem>
-        <TicketStyles.TicketTitle>
-          {translate('pages.senseDetails.pastelIdOfSubmitter')}:
-        </TicketStyles.TicketTitle>
-        <TicketStyles.TicketContent className="break-all">
-          <RouterLink
-            route={`${ROUTES.PASTEL_ID_DETAILS}/${pastelIdOfSubmitter}`}
-            value={pastelIdOfSubmitter}
-            title={pastelIdOfSubmitter}
-            className="address-link"
-          />
-          &nbsp;
         </TicketStyles.TicketContent>
       </Styles.ContentItem>
       <Styles.ContentItem>

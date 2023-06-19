@@ -16,7 +16,6 @@ import { TicketsList, TTicketType } from '@utils/types/ITransactions';
 import { TAppTheme } from '@theme/index';
 import * as TicketsStyles from '@components/Ticket/Ticket.styles';
 import { translate } from '@utils/helpers/i18n';
-import { getBaseURL } from '@utils/constants/statistics';
 import { getFileIcon } from '@pages/Details/CascadeDetails/CascadeDetails.helpers';
 import noImagePlaceholder from '@assets/images/no-image-placeholder.svg';
 
@@ -99,7 +98,7 @@ export const transformCascadeData = (cascade: TicketsList[], usdPrice: number) =
         [TXID_KEY]: (
           <>
             <Grid container spacing={3}>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={2}>
                 <Box className="title">{translate('pages.tickets.txID')}</Box>
                 <Box className="bold">
                   <RouterLink
@@ -135,7 +134,7 @@ export const transformCascadeData = (cascade: TicketsList[], usdPrice: number) =
                   </Tooltip>
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={4}>
                 <Box className="title">{translate('pages.tickets.fileName')}</Box>
                 <Box className="bold read-more">
                   <Tooltip title={fileName}>
@@ -160,7 +159,7 @@ export const transformCascadeData = (cascade: TicketsList[], usdPrice: number) =
                   )}
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={2}>
                 <Box className="title">{translate('pages.tickets.activationTXID')}</Box>
                 <Box className="bold">
                   {activation_txId ? (
@@ -181,7 +180,7 @@ export const transformCascadeData = (cascade: TicketsList[], usdPrice: number) =
                   {formatNumber(fee)} {getCurrencyName()} {getStorageFee(fee, usdPrice)}
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={4}>
                 <Box className="title">{translate('pages.tickets.timestamp')}</Box>
                 <Box className="bold">
                   {timestamp ? formatFullDate(timestamp, { dayName: false }) : '--'}
@@ -215,13 +214,14 @@ export const transformSenseData = (sense: TicketsList[], usdPrice: number) =>
       collectionAlias,
       dupeDetectionSystemVersion,
       fee,
+      imageFileCdnUrl,
     }) => {
       return {
         id: transactionHash,
         [TXID_KEY]: (
           <>
             <Grid container spacing={3} className="sense-col">
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={2} className="col-txid">
                 <Box className="title">{translate('pages.tickets.txID')}</Box>
                 <Box className="bold">
                   <RouterLink
@@ -232,7 +232,7 @@ export const transformSenseData = (sense: TicketsList[], usdPrice: number) =>
                   />
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={3} className="col-status">
                 <Box className="title">{translate('pages.tickets.status')}</Box>
                 <Box className="bold">
                   <Tooltip
@@ -257,7 +257,7 @@ export const transformSenseData = (sense: TicketsList[], usdPrice: number) =>
                   </Tooltip>
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={4} className="col-time">
                 <Box className="title">{translate('pages.tickets.collectionName')}</Box>
                 <Box className="bold">
                   {collectionName ? (
@@ -293,7 +293,7 @@ export const transformSenseData = (sense: TicketsList[], usdPrice: number) =>
                   )}
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={2} className="col-txid">
                 <Box className="title">{translate('pages.tickets.activationTXID')}</Box>
                 <Box className="bold">
                   {activation_txId ? (
@@ -308,23 +308,27 @@ export const transformSenseData = (sense: TicketsList[], usdPrice: number) =>
                   )}
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={3} className="col-status">
                 <Box className="title">{translate('pages.tickets.fee')}</Box>
                 <Box className="bold">
                   {formatNumber(fee)} {getCurrencyName()} {getStorageFee(fee, usdPrice)}
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6} md={3} className="hidden-sm">
+              <Grid item xs={12} sm={6} md={4} className="hidden-sm col-time">
                 <Box className="title">{translate('pages.tickets.timestamp')}</Box>
                 <Box className="bold">
                   {timestamp ? formatFullDate(timestamp, { dayName: false }) : '--'}
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6} md={3} className="sense-output">
+              <Grid item xs={12} sm={6} md={2} className="sense-output">
                 {activation_ticket ? (
                   <Link to={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${imageHash}`}>
                     <img
-                      src={`${getBaseURL()}/static/senses/${imageHash}-${transactionHash}.png`}
+                      src={
+                        imageFileCdnUrl
+                          ? `data:image/jpeg;base64,${imageFileCdnUrl}`
+                          : noImagePlaceholder
+                      }
                       alt={imageHash}
                       className="sense-img"
                     />

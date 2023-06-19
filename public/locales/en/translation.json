@@ -907,7 +907,7 @@
           "description": "Used for the OfferTicket component"
         },
         "pastelID": {
-          "message": "Pastel ID:",
+          "message": "Owner:",
           "description": "Used for the OfferTicket component"
         },
         "itemTxId": {
@@ -936,6 +936,14 @@
         },
         "timestamp": {
           "message": "Timestamp:",
+          "description": "Used for the OfferTicket component"
+        },
+        "nft": {
+          "message": "NFT",
+          "description": "Used for the OfferTicket component"
+        },
+        "sense": {
+          "message": "Sense",
           "description": "Used for the OfferTicket component"
         }
       },
@@ -1740,6 +1748,46 @@
       "relatedImages": {
         "message": "Related Images",
         "description": "Used for the SenseDetails page"
+      },
+      "creatorPastelID": {
+        "message": "Creator PastelID",
+        "description": "Used for the Cascade Details page"
+      },
+      "currentOwnerPastelID": {
+        "message": "Current Owner PastelID",
+        "description": "Used for the Cascade Details page"
+      },
+      "pastelID": {
+        "message": "PastelID",
+        "description": "Used for the Cascade Details page"
+      },
+      "offerTxId": {
+        "message": "Offer txId",
+        "description": "Used for the Cascade Details page"
+      },
+      "acceptTxId": {
+        "message": "Accept txId",
+        "description": "Used for the Cascade Details page"
+      },
+      "itemTxId": {
+        "message": "Item txId",
+        "description": "Used for the Cascade Details page"
+      },
+      "registrationTxId": {
+        "message": "Registration txId",
+        "description": "Used for the Cascade Details page"
+      },
+      "copySerialNr": {
+        "message": "Copy Serial Nr",
+        "description": "Used for the Cascade Details page"
+      },
+      "timestamp": {
+        "message": "Timestamp",
+        "description": "Used for the Cascade Details page"
+      },
+      "transfers": {
+        "message": "Transfers",
+        "description": "Used for the Cascade Details page"
       }
     },
     "transactionDetails": {
@@ -2842,6 +2890,46 @@
       "downloadInfo": {
         "message": "Please be patient while the file is assembled from the network... this can take up to 2 minutes",
         "description": "Used for the Cascade Details page"
+      },
+      "creatorPastelID": {
+        "message": "Creator PastelID",
+        "description": "Used for the Cascade Details page"
+      },
+      "currentOwnerPastelID": {
+        "message": "Current Owner PastelID",
+        "description": "Used for the Cascade Details page"
+      },
+      "pastelID": {
+        "message": "PastelID",
+        "description": "Used for the Cascade Details page"
+      },
+      "offerTxId": {
+        "message": "Offer txId",
+        "description": "Used for the Cascade Details page"
+      },
+      "acceptTxId": {
+        "message": "Accept txId",
+        "description": "Used for the Cascade Details page"
+      },
+      "itemTxId": {
+        "message": "Item txId",
+        "description": "Used for the Cascade Details page"
+      },
+      "registrationTxId": {
+        "message": "Registration txId",
+        "description": "Used for the Cascade Details page"
+      },
+      "copySerialNr": {
+        "message": "Copy Serial Nr",
+        "description": "Used for the Cascade Details page"
+      },
+      "timestamp": {
+        "message": "Timestamp",
+        "description": "Used for the Cascade Details page"
+      },
+      "transfers": {
+        "message": "Transfers",
+        "description": "Used for the Cascade Details page"
       }
     },
     "collection": {
@@ -3129,6 +3217,22 @@
       },
       "downloadThisFile": {
         "message": "Download File",
+        "description": "Used for the NFT Details page"
+      },
+      "offers": {
+        "message": "Offers",
+        "description": "Used for the NFT Details page"
+      },
+      "usdPrice": {
+        "message": "USD Price",
+        "description": "Used for the NFT Details page"
+      },
+      "from": {
+        "message": "From",
+        "description": "Used for the NFT Details page"
+      },
+      "all": {
+        "message": "All",
         "description": "Used for the NFT Details page"
       }
     }

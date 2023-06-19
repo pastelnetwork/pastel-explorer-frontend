@@ -329,7 +329,13 @@ export interface IOfferTicket {
   valid_before: number;
   locked_recipient: string;
   signature: string;
+  image: string;
   transactionTime: number;
+  otherData: {
+    offerType: string;
+    txId: string;
+    regTxId: string;
+  };
 }
 
 export interface IAcceptTicket {
@@ -525,6 +531,7 @@ export type TSenseRequests = {
   prevalenceOfSimilarImagesData: {
     [key: string]: number;
   };
+  currentOwnerPastelID: string;
 };
 
 export type TCurrentNode = {
@@ -588,6 +595,7 @@ export type TicketsList = {
   fileType: string;
   fileName: string;
   image?: string;
+  imageFileCdnUrl?: string;
 };
 
 export type TCascade = {
@@ -701,3 +709,22 @@ export interface ICollectionItem {
   txid: string;
   timestamp: number;
 }
+
+export type TAcceptedOffer = {
+  transactionHash: string;
+  offer_txid: string;
+  pastelID: string;
+  price: number;
+  copy_number: number;
+  timestamp: number;
+};
+export type TTransfer = {
+  transactionHash: string;
+  pastelID: string;
+  offer_txid: string;
+  accept_txid: string;
+  item_txid: string;
+  registration_txid: string;
+  copy_serial_nr: number;
+  transactionTime: number;
+};

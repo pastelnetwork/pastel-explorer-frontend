@@ -171,3 +171,22 @@ export const ActivationTicketItem = styled(Grid)`
     display: block;
   }
 `;
+
+export const OfferWrapper = styled(Box)`
+  .nft-image {
+    width: 200px;
+    height: 200px;
+    transition: all 0.3s ease-in-out;
+
+    &:not(.placeholder) {
+      &:hover {
+        transform: scale(2);
+      }
+    }
+  }
+
+  .driver {
+    margin: 20px 0;
+    border-top: solid 1px ${props => props.theme.table.hover};
+  }
+`;

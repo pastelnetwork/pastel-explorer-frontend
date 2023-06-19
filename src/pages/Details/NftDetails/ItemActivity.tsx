@@ -30,10 +30,19 @@ import * as Styles from './NftDetails.styles';
 
 const LIMIT = 5;
 
-const ItemActivity = () => {
+interface IItemActivity {
+  activitiesType: string;
+}
+
+const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
   const txid = getParameterByName('txid');
   const [currentPage, setCurrentPage] = useState(0);
-  const { data, isLoading, totalItems } = useItemActivity(txid, currentPage * LIMIT, LIMIT);
+  const { data, isLoading, totalItems } = useItemActivity(
+    txid,
+    currentPage * LIMIT,
+    LIMIT,
+    activitiesType,
+  );
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
@@ -162,7 +171,8 @@ const ItemActivity = () => {
                 {translate('pages.nftDetails.lockedRecipient')}:{' '}
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
-                {(ticket as IOfferTicket)?.locked_recipient ? (
+                {(ticket as IOfferTicket)?.locked_recipient &&
+                (ticket as IOfferTicket)?.locked_recipient !== 'not defined' ? (
                   <RouterLink
                     route={`${ROUTES.PASTEL_ID_DETAILS}/${
                       (ticket as IOfferTicket)?.locked_recipient

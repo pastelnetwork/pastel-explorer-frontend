@@ -5,6 +5,19 @@ export const Wrapper = styled.div`
   display: block;
   width: 100%;
 
+  .no-data {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 150px;
+    padding: 15px;
+
+    .no-data-content {
+      font-size: 22px;
+      font-weight: 700;
+    }
+  }
+
   .expand-more {
     display: flex;
     align-items: center;
@@ -35,7 +48,16 @@ export const Wrapper = styled.div`
   }
 
   .no-data {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 150px;
     padding: 15px;
+
+    .no-data-content {
+      font-size: 22px;
+      font-weight: 700;
+    }
   }
 
   &.content-center-wrapper {
@@ -49,6 +71,11 @@ export const Wrapper = styled.div`
     h2 {
       font-size: 18px;
       font-weight: 600;
+    }
+  }
+  ${props => props.theme.breakpoints.down(425)} {
+    .MuiSelect-select {
+      width: 110px;
     }
   }
 `;
@@ -162,6 +189,12 @@ export const MainWrapper = styled.div`
     .submitted-image-creator-section {
       margin-right: 0;
     }
+
+    .nft-info {
+      .title {
+        font-size: 22px;
+      }
+    }
   }
 
   ${props => props.theme.breakpoints.down(680)} {
@@ -262,8 +295,20 @@ export const SubmittedImageWrapper = styled.div`
 `;
 
 export const ItemActivityWrapper = styled.div`
+  .nowrap {
+    white-space: nowrap;
+  }
+
+  .scroll {
+    overflow: auto;
+  }
+
   .activities-table {
     padding: 0;
+
+    &.offers {
+      width: 100%;
+    }
 
     .event {
       display: flex;
@@ -290,6 +335,10 @@ export const ItemActivityWrapper = styled.div`
       white-space: nowrap;
       vertical-align: bottom;
     }
+
+    &.full {
+      max-width: 100%;
+    }
   }
 
   ${props => props.theme.breakpoints.down(1024)} {
@@ -312,6 +361,7 @@ export const ItemActivityWrapper = styled.div`
             content: attr(data-title);
             position: relative;
             min-width: 90px;
+            margin-right: 10px;
             padding-right: 0;
             font-weight: 600;
             font-size: 16px;

@@ -27,6 +27,7 @@ import RareOnTheInternetAlternativeResults from './RareOnTheInternetAlternativeR
 import SenseRawData from './SenseRawData';
 import SimilarRegisteredImages, { getSimilarRegisteredImagesData } from './SimilarRegisteredImages';
 import SubmittedImage from './SubmittedImage';
+import Transfers from './Transfers';
 import * as Styles from './SenseDetails.styles';
 
 interface IBlockItemLayout {
@@ -250,7 +251,10 @@ const SenseDetails: React.FC = () => {
               }
             />
           </BlockItemLayout>
-          <BlockItemLayout title="Pastel Data" className="pastel-data">
+          <BlockItemLayout
+            title={translate('pages.senseDetails.pastelData')}
+            className="pastel-data"
+          >
             <PastelData
               blockHash={sense?.blockHash}
               blockHeight={sense?.blockHeight}
@@ -260,7 +264,15 @@ const SenseDetails: React.FC = () => {
               pastelIdOfRegisteringSupernode2={sense?.pastelIdOfRegisteringSupernode2}
               pastelIdOfRegisteringSupernode3={sense?.pastelIdOfRegisteringSupernode3}
               isPastelOpenapiRequest={sense?.isPastelOpenapiRequest}
+              currentOwnerPastelID={sense?.currentOwnerPastelID}
             />
+          </BlockItemLayout>
+          <BlockItemLayout
+            title={translate('pages.senseDetails.transfers')}
+            className="pastel-data"
+            childrenClassName="no-spacing"
+          >
+            <Transfers />
           </BlockItemLayout>
         </Styles.ImagesWrapper>
       </Grid>

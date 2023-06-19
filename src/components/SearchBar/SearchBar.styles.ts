@@ -74,6 +74,10 @@ export const AppBar = styled(MuiAppBar)`
   z-index: 10;
 
   ${props => props.theme.breakpoints.up('md')} {
+    max-width: 36%;
+  }
+
+  ${props => props.theme.breakpoints.up(1110)} {
     max-width: 45%;
   }
 

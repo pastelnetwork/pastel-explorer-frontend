@@ -20,6 +20,7 @@ import * as TransactionStyles from '@pages/Details/TransactionDetails/Transactio
 import * as NftDetailsStyles from '@pages/Details/NftDetails/NftDetails.styles';
 
 import FileInfo from './FileInfo';
+import Transfers from './Transfers';
 import * as Styles from './CascadeDetails.styles';
 
 interface IBlockItemLayout {
@@ -105,6 +106,8 @@ const CascadeDetails = () => {
     const apiTicket = decodeApiTicket(parseActionTicket.api_ticket) as ICascadeApiTicket;
     return {
       ...apiTicket,
+      creatorPastelID: cascadeData.creatorPastelID,
+      currentOwnerPastelID: cascadeData.currentOwnerPastelID,
     };
   };
 
@@ -179,6 +182,12 @@ const CascadeDetails = () => {
             }
           >
             <FileInfo data={getCascadeInfo()} />
+          </BlockItemLayout>
+          <BlockItemLayout
+            title={translate('pages.cascade.transfers')}
+            childrenClassName="no-spacing"
+          >
+            <Transfers />
           </BlockItemLayout>
         </Styles.ContentWrapper>
       </Grid>

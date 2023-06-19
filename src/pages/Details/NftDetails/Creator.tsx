@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
 import format from 'date-fns/format';
 
 import { ExternalLink } from '@components/RouterLink/RouterLink';
@@ -46,42 +45,34 @@ const Creator: React.FC<ICreator> = ({ writtenStatement, memberSince, website })
   };
   return (
     <Box>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={4}>
-          <Styles.ContentItem>
-            <TicketStyles.TicketTitle>
-              {translate('pages.nftDetails.creatorWrittenStatement')}
-            </TicketStyles.TicketTitle>
-            <TicketStyles.TicketContent>
-              {getWrittenStatement() || translate('common.na')}
-            </TicketStyles.TicketContent>
-          </Styles.ContentItem>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <Styles.ContentItem>
-            <TicketStyles.TicketTitle>
-              {translate('pages.nftDetails.memberSince')}
-            </TicketStyles.TicketTitle>
-            <TicketStyles.TicketContent>
-              {memberSince ? format(memberSince, 'MMM yyyy') : translate('common.na')}
-            </TicketStyles.TicketContent>
-          </Styles.ContentItem>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <Styles.ContentItem>
-            <TicketStyles.TicketTitle>
-              {translate('pages.nftDetails.creatorWebsite')}
-            </TicketStyles.TicketTitle>
-            <TicketStyles.TicketContent>
-              {website ? (
-                <ExternalLink href={website} target="_blank" value={website} />
-              ) : (
-                translate('common.na')
-              )}
-            </TicketStyles.TicketContent>
-          </Styles.ContentItem>
-        </Grid>
-      </Grid>
+      <Styles.ContentItem>
+        <TicketStyles.TicketTitle>
+          {translate('pages.nftDetails.creatorWrittenStatement')}
+        </TicketStyles.TicketTitle>
+        <TicketStyles.TicketContent>
+          {getWrittenStatement() || translate('common.na')}
+        </TicketStyles.TicketContent>
+      </Styles.ContentItem>
+      <Styles.ContentItem>
+        <TicketStyles.TicketTitle>
+          {translate('pages.nftDetails.memberSince')}
+        </TicketStyles.TicketTitle>
+        <TicketStyles.TicketContent>
+          {memberSince ? format(memberSince, 'MMM yyyy') : translate('common.na')}
+        </TicketStyles.TicketContent>
+      </Styles.ContentItem>
+      <Styles.ContentItem>
+        <TicketStyles.TicketTitle>
+          {translate('pages.nftDetails.creatorWebsite')}
+        </TicketStyles.TicketTitle>
+        <TicketStyles.TicketContent>
+          {website ? (
+            <ExternalLink href={website} target="_blank" value={website} />
+          ) : (
+            translate('common.na')
+          )}
+        </TicketStyles.TicketContent>
+      </Styles.ContentItem>
     </Box>
   );
 };

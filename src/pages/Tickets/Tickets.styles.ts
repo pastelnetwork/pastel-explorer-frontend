@@ -213,6 +213,16 @@ export const TicketsContainer = styled.div`
         flex-basis: 23%;
       }
 
+      .col-txid {
+        max-width: 20%;
+        flex-basis: 20%;
+      }
+
+      .col-time {
+        max-width: 26%;
+        flex-basis: 26%;
+      }
+
       .sense-output {
         max-width: 31%;
         flex-basis: 31%;

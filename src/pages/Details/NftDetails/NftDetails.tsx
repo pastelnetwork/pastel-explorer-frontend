@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -5,9 +6,12 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { translate } from '@utils/helpers/i18n';
 import useNftDetails from '@hooks/useNftDetails';
+import { TagDropdown, OptionsProps } from '@components/Dropdown/Dropdown';
 import { getParameterByName } from '@utils/helpers/url';
 import * as TableStyles from '@components/Table/Table.styles';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
+import * as PastelIdStyles from '@pages/Details/PastelIdDetails/PastelIdDetails.styles';
+import * as FilterStyles from '@components/InfinityTable/InfinityTable.styles';
 
 import ItemActivity from './ItemActivity';
 import MoreItems from './MoreItems';
@@ -17,6 +21,7 @@ import NftInfo from './NftInfo';
 import Creator from './Creator';
 import RaptorQParameters from './RaptorQParameters';
 import DdAndFingerprints from './DdAndFingerprints';
+import Offers from './Offers';
 import * as Styles from './NftDetails.styles';
 
 interface IBlockItemLayout {
@@ -25,7 +30,38 @@ interface IBlockItemLayout {
   className?: string;
   childrenClassName?: string;
   titleClassName?: string;
+  id?: string;
+  options?: OptionsProps[];
+  onDropdownChange?: (_values: string[]) => void;
+  placeholder?: string;
 }
+
+const activityItems = [
+  {
+    name: 'pages.nftDetails.all',
+    value: 'all',
+  },
+  {
+    name: 'pages.nftDetails.registration',
+    value: 'nft-reg',
+  },
+  {
+    name: 'pages.nftDetails.activation',
+    value: 'nft-act',
+  },
+  {
+    name: 'pages.nftDetails.offer',
+    value: 'offer',
+  },
+  {
+    name: 'pages.nftDetails.accept',
+    value: 'accept',
+  },
+  {
+    name: 'pages.nftDetails.transfer',
+    value: 'transfer',
+  },
+];
 
 export const BlockLayout: React.FC<IBlockItemLayout> = ({
   title,
@@ -33,9 +69,33 @@ export const BlockLayout: React.FC<IBlockItemLayout> = ({
   className = '',
   childrenClassName = '',
   titleClassName = '',
+  id = undefined,
+  options,
+  onDropdownChange,
+  placeholder,
 }) => {
+  if (options) {
+    return (
+      <TableStyles.BlockWrapper className={`mb-20 ${className}`} id={id}>
+        <PastelIdStyles.BlockWrapper className="ticket-title-wrapper">
+          <PastelIdStyles.BlockTitle>{title}</PastelIdStyles.BlockTitle>
+          <PastelIdStyles.FilterBlock>
+            <FilterStyles.FilterWrapper>
+              <TagDropdown
+                options={options}
+                onChange={onDropdownChange}
+                placeholder={placeholder}
+              />
+            </FilterStyles.FilterWrapper>
+          </PastelIdStyles.FilterBlock>
+        </PastelIdStyles.BlockWrapper>
+        <Styles.ContentWrapper className={childrenClassName}>{children}</Styles.ContentWrapper>
+      </TableStyles.BlockWrapper>
+    );
+  }
+
   return (
-    <TableStyles.BlockWrapper className={`mb-20 ${className}`}>
+    <TableStyles.BlockWrapper className={`mb-20 ${className}`} id={id}>
       <TableStyles.BlockTitle className={titleClassName}>{title}</TableStyles.BlockTitle>
       <Styles.ContentWrapper className={childrenClassName}>{children}</Styles.ContentWrapper>
     </TableStyles.BlockWrapper>
@@ -44,6 +104,7 @@ export const BlockLayout: React.FC<IBlockItemLayout> = ({
 
 const NftDetails = () => {
   const txid = getParameterByName('txid');
+  const [activitiesType, setActivitiesType] = useState('');
   const { nftData, isLoading } = useNftDetails(txid);
 
   if (isLoading) {
@@ -66,7 +127,7 @@ const NftDetails = () => {
   };
 
   const getSummaryTitle = () => {
-    if (!nftData.makePubliclyAccessible) {
+    if (!nftData?.makePubliclyAccessible) {
       return translate('pages.nftDetails.details');
     }
 
@@ -78,6 +139,10 @@ const NftDetails = () => {
         </Styles.DownloadButton>
       </Styles.SummaryTitleWrapper>
     );
+  };
+
+  const handleDropdownChange = (_values: string[]) => {
+    setActivitiesType(_values.join());
   };
 
   return nftData ? (
@@ -118,19 +183,27 @@ const NftDetails = () => {
                   timestamp={nftData.transactionTime}
                 />
               </BlockLayout>
-              <BlockLayout title={translate('pages.nftDetails.creator')} className="creator">
-                <Creator
-                  writtenStatement={nftData.creatorWrittenStatement}
-                  memberSince={nftData.memberSince}
-                  website={nftData.creatorWebsite}
-                />
-              </BlockLayout>
             </Box>
+            <BlockLayout title={translate('pages.nftDetails.creator')} className="creator">
+              <Creator
+                writtenStatement={nftData.creatorWrittenStatement}
+                memberSince={nftData.memberSince}
+                website={nftData.creatorWebsite}
+              />
+            </BlockLayout>
             <BlockLayout
               title={translate('pages.nftDetails.raptorQParameters')}
               className="Raptorq-parameters"
             >
               <RaptorQParameters rqIc={nftData.rqIc} rqMax={nftData.rqMax} rqOti={nftData.rqOti} />
+            </BlockLayout>
+            <BlockLayout
+              title={translate('pages.nftDetails.offers')}
+              className="item-activity hidden-desktop"
+              childrenClassName="no-spacing"
+              id="offers"
+            >
+              <Offers />
             </BlockLayout>
           </Box>
           <Box className="nft-data hidden-mobile">
@@ -163,20 +236,24 @@ const NftDetails = () => {
                 timestamp={nftData.transactionTime}
               />
             </BlockLayout>
-            <BlockLayout title={translate('pages.nftDetails.creator')} className="creator">
-              <Creator
-                writtenStatement={nftData.creatorWrittenStatement}
-                memberSince={nftData.memberSince}
-                website={nftData.creatorWebsite}
-              />
+            <BlockLayout
+              title={translate('pages.nftDetails.offers')}
+              className="item-activity"
+              childrenClassName="no-spacing"
+              id="offers"
+            >
+              <Offers />
             </BlockLayout>
           </Box>
           <BlockLayout
             title={translate('pages.nftDetails.itemActivity')}
             className="item-activity"
             childrenClassName="no-spacing"
+            options={activityItems}
+            onDropdownChange={handleDropdownChange}
+            placeholder={translate('pages.nftDetails.all')}
           >
-            <ItemActivity />
+            <ItemActivity activitiesType={activitiesType} />
           </BlockLayout>
           <BlockLayout
             title={translate('pages.nftDetails.ddAndFingerprints')}

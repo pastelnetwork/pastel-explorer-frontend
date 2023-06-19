@@ -52,10 +52,13 @@ export const CASCADE_URL = 'v1/cascade';
 export const GET_COLLECTION_DETAILS_URL = 'v1/collections';
 export const GET_NFT_DETAILS_URL = 'v1/nfts/details';
 export const GET_ITEM_ACTIVITY_OF_NFT_DETAILS_URL = 'v1/nfts/item-activity';
+export const GET_OFFERS_OF_NFT_DETAILS_URL = 'v1/nfts/offers';
 export const GET_MEMPOOL_URL = 'v1/transactions/mempool';
 export const GET_COLLECTION_ITEMS = 'v1/collections/items';
 export const GET_COLLECTION_RELATED = 'v1/collections/related';
 export const GET_HISTORICAL_FEE_SCHEDULE = 'v1/stats/fee-schedule';
+export const GET_CASCADE_TRANSFERS = 'v1/cascade/transfers';
+export const GET_SENSE_TRANSFERS = 'v1/sense/transfers';
 // External URLS
 export const TWITTER_URL = 'https://twitter.com/pastelnetwork';
 export const TELEGRAM_URL = 'https://t.me/PastelNetwork';

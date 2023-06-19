@@ -13,7 +13,6 @@ import ActionRegistrationTicket from './ActionRegistrationTicket';
 import OfferTicket from './OfferTicket';
 import AcceptTicket from './AcceptTicket';
 import TransferTicket from './TransferTicket';
-import TicketDetail from './TicketDetail';
 
 const getTicketTitle = (type: TTicketType, itemType = '') => {
   switch (type) {
@@ -61,6 +60,5 @@ export {
   OfferTicket,
   AcceptTicket,
   TransferTicket,
-  TicketDetail,
   getTicketTitle,
 };

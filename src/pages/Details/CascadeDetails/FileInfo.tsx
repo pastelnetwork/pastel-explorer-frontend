@@ -6,8 +6,11 @@ import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
 
+import RouterLink from '@components/RouterLink/RouterLink';
+import * as ROUTES from '@utils/constants/routes';
 import { translate } from '@utils/helpers/i18n';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
+import { formatAddress } from '@utils/helpers/format';
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
 
 import RqIds from './RqIds';
@@ -24,6 +27,8 @@ type TCascadeData = {
   rq_max: number;
   rq_oti: string;
   rq_ids: string[];
+  creatorPastelID: string;
+  currentOwnerPastelID: string;
 };
 
 interface IFileInfo {
@@ -45,8 +50,8 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
           <Box>
             <Typography className="file_name">{data.file_name}</Typography>
           </Box>
-          <Box>
-            <Grid container spacing={3}>
+          <Box className="mt-4">
+            <Grid container spacing={1}>
               <Grid item xs={12} sm={6} md={4}>
                 <Box>
                   <TicketStyles.TicketTitle>
@@ -81,6 +86,44 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
                     >
                       {data.make_publicly_accessible ? <DoneIcon /> : <CloseIcon />}
                     </TicketStyles.ActionRegistrationTicketStatus>
+                  </TicketStyles.TicketContent>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <Box>
+                  <TicketStyles.TicketTitle>
+                    {translate('pages.cascade.creatorPastelID')}:
+                  </TicketStyles.TicketTitle>
+                  <TicketStyles.TicketContent>
+                    {data.creatorPastelID ? (
+                      <RouterLink
+                        route={`${ROUTES.TRANSACTION_DETAILS}/${data.creatorPastelID}`}
+                        value={formatAddress(data.creatorPastelID, 5, -5)}
+                        title={data.creatorPastelID}
+                        className="address-link nowrap inline-block read-more full"
+                      />
+                    ) : (
+                      translate('common.na')
+                    )}
+                  </TicketStyles.TicketContent>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <Box>
+                  <TicketStyles.TicketTitle>
+                    {translate('pages.cascade.currentOwnerPastelID')}:
+                  </TicketStyles.TicketTitle>
+                  <TicketStyles.TicketContent>
+                    {data.creatorPastelID ? (
+                      <RouterLink
+                        route={`${ROUTES.TRANSACTION_DETAILS}/${data.creatorPastelID}`}
+                        value={formatAddress(data.creatorPastelID, 5, -5)}
+                        title={data.creatorPastelID}
+                        className="address-link nowrap inline-block read-more full"
+                      />
+                    ) : (
+                      translate('common.na')
+                    )}
                   </TicketStyles.TicketContent>
                 </Box>
               </Grid>

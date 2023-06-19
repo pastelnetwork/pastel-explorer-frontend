@@ -2,7 +2,7 @@ import useSWR from 'swr';
 
 import { axiosGet } from '@utils/helpers/useFetch/useFetch';
 import * as URLS from '@utils/constants/urls';
-import { TSenseRequests } from '@utils/types/ITransactions';
+import { TSenseRequests, TTransfer } from '@utils/types/ITransactions';
 import {
   getLocalStorageItem,
   setLocalStorageItem,
@@ -49,5 +49,19 @@ export default function useSenseDetails(id: string, txid: string) {
   return {
     senseData,
     isLoading: isSenseLoading,
+  };
+}
+
+export function useTransfers(txid: string, offset: number, limit: number) {
+  const { data, isLoading } = useSWR<{ items: TTransfer[]; totalItems: number }>(
+    `${URLS.GET_SENSE_TRANSFERS}?registration_ticket_txid=${txid}&offset=${offset}&limit=${limit}`,
+    axiosGet,
+    SWR_OPTIONS,
+  );
+
+  return {
+    data: data?.items || null,
+    totalItems: data?.totalItems || 0,
+    isLoading,
   };
 }

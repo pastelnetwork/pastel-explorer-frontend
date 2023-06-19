@@ -16,7 +16,7 @@ interface RouterLinkProps {
 
 interface IExternalLinkProps {
   href: string;
-  value: string;
+  value: React.ReactNode;
   styles?: Partial<CSSProperties>;
   className?: string;
   target?: string;

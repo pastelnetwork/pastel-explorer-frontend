@@ -44,7 +44,6 @@ import {
   getTicketTitle,
 } from '@components/Ticket';
 import { Dropdown } from '@components/Dropdown/Dropdown';
-import { getBaseURL } from '@utils/constants/statistics';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import * as TableStyles from '@components/Table/Table.styles';
 import * as BlockDetailsStyles from '@pages/Details/BlockDetails/BlockDetails.styles';
@@ -58,6 +57,7 @@ import { translate } from '@utils/helpers/i18n';
 import * as ascii85 from '@utils/helpers/ascii85';
 import { getFileIcon } from '@pages/Details/CascadeDetails/CascadeDetails.helpers';
 
+import noImagePlaceholder from '@assets/images/no-image-placeholder.svg';
 import { TICKET_TYPE_OPTIONS, TICKET_STATUS_OPTIONS } from './TicketsType.helpers';
 
 const useStyles = makeStyles((theme: TAppTheme) => {
@@ -143,6 +143,9 @@ const TicketsList: React.FC<ITicketsList> = ({
       const actionTicket = ticket?.action_ticket;
       const parseActionTicket = JSON.parse(decode(actionTicket)) as IActionTicket;
       const apiTicket = decodeApiTicket(parseActionTicket.api_ticket) as ICascadeApiTicket;
+      if (!apiTicket.file_type) {
+        return null;
+      }
       return (
         <>
           <Grid container spacing={3}>
@@ -177,9 +180,11 @@ const TicketsList: React.FC<ITicketsList> = ({
                 to={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${sense.imageFileHash}`}
               >
                 <img
-                  src={`${getBaseURL()}/static/senses/${
-                    sense.imageFileHash
-                  }-${transactionHash}.png`}
+                  src={
+                    sense.imageFileCdnUrl
+                      ? `data:image/jpeg;base64,${sense.imageFileCdnUrl}`
+                      : noImagePlaceholder
+                  }
                   alt={sense.imageFileHash}
                   className="sense-img"
                 />

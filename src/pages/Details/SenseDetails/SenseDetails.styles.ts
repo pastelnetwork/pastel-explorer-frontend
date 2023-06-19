@@ -11,6 +11,19 @@ export const Wrapper = styled('div')`
     }
   }
 
+  .no-data {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 150px;
+    padding: 15px;
+
+    .no-data-content {
+      font-size: 22px;
+      font-weight: 700;
+    }
+  }
+
   .break-all {
     word-break: break-all;
   }
@@ -649,15 +662,17 @@ export const TitleWrapper = styled.div`
 export const FullImageWrapper = styled.div`
   width: 100%;
   height: 100%;
+  max-height: 95vh;
+  overflow: hidden;
 `;
 
 export const Dialog = styled(MuiDialog)`
   .MuiDialog-paperScrollPaper {
     max-width: 90vw;
-    max-height: 90vh;
+    max-height: 95vh;
 
     img {
-      max-height: 89vh;
+      max-height: 95vh;
     }
   }
 `;

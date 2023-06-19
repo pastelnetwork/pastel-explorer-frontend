@@ -41,7 +41,6 @@ import {
 } from '@components/Ticket';
 import { Dropdown } from '@components/Dropdown/Dropdown';
 import Pagination from '@components/Pagination/Pagination';
-import { getBaseURL } from '@utils/constants/statistics';
 import { translate } from '@utils/helpers/i18n';
 import * as ascii85 from '@utils/helpers/ascii85';
 import { getFileIcon } from '@pages/Details/CascadeDetails/CascadeDetails.helpers';
@@ -49,6 +48,7 @@ import { getFileIcon } from '@pages/Details/CascadeDetails/CascadeDetails.helper
 import * as TableStyles from '@components/Table/Table.styles';
 import * as BlockDetailsStyles from '@pages/Details/BlockDetails/BlockDetails.styles';
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
+import noImagePlaceholder from '@assets/images/no-image-placeholder.svg';
 import * as Styles from './PastelIdDetails.styles';
 import { TICKET_TYPE_OPTIONS, TTicketsTypeProps } from './PastelIdDetails.helpers';
 
@@ -103,6 +103,9 @@ const TicketsList: React.FC<ITicketsList> = ({
       const actionTicket = ticket?.action_ticket;
       const parseActionTicket = JSON.parse(decode(actionTicket)) as IActionTicket;
       const apiTicket = decodeApiTicket(parseActionTicket.api_ticket) as ICascadeApiTicket;
+      if (!apiTicket.file_type) {
+        return null;
+      }
       return (
         <>
           <Grid container spacing={3}>
@@ -137,9 +140,11 @@ const TicketsList: React.FC<ITicketsList> = ({
                 to={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${sense.imageFileHash}`}
               >
                 <img
-                  src={`${getBaseURL()}/static/senses/${
-                    sense.imageFileHash
-                  }-${transactionHash}.png`}
+                  src={
+                    sense.imageFileCdnUrl
+                      ? `data:image/jpeg;base64,${sense.imageFileCdnUrl}`
+                      : noImagePlaceholder
+                  }
                   alt={sense.imageFileHash}
                   className="sense-img"
                 />

@@ -39,22 +39,28 @@ import {
   TransferTicket,
   getTicketTitle,
 } from '@components/Ticket';
-import { getBaseURL } from '@utils/constants/statistics';
 import { translate } from '@utils/helpers/i18n';
 import * as ascii85 from '@utils/helpers/ascii85';
 import { getFileIcon } from '@pages/Details/CascadeDetails/CascadeDetails.helpers';
 
 import * as TableStyles from '@components/Table/Table.styles';
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
+import noImagePlaceholder from '@assets/images/no-image-placeholder.svg';
 import * as Styles from './BlockDetails.styles';
 
 interface ITicketsList {
   data: ITicket[];
   senses?: TSenseRequests[];
   showActivationTicket?: boolean;
+  variant?: string;
 }
 
-const TicketsList: React.FC<ITicketsList> = ({ data, senses, showActivationTicket = false }) => {
+const TicketsList: React.FC<ITicketsList> = ({
+  data,
+  senses,
+  showActivationTicket = false,
+  variant,
+}) => {
   if (!data?.length) {
     return null;
   }
@@ -83,6 +89,9 @@ const TicketsList: React.FC<ITicketsList> = ({ data, senses, showActivationTicke
       const actionTicket = ticket?.action_ticket;
       const parseActionTicket = JSON.parse(decode(actionTicket)) as IActionTicket;
       const apiTicket = decodeApiTicket(parseActionTicket.api_ticket) as ICascadeApiTicket;
+      if (!apiTicket.file_type) {
+        return null;
+      }
       return (
         <>
           <Grid container spacing={3}>
@@ -117,9 +126,11 @@ const TicketsList: React.FC<ITicketsList> = ({ data, senses, showActivationTicke
                 to={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${sense.imageFileHash}`}
               >
                 <img
-                  src={`${getBaseURL()}/static/senses/${
-                    sense.imageFileHash
-                  }-${transactionHash}.png`}
+                  src={
+                    sense.imageFileCdnUrl
+                      ? `data:image/jpeg;base64,${sense.imageFileCdnUrl}`
+                      : noImagePlaceholder
+                  }
                   alt={sense.imageFileHash}
                   className="sense-img"
                 />
@@ -212,7 +223,7 @@ const TicketsList: React.FC<ITicketsList> = ({ data, senses, showActivationTicke
       case 'action-act':
         return <ActionActivationTicket ticket={ticket as IActionActivationTicket} />;
       case 'offer':
-        return <OfferTicket ticket={ticket as IOfferTicket} />;
+        return <OfferTicket ticket={ticket as IOfferTicket} variant={variant} />;
       case 'accept':
         return <AcceptTicket ticket={ticket as IAcceptTicket} />;
       case 'transfer':
@@ -225,7 +236,15 @@ const TicketsList: React.FC<ITicketsList> = ({ data, senses, showActivationTicke
   return (
     <Styles.GridStyle item>
       <TableStyles.BlockWrapper className="mb-12">
-        <TableStyles.BlockTitle>{translate('pages.blockDetails.tickets')}</TableStyles.BlockTitle>
+        <TableStyles.BlockTitle>
+          {variant !== 'transaction'
+            ? translate('pages.blockDetails.tickets')
+            : getTicketTitle(
+                data[0].type as TTicketType,
+                (data[0].data.ticket as INftCollectionRegistrationTicket)?.collection_ticket
+                  ?.item_type,
+              )}
+        </TableStyles.BlockTitle>
         <Box className="custom-table tickets-table">
           {data.map(ticket => (
             <Styles.GridStyle
@@ -234,39 +253,44 @@ const TicketsList: React.FC<ITicketsList> = ({ data, senses, showActivationTicke
               className="table__row"
               id={ticket.transactionHash}
             >
-              <Grid container spacing={3}>
-                <Grid item xs={4} sm={3} className="max-w-355">
-                  <TicketStyles.TicketTitle>
-                    {translate('pages.blockDetails.txId')}:
-                  </TicketStyles.TicketTitle>
-                </Grid>
-                <Grid item xs={8} sm={9}>
-                  <TicketStyles.TicketContent>
-                    <RouterLink
-                      route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.transactionHash}`}
-                      value={ticket.transactionHash}
-                      title={ticket.transactionHash}
-                      className="address-link"
-                    />
-                  </TicketStyles.TicketContent>
-                </Grid>
-              </Grid>
-              <Grid container spacing={3}>
-                <Grid item xs={4} sm={3} className="max-w-355">
-                  <TicketStyles.TicketTitle>
-                    {translate('pages.blockDetails.type')}:
-                  </TicketStyles.TicketTitle>
-                </Grid>
-                <Grid item xs={8} sm={9}>
-                  <TicketStyles.TicketContent>
-                    {getTicketTitle(
-                      ticket.type as TTicketType,
-                      (ticket.data.ticket as INftCollectionRegistrationTicket)?.collection_ticket
-                        ?.item_type,
-                    )}
-                  </TicketStyles.TicketContent>
-                </Grid>
-              </Grid>
+              {variant !== 'transaction' ? (
+                <>
+                  <Grid container spacing={3}>
+                    <Grid item xs={4} sm={3} className="max-w-355">
+                      <TicketStyles.TicketTitle>
+                        {translate('pages.blockDetails.txId')}:
+                      </TicketStyles.TicketTitle>
+                    </Grid>
+                    <Grid item xs={8} sm={9}>
+                      <TicketStyles.TicketContent>
+                        <RouterLink
+                          route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.transactionHash}`}
+                          value={ticket.transactionHash}
+                          title={ticket.transactionHash}
+                          className="address-link"
+                        />
+                      </TicketStyles.TicketContent>
+                    </Grid>
+                  </Grid>
+                  <Grid container spacing={3}>
+                    <Grid item xs={4} sm={3} className="max-w-355">
+                      <TicketStyles.TicketTitle>
+                        {translate('pages.blockDetails.type')}:
+                      </TicketStyles.TicketTitle>
+                    </Grid>
+                    <Grid item xs={8} sm={9}>
+                      <TicketStyles.TicketContent>
+                        {getTicketTitle(
+                          ticket.type as TTicketType,
+                          (ticket.data.ticket as INftCollectionRegistrationTicket)
+                            ?.collection_ticket?.item_type,
+                        )}
+                      </TicketStyles.TicketContent>
+                    </Grid>
+                  </Grid>
+                </>
+              ) : null}
+
               {renderContent(ticket.type, ticket.data.ticket, ticket.transactionHash)}
             </Styles.GridStyle>
           ))}

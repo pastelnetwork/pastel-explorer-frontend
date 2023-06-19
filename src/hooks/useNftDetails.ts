@@ -2,7 +2,12 @@ import useSWR from 'swr';
 
 import { axiosGet } from '@utils/helpers/useFetch/useFetch';
 import * as URLS from '@utils/constants/urls';
-import { INftDetails, TItemActivity, ICollectionItem } from '@utils/types/ITransactions';
+import {
+  INftDetails,
+  TItemActivity,
+  ICollectionItem,
+  TAcceptedOffer,
+} from '@utils/types/ITransactions';
 import { SWR_OPTIONS } from '@utils/constants/statistics';
 
 export default function useNftDetails(txid: string) {
@@ -58,9 +63,18 @@ export default function useNftDetails(txid: string) {
   };
 }
 
-export function useItemActivity(txid: string, offset: number, limit: number) {
+export function useItemActivity(
+  txid: string,
+  offset: number,
+  limit: number,
+  activitiesType: string,
+) {
+  let type = activitiesType;
+  if (activitiesType.indexOf('all')) {
+    type = 'all';
+  }
   const { data, isLoading } = useSWR<{ items: TItemActivity[]; totalItems: number }>(
-    `${URLS.GET_ITEM_ACTIVITY_OF_NFT_DETAILS_URL}?registration_ticket_txid=${txid}&offset=${offset}&limit=${limit}`,
+    `${URLS.GET_ITEM_ACTIVITY_OF_NFT_DETAILS_URL}?registration_ticket_txid=${txid}&offset=${offset}&limit=${limit}&type=${type}`,
     axiosGet,
     SWR_OPTIONS,
   );
@@ -81,6 +95,20 @@ export function useCollectionRelated(txid: string, collectionId: string) {
 
   return {
     data: data?.items || null,
+    isLoading,
+  };
+}
+
+export function useOffers(txid: string, offset: number, limit: number) {
+  const { data, isLoading } = useSWR<{ items: TAcceptedOffer[]; totalItems: number }>(
+    `${URLS.GET_OFFERS_OF_NFT_DETAILS_URL}?registration_ticket_txid=${txid}&offset=${offset}&limit=${limit}`,
+    axiosGet,
+    SWR_OPTIONS,
+  );
+
+  return {
+    data: data?.items || null,
+    totalItems: data?.totalItems || 0,
     isLoading,
   };
 }
