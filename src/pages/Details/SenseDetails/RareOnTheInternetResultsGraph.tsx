@@ -78,6 +78,19 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
     return `image://${node?.img_src_string}`;
   };
 
+  let force = null;
+  let zoom = 1;
+  if (nodes.length && nodes.length <= 5) {
+    force = {
+      edgeLength: 5,
+      repulsion: 5,
+    };
+    zoom = 20;
+  } else {
+    force = {
+      edgeLength: 200,
+    };
+  }
   const options = {
     animationDurationUpdate: 1500,
     animationEasingUpdate: 'quinticInOut',
@@ -156,14 +169,13 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
           show: false,
         },
         roam: true,
+        zoom,
         emphasis: {
           label: {
             show: false,
           },
         },
-        force: {
-          edgeLength: 200,
-        },
+        force,
       },
     ],
   };

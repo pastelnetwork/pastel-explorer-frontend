@@ -84,6 +84,22 @@ const RareOnTheInternetAlternativeResults: React.FC<IRareOnTheInternetAlternativ
     edgesData = edges;
   }
 
+  let force = null;
+  let zoom = 1;
+  if (
+    internetRarenessAlternativeGraphData.length &&
+    internetRarenessAlternativeGraphData.length <= 5
+  ) {
+    force = {
+      edgeLength: 5,
+      repulsion: 5,
+    };
+    zoom = 20;
+  } else {
+    force = {
+      edgeLength: 200,
+    };
+  }
   const options = {
     animationDurationUpdate: 1500,
     animationEasingUpdate: 'quinticInOut',
@@ -134,15 +150,14 @@ const RareOnTheInternetAlternativeResults: React.FC<IRareOnTheInternetAlternativ
         label: {
           show: false,
         },
+        zoom,
         emphasis: {
           label: {
             show: false,
           },
         },
         roam: true,
-        force: {
-          edgeLength: 200,
-        },
+        force,
       },
     ],
   };
