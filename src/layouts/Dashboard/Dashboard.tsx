@@ -15,9 +15,10 @@ import * as Styles from './Dashboard.styles';
 interface DashboardPropsType {
   routes: Array<RouteType>;
   width: 'md' | 'xs' | 'sm' | 'lg' | 'xl';
+  fluid?: boolean;
 }
 
-const Dashboard: React.FC<DashboardPropsType> = ({ children, width, routes }) => {
+const Dashboard: React.FC<DashboardPropsType> = ({ children, width, routes, fluid = false }) => {
   const location = useLocation();
 
   return (
@@ -26,8 +27,14 @@ const Dashboard: React.FC<DashboardPropsType> = ({ children, width, routes }) =>
       <Styles.GlobalStyle />
       <Navbar routes={routes} />
       <Styles.MainWrapper>
-        {location.pathname === ROUTES.EXPLORER ? <Summary /> : <Styles.EmptySection />}
-        <Styles.MainContent p={isWidthUp('lg', width) ? 12 : 5}>{children}</Styles.MainContent>
+        {location.pathname === ROUTES.EXPLORER ? (
+          <Summary />
+        ) : (
+          <Styles.EmptySection className={fluid ? 'hidden' : ''} />
+        )}
+        <Styles.MainContent className={fluid ? 'fluid' : ''} p={isWidthUp('lg', width) ? 12 : 5}>
+          {children}
+        </Styles.MainContent>
       </Styles.MainWrapper>
       <Footer />
     </Styles.Root>

@@ -14,9 +14,11 @@ import * as Styles from './Tickets.styles';
 interface ISenseProps {
   isMobile: boolean;
   ticketsData: TTicketResponse;
+  innerWidth: number;
+  usdPrice: number;
 }
 
-const Sense: React.FC<ISenseProps> = ({ isMobile, ticketsData }) => {
+const Sense: React.FC<ISenseProps> = ({ isMobile, ticketsData, innerWidth, usdPrice }) => {
   const { data, total, isLoading, size, setSize } = ticketsData;
 
   const handleFetchMoreMovements = (reachedTableBottom: boolean) => {
@@ -42,18 +44,29 @@ const Sense: React.FC<ISenseProps> = ({ isMobile, ticketsData }) => {
     );
   };
 
+  const getRowHeight = () => {
+    if (innerWidth < 600) {
+      return 370;
+    }
+
+    if (isMobile) {
+      return 210;
+    }
+    return 120;
+  };
+
   return (
     <Styles.SenseContainer id="senseTickets">
       <InfinityTable
-        rows={data ? transformSenseData(data) : []}
+        rows={data ? transformSenseData(data, usdPrice) : []}
         columns={senseColumns}
-        tableHeight={495}
+        tableHeight={innerWidth < 600 ? 800 : 600}
         title={getTitle()}
         onBottomReach={handleFetchMoreMovements}
-        className="data-table"
+        className="data-table tickets-table"
         headerBackground
         customLoading={isLoading}
-        rowHeight={isMobile ? 180 : 50}
+        rowHeight={getRowHeight()}
       />
     </Styles.SenseContainer>
   );

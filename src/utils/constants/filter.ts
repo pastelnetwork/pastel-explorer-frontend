@@ -67,11 +67,11 @@ export const blocksFilters = [
   },
   {
     name: 'constants.filters.nftCollectionReg',
-    value: 'nft-collection-reg',
+    value: 'collection-reg',
   },
   {
     name: 'constants.filters.nftCollectionAct',
-    value: 'nft-collection-act',
+    value: 'collection-act',
   },
   {
     name: 'constants.filters.nftRoyalty',

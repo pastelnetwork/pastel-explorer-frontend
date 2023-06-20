@@ -63,6 +63,12 @@ const TotalTransactionFees = loadable(
 const Tickets = loadable(() => import('@pages/Tickets/Tickets'));
 const TicketsType = loadable(() => import('@pages/TicketsType/TicketsType'));
 const Burned = loadable(() => import('@pages/Burned/Burned'));
+const CollectionDetails = loadable(
+  () => import('@pages/Details/CollectionDetails/CollectionDetails'),
+);
+const CascadeDetails = loadable(() => import('@pages/Details/CascadeDetails/CascadeDetails'));
+const NftDetails = loadable(() => import('@pages/Details/NftDetails/NftDetails'));
+const FeeSchedule = loadable(() => import('@pages/HistoricalStatistics/FeeSchedule'));
 
 const explorerRoutes = {
   id: 'routes.explorer',
@@ -390,6 +396,15 @@ const accountsStatisticsRoutes = {
   children: null,
 };
 
+const feeScheduleStatisticsRoutes = {
+  id: 'feeSchedule',
+  path: ROUTES.STATISTICS_FEE_SCHEDULE,
+  component: FeeSchedule,
+  icon: null,
+  seoTitle: 'routes.feeSchedule',
+  children: null,
+};
+
 const senseDetailsRoutes = {
   id: 'routes.senseDetails',
   path: ROUTES.SENSE_DETAILS,
@@ -433,6 +448,34 @@ const burnedRoutes = {
   children: null,
 };
 
+const collectionDetailsRoutes = {
+  id: 'routes.collectionDetails',
+  path: `${ROUTES.COLLECTION_DETAILS_PAGE}/:id`,
+  icon: <LocalAtmIcon />,
+  component: CollectionDetails,
+  seoTitle: 'routes.collectionDetails',
+  children: null,
+  fluid: true,
+};
+
+const cascadeDetailsRoutes = {
+  id: 'routes.cascadeDetails',
+  path: ROUTES.CASCADE_DETAILS,
+  icon: <LocalAtmIcon />,
+  component: CascadeDetails,
+  seoTitle: 'routes.cascadeDetails',
+  children: null,
+};
+
+const nftDetailsRoutes = {
+  id: 'routes.nftDetails',
+  path: ROUTES.NFT_DETAILS,
+  icon: <LocalAtmIcon />,
+  component: NftDetails,
+  seoTitle: 'routes.nftDetails',
+  children: null,
+};
+
 export const pageRoutes = [
   explorerRoutes,
   movementRoutes,
@@ -471,10 +514,13 @@ export const pageRoutes = [
   pastelIdDetailsRoutes,
   ticketsTypeRoutes,
   burnedRoutes,
+  collectionDetailsRoutes,
+  cascadeDetailsRoutes,
+  nftDetailsRoutes,
+  feeScheduleStatisticsRoutes,
 ];
 
 export const sidebarRoutes = [
-  explorerRoutes,
   movementRoutes,
   blocksRoutes,
   ticketsRoutes,

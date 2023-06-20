@@ -98,6 +98,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
         chartName === 'mempoolsize' ||
         chartName === 'transactionCount' ||
         chartName === 'totalTransactionCount' ||
+        chartName === 'feeSchedule' ||
         chartName === 'averageTransactionsPerBlock' ||
         chartName === 'accounts' ||
         chartName === 'circulatingSupply' ||

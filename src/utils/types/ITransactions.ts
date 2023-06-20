@@ -12,6 +12,7 @@ export interface BlockUnconfirmed {
   size: number;
   height: string | number;
   txsCount: number;
+  ticketsTotal: number;
 }
 
 export interface ITransaction {
@@ -96,13 +97,16 @@ export interface IAppTicket {
   thumbnail1_hash: string;
   thumbnail2_hash: string;
   data_hash: string;
+  file_type: string;
+  make_publicly_accessible: boolean;
+  original_file_size_in_bytes: number;
   dd_and_fingerprints_ic: number;
   dd_and_fingerprints_max: number;
   dd_and_fingerprints_ids: string[];
   rq_ic: number;
   rq_max: number;
   rq_ids: string[];
-  rq_oti: string[];
+  rq_oti: string;
 }
 
 export interface IApiTicket {
@@ -178,6 +182,9 @@ export interface INftRegistrationTicket {
   transactionTime: number;
   activation_ticket: string;
   activation_txId: string;
+  collectionName?: string;
+  collectionAlias?: string;
+  image?: string;
 }
 
 export interface INftActivationTicket {
@@ -200,6 +207,7 @@ export interface INftCollectionRegistrationTicket {
   key: string;
   label: string;
   creator_height: number;
+  height: number;
   closing_height: number;
   nft_max_count: number;
   nft_copy_count: number;
@@ -210,6 +218,27 @@ export interface INftCollectionRegistrationTicket {
   transactionTime: number;
   activation_ticket: string;
   activation_txId: string;
+  collectionAlias: string;
+  collection_ticket: {
+    app_ticket: string;
+    block_hash: string;
+    blocknum: number;
+    collection_final_allowed_block_height: number;
+    collection_item_copy_count: number;
+    collection_name: string;
+    collection_ticket_version: number;
+    creator: string;
+    green: boolean;
+    item_type: string;
+    list_of_pastelids_of_authorized_contributors: string[];
+    max_collection_entries: number;
+    royalty: number;
+  };
+  otherData: {
+    cascadeFileName: string;
+    collectionAlias: string;
+    collectionName: string;
+  };
 }
 
 export interface INftCollectionTicket {
@@ -263,6 +292,8 @@ export interface IActionRegistrationTicket {
   activation_txId: string;
   transactionTime: number;
   activationTicket: ITicket;
+  collectionName?: string;
+  collectionAlias?: string;
 }
 
 export interface IActionTicket {
@@ -298,7 +329,15 @@ export interface IOfferTicket {
   valid_before: number;
   locked_recipient: string;
   signature: string;
+  image: string;
   transactionTime: number;
+  otherData: {
+    offerType: string;
+    txId: string;
+    regTxId: string;
+    ticketType: string;
+    ticketId: string;
+  };
 }
 
 export interface IAcceptTicket {
@@ -309,6 +348,14 @@ export interface IAcceptTicket {
   price: number;
   signature: string;
   transactionTime: number;
+  image: string;
+  otherData: {
+    offerType: string;
+    txId: string;
+    regTxId: string;
+    ticketType: string;
+    ticketId: string;
+  };
 }
 
 export interface ITransferTicket {
@@ -323,6 +370,14 @@ export interface ITransferTicket {
   copy_serial_nr: string;
   signature: string;
   transactionTime: number;
+  image: string;
+  otherData: {
+    offerType: string;
+    txId: string;
+    regTxId: string;
+    ticketType: string;
+    ticketId: string;
+  };
 }
 
 export interface ITicket {
@@ -353,8 +408,8 @@ export type TTicketType =
   | 'username-change'
   | 'nft-reg'
   | 'nft-act'
-  | 'nft-collection-reg'
-  | 'nft-collection-act'
+  | 'collection-reg'
+  | 'collection-act'
   | 'nft-royalty'
   | 'action-reg'
   | 'action-act'
@@ -394,7 +449,6 @@ export type TPastelData = {
   pastelIdOfRegisteringSupernode2: string;
   pastelIdOfRegisteringSupernode3: string;
   isPastelOpenApiRequest: boolean;
-  openApiSubsetIdString: string;
 };
 
 export type TSubgraph = {
@@ -481,7 +535,6 @@ export type TSenseRequests = {
   pastelIdOfRegisteringSupernode2: string;
   pastelIdOfRegisteringSupernode3: string;
   isPastelOpenapiRequest: number;
-  openApiSubsetIdString: string;
   isRareOnInternet: number;
   pctOfTop10MostSimilarWithDupeProbAbove25pct: number;
   pctOfTop10MostSimilarWithDupeProbAbove33pct: number;
@@ -496,6 +549,7 @@ export type TSenseRequests = {
   prevalenceOfSimilarImagesData: {
     [key: string]: number;
   };
+  currentOwnerPastelID: string;
 };
 
 export type TCurrentNode = {
@@ -521,6 +575,8 @@ export type TCurrentNode = {
   img_src: string;
   img_alt: string;
   text_strings_on_page: string;
+  misc_related_images_urls?: string;
+  misc_related_images_as_b64_strings?: string;
 };
 
 export type TCurrentNodeEdges = {
@@ -552,4 +608,141 @@ export type TicketsList = {
   activation_txId: string;
   id_type: string;
   type: string;
+  collectionName: string;
+  collectionAlias: string;
+  fileType: string;
+  fileName: string;
+  image?: string;
+  imageFileCdnUrl?: string;
+};
+
+export type TCascade = {
+  height: number;
+  ticket: {
+    action_ticket: string;
+    action_type: string;
+    called_at: number;
+    key: string;
+    label: string;
+    signatures: ISignature;
+    storage_fee: number;
+    type: string;
+    version: number;
+  };
+  tx_info: {
+    compressed_size: number;
+    compression_ratio: string;
+    is_compressed: boolean;
+    size: number;
+  };
+  txid: string;
+};
+
+export interface ICascadeApiTicket {
+  data_hash: string;
+  file_name: string;
+  rq_ic: number;
+  rq_max: number;
+  rq_ids: string[];
+  rq_oti: string;
+  original_file_size_in_bytes: number;
+  file_type: string;
+  make_publicly_accessible: boolean;
+}
+
+export interface ICollectionDetail {
+  item_copy_count: number;
+  name: string;
+  version: number;
+  creator: string;
+  green: boolean;
+  max_collection_entries: number;
+  royalty: number;
+  username: string;
+  transactionTime: number;
+  transactionHash: string;
+}
+
+export type TItemActivity = {
+  transactionHash: string;
+  transactionTime: number;
+  ticket:
+    | INftRegistrationTicket
+    | IOfferTicket
+    | IAcceptTicket
+    | ITransferTicket
+    | INftActivationTicket;
+};
+
+export interface INftDetails {
+  transactionHash: string;
+  transactionTime: number;
+  memberSince: number;
+  username: string;
+  total_copies: number;
+  royalty: number;
+  green: number;
+  storage_fee: number;
+  author: string;
+  collection_txid: string;
+  collection_name: string;
+  collection_alias: string;
+  creator_name: string;
+  creator_website: string;
+  creator_written_statement: string;
+  nft_title: string;
+  nft_type: string;
+  nft_series_name: string;
+  nft_creation_video_youtube_url: string;
+  nft_keyword_set: string;
+  data_hash: string;
+  original_file_size_in_bytes: number;
+  file_type: string;
+  make_publicly_accessible: number;
+  dd_and_fingerprints_ic: number;
+  dd_and_fingerprints_max: number;
+  dd_and_fingerprints_ids: string;
+  rq_ic: number;
+  rq_max: number;
+  rq_oti: string;
+  image: string;
+}
+
+export interface IMempool {
+  id: string;
+  recipientCount: number;
+  timestamp: number;
+  totalAmount: number;
+  isNonStandard: number | null;
+  size: number;
+  fee: number;
+  tickets?: string;
+}
+
+export interface ICollectionItem {
+  id: string;
+  title: string;
+  src: string;
+  type: string;
+  txid: string;
+  timestamp: number;
+}
+
+export type TAcceptedOffer = {
+  transactionHash: string;
+  offer_txid: string;
+  pastelID: string;
+  price: number;
+  copy_number: number;
+  timestamp: number;
+};
+export type TTransfer = {
+  transactionHash: string;
+  pastelID: string;
+  offer_txid: string;
+  accept_txid: string;
+  item_txid: string;
+  registration_txid: string;
+  copy_serial_nr: number;
+  transactionTime: number;
 };

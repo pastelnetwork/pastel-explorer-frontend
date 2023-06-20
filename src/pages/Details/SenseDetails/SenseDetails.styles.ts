@@ -11,6 +11,19 @@ export const Wrapper = styled('div')`
     }
   }
 
+  .no-data {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 150px;
+    padding: 15px;
+
+    .no-data-content {
+      font-size: 22px;
+      font-weight: 700;
+    }
+  }
+
   .break-all {
     word-break: break-all;
   }
@@ -119,6 +132,15 @@ export const ContentItem = styled.div`
     min-height: 400px;
   }
 
+  &.prevalence-of-similar-images-chart,
+  &.chart-section {
+    position: relative;
+
+    .empty {
+      opacity: 0.2;
+    }
+  }
+
   .tooltip-wrapper {
     font-size: 14px;
 
@@ -164,6 +186,11 @@ export const ContentItem = styled.div`
         white-space: break-spaces;
       }
     }
+
+    .tooltip-image {
+      max-width: 80px;
+      max-height: 80px;
+    }
   }
 `;
 
@@ -174,6 +201,10 @@ export const OpenNSFWChartWrapper = styled.div`
 
 export const OpenNSFWContent = styled.div`
   margin: 15px 0;
+
+  &.empty {
+    opacity: 0.2;
+  }
 `;
 
 export const OpenNSFWChartOverlay = styled.div`
@@ -340,6 +371,11 @@ export const ImagesWrapper = styled(Box)`
   .rare-on-the-internet-results-graph,
   .rare-on-the-internet-alternative-results {
     margin-right: 20px;
+    overflow: unset;
+
+    h4 {
+      border-radius: 10px 10px 0 0;
+    }
   }
 
   .similar-registered-images,
@@ -468,15 +504,140 @@ export const TableWrapper = styled.div`
     }
   }
 
-  .table__row {
-    img {
-      width: 64px;
-      height: 64px;
+  .custom-table {
+    .image-row {
+      text-align: center;
+      vertical-align: middle;
+    }
+    .rank {
+      min-width: 65px;
+      max-width: 65px;
+    }
+    .thumbnail {
+      min-width: 120px;
+      max-width: 120px;
+    }
+    .imageHash {
+      min-width: 150px;
+      max-width: 150px;
+    }
+    .dateTimeAdded {
+      min-width: 206px;
+      max-width: 206px;
+    }
+    .matchType {
+      min-width: 148px;
+      max-width: 148px;
+    }
+    .dupeProbability {
+      min-width: 140px;
+      max-width: 140px;
+    }
+    .dupeProbability.chart {
+      min-width: 140px;
+      max-width: 140px;
+    }
+    .cosineSimilarity {
+      min-width: 150px;
+      max-width: 150px;
+    }
+    .cosineGain {
+      min-width: 150px;
+      max-width: 150px;
+    }
+    .hoeffdingsDependency {
+      min-width: 190px;
+      max-width: 190px;
+    }
+    .hoeffdingGain {
+      min-width: 130px;
+      max-width: 130px;
+    }
+    .hilbertSchmidtInformationCriteria {
+      min-width: 265px;
+      max-width: 265px;
+    }
+    .hilbertSchmidtGain {
+      min-width: 166px;
+      max-width: 166px;
+    }
+
+    .table__row {
+      height: 95px;
+
+      img {
+        width: 64px;
+        height: 64px;
+      }
+
+      img {
+        transition: all 0.3s ease;
+        transform-origin: center;
+        transition-duration: 0.4s;
+      }
+
+      &,
+      div,
+      p,
+      a,
+      .progress-bar-item {
+        transition: all 0.15s ease;
+        transform-origin: center;
+        transition-duration: 0.3s;
+      }
+
+      &.active {
+        height: 142px;
+
+        img {
+          transform: scale(2);
+        }
+
+        div,
+        a,
+        p {
+          font-size: 20px;
+        }
+
+        .progress-bar-item {
+          height: 28px;
+        }
+      }
+
+      &.prev_row_active,
+      &.next_row_active {
+        height: 110px;
+
+        img {
+          transform: scale(1.5);
+        }
+
+        div,
+        a,
+        p {
+          font-size: 18px;
+        }
+
+        .progress-bar-item {
+          height: 20px;
+        }
+      }
     }
   }
 
   .white-space-nowrap {
     white-space: nowrap;
+  }
+
+  .seed-images-info {
+    color: ${props => props.theme.palette.text.primary};
+    margin-left: 5px;
+    font-size: 20px;
+  }
+
+  .inline-flex {
+    display: inline-flex;
+    align-items: center;
   }
 `;
 
@@ -501,15 +662,37 @@ export const TitleWrapper = styled.div`
 export const FullImageWrapper = styled.div`
   width: 100%;
   height: 100%;
+  max-height: 95vh;
+  overflow: hidden;
 `;
 
 export const Dialog = styled(MuiDialog)`
   .MuiDialog-paperScrollPaper {
     max-width: 90vw;
-    max-height: 90vh;
+    max-height: 95vh;
 
     img {
-      max-height: 89vh;
+      max-height: 95vh;
     }
   }
+`;
+
+export const EmptyOverlay = styled.div`
+  position: absolute;
+  top: -9px;
+  left: -16px;
+  right: -16px;
+  bottom: -14px;
+  display: block;
+  background: ${props => props.theme.sense.overlay};
+`;
+
+export const EmptyData = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 22px;
+  font-weight: 700;
 `;

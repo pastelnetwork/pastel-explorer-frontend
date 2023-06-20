@@ -6,6 +6,8 @@ import { TChartParams } from '@utils/types/IStatistics';
 import { TCurrentNode } from '@utils/types/ITransactions';
 import { translate } from '@utils/helpers/i18n';
 
+import { rareOnTheInternetAlternativeResultsData } from './mockup';
+import EmptyOverlay from './EmptyOverlay';
 import * as Styles from './SenseDetails.styles';
 
 interface IRareOnTheInternetAlternativeResults {
@@ -15,18 +17,19 @@ interface IRareOnTheInternetAlternativeResults {
 const RareOnTheInternetAlternativeResults: React.FC<IRareOnTheInternetAlternativeResults> = ({
   data,
 }) => {
-  if (!data) {
-    return <Styles.ContentItem className="min-height-400" />;
-  }
   const newData = JSON.parse(data);
-  if (
-    Object.keys(newData).length <= 2 ||
-    newData.alternative_rare_on_internet_dict_as_json_compressed_b64.length <= 50
-  ) {
-    return <Styles.ContentItem className="min-height-400" />;
-  }
-
   const processRareOnInternetAlternativeDataFunc = () => {
+    if (
+      !data ||
+      Object.keys(newData).length <= 2 ||
+      newData.alternative_rare_on_internet_dict_as_json_compressed_b64.length <= 50
+    ) {
+      return {
+        nodes: [],
+        edges: [],
+      };
+    }
+
     try {
       const uncompressedAlternativeRareOnInternetDictJsonObj = decompress_zstd_compressed_data_func(
         newData.alternative_rare_on_internet_dict_as_json_compressed_b64,
@@ -81,6 +84,22 @@ const RareOnTheInternetAlternativeResults: React.FC<IRareOnTheInternetAlternativ
     edgesData = edges;
   }
 
+  let force = null;
+  let zoom = 1;
+  if (
+    internetRarenessAlternativeGraphData.length &&
+    internetRarenessAlternativeGraphData.length <= 5
+  ) {
+    force = {
+      edgeLength: 5,
+      repulsion: 5,
+    };
+    zoom = 20;
+  } else {
+    force = {
+      edgeLength: 200,
+    };
+  }
   const options = {
     animationDurationUpdate: 1500,
     animationEasingUpdate: 'quinticInOut',
@@ -117,37 +136,38 @@ const RareOnTheInternetAlternativeResults: React.FC<IRareOnTheInternetAlternativ
       {
         type: 'graph',
         layout: 'force',
-        data: internetRarenessAlternativeGraphData.map(node => ({
+        data: (!internetRarenessAlternativeGraphData.length
+          ? rareOnTheInternetAlternativeResultsData.nodes
+          : internetRarenessAlternativeGraphData
+        ).map(node => ({
           id: node.id,
           name: node.id,
-          symbolSize: node.node_size,
           symbol: `image://data:image/jpg;base64,${node.image_base64_string}`,
         })),
-        edges: edgesData,
+        edges: !internetRarenessAlternativeGraphData.length
+          ? rareOnTheInternetAlternativeResultsData.edges
+          : edgesData,
         label: {
           show: false,
         },
+        zoom,
         emphasis: {
           label: {
             show: false,
           },
         },
         roam: true,
-        force: {
-          repulsion: 3000,
-          edgeLength: 100,
-        },
+        force,
       },
     ],
   };
 
-  if (!internetRarenessAlternativeGraphData.length) {
-    return <Styles.ContentItem className="min-height-400" />;
-  }
-
   return (
-    <Styles.ContentItem>
-      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '400px' }} />
+    <Styles.ContentItem className="chart-section">
+      <div className={!internetRarenessAlternativeGraphData.length ? 'empty' : ''}>
+        <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '400px' }} />
+      </div>
+      <EmptyOverlay isShow={!internetRarenessAlternativeGraphData.length} />
     </Styles.ContentItem>
   );
 };

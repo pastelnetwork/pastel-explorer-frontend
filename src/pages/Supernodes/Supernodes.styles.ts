@@ -1,11 +1,28 @@
 import styled from 'styled-components';
 import { Grid } from '@material-ui/core';
+import { CSVLink } from 'react-csv';
 
 export const GridWrapper = styled(Grid)`
   .col-address {
     & > .MuiTableCell-root {
       padding-left: 0;
     }
+  }
+
+  .bold {
+    font-weight: 700;
+  }
+
+  .title {
+    font-size: 15px;
+  }
+
+  .copy-icon {
+    margin-left: 0;
+  }
+
+  .ReactVirtualized__Table__headerRow {
+    display: none;
   }
 
   .supernode-table {
@@ -47,20 +64,6 @@ export const GridWrapper = styled(Grid)`
       .MuiTableCell-root {
         padding-left: 0;
         border-bottom: 0;
-      }
-
-      .cell-content {
-        &:before {
-          content: attr(data-title);
-          position: relative;
-          width: 100px;
-          min-width: 100px;
-          margin-right: 10px;
-          padding-right: 0;
-          font-weight: 600;
-          font-size: 16px;
-          color: ${props => props.theme.table.label};
-        }
       }
     }
   }
@@ -108,6 +111,7 @@ export const SubTitle = styled.span`
 `;
 
 export const Status = styled.div`
+  display: inline-flex;
   padding: 2px 10px;
   font-size: 14px;
   background: ${props => props.theme.supernodes.status.background.newStart};
@@ -121,12 +125,6 @@ export const Status = styled.div`
   &.expired {
     background: ${props => props.theme.supernodes.status.background.expired};
   }
-
-  ${props => props.theme.breakpoints.down(1024)} {
-    max-width: calc(100vw - 165px);
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
 `;
 
 export const TitleContainer = styled.div`
@@ -134,14 +132,23 @@ export const TitleContainer = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  ${props => props.theme.breakpoints.down('xs')} {
+  ${props => props.theme.breakpoints.down('sm')} {
     flex-direction: column;
   }
 `;
 
 export const FilterBlock = styled.div`
-  ${props => props.theme.breakpoints.down('xs')} {
+  ${props => props.theme.breakpoints.down('sm')} {
     margin-top: 10px;
+  }
+
+  ${props => props.theme.breakpoints.down(570)} {
+    text-align: center;
+
+    .supernode-status {
+      flex-direction: column;
+      width: 100%;
+    }
   }
 `;
 
@@ -169,5 +176,37 @@ export const SupernodeColumn = styled.div`
 
   ${props => props.theme.breakpoints.down(1024)} {
     width: 100%;
+  }
+`;
+
+export const CSVLinkButton = styled(CSVLink)`
+  margin-left: 10px;
+  padding: 8px 25px;
+  background: ${props => props.theme.sidebar.menu.toggle.switch};
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: 'Gill Sans';
+  cursor: pointer;
+  border-radius: 10px;
+  border: 0;
+  outline: none;
+  text-decoration: none;
+  transition: all 0.5s ease;
+
+  &:hover {
+    background: ${props => props.theme.sidebar.menu.toggle.hover};
+  }
+
+  ${props => props.theme.breakpoints.down(570)} {
+    display: inline-flex;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media screen and (max-width: 375px) {
+    padding: 8px 16px;
+    font-size: 15px;
   }
 `;

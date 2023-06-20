@@ -20,6 +20,7 @@ import * as ROUTES from '@utils/constants/routes';
 import { formatFullDate } from '@utils/helpers/date/date';
 import { translate } from '@utils/helpers/i18n';
 
+import { useStorageFee } from './Ticket.helpers';
 import ApiTicket from './ApiTicket';
 import Signatures from './Signatures';
 import { getTicketTitle } from './index';
@@ -29,6 +30,7 @@ interface IActionRegistrationTicketProps {
   ticket: IActionRegistrationTicket;
   senseInfo?: ReactNode;
   showActivationTicket?: boolean;
+  transactionHash?: string;
 }
 
 interface IActionTicketProps {
@@ -154,7 +156,12 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
   ticket,
   senseInfo,
   showActivationTicket,
+  transactionHash,
 }) => {
+  const { storageFee: activationTicketStorageFee } = useStorageFee(
+    (ticket.activationTicket?.data?.ticket as IActionActivationTicket)?.storage_fee,
+  );
+  const { storageFee } = useStorageFee(ticket.storage_fee);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const renderActivationTicket = () => {
@@ -162,7 +169,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
       return null;
     }
 
-    const activationTicket = ticket.activationTicket.data.ticket as IActionActivationTicket;
+    const activationTicket = ticket.activationTicket?.data?.ticket as IActionActivationTicket;
     return (
       <Grid container spacing={3}>
         <Grid item xs={12} sm={3} className="max-w-355">
@@ -261,7 +268,8 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
                 })}
               </Styles.TicketTitle>
               <Styles.TicketContent>
-                {formatNumber(activationTicket.storage_fee)} {getCurrencyName()}
+                {formatNumber(activationTicket.storage_fee)} {getCurrencyName()}{' '}
+                {activationTicketStorageFee}
               </Styles.TicketContent>
             </Styles.ActivationTicketItem>
           </Grid>
@@ -284,6 +292,29 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
 
   return (
     <Box>
+      {ticket.action_type === 'sense' ? (
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3} className="max-w-355">
+            <Styles.TicketTitle>
+              {translate('components.ticket.actionRegistrationTicket.collectionName')}
+            </Styles.TicketTitle>
+          </Grid>
+          <Grid item xs={8} sm={9}>
+            <Styles.TicketContent>
+              {ticket?.collectionName ? (
+                <RouterLink
+                  route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${ticket?.collectionAlias}`}
+                  value={ticket?.collectionName}
+                  title={ticket?.collectionName}
+                  className="address-link small"
+                />
+              ) : (
+                translate('common.na')
+              )}
+            </Styles.TicketContent>
+          </Grid>
+        </Grid>
+      ) : null}
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
@@ -291,7 +322,22 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{ticket.action_type}</Styles.TicketContent>
+          <Styles.TicketContent>
+            {ticket.action_type}
+            {ticket.action_type === 'cascade' && transactionHash && ticket.activation_txId ? (
+              <>
+                {' '}
+                (
+                <RouterLink
+                  route={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}
+                  value={translate('components.ticket.actionRegistrationTicket.viewDetails')}
+                  title={ticket.activation_txId}
+                  className="address-link"
+                />
+                )
+              </>
+            ) : null}
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -388,7 +434,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-            {formatNumber(ticket.storage_fee)} {getCurrencyName()}
+            {formatNumber(ticket.storage_fee)} {getCurrencyName()} {storageFee}
           </Styles.TicketContent>
         </Grid>
       </Grid>

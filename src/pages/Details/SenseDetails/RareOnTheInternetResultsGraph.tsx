@@ -6,6 +6,8 @@ import { decompress_zstd_compressed_data_func } from '@utils/helpers/encryption'
 import { TCurrentNode, TEdges } from '@utils/types/ITransactions';
 import { translate } from '@utils/helpers/i18n';
 
+import { rareOnTheInternetResultsGraphData } from './mockup';
+import EmptyOverlay from './EmptyOverlay';
 import * as Styles from './SenseDetails.styles';
 
 interface IRareOnTheInternetResultsGraph {
@@ -13,38 +15,45 @@ interface IRareOnTheInternetResultsGraph {
 }
 
 const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = ({ data }) => {
-  if (!data) {
-    return <Styles.ContentItem className="min-height-400" />;
-  }
   const newData = JSON.parse(data);
-  if (
-    Object.keys(newData).length <= 2 ||
-    newData.rare_on_internet_summary_table_as_json_compressed_b64.length <= 100
-  ) {
-    return <Styles.ContentItem className="min-height-400" />;
-  }
-
   const processRareOnInternetDataFunc = () => {
+    if (
+      !data ||
+      Object.keys(newData).length <= 2 ||
+      newData.rare_on_internet_summary_table_as_json_compressed_b64.length <= 100
+    ) {
+      return {
+        nodes: [],
+        edges: [],
+      };
+    }
+
     try {
       const internetRarenessGraphData = decompress_zstd_compressed_data_func(
         newData.rare_on_internet_graph_json_compressed_b64,
       );
       const keys = Object.keys(internetRarenessGraphData);
-      for (let i = 0; i < keys.length; i += 1) {
-        if (keys[i] === 'nodes') {
-          const keys2 = Object.keys(internetRarenessGraphData[keys[i]]);
-          const values2 = Object.values(internetRarenessGraphData[keys[i]]) as TCurrentNode[];
-          for (let j = 0; j < keys2.length; j += 1) {
-            const current_node: TCurrentNode = values2[j];
-            const current_node_size = 0.9 ** (current_node.search_result_ranking + 1) * 15;
-            current_node.node_size = current_node_size;
-            internetRarenessGraphData.nodes[keys2[j]] = current_node;
+      if (keys.length) {
+        for (let i = 0; i < keys.length; i += 1) {
+          if (keys[i] === 'nodes') {
+            const keys2 = Object.keys(internetRarenessGraphData[keys[i]]);
+            const values2 = Object.values(internetRarenessGraphData[keys[i]]) as TCurrentNode[];
+            for (let j = 0; j < keys2.length; j += 1) {
+              const current_node: TCurrentNode = values2[j];
+              const current_node_size = 0.9 ** (current_node?.search_result_ranking + 1) * 15;
+              current_node.node_size = current_node_size;
+              internetRarenessGraphData.nodes[keys2[j]] = current_node;
+            }
           }
         }
+        return {
+          nodes: internetRarenessGraphData.nodes as TCurrentNode[],
+          edges: internetRarenessGraphData.links as TEdges[],
+        };
       }
       return {
-        nodes: internetRarenessGraphData.nodes as TCurrentNode[],
-        edges: internetRarenessGraphData.links as TEdges[],
+        nodes: [],
+        edges: [],
       };
     } catch (error) {
       return {
@@ -54,6 +63,34 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
     }
   };
   const { nodes, edges } = processRareOnInternetDataFunc();
+
+  const getSymbol = (node: TCurrentNode) => {
+    if (node?.misc_related_images_as_b64_strings) {
+      let src = node.misc_related_images_as_b64_strings;
+      if (src.indexOf(';base64') === -1) {
+        src = `data:image/jpeg;base64,${node.misc_related_images_as_b64_strings}`;
+      }
+      return `image://${src}`;
+    }
+    if (node?.misc_related_images_urls) {
+      return `image://${node?.misc_related_images_urls}`;
+    }
+    return `image://${node?.img_src_string}`;
+  };
+
+  let force = null;
+  let zoom = 1;
+  if (nodes.length && nodes.length <= 5) {
+    force = {
+      edgeLength: 5,
+      repulsion: 5,
+    };
+    zoom = 20;
+  } else {
+    force = {
+      edgeLength: 200,
+    };
+  }
   const options = {
     animationDurationUpdate: 1500,
     animationEasingUpdate: 'quinticInOut',
@@ -62,6 +99,32 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
       formatter(params: TChartParams) {
         const item = nodes.find(i => i.id === parseInt(params.name, 10));
         if (item) {
+          let relatedImagesUrls = '';
+          if (item?.misc_related_images_urls) {
+            relatedImagesUrls = `<div class="tooltip-item">
+            <div class="label">${translate('pages.senseDetails.relatedImages')}:</div>
+            <div class="value"><img class="tooltip-image" src="${
+              item.misc_related_images_urls
+            }" /></div>
+          </div>`;
+          } else if (item?.misc_related_images_as_b64_strings) {
+            let src = item.misc_related_images_as_b64_strings;
+            if (src.indexOf(';base64') === -1) {
+              src = `data:image/jpeg;base64,${item.misc_related_images_as_b64_strings}`;
+            }
+            relatedImagesUrls = `<div class="tooltip-item">
+            <div class="label">${translate('pages.senseDetails.relatedImages')}:</div>
+            <div class="value"><img class="tooltip-image" src="${src}" /></div>
+          </div>`;
+          }
+
+          let dateString = '';
+          if (item?.date_string) {
+            dateString = `<div class="tooltip-item">
+            <div class="label">${translate('pages.senseDetails.imageDate')}:</div>
+            <div class="value">${item.date_string}</div>
+          </div>`;
+          }
           return `
             <div class="tooltip-wrapper max-w-280">
               <div class="tooltip-name">${item.title}</div>
@@ -69,18 +132,16 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
               <div class="tooltip-content-wrapper">
                 <div class="tooltip-item">
                   <div class="label">${translate('pages.senseDetails.resultRanking')}:</div>
-                  <div class="value">${item.search_result_ranking}</div>
+                  <div class="value">${item.search_result_ranking}&nbsp;</div>
                 </div>
                 <div class="tooltip-item">
                   <div class="label">${translate(
                     'pages.senseDetails.originalImageResolution',
                   )}:</div>
-                  <div class="value">${parse(item.resolution_string)}</div>
+                  <div class="value">${parse(item.resolution_string)}&nbsp;</div>
                 </div>
-                <div class="tooltip-item">
-                  <div class="label">${translate('pages.senseDetails.imageDate')}:</div>
-                  <div class="value">${item.date_string}</div>
-                </div>
+                ${dateString}
+                ${relatedImagesUrls}
               </div>
             </div>
           `;
@@ -97,33 +158,34 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
         type: 'graph',
         layout: 'force',
         animation: false,
-        data: nodes.map(node => ({
+        data: (!nodes.length ? rareOnTheInternetResultsGraphData.nodes : nodes).map(node => ({
           id: node.id,
           name: node.id,
           symbolSize: node.node_size,
-          symbol: `image://${node.img_src_string}`,
+          symbol: getSymbol(node as TCurrentNode),
         })),
-        edges,
+        edges: !nodes.length ? rareOnTheInternetResultsGraphData.edges : edges,
         label: {
           show: false,
         },
         roam: true,
+        zoom,
         emphasis: {
           label: {
             show: false,
           },
         },
-        force: {
-          repulsion: 3000,
-          edgeLength: 100,
-        },
+        force,
       },
     ],
   };
 
   return (
-    <Styles.ContentItem>
-      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '400px' }} />
+    <Styles.ContentItem className="chart-section">
+      <div className={!nodes.length ? 'empty' : ''}>
+        <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '400px' }} />
+      </div>
+      <EmptyOverlay isShow={!nodes.length} />
     </Styles.ContentItem>
   );
 };

@@ -14,6 +14,7 @@ export type RouteType = {
   guard?: any;
   exact?: boolean;
   seoTitle?: string;
+  fluid?: boolean;
 };
 
 export type RouteChildType = {

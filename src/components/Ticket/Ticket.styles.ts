@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 import MuiAccordion from '@material-ui/core/Accordion';
 import Grid from '@material-ui/core/Grid';
 
@@ -9,7 +10,7 @@ export const TicketTitle = styled(Typography)`
   font-weight: 600;
 `;
 
-export const TicketContent = styled(Typography)`
+export const TicketContent = styled(Box)`
   &.capitalize {
     text-transform: capitalize;
   }
@@ -47,8 +48,10 @@ export const TicketContent = styled(Typography)`
     height: 200px;
     transition: all 0.3s ease-in-out;
 
-    &:hover {
-      transform: scale(2);
+    &:not(.placeholder) {
+      &:hover {
+        transform: scale(2);
+      }
     }
   }
 
@@ -166,5 +169,30 @@ export const ActivationTicketItem = styled(Grid)`
 
   @media (max-width: 600px) {
     display: block;
+  }
+`;
+
+export const OfferWrapper = styled(Box)`
+  .nft-image {
+    width: 200px;
+    height: 200px;
+    transition: all 0.3s ease-in-out;
+
+    &:not(.placeholder) {
+      &:hover {
+        transform: scale(2);
+      }
+    }
+  }
+
+  .driver {
+    margin: 20px 0;
+    border-top: solid 1px ${props => props.theme.table.hover};
+  }
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    .mb-sm-8 {
+      margin-bottom: 8px;
+    }
   }
 `;

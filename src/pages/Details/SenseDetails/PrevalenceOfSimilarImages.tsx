@@ -6,6 +6,7 @@ import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { TChartParams } from '@utils/types/IStatistics';
 import { translate } from '@utils/helpers/i18n';
 
+import EmptyOverlay from './EmptyOverlay';
 import * as Styles from './SenseDetails.styles';
 
 interface IPrevalenceOfSimilarImages {
@@ -13,6 +14,8 @@ interface IPrevalenceOfSimilarImages {
     [key: string]: number;
   };
 }
+
+const defaultData = [0.5, 0.15, 0.33];
 
 const PrevalenceOfSimilarImages: React.FC<IPrevalenceOfSimilarImages> = ({ data }) => {
   const { darkMode } = useSelector(getThemeState);
@@ -23,11 +26,12 @@ const PrevalenceOfSimilarImages: React.FC<IPrevalenceOfSimilarImages> = ({ data 
   const keys = Object.keys(data);
   const seriesData = [];
   const xAxisData = [];
+  const hasValue = !!values.reduce((total, currentItem) => total + currentItem, 0);
   for (let i = 0; i < values.length; i += 1) {
     seriesData.push({
-      value: values[i],
+      value: hasValue ? values[i] : defaultData[i],
       itemStyle: {
-        color: sense_chart_colors[i] || sense_chart_colors[0],
+        color: !hasValue ? '#ddd' : sense_chart_colors[i] || sense_chart_colors[0],
       },
     });
     xAxisData.push(keys[i]);
@@ -94,8 +98,11 @@ const PrevalenceOfSimilarImages: React.FC<IPrevalenceOfSimilarImages> = ({ data 
   };
 
   return (
-    <Styles.ContentItem>
-      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '240px' }} />
+    <Styles.ContentItem className="prevalence-of-similar-images-chart">
+      <div className={!hasValue ? 'empty' : ''}>
+        <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '240px' }} />
+      </div>
+      <EmptyOverlay isShow={!hasValue} />
     </Styles.ContentItem>
   );
 };

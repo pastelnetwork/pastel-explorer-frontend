@@ -1,6 +1,7 @@
 import fromUnixTime from 'date-fns/fromUnixTime';
 import format from 'date-fns/format';
 import getTime from 'date-fns/getTime';
+import subHours from 'date-fns/subHours';
 import intervalToDuration from 'date-fns/intervalToDuration';
 
 interface DateOptions {
@@ -45,4 +46,23 @@ export const formatFullDate = (timestamp: number, options: DateOptions = initial
   const dateFormat = generateDateFormat(options);
 
   return format(timestamp, dateFormat);
+};
+
+export const periodData = {
+  '24h': 24,
+  '1d': 24,
+  '7d': 7 * 24,
+  '14d': 14 * 24,
+  '30d': 30 * 24,
+  '60d': 60 * 24,
+  '90d': 90 * 24,
+  '180d': 180 * 24,
+};
+
+export const getSubHours = (period: string | null) => {
+  if (!period) {
+    return 0;
+  }
+  const duration = periodData[period as keyof typeof periodData] ?? 0;
+  return subHours(new Date(), duration).valueOf();
 };

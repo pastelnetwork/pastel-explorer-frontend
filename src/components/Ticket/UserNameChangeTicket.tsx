@@ -9,6 +9,7 @@ import * as ROUTES from '@utils/constants/routes';
 import { formatFullDate } from '@utils/helpers/date/date';
 import { translate } from '@utils/helpers/i18n';
 
+import { useStorageFee } from './Ticket.helpers';
 import Signatures from './Signatures';
 import * as Styles from './Ticket.styles';
 
@@ -17,6 +18,7 @@ interface IUserNameChangeTicketProps {
 }
 
 const UserNameChangeTicket: React.FC<IUserNameChangeTicketProps> = ({ ticket }) => {
+  const { storageFee } = useStorageFee(ticket.fee);
   return (
     <Box>
       <Grid container spacing={3}>
@@ -65,7 +67,7 @@ const UserNameChangeTicket: React.FC<IUserNameChangeTicketProps> = ({ ticket }) 
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-            {formatNumber(ticket.fee)} {getCurrencyName()}
+            {formatNumber(ticket.fee)} {getCurrencyName()} {storageFee}
           </Styles.TicketContent>
         </Grid>
       </Grid>

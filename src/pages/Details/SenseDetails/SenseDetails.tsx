@@ -27,6 +27,7 @@ import RareOnTheInternetAlternativeResults from './RareOnTheInternetAlternativeR
 import SenseRawData from './SenseRawData';
 import SimilarRegisteredImages, { getSimilarRegisteredImagesData } from './SimilarRegisteredImages';
 import SubmittedImage from './SubmittedImage';
+import Transfers from './Transfers';
 import * as Styles from './SenseDetails.styles';
 
 interface IBlockItemLayout {
@@ -85,10 +86,15 @@ const SenseDetails: React.FC = () => {
       return '';
     }
     const parseSenseData = JSON.parse(sense.rawData);
+    const rawSenseDataJson = parseSenseData?.raw_dd_service_data_json
+      ? JSON.parse(parseSenseData.raw_dd_service_data_json)
+      : null;
     return JSON.stringify(
       JSON.stringify({
         ...parseSenseData,
-        raw_sense_data_json: JSON.parse(parseSenseData.raw_sense_data_json),
+        raw_dd_service_data_json: {
+          ...rawSenseDataJson,
+        },
       }),
     );
   };
@@ -245,7 +251,10 @@ const SenseDetails: React.FC = () => {
               }
             />
           </BlockItemLayout>
-          <BlockItemLayout title="Pastel Data" className="pastel-data">
+          <BlockItemLayout
+            title={translate('pages.senseDetails.pastelData')}
+            className="pastel-data"
+          >
             <PastelData
               blockHash={sense?.blockHash}
               blockHeight={sense?.blockHeight}
@@ -255,8 +264,15 @@ const SenseDetails: React.FC = () => {
               pastelIdOfRegisteringSupernode2={sense?.pastelIdOfRegisteringSupernode2}
               pastelIdOfRegisteringSupernode3={sense?.pastelIdOfRegisteringSupernode3}
               isPastelOpenapiRequest={sense?.isPastelOpenapiRequest}
-              openApiSubsetIdString={sense?.openApiSubsetIdString}
+              currentOwnerPastelID={sense?.currentOwnerPastelID}
             />
+          </BlockItemLayout>
+          <BlockItemLayout
+            title={translate('pages.senseDetails.transfers')}
+            className="pastel-data"
+            childrenClassName="no-spacing"
+          >
+            <Transfers />
           </BlockItemLayout>
         </Styles.ImagesWrapper>
       </Grid>
@@ -271,9 +287,11 @@ const SenseDetails: React.FC = () => {
           </Typography>
         </Grid>
       </Grid>
-      <Typography component="h2" variant="h5" align="center" gutterBottom>
-        {translate('pages.senseDetails.senseNotFound')}
-      </Typography>
+      {matchType !== 'seedimage' ? (
+        <Typography component="h2" variant="h5" align="center" gutterBottom>
+          {translate('pages.senseDetails.senseNotFound')}
+        </Typography>
+      ) : null}
       {!txid && matchType === 'seedimage' ? (
         <Typography component="h3" variant="body1" align="center" gutterBottom>
           {translate('pages.senseDetails.seedImagesInfo')}

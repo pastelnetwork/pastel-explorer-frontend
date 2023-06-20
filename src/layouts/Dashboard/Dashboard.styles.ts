@@ -49,6 +49,10 @@ export const MainContent = styled(Paper)`
   background: ${props => props.theme.palette.background.paper};
   min-height: 65vh;
 
+  &.fluid {
+    padding: 0;
+  }
+
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     flex: none;
   }
@@ -63,4 +67,8 @@ export const EmptySection = styled.div`
   width: 100%;
   height: 20px;
   background: ${props => props.theme.palette.background.paper};
+
+  &.hidden {
+    display: none;
+  }
 `;

@@ -1,16 +1,20 @@
-import { decode } from 'js-base64';
+import { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import { INftCollectionRegistrationTicket, INftCollectionTicket } from '@utils/types/ITransactions';
+import { INftCollectionRegistrationTicket } from '@utils/types/ITransactions';
 import { getCurrencyName } from '@utils/appInfo';
 import * as ROUTES from '@utils/constants/routes';
 import { formatFullDate } from '@utils/helpers/date/date';
 import { formatAddress } from '@utils/helpers/format';
 import { translate } from '@utils/helpers/i18n';
 
+import { useStorageFee } from './Ticket.helpers';
 import Signatures from './Signatures';
 import AppTicket from './AppTicket';
 import * as Styles from './Ticket.styles';
@@ -19,167 +23,12 @@ interface INFTCollectionRegistrationTicketProps {
   ticket: INftCollectionRegistrationTicket;
 }
 
-interface INFTCollectionTicketProps {
-  nftTicket: string;
-}
-
-const NFTCollectionTicket: React.FC<INFTCollectionTicketProps> = ({ nftTicket }) => {
-  if (!nftTicket) {
-    return null;
-  }
-
-  const nft = JSON.parse(decode(nftTicket)) as INftCollectionTicket;
-  return (
-    <Box>
-      <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>
-            {translate(
-              'components.ticket.nftCollectionRegistrationTicket.nftCollectionTicketVersion',
-            )}
-          </Styles.TicketTitle>
-        </Grid>
-        <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{nft.nft_collection_ticket_version}</Styles.TicketContent>
-        </Grid>
-      </Grid>
-      {nft?.nft_collection_name ? (
-        <Grid container spacing={3}>
-          <Grid item xs={4} sm={3} className="max-w-355">
-            <Styles.TicketTitle>
-              {translate('components.ticket.nftCollectionRegistrationTicket.nftCollectionName')}
-            </Styles.TicketTitle>
-          </Grid>
-          <Grid item xs={8} sm={9}>
-            <Styles.TicketContent>{nft.nft_collection_name}</Styles.TicketContent>
-          </Grid>
-        </Grid>
-      ) : null}
-      <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>
-            {translate('components.ticket.nftCollectionRegistrationTicket.creator')}
-          </Styles.TicketTitle>
-        </Grid>
-        <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>
-            <RouterLink
-              route={`${ROUTES.PASTEL_ID_DETAILS}/${nft.creator}`}
-              value={nft.creator}
-              title={nft.creator}
-              className="address-link"
-            />
-          </Styles.TicketContent>
-        </Grid>
-      </Grid>
-      {nft?.permitted_users?.length ? (
-        <Grid container spacing={3}>
-          <Grid item xs={4} sm={3} className="max-w-355">
-            <Styles.TicketTitle>
-              {translate('components.ticket.nftCollectionRegistrationTicket.permittedUsers')}
-            </Styles.TicketTitle>
-          </Grid>
-          <Grid item xs={8} sm={9}>
-            <Styles.TicketContent>{nft.permitted_users.join(', ')}</Styles.TicketContent>
-          </Grid>
-        </Grid>
-      ) : null}
-      {nft?.blocknum ? (
-        <Grid container spacing={3}>
-          <Grid item xs={4} sm={3} className="max-w-355">
-            <Styles.TicketTitle>
-              {translate('components.ticket.nftCollectionRegistrationTicket.blockNum')}
-            </Styles.TicketTitle>
-          </Grid>
-          <Grid item xs={8} sm={9}>
-            <Styles.TicketContent>
-              <RouterLink
-                route={`${ROUTES.BLOCK_DETAILS}/${nft.blocknum}`}
-                value={nft.blocknum}
-                title={nft.blocknum?.toString()}
-                className="address-link"
-              />
-            </Styles.TicketContent>
-          </Grid>
-        </Grid>
-      ) : null}
-      {nft?.block_hash ? (
-        <Grid container spacing={3}>
-          <Grid item xs={4} sm={3} className="max-w-355">
-            <Styles.TicketTitle>
-              {translate('components.ticket.nftCollectionRegistrationTicket.blockHash')}
-            </Styles.TicketTitle>
-          </Grid>
-          <Grid item xs={8} sm={9}>
-            <Styles.TicketContent>
-              <RouterLink
-                route={`${ROUTES.BLOCK_DETAILS}/${nft.block_hash}`}
-                value={nft.block_hash}
-                title={nft.block_hash?.toString()}
-                className="address-link"
-              />
-            </Styles.TicketContent>
-          </Grid>
-        </Grid>
-      ) : null}
-      <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>
-            {translate('components.ticket.nftCollectionRegistrationTicket.closingHeight')}
-          </Styles.TicketTitle>
-        </Grid>
-        <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{nft.closing_height}</Styles.TicketContent>
-        </Grid>
-      </Grid>
-      <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>
-            {translate('components.ticket.nftCollectionRegistrationTicket.nftMaxCount')}
-          </Styles.TicketTitle>
-        </Grid>
-        <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{nft.nft_max_count}</Styles.TicketContent>
-        </Grid>
-      </Grid>
-      <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>
-            {translate('components.ticket.nftCollectionRegistrationTicket.nftCopyCount')}
-          </Styles.TicketTitle>
-        </Grid>
-        <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{nft.nft_copy_count}</Styles.TicketContent>
-        </Grid>
-      </Grid>
-      <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>
-            {translate('components.ticket.nftCollectionRegistrationTicket.royalty')}
-          </Styles.TicketTitle>
-        </Grid>
-        <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{nft?.royalty || '0'}</Styles.TicketContent>
-        </Grid>
-      </Grid>
-      <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>
-            {translate('components.ticket.nftCollectionRegistrationTicket.green')}
-          </Styles.TicketTitle>
-        </Grid>
-        <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{nft?.green?.toString() || 'false'}</Styles.TicketContent>
-        </Grid>
-      </Grid>
-      <AppTicket appTicket={nft.app_ticket} />
-    </Box>
-  );
-};
-
 const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicketProps> = ({
   ticket,
 }) => {
+  const { storageFee } = useStorageFee(ticket?.storage_fee);
+  const [isExpanded, setIsExpanded] = useState(true);
+
   return (
     <Box>
       <Grid container spacing={3}>
@@ -279,19 +128,19 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
           </Grid>
         </Grid>
       ) : null}
-      {ticket?.closing_height ? (
+      {ticket?.height ? (
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.nftCollectionRegistrationTicket.closingHeight')}
+              {translate('components.ticket.nftCollectionRegistrationTicket.height')}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
             <Styles.TicketContent>
               <RouterLink
-                route={`${ROUTES.BLOCK_DETAILS}/${ticket.closing_height}`}
-                value={ticket.closing_height}
-                title={ticket.closing_height?.toString()}
+                route={`${ROUTES.BLOCK_DETAILS}/${ticket.height}`}
+                value={ticket.height}
+                title={ticket.height?.toString()}
                 className="address-link"
               />
             </Styles.TicketContent>
@@ -301,21 +150,99 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.nftCollectionRegistrationTicket.nftMaxCount')}
+            {translate('components.ticket.nftCollectionRegistrationTicket.collectionItemCopyCount')}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{ticket.nft_max_count}</Styles.TicketContent>
+          <Styles.TicketContent>
+            {ticket?.collection_ticket?.collection_item_copy_count}
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.nftCollectionRegistrationTicket.nftCopyCount')}
+            {translate(
+              'components.ticket.nftCollectionRegistrationTicket.collectionFinalAllowedBlockHeight',
+            )}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{ticket?.nft_copy_count || '0'}</Styles.TicketContent>
+          <Styles.TicketContent>
+            <RouterLink
+              route={`${ROUTES.BLOCK_DETAILS}/${ticket?.collection_ticket?.collection_final_allowed_block_height}`}
+              value={ticket?.collection_ticket?.collection_final_allowed_block_height}
+              title={ticket?.collection_ticket?.collection_final_allowed_block_height?.toString()}
+              className="address-link"
+            />
+          </Styles.TicketContent>
+        </Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
+          <Styles.TicketTitle>
+            {translate('components.ticket.nftCollectionRegistrationTicket.collectionName')}
+          </Styles.TicketTitle>
+        </Grid>
+        <Grid item xs={8} sm={9}>
+          <Styles.TicketContent>
+            <RouterLink
+              route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${
+                ticket?.otherData?.collectionAlias || ticket?.collectionAlias
+              }`}
+              value={ticket?.collection_ticket?.collection_name}
+              title={ticket?.collection_ticket?.collection_name}
+              className="address-link"
+            />
+          </Styles.TicketContent>
+        </Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
+          <Styles.TicketTitle>
+            {translate('components.ticket.nftCollectionRegistrationTicket.collectionTicketVersion')}
+          </Styles.TicketTitle>
+        </Grid>
+        <Grid item xs={8} sm={9}>
+          <Styles.TicketContent>
+            {ticket?.collection_ticket?.collection_ticket_version}
+          </Styles.TicketContent>
+        </Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
+          <Styles.TicketTitle>
+            {translate('components.ticket.nftCollectionRegistrationTicket.itemType')}
+          </Styles.TicketTitle>
+        </Grid>
+        <Grid item xs={8} sm={9}>
+          <Styles.TicketContent>{ticket?.collection_ticket?.item_type}</Styles.TicketContent>
+        </Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
+          <Styles.TicketTitle>
+            {translate('components.ticket.nftCollectionRegistrationTicket.maxCollectionEntries')}
+          </Styles.TicketTitle>
+        </Grid>
+        <Grid item xs={8} sm={9}>
+          <Styles.TicketContent>
+            {ticket?.collection_ticket?.max_collection_entries}
+          </Styles.TicketContent>
+        </Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
+          <Styles.TicketTitle>
+            {translate(
+              'components.ticket.nftCollectionRegistrationTicket.listOfPastelidsOfAuthorizedContributors',
+            )}
+          </Styles.TicketTitle>
+        </Grid>
+        <Grid item xs={8} sm={9}>
+          <Styles.TicketContent>
+            {ticket?.collection_ticket?.list_of_pastelids_of_authorized_contributors?.join(', ')}
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -367,7 +294,7 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-            {formatNumber(ticket.storage_fee)} {getCurrencyName()}
+            {formatNumber(ticket.storage_fee)} {getCurrencyName()} {storageFee}
           </Styles.TicketContent>
         </Grid>
       </Grid>
@@ -386,7 +313,33 @@ const NFTCollectionRegistrationTicket: React.FC<INFTCollectionRegistrationTicket
           </Grid>
         </Grid>
       ) : null}
-      <NFTCollectionTicket nftTicket={ticket.nft_collection_ticket} />
+      {ticket?.collection_ticket?.app_ticket ? (
+        <Styles.Accordion
+          expanded={isExpanded}
+          onChange={(event, isPanelExpanded) => setIsExpanded(isPanelExpanded)}
+        >
+          <AccordionSummary>
+            <Grid container spacing={3}>
+              <Grid item xs={4} sm={3} className="max-w-355">
+                <Styles.TicketTitle>
+                  {translate('components.ticket.nftRegistrationTicket.appTicket')}
+                </Styles.TicketTitle>
+              </Grid>
+              <Grid item xs={8} sm={9}>
+                <Styles.TicketContent className="expand-more">
+                  {isExpanded
+                    ? translate('components.ticket.nftRegistrationTicket.hideDetail')
+                    : translate('components.ticket.nftRegistrationTicket.clickToSeeDetail')}{' '}
+                  <ExpandMoreIcon />
+                </Styles.TicketContent>
+              </Grid>
+            </Grid>
+          </AccordionSummary>
+          <AccordionDetails>
+            <AppTicket appTicket={ticket.collection_ticket.app_ticket} />
+          </AccordionDetails>
+        </Styles.Accordion>
+      ) : null}
     </Box>
   );
 };

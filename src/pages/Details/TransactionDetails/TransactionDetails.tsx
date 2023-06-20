@@ -201,7 +201,12 @@ const TransactionDetails = () => {
         </Styles.GridStyle>
         {tickets.length ? (
           <Styles.GridStyle item>
-            <TicketsList data={tickets} senses={senses} showActivationTicket />
+            <TicketsList
+              data={tickets}
+              senses={senses}
+              showActivationTicket
+              variant="transaction"
+            />
           </Styles.GridStyle>
         ) : null}
       </Grid>

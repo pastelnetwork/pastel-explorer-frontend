@@ -14,12 +14,14 @@ interface BlockVisualizationProps {
   clickHandler?: () => void;
   className?: string;
   title?: string;
+  ticketsCount: BlockElementType;
 }
 
 const BlockVisualization: React.FC<BlockVisualizationProps> = ({
   height,
   size,
   transactionCount,
+  ticketsCount,
   minutesAgo,
   className = '',
   title = translate('pages.statistics.block'),
@@ -31,6 +33,7 @@ const BlockVisualization: React.FC<BlockVisualizationProps> = ({
       <Typography variant="h3">{height}</Typography>
       <Typography variant="h4">{size}</Typography>
       <Typography variant="caption">{transactionCount}</Typography>
+      <Typography variant="caption">{ticketsCount}</Typography>
       <Typography variant="caption">{minutesAgo}</Typography>
     </Styles.BlockContainer>
   );

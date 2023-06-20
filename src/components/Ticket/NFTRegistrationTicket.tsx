@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { decode } from 'js-base64';
+import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -14,13 +15,16 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { formatAddress } from '@utils/helpers/format';
 import { formatFullDate } from '@utils/helpers/date/date';
 import { translate } from '@utils/helpers/i18n';
+import noImagePlaceholder from '@assets/images/no-image-placeholder.svg';
 
+import { useStorageFee } from './Ticket.helpers';
 import Signatures from './Signatures';
 import AppTicket from './AppTicket';
 import * as Styles from './Ticket.styles';
 
 interface INFTRegistrationTicketProps {
   ticket: INftRegistrationTicket;
+  transactionHash?: string;
 }
 
 interface INFTTicketProps {
@@ -33,6 +37,7 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
     return null;
   }
   const nft = JSON.parse(decode(nftTicket)) as INftTicket;
+
   return (
     <Box>
       <Grid container spacing={3}>
@@ -173,40 +178,83 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
   );
 };
 
-const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({ ticket }) => {
+const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
+  ticket,
+  transactionHash,
+}) => {
+  const { storageFee } = useStorageFee(ticket?.storage_fee);
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <Box>
+      <Grid container spacing={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
+          <Styles.TicketTitle>
+            {translate('components.ticket.actionRegistrationTicket.collectionName')}
+          </Styles.TicketTitle>
+        </Grid>
+        <Grid item xs={8} sm={9}>
+          <Styles.TicketContent>
+            {ticket?.collectionName ? (
+              <RouterLink
+                route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${ticket.collectionAlias}`}
+                value={ticket.collectionName}
+                title={ticket.collectionName}
+                className="address-link"
+              />
+            ) : (
+              translate('common.na')
+            )}
+          </Styles.TicketContent>
+        </Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs={4} sm={3} className="max-w-355">
+          <Styles.TicketTitle>
+            {translate('components.ticket.actionRegistrationTicket.status')}
+          </Styles.TicketTitle>
+        </Grid>
+        <Grid item xs={8} sm={9}>
+          <Styles.StatusWrapper className="item">
+            <Styles.ActionRegistrationTicketStatus
+              className={ticket?.activation_ticket ? 'active' : ''}
+            >
+              {ticket?.activation_ticket
+                ? translate('components.ticket.actionRegistrationTicket.activated')
+                : translate('components.ticket.actionRegistrationTicket.notYetActivated')}
+            </Styles.ActionRegistrationTicketStatus>
+            {ticket?.activation_ticket && ticket?.activation_txId ? (
+              <Styles.TicketContent>
+                ({translate('components.ticket.actionRegistrationTicket.activationTXID')}{' '}
+                <RouterLink
+                  route={`${ROUTES.TRANSACTION_DETAILS}/${ticket?.activation_txId}`}
+                  value={formatAddress(ticket.activation_txId, 10, -3)}
+                  title={ticket.activation_txId}
+                  className="address-link"
+                />
+                )
+              </Styles.TicketContent>
+            ) : null}
+          </Styles.StatusWrapper>
+        </Grid>
+      </Grid>
       {ticket?.activation_ticket ? (
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.actionRegistrationTicket.status')}
+              {translate('components.ticket.nftRegistrationTicket.PastelNFTImage')}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
-            <Styles.StatusWrapper className="item">
-              <Styles.ActionRegistrationTicketStatus
-                className={ticket?.activation_ticket ? 'active' : ''}
-              >
-                {ticket?.activation_ticket
-                  ? translate('components.ticket.actionRegistrationTicket.activated')
-                  : translate('components.ticket.actionRegistrationTicket.notYetActivated')}
-              </Styles.ActionRegistrationTicketStatus>
-              {ticket?.activation_ticket && ticket?.activation_txId ? (
-                <Styles.TicketContent>
-                  ({translate('components.ticket.actionRegistrationTicket.activationTXID')}{' '}
-                  <RouterLink
-                    route={`${ROUTES.TRANSACTION_DETAILS}/${ticket?.activation_txId}`}
-                    value={formatAddress(ticket.activation_txId, 10, -3)}
-                    title={ticket.activation_txId}
-                    className="address-link"
-                  />
-                  )
-                </Styles.TicketContent>
-              ) : null}
-            </Styles.StatusWrapper>
+            <Styles.TicketContent>
+              <Link to={`${ROUTES.NFT_DETAILS}?txid=${transactionHash}`}>
+                <img
+                  src={ticket?.image || noImagePlaceholder}
+                  alt={transactionHash}
+                  className={`sense-img ${!ticket?.image ? 'placeholder' : ''}`}
+                />
+              </Link>
+            </Styles.TicketContent>
           </Grid>
         </Grid>
       ) : null}
@@ -315,7 +363,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({ ticket }
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-            {formatNumber(ticket.storage_fee)} {getCurrencyName()}
+            {formatNumber(ticket.storage_fee)} {getCurrencyName()} {storageFee}
           </Styles.TicketContent>
         </Grid>
       </Grid>

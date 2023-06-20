@@ -5,6 +5,7 @@ import { formattedDate } from '@utils/helpers/date/date';
 import { IBlock } from '@utils/types/IBlocks';
 import { formatAddress } from '@utils/helpers/format';
 import { getTicketsTypeList } from '@pages/Movement/Movement.helpers';
+import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 
 import { ReactComponent as BoxIcon } from '@assets/icons/box.svg';
 
@@ -14,6 +15,7 @@ import {
   TRANSACTIONS_QTY_KEY,
   TOTAL_TICKETS,
   TIMESTAMP_BLOCKS_KEY,
+  BLOCK_SIZE,
 } from './Blocks.columns';
 import * as Styles from './Blocks.styles';
 
@@ -22,7 +24,7 @@ export const DATA_OFFSET = 0;
 export const DATA_DEFAULT_SORT = 'DESC';
 
 export const transformTableData = (transactions: Array<IBlock>, isMobile: boolean) =>
-  transactions.map(({ id, timestamp, transactionCount, height, ticketsList }) => {
+  transactions.map(({ id, timestamp, transactionCount, height, ticketsList, size }) => {
     const ticketsTypeList = getTicketsTypeList(ticketsList || '');
     return {
       id,
@@ -60,6 +62,9 @@ export const transformTableData = (transactions: Array<IBlock>, isMobile: boolea
             <>0</>
           )}
         </div>
+      ),
+      [BLOCK_SIZE]: (
+        <div className="inline-block">{formatNumber(size / 1024, { decimalsLength: 2 })}</div>
       ),
       [TIMESTAMP_BLOCKS_KEY]: (
         <div className="timestamp">{formattedDate(timestamp, { dayName: false })}</div>

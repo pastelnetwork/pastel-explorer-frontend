@@ -6,7 +6,10 @@ import { darken } from 'polished';
 import { Grid, Hidden, Theme, TextField, CircularProgress, makeStyles } from '@material-ui/core';
 import { Menu as MenuIcon, Search as SearchIcon } from '@material-ui/icons';
 import MuiAutocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
+import Box from '@material-ui/core/Box';
+import CancelIcon from '@material-ui/icons/Cancel';
 
+import Social from '@components/Social/Social';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { ISearchResponse } from '@utils/types/ISearch';
@@ -32,12 +35,18 @@ import {
   BLOCKS_HEIGHTS_LABEL,
   SENSES_LABEL,
   PASTEL_ID_LABEL,
+  COLLECTION_LABEL,
+  CASCADE_LABEL,
   USERNAME,
+  COLLECTION,
+  CASCADE,
   TOptionsCategories,
   getRoute,
   collectData,
   collectUsernameData,
   TAutocompleteOptions,
+  collectCascadeData,
+  collectCollectionData,
 } from './SearchBar.helpers';
 
 interface AppBarProps {
@@ -67,10 +76,10 @@ const useStyles = makeStyles((theme: TAppTheme) => ({
     },
   },
   listboxOptions: {
+    margin: 0,
     background: theme.palette.background.default,
-    border: '1px solid',
-    borderColor: darken(0.05, theme.palette.background.paper),
-    borderRadius: 5,
+    border: 0,
+    borderRadius: 4,
   },
 }));
 
@@ -82,6 +91,7 @@ const filterOptions = createFilterOptions({
 
 const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
   const optionSelectedFromList = React.useRef(false);
   const { fetchData } = useFetch<ISearchResponse>({ method: 'get', url: URLS.SEARCH_URL });
   const [searchData, setSearchData] = React.useState<Array<ISearchData>>([]);
@@ -89,6 +99,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
   const [isShowSearchInput, setShowSearchInput] = React.useState(false);
   const [forceShowSearchInput, setForceShowSearchInput] = React.useState(false);
   const [isInputFocus, setInputFocus] = React.useState(false);
+  const [noResult, setNoResult] = React.useState(false);
 
   const handleShowSearchInput = () => {
     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -119,7 +130,6 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
 
   const sortSearchData = ({ data }: ISearchResponse) => {
     if (!data) return [];
-
     const groupedData = [
       ...collectData(
         data.address,
@@ -152,8 +162,18 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         USERNAME,
         translate(USERNAME_TEXT_LABEL) as TOptionsCategories,
       ),
+      ...collectCascadeData(
+        data.cascadeList,
+        CASCADE,
+        translate(CASCADE_LABEL) as TOptionsCategories,
+      ),
+      ...collectCollectionData(
+        data.collectionNameList,
+        COLLECTION,
+        translate(COLLECTION_LABEL) as TOptionsCategories,
+      ),
     ];
-
+    setNoResult(!groupedData.length);
     return setSearchData(groupedData.sort((a, b) => -b.category.localeCompare(a.category)));
   };
 
@@ -174,7 +194,6 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
   // Prevent component from fetching new data and changing component states
   const handleChange = () => {
     optionSelectedFromList.current = true;
-
     // Reset reference object when to allow user search again if he will click on some option from dropdown
     const id = setTimeout(() => {
       optionSelectedFromList.current = false;
@@ -193,7 +212,30 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
     setInputFocus(false);
   };
 
+  const isSearchOpen = Boolean(anchorEl);
   const dropdownOpen = Boolean(searchData.length) || loading;
+
+  const renderSearchFooter = () => {
+    return (
+      <Styles.SearchFooter>
+        <div className="search-footer-left">
+          <h6>{translate('components.searchBar.findMore')}</h6>
+          <p>{translate('components.searchBar.connectCommunity')}</p>
+        </div>
+        <Social className="social-search" />
+      </Styles.SearchFooter>
+    );
+  };
+
+  const renderNoResult = () => {
+    return <Styles.EmptyBox>{translate('components.searchBar.noResults')}</Styles.EmptyBox>;
+  };
+
+  const handleCloseSearch = () => {
+    setAnchorEl(null);
+    setNoResult(false);
+    setSearchData([]);
+  };
 
   const renderSearchInput = () => (
     <Styles.AutocompleteWrapper item>
@@ -218,7 +260,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         getOptionSelected={(option, value) =>
           (option as TAutocompleteOptions).value === (value as TAutocompleteOptions).value
         }
-        noOptionsText={translate('components.searchBar.noResults')}
+        noOptionsText={renderNoResult()}
         loadingText={translate('components.searchBar.loadingResults')}
         size="small"
         debug
@@ -245,6 +287,28 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
               />
             );
           }
+          if ((option as TAutocompleteOptions).category === CASCADE) {
+            return (
+              <RouterLink
+                styles={{ padding: '6px 24px 6px 16px' }}
+                route={`${getRoute((option as TAutocompleteOptions).category)}?txid=${
+                  (option as TAutocompleteOptions).transactionHash
+                }`}
+                value={(option as TAutocompleteOptions).value}
+              />
+            );
+          }
+          if ((option as TAutocompleteOptions).category === COLLECTION) {
+            return (
+              <RouterLink
+                styles={{ padding: '6px 24px 6px 16px' }}
+                route={`${getRoute((option as TAutocompleteOptions).category)}/${
+                  (option as TAutocompleteOptions).alias
+                }`}
+                value={(option as TAutocompleteOptions).value}
+              />
+            );
+          }
           return (
             <RouterLink
               styles={{ padding: '6px 24px 6px 16px' }}
@@ -258,13 +322,14 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         renderInput={params => (
           <TextField
             {...params}
-            label={translate('components.searchBar.inputSearchLabel')}
+            placeholder={translate('components.searchBar.search')}
             InputLabelProps={{
               ...params.InputLabelProps,
               classes: {
                 root: `${classes.labelInputRoot} label-input`,
               },
             }}
+            autoFocus
             InputProps={{
               ...params.InputProps,
               classes: {
@@ -272,13 +337,25 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
               },
               endAdornment: (
                 <>
-                  {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                  {loading ? (
+                    <CircularProgress color="inherit" size={20} />
+                  ) : (
+                    <button type="button" className="close-button" onClick={handleCloseSearch}>
+                      <CancelIcon className="cancel-icon" />
+                    </button>
+                  )}
                   {params.InputProps.endAdornment}
                 </>
               ),
             }}
             variant="outlined"
           />
+        )}
+        PaperComponent={({ children }) => (
+          <Styles.PaperComponentWrapper>
+            {loading ? <Styles.EmptyBox>{children}</Styles.EmptyBox> : children}
+            {renderSearchFooter()}
+          </Styles.PaperComponentWrapper>
         )}
       />
     </Styles.AutocompleteWrapper>
@@ -301,6 +378,92 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
     onDrawerToggle(event);
   };
 
+  const handleFakeButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setSearchData([]);
+    setAnchorEl(event.currentTarget);
+    setNoResult(false);
+  };
+
+  const handleSearchClose = () => {
+    setAnchorEl(null);
+  };
+
+  const renderFakeInput = () => {
+    return (
+      <Styles.FakeInput type="button" onClick={handleFakeButtonClick}>
+        {translate('components.searchBar.search')}
+      </Styles.FakeInput>
+    );
+  };
+
+  const searchId = isSearchOpen ? 'search-popover' : undefined;
+
+  const renderSearchContent = () => {
+    return (
+      <>
+        {renderFakeInput()}
+        <Styles.PopoverWrapper
+          id={searchId}
+          open={isSearchOpen}
+          anchorEl={anchorEl}
+          onClose={handleSearchClose}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          <Styles.SearchInputWrapper>
+            {renderSearchInput()}
+            {!dropdownOpen ? (
+              <Box>
+                {noResult ? (
+                  <Styles.EmptyBox>{translate('components.searchBar.noResults')}</Styles.EmptyBox>
+                ) : (
+                  <Box className="search-feature">
+                    <p className="search-feature-title">
+                      {translate('components.searchBar.searchBy')}:
+                    </p>
+                    <ul className="search-feature-list">
+                      <li className="search-feature-item">
+                        {translate('components.searchBar.blocksHeights')}
+                      </li>
+                      <li className="search-feature-item">
+                        {translate('components.searchBar.blocksIds')}
+                      </li>
+                      <li className="search-feature-item">
+                        {translate('components.searchBar.txID')}
+                      </li>
+                      <li className="search-feature-item">
+                        {translate('components.searchBar.addresses')}
+                      </li>
+                      <li className="search-feature-item">
+                        {translate('components.searchBar.pastelID')}
+                      </li>
+                      <li className="search-feature-item">
+                        {translate('components.searchBar.username')}
+                      </li>
+                      <li className="search-feature-item">
+                        {translate('components.searchBar.cascadeFilename')}
+                      </li>
+                      <li className="search-feature-item">
+                        {translate('components.searchBar.senseImageHash')}
+                      </li>
+                    </ul>
+                  </Box>
+                )}
+                {renderSearchFooter()}
+              </Box>
+            ) : null}
+          </Styles.SearchInputWrapper>
+        </Styles.PopoverWrapper>
+      </>
+    );
+  };
+
   return (
     <Styles.AppBar
       position="relative"
@@ -314,7 +477,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
           alignItems="center"
           wrap="nowrap"
         >
-          {renderSearchInput()}
+          {renderSearchContent()}
         </Styles.GridStyle>
         <Styles.IconButton
           className="search-icon"
@@ -340,7 +503,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         <ChooseCluster />
       </Styles.ToolbarStyle>
       <Styles.GridStyle className="search-popup" container alignItems="center" wrap="nowrap">
-        {renderSearchInput()}
+        {renderFakeInput()}
       </Styles.GridStyle>
     </Styles.AppBar>
   );

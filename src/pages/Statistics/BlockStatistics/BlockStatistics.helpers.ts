@@ -9,13 +9,14 @@ export interface ITransformBlocksData {
   height: string;
   size: string;
   minutesAgo: string;
+  ticketsCount: string;
 }
 
 export const transformBlocksData = (
   transactions: Array<IBlock>,
   currentTime: number,
 ): Array<ITransformBlocksData> => {
-  return transactions.map(({ id, timestamp, transactionCount, height, size }) => {
+  return transactions.map(({ id, timestamp, transactionCount, height, size, totalTickets }) => {
     const minutesAgo = Math.floor(((currentTime || getCurrentUnixTimestamp) - timestamp) / 60);
     return {
       id,
@@ -26,6 +27,10 @@ export const transformBlocksData = (
         minutesAgo === 1
           ? translate('pages.statistics.minuteAgo', { minutesAgo })
           : translate('pages.statistics.minutesAgo', { minutesAgo }),
+      ticketsCount:
+        totalTickets > 1
+          ? translate('pages.statistics.tickets', { ticketsCount: totalTickets })
+          : translate('pages.statistics.ticket', { ticketsCount: totalTickets || 0 }),
     };
   });
 };

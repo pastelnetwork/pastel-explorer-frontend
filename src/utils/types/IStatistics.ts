@@ -194,3 +194,8 @@ export type TCascadeAndSenseChart = {
   difference: number;
   currentValue: number;
 };
+
+export type TFeeSchedule = {
+  time: number;
+  value: number;
+};

@@ -7,6 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Tooltip from '@material-ui/core/Tooltip';
+import InfoIcon from '@material-ui/icons/Info';
 
 import { TAppTheme } from '@theme/index';
 import { decompress_zstd_compressed_data_func } from '@utils/helpers/encryption';
@@ -15,6 +16,8 @@ import * as ROUTES from '@utils/constants/routes';
 import { translate } from '@utils/helpers/i18n';
 
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
+import imagePlaceholder from '@assets/images/no-image-placeholder.svg';
+
 import * as Styles from './SenseDetails.styles';
 
 export const StyledTableCell = withStyles((theme: TAppTheme) => ({
@@ -45,7 +48,7 @@ const ProgressBar: React.FC<IProgressBar> = ({ value }) => {
   return (
     <Styles.ProgressBarWrapper>
       <Tooltip title={`${value}%`}>
-        <Styles.ProgressBarItem style={{ width: `${value}%` }} />
+        <Styles.ProgressBarItem className="progress-bar-item" style={{ width: `${value}%` }} />
       </Tooltip>
     </Styles.ProgressBarWrapper>
   );
@@ -59,18 +62,47 @@ const formatImageHash = (hash: string) => {
   return `${hash.substring(0, 10)}...`;
 };
 
+type TSimilarRegisteredImage = {
+  image: string | null;
+  imageHash: string;
+  imageHashOriginal: string;
+  dateTimeAdded: string;
+  matchType: string;
+  finalDupeProbability: number;
+  cosineSimilarity: number;
+  cosineGain: number;
+  hoeffdingDependency: number;
+  hoeffdingGain: number;
+  hilbertSchmidtInformationCriteria: number;
+  hilbertSchmidtGain: number;
+  likelyDupe: boolean;
+};
+
 export const getSimilarRegisteredImagesData = (rarenessScoresTable: string) => {
   if (!rarenessScoresTable) {
     return [];
   }
   const uncompressedRarenessScoresTable = decompress_zstd_compressed_data_func(rarenessScoresTable);
+
+  const getRegisterTime = (value: string | Array<string[]>) => {
+    try {
+      if (value?.length) {
+        return value[0][0];
+      }
+      return value?.toString()?.split('.')[0];
+    } catch {
+      return '';
+    }
+  };
   let fancyGridData = [];
   for (let i = 0; i < Object.values(uncompressedRarenessScoresTable.image_hash).length; i += 1) {
     fancyGridData.push({
-      image: `data:image/jpeg;base64,${uncompressedRarenessScoresTable.thumbnail[i]}`,
+      image: uncompressedRarenessScoresTable.thumbnail[i]
+        ? `data:image/jpeg;base64,${uncompressedRarenessScoresTable.thumbnail[i]}`
+        : null,
       imageHash: formatImageHash(uncompressedRarenessScoresTable.image_hash[i]),
       imageHashOriginal: uncompressedRarenessScoresTable.image_hash[i],
-      dateTimeAdded: uncompressedRarenessScoresTable.register_time[i],
+      dateTimeAdded: getRegisterTime(uncompressedRarenessScoresTable.register_time[i]),
       likelyDupe: uncompressedRarenessScoresTable.is_likely_dupe[i],
       matchType: uncompressedRarenessScoresTable.match_type[i],
       finalDupeProbability: uncompressedRarenessScoresTable.final_dupe_probability[i],
@@ -89,6 +121,117 @@ export const getSimilarRegisteredImagesData = (rarenessScoresTable: string) => {
   return fancyGridData;
 };
 
+interface ISimilarRegisteredImageRow {
+  index: number;
+  item: TSimilarRegisteredImage;
+  totalItem: number;
+}
+
+const SimilarRegisteredImageRow: React.FC<ISimilarRegisteredImageRow> = ({
+  item,
+  index,
+  totalItem,
+}) => {
+  const toggleHover = () => {
+    const currentRow = document.getElementById(`table__row_${index}`);
+    if (currentRow) {
+      currentRow.classList.toggle('active');
+    }
+    if (index > 0) {
+      const prevRow = document.getElementById(`table__row_${index - 1}`);
+      if (prevRow) {
+        prevRow.classList.toggle('prev_row_active');
+      }
+    }
+    if (index < totalItem) {
+      const nextRow = document.getElementById(`table__row_${index + 1}`);
+      if (nextRow) {
+        nextRow.classList.toggle('next_row_active');
+      }
+    }
+  };
+
+  return (
+    <StyledTableRow
+      className="table__row"
+      id={`table__row_${index}`}
+      style={{
+        background: item.likelyDupe ? 'linear-gradient(to bottom, #d9a7c7, #f4dae5)' : undefined,
+      }}
+    >
+      <StyledTableCell component="td" scope="row" align="center">
+        <TicketStyles.TicketContent>{index + 1}</TicketStyles.TicketContent>
+      </StyledTableCell>
+      <StyledTableCell
+        component="td"
+        scope="row"
+        onMouseEnter={toggleHover}
+        onMouseLeave={toggleHover}
+        className="image-row"
+      >
+        <img src={item.image || imagePlaceholder} alt={item.imageHashOriginal} />
+      </StyledTableCell>
+      <StyledTableCell component="td" scope="row">
+        <TicketStyles.TicketContent>
+          {item.matchType === 'Seed Image' ? (
+            <>{item.imageHash}</>
+          ) : (
+            <RouterLink
+              route={`${ROUTES.SENSE_DETAILS}?hash=${item.imageHashOriginal}`}
+              value={item.imageHash}
+              title={item.imageHash}
+              className="address-link"
+            />
+          )}
+        </TicketStyles.TicketContent>
+      </StyledTableCell>
+      <StyledTableCell component="td" scope="row">
+        <TicketStyles.TicketContent>{item.dateTimeAdded}</TicketStyles.TicketContent>
+      </StyledTableCell>
+      <StyledTableCell component="td" scope="row">
+        <TicketStyles.TicketContent
+          className={`white-space-nowrap ${item.matchType === 'Seed Image' ? 'inline-flex' : ''}`}
+        >
+          {item.matchType}
+          {item.matchType === 'Seed Image' ? (
+            <Tooltip title={translate('pages.senseDetails.seedImagesInfo')}>
+              <InfoIcon className="seed-images-info" />
+            </Tooltip>
+          ) : null}
+        </TicketStyles.TicketContent>
+      </StyledTableCell>
+      <StyledTableCell component="td" scope="row">
+        <TicketStyles.TicketContent>
+          {(item.finalDupeProbability * 100).toFixed(2)}%
+        </TicketStyles.TicketContent>
+      </StyledTableCell>
+      <StyledTableCell component="td" scope="row">
+        <ProgressBar value={parseFloat((item.finalDupeProbability * 100).toFixed(2))} />
+      </StyledTableCell>
+      <StyledTableCell component="td" scope="row">
+        <TicketStyles.TicketContent>{item.cosineSimilarity}</TicketStyles.TicketContent>
+      </StyledTableCell>
+      <StyledTableCell component="td" scope="row">
+        <TicketStyles.TicketContent>{item.cosineGain}</TicketStyles.TicketContent>
+      </StyledTableCell>
+      <StyledTableCell component="td" scope="row">
+        <TicketStyles.TicketContent>{item.hoeffdingDependency}</TicketStyles.TicketContent>
+      </StyledTableCell>
+      <StyledTableCell component="td" scope="row">
+        <TicketStyles.TicketContent>{item.hoeffdingGain}</TicketStyles.TicketContent>
+      </StyledTableCell>
+      <StyledTableCell component="td" scope="row">
+        <TicketStyles.TicketContent>
+          {item.hilbertSchmidtInformationCriteria}
+        </TicketStyles.TicketContent>
+      </StyledTableCell>
+      <StyledTableCell component="td" scope="row">
+        <TicketStyles.TicketContent>{item.hilbertSchmidtGain}</TicketStyles.TicketContent>
+      </StyledTableCell>
+    </StyledTableRow>
+  );
+};
+
 const SimilarRegisteredImages: React.FC<ISimilarRegisteredImages> = ({ rarenessScoresTable }) => {
   if (!rarenessScoresTable) {
     return null;
@@ -101,136 +244,55 @@ const SimilarRegisteredImages: React.FC<ISimilarRegisteredImages> = ({ rarenessS
         <Table aria-label="customized table" className="custom-table latest-transactions">
           <TableHead className="table__row-header">
             <TableRow>
-              <StyledTableCell component="th">
+              <StyledTableCell component="th" className="rank" align="center">
                 {translate('pages.senseDetails.rank')}
               </StyledTableCell>
-              <StyledTableCell component="th">
+              <StyledTableCell component="th" className="thumbnail">
                 {translate('pages.senseDetails.thumbnail')}
               </StyledTableCell>
-              <StyledTableCell component="th">
+              <StyledTableCell component="th" className="imageHash">
                 {translate('pages.senseDetails.imageHash')}
               </StyledTableCell>
-              <StyledTableCell component="th">
+              <StyledTableCell component="th" className="dateTimeAdded">
                 {translate('pages.senseDetails.dateTimeAdded')}
               </StyledTableCell>
-              <StyledTableCell component="th">
+              <StyledTableCell component="th" className="matchType">
                 {translate('pages.senseDetails.matchType')}
               </StyledTableCell>
-              <StyledTableCell component="th">
+              <StyledTableCell component="th" className="dupeProbability">
                 {translate('pages.senseDetails.dupeProbability')}
               </StyledTableCell>
-              <StyledTableCell component="th">
+              <StyledTableCell component="th" className="dupeProbability chart">
                 {translate('pages.senseDetails.dupeProbability')}
               </StyledTableCell>
-              <StyledTableCell component="th">
+              <StyledTableCell component="th" className="cosineSimilarity">
                 {translate('pages.senseDetails.cosineSimilarity')}
               </StyledTableCell>
-              <StyledTableCell component="th">
+              <StyledTableCell component="th" className="cosineGain">
                 {translate('pages.senseDetails.cosineGain')}
               </StyledTableCell>
-              <StyledTableCell component="th">
+              <StyledTableCell component="th" className="hoeffdingsDependency">
                 {translate('pages.senseDetails.hoeffdingsDependency')}
               </StyledTableCell>
-              <StyledTableCell component="th">
+              <StyledTableCell component="th" className="hoeffdingGain">
                 {translate('pages.senseDetails.hoeffdingGain')}
               </StyledTableCell>
-              <StyledTableCell component="th">
+              <StyledTableCell component="th" className="hilbertSchmidtInformationCriteria">
                 {translate('pages.senseDetails.hilbertSchmidtInformationCriteria')}
               </StyledTableCell>
-              <StyledTableCell component="th">
+              <StyledTableCell component="th" className="hilbertSchmidtGain">
                 {translate('pages.senseDetails.hilbertSchmidtGain')}
               </StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {fancyGridData?.map((item, index) => (
-              <StyledTableRow
-                className="table__row"
+              <SimilarRegisteredImageRow
                 key={item.imageHashOriginal}
-                style={{
-                  background: item.likelyDupe
-                    ? 'linear-gradient(to bottom, #d9a7c7, #f4dae5)'
-                    : undefined,
-                }}
-              >
-                <StyledTableCell component="td" scope="row">
-                  <TicketStyles.TicketContent className="white-space-nowrap">
-                    {index + 1}
-                  </TicketStyles.TicketContent>
-                </StyledTableCell>
-                <StyledTableCell component="td" scope="row">
-                  <img src={item.image} alt={item.imageHashOriginal} />
-                </StyledTableCell>
-                <StyledTableCell component="td" scope="row">
-                  <TicketStyles.TicketContent className="white-space-nowrap">
-                    {item.matchType === 'Seed Image' ? (
-                      <RouterLink
-                        route={`${ROUTES.SENSE_DETAILS}?hash=${
-                          item.imageHashOriginal
-                        }&matchType=${item?.matchType?.replaceAll(' ', '')?.toLowerCase()}`}
-                        value={item.imageHash}
-                        title={item.imageHash}
-                        className="address-link"
-                      />
-                    ) : (
-                      <RouterLink
-                        route={`${ROUTES.SENSE_DETAILS}?hash=${item.imageHashOriginal}`}
-                        value={item.imageHash}
-                        title={item.imageHash}
-                        className="address-link"
-                      />
-                    )}
-                  </TicketStyles.TicketContent>
-                </StyledTableCell>
-                <StyledTableCell component="td" scope="row">
-                  <TicketStyles.TicketContent className="white-space-nowrap">
-                    {item.dateTimeAdded}
-                  </TicketStyles.TicketContent>
-                </StyledTableCell>
-                <StyledTableCell component="td" scope="row">
-                  <TicketStyles.TicketContent className="white-space-nowrap">
-                    {item.matchType}
-                  </TicketStyles.TicketContent>
-                </StyledTableCell>
-                <StyledTableCell component="td" scope="row">
-                  <TicketStyles.TicketContent className="white-space-nowrap">
-                    {(item.finalDupeProbability * 100).toFixed(2)}%
-                  </TicketStyles.TicketContent>
-                </StyledTableCell>
-                <StyledTableCell component="td" scope="row">
-                  <ProgressBar value={parseFloat((item.finalDupeProbability * 100).toFixed(2))} />
-                </StyledTableCell>
-                <StyledTableCell component="td" scope="row">
-                  <TicketStyles.TicketContent className="white-space-nowrap">
-                    {item.cosineSimilarity}
-                  </TicketStyles.TicketContent>
-                </StyledTableCell>
-                <StyledTableCell component="td" scope="row">
-                  <TicketStyles.TicketContent className="white-space-nowrap">
-                    {item.cosineGain}
-                  </TicketStyles.TicketContent>
-                </StyledTableCell>
-                <StyledTableCell component="td" scope="row">
-                  <TicketStyles.TicketContent className="white-space-nowrap">
-                    {item.hoeffdingDependency}
-                  </TicketStyles.TicketContent>
-                </StyledTableCell>
-                <StyledTableCell component="td" scope="row">
-                  <TicketStyles.TicketContent className="white-space-nowrap">
-                    {item.hoeffdingGain}
-                  </TicketStyles.TicketContent>
-                </StyledTableCell>
-                <StyledTableCell component="td" scope="row">
-                  <TicketStyles.TicketContent className="white-space-nowrap">
-                    {item.hilbertSchmidtInformationCriteria}
-                  </TicketStyles.TicketContent>
-                </StyledTableCell>
-                <StyledTableCell component="td" scope="row">
-                  <TicketStyles.TicketContent className="white-space-nowrap">
-                    {item.hilbertSchmidtGain}
-                  </TicketStyles.TicketContent>
-                </StyledTableCell>
-              </StyledTableRow>
+                item={item}
+                index={index}
+                totalItem={fancyGridData.length - 1}
+              />
             ))}
           </TableBody>
         </Table>

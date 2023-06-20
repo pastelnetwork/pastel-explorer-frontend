@@ -1,6 +1,13 @@
 import styled from 'styled-components/macro';
+import Paper from '@material-ui/core/Paper';
 
-import { AppBar as MuiAppBar, IconButton as MuiIconButton, Grid, Toolbar } from '@material-ui/core';
+import {
+  AppBar as MuiAppBar,
+  IconButton as MuiIconButton,
+  Grid,
+  Toolbar,
+  Popover,
+} from '@material-ui/core';
 
 import sun from '@assets/icons/sun.svg';
 import moon from '@assets/icons/moon.svg';
@@ -13,7 +20,7 @@ export const ToolbarStyle = styled(Toolbar)`
 `;
 
 export const GridStyle = styled(Grid)`
-  max-width: 530px;
+  max-width: 430px;
 
   &.search-popup {
     display: none;
@@ -26,10 +33,6 @@ export const GridStyle = styled(Grid)`
     margin-left: 0;
     padding: 10px;
     background: ${props => props.theme.sidebar.menu.background};
-  }
-
-  ${props => props.theme.breakpoints.down('md')} {
-    max-width: 200px;
   }
 
   ${props => props.theme.breakpoints.down('xs')} {
@@ -60,38 +63,6 @@ export const GridStyle = styled(Grid)`
   .MuiInputBase-input {
     font-size: 13px;
   }
-
-  @media (max-width: 1424px) and (min-width: 900px) {
-    &.autocomplete-focus {
-      position: absolute;
-      right: 76px;
-      width: 55vw;
-      max-width: 74vw;
-      background: ${props => props.theme.sidebar.menu.background};
-      z-index: 100;
-
-      .label-input {
-        max-width: 100%;
-        width: auto;
-      }
-    }
-  }
-
-  @media (max-width: 900px) and (min-width: 600px) {
-    &.autocomplete-focus {
-      position: absolute;
-      right: 76px;
-      width: 74vw;
-      max-width: 74vw;
-      background: ${props => props.theme.sidebar.menu.background};
-      z-index: 100;
-
-      .label-input {
-        max-width: 100%;
-        width: auto;
-      }
-    }
-  }
 `;
 
 export const AppBar = styled(MuiAppBar)`
@@ -103,7 +74,11 @@ export const AppBar = styled(MuiAppBar)`
   z-index: 10;
 
   ${props => props.theme.breakpoints.up('md')} {
-    max-width: 28%;
+    max-width: 36%;
+  }
+
+  ${props => props.theme.breakpoints.up(1110)} {
+    max-width: 45%;
   }
 
   ${props => props.theme.breakpoints.up('lg')} {
@@ -134,7 +109,7 @@ export const AppBar = styled(MuiAppBar)`
     }
 
     ${props => props.theme.breakpoints.up('lg')} {
-      max-width: 96%;
+      max-width: 94%;
     }
   }
 
@@ -185,6 +160,26 @@ export const IconButton = styled(MuiIconButton)`
 export const AutocompleteWrapper = styled(Grid)`
   width: 100%;
   margin-right: 15px;
+
+  .close-button {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    z-index: 10000;
+    line-height: 1;
+    display: inline-flex;
+
+    .cancel-icon {
+      font-size: 20px;
+      color: #b9bfcb;
+      transition: all 0.5s ease;
+
+      &:hover {
+        color: ${props => props.theme.sidebar.menu.toggle.switch};
+      }
+    }
+  }
 
   ${props => props.theme.breakpoints.down('md')} {
     margin-right: 5px;
@@ -303,5 +298,161 @@ export const ModeToggle = styled.div`
   ${props => props.theme.breakpoints.down('sm')} {
     margin-right: 6px;
     transform: scale(0.8);
+  }
+`;
+
+export const FakeInput = styled.button`
+  width: 100%;
+  text-align: left;
+  border: 1px solid ${props => props.theme.sidebar.menu.default};
+  color: ${props => props.theme.sidebar.menu.default};
+  position: relative;
+  border-radius: 5px;
+  background: transparent;
+  margin-right: 15px;
+  padding: 9px 20px 9px 14px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
+export const SearchInputWrapper = styled.div`
+  min-width: 430px;
+
+  .search-feature {
+    padding: 0;
+  }
+
+  .search-feature-title {
+    margin: 0;
+    padding: 10px 18px;
+    background: ${props => props.theme.filter.group};
+  }
+
+  .search-feature-list {
+    display: grid;
+    gap: 6px 10px;
+    grid-template-columns: 1fr 1fr;
+
+    ${props => props.theme.breakpoints.down(430)} {
+      padding-left: 30px;
+    }
+  }
+
+  .search-feature-item {
+    color: ${props => props.theme.filter.text};
+  }
+
+  ${props => props.theme.breakpoints.down('xs')} {
+    min-width: calc(100vw - 18px);
+  }
+`;
+
+export const PopoverWrapper = styled(Popover)`
+  min-width: 400px;
+  overflow: unset;
+
+  .MuiPopover-paper {
+    top: 15px !important;
+    overflow: hidden;
+    border-radius: 5px;
+    box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
+    border: 1px solid rgb(16 16 16 / 6%);
+
+    .MuiInputBase-root {
+      padding-right: 20px;
+    }
+
+    .MuiInputBase-root,
+    .MuiOutlinedInput-notchedOutline {
+      border: 0;
+    }
+
+    .MuiFormControl-fullWidth {
+      background: ${props => props.theme.sidebar.menu.background};
+    }
+
+    .MuiBox-root:not(.search-footer) {
+      background: ${props => props.theme.sidebar.menu.background};
+      border-radius: 0 0 5px 5px;
+    }
+
+    .MuiFormLabel-root {
+      background: transparent;
+
+      &.Mui-focused {
+        color: ${props => props.theme.header.color};
+      }
+    }
+
+    ${props => props.theme.breakpoints.down('xs')} {
+      top: 58px !important;
+      left: 8px !important;
+      max-width: 100vw;
+    }
+  }
+`;
+
+export const SearchFooter = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 26px;
+  background: ${props => props.theme.filter.footer};
+  border-radius: 0 0 4px 4px;
+
+  ${props => props.theme.breakpoints.down(430)} {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .search-footer-left {
+    h6 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    p {
+      margin: 4px 0 0;
+    }
+  }
+
+  .social-search {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin: 0;
+    padding-left: 0;
+
+    li {
+      margin-right: 0;
+    }
+
+    ${props => props.theme.breakpoints.down(430)} {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+`;
+
+export const EmptyBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 182px;
+  font-size: 16px;
+  font-weight: 600;
+  background: ${props => props.theme.sidebar.menu.background};
+`;
+
+export const PaperComponentWrapper = styled(Paper)`
+  background: ${props => props.theme.sidebar.menu.background};
+
+  .MuiAutocomplete-listbox {
+    padding: 0;
+
+    .MuiAutocomplete-groupLabel {
+      background: ${props => props.theme.filter.group};
+    }
   }
 `;

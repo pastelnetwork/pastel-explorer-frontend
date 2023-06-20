@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 
+import { useUsdPrice } from '@hooks/useTransactionDetails';
 import useTickets from '@hooks/useTickets';
 
 import Sense from './Sense';
@@ -20,6 +21,7 @@ import {
 import * as Styles from './Tickets.styles';
 
 const Tickets: React.FC = () => {
+  const { usdPrice } = useUsdPrice();
   const otherTicketData = useTickets('other', DATA_LIMIT);
   const cascadeTicketData = useTickets('cascade', DATA_LIMIT);
   const offerTransferTicketData = useTickets('offer-transfer', DATA_LIMIT);
@@ -27,9 +29,11 @@ const Tickets: React.FC = () => {
   const pastelNftTicketData = useTickets('pastel-nft', DATA_LIMIT);
   const senseTicketData = useTickets('sense', DATA_LIMIT);
   const [isMobile, setMobileView] = useState(false);
+  const [innerWidth, setInnerWidth] = useState(0);
 
   const handleResize = () => {
     setMobileView(false);
+    setInnerWidth(window.innerWidth);
     if (window.innerWidth < 960) {
       setMobileView(true);
     }
@@ -67,7 +71,7 @@ const Tickets: React.FC = () => {
         <Styles.GirdStyle item className="full">
           <Styles.TicketSummaryContainer>
             {ticketsSummary.map(item => (
-              <Styles.TicketSummaryBox key={item.id} href={`#${item.id}`} className={item.id}>
+              <Styles.TicketSummaryBox key={item.id} to={item.link} className={item.id}>
                 <span className="ticket-summary-title">{item.name}</span>
                 <span className="ticket-summary-value">
                   {isLoading(item.id, ticketLoading) ? (
@@ -83,10 +87,20 @@ const Tickets: React.FC = () => {
       </Grid>
       <Grid container spacing={6}>
         <Styles.GirdStyle item xs={12} lg={6} className="left">
-          <Sense isMobile={isMobile} ticketsData={senseTicketData as TTicketResponse} />
+          <Sense
+            isMobile={isMobile}
+            ticketsData={senseTicketData as TTicketResponse}
+            innerWidth={innerWidth}
+            usdPrice={usdPrice}
+          />
         </Styles.GirdStyle>
         <Styles.GirdStyle item xs={12} lg={6} className="right">
-          <Cascade isMobile={isMobile} ticketsData={cascadeTicketData as TTicketResponse} />
+          <Cascade
+            isMobile={isMobile}
+            ticketsData={cascadeTicketData as TTicketResponse}
+            innerWidth={innerWidth}
+            usdPrice={usdPrice}
+          />
         </Styles.GirdStyle>
       </Grid>
       <Grid container spacing={6}>
@@ -100,6 +114,8 @@ const Tickets: React.FC = () => {
           <PastelNftTickets
             isMobile={isMobile}
             ticketsData={pastelNftTicketData as TTicketResponse}
+            innerWidth={innerWidth}
+            usdPrice={usdPrice}
           />
         </Styles.GirdStyle>
       </Grid>

@@ -1,10 +1,51 @@
 import styled from 'styled-components/macro';
 import { Grid } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
 
 import themeVariant from '@theme/variants';
 
 export const TicketsContainer = styled.div`
   width: 100%;
+
+  .read-more {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .mr-10 {
+    margin-right: 10px;
+  }
+
+  .cascade-image {
+    width: 48px;
+
+    img {
+      width: 48px;
+      max-height: 48px;
+    }
+  }
+
+  .nft-image {
+    width: 48px;
+    margin-left: 10px;
+
+    img {
+      width: 48px;
+      max-height: 48px;
+    }
+  }
+
+  .sense-img {
+    width: 48px;
+    max-height: 48px;
+  }
+
+  .thumbnail-box {
+    display: flex;
+  }
 
   .p-16 {
     padding: 16px;
@@ -25,6 +66,10 @@ export const TicketsContainer = styled.div`
 
   .more-detail {
     margin-top: 4px;
+  }
+
+  .inline-block {
+    display: inline-block;
   }
 
   .table-title {
@@ -56,6 +101,10 @@ export const TicketsContainer = styled.div`
     }
   }
 
+  .white-nowrap {
+    white-space: nowrap;
+  }
+
   .view-detail {
     font-size: 14px;
     margin-left: 0px;
@@ -68,6 +117,34 @@ export const TicketsContainer = styled.div`
       display: block;
       margin-top: 4px;
       margin-left: 0;
+    }
+  }
+
+  .tickets-table {
+    .ReactVirtualized__Table__headerRow {
+      display: none;
+    }
+
+    .bold {
+      font-weight: 700;
+    }
+
+    .title {
+      font-size: 15px;
+    }
+
+    .MuiGrid-spacing-xs-3 > .MuiGrid-item {
+      padding: 4px 6px;
+    }
+
+    .ticket-status {
+      display: flex;
+      align-items: center;
+
+      .action-ticket-status {
+        padding: 6px 10px;
+        border-radius: 4px;
+      }
     }
   }
 
@@ -117,11 +194,52 @@ export const TicketsContainer = styled.div`
         }
       }
     }
+
+    .tickets-table {
+      .ReactVirtualized__Table__rowColumn {
+        .cell-content {
+          &:before {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+  ${props => props.theme.breakpoints.up(960)} {
+    .sense-col {
+      .MuiGrid-root {
+        max-width: 23%;
+        flex-basis: 23%;
+      }
+
+      .col-txid {
+        max-width: 20%;
+        flex-basis: 20%;
+      }
+
+      .col-time {
+        max-width: 26%;
+        flex-basis: 26%;
+      }
+
+      .sense-output {
+        max-width: 31%;
+        flex-basis: 31%;
+      }
+    }
+  }
+
+  ${props => props.theme.breakpoints.down(600)} {
+    .hidden-sm {
+      display: none;
+    }
   }
 `;
 
 export const SenseContainer = styled.div`
   width: 100%;
+  line-height: 1.25;
 `;
 
 export const CascadeContainer = styled.div`
@@ -197,9 +315,13 @@ export const TicketSummaryContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+
+  @media screen and (max-width: 1200px) {
+    flex-wrap: wrap;
+  }
 `;
 
-export const TicketSummaryBox = styled.a`
+export const TicketSummaryBox = styled(RouterLink)`
   display: block;
   width: calc(100% / 6);
   margin-right: 12px;

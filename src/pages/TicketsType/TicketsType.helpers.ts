@@ -25,11 +25,11 @@ export const TICKET_TYPE_OPTIONS = [
   },
   {
     name: 'pages.ticketsType.nftCollectionReg',
-    value: 'nft-collection-reg',
+    value: 'collection-reg',
   },
   {
     name: 'pages.ticketsType.nftCollectionAct',
-    value: 'nft-collection-act',
+    value: 'collection-act',
   },
   {
     name: 'pages.ticketsType.nftRoyalty',

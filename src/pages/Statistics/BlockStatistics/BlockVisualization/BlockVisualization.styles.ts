@@ -13,7 +13,7 @@ export const BlockContainer = styled.div`
   color: ${themeVariant.custom.white};
   text-align: center;
   width: 125px;
-  height: 125px;
+  height: 145px;
   cursor: pointer;
   background: repeating-linear-gradient(
     rgb(45, 51, 72),
@@ -53,7 +53,7 @@ export const BlockContainer = styled.div`
   &::before {
     content: '';
     width: 20px;
-    height: 125px;
+    height: 145px;
     position: absolute;
     top: -12px;
     left: -20px;

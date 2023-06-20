@@ -13,9 +13,8 @@ import ActionRegistrationTicket from './ActionRegistrationTicket';
 import OfferTicket from './OfferTicket';
 import AcceptTicket from './AcceptTicket';
 import TransferTicket from './TransferTicket';
-import TicketDetail from './TicketDetail';
 
-const getTicketTitle = (type: TTicketType) => {
+const getTicketTitle = (type: TTicketType, itemType = '') => {
   switch (type) {
     case 'pastelid':
       return translate('components.ticket.ticketsTitle.pastelid');
@@ -25,9 +24,11 @@ const getTicketTitle = (type: TTicketType) => {
       return translate('components.ticket.ticketsTitle.nftReg');
     case 'nft-act':
       return translate('components.ticket.ticketsTitle.nftAct');
-    case 'nft-collection-reg':
-      return translate('components.ticket.ticketsTitle.nftCollectionReg');
-    case 'nft-collection-act':
+    case 'collection-reg':
+      return itemType === 'sense'
+        ? translate('components.ticket.ticketsTitle.senseCollectionRegistrationTicket')
+        : translate('components.ticket.ticketsTitle.nftCollectionReg');
+    case 'collection-act':
       return translate('components.ticket.ticketsTitle.nftCollectionAct');
     case 'nft-royalty':
       return translate('components.ticket.ticketsTitle.nftRoyalty');
@@ -59,6 +60,5 @@ export {
   OfferTicket,
   AcceptTicket,
   TransferTicket,
-  TicketDetail,
   getTicketTitle,
 };
