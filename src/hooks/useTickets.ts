@@ -4,11 +4,13 @@ import { axiosGet } from '@utils/helpers/useFetch/useFetch';
 import * as URLS from '@utils/constants/urls';
 import { TicketsList } from '@utils/types/ITransactions';
 import { DATA_LIMIT } from '@pages/Tickets/Tickets.helpers';
+import { SWR_OPTIONS } from '@utils/constants/statistics';
 
 export default function useTickets(type: string, limit: number, DATA_FETCH_LIMIT = DATA_LIMIT) {
   const { data, isLoading, size, setSize } = useSWRInfinite(
     index => `${URLS.GET_TICKETS}/${type}?offset=${index * DATA_FETCH_LIMIT}&limit=${limit}`,
     axiosGet,
+    SWR_OPTIONS,
   );
 
   const isLoadingMore = isLoading || (size > 0 && data && typeof data[size - 1] === 'undefined');

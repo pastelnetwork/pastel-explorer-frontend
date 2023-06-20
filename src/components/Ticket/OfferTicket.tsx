@@ -39,30 +39,56 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
     );
   };
   if (variant === 'transaction') {
+    const renderDetailLink = () => {
+      if (ticket.otherData.offerType === 'sense') {
+        return (
+          <ExternalLink
+            href={`${ROUTES.SENSE_DETAILS}?txid=${ticket.otherData.ticketId}`}
+            value={getImage()}
+          />
+        );
+      }
+      if (ticket.otherData.ticketType === 'cascade') {
+        return (
+          <ExternalLink
+            href={`${ROUTES.CASCADE_DETAILS}?txid=${ticket.otherData.ticketId}`}
+            value={getImage()}
+          />
+        );
+      }
+
+      return (
+        <ExternalLink
+          href={`${ROUTES.NFT_DETAILS}?txid=${ticket.otherData.ticketId}#offers`}
+          value={getImage()}
+        />
+      );
+    };
+    const getOfferType = () => {
+      switch (ticket.otherData.offerType) {
+        case 'sense':
+          return translate('components.ticket.offerTicket.sense');
+        case 'cascade':
+          return translate('components.ticket.offerTicket.cascade');
+        default:
+          return translate('components.ticket.offerTicket.nft');
+      }
+    };
+
     return (
       <Styles.OfferWrapper>
         <Grid container spacing={3}>
-          <Grid item xs={4} sm={3} className="max-w-355">
-            {ticket.otherData.offerType === 'nft-offer' ? (
-              <ExternalLink
-                href={`${ROUTES.NFT_DETAILS}?txid=${ticket.otherData.regTxId}#offers`}
-                value={getImage()}
-              />
-            ) : (
-              <ExternalLink
-                href={`${ROUTES.SENSE_DETAILS}?txid=${ticket.otherData.regTxId}`}
-                value={getImage()}
-              />
-            )}
+          <Grid item xs={12} md={3} className="max-w-355">
+            {renderDetailLink()}
           </Grid>
-          <Grid item xs={8} sm={9}>
-            <Grid container spacing={3}>
-              <Grid item xs={4} sm={3} className="max-w-355">
+          <Grid item xs={12} md={9}>
+            <Grid container spacing={3} className="mb-sm-8">
+              <Grid item xs={12} md={3} className="max-w-355">
                 <Styles.TicketTitle>
                   {translate('components.ticket.offerTicket.pastelID')}
                 </Styles.TicketTitle>
               </Grid>
-              <Grid item xs={8} sm={9}>
+              <Grid item xs={12} md={9}>
                 <Styles.TicketContent>
                   {ticket.pastelID && ticket.pastelID !== 'not defined' ? (
                     <RouterLink
@@ -77,46 +103,35 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
                 </Styles.TicketContent>
               </Grid>
             </Grid>
-            <Grid container spacing={3}>
-              <Grid item xs={4} sm={3} className="max-w-355">
+            <Grid container spacing={3} className="mb-sm-8">
+              <Grid item xs={12} md={3} className="max-w-355">
                 <Styles.TicketTitle>
                   {translate('components.ticket.offerTicket.copyNumber')}
                 </Styles.TicketTitle>
               </Grid>
-              <Grid item xs={8} sm={9}>
+              <Grid item xs={12} sm={9}>
                 <Styles.TicketContent>{ticket.copy_number}</Styles.TicketContent>
               </Grid>
             </Grid>
-            <Grid container spacing={3}>
-              <Grid item xs={4} sm={3} className="max-w-355">
+            <Grid container spacing={3} className="mb-sm-8">
+              <Grid item xs={12} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
                   {translate('components.ticket.offerTicket.askedPrice')}
                 </Styles.TicketTitle>
               </Grid>
-              <Grid item xs={8} sm={9}>
+              <Grid item xs={12} sm={9}>
                 <Styles.TicketContent>
                   {formatNumber(ticket.asked_price)} {getCurrencyName()} {storageFee}
                 </Styles.TicketContent>
               </Grid>
             </Grid>
-            <div className="driver" />
-            <Grid container spacing={3}>
-              <Grid item xs={4} sm={3} className="max-w-355">
-                <Styles.TicketTitle>
-                  {translate('components.ticket.offerTicket.version')}
-                </Styles.TicketTitle>
-              </Grid>
-              <Grid item xs={8} sm={9}>
-                <Styles.TicketContent>{ticket.version}</Styles.TicketContent>
-              </Grid>
-            </Grid>
-            <Grid container spacing={3}>
-              <Grid item xs={4} sm={3} className="max-w-355">
+            <Grid container spacing={3} className="mb-sm-8">
+              <Grid item xs={12} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
                   {translate('components.ticket.offerTicket.itemTxId')}
                 </Styles.TicketTitle>
               </Grid>
-              <Grid item xs={8} sm={9}>
+              <Grid item xs={12} sm={9}>
                 <Styles.TicketContent>
                   <RouterLink
                     route={`${ROUTES.TRANSACTION_DETAILS}/${ticket?.item_txid || ticket?.nft_txid}`}
@@ -127,13 +142,34 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
                 </Styles.TicketContent>
               </Grid>
             </Grid>
-            <Grid container spacing={3}>
-              <Grid item xs={4} sm={3} className="max-w-355">
+            <div className="driver" />
+            <Grid container spacing={3} className="mb-sm-8">
+              <Grid item xs={12} sm={3} className="max-w-355">
+                <Styles.TicketTitle>
+                  {translate('components.ticket.offerTicket.type')}:
+                </Styles.TicketTitle>
+              </Grid>
+              <Grid item xs={12} sm={9}>
+                <Styles.TicketContent>{getOfferType()}</Styles.TicketContent>
+              </Grid>
+            </Grid>
+            <Grid container spacing={3} className="mb-sm-8">
+              <Grid item xs={12} sm={3} className="max-w-355">
+                <Styles.TicketTitle>
+                  {translate('components.ticket.offerTicket.version')}
+                </Styles.TicketTitle>
+              </Grid>
+              <Grid item xs={12} sm={9}>
+                <Styles.TicketContent>{ticket.version}</Styles.TicketContent>
+              </Grid>
+            </Grid>
+            <Grid container spacing={3} className="mb-sm-8">
+              <Grid item xs={12} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
                   {translate('components.ticket.offerTicket.validAfter')}
                 </Styles.TicketTitle>
               </Grid>
-              <Grid item xs={8} sm={9}>
+              <Grid item xs={12} sm={9}>
                 <Styles.TicketContent>
                   {ticket.valid_after ? (
                     <RouterLink
@@ -148,13 +184,13 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
                 </Styles.TicketContent>
               </Grid>
             </Grid>
-            <Grid container spacing={3}>
-              <Grid item xs={4} sm={3} className="max-w-355">
+            <Grid container spacing={3} className="mb-sm-8">
+              <Grid item xs={12} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
                   {translate('components.ticket.offerTicket.validBefore')}
                 </Styles.TicketTitle>
               </Grid>
-              <Grid item xs={8} sm={9}>
+              <Grid item xs={12} sm={9}>
                 <Styles.TicketContent>
                   {ticket.valid_before ? (
                     <RouterLink
@@ -169,25 +205,36 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
                 </Styles.TicketContent>
               </Grid>
             </Grid>
-            <Grid container spacing={3}>
-              <Grid item xs={4} sm={3} className="max-w-355">
+            <Grid container spacing={3} className="mb-sm-8">
+              <Grid item xs={12} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
                   {translate('components.ticket.offerTicket.lockedRecipient')}
                 </Styles.TicketTitle>
               </Grid>
-              <Grid item xs={8} sm={9}>
-                <Styles.TicketContent>{ticket.locked_recipient}</Styles.TicketContent>
+              <Grid item xs={12} sm={9}>
+                <Styles.TicketContent>
+                  {ticket.locked_recipient !== 'not defined' ? (
+                    <RouterLink
+                      route={`${ROUTES.PASTEL_ID_DETAILS}/${ticket.locked_recipient}`}
+                      value={ticket.locked_recipient}
+                      title={ticket.locked_recipient}
+                      className="address-link"
+                    />
+                  ) : (
+                    ticket.locked_recipient
+                  )}
+                </Styles.TicketContent>
               </Grid>
             </Grid>
-            <Signatures signature={ticket.signature} />
+            <Signatures signature={ticket.signature} variant={variant} />
             {ticket.transactionTime ? (
               <Grid container spacing={3}>
-                <Grid item xs={4} sm={3} className="max-w-355">
+                <Grid item xs={12} sm={3} className="max-w-355">
                   <Styles.TicketTitle>
                     {translate('components.ticket.offerTicket.timestamp')}
                   </Styles.TicketTitle>
                 </Grid>
-                <Grid item xs={8} sm={9}>
+                <Grid item xs={12} sm={9}>
                   <Styles.TicketContent>
                     {formatFullDate(ticket.transactionTime, { dayName: false })}
                   </Styles.TicketContent>

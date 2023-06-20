@@ -12,6 +12,19 @@ export const Wrapper = styled.div`
     }
   }
 
+  .no-data {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 150px;
+    padding: 15px;
+
+    .no-data-content {
+      font-size: 22px;
+      font-weight: 700;
+    }
+  }
+
   ${props => props.theme.breakpoints.down(1200)} {
     .view-more {
       overflow: hidden;

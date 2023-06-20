@@ -8,10 +8,25 @@ import * as Styles from './Ticket.styles';
 interface ISignaturesProps {
   signatures?: ISignature;
   signature?: string;
+  variant?: string;
 }
 
-const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature }) => {
+const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature, variant }) => {
   if (signature) {
+    if (variant === 'transaction') {
+      return (
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={3} className="max-w-355">
+            <Styles.TicketTitle>
+              {translate('components.ticket.signatures.signature')}
+            </Styles.TicketTitle>
+          </Grid>
+          <Grid item xs={12} sm={9}>
+            <Styles.TicketContent className="break-all">{signature}</Styles.TicketContent>
+          </Grid>
+        </Grid>
+      );
+    }
     return (
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">

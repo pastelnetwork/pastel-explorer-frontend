@@ -189,4 +189,10 @@ export const OfferWrapper = styled(Box)`
     margin: 20px 0;
     border-top: solid 1px ${props => props.theme.table.hover};
   }
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    .mb-sm-8 {
+      margin-bottom: 8px;
+    }
+  }
 `;

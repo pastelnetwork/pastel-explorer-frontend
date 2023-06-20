@@ -335,6 +335,8 @@ export interface IOfferTicket {
     offerType: string;
     txId: string;
     regTxId: string;
+    ticketType: string;
+    ticketId: string;
   };
 }
 
@@ -346,6 +348,14 @@ export interface IAcceptTicket {
   price: number;
   signature: string;
   transactionTime: number;
+  image: string;
+  otherData: {
+    offerType: string;
+    txId: string;
+    regTxId: string;
+    ticketType: string;
+    ticketId: string;
+  };
 }
 
 export interface ITransferTicket {
@@ -360,6 +370,14 @@ export interface ITransferTicket {
   copy_serial_nr: string;
   signature: string;
   transactionTime: number;
+  image: string;
+  otherData: {
+    offerType: string;
+    txId: string;
+    regTxId: string;
+    ticketType: string;
+    ticketId: string;
+  };
 }
 
 export interface ITicket {

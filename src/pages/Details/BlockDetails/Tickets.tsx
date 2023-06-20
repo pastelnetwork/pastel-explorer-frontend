@@ -225,9 +225,9 @@ const TicketsList: React.FC<ITicketsList> = ({
       case 'offer':
         return <OfferTicket ticket={ticket as IOfferTicket} variant={variant} />;
       case 'accept':
-        return <AcceptTicket ticket={ticket as IAcceptTicket} />;
+        return <AcceptTicket ticket={ticket as IAcceptTicket} variant={variant} />;
       case 'transfer':
-        return <TransferTicket ticket={ticket as ITransferTicket} />;
+        return <TransferTicket ticket={ticket as ITransferTicket} variant={variant} />;
       default:
         return <PastelIDRegistrationTicket ticket={ticket as IPastelIDRegistrationTicket} />;
     }

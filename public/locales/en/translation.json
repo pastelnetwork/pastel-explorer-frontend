@@ -945,6 +945,14 @@
         "sense": {
           "message": "Sense",
           "description": "Used for the OfferTicket component"
+        },
+        "cascade": {
+          "message": "Cascade",
+          "description": "Used for the OfferTicket component"
+        },
+        "type": {
+          "message": "Type",
+          "description": "Used for the OfferTicket component"
         }
       },
       "pastelIDRegistrationTicket": {
