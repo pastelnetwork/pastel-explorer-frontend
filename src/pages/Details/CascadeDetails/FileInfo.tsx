@@ -97,7 +97,7 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
                   <TicketStyles.TicketContent>
                     {data.creatorPastelID ? (
                       <RouterLink
-                        route={`${ROUTES.TRANSACTION_DETAILS}/${data.creatorPastelID}`}
+                        route={`${ROUTES.PASTEL_ID_DETAILS}/${data.creatorPastelID}`}
                         value={formatAddress(data.creatorPastelID, 5, -5)}
                         title={data.creatorPastelID}
                         className="address-link nowrap inline-block read-more full"
@@ -116,7 +116,7 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
                   <TicketStyles.TicketContent>
                     {data.creatorPastelID ? (
                       <RouterLink
-                        route={`${ROUTES.TRANSACTION_DETAILS}/${data.creatorPastelID}`}
+                        route={`${ROUTES.PASTEL_ID_DETAILS}/${data.creatorPastelID}`}
                         value={formatAddress(data.creatorPastelID, 5, -5)}
                         title={data.creatorPastelID}
                         className="address-link nowrap inline-block read-more full"
