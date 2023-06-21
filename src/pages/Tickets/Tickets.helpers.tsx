@@ -265,7 +265,7 @@ export const transformSenseData = (sense: TicketsList[], usdPrice: number) =>
                       route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${collectionAlias}`}
                       value={collectionName}
                       title={collectionName}
-                      className="address-link nowrap inline-block"
+                      className="address-link read-more"
                     />
                   ) : (
                     translate('common.na')
@@ -342,6 +342,124 @@ export const transformSenseData = (sense: TicketsList[], usdPrice: number) =>
     },
   );
 
+export const transformOtherData = (data: TicketsList[], usdPrice: number) =>
+  data.map(
+    ({
+      transactionHash,
+      activation_ticket,
+      timestamp,
+      activation_txId,
+      fee,
+      collectionName,
+      collectionAlias,
+      item_type,
+      nft_copy_count,
+      nft_max_count,
+    }) => {
+      return {
+        id: transactionHash,
+        [TXID_KEY]: (
+          <>
+            <Grid container spacing={3} className="collection-col">
+              <Grid item xs={12} sm={6} md={2}>
+                <Box className="title">{translate('pages.tickets.txID')}</Box>
+                <Box className="bold">
+                  <RouterLink
+                    route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
+                    value={formatAddress(transactionHash, 5, -5)}
+                    title={transactionHash}
+                    className="address-link"
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{translate('pages.tickets.status')}</Box>
+                <Box className="bold">
+                  <Tooltip
+                    arrow
+                    title={
+                      activation_ticket
+                        ? translate('pages.tickets.activated')
+                        : translate('pages.tickets.notYetActivated')
+                    }
+                  >
+                    <Box className="ticket-status">
+                      <TicketsStyles.ActionRegistrationTicketStatus
+                        className={`space-nowrap action-ticket-status ${
+                          activation_ticket ? 'active' : ''
+                        }`}
+                      >
+                        {activation_ticket
+                          ? translate('pages.tickets.activated')
+                          : translate('pages.tickets.notYetActivated')}
+                      </TicketsStyles.ActionRegistrationTicketStatus>
+                    </Box>
+                  </Tooltip>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} className="col-time">
+                <Box className="title">{translate('pages.tickets.collectionName')}</Box>
+                <Box className="bold">
+                  {collectionName ? (
+                    <RouterLink
+                      route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${collectionAlias}`}
+                      value={collectionName}
+                      title={collectionName}
+                      className="address-link read-more"
+                    />
+                  ) : (
+                    translate('common.na')
+                  )}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3} className="col-type">
+                <Box className="title">{translate('pages.tickets.collectionType')}</Box>
+                <Box className="bold">
+                  {item_type ? item_type.toUpperCase() : translate('common.na')}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={2}>
+                <Box className="title">{translate('pages.tickets.activationTXID')}</Box>
+                <Box className="bold">
+                  {activation_txId ? (
+                    <RouterLink
+                      route={`${ROUTES.TRANSACTION_DETAILS}/${activation_txId}`}
+                      value={activation_txId ? formatAddress(activation_txId, 5, -5) : ''}
+                      title={activation_txId}
+                      className="address-link"
+                    />
+                  ) : (
+                    translate('common.na')
+                  )}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{translate('pages.tickets.fee')}</Box>
+                <Box className="bold">
+                  {formatNumber(fee)} {getCurrencyName()} {getStorageFee(fee, usdPrice)}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} className="col-time">
+                <Box className="title">{translate('pages.tickets.timestamp')}</Box>
+                <Box className="bold">
+                  {timestamp ? formatFullDate(timestamp, { dayName: false }) : '--'}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} className="col-type">
+                <Box className="title">{translate('pages.tickets.numberOfEntries')}</Box>
+                <Box className="bold">
+                  {nft_max_count
+                    ? `${formatNumber(nft_copy_count || 0)}/${formatNumber(nft_max_count)}`
+                    : translate('common.na')}
+                </Box>
+              </Grid>
+            </Grid>
+          </>
+        ),
+      };
+    },
+  );
+
 export const transformPastelIdData = (data: TicketsList[]) =>
   data.map(({ transactionHash, pastelID, timestamp, type }) => {
     return {
@@ -371,7 +489,7 @@ export const transformPastelIdData = (data: TicketsList[]) =>
     };
   });
 
-export const transformOtherData = (data: TicketsList[]) =>
+export const transformOfferAndTransferData = (data: TicketsList[]) =>
   data.map(({ transactionHash, type, timestamp, version }) => {
     return {
       id: transactionHash,
@@ -452,7 +570,7 @@ export const transformPastelNftTicketsData = (data: TicketsList[], usdPrice: num
                       route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${collectionAlias}`}
                       value={collectionName}
                       title={collectionName}
-                      className="address-link nowrap inline-block"
+                      className="address-link read-more"
                     />
                   ) : (
                     translate('common.na')

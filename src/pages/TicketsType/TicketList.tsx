@@ -308,17 +308,19 @@ const TicketsList: React.FC<ITicketsList> = ({
       return translate('pages.ticketsType.pastelNFTTickets');
     }
     if (ticketType === 'other') {
-      return translate('pages.ticketsType.otherTickets');
+      return translate('pages.ticketsType.senseAndNFTCollectionTickets');
     }
     const ticket = TICKET_TYPE_OPTIONS.find(t => t.value === ticketType);
-    return translate(ticket?.name || '') || translate('pages.ticketsType.otherTickets');
+    return (
+      translate(ticket?.name || '') || translate('pages.ticketsType.senseAndNFTCollectionTickets')
+    );
   };
 
   const getDropdownOptions = () => {
     const result = [];
     if (ticketType === 'other') {
       result.push({
-        name: translate('pages.ticketsType.otherTickets'),
+        name: translate('pages.ticketsType.senseAndNFTCollectionTickets'),
         value: 'other',
       });
     } else if (ticketType === 'pastelid-usename') {

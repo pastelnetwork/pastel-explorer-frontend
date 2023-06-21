@@ -88,7 +88,6 @@ const Tickets: React.FC = () => {
       <Grid container spacing={6}>
         <Styles.GirdStyle item xs={12} lg={6} className="left">
           <Sense
-            isMobile={isMobile}
             ticketsData={senseTicketData as TTicketResponse}
             innerWidth={innerWidth}
             usdPrice={usdPrice}
@@ -96,7 +95,6 @@ const Tickets: React.FC = () => {
         </Styles.GirdStyle>
         <Styles.GirdStyle item xs={12} lg={6} className="right">
           <Cascade
-            isMobile={isMobile}
             ticketsData={cascadeTicketData as TTicketResponse}
             innerWidth={innerWidth}
             usdPrice={usdPrice}
@@ -112,7 +110,6 @@ const Tickets: React.FC = () => {
         </Styles.GirdStyle>
         <Styles.GirdStyle item xs={12} lg={6} className="right">
           <PastelNftTickets
-            isMobile={isMobile}
             ticketsData={pastelNftTicketData as TTicketResponse}
             innerWidth={innerWidth}
             usdPrice={usdPrice}
@@ -128,8 +125,9 @@ const Tickets: React.FC = () => {
         </Styles.GirdStyle>
         <Styles.GirdStyle item xs={12} lg={6} className="right">
           <MiscOtherTicketTypes
-            isMobile={isMobile}
             ticketsData={otherTicketData as TTicketResponse}
+            innerWidth={innerWidth}
+            usdPrice={usdPrice}
           />
         </Styles.GirdStyle>
       </Grid>

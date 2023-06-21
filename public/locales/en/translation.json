@@ -2680,6 +2680,18 @@
       "fileName": {
         "message": "File name",
         "description": "Used for the Tickets page"
+      },
+      "senseAndNFTCollectionTickets": {
+        "message": "Sense and NFT Collection Tickets",
+        "description": "Used for the Tickets page"
+      },
+      "collectionType": {
+        "message": "Type",
+        "description": "Used for the Tickets page"
+      },
+      "numberOfEntries": {
+        "message": "Number of Entries",
+        "description": "Used for the Tickets page"
       }
     },
     "ticketsType": {
@@ -2797,6 +2809,10 @@
       },
       "offerTicketsAndTransferTickets": {
         "message": "Offer Tickets and Transfer Tickets",
+        "description": "Used for the Tickets page"
+      },
+      "senseAndNFTCollectionTickets": {
+        "message": "Sense and NFT Collection Tickets",
         "description": "Used for the Tickets page"
       }
     },

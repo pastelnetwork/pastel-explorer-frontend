@@ -614,6 +614,9 @@ export type TicketsList = {
   fileName: string;
   image?: string;
   imageFileCdnUrl?: string;
+  item_type?: string;
+  nft_copy_count?: number;
+  nft_max_count?: number;
 };
 
 export type TCascade = {

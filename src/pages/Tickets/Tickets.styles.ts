@@ -207,6 +207,22 @@ export const TicketsContainer = styled.div`
   }
 
   ${props => props.theme.breakpoints.up(960)} {
+    .collection-col {
+      .MuiGrid-root {
+        max-width: 25%;
+        flex-basis: 25%;
+      }
+
+      .col-time {
+        max-width: 28%;
+        flex-basis: 28%;
+      }
+
+      .col-type {
+        max-width: 22%;
+        flex-basis: 22%;
+      }
+    }
     .sense-col {
       .MuiGrid-root {
         max-width: 23%;
