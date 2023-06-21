@@ -8,6 +8,7 @@ export const VERSION_KEY = 'version';
 export const TYPE_KEY = 'type';
 export const ACTIVATION_TXID_KEY = 'activation_txid';
 export const COLLECTION_NAME = 'collectionName';
+export const USERNAME_KEY = 'userName';
 
 export const cascadeColumns = [
   {
@@ -55,11 +56,11 @@ export const pastelIDAndUsernameTicketsColumns = [
   {
     width: 140,
     flexGrow: 1,
-    label: 'pages.tickets.type',
-    dataKey: TYPE_KEY,
+    label: 'pages.tickets.userName',
+    dataKey: USERNAME_KEY,
     disableSort: true,
     className: 'idType',
-    dataTitle: 'pages.tickets.type',
+    dataTitle: 'pages.tickets.userName',
   },
   {
     width: 160,

@@ -620,6 +620,7 @@ export type TicketsList = {
   copyNumber?: string;
   reTxId?: string;
   ticketType?: string;
+  userName?: string;
 };
 
 export type TCascade = {

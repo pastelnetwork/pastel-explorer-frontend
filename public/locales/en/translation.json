@@ -2700,6 +2700,10 @@
       "thumbnail": {
         "message": "Thumbnail",
         "description": "Used for the Tickets page"
+      },
+      "userName": {
+        "message": "Username",
+        "description": "Used for the Tickets page"
       }
     },
     "ticketsType": {

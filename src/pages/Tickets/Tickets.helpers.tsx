@@ -19,7 +19,7 @@ import { translate } from '@utils/helpers/i18n';
 import { getFileIcon } from '@pages/Details/CascadeDetails/CascadeDetails.helpers';
 import noImagePlaceholder from '@assets/images/no-image-placeholder.svg';
 
-import { TXID_KEY, TIMESTAMP_KEY, PASTEL_ID_KEY, TYPE_KEY } from './Tickets.columns';
+import { TXID_KEY, TIMESTAMP_KEY, PASTEL_ID_KEY, USERNAME_KEY } from './Tickets.columns';
 
 const getTicketTitle = (type: TTicketType) => {
   switch (type) {
@@ -461,7 +461,7 @@ export const transformOtherData = (data: TicketsList[], usdPrice: number) =>
   );
 
 export const transformPastelIdData = (data: TicketsList[]) =>
-  data.map(({ transactionHash, pastelID, timestamp, type }) => {
+  data.map(({ transactionHash, pastelID, timestamp, userName, reTxId }) => {
     return {
       id: transactionHash,
       [TXID_KEY]: (
@@ -484,7 +484,20 @@ export const transformPastelIdData = (data: TicketsList[]) =>
           />
         </>
       ),
-      [TYPE_KEY]: getTicketTitle(type as TTicketType),
+      [USERNAME_KEY]: (
+        <>
+          {userName ? (
+            <RouterLink
+              route={`${ROUTES.TRANSACTION_DETAILS}/${reTxId}`}
+              value={userName}
+              title={userName}
+              className="address-link read-more"
+            />
+          ) : (
+            translate('common.na')
+          )}
+        </>
+      ),
       [TIMESTAMP_KEY]: timestamp ? formatFullDate(timestamp, { dayName: false }) : '--',
     };
   });
