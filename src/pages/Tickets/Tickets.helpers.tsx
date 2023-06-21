@@ -155,13 +155,13 @@ export const transformCascadeData = (cascade: TicketsList[], usdPrice: number) =
                       />
                     </>
                   ) : (
-                    translate('common.na')
+                    translate('pages.tickets.pendingActivation')
                   )}
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6} md={2}>
                 <Box className="title">{translate('pages.tickets.activationTXID')}</Box>
-                <Box className="bold">
+                <Box className={activation_txId ? 'bold' : ''}>
                   {activation_txId ? (
                     <RouterLink
                       route={`${ROUTES.TRANSACTION_DETAILS}/${activation_txId}`}
@@ -259,7 +259,7 @@ export const transformSenseData = (sense: TicketsList[], usdPrice: number) =>
               </Grid>
               <Grid item xs={12} sm={6} md={4} className="col-time">
                 <Box className="title">{translate('pages.tickets.collectionName')}</Box>
-                <Box className="bold">
+                <Box className={collectionName ? 'bold' : ''}>
                   {collectionName ? (
                     <RouterLink
                       route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${collectionAlias}`}
@@ -289,13 +289,13 @@ export const transformSenseData = (sense: TicketsList[], usdPrice: number) =>
                       />
                     </>
                   ) : (
-                    translate('common.na')
+                    translate('pages.tickets.pendingActivation')
                   )}
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6} md={2} className="col-txid">
                 <Box className="title">{translate('pages.tickets.activationTXID')}</Box>
-                <Box className="bold">
+                <Box className={activation_txId ? 'bold' : ''}>
                   {activation_txId ? (
                     <RouterLink
                       route={`${ROUTES.TRANSACTION_DETAILS}/${activation_txId}`}
@@ -399,7 +399,7 @@ export const transformOtherData = (data: TicketsList[], usdPrice: number) =>
               </Grid>
               <Grid item xs={12} sm={6} md={4} className="col-time">
                 <Box className="title">{translate('pages.tickets.collectionName')}</Box>
-                <Box className="bold">
+                <Box className={collectionName ? 'bold' : ''}>
                   {collectionName ? (
                     <RouterLink
                       route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${collectionAlias}`}
@@ -414,13 +414,13 @@ export const transformOtherData = (data: TicketsList[], usdPrice: number) =>
               </Grid>
               <Grid item xs={12} sm={6} md={3} className="col-type">
                 <Box className="title">{translate('pages.tickets.collectionType')}</Box>
-                <Box className="bold">
+                <Box className={item_type ? 'bold' : ''}>
                   {item_type ? item_type.toUpperCase() : translate('common.na')}
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6} md={2}>
                 <Box className="title">{translate('pages.tickets.activationTXID')}</Box>
-                <Box className="bold">
+                <Box className={activation_txId ? 'bold' : ''}>
                   {activation_txId ? (
                     <RouterLink
                       route={`${ROUTES.TRANSACTION_DETAILS}/${activation_txId}`}
@@ -447,7 +447,7 @@ export const transformOtherData = (data: TicketsList[], usdPrice: number) =>
               </Grid>
               <Grid item xs={12} sm={6} md={4} className="col-type">
                 <Box className="title">{translate('pages.tickets.numberOfEntries')}</Box>
-                <Box className="bold">
+                <Box className={nft_max_count ? 'bold' : ''}>
                   {nft_max_count
                     ? `${formatNumber(nft_copy_count || 0)}/${formatNumber(nft_max_count)}`
                     : translate('common.na')}
@@ -669,7 +669,7 @@ export const transformPastelNftTicketsData = (data: TicketsList[], usdPrice: num
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
                 <Box className="title">{translate('pages.tickets.collectionName')}</Box>
-                <Box className="bold">
+                <Box className={collectionName ? 'bold' : ''}>
                   {collectionName ? (
                     <RouterLink
                       route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${collectionAlias}`}
@@ -695,13 +695,13 @@ export const transformPastelNftTicketsData = (data: TicketsList[], usdPrice: num
                       />
                     </>
                   ) : (
-                    translate('common.na')
+                    translate('pages.tickets.pendingActivation')
                   )}
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
                 <Box className="title">{translate('pages.tickets.activationTXID')}</Box>
-                <Box className="bold">
+                <Box className={activation_txId ? 'bold' : ''}>
                   {activation_txId ? (
                     <RouterLink
                       route={`${ROUTES.TRANSACTION_DETAILS}/${activation_txId}`}
@@ -722,7 +722,7 @@ export const transformPastelNftTicketsData = (data: TicketsList[], usdPrice: num
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
                 <Box className="title">{translate('pages.tickets.timestamp')}</Box>
-                <Box className="bold">
+                <Box className={timestamp ? 'bold' : ''}>
                   {timestamp
                     ? formatFullDate(timestamp, { dayName: false })
                     : translate('common.na')}

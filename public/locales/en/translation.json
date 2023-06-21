@@ -2704,6 +2704,10 @@
       "userName": {
         "message": "Username",
         "description": "Used for the Tickets page"
+      },
+      "pendingActivation": {
+        "message": "Pending Activation",
+        "description": "Used for the Tickets page"
       }
     },
     "ticketsType": {
