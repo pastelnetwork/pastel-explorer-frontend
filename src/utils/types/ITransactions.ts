@@ -617,6 +617,9 @@ export type TicketsList = {
   item_type?: string;
   nft_copy_count?: number;
   nft_max_count?: number;
+  copyNumber?: string;
+  reTxId?: string;
+  ticketType?: string;
 };
 
 export type TCascade = {

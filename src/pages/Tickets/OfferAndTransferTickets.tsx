@@ -12,12 +12,12 @@ import { offerAndTransferTicketsColumns } from './Tickets.columns';
 import * as Styles from './Tickets.styles';
 
 interface IOfferAndTransferTicketsProps {
-  isMobile: boolean;
+  innerWidth: number;
   ticketsData: TTicketResponse;
 }
 
 const OfferAndTransferTickets: React.FC<IOfferAndTransferTicketsProps> = ({
-  isMobile,
+  innerWidth,
   ticketsData,
 }) => {
   const { data, total, isLoading, size, setSize } = ticketsData;
@@ -45,18 +45,35 @@ const OfferAndTransferTickets: React.FC<IOfferAndTransferTicketsProps> = ({
     );
   };
 
+  const getRowHeight = () => {
+    if (innerWidth < 600) {
+      return 430;
+    }
+    if (innerWidth < 960) {
+      return 220;
+    }
+    return 120;
+  };
+
+  const gettableHeight = () => {
+    if (innerWidth < 600) {
+      return 1200;
+    }
+    return 600;
+  };
+
   return (
     <Styles.OtherTicketContainer id="offerTicketsAndTransferTickets">
       <InfinityTable
         rows={data ? transformOfferAndTransferData(data) : []}
         columns={offerAndTransferTicketsColumns}
-        tableHeight={495}
+        tableHeight={gettableHeight()}
         title={getTitle()}
         onBottomReach={handleFetchMoreMovements}
-        className="data-table"
+        className="data-table tickets-table"
         headerBackground
         customLoading={isLoading}
-        rowHeight={isMobile ? 140 : 45}
+        rowHeight={getRowHeight()}
       />
     </Styles.OtherTicketContainer>
   );

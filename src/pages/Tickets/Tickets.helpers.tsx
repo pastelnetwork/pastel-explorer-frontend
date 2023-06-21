@@ -19,7 +19,7 @@ import { translate } from '@utils/helpers/i18n';
 import { getFileIcon } from '@pages/Details/CascadeDetails/CascadeDetails.helpers';
 import noImagePlaceholder from '@assets/images/no-image-placeholder.svg';
 
-import { TXID_KEY, TIMESTAMP_KEY, PASTEL_ID_KEY, VERSION_KEY, TYPE_KEY } from './Tickets.columns';
+import { TXID_KEY, TIMESTAMP_KEY, PASTEL_ID_KEY, TYPE_KEY } from './Tickets.columns';
 
 const getTicketTitle = (type: TTicketType) => {
   switch (type) {
@@ -490,24 +490,116 @@ export const transformPastelIdData = (data: TicketsList[]) =>
   });
 
 export const transformOfferAndTransferData = (data: TicketsList[]) =>
-  data.map(({ transactionHash, type, timestamp, version }) => {
-    return {
-      id: transactionHash,
-      [TXID_KEY]: (
-        <>
-          <RouterLink
-            route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
-            value={formatAddress(transactionHash, 5, -5)}
-            title={transactionHash}
-            className="address-link"
-          />
-        </>
-      ),
-      [TYPE_KEY]: getTicketTitle(type as TTicketType),
-      [VERSION_KEY]: <>{version}</>,
-      [TIMESTAMP_KEY]: timestamp ? formatFullDate(timestamp, { dayName: false }) : '--',
-    };
-  });
+  data.map(
+    ({
+      transactionHash,
+      type,
+      timestamp,
+      pastelID,
+      copyNumber,
+      image,
+      version,
+      reTxId,
+      ticketType,
+    }) => {
+      const getInfo = () => {
+        if (ticketType === 'sense') {
+          return {
+            link: `${ROUTES.SENSE_DETAILS}?txid=${reTxId}`,
+            label: translate('pages.tickets.cascadeOutput'),
+          };
+        }
+
+        if (ticketType === 'cascade') {
+          return {
+            link: `${ROUTES.CASCADE_DETAILS}?txid=${reTxId}`,
+            label: translate('pages.tickets.senseOutput'),
+          };
+        }
+
+        return {
+          link: `${ROUTES.NFT_DETAILS}?txid=${reTxId}`,
+          label: translate('pages.tickets.pastelNFT'),
+        };
+      };
+
+      const getImage = () => {
+        return (
+          <Link to={getInfo().link}>
+            <img
+              src={image ? `data:image/jpeg;base64,${image}` : noImagePlaceholder}
+              alt={reTxId}
+              className="sense-img"
+            />
+          </Link>
+        );
+      };
+
+      return {
+        id: transactionHash,
+        [TXID_KEY]: (
+          <>
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{translate('pages.tickets.txID')}</Box>
+                <Box className="bold">
+                  <RouterLink
+                    route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
+                    value={formatAddress(transactionHash, 5, -5)}
+                    title={transactionHash}
+                    className="address-link"
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={2}>
+                <Box className="title">{translate('pages.tickets.type')}</Box>
+                <Box className="bold">{getTicketTitle(type as TTicketType)}</Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <Box className="title">{translate('pages.tickets.copyNumber')}</Box>
+                <Box className="bold">{copyNumber ? formatNumber(copyNumber) : 0}</Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{getInfo().label}</Box>
+                <Box className="bold">
+                  <RouterLink
+                    route={getInfo().link}
+                    value={translate('pages.tickets.senseDetail')}
+                    title={reTxId}
+                    className="address-link"
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{translate('pages.tickets.pastelID')}</Box>
+                <Box className="bold">
+                  <RouterLink
+                    route={`${ROUTES.TRANSACTION_DETAILS}/${pastelID}`}
+                    value={formatAddress(pastelID, 5, -5)}
+                    title={pastelID}
+                    className="address-link"
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={2}>
+                <Box className="title">{translate('pages.tickets.version')}</Box>
+                <Box className="bold">{version}</Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <Box className="title">{translate('pages.tickets.timestamp')}</Box>
+                <Box className="bold">
+                  {timestamp ? formatFullDate(timestamp, { dayName: false }) : '--'}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                {getImage()}
+              </Grid>
+            </Grid>
+          </>
+        ),
+      };
+    },
+  );
 
 export const transformPastelNftTicketsData = (data: TicketsList[], usdPrice: number) =>
   data.map(

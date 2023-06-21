@@ -119,7 +119,7 @@ const Tickets: React.FC = () => {
       <Grid container spacing={6}>
         <Styles.GirdStyle item xs={12} lg={6} className="left">
           <OfferAndTransferTickets
-            isMobile={isMobile}
+            innerWidth={innerWidth}
             ticketsData={offerTransferTicketData as TTicketResponse}
           />
         </Styles.GirdStyle>

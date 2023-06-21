@@ -2692,6 +2692,14 @@
       "numberOfEntries": {
         "message": "Number of Entries",
         "description": "Used for the Tickets page"
+      },
+      "copyNumber": {
+        "message": "Copy Number",
+        "description": "Used for the Tickets page"
+      },
+      "thumbnail": {
+        "message": "Thumbnail",
+        "description": "Used for the Tickets page"
       }
     },
     "ticketsType": {

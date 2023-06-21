@@ -94,33 +94,6 @@ export const offerAndTransferTicketsColumns = [
     className: 'txID',
     dataTitle: 'pages.tickets.txID',
   },
-  {
-    width: 140,
-    flexGrow: 1,
-    label: 'pages.tickets.type',
-    dataKey: TYPE_KEY,
-    disableSort: true,
-    className: 'type',
-    dataTitle: 'pages.tickets.type',
-  },
-  {
-    width: 10,
-    flexGrow: 1,
-    label: 'pages.tickets.version',
-    dataKey: VERSION_KEY,
-    disableSort: true,
-    className: 'version',
-    dataTitle: 'pages.tickets.version',
-  },
-  {
-    width: 140,
-    flexGrow: 1,
-    label: 'pages.tickets.timestamp',
-    dataKey: TIMESTAMP_KEY,
-    disableSort: true,
-    className: 'timestamp',
-    dataTitle: 'pages.tickets.timestamp',
-  },
 ];
 
 export const pastelNftTicketsColumns = [
