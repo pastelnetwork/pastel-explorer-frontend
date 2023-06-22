@@ -108,7 +108,7 @@ export const MainWrapper = styled.div`
 
   .submitted-image {
     width: 100%;
-    height: 400px;
+    max-height: 400px;
     margin-bottom: 20px;
   }
 
@@ -203,7 +203,7 @@ export const MainWrapper = styled.div`
     }
 
     .submitted-image {
-      height: 350px;
+      max-height: 350px;
     }
 
     .nft-info {

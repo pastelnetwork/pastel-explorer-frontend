@@ -249,7 +249,9 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
             <Styles.TicketContent>
               <Link to={`${ROUTES.NFT_DETAILS}?txid=${transactionHash}`}>
                 <img
-                  src={ticket?.image || noImagePlaceholder}
+                  src={
+                    ticket?.image ? `data:image/jpeg;base64,${ticket.image}` : noImagePlaceholder
+                  }
                   alt={transactionHash}
                   className={`sense-img ${!ticket?.image ? 'placeholder' : ''}`}
                 />

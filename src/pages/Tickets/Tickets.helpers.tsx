@@ -732,7 +732,7 @@ export const transformPastelNftTicketsData = (data: TicketsList[], usdPrice: num
                 {activation_ticket ? (
                   <Link to={`${ROUTES.NFT_DETAILS}?txid=${transactionHash}`}>
                     <img
-                      src={image || noImagePlaceholder}
+                      src={image ? `data:image/jpeg;base64,${image}` : noImagePlaceholder}
                       alt={transactionHash || ''}
                       className="sense-img"
                     />
