@@ -73,6 +73,29 @@ export const Wrapper = styled.div`
       font-weight: 600;
     }
   }
+
+  .summary-image {
+    border-top: 1px solid ${props => props.theme.sidebar.menu.default};
+    border-bottom: 1px solid ${props => props.theme.sidebar.menu.default};
+    text-align: center;
+
+    img {
+      max-width: 100%;
+      width: 150px;
+    }
+  }
+
+  .summary-section {
+    display: flex;
+    justify-content: space-between;
+
+    .summary,
+    .open-nsfw,
+    .rareness-score {
+      width: 32%;
+    }
+  }
+
   ${props => props.theme.breakpoints.down(425)} {
     .MuiSelect-select {
       width: 110px;
@@ -226,6 +249,10 @@ export const ContentWrapper = styled.div`
   &.relative {
     position: relative;
   }
+
+  .no-spacing {
+    padding: 0;
+  }
 `;
 
 export const ContentItem = styled.div`
@@ -271,7 +298,7 @@ export const SubmittedImageWrapper = styled.div`
 
   img {
     max-width: 100%;
-    max-height: 100%;
+    max-height: 400px;
   }
 
   &.image-placeholder {

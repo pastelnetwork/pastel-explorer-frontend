@@ -50,6 +50,33 @@ export default function useNftDetails(txid: string) {
       username: data?.nft?.username,
       memberSince: data?.nft?.memberSince,
       image: data.nft.image,
+      pastel_block_hash_when_request_submitted: data.nft.pastel_block_hash_when_request_submitted,
+      pastel_block_height_when_request_submitted:
+        data.nft.pastel_block_height_when_request_submitted,
+      utc_timestamp_when_request_submitted: data.nft.utc_timestamp_when_request_submitted,
+      pastel_id_of_submitter: data.nft.pastel_id_of_submitter,
+      pastel_id_of_registering_supernode_1: data.nft.pastel_id_of_registering_supernode_1,
+      pastel_id_of_registering_supernode_2: data.nft.pastel_id_of_registering_supernode_2,
+      pastel_id_of_registering_supernode_3: data.nft.pastel_id_of_registering_supernode_3,
+      is_pastel_openapi_request: data.nft.is_pastel_openapi_request,
+      dupe_detection_system_version: data.nft.dupe_detection_system_version,
+      is_likely_dupe: data.nft.is_likely_dupe,
+      overall_rareness_score: data.nft.overall_rareness_score,
+      is_rare_on_internet: data.nft.is_rare_on_internet,
+      pct_of_top_10_most_similar_with_dupe_prob_above_25pct:
+        data.nft.pct_of_top_10_most_similar_with_dupe_prob_above_25pct,
+      pct_of_top_10_most_similar_with_dupe_prob_above_33pct:
+        data.nft.pct_of_top_10_most_similar_with_dupe_prob_above_33pct,
+      pct_of_top_10_most_similar_with_dupe_prob_above_50pct:
+        data.nft.pct_of_top_10_most_similar_with_dupe_prob_above_50pct,
+      rareness_scores_table_json_compressed_b64: data.nft.rareness_scores_table_json_compressed_b64,
+      open_nsfw_score: data.nft.open_nsfw_score,
+      image_fingerprint_of_candidate_image_file: data.nft.image_fingerprint_of_candidate_image_file,
+      nsfw_score: data.nft.nsfw_score,
+      internet_rareness: data.nft.internet_rareness,
+      alternative_nsfw_scores: data.nft.alternative_nsfw_scores,
+      blockHeight: data.nft.blockHeight,
+      currentOwnerPastelID: data.nft.currentOwnerPastelID,
     };
 
     return {

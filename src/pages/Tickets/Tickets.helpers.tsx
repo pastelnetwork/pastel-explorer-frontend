@@ -774,7 +774,7 @@ export const ticketsSummary = [
   },
   {
     id: 'miscOtherTicketTypes',
-    name: translate('pages.tickets.miscOtherTicketTypes'),
+    name: translate('pages.tickets.senseAndNFTCollectionTickets'),
     link: `${ROUTES.TICKETS_TYPE}/other`,
   },
 ];

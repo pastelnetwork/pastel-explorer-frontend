@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -12,6 +12,20 @@ import * as TableStyles from '@components/Table/Table.styles';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 import * as PastelIdStyles from '@pages/Details/PastelIdDetails/PastelIdDetails.styles';
 import * as FilterStyles from '@components/InfinityTable/InfinityTable.styles';
+import PastelData from '@pages/Details/SenseDetails/PastelData';
+import Summary from '@pages/Details/SenseDetails/Summary';
+import OpenNSFW from '@pages/Details/SenseDetails/OpenNSFW';
+import RarenessScore from '@pages/Details/SenseDetails/RarenessScore';
+import CategoryProbabilities from '@pages/Details/SenseDetails/CategoryProbabilities';
+import PrevalenceOfSimilarImages from '@pages/Details/SenseDetails/PrevalenceOfSimilarImages';
+import FingerprintVectorHeatmap from '@pages/Details/SenseDetails/FingerprintVectorHeatmap';
+import RareOnTheInternetResultsGraph from '@pages/Details/SenseDetails/RareOnTheInternetResultsGraph';
+import RareOnTheInternetAlternativeResults from '@pages/Details/SenseDetails/RareOnTheInternetAlternativeResults';
+import SimilarRegisteredImages, {
+  getSimilarRegisteredImagesData,
+} from '@pages/Details/SenseDetails/SimilarRegisteredImages';
+import * as SenseStyles from '@pages/Details/SenseDetails/SenseDetails.styles';
+import * as ChartStyles from '@pages/HistoricalStatistics/Chart/Chart.styles';
 
 import ItemActivity from './ItemActivity';
 import MoreItems from './MoreItems';
@@ -34,6 +48,7 @@ interface IBlockItemLayout {
   options?: OptionsProps[];
   onDropdownChange?: (_values: string[]) => void;
   placeholder?: string;
+  customTitle?: React.ReactNode;
 }
 
 const activityItems = [
@@ -73,6 +88,7 @@ export const BlockLayout: React.FC<IBlockItemLayout> = ({
   options,
   onDropdownChange,
   placeholder,
+  customTitle,
 }) => {
   if (options) {
     return (
@@ -96,13 +112,35 @@ export const BlockLayout: React.FC<IBlockItemLayout> = ({
 
   return (
     <TableStyles.BlockWrapper className={`mb-20 ${className}`} id={id}>
-      <TableStyles.BlockTitle className={titleClassName}>{title}</TableStyles.BlockTitle>
+      {!customTitle ? (
+        <TableStyles.BlockTitle>{titleClassName}</TableStyles.BlockTitle>
+      ) : (
+        customTitle
+      )}
       <Styles.ContentWrapper className={childrenClassName}>{children}</Styles.ContentWrapper>
     </TableStyles.BlockWrapper>
   );
 };
 
 const NftDetails = () => {
+  const csvHeaders = [
+    { key: 'rank', label: translate('pages.senseDetails.rank') },
+    { key: 'image', label: translate('pages.senseDetails.thumbnail') },
+    { key: 'imageHash', label: translate('pages.senseDetails.imageHash') },
+    { key: 'dateTimeAdded', label: translate('pages.senseDetails.dateTimeAdded') },
+    { key: 'matchType', label: translate('pages.senseDetails.matchType') },
+    { key: 'finalDupeProbability', label: translate('pages.senseDetails.dupeProbability') },
+    { key: 'cosineSimilarity', label: translate('pages.senseDetails.cosineSimilarity') },
+    { key: 'cosineGain', label: translate('pages.senseDetails.cosineGain') },
+    { key: 'hoeffdingDependency', label: translate('pages.senseDetails.hoeffdingsDependency') },
+    { key: 'hoeffdingGain', label: translate('pages.senseDetails.hoeffdingGain') },
+    {
+      key: 'hilbertSchmidtInformationCriteria',
+      label: translate('pages.senseDetails.hilbertSchmidtInformationCriteria'),
+    },
+    { key: 'hilbertSchmidtGain', label: translate('pages.senseDetails.hilbertSchmidtGain') },
+  ];
+  const downloadRef = useRef(null);
   const txid = getParameterByName('txid');
   const [activitiesType, setActivitiesType] = useState('');
   const { nftData, isLoading } = useNftDetails(txid);
@@ -143,6 +181,31 @@ const NftDetails = () => {
 
   const handleDropdownChange = (_values: string[]) => {
     setActivitiesType(_values.join());
+  };
+
+  const getCsvData = () => {
+    if (!nftData?.rareness_scores_table_json_compressed_b64) {
+      return [];
+    }
+    const results = [];
+    const data = getSimilarRegisteredImagesData(nftData.rareness_scores_table_json_compressed_b64);
+    for (let i = 0; i < data.length; i += 1) {
+      results.push({
+        rank: i + 1,
+        image: data[i].image,
+        imageHash: data[i].imageHashOriginal,
+        dateTimeAdded: data[i].dateTimeAdded,
+        matchType: data[i].matchType,
+        finalDupeProbability: `${(data[i].finalDupeProbability * 100).toFixed(2)}%`,
+        cosineSimilarity: data[i].cosineSimilarity,
+        cosineGain: data[i].cosineGain,
+        hoeffdingDependency: data[i].hoeffdingDependency,
+        hoeffdingGain: data[i].hoeffdingGain,
+        hilbertSchmidtInformationCriteria: data[i].hilbertSchmidtInformationCriteria,
+        hilbertSchmidtGain: data[i].hilbertSchmidtGain,
+      });
+    }
+    return results;
   };
 
   return nftData ? (
@@ -198,13 +261,56 @@ const NftDetails = () => {
               <RaptorQParameters rqIc={nftData.rqIc} rqMax={nftData.rqMax} rqOti={nftData.rqOti} />
             </BlockLayout>
             <BlockLayout
-              title={translate('pages.nftDetails.offers')}
-              className="item-activity hidden-desktop"
-              childrenClassName="no-spacing"
-              id="offers"
+              title={translate('pages.senseDetails.prevalenceOfSimilarImages')}
+              className="prevalence-of-similar-images"
             >
-              <Offers />
+              <PrevalenceOfSimilarImages
+                data={{
+                  '25%': nftData?.pct_of_top_10_most_similar_with_dupe_prob_above_25pct || 0,
+                  '33%': nftData?.pct_of_top_10_most_similar_with_dupe_prob_above_33pct || 0,
+                  '50%': nftData?.pct_of_top_10_most_similar_with_dupe_prob_above_50pct || 0,
+                }}
+              />
             </BlockLayout>
+            <BlockLayout
+              title={translate('pages.senseDetails.categoryProbabilities')}
+              className="category-probabilities"
+            >
+              <CategoryProbabilities data={nftData?.alternative_nsfw_scores} />
+            </BlockLayout>
+            <Box className="hidden-desktop">
+              <BlockLayout title={translate('pages.senseDetails.summary')} className="summary">
+                <Summary
+                  isLikelyDupe={nftData?.is_likely_dupe}
+                  senseVersion={nftData?.dupe_detection_system_version}
+                />
+              </BlockLayout>
+              <BlockLayout title={translate('pages.senseDetails.openNSFW')} className="open-nsfw">
+                <OpenNSFW openNSFWScore={nftData?.open_nsfw_score} />
+              </BlockLayout>
+              <BlockLayout
+                title={translate('pages.senseDetails.rarenessScore')}
+                className="rareness-score"
+              >
+                <RarenessScore rarenessScore={nftData?.overall_rareness_score} />
+              </BlockLayout>
+              <BlockLayout
+                title={translate('pages.senseDetails.pastelData')}
+                className="pastel-data"
+              >
+                <PastelData
+                  blockHash={nftData?.pastel_block_height_when_request_submitted}
+                  blockHeight={nftData?.blockHeight}
+                  utcTimestampWhenRequestSubmitted={nftData?.utc_timestamp_when_request_submitted}
+                  pastelIdOfSubmitter={nftData?.pastel_id_of_submitter}
+                  pastelIdOfRegisteringSupernode1={nftData?.pastel_id_of_registering_supernode_1}
+                  pastelIdOfRegisteringSupernode2={nftData?.pastel_id_of_registering_supernode_2}
+                  pastelIdOfRegisteringSupernode3={nftData?.pastel_id_of_registering_supernode_3}
+                  isPastelOpenapiRequest={nftData?.is_pastel_openapi_request}
+                  currentOwnerPastelID={nftData?.currentOwnerPastelID}
+                />
+              </BlockLayout>
+            </Box>
           </Box>
           <Box className="nft-data hidden-mobile">
             <NftInfo
@@ -236,15 +342,104 @@ const NftDetails = () => {
                 timestamp={nftData.transactionTime}
               />
             </BlockLayout>
-            <BlockLayout
-              title={translate('pages.nftDetails.offers')}
-              className="item-activity"
-              childrenClassName="no-spacing"
-              id="offers"
-            >
-              <Offers />
+
+            <Box className="summary-section">
+              <BlockLayout title={translate('pages.senseDetails.summary')} className="summary">
+                <Summary
+                  isLikelyDupe={nftData?.is_likely_dupe}
+                  senseVersion={nftData?.dupe_detection_system_version}
+                />
+              </BlockLayout>
+              <BlockLayout title={translate('pages.senseDetails.openNSFW')} className="open-nsfw">
+                <OpenNSFW openNSFWScore={nftData?.open_nsfw_score} />
+              </BlockLayout>
+              <BlockLayout
+                title={translate('pages.senseDetails.rarenessScore')}
+                className="rareness-score"
+              >
+                <RarenessScore rarenessScore={nftData?.overall_rareness_score} />
+              </BlockLayout>
+            </Box>
+            <BlockLayout title={translate('pages.senseDetails.pastelData')} className="pastel-data">
+              <PastelData
+                blockHash={nftData?.pastel_block_height_when_request_submitted}
+                blockHeight={nftData?.blockHeight}
+                utcTimestampWhenRequestSubmitted={nftData?.utc_timestamp_when_request_submitted}
+                pastelIdOfSubmitter={nftData?.pastel_id_of_submitter}
+                pastelIdOfRegisteringSupernode1={nftData?.pastel_id_of_registering_supernode_1}
+                pastelIdOfRegisteringSupernode2={nftData?.pastel_id_of_registering_supernode_2}
+                pastelIdOfRegisteringSupernode3={nftData?.pastel_id_of_registering_supernode_3}
+                isPastelOpenapiRequest={nftData?.is_pastel_openapi_request}
+                currentOwnerPastelID={nftData?.currentOwnerPastelID}
+              />
             </BlockLayout>
           </Box>
+          <BlockLayout
+            title=""
+            className="similar-registered-images"
+            childrenClassName="no-spacing"
+            customTitle={
+              <SenseStyles.TitleWrapper>
+                <TableStyles.BlockTitle>
+                  {translate('pages.senseDetails.top10MostSimilarRegisteredImages')}
+                </TableStyles.BlockTitle>
+                <ChartStyles.CSVLinkButton
+                  data={getCsvData()}
+                  filename="top_10_most_similar_images.csv"
+                  headers={csvHeaders}
+                  separator=","
+                  ref={downloadRef}
+                  className="space-nowrap"
+                >
+                  {translate('pages.senseDetails.exportToCSV')}
+                </ChartStyles.CSVLinkButton>
+              </SenseStyles.TitleWrapper>
+            }
+          >
+            <SimilarRegisteredImages
+              rarenessScoresTable={nftData?.rareness_scores_table_json_compressed_b64}
+            />
+          </BlockLayout>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={4}>
+              <BlockLayout
+                title={translate('pages.senseDetails.rareOnTheInternetResultsGraph')}
+                className="rare-on-the-internet-results-graph"
+              >
+                <RareOnTheInternetResultsGraph data={nftData?.internet_rareness} />
+              </BlockLayout>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <BlockLayout
+                title={translate('pages.senseDetails.rareOnTheInternetAlternativeResults')}
+                className="rare-on-the-internet-alternative-results"
+              >
+                <RareOnTheInternetAlternativeResults data={nftData?.internet_rareness} />
+              </BlockLayout>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <BlockLayout
+                title={translate('pages.senseDetails.fingerprintVectorHeatmap')}
+                className="fingerprint-vector-heatmap"
+              >
+                <FingerprintVectorHeatmap
+                  data={
+                    nftData?.image_fingerprint_of_candidate_image_file
+                      ? JSON.parse(nftData?.image_fingerprint_of_candidate_image_file)
+                      : []
+                  }
+                />
+              </BlockLayout>
+            </Grid>
+          </Grid>
+          <BlockLayout
+            title={translate('pages.nftDetails.offers')}
+            className="item-activity"
+            childrenClassName="no-spacing"
+            id="offers"
+          >
+            <Offers />
+          </BlockLayout>
           <BlockLayout
             title={translate('pages.nftDetails.itemActivity')}
             className="item-activity"
