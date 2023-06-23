@@ -173,6 +173,10 @@ export const Wrapper = styled.div`
     min-height: 173px;
   }
 
+  .creator-content {
+    min-height: 353px;
+  }
+
   ${props => props.theme.breakpoints.down(425)} {
     .MuiSelect-select {
       width: 110px;
@@ -427,10 +431,6 @@ export const ItemActivityWrapper = styled.div`
         max-height: unset;
       }
     }
-  }
-
-  .creator-content {
-    min-height: 353px;
   }
 
   .nowrap {
