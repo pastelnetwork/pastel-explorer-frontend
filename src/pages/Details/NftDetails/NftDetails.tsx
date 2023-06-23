@@ -12,7 +12,6 @@ import * as TableStyles from '@components/Table/Table.styles';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 import * as PastelIdStyles from '@pages/Details/PastelIdDetails/PastelIdDetails.styles';
 import * as FilterStyles from '@components/InfinityTable/InfinityTable.styles';
-import PastelData from '@pages/Details/SenseDetails/PastelData';
 import Summary from '@pages/Details/SenseDetails/Summary';
 import OpenNSFW from '@pages/Details/SenseDetails/OpenNSFW';
 import RarenessScore from '@pages/Details/SenseDetails/RarenessScore';
@@ -33,7 +32,6 @@ import NftSummary from './NftSummary';
 import SubmittedImage from './SubmittedImage';
 import NftInfo from './NftInfo';
 import Creator from './Creator';
-import RaptorQParameters from './RaptorQParameters';
 import DdAndFingerprints from './DdAndFingerprints';
 import Offers from './Offers';
 import * as Styles from './NftDetails.styles';
@@ -113,7 +111,7 @@ export const BlockLayout: React.FC<IBlockItemLayout> = ({
   return (
     <TableStyles.BlockWrapper className={`mb-20 ${className}`} id={id}>
       {!customTitle ? (
-        <TableStyles.BlockTitle>{titleClassName}</TableStyles.BlockTitle>
+        <TableStyles.BlockTitle className={titleClassName}>{title}</TableStyles.BlockTitle>
       ) : (
         customTitle
       )}
@@ -212,11 +210,13 @@ const NftDetails = () => {
     <Styles.Wrapper className="nft-main-content">
       <Grid container direction="column" spacing={2}>
         <Styles.MainWrapper>
-          <Box className="submitted-image-creator-section">
-            <Box className="submitted-image">
-              <SubmittedImage img={nftData.image} alt={nftData.nftTitle} />
+          <Styles.ItemWrapper>
+            <Box className="submitted-image-creator-section">
+              <Box className="submitted-image">
+                <SubmittedImage img={nftData.image} alt={nftData.nftTitle} />
+              </Box>
             </Box>
-            <Box className="nft-data hidden-desktop">
+            <Box className="nft-data">
               <NftInfo
                 collectionName={nftData.collectionName}
                 collectionAlias={nftData.collectionAlias}
@@ -225,6 +225,7 @@ const NftDetails = () => {
                 username={nftData.username}
                 txId={nftData.transactionHash}
                 creatorName={nftData.creatorName}
+                rawData={nftData.rawData}
               />
               <BlockLayout
                 title={getSummaryTitle()}
@@ -244,136 +245,100 @@ const NftDetails = () => {
                   isPubliclyAccessible={nftData.makePubliclyAccessible}
                   totalCopies={nftData.totalCopies}
                   timestamp={nftData.transactionTime}
-                />
-              </BlockLayout>
-            </Box>
-            <BlockLayout title={translate('pages.nftDetails.creator')} className="creator">
-              <Creator
-                writtenStatement={nftData.creatorWrittenStatement}
-                memberSince={nftData.memberSince}
-                website={nftData.creatorWebsite}
-              />
-            </BlockLayout>
-            <BlockLayout
-              title={translate('pages.nftDetails.raptorQParameters')}
-              className="Raptorq-parameters"
-            >
-              <RaptorQParameters rqIc={nftData.rqIc} rqMax={nftData.rqMax} rqOti={nftData.rqOti} />
-            </BlockLayout>
-            <BlockLayout
-              title={translate('pages.senseDetails.prevalenceOfSimilarImages')}
-              className="prevalence-of-similar-images"
-            >
-              <PrevalenceOfSimilarImages
-                data={{
-                  '25%': nftData?.pct_of_top_10_most_similar_with_dupe_prob_above_25pct || 0,
-                  '33%': nftData?.pct_of_top_10_most_similar_with_dupe_prob_above_33pct || 0,
-                  '50%': nftData?.pct_of_top_10_most_similar_with_dupe_prob_above_50pct || 0,
-                }}
-              />
-            </BlockLayout>
-            <BlockLayout
-              title={translate('pages.senseDetails.categoryProbabilities')}
-              className="category-probabilities"
-            >
-              <CategoryProbabilities data={nftData?.alternative_nsfw_scores} />
-            </BlockLayout>
-            <Box className="hidden-desktop">
-              <BlockLayout title={translate('pages.senseDetails.summary')} className="summary">
-                <Summary
-                  isLikelyDupe={nftData?.is_likely_dupe}
-                  senseVersion={nftData?.dupe_detection_system_version}
-                />
-              </BlockLayout>
-              <BlockLayout title={translate('pages.senseDetails.openNSFW')} className="open-nsfw">
-                <OpenNSFW openNSFWScore={nftData?.open_nsfw_score} />
-              </BlockLayout>
-              <BlockLayout
-                title={translate('pages.senseDetails.rarenessScore')}
-                className="rareness-score"
-              >
-                <RarenessScore rarenessScore={nftData?.overall_rareness_score} />
-              </BlockLayout>
-              <BlockLayout
-                title={translate('pages.senseDetails.pastelData')}
-                className="pastel-data"
-              >
-                <PastelData
-                  blockHash={nftData?.pastel_block_height_when_request_submitted}
-                  blockHeight={nftData?.blockHeight}
-                  utcTimestampWhenRequestSubmitted={nftData?.utc_timestamp_when_request_submitted}
-                  pastelIdOfSubmitter={nftData?.pastel_id_of_submitter}
-                  pastelIdOfRegisteringSupernode1={nftData?.pastel_id_of_registering_supernode_1}
-                  pastelIdOfRegisteringSupernode2={nftData?.pastel_id_of_registering_supernode_2}
-                  pastelIdOfRegisteringSupernode3={nftData?.pastel_id_of_registering_supernode_3}
                   isPastelOpenapiRequest={nftData?.is_pastel_openapi_request}
-                  currentOwnerPastelID={nftData?.currentOwnerPastelID}
                 />
               </BlockLayout>
             </Box>
-          </Box>
-          <Box className="nft-data hidden-mobile">
-            <NftInfo
-              collectionName={nftData.collectionName}
-              collectionAlias={nftData.collectionAlias}
-              nftTitle={nftData.nftTitle}
-              creator={nftData.author}
-              username={nftData.username}
-              txId={nftData.transactionHash}
-              creatorName={nftData.creatorName}
-            />
-            <BlockLayout
-              title={getSummaryTitle()}
-              className="nft-summary"
-              titleClassName={nftData.makePubliclyAccessible ? 'summary-title-block' : ''}
-            >
-              <NftSummary
-                nftSeriesName={nftData.nftSeriesName}
-                royalty={nftData.royalty}
-                nftKeyword={nftData.nftKeywordSet}
-                green={nftData.green}
-                video={nftData.nftCreationVideoYoutubeUrl}
-                originalFileSize={nftData.originalFileSizeInBytes}
-                nftType={nftData.nftType}
-                dataHash={nftData.dataDash}
-                fileType={nftData.fileType}
-                isPubliclyAccessible={nftData.makePubliclyAccessible}
-                totalCopies={nftData.totalCopies}
-                timestamp={nftData.transactionTime}
-              />
-            </BlockLayout>
-
-            <Box className="summary-section">
+          </Styles.ItemWrapper>
+          <Styles.ItemWrapper>
+            <Box className="submitted-image-creator-section">
+              <BlockLayout
+                title={translate('pages.nftDetails.creator')}
+                className="creator"
+                childrenClassName="creator-content"
+              >
+                <Creator
+                  writtenStatement={nftData.creatorWrittenStatement}
+                  memberSince={nftData.memberSince}
+                  website={nftData.creatorWebsite}
+                />
+              </BlockLayout>
+            </Box>
+            <Box className="nft-data">
+              <BlockLayout
+                title={translate('pages.nftDetails.offers')}
+                className="item-activity"
+                childrenClassName="no-spacing offers-content"
+                id="offers"
+              >
+                <Offers />
+              </BlockLayout>
+            </Box>
+          </Styles.ItemWrapper>
+          <Styles.ItemWrapper>
+            <Box className="submitted-image-creator-section">
               <BlockLayout title={translate('pages.senseDetails.summary')} className="summary">
                 <Summary
                   isLikelyDupe={nftData?.is_likely_dupe}
                   senseVersion={nftData?.dupe_detection_system_version}
                 />
               </BlockLayout>
-              <BlockLayout title={translate('pages.senseDetails.openNSFW')} className="open-nsfw">
+            </Box>
+            <Box className="nft-data">
+              <BlockLayout
+                title={translate('pages.nftDetails.itemActivity')}
+                className="item-activity"
+                childrenClassName="no-spacing item-activity-content"
+                options={activityItems}
+                onDropdownChange={handleDropdownChange}
+                placeholder={translate('pages.nftDetails.all')}
+              >
+                <ItemActivity activitiesType={activitiesType} />
+              </BlockLayout>
+            </Box>
+          </Styles.ItemWrapper>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={3}>
+              <BlockLayout
+                title={translate('pages.senseDetails.openNSFW')}
+                className="open-nsfw"
+                childrenClassName="open-nsfw-content"
+              >
                 <OpenNSFW openNSFWScore={nftData?.open_nsfw_score} />
               </BlockLayout>
+            </Grid>
+            <Grid item xs={12} md={3}>
               <BlockLayout
                 title={translate('pages.senseDetails.rarenessScore')}
                 className="rareness-score"
+                childrenClassName="rareness-score-content"
               >
                 <RarenessScore rarenessScore={nftData?.overall_rareness_score} />
               </BlockLayout>
-            </Box>
-            <BlockLayout title={translate('pages.senseDetails.pastelData')} className="pastel-data">
-              <PastelData
-                blockHash={nftData?.pastel_block_height_when_request_submitted}
-                blockHeight={nftData?.blockHeight}
-                utcTimestampWhenRequestSubmitted={nftData?.utc_timestamp_when_request_submitted}
-                pastelIdOfSubmitter={nftData?.pastel_id_of_submitter}
-                pastelIdOfRegisteringSupernode1={nftData?.pastel_id_of_registering_supernode_1}
-                pastelIdOfRegisteringSupernode2={nftData?.pastel_id_of_registering_supernode_2}
-                pastelIdOfRegisteringSupernode3={nftData?.pastel_id_of_registering_supernode_3}
-                isPastelOpenapiRequest={nftData?.is_pastel_openapi_request}
-                currentOwnerPastelID={nftData?.currentOwnerPastelID}
-              />
-            </BlockLayout>
-          </Box>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <BlockLayout
+                title={translate('pages.senseDetails.prevalenceOfSimilarImages')}
+                className="prevalence-of-similar-images"
+              >
+                <PrevalenceOfSimilarImages
+                  data={{
+                    '25%': nftData?.pct_of_top_10_most_similar_with_dupe_prob_above_25pct || 0,
+                    '33%': nftData?.pct_of_top_10_most_similar_with_dupe_prob_above_33pct || 0,
+                    '50%': nftData?.pct_of_top_10_most_similar_with_dupe_prob_above_50pct || 0,
+                  }}
+                />
+              </BlockLayout>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <BlockLayout
+                title={translate('pages.senseDetails.categoryProbabilities')}
+                className="category-probabilities"
+              >
+                <CategoryProbabilities data={nftData?.alternative_nsfw_scores} />
+              </BlockLayout>
+            </Grid>
+          </Grid>
           <BlockLayout
             title=""
             className="similar-registered-images"
@@ -433,24 +398,6 @@ const NftDetails = () => {
             </Grid>
           </Grid>
           <BlockLayout
-            title={translate('pages.nftDetails.offers')}
-            className="item-activity"
-            childrenClassName="no-spacing"
-            id="offers"
-          >
-            <Offers />
-          </BlockLayout>
-          <BlockLayout
-            title={translate('pages.nftDetails.itemActivity')}
-            className="item-activity"
-            childrenClassName="no-spacing"
-            options={activityItems}
-            onDropdownChange={handleDropdownChange}
-            placeholder={translate('pages.nftDetails.all')}
-          >
-            <ItemActivity activitiesType={activitiesType} />
-          </BlockLayout>
-          <BlockLayout
             title={translate('pages.nftDetails.ddAndFingerprints')}
             className="item-activity"
           >
@@ -460,6 +407,7 @@ const NftDetails = () => {
               ddAndFingerprintsIds={nftData.ddAndFingerprintsIds}
             />
           </BlockLayout>
+
           {nftData.collectionAlias ? (
             <BlockLayout
               title={translate('pages.nftDetails.moreFromThisCollection')}

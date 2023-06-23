@@ -736,6 +736,7 @@ export interface INftDetails {
   image_fingerprint_of_candidate_image_file: string;
   blockHeight: number;
   currentOwnerPastelID: string;
+  rawData: string;
 }
 
 export interface IMempool {

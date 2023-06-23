@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import Box from '@material-ui/core/Box';
 
 export const Wrapper = styled.div`
   display: block;
@@ -94,6 +95,82 @@ export const Wrapper = styled.div`
     .rareness-score {
       width: 32%;
     }
+  }
+
+  .offers-content {
+    .no-data {
+      min-height: 354px;
+    }
+  }
+
+  .tooltip-wrapper {
+    font-size: 14px;
+
+    &.max-w-280 {
+      max-width: 280px;
+    }
+
+    .tooltip-content-wrapper {
+      margin-top: 20px;
+    }
+
+    .tooltip-name {
+      font-weight: bold;
+      font-size: 16px;
+      word-break: break-all;
+      white-space: break-spaces;
+    }
+
+    .tooltip-url {
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .tooltip-item {
+      margin-top: 5px;
+
+      .label {
+        font-weight: bold;
+      }
+
+      .value {
+        max-width: 100%;
+        font-weight: normal;
+      }
+
+      .description {
+        display: -webkit-box;
+        -webkit-line-clamp: 7;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        white-space: break-spaces;
+      }
+    }
+
+    .tooltip-image {
+      max-width: 80px;
+      max-height: 80px;
+    }
+  }
+
+  .similar-registered-images,
+  .pastel-data {
+    width: 100%;
+  }
+
+  .open-nsfw-content,
+  .rareness-score-content {
+    min-height: 262px;
+  }
+
+  .item-activity-content {
+    min-height: 269px;
+  }
+
+  .offers-content {
+    min-height: 173px;
   }
 
   ${props => props.theme.breakpoints.down(425)} {
@@ -322,6 +399,40 @@ export const SubmittedImageWrapper = styled.div`
 `;
 
 export const ItemActivityWrapper = styled.div`
+  &.has-pagination {
+    .MuiPaper-root {
+      max-height: 210px;
+      overflow: auto;
+    }
+  }
+
+  &.has-scroll {
+    .MuiPaper-root {
+      max-height: 269px;
+      overflow: auto;
+    }
+  }
+
+  &.offers {
+    height: 354px;
+
+    &.has-pagination {
+      .MuiPaper-root {
+        max-height: unset;
+      }
+    }
+
+    &.has-scroll {
+      .MuiPaper-root {
+        max-height: unset;
+      }
+    }
+  }
+
+  .creator-content {
+    min-height: 353px;
+  }
+
   .nowrap {
     white-space: nowrap;
   }
@@ -460,4 +571,10 @@ export const LoadingWrapper = styled.div`
 
 export const LoadingSection = styled.div`
   min-height: 160px;
+`;
+
+export const ItemWrapper = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 `;

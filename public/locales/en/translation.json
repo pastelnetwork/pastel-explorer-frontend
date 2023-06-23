@@ -3274,6 +3274,14 @@
       "all": {
         "message": "All",
         "description": "Used for the NFT Details page"
+      },
+      "rawData": {
+        "message": "Raw Data",
+        "description": "Used for the NFT Details page"
+      },
+      "viewNFTRawData": {
+        "message": "View NFT Raw Data",
+        "description": "Used for the NFT Details page"
       }
     }
   },

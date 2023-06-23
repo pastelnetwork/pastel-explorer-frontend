@@ -31,16 +31,16 @@ const FingerprintVectorHeatmap: React.FC<IFingerprintVectorHeatmap> = ({ data })
         return `
           <div class="tooltip-wrapper">
             <div class="flex">
-              <div class="tooltip-label">x:</div>
-              <div class="tooltip-value ml-5">${params.data[0]}</div>
+              <span class="tooltip-label">x:</span>
+              <span class="tooltip-value ml-5">${params.data[0]}</span>
             </div>
             <div class="flex">
-              <div class="tooltip-label">y:</div>
-              <div class="tooltip-value ml-5">${params.data[1]}</div>
+              <span class="tooltip-label">y:</span>
+              <span class="tooltip-value ml-5">${params.data[1]}</span>
             </div>
             <div class="flex">
-              <div class="tooltip-label">z:</div>
-              <div class="tooltip-value ml-5">${params.data[2]}</div>
+              <span class="tooltip-label">z:</span>
+              <span class="tooltip-value ml-5">${params.data[2]}</span>
             </div>
           </div>
         `;

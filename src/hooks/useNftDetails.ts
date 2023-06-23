@@ -77,6 +77,7 @@ export default function useNftDetails(txid: string) {
       alternative_nsfw_scores: data.nft.alternative_nsfw_scores,
       blockHeight: data.nft.blockHeight,
       currentOwnerPastelID: data.nft.currentOwnerPastelID,
+      rawData: data.nft.rawData,
     };
 
     return {
@@ -125,6 +126,50 @@ export function useCollectionRelated(txid: string, collectionId: string) {
     isLoading,
   };
 }
+
+const fake = [
+  {
+    transactionHash: '1',
+    offer_txid: '12',
+    pastelID: '12',
+    price: 1200,
+    copy_number: 10,
+    timestamp: 1687499246182,
+  },
+  {
+    transactionHash: '2',
+    offer_txid: '12',
+    pastelID: '12',
+    price: 1200,
+    copy_number: 10,
+    timestamp: 1687499246182,
+  },
+  {
+    transactionHash: '3',
+    offer_txid: '12',
+    pastelID: '12',
+    price: 1200,
+    copy_number: 10,
+    timestamp: 1687499246182,
+  },
+  {
+    transactionHash: '4',
+    offer_txid: '12',
+    pastelID: '12',
+    price: 1200,
+    copy_number: 10,
+    timestamp: 1687499246182,
+  },
+  {
+    transactionHash: '5',
+    offer_txid: '12',
+    pastelID: '12',
+    price: 1200,
+    copy_number: 10,
+    timestamp: 1687499246182,
+  },
+];
+console.log(fake)
 
 export function useOffers(txid: string, offset: number, limit: number) {
   const { data, isLoading } = useSWR<{ items: TAcceptedOffer[]; totalItems: number }>(

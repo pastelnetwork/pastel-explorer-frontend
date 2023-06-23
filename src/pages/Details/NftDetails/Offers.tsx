@@ -22,7 +22,7 @@ import * as Styles from './NftDetails.styles';
 
 const LIMIT = 5;
 
-const Offers = () => {
+const Offers: React.FC = () => {
   const { usdPrice } = useUsdPrice();
   const txid = getParameterByName('txid');
   const [currentPage, setCurrentPage] = useState(0);
@@ -44,8 +44,19 @@ const Offers = () => {
 
   const totalPages = Math.ceil(totalItems / LIMIT);
 
+  const getClassName = () => {
+    if (totalPages > 1) {
+      return 'has-pagination';
+    }
+    if (data && data?.length > 4) {
+      return 'has-scroll';
+    }
+
+    return '';
+  };
+
   return data?.length ? (
-    <Styles.ItemActivityWrapper>
+    <Styles.ItemActivityWrapper className={`offers ${getClassName()}`}>
       <TableStyles.PaperWrapper>
         <TableStyles.TableWrapper className="scroll">
           <Table className="custom-table activities-table offers">
