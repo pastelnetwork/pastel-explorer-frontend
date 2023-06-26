@@ -161,8 +161,10 @@ export const Wrapper = styled.div`
   }
 
   .open-nsfw-content,
-  .rareness-score-content {
-    min-height: 262px;
+  .rareness-score-content,
+  .prevalence-of-similar-images-content,
+  .category-probabilities-content {
+    min-height: 270px;
   }
 
   .item-activity-content {
@@ -385,6 +387,7 @@ export const SubmittedImageWrapper = styled.div`
   &.image-placeholder {
     background-color: #ebeaea;
     border-radius: 10px;
+    height: 390px;
 
     img {
       max-width: 300px;

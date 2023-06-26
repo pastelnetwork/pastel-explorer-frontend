@@ -696,3 +696,7 @@ export const EmptyData = styled.div`
   font-size: 22px;
   font-weight: 700;
 `;
+
+export const EmptyWrapper = styled('div')`
+  margin: 50px 0;
+`;

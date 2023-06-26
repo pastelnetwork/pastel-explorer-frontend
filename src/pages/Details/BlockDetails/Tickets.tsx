@@ -86,12 +86,30 @@ const TicketsList: React.FC<ITicketsList> = ({
     }
     const sense = senses?.find(s => s.transactionHash === transactionHash);
     if (!sense) {
+      if (ticket.action_type === 'sense' && ticket.activation_txId) {
+        return (
+          <Grid container spacing={3}>
+            <Grid item xs={4} sm={3} className="max-w-355">
+              <TicketStyles.TicketTitle>
+                {translate('pages.blockDetails.senseOutputDetails')}
+              </TicketStyles.TicketTitle>
+            </Grid>
+            <Grid item xs={8} sm={9}>
+              <TicketStyles.TicketContent>
+                {translate('pages.tickets.pendingSenseGenerate')}
+              </TicketStyles.TicketContent>
+            </Grid>
+          </Grid>
+        );
+      }
+
       const actionTicket = ticket?.action_ticket;
       const parseActionTicket = JSON.parse(decode(actionTicket)) as IActionTicket;
       const apiTicket = decodeApiTicket(parseActionTicket.api_ticket) as ICascadeApiTicket;
       if (!apiTicket.file_type) {
         return null;
       }
+
       return (
         <>
           <Grid container spacing={3}>
@@ -122,19 +140,23 @@ const TicketsList: React.FC<ITicketsList> = ({
           </Grid>
           <Grid item xs={8} sm={9}>
             <TicketStyles.TicketContent>
-              <Link
-                to={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${sense.imageFileHash}`}
-              >
-                <img
-                  src={
-                    sense.imageFileCdnUrl
-                      ? `data:image/jpeg;base64,${sense.imageFileCdnUrl}`
-                      : noImagePlaceholder
-                  }
-                  alt={sense.imageFileHash}
-                  className="sense-img"
-                />
-              </Link>
+              {sense.imageFileCdnUrl ? (
+                <Link
+                  to={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${sense.imageFileHash}`}
+                >
+                  <img
+                    src={
+                      sense.imageFileCdnUrl
+                        ? `data:image/jpeg;base64,${sense.imageFileCdnUrl}`
+                        : noImagePlaceholder
+                    }
+                    alt={sense.imageFileHash}
+                    className="sense-img"
+                  />
+                </Link>
+              ) : (
+                translate('pages.tickets.pendingSenseGenerate')
+              )}
             </TicketStyles.TicketContent>
           </Grid>
         </Grid>

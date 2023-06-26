@@ -185,6 +185,7 @@ export interface INftRegistrationTicket {
   collectionName?: string;
   collectionAlias?: string;
   image?: string;
+  nftId?: string;
 }
 
 export interface INftActivationTicket {
@@ -294,6 +295,7 @@ export interface IActionRegistrationTicket {
   activationTicket: ITicket;
   collectionName?: string;
   collectionAlias?: string;
+  nftId?: string;
 }
 
 export interface IActionTicket {
@@ -621,6 +623,8 @@ export type TicketsList = {
   reTxId?: string;
   ticketType?: string;
   userName?: string;
+  nftId?: string;
+  fileSize?: number;
 };
 
 export type TCascade = {

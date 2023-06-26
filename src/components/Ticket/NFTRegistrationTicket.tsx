@@ -247,15 +247,19 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
           </Grid>
           <Grid item xs={8} sm={9}>
             <Styles.TicketContent>
-              <Link to={`${ROUTES.NFT_DETAILS}?txid=${transactionHash}`}>
-                <img
-                  src={
-                    ticket?.image ? `data:image/jpeg;base64,${ticket.image}` : noImagePlaceholder
-                  }
-                  alt={transactionHash}
-                  className={`sense-img ${!ticket?.image ? 'placeholder' : ''}`}
-                />
-              </Link>
+              {ticket.nftId ? (
+                <Link to={`${ROUTES.NFT_DETAILS}?txid=${transactionHash}`}>
+                  <img
+                    src={
+                      ticket?.image ? `data:image/jpeg;base64,${ticket.image}` : noImagePlaceholder
+                    }
+                    alt={transactionHash}
+                    className={`sense-img ${!ticket?.image ? 'placeholder' : ''}`}
+                  />
+                </Link>
+              ) : (
+                translate('pages.tickets.pendingPastelNftGenerate')
+              )}
             </Styles.TicketContent>
           </Grid>
         </Grid>

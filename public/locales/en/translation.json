@@ -2708,6 +2708,18 @@
       "pendingActivation": {
         "message": "Pending Activation",
         "description": "Used for the Tickets page"
+      },
+      "pendingSenseGenerate": {
+        "message": "Creating Sense",
+        "description": "Used for the Tickets page"
+      },
+      "pendingPastelNftGenerate": {
+        "message": "Creating Pastel NFT",
+        "description": "Used for the Tickets page"
+      },
+      "fileSize": {
+        "message": "File size",
+        "description": "Used for the Tickets page"
       }
     },
     "ticketsType": {

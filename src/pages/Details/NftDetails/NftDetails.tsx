@@ -320,6 +320,7 @@ const NftDetails = () => {
               <BlockLayout
                 title={translate('pages.senseDetails.prevalenceOfSimilarImages')}
                 className="prevalence-of-similar-images"
+                childrenClassName="prevalence-of-similar-images-content"
               >
                 <PrevalenceOfSimilarImages
                   data={{
@@ -334,6 +335,7 @@ const NftDetails = () => {
               <BlockLayout
                 title={translate('pages.senseDetails.categoryProbabilities')}
                 className="category-probabilities"
+                childrenClassName="category-probabilities-content"
               >
                 <CategoryProbabilities data={nftData?.alternative_nsfw_scores} />
               </BlockLayout>

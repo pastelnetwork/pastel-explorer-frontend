@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
 import { getCurrencyName } from '@utils/appInfo';
-import { formatAddress } from '@utils/helpers/format';
+import { formatAddress, formatBytes } from '@utils/helpers/format';
 import { formatFullDate } from '@utils/helpers/date/date';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { TicketsList, TTicketType } from '@utils/types/ITransactions';
@@ -92,6 +92,7 @@ export const transformCascadeData = (cascade: TicketsList[], usdPrice: number) =
       activation_txId,
       fileType,
       fileName,
+      fileSize,
     }) => {
       return {
         id: transactionHash,
@@ -134,7 +135,7 @@ export const transformCascadeData = (cascade: TicketsList[], usdPrice: number) =
                   </Tooltip>
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6} md={4}>
+              <Grid item xs={12} sm={6} md={3}>
                 <Box className="title">{translate('pages.tickets.fileName')}</Box>
                 <Box className="bold read-more">
                   <Tooltip title={fileName}>
@@ -142,11 +143,15 @@ export const transformCascadeData = (cascade: TicketsList[], usdPrice: number) =
                   </Tooltip>
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={4}>
                 <Box className="title">{translate('pages.tickets.cascadeOutput')}</Box>
                 <Box className="bold">
                   {activation_ticket ? (
                     <>
+                      <span className="nowrap">
+                        {translate('pages.tickets.fileSize')}: {formatBytes(fileSize || 0)}
+                      </span>
+                      {' - '}
                       <RouterLink
                         route={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}
                         value={translate('pages.tickets.senseDetail')}
@@ -180,13 +185,13 @@ export const transformCascadeData = (cascade: TicketsList[], usdPrice: number) =
                   {formatNumber(fee)} {getCurrencyName()} {getStorageFee(fee, usdPrice)}
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6} md={4}>
+              <Grid item xs={12} sm={6} md={3}>
                 <Box className="title">{translate('pages.tickets.timestamp')}</Box>
                 <Box className="bold">
                   {timestamp ? formatFullDate(timestamp, { dayName: false }) : '--'}
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={4}>
                 {activation_txId ? (
                   <Box className="cascade-image">
                     <Link to={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}>
@@ -277,16 +282,22 @@ export const transformSenseData = (sense: TicketsList[], usdPrice: number) =>
                 <Box className="bold">
                   {activation_ticket ? (
                     <>
-                      <span className="nowrap">
-                        {translate('pages.tickets.version')}: {dupeDetectionSystemVersion}
-                      </span>{' '}
-                      -{' '}
-                      <RouterLink
-                        route={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${imageHash}`}
-                        value={translate('pages.tickets.senseDetail')}
-                        title={imageHash}
-                        className="address-link nowrap"
-                      />
+                      {!dupeDetectionSystemVersion && !imageFileCdnUrl ? (
+                        <>{translate('pages.tickets.pendingSenseGenerate')}</>
+                      ) : (
+                        <>
+                          <span className="nowrap">
+                            {translate('pages.tickets.version')}: {dupeDetectionSystemVersion}
+                          </span>{' '}
+                          -{' '}
+                          <RouterLink
+                            route={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${imageHash}`}
+                            value={translate('pages.tickets.senseDetail')}
+                            title={imageHash}
+                            className="address-link nowrap"
+                          />
+                        </>
+                      )}
                     </>
                   ) : (
                     translate('pages.tickets.pendingActivation')
@@ -322,17 +333,23 @@ export const transformSenseData = (sense: TicketsList[], usdPrice: number) =>
               </Grid>
               <Grid item xs={12} sm={6} md={2} className="sense-output">
                 {activation_ticket ? (
-                  <Link to={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${imageHash}`}>
-                    <img
-                      src={
-                        imageFileCdnUrl
-                          ? `data:image/jpeg;base64,${imageFileCdnUrl}`
-                          : noImagePlaceholder
-                      }
-                      alt={imageHash}
-                      className="sense-img"
-                    />
-                  </Link>
+                  <>
+                    {dupeDetectionSystemVersion && imageFileCdnUrl ? (
+                      <Link
+                        to={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${imageHash}`}
+                      >
+                        <img
+                          src={
+                            imageFileCdnUrl
+                              ? `data:image/jpeg;base64,${imageFileCdnUrl}`
+                              : noImagePlaceholder
+                          }
+                          alt={imageHash}
+                          className="sense-img"
+                        />
+                      </Link>
+                    ) : null}
+                  </>
                 ) : null}
               </Grid>
             </Grid>
@@ -625,6 +642,7 @@ export const transformPastelNftTicketsData = (data: TicketsList[], usdPrice: num
       collectionAlias,
       image,
       fee,
+      nftId,
     }) => {
       return {
         id: transactionHash,
@@ -687,12 +705,16 @@ export const transformPastelNftTicketsData = (data: TicketsList[], usdPrice: num
                 <Box className="bold">
                   {activation_ticket ? (
                     <>
-                      <RouterLink
-                        route={`${ROUTES.NFT_DETAILS}?txid=${transactionHash}`}
-                        value={translate('pages.tickets.senseDetail')}
-                        title={transactionHash}
-                        className="address-link"
-                      />
+                      {nftId ? (
+                        <RouterLink
+                          route={`${ROUTES.NFT_DETAILS}?txid=${transactionHash}`}
+                          value={translate('pages.tickets.senseDetail')}
+                          title={transactionHash}
+                          className="address-link"
+                        />
+                      ) : (
+                        translate('pages.tickets.pendingPastelNftGenerate')
+                      )}
                     </>
                   ) : (
                     translate('pages.tickets.pendingActivation')
@@ -730,13 +752,17 @@ export const transformPastelNftTicketsData = (data: TicketsList[], usdPrice: num
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
                 {activation_ticket ? (
-                  <Link to={`${ROUTES.NFT_DETAILS}?txid=${transactionHash}`}>
-                    <img
-                      src={image ? `data:image/jpeg;base64,${image}` : noImagePlaceholder}
-                      alt={transactionHash || ''}
-                      className="sense-img"
-                    />
-                  </Link>
+                  <>
+                    {nftId ? (
+                      <Link to={`${ROUTES.NFT_DETAILS}?txid=${transactionHash}`}>
+                        <img
+                          src={image ? `data:image/jpeg;base64,${image}` : noImagePlaceholder}
+                          alt={transactionHash || ''}
+                          className="sense-img"
+                        />
+                      </Link>
+                    ) : null}
+                  </>
                 ) : null}
               </Grid>
             </Grid>

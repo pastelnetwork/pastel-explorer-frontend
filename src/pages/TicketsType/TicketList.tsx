@@ -176,19 +176,23 @@ const TicketsList: React.FC<ITicketsList> = ({
           </Grid>
           <Grid item xs={8} sm={9}>
             <TicketStyles.TicketContent>
-              <Link
-                to={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${sense.imageFileHash}`}
-              >
-                <img
-                  src={
-                    sense.imageFileCdnUrl
-                      ? `data:image/jpeg;base64,${sense.imageFileCdnUrl}`
-                      : noImagePlaceholder
-                  }
-                  alt={sense.imageFileHash}
-                  className="sense-img"
-                />
-              </Link>
+              {sense.imageFileCdnUrl ? (
+                <Link
+                  to={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${sense.imageFileHash}`}
+                >
+                  <img
+                    src={
+                      sense.imageFileCdnUrl
+                        ? `data:image/jpeg;base64,${sense.imageFileCdnUrl}`
+                        : noImagePlaceholder
+                    }
+                    alt={sense.imageFileHash}
+                    className="sense-img"
+                  />
+                </Link>
+              ) : (
+                translate('pages.tickets.pendingSenseGenerate')
+              )}
             </TicketStyles.TicketContent>
           </Grid>
         </Grid>
