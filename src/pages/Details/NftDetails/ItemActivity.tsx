@@ -226,8 +226,19 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
 
   const totalPages = Math.ceil(totalItems / LIMIT);
 
+  const getClassName = () => {
+    if (totalPages > 1) {
+      return 'has-pagination';
+    }
+    if (data && data?.length > 4) {
+      return 'has-scroll';
+    }
+
+    return '';
+  };
+
   return data?.length ? (
-    <Styles.ItemActivityWrapper>
+    <Styles.ItemActivityWrapper className={getClassName()}>
       <TableStyles.PaperWrapper>
         <TableStyles.TableWrapper>
           <Table className="custom-table activities-table">

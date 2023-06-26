@@ -12,11 +12,16 @@ import { otherTicketsColumns } from './Tickets.columns';
 import * as Styles from './Tickets.styles';
 
 interface IMiscOtherTicketTypesProps {
-  isMobile: boolean;
   ticketsData: TTicketResponse;
+  innerWidth: number;
+  usdPrice: number;
 }
 
-const MiscOtherTicketTypes: React.FC<IMiscOtherTicketTypesProps> = ({ isMobile, ticketsData }) => {
+const MiscOtherTicketTypes: React.FC<IMiscOtherTicketTypesProps> = ({
+  ticketsData,
+  innerWidth,
+  usdPrice,
+}) => {
   const { data, total, isLoading, size, setSize } = ticketsData;
 
   const handleFetchMoreMovements = (reachedTableBottom: boolean) => {
@@ -28,7 +33,7 @@ const MiscOtherTicketTypes: React.FC<IMiscOtherTicketTypesProps> = ({ isMobile, 
   const getTitle = () => {
     return (
       <Styles.BlockTitle className="latest-blocks">
-        {translate('pages.tickets.miscOtherTicketTypes')} (
+        {translate('pages.tickets.senseAndNFTCollectionTickets')} (
         {total > 1
           ? translate('pages.tickets.totalTickets', { total: formatNumber(total) })
           : translate('pages.tickets.totalTicket', { total: formatNumber(total) })}
@@ -42,18 +47,35 @@ const MiscOtherTicketTypes: React.FC<IMiscOtherTicketTypesProps> = ({ isMobile, 
     );
   };
 
+  const getRowHeight = () => {
+    if (innerWidth < 600) {
+      return 430;
+    }
+    if (innerWidth < 960) {
+      return 220;
+    }
+    return 120;
+  };
+
+  const gettableHeight = () => {
+    if (innerWidth < 600) {
+      return 1200;
+    }
+    return 600;
+  };
+
   return (
     <Styles.OtherTicketContainer id="miscOtherTicketTypes">
       <InfinityTable
-        rows={data ? transformOtherData(data) : []}
+        rows={data ? transformOtherData(data, usdPrice) : []}
         columns={otherTicketsColumns}
-        tableHeight={495}
+        tableHeight={gettableHeight()}
         title={getTitle()}
         onBottomReach={handleFetchMoreMovements}
-        className="data-table"
+        className="data-table tickets-table"
         headerBackground
         customLoading={isLoading}
-        rowHeight={isMobile ? 140 : 45}
+        rowHeight={getRowHeight()}
       />
     </Styles.OtherTicketContainer>
   );

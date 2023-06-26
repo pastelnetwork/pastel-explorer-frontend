@@ -18,7 +18,67 @@ interface ICategoryProbabilities {
 const CategoryProbabilities: React.FC<ICategoryProbabilities> = ({ data }) => {
   const { darkMode } = useSelector(getThemeState);
   if (!data) {
-    return <Styles.ContentItem className="min-height-315" />;
+    const xAxisData = ['drawings', 'hentai', 'sexy', 'porn', 'neutral'];
+    const seriesData = [];
+    for (let i = 0; i < categoryProbabilitiesData.length; i += 1) {
+      seriesData.push({
+        value: categoryProbabilitiesData[i],
+        itemStyle: {
+          color: '#ddd',
+        },
+      });
+    }
+    const options = {
+      grid: {
+        top: 30,
+        left: 35,
+        right: 5,
+        bottom: 20,
+      },
+      tooltip: {
+        trigger: 'axis',
+      },
+      xAxis: {
+        type: 'category',
+        data: xAxisData,
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          color: darkMode ? '#fff' : '#2D3748',
+        },
+      },
+      yAxis: {
+        type: 'value',
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          color: darkMode ? '#fff' : '#2D3748',
+          formatter: (value: number) => {
+            return value.toFixed(2);
+          },
+        },
+      },
+      series: {
+        type: 'bar',
+        data: seriesData,
+      },
+    };
+    return (
+      <Styles.ContentItem className="chart-section">
+        <div className="empty">
+          <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '240px' }} />
+        </div>
+        <EmptyOverlay isShow />
+      </Styles.ContentItem>
+    );
   }
   const newData = JSON.parse(data);
   const values: number[] = Object.values(newData);

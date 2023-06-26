@@ -2680,6 +2680,46 @@
       "fileName": {
         "message": "File name",
         "description": "Used for the Tickets page"
+      },
+      "senseAndNFTCollectionTickets": {
+        "message": "Sense and NFT Collection Tickets",
+        "description": "Used for the Tickets page"
+      },
+      "collectionType": {
+        "message": "Type",
+        "description": "Used for the Tickets page"
+      },
+      "numberOfEntries": {
+        "message": "Number of Entries",
+        "description": "Used for the Tickets page"
+      },
+      "copyNumber": {
+        "message": "Copy Number",
+        "description": "Used for the Tickets page"
+      },
+      "thumbnail": {
+        "message": "Thumbnail",
+        "description": "Used for the Tickets page"
+      },
+      "userName": {
+        "message": "Username",
+        "description": "Used for the Tickets page"
+      },
+      "pendingActivation": {
+        "message": "Pending Activation",
+        "description": "Used for the Tickets page"
+      },
+      "pendingSenseGenerate": {
+        "message": "Creating Sense",
+        "description": "Used for the Tickets page"
+      },
+      "pendingPastelNftGenerate": {
+        "message": "Creating Pastel NFT",
+        "description": "Used for the Tickets page"
+      },
+      "fileSize": {
+        "message": "File size",
+        "description": "Used for the Tickets page"
       }
     },
     "ticketsType": {
@@ -2797,6 +2837,10 @@
       },
       "offerTicketsAndTransferTickets": {
         "message": "Offer Tickets and Transfer Tickets",
+        "description": "Used for the Tickets page"
+      },
+      "senseAndNFTCollectionTickets": {
+        "message": "Sense and NFT Collection Tickets",
         "description": "Used for the Tickets page"
       }
     },
@@ -3241,6 +3285,14 @@
       },
       "all": {
         "message": "All",
+        "description": "Used for the NFT Details page"
+      },
+      "rawData": {
+        "message": "Raw Data",
+        "description": "Used for the NFT Details page"
+      },
+      "viewNFTRawData": {
+        "message": "View NFT Raw Data",
         "description": "Used for the NFT Details page"
       }
     }

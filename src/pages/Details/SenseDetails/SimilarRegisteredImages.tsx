@@ -234,7 +234,11 @@ const SimilarRegisteredImageRow: React.FC<ISimilarRegisteredImageRow> = ({
 
 const SimilarRegisteredImages: React.FC<ISimilarRegisteredImages> = ({ rarenessScoresTable }) => {
   if (!rarenessScoresTable) {
-    return null;
+    return (
+      <Styles.EmptyWrapper>
+        <Styles.EmptyData>{translate('common.noData')}</Styles.EmptyData>
+      </Styles.EmptyWrapper>
+    );
   }
   const fancyGridData = getSimilarRegisteredImagesData(rarenessScoresTable);
 
@@ -294,6 +298,13 @@ const SimilarRegisteredImages: React.FC<ISimilarRegisteredImages> = ({ rarenessS
                 totalItem={fancyGridData.length - 1}
               />
             ))}
+            {!fancyGridData.length ? (
+              <StyledTableRow className="table__row">
+                <StyledTableCell component="td" scope="row" align="center" colSpan={13}>
+                  <Styles.EmptyData>{translate('common.noData')}</Styles.EmptyData>
+                </StyledTableCell>
+              </StyledTableRow>
+            ) : null}
           </TableBody>
         </Table>
       </TableContainer>

@@ -8,6 +8,7 @@ export const VERSION_KEY = 'version';
 export const TYPE_KEY = 'type';
 export const ACTIVATION_TXID_KEY = 'activation_txid';
 export const COLLECTION_NAME = 'collectionName';
+export const USERNAME_KEY = 'userName';
 
 export const cascadeColumns = [
   {
@@ -55,11 +56,11 @@ export const pastelIDAndUsernameTicketsColumns = [
   {
     width: 140,
     flexGrow: 1,
-    label: 'pages.tickets.type',
-    dataKey: TYPE_KEY,
+    label: 'pages.tickets.userName',
+    dataKey: USERNAME_KEY,
     disableSort: true,
     className: 'idType',
-    dataTitle: 'pages.tickets.type',
+    dataTitle: 'pages.tickets.userName',
   },
   {
     width: 160,
@@ -82,33 +83,6 @@ export const otherTicketsColumns = [
     className: 'txID',
     dataTitle: 'pages.tickets.txID',
   },
-  {
-    width: 140,
-    flexGrow: 1,
-    label: 'pages.tickets.type',
-    dataKey: TYPE_KEY,
-    disableSort: true,
-    className: 'type',
-    dataTitle: 'pages.tickets.type',
-  },
-  {
-    width: 10,
-    flexGrow: 1,
-    label: 'pages.tickets.version',
-    dataKey: VERSION_KEY,
-    disableSort: true,
-    className: 'version',
-    dataTitle: 'pages.tickets.version',
-  },
-  {
-    width: 140,
-    flexGrow: 1,
-    label: 'pages.tickets.timestamp',
-    dataKey: TIMESTAMP_KEY,
-    disableSort: true,
-    className: 'timestamp',
-    dataTitle: 'pages.tickets.timestamp',
-  },
 ];
 
 export const offerAndTransferTicketsColumns = [
@@ -120,33 +94,6 @@ export const offerAndTransferTicketsColumns = [
     disableSort: true,
     className: 'txID',
     dataTitle: 'pages.tickets.txID',
-  },
-  {
-    width: 140,
-    flexGrow: 1,
-    label: 'pages.tickets.type',
-    dataKey: TYPE_KEY,
-    disableSort: true,
-    className: 'type',
-    dataTitle: 'pages.tickets.type',
-  },
-  {
-    width: 10,
-    flexGrow: 1,
-    label: 'pages.tickets.version',
-    dataKey: VERSION_KEY,
-    disableSort: true,
-    className: 'version',
-    dataTitle: 'pages.tickets.version',
-  },
-  {
-    width: 140,
-    flexGrow: 1,
-    label: 'pages.tickets.timestamp',
-    dataKey: TIMESTAMP_KEY,
-    disableSort: true,
-    className: 'timestamp',
-    dataTitle: 'pages.tickets.timestamp',
   },
 ];
 

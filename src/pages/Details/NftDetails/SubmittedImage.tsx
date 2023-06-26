@@ -10,7 +10,7 @@ interface ISubmittedImage {
 const SubmittedImage: React.FC<ISubmittedImage> = ({ img, alt }) => {
   return (
     <Styles.SubmittedImageWrapper className={`${!img ? 'image-placeholder' : ''}`}>
-      <img src={img || noImagePlaceholder} alt={alt || ''} />
+      <img src={img ? `data:image/jpeg;base64,${img}` : noImagePlaceholder} alt={alt || ''} />
     </Styles.SubmittedImageWrapper>
   );
 };

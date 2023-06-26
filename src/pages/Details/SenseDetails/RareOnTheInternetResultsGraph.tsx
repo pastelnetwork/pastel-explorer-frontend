@@ -20,7 +20,7 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
     if (
       !data ||
       Object.keys(newData).length <= 2 ||
-      newData.rare_on_internet_summary_table_as_json_compressed_b64.length <= 100
+      newData?.rare_on_internet_summary_table_as_json_compressed_b64?.length <= 100
     ) {
       return {
         nodes: [],

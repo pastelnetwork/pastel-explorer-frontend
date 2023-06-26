@@ -185,6 +185,7 @@ export interface INftRegistrationTicket {
   collectionName?: string;
   collectionAlias?: string;
   image?: string;
+  nftId?: string;
 }
 
 export interface INftActivationTicket {
@@ -294,6 +295,7 @@ export interface IActionRegistrationTicket {
   activationTicket: ITicket;
   collectionName?: string;
   collectionAlias?: string;
+  nftId?: string;
 }
 
 export interface IActionTicket {
@@ -614,6 +616,15 @@ export type TicketsList = {
   fileName: string;
   image?: string;
   imageFileCdnUrl?: string;
+  item_type?: string;
+  nft_copy_count?: number;
+  nft_max_count?: number;
+  copyNumber?: string;
+  reTxId?: string;
+  ticketType?: string;
+  userName?: string;
+  nftId?: string;
+  fileSize?: number;
 };
 
 export type TCascade = {
@@ -706,6 +717,30 @@ export interface INftDetails {
   rq_max: number;
   rq_oti: string;
   image: string;
+  pastel_block_hash_when_request_submitted: string;
+  pastel_block_height_when_request_submitted: string;
+  utc_timestamp_when_request_submitted: string;
+  pastel_id_of_submitter: string;
+  pastel_id_of_registering_supernode_1: string;
+  pastel_id_of_registering_supernode_2: string;
+  pastel_id_of_registering_supernode_3: string;
+  is_pastel_openapi_request: number;
+  dupe_detection_system_version: string;
+  is_likely_dupe: number;
+  overall_rareness_score: number;
+  is_rare_on_internet: number;
+  pct_of_top_10_most_similar_with_dupe_prob_above_25pct: number;
+  pct_of_top_10_most_similar_with_dupe_prob_above_33pct: number;
+  pct_of_top_10_most_similar_with_dupe_prob_above_50pct: number;
+  rareness_scores_table_json_compressed_b64: string;
+  open_nsfw_score: number;
+  nsfw_score: number;
+  internet_rareness: string;
+  alternative_nsfw_scores: string;
+  image_fingerprint_of_candidate_image_file: string;
+  blockHeight: number;
+  currentOwnerPastelID: string;
+  rawData: string;
 }
 
 export interface IMempool {

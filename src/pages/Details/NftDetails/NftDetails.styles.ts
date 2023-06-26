@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import Box from '@material-ui/core/Box';
 
 export const Wrapper = styled.div`
   display: block;
@@ -73,6 +74,111 @@ export const Wrapper = styled.div`
       font-weight: 600;
     }
   }
+
+  .summary-image {
+    border-top: 1px solid ${props => props.theme.sidebar.menu.default};
+    border-bottom: 1px solid ${props => props.theme.sidebar.menu.default};
+    text-align: center;
+
+    img {
+      max-width: 100%;
+      width: 150px;
+    }
+  }
+
+  .summary-section {
+    display: flex;
+    justify-content: space-between;
+
+    .summary,
+    .open-nsfw,
+    .rareness-score {
+      width: 32%;
+    }
+  }
+
+  .offers-content {
+    .no-data {
+      min-height: 354px;
+    }
+  }
+
+  .tooltip-wrapper {
+    font-size: 14px;
+
+    &.max-w-280 {
+      max-width: 280px;
+    }
+
+    .tooltip-content-wrapper {
+      margin-top: 20px;
+    }
+
+    .tooltip-name {
+      font-weight: bold;
+      font-size: 16px;
+      word-break: break-all;
+      white-space: break-spaces;
+    }
+
+    .tooltip-url {
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .tooltip-item {
+      margin-top: 5px;
+
+      .label {
+        font-weight: bold;
+      }
+
+      .value {
+        max-width: 100%;
+        font-weight: normal;
+      }
+
+      .description {
+        display: -webkit-box;
+        -webkit-line-clamp: 7;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        white-space: break-spaces;
+      }
+    }
+
+    .tooltip-image {
+      max-width: 80px;
+      max-height: 80px;
+    }
+  }
+
+  .similar-registered-images,
+  .pastel-data {
+    width: 100%;
+  }
+
+  .open-nsfw-content,
+  .rareness-score-content,
+  .prevalence-of-similar-images-content,
+  .category-probabilities-content {
+    min-height: 270px;
+  }
+
+  .item-activity-content {
+    min-height: 269px;
+  }
+
+  .offers-content {
+    min-height: 173px;
+  }
+
+  .creator-content {
+    min-height: 353px;
+  }
+
   ${props => props.theme.breakpoints.down(425)} {
     .MuiSelect-select {
       width: 110px;
@@ -108,7 +214,7 @@ export const MainWrapper = styled.div`
 
   .submitted-image {
     width: 100%;
-    height: 400px;
+    max-height: 400px;
     margin-bottom: 20px;
   }
 
@@ -203,7 +309,7 @@ export const MainWrapper = styled.div`
     }
 
     .submitted-image {
-      height: 350px;
+      max-height: 350px;
     }
 
     .nft-info {
@@ -225,6 +331,10 @@ export const ContentWrapper = styled.div`
 
   &.relative {
     position: relative;
+  }
+
+  .no-spacing {
+    padding: 0;
   }
 `;
 
@@ -271,12 +381,13 @@ export const SubmittedImageWrapper = styled.div`
 
   img {
     max-width: 100%;
-    max-height: 100%;
+    max-height: 400px;
   }
 
   &.image-placeholder {
     background-color: #ebeaea;
     border-radius: 10px;
+    height: 390px;
 
     img {
       max-width: 300px;
@@ -295,6 +406,36 @@ export const SubmittedImageWrapper = styled.div`
 `;
 
 export const ItemActivityWrapper = styled.div`
+  &.has-pagination {
+    .MuiPaper-root {
+      max-height: 210px;
+      overflow: auto;
+    }
+  }
+
+  &.has-scroll {
+    .MuiPaper-root {
+      max-height: 269px;
+      overflow: auto;
+    }
+  }
+
+  &.offers {
+    height: 354px;
+
+    &.has-pagination {
+      .MuiPaper-root {
+        max-height: unset;
+      }
+    }
+
+    &.has-scroll {
+      .MuiPaper-root {
+        max-height: unset;
+      }
+    }
+  }
+
   .nowrap {
     white-space: nowrap;
   }
@@ -433,4 +574,10 @@ export const LoadingWrapper = styled.div`
 
 export const LoadingSection = styled.div`
   min-height: 160px;
+`;
+
+export const ItemWrapper = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 `;

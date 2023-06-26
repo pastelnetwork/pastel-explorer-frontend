@@ -176,19 +176,23 @@ const TicketsList: React.FC<ITicketsList> = ({
           </Grid>
           <Grid item xs={8} sm={9}>
             <TicketStyles.TicketContent>
-              <Link
-                to={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${sense.imageFileHash}`}
-              >
-                <img
-                  src={
-                    sense.imageFileCdnUrl
-                      ? `data:image/jpeg;base64,${sense.imageFileCdnUrl}`
-                      : noImagePlaceholder
-                  }
-                  alt={sense.imageFileHash}
-                  className="sense-img"
-                />
-              </Link>
+              {sense.imageFileCdnUrl ? (
+                <Link
+                  to={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${sense.imageFileHash}`}
+                >
+                  <img
+                    src={
+                      sense.imageFileCdnUrl
+                        ? `data:image/jpeg;base64,${sense.imageFileCdnUrl}`
+                        : noImagePlaceholder
+                    }
+                    alt={sense.imageFileHash}
+                    className="sense-img"
+                  />
+                </Link>
+              ) : (
+                translate('pages.tickets.pendingSenseGenerate')
+              )}
             </TicketStyles.TicketContent>
           </Grid>
         </Grid>
@@ -308,17 +312,19 @@ const TicketsList: React.FC<ITicketsList> = ({
       return translate('pages.ticketsType.pastelNFTTickets');
     }
     if (ticketType === 'other') {
-      return translate('pages.ticketsType.otherTickets');
+      return translate('pages.ticketsType.senseAndNFTCollectionTickets');
     }
     const ticket = TICKET_TYPE_OPTIONS.find(t => t.value === ticketType);
-    return translate(ticket?.name || '') || translate('pages.ticketsType.otherTickets');
+    return (
+      translate(ticket?.name || '') || translate('pages.ticketsType.senseAndNFTCollectionTickets')
+    );
   };
 
   const getDropdownOptions = () => {
     const result = [];
     if (ticketType === 'other') {
       result.push({
-        name: translate('pages.ticketsType.otherTickets'),
+        name: translate('pages.ticketsType.senseAndNFTCollectionTickets'),
         value: 'other',
       });
     } else if (ticketType === 'pastelid-usename') {

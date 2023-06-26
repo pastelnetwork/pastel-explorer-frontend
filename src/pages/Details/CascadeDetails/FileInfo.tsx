@@ -9,8 +9,7 @@ import DoneIcon from '@material-ui/icons/Done';
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
 import { translate } from '@utils/helpers/i18n';
-import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import { formatAddress } from '@utils/helpers/format';
+import { formatAddress, formatBytes } from '@utils/helpers/format';
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
 
 import RqIds from './RqIds';
@@ -58,8 +57,7 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
                     {translate('pages.cascade.fileSize')}:
                   </TicketStyles.TicketTitle>
                   <TicketStyles.TicketContent>
-                    {formatNumber(data.original_file_size_in_bytes / 1024, { decimalsLength: 2 })}{' '}
-                    {translate('pages.cascade.kb')}
+                    {formatBytes(data.original_file_size_in_bytes)}
                   </TicketStyles.TicketContent>
                 </Box>
               </Grid>
