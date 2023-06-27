@@ -122,3 +122,7 @@ export const SubTitle = styled.span`
 export const BlockStatistics = styled.div`
   margin-bottom: 20px;
 `;
+
+export const HourglassWrapper = styled.div`
+  margin-left: -8px;
+`;

@@ -11,13 +11,14 @@ import {
 } from '@material-ui/core';
 import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+
 import RouterLink, { ExternalLink } from '@components/RouterLink/RouterLink';
 import Header from '@components/Header/Header';
 import Table, { RowsProps } from '@components/Table/Table';
 import CopyButton from '@components/CopyButton/CopyButton';
-
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import Hourglass from '@components/Hourglass/Hourglass';
 
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { formattedDate } from '@utils/helpers/date/date';
@@ -30,6 +31,7 @@ import * as TransactionStyles from '@pages/Details/TransactionDetails/Transactio
 import { getTicketsTypeList } from '@pages/Movement/Movement.helpers';
 import useBlockDetails from '@hooks/useBlockDetails';
 import { translate } from '@utils/helpers/i18n';
+import * as BlockStyles from '@pages/Blocks/Blocks.styles';
 
 import { blockHeaders, transactionHeaders, generateDetailsElement } from './BlockDetails.helpers';
 import * as Styles from './BlockDetails.styles';
@@ -114,18 +116,26 @@ const BlockDetails = () => {
             id: 3,
             value: (
               <div className="inline-block">
-                {ticketsTypeList.total > 0 ? (
-                  <div className="inline-block">
-                    <ExternalLink
-                      href={`#${transaction.id}`}
-                      value={ticketsTypeList.total.toString()}
-                      className="transaction-hash"
-                      title={ticketsTypeList.text.join(', <br />')}
-                      isUseTooltip
-                    />
-                  </div>
+                {transaction.ticketsTotal === -1 ? (
+                  <BlockStyles.HourglassWrapper>
+                    <Hourglass />
+                  </BlockStyles.HourglassWrapper>
                 ) : (
-                  <>0</>
+                  <>
+                    {ticketsTypeList.total > 0 ? (
+                      <div className="inline-block">
+                        <ExternalLink
+                          href={`#${transaction.id}`}
+                          value={ticketsTypeList.total.toString()}
+                          className="transaction-hash"
+                          title={ticketsTypeList.text.join(', <br />')}
+                          isUseTooltip
+                        />
+                      </div>
+                    ) : (
+                      <>0</>
+                    )}
+                  </>
                 )}
               </div>
             ),

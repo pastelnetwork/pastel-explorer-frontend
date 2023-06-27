@@ -1,4 +1,5 @@
 import RouterLink from '@components/RouterLink/RouterLink';
+import Hourglass from '@components/Hourglass/Hourglass';
 
 import * as ROUTES from '@utils/constants/routes';
 import { formattedDate } from '@utils/helpers/date/date';
@@ -24,50 +25,60 @@ export const DATA_OFFSET = 0;
 export const DATA_DEFAULT_SORT = 'DESC';
 
 export const transformTableData = (transactions: Array<IBlock>, isMobile: boolean) =>
-  transactions.map(({ id, timestamp, transactionCount, height, ticketsList, size }) => {
-    const ticketsTypeList = getTicketsTypeList(ticketsList || '');
-    return {
-      id,
-      [BLOCK_ID_KEY]: (
-        <Styles.BlockHeight>
-          <BoxIcon />{' '}
-          <RouterLink
-            className="hash-link"
-            route={`${ROUTES.BLOCK_DETAILS}/${id}`}
-            value={height}
-            title={height.toString()}
-          />
-        </Styles.BlockHeight>
-      ),
-      [BLOCK_HASH]: (
-        <RouterLink
-          className="hash-link"
-          route={`${ROUTES.BLOCK_DETAILS}/${id}`}
-          value={isMobile ? formatAddress(id) : id}
-          title={id}
-        />
-      ),
-      [TRANSACTIONS_QTY_KEY]: transactionCount,
-      [TOTAL_TICKETS]: (
-        <div className="inline-block">
-          {ticketsTypeList.total > 0 ? (
+  transactions.map(
+    ({ id, timestamp, transactionCount, height, ticketsList, size, totalTickets }) => {
+      const ticketsTypeList = getTicketsTypeList(ticketsList || '');
+      return {
+        id,
+        [BLOCK_ID_KEY]: (
+          <Styles.BlockHeight>
+            <BoxIcon />{' '}
             <RouterLink
               className="hash-link"
               route={`${ROUTES.BLOCK_DETAILS}/${id}`}
-              value={ticketsTypeList.total}
-              title={ticketsTypeList.text.join(', <br />')}
-              isUseTooltip
+              value={height}
+              title={height.toString()}
             />
-          ) : (
-            <>0</>
-          )}
-        </div>
-      ),
-      [BLOCK_SIZE]: (
-        <div className="inline-block">{formatNumber(size / 1024, { decimalsLength: 2 })}</div>
-      ),
-      [TIMESTAMP_BLOCKS_KEY]: (
-        <div className="timestamp">{formattedDate(timestamp, { dayName: false })}</div>
-      ),
-    };
-  });
+          </Styles.BlockHeight>
+        ),
+        [BLOCK_HASH]: (
+          <RouterLink
+            className="hash-link"
+            route={`${ROUTES.BLOCK_DETAILS}/${id}`}
+            value={isMobile ? formatAddress(id) : id}
+            title={id}
+          />
+        ),
+        [TRANSACTIONS_QTY_KEY]: transactionCount,
+        [TOTAL_TICKETS]: (
+          <div className="inline-block">
+            {totalTickets === -1 ? (
+              <Styles.HourglassWrapper>
+                <Hourglass />
+              </Styles.HourglassWrapper>
+            ) : (
+              <>
+                {ticketsTypeList.total > 0 ? (
+                  <RouterLink
+                    className="hash-link"
+                    route={`${ROUTES.BLOCK_DETAILS}/${id}`}
+                    value={ticketsTypeList.total}
+                    title={ticketsTypeList.text.join(', <br />')}
+                    isUseTooltip
+                  />
+                ) : (
+                  <>0</>
+                )}
+              </>
+            )}
+          </div>
+        ),
+        [BLOCK_SIZE]: (
+          <div className="inline-block">{formatNumber(size / 1024, { decimalsLength: 2 })}</div>
+        ),
+        [TIMESTAMP_BLOCKS_KEY]: (
+          <div className="timestamp">{formattedDate(timestamp, { dayName: false })}</div>
+        ),
+      };
+    },
+  );
