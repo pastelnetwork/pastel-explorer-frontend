@@ -31,6 +31,7 @@ import {
   generateCoinbaseInfo,
 } from './TransactionDetails.helpers';
 import TransactionRawData from './TransactionRawData';
+import BurnAddressIcon from './BurnAddressIcon';
 
 interface ParamTypes {
   id: string;
@@ -73,32 +74,35 @@ const TransactionDetails = () => {
       transactionEvent => transactionEvent.direction === type,
     );
 
-    const tableTransactionEvents = typeTransactionEvents.map(({ amount, address }, index) => {
-      return {
-        id: index,
-        data: [
-          {
-            id: 1,
-            value: (
-              <Grid container alignItems="center" wrap="nowrap">
-                <Styles.RowWrapper>
-                  <CopyButton copyText={address} />
-                  <RouterLink
-                    route={`${ROUTES.ADDRESS_DETAILS}/${address}`}
-                    value={address}
-                    textSize="large"
-                    title={address}
-                    className="address-link"
-                  />
-                </Styles.RowWrapper>
-              </Grid>
-            ),
-          },
-          { id: 2, value: formatNumber(amount, { decimalsLength: 2 }) },
-          { id: 3, value: formatNumber(amount * usdPrice, { decimalsLength: 2 }, '$') },
-        ],
-      };
-    });
+    const tableTransactionEvents = typeTransactionEvents.map(
+      ({ amount, address, type: addressType }, index) => {
+        return {
+          id: index,
+          data: [
+            {
+              id: 1,
+              value: (
+                <Grid container alignItems="center" wrap="nowrap">
+                  <Styles.RowWrapper>
+                    <CopyButton copyText={address} />
+                    <RouterLink
+                      route={`${ROUTES.ADDRESS_DETAILS}/${address}`}
+                      value={address}
+                      textSize="large"
+                      title={address}
+                      className="address-link"
+                    />
+                    <BurnAddressIcon type={addressType} />
+                  </Styles.RowWrapper>
+                </Grid>
+              ),
+            },
+            { id: 2, value: formatNumber(amount, { decimalsLength: 2 }) },
+            { id: 3, value: formatNumber(amount * usdPrice, { decimalsLength: 2 }, '$') },
+          ],
+        };
+      },
+    );
 
     return tableTransactionEvents;
   };

@@ -10,6 +10,7 @@ import { ICollectionDetail } from '@utils/types/ITransactions';
 import { formatAddress } from '@utils/helpers/format';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import banner from '@assets/images/placeholder-banner.png';
+import CopyButton from '@components/CopyButton/CopyButton';
 
 import * as Styles from './CollectionDetails.styles';
 
@@ -83,6 +84,7 @@ const Summary: React.FC<ISummary> = ({ collection, totalItems }) => {
                 <Typography component="span" className="bold">
                   {translate('pages.collection.txID')}:
                 </Typography>{' '}
+                <CopyButton copyText={collection?.transactionHash || ''} />
                 <RouterLink
                   route={`${ROUTES.TRANSACTION_DETAILS}/${collection?.transactionHash}`}
                   value={formatAddress(collection?.transactionHash || '', 5, -5)}

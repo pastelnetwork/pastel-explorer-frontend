@@ -210,11 +210,30 @@ const NftDetails = () => {
     <Styles.Wrapper className="nft-main-content">
       <Grid container direction="column" spacing={2}>
         <Styles.MainWrapper>
-          <Styles.ItemWrapper>
+          <Styles.ItemWrapper className="info-section">
             <Box className="submitted-image-creator-section">
               <Box className="submitted-image">
                 <SubmittedImage img={nftData.image} alt={nftData.nftTitle} />
               </Box>
+              <div className="hidden-lg hide-down-1024">
+                <BlockLayout
+                  title={translate('pages.nftDetails.creator')}
+                  className="creator"
+                  childrenClassName="creator-content"
+                >
+                  <Creator
+                    writtenStatement={nftData.creatorWrittenStatement}
+                    memberSince={nftData.memberSince}
+                    website={nftData.creatorWebsite}
+                  />
+                </BlockLayout>
+                <BlockLayout title={translate('pages.senseDetails.summary')} className="summary">
+                  <Summary
+                    isLikelyDupe={nftData?.is_likely_dupe}
+                    senseVersion={nftData?.dupe_detection_system_version}
+                  />
+                </BlockLayout>
+              </div>
             </Box>
             <Box className="nft-data">
               <NftInfo
@@ -248,10 +267,49 @@ const NftDetails = () => {
                   isPastelOpenapiRequest={nftData?.is_pastel_openapi_request}
                 />
               </BlockLayout>
+              <div className="hidden-lg hide-down-1024">
+                <BlockLayout
+                  title={translate('pages.nftDetails.offers')}
+                  className="item-activity"
+                  childrenClassName="no-spacing offers-content"
+                  id="offers"
+                >
+                  <Offers />
+                </BlockLayout>
+                <BlockLayout
+                  title={translate('pages.nftDetails.itemActivity')}
+                  className="item-activity"
+                  childrenClassName="no-spacing item-activity-content"
+                  options={activityItems}
+                  onDropdownChange={handleDropdownChange}
+                  placeholder={translate('pages.nftDetails.all')}
+                >
+                  <ItemActivity activitiesType={activitiesType} />
+                </BlockLayout>
+              </div>
             </Box>
           </Styles.ItemWrapper>
-          <Styles.ItemWrapper>
-            <Box className="submitted-image-creator-section">
+          <div className="hide-up-1020 summary-section">
+            <BlockLayout
+              title={translate('pages.nftDetails.creator')}
+              className="creator"
+              childrenClassName="creator-content"
+            >
+              <Creator
+                writtenStatement={nftData.creatorWrittenStatement}
+                memberSince={nftData.memberSince}
+                website={nftData.creatorWebsite}
+              />
+            </BlockLayout>
+            <BlockLayout title={translate('pages.senseDetails.summary')} className="summary">
+              <Summary
+                isLikelyDupe={nftData?.is_likely_dupe}
+                senseVersion={nftData?.dupe_detection_system_version}
+              />
+            </BlockLayout>
+          </div>
+          <Styles.ItemWrapper className="show-lg show-down-1024 offers-section">
+            <Box className="submitted-image-creator-section hide-down-1024">
               <BlockLayout
                 title={translate('pages.nftDetails.creator')}
                 className="creator"
@@ -275,8 +333,8 @@ const NftDetails = () => {
               </BlockLayout>
             </Box>
           </Styles.ItemWrapper>
-          <Styles.ItemWrapper>
-            <Box className="submitted-image-creator-section">
+          <Styles.ItemWrapper className="show-lg show-down-1024 item-activity-section">
+            <Box className="submitted-image-creator-section hide-down-1024">
               <BlockLayout title={translate('pages.senseDetails.summary')} className="summary">
                 <Summary
                   isLikelyDupe={nftData?.is_likely_dupe}
@@ -297,8 +355,8 @@ const NftDetails = () => {
               </BlockLayout>
             </Box>
           </Styles.ItemWrapper>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={3}>
+          <Grid container spacing={5}>
+            <Grid item xs={12} sm={6} lg={3}>
               <BlockLayout
                 title={translate('pages.senseDetails.openNSFW')}
                 className="open-nsfw"
@@ -307,7 +365,7 @@ const NftDetails = () => {
                 <OpenNSFW openNSFWScore={nftData?.open_nsfw_score} />
               </BlockLayout>
             </Grid>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} sm={6} lg={3}>
               <BlockLayout
                 title={translate('pages.senseDetails.rarenessScore')}
                 className="rareness-score"
@@ -316,7 +374,7 @@ const NftDetails = () => {
                 <RarenessScore rarenessScore={nftData?.overall_rareness_score} />
               </BlockLayout>
             </Grid>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} sm={6} lg={3}>
               <BlockLayout
                 title={translate('pages.senseDetails.prevalenceOfSimilarImages')}
                 className="prevalence-of-similar-images"
@@ -331,7 +389,7 @@ const NftDetails = () => {
                 />
               </BlockLayout>
             </Grid>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} sm={6} lg={3}>
               <BlockLayout
                 title={translate('pages.senseDetails.categoryProbabilities')}
                 className="category-probabilities"

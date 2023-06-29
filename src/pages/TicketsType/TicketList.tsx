@@ -56,6 +56,7 @@ import { TAppTheme } from '@theme/index';
 import { translate } from '@utils/helpers/i18n';
 import * as ascii85 from '@utils/helpers/ascii85';
 import { getFileIcon } from '@pages/Details/CascadeDetails/CascadeDetails.helpers';
+import CopyButton from '@components/CopyButton/CopyButton';
 
 import noImagePlaceholder from '@assets/images/no-image-placeholder.svg';
 import { TICKET_TYPE_OPTIONS, TICKET_STATUS_OPTIONS } from './TicketsType.helpers';
@@ -447,6 +448,7 @@ const TicketsList: React.FC<ITicketsList> = ({
                 </Grid>
                 <Grid item xs={8} sm={9}>
                   <TicketStyles.TicketContent>
+                    <CopyButton copyText={ticket.transactionHash} />
                     <RouterLink
                       route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.transactionHash}`}
                       value={ticket.transactionHash}

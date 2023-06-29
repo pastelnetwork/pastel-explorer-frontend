@@ -11,6 +11,12 @@ export const Wrapper = styled('div')`
     }
   }
 
+  .copy-wrapper {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
   .no-data {
     display: flex;
     align-items: center;

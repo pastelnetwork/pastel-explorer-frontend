@@ -43,7 +43,7 @@ const NftSummary: React.FC<INftSummary> = ({
   return (
     <Box>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
               {translate('pages.nftDetails.nftSeriesName')}
@@ -53,7 +53,7 @@ const NftSummary: React.FC<INftSummary> = ({
             </TicketStyles.TicketContent>
           </Styles.ContentItem>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
               {translate('pages.nftDetails.royalty')}
@@ -63,7 +63,7 @@ const NftSummary: React.FC<INftSummary> = ({
             </TicketStyles.TicketContent>
           </Styles.ContentItem>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
               {translate('pages.nftDetails.fileType')}
@@ -73,10 +73,7 @@ const NftSummary: React.FC<INftSummary> = ({
             </TicketStyles.TicketContent>
           </Styles.ContentItem>
         </Grid>
-      </Grid>
-
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
               {translate('pages.nftDetails.nftKeyword')}
@@ -86,7 +83,7 @@ const NftSummary: React.FC<INftSummary> = ({
             </TicketStyles.TicketContent>
           </Styles.ContentItem>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
               {translate('pages.nftDetails.totalCopies')}
@@ -94,7 +91,7 @@ const NftSummary: React.FC<INftSummary> = ({
             <TicketStyles.TicketContent>{totalCopies || 0}</TicketStyles.TicketContent>
           </Styles.ContentItem>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
               {translate('pages.nftDetails.originalFileSize')}
@@ -110,10 +107,7 @@ const NftSummary: React.FC<INftSummary> = ({
             </TicketStyles.TicketContent>
           </Styles.ContentItem>
         </Grid>
-      </Grid>
-
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
               {translate('pages.nftDetails.video')}
@@ -127,7 +121,7 @@ const NftSummary: React.FC<INftSummary> = ({
             </TicketStyles.TicketContent>
           </Styles.ContentItem>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
               {translate('pages.nftDetails.isPubliclyAccessible')}
@@ -143,7 +137,7 @@ const NftSummary: React.FC<INftSummary> = ({
             </TicketStyles.TicketContent>
           </Styles.ContentItem>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
               {translate('pages.nftDetails.dataHash')}
@@ -153,10 +147,7 @@ const NftSummary: React.FC<INftSummary> = ({
             </TicketStyles.TicketContent>
           </Styles.ContentItem>
         </Grid>
-      </Grid>
-
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
               {translate('pages.nftDetails.nftType')}
@@ -166,7 +157,7 @@ const NftSummary: React.FC<INftSummary> = ({
             </TicketStyles.TicketContent>
           </Styles.ContentItem>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
               {translate('pages.senseDetails.isPastelOpenapiRequest')}
@@ -178,7 +169,7 @@ const NftSummary: React.FC<INftSummary> = ({
             </TicketStyles.TicketContent>
           </Styles.ContentItem>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
               {translate('pages.nftDetails.timestamp')}

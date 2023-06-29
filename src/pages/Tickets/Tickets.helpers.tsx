@@ -6,6 +6,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
 
+import CopyButton from '@components/CopyButton/CopyButton';
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
 import { getCurrencyName } from '@utils/appInfo';
@@ -102,12 +103,15 @@ export const transformCascadeData = (cascade: TicketsList[], usdPrice: number) =
               <Grid item xs={12} sm={6} md={2}>
                 <Box className="title">{translate('pages.tickets.txID')}</Box>
                 <Box className="bold">
-                  <RouterLink
-                    route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
-                    value={formatAddress(transactionHash, 5, -5)}
-                    title={transactionHash}
-                    className="address-link"
-                  />
+                  <Grid container alignItems="center" wrap="nowrap">
+                    <CopyButton copyText={transactionHash} />
+                    <RouterLink
+                      route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
+                      value={formatAddress(transactionHash, 5, -5)}
+                      title={transactionHash}
+                      className="address-link"
+                    />
+                  </Grid>
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
@@ -168,12 +172,15 @@ export const transformCascadeData = (cascade: TicketsList[], usdPrice: number) =
                 <Box className="title">{translate('pages.tickets.activationTXID')}</Box>
                 <Box className={activation_txId ? 'bold' : ''}>
                   {activation_txId ? (
-                    <RouterLink
-                      route={`${ROUTES.TRANSACTION_DETAILS}/${activation_txId}`}
-                      value={activation_txId ? formatAddress(activation_txId, 5, -5) : ''}
-                      title={activation_txId}
-                      className="address-link"
-                    />
+                    <Grid container alignItems="center" wrap="nowrap">
+                      <CopyButton copyText={activation_txId} />
+                      <RouterLink
+                        route={`${ROUTES.TRANSACTION_DETAILS}/${activation_txId}`}
+                        value={activation_txId ? formatAddress(activation_txId, 5, -5) : ''}
+                        title={activation_txId}
+                        className="address-link"
+                      />
+                    </Grid>
                   ) : (
                     translate('common.na')
                   )}
@@ -226,9 +233,10 @@ export const transformSenseData = (sense: TicketsList[], usdPrice: number) =>
         [TXID_KEY]: (
           <>
             <Grid container spacing={3} className="sense-col">
-              <Grid item xs={12} sm={6} md={2} className="col-txid">
+              <Grid item xs={12} sm={6} md={3} className="col-txid">
                 <Box className="title">{translate('pages.tickets.txID')}</Box>
                 <Box className="bold">
+                  <CopyButton copyText={transactionHash} />
                   <RouterLink
                     route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
                     value={formatAddress(transactionHash, 5, -5)}
@@ -262,7 +270,7 @@ export const transformSenseData = (sense: TicketsList[], usdPrice: number) =>
                   </Tooltip>
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6} md={4} className="col-time">
+              <Grid item xs={12} sm={6} md={3} className="col-time">
                 <Box className="title">{translate('pages.tickets.collectionName')}</Box>
                 <Box className={collectionName ? 'bold' : ''}>
                   {collectionName ? (
@@ -304,16 +312,19 @@ export const transformSenseData = (sense: TicketsList[], usdPrice: number) =>
                   )}
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6} md={2} className="col-txid">
+              <Grid item xs={12} sm={6} md={3} className="col-txid">
                 <Box className="title">{translate('pages.tickets.activationTXID')}</Box>
                 <Box className={activation_txId ? 'bold' : ''}>
                   {activation_txId ? (
-                    <RouterLink
-                      route={`${ROUTES.TRANSACTION_DETAILS}/${activation_txId}`}
-                      value={activation_txId ? formatAddress(activation_txId, 5, -5) : ''}
-                      title={activation_txId}
-                      className="address-link"
-                    />
+                    <>
+                      <CopyButton copyText={activation_txId} />
+                      <RouterLink
+                        route={`${ROUTES.TRANSACTION_DETAILS}/${activation_txId}`}
+                        value={activation_txId ? formatAddress(activation_txId, 5, -5) : ''}
+                        title={activation_txId}
+                        className="address-link"
+                      />
+                    </>
                   ) : (
                     translate('common.na')
                   )}
@@ -325,7 +336,7 @@ export const transformSenseData = (sense: TicketsList[], usdPrice: number) =>
                   {formatNumber(fee)} {getCurrencyName()} {getStorageFee(fee, usdPrice)}
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6} md={4} className="hidden-sm col-time">
+              <Grid item xs={12} sm={6} md={3} className="hidden-sm col-time">
                 <Box className="title">{translate('pages.tickets.timestamp')}</Box>
                 <Box className="bold">
                   {timestamp ? formatFullDate(timestamp, { dayName: false }) : '--'}
@@ -381,6 +392,7 @@ export const transformOtherData = (data: TicketsList[], usdPrice: number) =>
               <Grid item xs={12} sm={6} md={2}>
                 <Box className="title">{translate('pages.tickets.txID')}</Box>
                 <Box className="bold">
+                  <CopyButton copyText={transactionHash} />
                   <RouterLink
                     route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
                     value={formatAddress(transactionHash, 5, -5)}
@@ -439,12 +451,15 @@ export const transformOtherData = (data: TicketsList[], usdPrice: number) =>
                 <Box className="title">{translate('pages.tickets.activationTXID')}</Box>
                 <Box className={activation_txId ? 'bold' : ''}>
                   {activation_txId ? (
-                    <RouterLink
-                      route={`${ROUTES.TRANSACTION_DETAILS}/${activation_txId}`}
-                      value={activation_txId ? formatAddress(activation_txId, 5, -5) : ''}
-                      title={activation_txId}
-                      className="address-link"
-                    />
+                    <>
+                      <CopyButton copyText={activation_txId} />
+                      <RouterLink
+                        route={`${ROUTES.TRANSACTION_DETAILS}/${activation_txId}`}
+                        value={activation_txId ? formatAddress(activation_txId, 5, -5) : ''}
+                        title={activation_txId}
+                        className="address-link"
+                      />
+                    </>
                   ) : (
                     translate('common.na')
                   )}
@@ -482,14 +497,15 @@ export const transformPastelIdData = (data: TicketsList[]) =>
     return {
       id: transactionHash,
       [TXID_KEY]: (
-        <>
+        <Grid container alignItems="center" wrap="nowrap">
+          <CopyButton copyText={transactionHash} />
           <RouterLink
             route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
             value={formatAddress(transactionHash, 5, -5)}
             title={transactionHash}
             className="address-link"
           />
-        </>
+        </Grid>
       ),
       [PASTEL_ID_KEY]: (
         <>
@@ -573,12 +589,15 @@ export const transformOfferAndTransferData = (data: TicketsList[]) =>
               <Grid item xs={12} sm={6} md={3}>
                 <Box className="title">{translate('pages.tickets.txID')}</Box>
                 <Box className="bold">
-                  <RouterLink
-                    route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
-                    value={formatAddress(transactionHash, 5, -5)}
-                    title={transactionHash}
-                    className="address-link"
-                  />
+                  <Grid container alignItems="center" wrap="nowrap">
+                    <CopyButton copyText={transactionHash} />
+                    <RouterLink
+                      route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
+                      value={formatAddress(transactionHash, 5, -5)}
+                      title={transactionHash}
+                      className="address-link"
+                    />
+                  </Grid>
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6} md={2}>
@@ -652,12 +671,15 @@ export const transformPastelNftTicketsData = (data: TicketsList[], usdPrice: num
               <Grid item xs={12} sm={6} md={3}>
                 <Box className="title">{translate('pages.tickets.txID')}</Box>
                 <Box className="bold">
-                  <RouterLink
-                    route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
-                    value={formatAddress(transactionHash, 5, -5)}
-                    title={transactionHash}
-                    className="address-link"
-                  />
+                  <Grid container alignItems="center" wrap="nowrap">
+                    <CopyButton copyText={transactionHash} />
+                    <RouterLink
+                      route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
+                      value={formatAddress(transactionHash, 5, -5)}
+                      title={transactionHash}
+                      className="address-link"
+                    />
+                  </Grid>
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
@@ -725,12 +747,15 @@ export const transformPastelNftTicketsData = (data: TicketsList[], usdPrice: num
                 <Box className="title">{translate('pages.tickets.activationTXID')}</Box>
                 <Box className={activation_txId ? 'bold' : ''}>
                   {activation_txId ? (
-                    <RouterLink
-                      route={`${ROUTES.TRANSACTION_DETAILS}/${activation_txId}`}
-                      value={activation_txId ? formatAddress(activation_txId, 5, -5) : ''}
-                      title={activation_txId}
-                      className="address-link"
-                    />
+                    <Grid container alignItems="center" wrap="nowrap">
+                      <CopyButton copyText={activation_txId} />
+                      <RouterLink
+                        route={`${ROUTES.TRANSACTION_DETAILS}/${activation_txId}`}
+                        value={activation_txId ? formatAddress(activation_txId, 5, -5) : ''}
+                        title={activation_txId}
+                        className="address-link"
+                      />
+                    </Grid>
                   ) : (
                     translate('common.na')
                   )}

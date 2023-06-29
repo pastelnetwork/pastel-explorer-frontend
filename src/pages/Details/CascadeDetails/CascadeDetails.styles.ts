@@ -25,6 +25,12 @@ export const Wrapper = styled.div`
     }
   }
 
+  .registration_txid {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
   ${props => props.theme.breakpoints.down(1200)} {
     .view-more {
       overflow: hidden;

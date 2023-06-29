@@ -15,6 +15,7 @@ import {
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { formatAddress } from '@utils/helpers/format';
 import RouterLink from '@components/RouterLink/RouterLink';
+import CopyButton from '@components/CopyButton/CopyButton';
 import { getCurrencyName } from '@utils/appInfo';
 import * as ROUTES from '@utils/constants/routes';
 import { formatFullDate } from '@utils/helpers/date/date';
@@ -184,12 +185,15 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
                 {translate('components.ticket.actionRegistrationTicket.txId')}
               </Styles.TicketTitle>
               <Styles.TicketContent>
-                <RouterLink
-                  route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.activationTicket.transactionHash}`}
-                  value={ticket.activationTicket.transactionHash}
-                  title={ticket.activationTicket.transactionHash}
-                  className="address-link small"
-                />
+                <Grid container alignItems="center" wrap="nowrap">
+                  <CopyButton copyText={ticket.activationTicket.transactionHash} />
+                  <RouterLink
+                    route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.activationTicket.transactionHash}`}
+                    value={ticket.activationTicket.transactionHash}
+                    title={ticket.activationTicket.transactionHash}
+                    className="address-link small"
+                  />
+                </Grid>
               </Styles.TicketContent>
             </Styles.ActivationTicketItem>
           </Grid>
@@ -250,12 +254,15 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
                   {translate('components.ticket.actionRegistrationTicket.regTxId')}
                 </Styles.TicketTitle>
                 <Styles.TicketContent>
-                  <RouterLink
-                    route={`${ROUTES.TRANSACTION_DETAILS}/${activationTicket.reg_txid}`}
-                    value={activationTicket.reg_txid}
-                    title={activationTicket.reg_txid}
-                    className="address-link small"
-                  />
+                  <Grid container alignItems="center" wrap="nowrap">
+                    <CopyButton copyText={activationTicket.reg_txid} />
+                    <RouterLink
+                      route={`${ROUTES.TRANSACTION_DETAILS}/${activationTicket.reg_txid}`}
+                      value={activationTicket.reg_txid}
+                      title={activationTicket.reg_txid}
+                      className="address-link small"
+                    />
+                  </Grid>
                 </Styles.TicketContent>
               </Styles.ActivationTicketItem>
             </Grid>
@@ -358,6 +365,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
             {ticket?.activation_ticket && ticket?.activation_txId ? (
               <Styles.TicketContent>
                 ({translate('components.ticket.actionRegistrationTicket.activationTXID')}{' '}
+                <CopyButton copyText={ticket?.activation_txId} />
                 <RouterLink
                   route={`${ROUTES.TRANSACTION_DETAILS}/${ticket?.activation_txId}`}
                   value={formatAddress(ticket.activation_txId, 10, -3)}

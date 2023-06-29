@@ -7,6 +7,10 @@ import themeVariant from '@theme/variants';
 export const TicketsContainer = styled.div`
   width: 100%;
 
+  .copy-icon {
+    margin-left: 0;
+  }
+
   .read-more {
     white-space: nowrap;
     text-overflow: ellipsis;

@@ -1906,6 +1906,10 @@
       "transactionRawData": {
         "message": "Transaction Raw Data",
         "description": "Used for the TransactionDetails page"
+      },
+      "burnAddress": {
+        "message": "Data storage address",
+        "description": "Used for the TransactionDetails page"
       }
     },
     "errorHandler": {

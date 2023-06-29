@@ -270,3 +270,14 @@ export const SenseImageWrapper = styled.div`
 export const SenseContentWrapper = styled.div`
   width: calc(100% - 80px);
 `;
+
+export const FireWrapper = styled.span`
+  display: inline-flex;
+  align-items: center;
+  margin-right: 5px;
+  opacity: 0.4;
+
+  svg {
+    width: 20px;
+  }
+`;

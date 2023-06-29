@@ -13,6 +13,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Skeleton from '@material-ui/lab/Skeleton';
 import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
+import Grid from '@material-ui/core/Grid';
 import { useDispatch } from 'react-redux';
 // application
 import { TAppTheme } from '@theme/index';
@@ -25,6 +26,9 @@ import { useTransactionLatestTransactions } from '@redux/hooks/transactionsHooks
 import { ITransaction } from '@utils/types/ITransactions';
 import { TRANSACTION_DETAILS } from '@utils/constants/routes';
 import { translate } from '@utils/helpers/i18n';
+import Hourglass from '@components/Hourglass/Hourglass';
+import CopyButton from '@components/CopyButton/CopyButton';
+import * as BlockStyles from '@pages/Blocks/Blocks.styles';
 
 import { Link } from '@components/Link/Link.styles';
 import { getCurrencyName } from '@utils/appInfo';
@@ -106,11 +110,14 @@ function LatestTransactions() {
                       {generateBlockKeyValue(tx.blockHash || '', tx.block.height || '')}
                     </StyledTableCell>
                     <StyledTableCell component="th" scope="row">
-                      <Link to={`${TRANSACTION_DETAILS}/${tx.id}`}>
-                        <Typography noWrap title={tx.id} className="no-limit">
-                          {formatAddress(tx.id)}
-                        </Typography>
-                      </Link>
+                      <Grid container alignItems="center" wrap="nowrap">
+                        <CopyButton copyText={tx.id} />
+                        <Link to={`${TRANSACTION_DETAILS}/${tx.id}`}>
+                          <Typography noWrap title={tx.id} className="no-limit">
+                            {formatAddress(tx.id)}
+                          </Typography>
+                        </Link>
+                      </Grid>
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       {tx.isNonStandard ? (
@@ -123,16 +130,24 @@ function LatestTransactions() {
                     </StyledTableCell>
                     <StyledTableCell align="right">{tx.recipientCount}</StyledTableCell>
                     <StyledTableCell align="right">
-                      {ticketsTypeList.total > 0 ? (
-                        <RouterLink
-                          route={`${TRANSACTION_DETAILS}/${tx.id}`}
-                          value={ticketsTypeList.total}
-                          textSize="large"
-                          title={ticketsTypeList.text.join(', <br />')}
-                          isUseTooltip
-                        />
+                      {tx.ticketsTotal === -1 ? (
+                        <BlockStyles.HourglassWrapper>
+                          <Hourglass />
+                        </BlockStyles.HourglassWrapper>
                       ) : (
-                        0
+                        <>
+                          {ticketsTypeList.total > 0 ? (
+                            <RouterLink
+                              route={`${TRANSACTION_DETAILS}/${tx.id}`}
+                              value={ticketsTypeList.total}
+                              textSize="large"
+                              title={ticketsTypeList.text.join(', <br />')}
+                              isUseTooltip
+                            />
+                          ) : (
+                            0
+                          )}
+                        </>
                       )}
                     </StyledTableCell>
                     <StyledTableCell align="right">{tx.fee || '--'}</StyledTableCell>

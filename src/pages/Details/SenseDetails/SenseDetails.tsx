@@ -155,6 +155,7 @@ const SenseDetails: React.FC = () => {
             </AlertTitle>
             <AlertTitle className="alert-title">
               {translate('pages.senseDetails.ticketDetail')}:{' '}
+              <CopyButton copyText={sense.transactionHash} />
               <RouterLink
                 route={`${ROUTES.TRANSACTION_DETAILS}/${sense.transactionHash}`}
                 value={sense.transactionHash}

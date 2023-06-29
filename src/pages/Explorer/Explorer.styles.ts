@@ -14,6 +14,10 @@ export const ExplorerWrapper = styled.div`
       }
     }
   }
+
+  .copy-icon {
+    margin-left: 0;
+  }
 `;
 
 export const Gird = styled.div`

@@ -24,6 +24,7 @@ import { getParameterByName } from '@utils/helpers/url';
 import * as TableStyles from '@components/Table/Table.styles';
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
+import CopyButton from '@components/CopyButton/CopyButton';
 
 import { getActivityType } from './NftDetails.helpers';
 import * as Styles from './NftDetails.styles';
@@ -59,14 +60,17 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
                 {(ticket as ITransferTicket)?.offer_txid ? (
-                  <RouterLink
-                    route={`${ROUTES.TRANSACTION_DETAILS}/${
-                      (ticket as ITransferTicket)?.offer_txid
-                    }`}
-                    value={(ticket as ITransferTicket)?.offer_txid}
-                    title={(ticket as ITransferTicket)?.offer_txid}
-                    className="address-link read-more"
-                  />
+                  <span className="link-copy-wrapper">
+                    <CopyButton copyText={(ticket as ITransferTicket)?.offer_txid} />
+                    <RouterLink
+                      route={`${ROUTES.TRANSACTION_DETAILS}/${
+                        (ticket as ITransferTicket)?.offer_txid
+                      }`}
+                      value={(ticket as ITransferTicket)?.offer_txid}
+                      title={(ticket as ITransferTicket)?.offer_txid}
+                      className="address-link read-more"
+                    />
+                  </span>
                 ) : (
                   translate('common.na')
                 )}
@@ -78,14 +82,17 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
                 {(ticket as ITransferTicket)?.accept_txid ? (
-                  <RouterLink
-                    route={`${ROUTES.TRANSACTION_DETAILS}/${
-                      (ticket as ITransferTicket)?.accept_txid
-                    }`}
-                    value={(ticket as ITransferTicket)?.accept_txid}
-                    title={(ticket as ITransferTicket)?.accept_txid}
-                    className="address-link read-more"
-                  />
+                  <span className="link-copy-wrapper">
+                    <CopyButton copyText={(ticket as ITransferTicket)?.accept_txid} />
+                    <RouterLink
+                      route={`${ROUTES.TRANSACTION_DETAILS}/${
+                        (ticket as ITransferTicket)?.accept_txid
+                      }`}
+                      value={(ticket as ITransferTicket)?.accept_txid}
+                      title={(ticket as ITransferTicket)?.accept_txid}
+                      className="address-link read-more"
+                    />
+                  </span>
                 ) : (
                   translate('common.na')
                 )}
@@ -110,12 +117,17 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
                 {(ticket as IAcceptTicket)?.offer_txid ? (
-                  <RouterLink
-                    route={`${ROUTES.TRANSACTION_DETAILS}/${(ticket as IAcceptTicket)?.offer_txid}`}
-                    value={(ticket as IAcceptTicket)?.offer_txid}
-                    title={(ticket as IAcceptTicket)?.offer_txid}
-                    className="address-link read-more"
-                  />
+                  <span className="link-copy-wrapper">
+                    <CopyButton copyText={(ticket as IAcceptTicket)?.offer_txid} />
+                    <RouterLink
+                      route={`${ROUTES.TRANSACTION_DETAILS}/${
+                        (ticket as IAcceptTicket)?.offer_txid
+                      }`}
+                      value={(ticket as IAcceptTicket)?.offer_txid}
+                      title={(ticket as IAcceptTicket)?.offer_txid}
+                      className="address-link read-more"
+                    />
+                  </span>
                 ) : (
                   translate('common.na')
                 )}
@@ -244,19 +256,15 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
           <Table className="custom-table activities-table">
             <TableHead className="table__row-header">
               <TableRow>
-                <TableStyles.TableCell width={180}>
-                  {translate('pages.nftDetails.event')}
-                </TableStyles.TableCell>
-                <TableStyles.TableCell width={180}>
-                  {translate('pages.nftDetails.txID')}
-                </TableStyles.TableCell>
-                <TableStyles.TableCell width={120}>
+                <TableStyles.TableCell>{translate('pages.nftDetails.event')}</TableStyles.TableCell>
+                <TableStyles.TableCell>{translate('pages.nftDetails.txID')}</TableStyles.TableCell>
+                <TableStyles.TableCell>
                   {translate('pages.nftDetails.version')}
                 </TableStyles.TableCell>
                 <TableStyles.TableCell>
                   {translate('pages.nftDetails.eventDetails')}
                 </TableStyles.TableCell>
-                <TableStyles.TableCell width={250}>
+                <TableStyles.TableCell>
                   {translate('pages.nftDetails.timestamp')}
                 </TableStyles.TableCell>
               </TableRow>
@@ -274,12 +282,15 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
                     data-title={`${translate('pages.nftDetails.txID')}:`}
                     className="cell-content"
                   >
-                    <RouterLink
-                      route={`${ROUTES.TRANSACTION_DETAILS}/${item.transactionHash}`}
-                      value={formatAddress(item.transactionHash, 5, -5)}
-                      title={item.transactionHash}
-                      className="address-link nowrap inline-block"
-                    />
+                    <div className="copy-wrapper">
+                      <CopyButton copyText={item.transactionHash} />
+                      <RouterLink
+                        route={`${ROUTES.TRANSACTION_DETAILS}/${item.transactionHash}`}
+                        value={formatAddress(item.transactionHash, 5, -5)}
+                        title={item.transactionHash}
+                        className="address-link nowrap inline-block"
+                      />
+                    </div>
                   </TableStyles.RowCell>
                   <TableStyles.RowCell
                     data-title={`${translate('pages.nftDetails.version')}:`}
