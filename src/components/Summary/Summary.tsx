@@ -105,7 +105,11 @@ const Summary: React.FC = () => {
               decimalsLength: summaryElement.decimals,
             },
           ),
-          difference: calculateDifference(currentStats?.[key] || 0, lastDayStats?.[key] || 0),
+          difference: calculateDifference(
+            Number(currentStats?.[key]) || 0,
+            Number(lastDayStats?.[key]) || 0,
+            key,
+          ),
         };
       });
       return items;
