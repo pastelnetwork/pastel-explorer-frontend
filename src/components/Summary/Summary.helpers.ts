@@ -86,7 +86,11 @@ export const initialSummaryList: Array<SummaryItemProps> = [
   },
 ];
 
-export const calculateDifference = (first: string | number, second: string | number) => {
+export const calculateDifference = (
+  first: string | number,
+  second: string | number,
+  key: string,
+) => {
   const firstValue = parseFloat(first.toString());
   const secondValue = parseFloat(second.toString());
 
@@ -94,7 +98,9 @@ export const calculateDifference = (first: string | number, second: string | num
 
   if (Number.isNaN(difference)) return '0.00';
 
-  return difference.toFixed(2);
+  return ['gigaHashPerSec', 'difficulty'].includes(key) && difference < 0
+    ? '0.00'
+    : difference.toFixed(2);
 };
 
 export const getRouteForChart = (key: string) => {
