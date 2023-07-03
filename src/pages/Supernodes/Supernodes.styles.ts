@@ -68,6 +68,13 @@ export const GridWrapper = styled(Grid)`
     }
   }
 
+  .ticket-title-wrapper {
+    h4 {
+      margin: 0;
+      padding: 0;
+    }
+  }
+
   ${props => props.theme.breakpoints.down('xs')} {
     .ReactVirtualized__Table__rowColumn {
       &:before {
@@ -90,11 +97,39 @@ export const BlockWrapper = styled.div`
     padding: 18px 16px;
     background: ${props => props.theme.card.titleColor};
   }
+
+  ${props => props.theme.breakpoints.down(800)} {
+    .ticket-title-wrapper {
+      h4 {
+        margin-bottom: 5px;
+      }
+    }
+  }
+
+  ${props => props.theme.breakpoints.down(570)} {
+    .filter-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .supernode-status {
+      flex-direction: column;
+    }
+  }
 `;
 
 export const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: ${props => props.theme.card.titleColor};
+
+  ${props => props.theme.breakpoints.down(800)} {
+    flex-direction: column;
+  }
 `;
 
 export const Title = styled.span`
@@ -208,5 +243,135 @@ export const CSVLinkButton = styled(CSVLink)`
   @media screen and (max-width: 375px) {
     padding: 8px 16px;
     font-size: 15px;
+  }
+`;
+
+export const ContentWrapper = styled.div`
+  display: block;
+
+  .masternode-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+  }
+
+  .header-cell {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .nowrap {
+    white-space: nowrap;
+  }
+
+  .title {
+    font-weight: 400;
+  }
+
+  .MuiIconButton-root {
+    .MuiSvgIcon-root {
+      transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    }
+
+    &.open {
+      .MuiSvgIcon-root {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .custom-table {
+    .table__row {
+      &.row_active {
+        &,
+        &:hover,
+        &:nth-of-type(2n + 1) {
+          background-color: ${props => props.theme.supernodes.table.even} !important;
+        }
+      }
+    }
+
+    .row_more_active {
+      background-color: ${props => props.theme.supernodes.table.active};
+
+      &:nth-of-type(2n + 1) {
+        background-color: ${props => props.theme.supernodes.table.even} !important;
+      }
+    }
+
+    .MuiSvgIcon-root {
+      color: ${props => props.theme.palette.text.primary};
+    }
+
+    .wrapper-content {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .see-more {
+      .MuiButtonBase-root {
+        padding: 1px;
+      }
+    }
+  }
+
+  ${props => props.theme.breakpoints.down(1170)} {
+    .custom-table {
+      .table__row-header {
+        display: none;
+      }
+
+      .table__row {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        .cell-content {
+          &::before {
+            content: attr(data-title);
+            position: relative;
+            display: inline-flex;
+            min-width: 100px;
+            padding-right: 0;
+            font-weight: 600;
+            font-size: 16px;
+            color: ${props => props.theme.table.label};
+          }
+        }
+      }
+    }
+  }
+
+  ${props => props.theme.breakpoints.down(768)} {
+    .custom-table {
+      .masternode-detail {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  }
+
+  ${props => props.theme.breakpoints.down(480)} {
+    .custom-table {
+      .masternode-detail {
+        grid-template-columns: 1fr;
+      }
+
+      .table__row {
+        .cell-content {
+          &.see-more {
+            width: 100%;
+
+            &::before {
+              display: inline-flex;
+            }
+          }
+        }
+      }
+
+      .address-link {
+        max-width: 57vw;
+        display: inline-block;
+      }
+    }
   }
 `;

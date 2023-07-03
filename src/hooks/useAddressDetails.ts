@@ -24,6 +24,7 @@ export function useBalanceHistory(id: string) {
     outgoing: Array<TChartStatisticsResponse>;
     totalReceived: number;
     totalSent: number;
+    type: string;
   }>(() => `${URLS.BALANCE_HISTORY_URL}/${id}`, axiosGet, SWR_OPTIONS);
 
   return {
@@ -33,6 +34,7 @@ export function useBalanceHistory(id: string) {
       sent: data ? data[0].outgoing : [],
       totalReceived: data ? data[0].totalReceived : 0,
       totalSent: data ? data[0].totalSent : 0,
+      type: data ? data[0].type : '',
     },
     isLoading,
   };

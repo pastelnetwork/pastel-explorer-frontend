@@ -15,7 +15,8 @@ import { getCurrencyName, isPastelBurnAddress } from '@utils/appInfo';
 import { eChartLineStyles } from '@pages/HistoricalStatistics/Chart/styles';
 import * as TableStyles from '@components/Table/Table.styles';
 import Fire from '@components/SvgIcon/Fire';
-import { useLatestTransactions } from '@hooks/useAddressDetails';
+import { useLatestTransactions, useBalanceHistory } from '@hooks/useAddressDetails';
+import BurnAddressIcon from '@pages/Details/TransactionDetails/BurnAddressIcon';
 
 import {
   DATA_FETCH_LIMIT,
@@ -58,6 +59,7 @@ const AddressDetails = () => {
     apiParams.sortBy,
     apiParams.sortDirection,
   );
+  const swrData = useBalanceHistory(id);
   const styles = eChartLineStyles();
   const downloadRef = useRef(null);
   const [isMobile, setMobileView] = useState(false);
@@ -102,6 +104,7 @@ const AddressDetails = () => {
       <Styles.AddressTitleBlock>
         {translate('pages.addressDetails.address', { currency: getCurrencyName() })}:{' '}
         <span>{id}</span>
+        <BurnAddressIcon type={swrData?.data?.type || ''} />
         {isBurnAddress ? (
           <Tooltip title={translate('pages.addressDetails.pastelBurnAddress')}>
             <Styles.FireIcon>
