@@ -155,6 +155,7 @@ const TotalSizeOfDataStored: React.FC = () => {
             dataY={chartData?.dataY}
             offset={0.1}
             disableClick
+            period={period}
           />
         )}
       </Styles.ChartContentWrapper>

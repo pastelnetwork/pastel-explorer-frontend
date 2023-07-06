@@ -158,6 +158,7 @@ const AverageSizeOfNFTStoredOnCascade: React.FC = () => {
             dataY1={chartData?.dataY1}
             offset={1}
             disableClick
+            period={period}
           />
         )}
       </Styles.ChartContentWrapper>

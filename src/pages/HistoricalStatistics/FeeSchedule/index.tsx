@@ -61,7 +61,7 @@ const FeeSchedule = () => {
         dataY={chartData?.dataY}
         title={translate('pages.historicalStatistics.feeSchedule')}
         info={info}
-        offset={1}
+        offset={100}
         period={period}
         periods={periods[11]}
         handleBgColorChange={handleBgColorChange}

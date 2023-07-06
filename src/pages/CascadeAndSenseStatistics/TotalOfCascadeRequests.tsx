@@ -157,6 +157,7 @@ const TotalOfCascadeRequests: React.FC = () => {
             dataY={chartData?.dataY}
             offset={1}
             disableClick
+            period={period}
           />
         )}
       </Styles.ChartContentWrapper>
