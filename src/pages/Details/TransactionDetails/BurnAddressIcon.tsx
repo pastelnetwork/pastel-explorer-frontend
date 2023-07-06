@@ -1,7 +1,7 @@
 import Tooltip from '@material-ui/core/Tooltip';
 
 import { translate } from '@utils/helpers/i18n';
-import Fire from '@components/SvgIcon/Fire';
+import databaseIcon from '@assets/images/database.png';
 import * as Styles from './TransactionDetails.styles';
 
 interface IBurnAddressIcon {
@@ -16,7 +16,7 @@ const BurnAddressIcon: React.FC<IBurnAddressIcon> = ({ type }) => {
   return (
     <Tooltip title={translate('pages.transactionDetails.burnAddress')}>
       <Styles.FireWrapper>
-        <Fire />
+        <img src={databaseIcon} alt={translate('pages.transactionDetails.burnAddress')} />
       </Styles.FireWrapper>
     </Tooltip>
   );

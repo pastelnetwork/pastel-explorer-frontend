@@ -274,10 +274,9 @@ export const SenseContentWrapper = styled.div`
 export const FireWrapper = styled.span`
   display: inline-flex;
   align-items: center;
-  margin-right: 5px;
-  opacity: 0.4;
+  margin-left: 5px;
 
-  svg {
+  img {
     width: 20px;
   }
 `;
