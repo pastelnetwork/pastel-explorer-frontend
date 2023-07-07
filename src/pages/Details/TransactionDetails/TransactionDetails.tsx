@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { CircularProgress, Grid } from '@material-ui/core';
+import { CircularProgress, Grid, Tooltip } from '@material-ui/core';
 
 import Header from '@components/Header/Header';
 import RouterLink from '@components/RouterLink/RouterLink';
 import Table, { RowsProps } from '@components/Table/Table';
 import CopyButton from '@components/CopyButton/CopyButton';
 import TicketsList from '@pages/Details/BlockDetails/Tickets';
-
+import Fire from '@components/SvgIcon/Fire';
+import { isPastelBurnAddress } from '@utils/appInfo';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import * as ROUTES from '@utils/constants/routes';
 import { formattedDate } from '@utils/helpers/date/date';
@@ -21,6 +22,7 @@ import {
 import { useSortData } from '@utils/hooks';
 import useTransactionDetails, { useUsdPrice } from '@hooks/useTransactionDetails';
 import { translate } from '@utils/helpers/i18n';
+import * as AddressDetailStyles from '@pages/Details/AddressDetails/AddressDetails.styles';
 
 import * as Styles from './TransactionDetails.styles';
 import {
@@ -92,6 +94,13 @@ const TransactionDetails = () => {
                       title={address}
                       className="address-link"
                     />
+                    {isPastelBurnAddress(address) ? (
+                      <Tooltip title={translate('pages.addressDetails.pastelBurnAddress')}>
+                        <AddressDetailStyles.FireIcon>
+                          <Fire />
+                        </AddressDetailStyles.FireIcon>
+                      </Tooltip>
+                    ) : null}
                     <BurnAddressIcon type={addressType} />
                   </Styles.RowWrapper>
                 </Grid>

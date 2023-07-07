@@ -275,7 +275,7 @@ const Supernodes: React.FC = () => {
                               <span className="wrapper-content">
                                 <CopyButton copyText={masternode.address} />
                                 <RouterLink
-                                  route={`${ROUTES.PASTEL_ID_DETAILS}/${masternode.address}`}
+                                  route={`${ROUTES.ADDRESS_DETAILS}/${masternode.address}`}
                                   value={masternode.address}
                                   textSize="large"
                                   title={masternode.address}
