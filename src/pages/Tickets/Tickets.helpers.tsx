@@ -168,6 +168,15 @@ export const transformCascadeData = (cascade: TicketsList[], usdPrice: number) =
                   )}
                 </Box>
               </Grid>
+              <Grid item xs={12} sm={6} md={4} className="ticket-output image-mobile xs">
+                {activation_txId ? (
+                  <Box className="cascade-image">
+                    <Link to={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}>
+                      {getFileIcon(fileType || '')}
+                    </Link>
+                  </Box>
+                ) : null}
+              </Grid>
               <Grid item xs={12} sm={6} md={2}>
                 <Box className="title">{translate('pages.tickets.activationTXID')}</Box>
                 <Box className={activation_txId ? 'bold' : ''}>
@@ -186,6 +195,15 @@ export const transformCascadeData = (cascade: TicketsList[], usdPrice: number) =
                   )}
                 </Box>
               </Grid>
+              <Grid item xs={12} sm={6} md={4} className="ticket-output image-mobile sm">
+                {activation_txId ? (
+                  <Box className="cascade-image">
+                    <Link to={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}>
+                      {getFileIcon(fileType || '')}
+                    </Link>
+                  </Box>
+                ) : null}
+              </Grid>
               <Grid item xs={12} sm={6} md={3}>
                 <Box className="title">{translate('pages.tickets.fee')}</Box>
                 <Box className="bold">
@@ -198,7 +216,7 @@ export const transformCascadeData = (cascade: TicketsList[], usdPrice: number) =
                   {timestamp ? formatFullDate(timestamp, { dayName: false }) : '--'}
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6} md={4}>
+              <Grid item xs={12} sm={6} md={4} className="ticket-output image-desktop">
                 {activation_txId ? (
                   <Box className="cascade-image">
                     <Link to={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}>
@@ -312,6 +330,27 @@ export const transformSenseData = (sense: TicketsList[], usdPrice: number) =>
                   )}
                 </Box>
               </Grid>
+              <Grid item xs={12} sm={6} md={2} className="ticket-output image-mobile xs">
+                {activation_ticket ? (
+                  <>
+                    {dupeDetectionSystemVersion && imageFileCdnUrl ? (
+                      <Link
+                        to={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${imageHash}`}
+                      >
+                        <img
+                          src={
+                            imageFileCdnUrl
+                              ? `data:image/jpeg;base64,${imageFileCdnUrl}`
+                              : noImagePlaceholder
+                          }
+                          alt={imageHash}
+                          className="sense-img"
+                        />
+                      </Link>
+                    ) : null}
+                  </>
+                ) : null}
+              </Grid>
               <Grid item xs={12} sm={6} md={3} className="col-txid">
                 <Box className="title">{translate('pages.tickets.activationTXID')}</Box>
                 <Box className={activation_txId ? 'bold' : ''}>
@@ -330,19 +369,40 @@ export const transformSenseData = (sense: TicketsList[], usdPrice: number) =>
                   )}
                 </Box>
               </Grid>
+              <Grid item xs={12} sm={6} md={2} className="ticket-output image-mobile sm">
+                {activation_ticket ? (
+                  <>
+                    {dupeDetectionSystemVersion && imageFileCdnUrl ? (
+                      <Link
+                        to={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${imageHash}`}
+                      >
+                        <img
+                          src={
+                            imageFileCdnUrl
+                              ? `data:image/jpeg;base64,${imageFileCdnUrl}`
+                              : noImagePlaceholder
+                          }
+                          alt={imageHash}
+                          className="sense-img"
+                        />
+                      </Link>
+                    ) : null}
+                  </>
+                ) : null}
+              </Grid>
               <Grid item xs={12} sm={6} md={3} className="col-status">
                 <Box className="title">{translate('pages.tickets.fee')}</Box>
                 <Box className="bold">
                   {formatNumber(fee)} {getCurrencyName()} {getStorageFee(fee, usdPrice)}
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6} md={3} className="hidden-sm col-time">
+              <Grid item xs={12} sm={6} md={3} className="col-time">
                 <Box className="title">{translate('pages.tickets.timestamp')}</Box>
                 <Box className="bold">
                   {timestamp ? formatFullDate(timestamp, { dayName: false }) : '--'}
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6} md={2} className="sense-output">
+              <Grid item xs={12} sm={6} md={2} className="ticket-output image-desktop">
                 {activation_ticket ? (
                   <>
                     {dupeDetectionSystemVersion && imageFileCdnUrl ? (
@@ -552,14 +612,14 @@ export const transformOfferAndTransferData = (data: TicketsList[]) =>
         if (ticketType === 'sense') {
           return {
             link: `${ROUTES.SENSE_DETAILS}?txid=${reTxId}`,
-            label: translate('pages.tickets.cascadeOutput'),
+            label: translate('pages.tickets.senseOutput'),
           };
         }
 
         if (ticketType === 'cascade') {
           return {
             link: `${ROUTES.CASCADE_DETAILS}?txid=${reTxId}`,
-            label: translate('pages.tickets.senseOutput'),
+            label: translate('pages.tickets.cascadeOutput'),
           };
         }
 
@@ -619,6 +679,9 @@ export const transformOfferAndTransferData = (data: TicketsList[]) =>
                   />
                 </Box>
               </Grid>
+              <Grid item xs={12} sm={6} md={3} className="ticket-output image-mobile xs">
+                {getImage()}
+              </Grid>
               <Grid item xs={12} sm={6} md={3}>
                 <Box className="title">{translate('pages.tickets.pastelID')}</Box>
                 <Box className="bold">
@@ -630,6 +693,9 @@ export const transformOfferAndTransferData = (data: TicketsList[]) =>
                   />
                 </Box>
               </Grid>
+              <Grid item xs={12} sm={6} md={3} className="ticket-output image-mobile sm">
+                {getImage()}
+              </Grid>
               <Grid item xs={12} sm={6} md={2}>
                 <Box className="title">{translate('pages.tickets.version')}</Box>
                 <Box className="bold">{version}</Box>
@@ -640,7 +706,7 @@ export const transformOfferAndTransferData = (data: TicketsList[]) =>
                   {timestamp ? formatFullDate(timestamp, { dayName: false }) : '--'}
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={3} className="ticket-output image-desktop">
                 {getImage()}
               </Grid>
             </Grid>
@@ -743,6 +809,21 @@ export const transformPastelNftTicketsData = (data: TicketsList[], usdPrice: num
                   )}
                 </Box>
               </Grid>
+              <Grid item xs={12} sm={6} md={3} className="ticket-output image-mobile xs">
+                {activation_ticket ? (
+                  <>
+                    {nftId ? (
+                      <Link to={`${ROUTES.NFT_DETAILS}?txid=${transactionHash}`}>
+                        <img
+                          src={image ? `data:image/jpeg;base64,${image}` : noImagePlaceholder}
+                          alt={transactionHash || ''}
+                          className="sense-img"
+                        />
+                      </Link>
+                    ) : null}
+                  </>
+                ) : null}
+              </Grid>
               <Grid item xs={12} sm={6} md={3}>
                 <Box className="title">{translate('pages.tickets.activationTXID')}</Box>
                 <Box className={activation_txId ? 'bold' : ''}>
@@ -761,6 +842,21 @@ export const transformPastelNftTicketsData = (data: TicketsList[], usdPrice: num
                   )}
                 </Box>
               </Grid>
+              <Grid item xs={12} sm={6} md={3} className="ticket-output image-mobile sm">
+                {activation_ticket ? (
+                  <>
+                    {nftId ? (
+                      <Link to={`${ROUTES.NFT_DETAILS}?txid=${transactionHash}`}>
+                        <img
+                          src={image ? `data:image/jpeg;base64,${image}` : noImagePlaceholder}
+                          alt={transactionHash || ''}
+                          className="sense-img"
+                        />
+                      </Link>
+                    ) : null}
+                  </>
+                ) : null}
+              </Grid>
               <Grid item xs={12} sm={6} md={3}>
                 <Box className="title">{translate('pages.tickets.fee')}</Box>
                 <Box className="bold">
@@ -775,7 +871,7 @@ export const transformPastelNftTicketsData = (data: TicketsList[], usdPrice: num
                     : translate('common.na')}
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={3} className="ticket-output image-desktop">
                 {activation_ticket ? (
                   <>
                     {nftId ? (

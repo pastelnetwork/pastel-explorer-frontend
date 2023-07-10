@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { CircularProgress, Grid, Tooltip } from '@material-ui/core';
+import { CircularProgress, Grid, Tooltip, Typography } from '@material-ui/core';
 
 import Header from '@components/Header/Header';
 import RouterLink from '@components/RouterLink/RouterLink';
@@ -23,6 +23,7 @@ import { useSortData } from '@utils/hooks';
 import useTransactionDetails, { useUsdPrice } from '@hooks/useTransactionDetails';
 import { translate } from '@utils/helpers/i18n';
 import * as AddressDetailStyles from '@pages/Details/AddressDetails/AddressDetails.styles';
+import * as CascadeDetailsStyles from '@pages/Details/CascadeDetails/CascadeDetails.styles';
 
 import * as Styles from './TransactionDetails.styles';
 import {
@@ -154,6 +155,16 @@ const TransactionDetails = () => {
     ];
   };
 
+  if (isLoading) {
+    return (
+      <Styles.LoadingWrapper>
+        <Styles.Loader>
+          <CircularProgress size={40} />
+        </Styles.Loader>
+      </Styles.LoadingWrapper>
+    );
+  }
+
   return transaction ? (
     <Styles.Wrapper>
       <Header title={translate('pages.transactionDetails.transactionDetails')} />
@@ -225,11 +236,18 @@ const TransactionDetails = () => {
       </Grid>
     </Styles.Wrapper>
   ) : (
-    <Styles.LoadingWrapper>
-      <Styles.Loader>
-        <CircularProgress size={40} />
-      </Styles.Loader>
-    </Styles.LoadingWrapper>
+    <CascadeDetailsStyles.Wrapper className="content-center-wrapper">
+      <Grid container justify="center" alignItems="center" direction="column" spacing={2}>
+        <Grid item>
+          <Typography component="h1" variant="h1" align="center" gutterBottom>
+            {translate('pages.cascade.404')}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Typography component="h2" variant="h5" align="center" gutterBottom>
+        {translate('pages.transactionDetails.transactionNotFound')}
+      </Typography>
+    </CascadeDetailsStyles.Wrapper>
   );
 };
 

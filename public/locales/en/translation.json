@@ -1910,6 +1910,10 @@
       "burnAddress": {
         "message": "Data storage address",
         "description": "Used for the TransactionDetails page"
+      },
+      "transactionNotFound": {
+        "message": "Transaction not found",
+        "description": "Used for the TransactionDetails page"
       }
     },
     "errorHandler": {
