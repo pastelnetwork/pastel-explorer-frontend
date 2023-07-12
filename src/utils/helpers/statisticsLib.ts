@@ -226,14 +226,15 @@ export function transformMempoolInfo(
 export function transformNetTotals(
   nettotals: TNettotalsInfo[],
   period: PeriodTypes,
+  range = 1024,
 ): TMultiLineChartData {
   const dataX: string[] = [];
   const dataY1: number[] = [];
   const dataY2: number[] = [];
   for (let i = 0; i < nettotals.length; i += 1) {
     if (nettotals[i].timemillis !== null) {
-      const recv = Number(nettotals[i].totalbytesrecv);
-      const sent = Number(nettotals[i].totalbytessent);
+      const recv = Number(nettotals[i].totalbytesrecv) / range;
+      const sent = Number(nettotals[i].totalbytessent) / range;
       dataY1.push(recv);
       dataY2.push(sent);
       dataX.push(new Date(Number(nettotals[i].timemillis)).toLocaleString());

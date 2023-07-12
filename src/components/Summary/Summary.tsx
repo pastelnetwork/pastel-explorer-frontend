@@ -64,6 +64,8 @@ const CustomTooltip = withStyles(theme => ({
   },
 }))(Tooltip);
 
+const NETWORK_RANGE = 1048576;
+
 const Summary: React.FC = () => {
   const { supernodeList, isLoading } = useNetwork(true);
   const [summaryList, setSummaryList] = React.useState(initialSummaryList);
@@ -168,6 +170,24 @@ const Summary: React.FC = () => {
     };
   };
 
+  const transformNetworkChartData = (key: string) => {
+    const dataX = [];
+    const dataY = [];
+    if (summaryChartData) {
+      const items = summaryChartData[key as keyof ISummaryChartStats] as TSummaryChartProps[];
+      if (items.length) {
+        for (let i = 0; i < items.length; i += 1) {
+          dataX.push(new Date(items[i].time).toLocaleString());
+          dataY.push(Number(items[i].value) * NETWORK_RANGE);
+        }
+      }
+    }
+    return {
+      dataX,
+      dataY,
+    };
+  };
+
   const generateChartData = (key: string): TChartDataProps => {
     let dataX;
     let dataY;
@@ -202,7 +222,7 @@ const Summary: React.FC = () => {
         offset = 1;
         break;
       case 'gigaHashPerSec':
-        parseChartData = transformChartData(key);
+        parseChartData = transformNetworkChartData(key);
         dataX = parseChartData?.dataX;
         dataY = parseChartData?.dataY;
         offset = 0;
@@ -289,6 +309,10 @@ const Summary: React.FC = () => {
           <Box>{value}</Box>
         </CustomTooltip>
       );
+    }
+
+    if (sumKey === 'gigaHashPerSec') {
+      return formatNumber(Number(value) * NETWORK_RANGE, { decimalsLength: 2 });
     }
 
     return value;

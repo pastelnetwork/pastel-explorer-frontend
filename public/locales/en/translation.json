@@ -287,7 +287,7 @@
           "description": "Used for the Summary component"
         },
         "gigaHashPerSec": {
-          "message": "Network (MH/s)",
+          "message": "Network (kB/s)",
           "description": "Used for the Summary component"
         },
         "difficulty": {
@@ -3520,6 +3520,10 @@
       "message": "MSol/S",
       "description": "Used for the chartOptions"
     },
+    "kBS": {
+      "message": "kB/s",
+      "description": "Used for the chartOptions"
+    },
     "bytes": {
       "message": "bytes",
       "description": "Used for the chartOptions"
@@ -3581,7 +3585,7 @@
       "description": "Used for the chartOptions"
     },
     "network": {
-      "message": "Network (MH/s): ",
+      "message": "Network (kB/s): ",
       "description": "Used for the chartOptions"
     },
     "difficulty": {
