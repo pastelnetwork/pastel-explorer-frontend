@@ -298,9 +298,8 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             html += `
               <div class="tooltip-item">
                 <div class="item-label">${item.marker} ${item.seriesName}:</div>
-                <div class="item-value">${formatNumber(item.value, { decimalsLength: 2 })} ${translate(
-              'chartOptions.kBS',
-            )}</div>
+                <div class="item-value">${formatNumber(item.value, { decimalsLength: 2 })}
+                ${translate('chartOptions.kBS')}</div>
               </div>
             `;
           });
