@@ -8,6 +8,7 @@ import * as ROUTES from '@utils/constants/routes';
 import { getCurrencyName } from '@utils/appInfo';
 import { formatFullDate } from '@utils/helpers/date/date';
 import { translate } from '@utils/helpers/i18n';
+import CopyButton from '@components/CopyButton/CopyButton';
 
 import noImagePlaceholder from '@assets/images/no-image-placeholder.svg';
 
@@ -133,6 +134,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
               </Grid>
               <Grid item xs={12} sm={9}>
                 <Styles.TicketContent>
+                  <CopyButton copyText={ticket?.item_txid || ticket?.nft_txid} />
                   <RouterLink
                     route={`${ROUTES.TRANSACTION_DETAILS}/${ticket?.item_txid || ticket?.nft_txid}`}
                     value={ticket?.item_txid || ticket?.nft_txid}
@@ -309,6 +311,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
+            <CopyButton copyText={ticket?.item_txid || ticket?.nft_txid} />
             <RouterLink
               route={`${ROUTES.TRANSACTION_DETAILS}/${ticket?.item_txid || ticket?.nft_txid}`}
               value={ticket?.item_txid || ticket?.nft_txid}

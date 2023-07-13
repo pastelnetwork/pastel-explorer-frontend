@@ -287,7 +287,7 @@
           "description": "Used for the Summary component"
         },
         "gigaHashPerSec": {
-          "message": "Network (MH/s)",
+          "message": "Network (kB/s)",
           "description": "Used for the Summary component"
         },
         "difficulty": {
@@ -1906,6 +1906,14 @@
       "transactionRawData": {
         "message": "Transaction Raw Data",
         "description": "Used for the TransactionDetails page"
+      },
+      "burnAddress": {
+        "message": "Data storage address",
+        "description": "Used for the TransactionDetails page"
+      },
+      "transactionNotFound": {
+        "message": "Transaction not found",
+        "description": "Used for the TransactionDetails page"
       }
     },
     "errorHandler": {
@@ -2511,6 +2519,18 @@
       },
       "activeSeconds": {
         "message": "Active seconds",
+        "description": "Used for the Supernodes page"
+      },
+      "city": {
+        "message": "City",
+        "description": "Used for the Supernodes page"
+      },
+      "seeMore": {
+        "message": "See more",
+        "description": "Used for the Supernodes page"
+      },
+      "seeLess": {
+        "message": "See less",
         "description": "Used for the Supernodes page"
       }
     },
@@ -3500,6 +3520,10 @@
       "message": "MSol/S",
       "description": "Used for the chartOptions"
     },
+    "kBS": {
+      "message": "kB/s",
+      "description": "Used for the chartOptions"
+    },
     "bytes": {
       "message": "bytes",
       "description": "Used for the chartOptions"
@@ -3561,7 +3585,7 @@
       "description": "Used for the chartOptions"
     },
     "network": {
-      "message": "Network (MH/s): ",
+      "message": "Network (kB/s): ",
       "description": "Used for the chartOptions"
     },
     "difficulty": {

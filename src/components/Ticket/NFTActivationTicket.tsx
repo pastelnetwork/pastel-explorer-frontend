@@ -8,6 +8,7 @@ import { getCurrencyName } from '@utils/appInfo';
 import * as ROUTES from '@utils/constants/routes';
 import { formatFullDate } from '@utils/helpers/date/date';
 import { translate } from '@utils/helpers/i18n';
+import CopyButton from '@components/CopyButton/CopyButton';
 
 import { useStorageFee } from './Ticket.helpers';
 import Signatures from './Signatures';
@@ -77,6 +78,7 @@ const NFTActivationTicket: React.FC<INFTActivationTicketProps> = ({ ticket }) =>
           </Grid>
           <Grid item xs={8} sm={9}>
             <Styles.TicketContent>
+              <CopyButton copyText={ticket.reg_txid} />
               <RouterLink
                 route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.reg_txid}`}
                 value={ticket.reg_txid}

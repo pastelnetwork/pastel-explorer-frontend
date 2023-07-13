@@ -201,10 +201,6 @@ export const AddressTitleBlock = styled.div`
     margin-left: 5px;
   }
 
-  svg {
-    width: 18px;
-  }
-
   ${props => props.theme.breakpoints.down(1024)} {
     span {
       max-width: calc(100vw - 145px);
@@ -526,4 +522,8 @@ export const LoadingText = styled.div`
 export const FireIcon = styled.div`
   display: inline-flex;
   align-items: center;
+
+  svg {
+    width: 18px;
+  }
 `;

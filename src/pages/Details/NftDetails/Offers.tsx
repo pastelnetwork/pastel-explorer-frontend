@@ -17,6 +17,7 @@ import { getParameterByName } from '@utils/helpers/url';
 import * as TableStyles from '@components/Table/Table.styles';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
+import CopyButton from '@components/CopyButton/CopyButton';
 
 import * as Styles from './NftDetails.styles';
 
@@ -110,12 +111,15 @@ const Offers: React.FC = () => {
                     className="cell-content nowrap"
                   >
                     {item.transactionHash ? (
-                      <RouterLink
-                        route={`${ROUTES.TRANSACTION_DETAILS}/${item.transactionHash}`}
-                        value={formatAddress(item.transactionHash, 5, -5)}
-                        title={item.transactionHash}
-                        className="address-link nowrap inline-block read-more full"
-                      />
+                      <div>
+                        <CopyButton copyText={item.transactionHash} />
+                        <RouterLink
+                          route={`${ROUTES.TRANSACTION_DETAILS}/${item.transactionHash}`}
+                          value={formatAddress(item.transactionHash, 5, -5)}
+                          title={item.transactionHash}
+                          className="address-link nowrap inline-block read-more full"
+                        />
+                      </div>
                     ) : (
                       translate('common.na')
                     )}

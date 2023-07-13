@@ -143,6 +143,10 @@ export const themeLight = createMuiTheme(
         },
         color: '#fff',
       },
+      table: {
+        active: '#ebeaea',
+        even: '#e0e0e0',
+      },
     },
     dropdown: {
       border: '#A0AEC0',
@@ -282,6 +286,10 @@ export const themeDark = createMuiTheme(
           newStart: '#E88A00',
         },
         color: '#fff',
+      },
+      table: {
+        active: '#1a202c',
+        even: '#292e36',
       },
     },
     dropdown: {

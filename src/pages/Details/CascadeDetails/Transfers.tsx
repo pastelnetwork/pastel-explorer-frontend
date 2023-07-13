@@ -14,6 +14,7 @@ import { getParameterByName } from '@utils/helpers/url';
 import * as TableStyles from '@components/Table/Table.styles';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 import * as NftDetailStyles from '@pages/Details/NftDetails/NftDetails.styles';
+import CopyButton from '@components/CopyButton/CopyButton';
 
 const LIMIT = 5;
 
@@ -97,12 +98,15 @@ const Transfers = () => {
                     className="cell-content nowrap"
                   >
                     {item.registration_txid ? (
-                      <RouterLink
-                        route={`${ROUTES.PASTEL_ID_DETAILS}/${item.registration_txid}`}
-                        value={formatAddress(item.registration_txid, 5, -5)}
-                        title={item.registration_txid}
-                        className="address-link nowrap inline-block read-more full"
-                      />
+                      <div className="registration_txid">
+                        <CopyButton copyText={item.registration_txid} />
+                        <RouterLink
+                          route={`${ROUTES.PASTEL_ID_DETAILS}/${item.registration_txid}`}
+                          value={formatAddress(item.registration_txid, 5, -5)}
+                          title={item.registration_txid}
+                          className="address-link nowrap inline-block read-more full"
+                        />
+                      </div>
                     ) : (
                       translate('common.na')
                     )}
@@ -112,12 +116,15 @@ const Transfers = () => {
                     className="cell-content nowrap"
                   >
                     {item.offer_txid ? (
-                      <RouterLink
-                        route={`${ROUTES.PASTEL_ID_DETAILS}/${item.offer_txid}`}
-                        value={formatAddress(item.offer_txid, 5, -5)}
-                        title={item.offer_txid}
-                        className="address-link nowrap inline-block read-more full"
-                      />
+                      <div className="registration_txid">
+                        <CopyButton copyText={item.offer_txid} />
+                        <RouterLink
+                          route={`${ROUTES.PASTEL_ID_DETAILS}/${item.offer_txid}`}
+                          value={formatAddress(item.offer_txid, 5, -5)}
+                          title={item.offer_txid}
+                          className="address-link nowrap inline-block read-more full"
+                        />
+                      </div>
                     ) : (
                       translate('common.na')
                     )}
@@ -127,12 +134,15 @@ const Transfers = () => {
                     className="cell-content nowrap"
                   >
                     {item.accept_txid ? (
-                      <RouterLink
-                        route={`${ROUTES.PASTEL_ID_DETAILS}/${item.accept_txid}`}
-                        value={formatAddress(item.accept_txid, 5, -5)}
-                        title={item.accept_txid}
-                        className="address-link nowrap inline-block read-more full"
-                      />
+                      <div className="registration_txid">
+                        <CopyButton copyText={item.accept_txid} />
+                        <RouterLink
+                          route={`${ROUTES.PASTEL_ID_DETAILS}/${item.accept_txid}`}
+                          value={formatAddress(item.accept_txid, 5, -5)}
+                          title={item.accept_txid}
+                          className="address-link nowrap inline-block read-more full"
+                        />
+                      </div>
                     ) : (
                       translate('common.na')
                     )}
@@ -142,12 +152,15 @@ const Transfers = () => {
                     className="cell-content nowrap"
                   >
                     {item.item_txid ? (
-                      <RouterLink
-                        route={`${ROUTES.PASTEL_ID_DETAILS}/${item.item_txid}`}
-                        value={formatAddress(item.item_txid, 5, -5)}
-                        title={item.item_txid}
-                        className="address-link nowrap inline-block read-more full"
-                      />
+                      <div className="registration_txid">
+                        <CopyButton copyText={item.item_txid} />
+                        <RouterLink
+                          route={`${ROUTES.PASTEL_ID_DETAILS}/${item.item_txid}`}
+                          value={formatAddress(item.item_txid, 5, -5)}
+                          title={item.item_txid}
+                          className="address-link nowrap inline-block read-more full"
+                        />
+                      </div>
                     ) : (
                       translate('common.na')
                     )}

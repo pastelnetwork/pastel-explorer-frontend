@@ -6,6 +6,25 @@ export const Wrapper = styled.div`
   display: block;
   width: 100%;
 
+  .copy-icon {
+    .MuiSvgIcon-root {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  .copy-wrapper {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  .link-copy-wrapper {
+    .address-link.read-more {
+      max-width: 57%;
+    }
+  }
+
   .no-data {
     display: flex;
     align-items: center;
@@ -277,28 +296,108 @@ export const MainWrapper = styled.div`
     }
   }
 
-  ${props => props.theme.breakpoints.down(1024)} {
-    .hidden-desktop {
+  .hidden-lg {
+    display: none;
+  }
+
+  ${props => props.theme.breakpoints.down(1240)} {
+    .open-nsfw,
+    .rareness-score {
+      margin-bottom: 0;
+    }
+
+    .created-by {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .nft-info {
+      .txt-id:nth-of-type(2) {
+        margin-left: 0;
+      }
+    }
+
+    .hidden-lg {
       display: block;
     }
 
-    .hidden-mobile {
-      display: none;
+    .show-lg {
+      display: none !important;
     }
 
-    .submitted-image-creator-section,
     .nft-data {
       width: 100%;
-      max-width: 100%;
+      max-width: unset;
     }
 
     .submitted-image-creator-section {
-      margin-right: 0;
+      width: calc(30% - 20px);
+    }
+
+    .nft-data {
+      width: 70%;
+    }
+
+    .creator-section,
+    .summary-section {
+      &,
+      & .creator,
+      & .summary {
+        width: 100%;
+      }
+    }
+
+    .offers-content {
+      .no-data {
+        min-height: 182px;
+      }
+    }
+  }
+
+  .hide-up-1020 {
+    display: none;
+  }
+
+  ${props => props.theme.breakpoints.down(1024)} {
+    .show-down-1024 {
+      display: block !important;
+    }
+
+    .hide-down-1024 {
+      display: none;
     }
 
     .nft-info {
       .title {
         font-size: 22px;
+      }
+    }
+
+    .created-by {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    .nft-info {
+      .txt-id {
+        margin-left: 0;
+      }
+    }
+
+    .offers-section,
+    .item-activity-section {
+      .nft-data {
+        width: 100%;
+      }
+    }
+
+    .summary-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+
+      .creator-content {
+        min-height: unset;
       }
     }
   }
@@ -322,6 +421,12 @@ export const MainWrapper = styled.div`
       .share-icon {
         margin-right: 10px;
       }
+    }
+  }
+  ${props => props.theme.breakpoints.down(600)} {
+    .summary-section {
+      grid-template-columns: 1fr;
+      gap: 0;
     }
   }
 `;
@@ -580,4 +685,23 @@ export const ItemWrapper = styled(Box)`
   display: flex;
   justify-content: space-between;
   width: 100%;
+
+  ${props => props.theme.breakpoints.down(1240)} {
+    flex-wrap: wrap;
+
+    &.info-section {
+      flex-wrap: nowrap;
+    }
+  }
+
+  ${props => props.theme.breakpoints.down(1024)} {
+    &.info-section {
+      flex-wrap: wrap;
+
+      .submitted-image-creator-section,
+      .nft-data {
+        width: 100%;
+      }
+    }
+  }
 `;

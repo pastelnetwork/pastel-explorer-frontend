@@ -92,6 +92,7 @@ const NftInfo: React.FC<INftInfo> = ({
               <TicketStyles.TicketTitle as="span">
                 {translate('pages.nftDetails.txID')}:
               </TicketStyles.TicketTitle>{' '}
+              <CopyButton copyText={txId} />
               <RouterLink
                 route={`${ROUTES.TRANSACTION_DETAILS}/${txId}`}
                 value={formatAddress(txId || '', 5, -5)}

@@ -49,12 +49,12 @@ const PastelNftTickets: React.FC<IPastelNftTicketsProps> = ({
 
   const getRowHeight = () => {
     if (innerWidth < 600) {
-      return 430;
+      return 450;
     }
     if (innerWidth < 960) {
-      return 220;
+      return 240;
     }
-    return 120;
+    return 140;
   };
 
   const gettableHeight = () => {

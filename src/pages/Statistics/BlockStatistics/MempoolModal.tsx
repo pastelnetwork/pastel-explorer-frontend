@@ -12,6 +12,7 @@ import { IMempool } from '@utils/types/ITransactions';
 import * as URLS from '@utils/constants/urls';
 import { axiosGet } from '@utils/helpers/useFetch/useFetch';
 import { getCurrencyName } from '@utils/appInfo';
+import Pagination from '@components/Pagination/Pagination';
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
 import { formatAddress } from '@utils/helpers/format';
@@ -28,23 +29,34 @@ interface IMempoolModal {
   onClose: () => void;
 }
 
+const LIMIT = 10;
+
 const MempoolModal: React.FC<IMempoolModal> = ({ open, onClose }) => {
   const [isLoading, setLoading] = useState(false);
   const [mempools, setMempools] = useState<IMempool[]>();
+  const [totalPage, setTotalPage] = useState(0);
+
+  const fetchData = async (offset = 0) => {
+    setLoading(true);
+    try {
+      const { data, total } = await axiosGet(
+        `${URLS.GET_MEMPOOL_URL}?offset=${offset}&limit=${LIMIT}`,
+      );
+      setMempools(data);
+      setTotalPage(Math.ceil(total / LIMIT));
+    } catch {
+      setMempools([]);
+    }
+    setLoading(false);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const { data } = await axiosGet(URLS.GET_MEMPOOL_URL);
-        setMempools(data);
-      } catch {
-        setMempools([]);
-      }
-      setLoading(false);
-    };
-    fetchData();
+    fetchData(0);
   }, []);
+
+  const handlePageChange = (page: number) => {
+    fetchData(page * LIMIT);
+  };
 
   const useStyles = makeStyles(() =>
     createStyles({
@@ -186,6 +198,11 @@ const MempoolModal: React.FC<IMempoolModal> = ({ open, onClose }) => {
               </TableStyles.TableWrapper>
             </TableStyles.PaperWrapper>
           )}
+          {totalPage > 1 ? (
+            <Styles.Pagination>
+              <Pagination totalPage={totalPage} onPageChange={handlePageChange} />
+            </Styles.Pagination>
+          ) : null}
         </Styles.ContentWrapper>
       </TableStyles.BlockWrapper>
     );

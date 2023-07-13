@@ -6,6 +6,7 @@ import { INftRoyaltyTicket } from '@utils/types/ITransactions';
 import * as ROUTES from '@utils/constants/routes';
 import { formatFullDate } from '@utils/helpers/date/date';
 import { translate } from '@utils/helpers/i18n';
+import CopyButton from '@components/CopyButton/CopyButton';
 
 import Signatures from './Signatures';
 import * as Styles from './Ticket.styles';
@@ -71,6 +72,7 @@ const NFTRoyaltyTicket: React.FC<INFTRoyaltyTicketProps> = ({ ticket }) => {
           </Grid>
           <Grid item xs={8} sm={9}>
             <Styles.TicketContent>
+              <CopyButton copyText={ticket.nft_txid} />
               <RouterLink
                 route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.nft_txid}`}
                 value={ticket.nft_txid}

@@ -7,6 +7,10 @@ import themeVariant from '@theme/variants';
 export const TicketsContainer = styled.div`
   width: 100%;
 
+  .copy-icon {
+    margin-left: 0;
+  }
+
   .read-more {
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -246,9 +250,30 @@ export const TicketsContainer = styled.div`
     }
   }
 
+  ${props => props.theme.breakpoints.up(960)} {
+    .ticket-output {
+      &.image-mobile,
+      &.xs {
+        display: none;
+      }
+    }
+  }
+
+  ${props => props.theme.breakpoints.between(600, 960)} {
+    .ticket-output {
+      &.image-desktop,
+      &.xs {
+        display: none;
+      }
+    }
+  }
+
   ${props => props.theme.breakpoints.down(600)} {
-    .hidden-sm {
-      display: none;
+    .ticket-output {
+      &.image-desktop,
+      &.sm {
+        display: none;
+      }
     }
   }
 `;

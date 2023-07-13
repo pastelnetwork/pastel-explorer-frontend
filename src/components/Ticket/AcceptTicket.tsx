@@ -8,6 +8,7 @@ import { getCurrencyName } from '@utils/appInfo';
 import * as ROUTES from '@utils/constants/routes';
 import { formatFullDate } from '@utils/helpers/date/date';
 import { translate } from '@utils/helpers/i18n';
+import CopyButton from '@components/CopyButton/CopyButton';
 
 import noImagePlaceholder from '@assets/images/no-image-placeholder.svg';
 
@@ -108,6 +109,7 @@ const AcceptTicket: React.FC<IAcceptTicketProps> = ({ ticket, variant }) => {
                 </Grid>
                 <Grid item xs={12} sm={9}>
                   <Styles.TicketContent>
+                    <CopyButton copyText={ticket.offer_txid} />
                     <RouterLink
                       route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.offer_txid}`}
                       value={ticket.offer_txid}
@@ -211,6 +213,7 @@ const AcceptTicket: React.FC<IAcceptTicketProps> = ({ ticket, variant }) => {
           </Grid>
           <Grid item xs={8} sm={9}>
             <Styles.TicketContent>
+              <CopyButton copyText={ticket.offer_txid} />
               <RouterLink
                 route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.offer_txid}`}
                 value={ticket.offer_txid}

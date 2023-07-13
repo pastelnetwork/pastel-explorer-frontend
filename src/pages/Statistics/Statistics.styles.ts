@@ -207,3 +207,9 @@ export const NoContent = styled.div`
 export const ContentWrapper = styled.div`
   padding: 0;
 `;
+
+export const Pagination = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px;
+`;

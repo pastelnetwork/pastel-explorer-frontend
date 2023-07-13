@@ -298,9 +298,8 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             html += `
               <div class="tooltip-item">
                 <div class="item-label">${item.marker} ${item.seriesName}:</div>
-                <div class="item-value">${formatNumber(item.value)} ${translate(
-              'chartOptions.bytes',
-            )}</div>
+                <div class="item-value">${formatNumber(item.value, { decimalsLength: 2 })}
+                ${translate('chartOptions.kBS')}</div>
               </div>
             `;
           });
@@ -2943,9 +2942,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       color: ['#cd6661'],
       grid: {
         top: 9,
-        right: 0,
-        bottom: 0,
-        left: 0,
+        right: 35,
+        bottom: 20,
+        left: 35,
         show: false,
       },
       tooltip: {
@@ -2969,22 +2968,44 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         {
           type: 'category',
           data: dataX,
-          axisLabel: {
+          boundaryGap: false,
+          splitLine: {
             show: false,
+          },
+          axisLine: {
+            show: true,
+          },
+          axisLabel: {
+            formatter(value: string, index: number) {
+              let isShowMinutesFor24h = false;
+              if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+                isShowMinutesFor24h = true;
+              }
+              return value
+                ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h)
+                : null;
+            },
+            showMaxLabel: true,
+            interval: dataX?.length ? Math.floor(dataX.length / 3) : 'auto',
           },
         },
       ],
       yAxis: [
         {
           type: 'value',
-          axisLine: {
+          min: 0,
+          max: maxY,
+          interval: maxY / 4,
+          splitLine: {
             show: false,
           },
           axisLabel: {
-            show: false,
+            formatter(value: string) {
+              return getYAxisLabel(Number(value), 0, maxY);
+            },
           },
-          splitLine: {
-            show: false,
+          axisLine: {
+            show: true,
           },
         },
       ],
@@ -3025,32 +3046,53 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       grid: {
         top: 9,
-        right: 0,
-        bottom: 0,
-        left: 0,
+        right: 35,
+        bottom: 20,
+        left: 35,
         show: false,
       },
       xAxis: [
         {
           type: 'category',
           data: dataX,
-          axisLabel: {
+          boundaryGap: false,
+          splitLine: {
             show: false,
+          },
+          axisLine: {
+            show: true,
+          },
+          axisLabel: {
+            formatter(value: string, index: number) {
+              let isShowMinutesFor24h = false;
+              if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+                isShowMinutesFor24h = true;
+              }
+              return value
+                ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h)
+                : null;
+            },
+            showMaxLabel: true,
+            interval: dataX?.length ? Math.floor(dataX.length / 3) : 'auto',
           },
         },
       ],
       yAxis: [
         {
           type: 'value',
+          min: 0,
           max: maxY,
-          axisLine: {
+          interval: maxY / 4,
+          splitLine: {
             show: false,
           },
           axisLabel: {
-            show: false,
+            formatter(value: string) {
+              return getYAxisLabel(Number(value), 0, maxY);
+            },
           },
-          splitLine: {
-            show: false,
+          axisLine: {
+            show: true,
           },
         },
       ],
@@ -3079,9 +3121,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       color: ['#cd6661'],
       grid: {
         top: 9,
-        right: 0,
-        bottom: 0,
-        left: 0,
+        right: 35,
+        bottom: 20,
+        left: 35,
         show: false,
       },
       tooltip: {
@@ -3096,27 +3138,51 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           }`;
         },
       },
-      xAxis: {
-        type: 'category',
-        data: dataX,
-        boundaryGap: false,
-        axisLabel: {
-          show: false,
+      xAxis: [
+        {
+          type: 'category',
+          data: dataX,
+          boundaryGap: false,
+          splitLine: {
+            show: false,
+          },
+          axisLine: {
+            show: true,
+          },
+          axisLabel: {
+            formatter(value: string, index: number) {
+              let isShowMinutesFor24h = false;
+              if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+                isShowMinutesFor24h = true;
+              }
+              return value
+                ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h)
+                : null;
+            },
+            showMaxLabel: true,
+            interval: dataX?.length ? Math.floor(dataX.length / 3) : 'auto',
+          },
         },
-      },
-      yAxis: {
-        type: 'value',
-        max: maxY,
-        axisLine: {
-          show: false,
+      ],
+      yAxis: [
+        {
+          type: 'value',
+          min: 0,
+          max: maxY,
+          interval: maxY / 4,
+          splitLine: {
+            show: false,
+          },
+          axisLabel: {
+            formatter(value: string) {
+              return getYAxisLabel(Number(value), 0, maxY);
+            },
+          },
+          axisLine: {
+            show: true,
+          },
         },
-        axisLabel: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-      },
+      ],
       series: {
         name: translate('chartOptions.cascadeRequests'),
         type: 'line',
@@ -3146,9 +3212,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       color: [blueColor],
       grid: {
         top: 9,
-        right: 0,
-        bottom: 0,
-        left: 0,
+        right: 35,
+        bottom: 20,
+        left: 35,
         show: false,
       },
       tooltip: {
@@ -3167,21 +3233,39 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         type: 'category',
         data: dataX,
         boundaryGap: false,
-        axisLabel: {
+        splitLine: {
           show: false,
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
+            return value ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h) : null;
+          },
+          showMaxLabel: true,
+          interval: dataX?.length ? Math.floor(dataX.length / 3) : 'auto',
         },
       },
       yAxis: {
         type: 'value',
+        min: 0,
         max: maxY,
-        axisLine: {
+        interval: maxY / 4,
+        splitLine: {
           show: false,
         },
         axisLabel: {
-          show: false,
+          formatter(value: string) {
+            return getYAxisLabel(Number(value), 0, maxY);
+          },
         },
-        splitLine: {
-          show: false,
+        axisLine: {
+          show: true,
         },
       },
       series: {
@@ -3213,9 +3297,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       color: ['#cd6661'],
       grid: {
         top: 9,
-        right: 0,
-        bottom: 0,
-        left: 0,
+        right: 35,
+        bottom: 20,
+        left: 35,
         show: false,
       },
       tooltip: {
@@ -3231,22 +3315,40 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       xAxis: {
         type: 'category',
         data: dataX,
-        axisLabel: {
+        boundaryGap: false,
+        splitLine: {
           show: false,
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
+            return value ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h) : null;
+          },
+          showMaxLabel: true,
+          interval: dataX?.length ? Math.floor(dataX.length / 3) : 'auto',
         },
       },
       yAxis: {
         type: 'value',
         min: minY,
         max: maxY,
-        axisLine: {
+        interval: (maxY - minY) / 4,
+        splitLine: {
           show: false,
         },
         axisLabel: {
-          show: false,
+          formatter(value: string) {
+            return getYAxisLabel(Number(value), minY, maxY);
+          },
         },
-        splitLine: {
-          show: false,
+        axisLine: {
+          show: true,
         },
       },
       series: {
@@ -3278,9 +3380,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       color: [blueColor],
       grid: {
         top: 9,
-        right: 0,
-        bottom: 0,
-        left: 0,
+        right: 35,
+        bottom: 20,
+        left: 35,
         show: false,
       },
       tooltip: {
@@ -3294,22 +3396,40 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       xAxis: {
         type: 'category',
         data: dataX,
-        axisLabel: {
+        boundaryGap: false,
+        splitLine: {
           show: false,
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
+            return value ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h) : null;
+          },
+          showMaxLabel: true,
+          interval: dataX?.length ? Math.floor(dataX.length / 3) : 'auto',
         },
       },
       yAxis: {
         type: 'value',
         min: minY,
         max: maxY,
-        axisLine: {
+        interval: (maxY - minY) / 4,
+        splitLine: {
           show: false,
         },
         axisLabel: {
-          show: false,
+          formatter(value: string) {
+            return getYAxisLabel(Number(value), minY, maxY);
+          },
         },
-        splitLine: {
-          show: false,
+        axisLine: {
+          show: true,
         },
       },
       series: {
@@ -3341,9 +3461,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       color: ['#cd6661'],
       grid: {
         top: 120,
-        right: 0,
-        bottom: 0,
-        left: 0,
+        right: 30,
+        bottom: 20,
+        left: 40,
         show: false,
       },
       tooltip: {
@@ -3366,10 +3486,14 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           show: false,
         },
         axisLine: {
-          show: false,
+          show: true,
         },
         axisLabel: {
-          show: false,
+          formatter(value: string) {
+            return generateXAxisLabel(new Date(value), '24h', true);
+          },
+          showMaxLabel: true,
+          interval: generateXAxisInterval('1d', '24h', dataX, width),
         },
         data: dataX,
       },
@@ -3377,14 +3501,17 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         type: 'value',
         min: minY,
         max: maxY,
+        interval: (maxY - minY) / 4,
         splitLine: {
           show: false,
         },
-        axisLine: {
-          show: false,
-        },
         axisLabel: {
-          show: false,
+          formatter(value: string) {
+            return getYAxisLabel(Number(value), minY, maxY);
+          },
+        },
+        axisLine: {
+          show: true,
         },
       },
       series: [
@@ -3411,9 +3538,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       grid: {
         top: 100,
-        right: 0,
-        bottom: 0,
-        left: 0,
+        right: 30,
+        bottom: 20,
+        left: 40,
         show: false,
       },
       tooltip: {
@@ -3437,10 +3564,14 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           show: false,
         },
         axisLine: {
-          show: false,
+          show: true,
         },
         axisLabel: {
-          show: false,
+          formatter(value: string) {
+            return generateXAxisLabel(new Date(value), '24h', true);
+          },
+          showMaxLabel: true,
+          interval: generateXAxisInterval('1d', '24h', dataX, width),
         },
         data: dataX,
       },
@@ -3448,14 +3579,17 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         type: 'value',
         min: minY,
         max: maxY,
+        interval: (maxY - minY) / 4,
         splitLine: {
           show: false,
         },
-        axisLine: {
-          show: false,
-        },
         axisLabel: {
-          show: false,
+          formatter(value: string) {
+            return getYAxisLabel(Number(value), minY, maxY);
+          },
+        },
+        axisLine: {
+          show: true,
         },
       },
       series: [
@@ -3491,9 +3625,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       grid: {
         top: 100,
-        right: 0,
-        bottom: 0,
-        left: 0,
+        right: 30,
+        bottom: 20,
+        left: 40,
         show: false,
       },
       tooltip: {
@@ -3517,10 +3651,14 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           show: false,
         },
         axisLine: {
-          show: false,
+          show: true,
         },
         axisLabel: {
-          show: false,
+          formatter(value: string) {
+            return generateXAxisLabel(new Date(value), '24h', true);
+          },
+          showMaxLabel: true,
+          interval: generateXAxisInterval('1d', '24h', dataX, width),
         },
         data: dataX,
       },
@@ -3528,14 +3666,17 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         type: 'value',
         min: minY,
         max: maxY,
+        interval: (maxY - minY) / 4,
         splitLine: {
           show: false,
         },
-        axisLine: {
-          show: false,
-        },
         axisLabel: {
-          show: false,
+          formatter(value: string) {
+            return getYAxisLabel(Number(value), minY, maxY);
+          },
+        },
+        axisLine: {
+          show: true,
         },
       },
       series: [
@@ -3572,9 +3713,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       color: ['#cd6661'],
       grid: {
         top: 100,
-        right: 0,
-        bottom: 0,
-        left: 0,
+        right: 30,
+        bottom: 20,
+        left: 40,
         show: false,
       },
       tooltip: {
@@ -3598,24 +3739,31 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           show: false,
         },
         axisLine: {
-          show: false,
+          show: true,
         },
         axisLabel: {
-          show: false,
+          formatter(value: string) {
+            return generateXAxisLabel(new Date(value), '24h', true);
+          },
+          showMaxLabel: true,
+          interval: generateXAxisInterval('1d', '24h', dataX, width),
         },
       },
       yAxis: {
         type: 'value',
         min: 0,
         max: maxY,
+        interval: maxY / 4,
         splitLine: {
           show: false,
         },
-        axisLine: {
-          show: false,
-        },
         axisLabel: {
-          show: false,
+          formatter(value: string) {
+            return getYAxisLabel(Number(value), 0, maxY);
+          },
+        },
+        axisLine: {
+          show: true,
         },
       },
       series: {

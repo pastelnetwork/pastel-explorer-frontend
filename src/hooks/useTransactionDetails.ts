@@ -9,6 +9,7 @@ export default function useTransactionDetails(id: string) {
   const { data, isLoading } = useSWR<{ data: ITransactionDetails }>(
     `${URLS.TRANSACTION_URL}/${id}`,
     axiosGet,
+    SWR_OPTIONS,
   );
   return {
     data: data?.data,

@@ -5,6 +5,7 @@ export interface TransactionEvent {
   transactionHash: string;
   direction: DirectionType;
   address: string;
+  type: string;
 }
 
 export interface BlockUnconfirmed {

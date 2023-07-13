@@ -98,7 +98,6 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
         chartName === 'mempoolsize' ||
         chartName === 'transactionCount' ||
         chartName === 'totalTransactionCount' ||
-        chartName === 'feeSchedule' ||
         chartName === 'averageTransactionsPerBlock' ||
         chartName === 'accounts' ||
         chartName === 'circulatingSupply' ||
@@ -112,7 +111,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
         const result = generateMinMaxChartData(min, max, offset, 5, selectedPeriodButton, 5);
         setMinY(result.min);
         setMaxY(result.max);
-      } else if (chartName === 'totalTransactionFees') {
+      } else if (chartName === 'totalTransactionFees' || chartName === 'feeSchedule') {
         const result = generateMinMaxChartData(min, max, offset, 5, selectedPeriodButton, 2);
         setMinY(result.min);
         setMaxY(result.max);

@@ -16,6 +16,7 @@ import { formatAddress } from '@utils/helpers/format';
 import { formatFullDate } from '@utils/helpers/date/date';
 import { translate } from '@utils/helpers/i18n';
 import noImagePlaceholder from '@assets/images/no-image-placeholder.svg';
+import CopyButton from '@components/CopyButton/CopyButton';
 
 import { useStorageFee } from './Ticket.helpers';
 import Signatures from './Signatures';
@@ -226,6 +227,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
             {ticket?.activation_ticket && ticket?.activation_txId ? (
               <Styles.TicketContent>
                 ({translate('components.ticket.actionRegistrationTicket.activationTXID')}{' '}
+                <CopyButton copyText={ticket?.activation_txId} />
                 <RouterLink
                   route={`${ROUTES.TRANSACTION_DETAILS}/${ticket?.activation_txId}`}
                   value={formatAddress(ticket.activation_txId, 10, -3)}
