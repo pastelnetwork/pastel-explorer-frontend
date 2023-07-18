@@ -4,6 +4,7 @@ import CallSplitIcon from '@material-ui/icons/CallSplit';
 import WidgetsIcon from '@material-ui/icons/Widgets';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import BarChartIcon from '@material-ui/icons/BarChart';
+import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
 
 import * as ROUTES from '@utils/constants/routes';
 
@@ -424,7 +425,7 @@ const pastelIdDetailsRoutes = {
 const ticketsRoutes = {
   id: 'routes.tickets',
   path: ROUTES.TICKETS,
-  icon: <LocalAtmIcon />,
+  icon: <ConfirmationNumberIcon />,
   component: Tickets,
   seoTitle: 'routes.ticketsList',
   children: null,

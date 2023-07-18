@@ -480,22 +480,17 @@ const SearchBar: React.FC<AppBarProps> = ({ isDarkMode }) => {
       elevation={0}
       className={`${isShowSearchInput ? 'search-show' : ''} ${forceShowSearchInput ? 'force' : ''}`}
     >
+      <Hidden mdUp>
+        <SidebarStyles.Brand component={NavLink} to={ROUTES.EXPLORER} button>
+          <Box ml={1}>
+            <SidebarStyles.BrandLogo
+              src={isDarkMode ? PastelLogoWhite : PastelLogo}
+              alt="Pastel Logo"
+            />
+          </Box>
+        </SidebarStyles.Brand>
+      </Hidden>
       <Styles.ToolbarStyle className="disable-padding">
-        <Hidden smUp>
-          <SidebarStyles.Brand
-            className="mobile-logo"
-            component={NavLink}
-            to={ROUTES.EXPLORER}
-            button
-          >
-            <Box ml={1}>
-              <SidebarStyles.BrandLogo
-                src={isDarkMode ? PastelLogoWhite : PastelLogo}
-                alt="Pastel Logo"
-              />
-            </Box>
-          </SidebarStyles.Brand>
-        </Hidden>
         <Styles.GridStyle
           className={`top ${isInputFocus ? 'autocomplete-focus' : ''}`}
           container

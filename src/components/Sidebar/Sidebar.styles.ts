@@ -38,11 +38,17 @@ export const DrawerMobile = styled(MuiDrawer)`
 export const Items = styled.div`
   display: flex;
   margin: ${props => props.theme.spacing(2.5)}px 0;
+  padding: 0 20px;
+
+  .MuiListItem-root {
+    padding: 10px 12px;
+  }
 
   ${props => props.theme.breakpoints.down('sm')} {
     flex-direction: column;
     width: 100%;
     margin-top: 0;
+    padding: 0 15px;
   }
 `;
 
@@ -83,16 +89,8 @@ export const Brand = styled(ListItem)<{
   }
 
   ${props => props.theme.breakpoints.down('sm')} {
-    margin-right: 5px;
-  }
-  ${props => props.theme.breakpoints.down(600)} {
-    &.desktop-logo {
-      display: none;
-    }
-  }
-
-  ${props => props.theme.breakpoints.down('md')} {
-    margin-right: 10px;
+    width: 50%;
+    text-align: center;
   }
 `;
 
@@ -183,18 +181,6 @@ export const Category = styled(ListItem)<CategoryType>`
         }
       }
     }
-
-    ${props => props.theme.breakpoints.down('sm')} {
-      span {
-        &:before {
-          display: none;
-        }
-      }
-
-      svg {
-        display: none;
-      }
-    }
   }
 
   &:hover {
@@ -251,6 +237,89 @@ export const Category = styled(ListItem)<CategoryType>`
       color: ${props => props.theme.sidebar.menu.default};
     }
   }
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    &.MuiListItem-root {
+      padding: 10px 12px;
+      border-radius: 4px;
+
+      &:hover,
+      &.${props => props.activeClassName} {
+        background-color: ${props => props.theme.table.odd};
+
+        .menu-text,
+        .sub-menu {
+          span {
+            &:before {
+              display: none;
+            }
+
+            svg {
+              fill: ${props => props.theme.sidebar.menu.active};
+            }
+          }
+        }
+      }
+
+      &.has-sub {
+        padding: 0;
+        border-radius: 0;
+      }
+
+      .menu-text {
+        &.sub-menu {
+          padding: 10px 12px;
+          border-radius: 4px;
+          transition: all 0.3s ease-in-out;
+
+          span {
+            &,
+            & svg {
+              transition: all 0.3s ease-in-out;
+            }
+          }
+
+          &.active-submenu {
+            background-color: ${props => props.theme.table.odd};
+
+            svg {
+              fill: ${props => props.theme.sidebar.menu.active};
+            }
+          }
+
+          &.opened {
+            background: ${props => props.theme.sidebar.menu.toggle.switch};
+            border-radius: 4px 4px 0 0;
+
+            span {
+              color: #fff;
+              transition: all 0.3s ease-in-out;
+
+              svg {
+                fill: #fff;
+                transition: all 0.3s ease-in-out;
+              }
+            }
+          }
+        }
+
+        &.active-submenu,
+        &:hover {
+          span {
+            &:before {
+              display: none;
+            }
+          }
+        }
+      }
+
+      .submenu {
+        margin: 0;
+        background-color: ${props => props.theme.table.odd};
+        border-radius: 0 0 4px 4px;
+      }
+    }
+  }
 `;
 
 export const CategoryText = styled(ListItemText)`
@@ -262,22 +331,46 @@ export const CategoryText = styled(ListItemText)`
     margin: 0 11px;
     padding: 0;
 
-    ${props => props.theme.breakpoints.down('sm')} {
-      justify-content: space-between;
-    }
-
     ${props => props.theme.breakpoints.up('lg')} {
       margin: 0 16px;
+    }
+  }
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    span {
+      margin: 0;
+
+      svg {
+        margin-right: 10px;
+      }
     }
   }
 `;
 
 export const CategoryIconLess = styled(ExpandLess)`
   color: ${props => rgba(props.theme.sidebar.color, 0.5)};
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    &.MuiSvgIcon-root {
+      width: 26px;
+      height: 26px;
+      margin-left: auto;
+      margin-right: 0;
+    }
+  }
 `;
 
 export const CategoryIconMore = styled(ExpandMore)`
   color: ${props => rgba(props.theme.sidebar.color, 0.5)};
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    &.MuiSvgIcon-root {
+      width: 26px;
+      height: 26px;
+      margin-left: auto;
+      margin-right: 0;
+    }
+  }
 `;
 
 export const Link = styled(ListItem)<{
@@ -380,16 +473,26 @@ export const SidebarSection = styled(Typography)`
   display: block;
 `;
 
-export const SlideMenuMobileWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  padding: 0;
-`;
-
 export const SlideLogoMobileWrapper = styled.div`
   display: flex;
   width: 100%;
-  margin-top: 35px;
+  margin-top: 20px;
   margin-bottom: 20px;
-  padding: 0 0 0 52px;
+  padding: 0 10px 0 20px;
+  align-items: center;
+  justify-content: space-between;
+
+  .MuiButtonBase-root {
+    text-align: left;
+  }
+
+  .MuiButtonBase-root {
+    position: relative;
+    top: unset;
+    right: unset;
+    justify-content: flex-start;
+    margin-right: 0;
+    margin-left: 14px;
+    font-size: 32px;
+  }
 `;

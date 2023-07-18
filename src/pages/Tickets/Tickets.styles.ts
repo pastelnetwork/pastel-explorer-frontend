@@ -372,9 +372,14 @@ export const TicketSummaryContainer = styled.div`
   justify-content: space-between;
   margin-bottom: 10px;
 
-  @media screen and (max-width: 1279px) {
+  ${props => props.theme.breakpoints.down(1279)} {
     padding-bottom: 15px;
     overflow-x: scroll;
+  }
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    margin-bottom: 0;
+    padding-bottom: 10px;
   }
 `;
 
@@ -439,7 +444,7 @@ export const TicketSummaryBox = styled(RouterLink)`
 
 export const LinkWrapper = styled.div`
   display: flex;
-  align-item: center;
+  align-items: center;
   padding: 16px;
 
   .btn-toggle,

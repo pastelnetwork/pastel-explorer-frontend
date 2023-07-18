@@ -30,20 +30,22 @@ export default function Navbar({ routes }: { routes: Array<RouteType> }): JSX.El
   return (
     <Styles.NavContainer>
       <Styles.Menu>
-        <SidebarStyles.Brand
-          className="desktop-logo"
-          component={NavLink}
-          to={ROUTES.EXPLORER}
-          button
-        >
-          <Box ml={1}>
-            <SidebarStyles.BrandLogo
-              src={isDarkMode ? PastelLogoWhite : PastelLogo}
-              alt="Pastel Logo"
-            />
-          </Box>
-        </SidebarStyles.Brand>
-        <Hidden smUp>
+        <Hidden smDown implementation="js">
+          <SidebarStyles.Brand
+            className="desktop-logo"
+            component={NavLink}
+            to={ROUTES.EXPLORER}
+            button
+          >
+            <Box ml={1}>
+              <SidebarStyles.BrandLogo
+                src={isDarkMode ? PastelLogoWhite : PastelLogo}
+                alt="Pastel Logo"
+              />
+            </Box>
+          </SidebarStyles.Brand>
+        </Hidden>
+        <Hidden mdUp implementation="css">
           <Grid item>
             <SearchBarStyles.IconButton
               color="inherit"

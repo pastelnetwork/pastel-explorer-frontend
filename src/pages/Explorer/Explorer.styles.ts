@@ -293,3 +293,43 @@ export const GirdStyle = styled(Grid)`
     }
   }
 `;
+
+export const LinkWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0;
+
+  .btn-toggle,
+  .view-all {
+    padding: 0;
+  }
+
+  .view-all {
+    .MuiTypography-root {
+      padding: 0;
+    }
+  }
+
+  .btn-toggle {
+    display: none;
+
+    @media screen and (max-width: 1279px) {
+      display: inline-flex;
+      margin-top: -2px;
+    }
+
+    &.show-less {
+      .MuiSvgIcon-root {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .MuiSvgIcon-root {
+    &.toggle-icon {
+      width: 30px;
+      transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      color: ${props => props.theme.link.main};
+    }
+  }
+`;

@@ -23,15 +23,14 @@ export const ToolbarStyle = styled(Toolbar)`
     margin-right: auto;
   }
 
-  ${props => props.theme.breakpoints.down(440)} {
-    .mobile-logo {
-      margin-left: 20%;
-    }
+  ${props => props.theme.breakpoints.down('sm')} {
+    width: 50%;
+    padding-left: 0;
   }
 `;
 
 export const GridStyle = styled(Grid)`
-  max-width: 430px;
+  max-width: 250px;
 
   &.search-popup {
     display: none;
@@ -96,8 +95,13 @@ export const AppBar = styled(MuiAppBar)`
     max-width: calc(100% - 783px);
   }
 
+  ${props => props.theme.breakpoints.down('sm')} {
+    width: calc(100% - 33%);
+    flex-direction: row;
+  }
+
   ${props => props.theme.breakpoints.down(600)} {
-    width: calc(100% - 50px);
+    align-items: baseline;
   }
 
   fieldset {
@@ -163,8 +167,14 @@ export const IconButton = styled(MuiIconButton)`
     display: none;
   }
 
+  ${props => props.theme.breakpoints.down('sm')} {
+    margin-top: 10px;
+    margin-left: -12px;
+  }
+
   ${props => props.theme.breakpoints.down('xs')} {
     padding: 6px;
+    margin-top: 0;
 
     &.search-icon {
       display: inline-block;
@@ -330,6 +340,10 @@ export const FakeInput = styled.button`
   display: flex;
   align-items: center;
   cursor: pointer;
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    margin-right: 10px;
+  }
 `;
 
 export const SearchInputWrapper = styled.div`
