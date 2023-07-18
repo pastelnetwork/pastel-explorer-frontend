@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Typography, Dialog, AppBar, IconButton, Slide } from '@material-ui/core';
 import { TransitionProps } from '@material-ui/core/transitions';
 import CloseIcon from '@material-ui/icons/Close';
+import parse from 'html-react-parser';
 
 import { ITicket, TSenseRequests } from '@utils/types/ITransactions';
 import { translate } from '@utils/helpers/i18n';
@@ -59,7 +60,7 @@ const TransactionRawData: React.FC<ITransactionRawDataProps> = ({
             <CloseIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            {translate('pages.transactionDetails.transactionRawData')}
+            {parse(translate('pages.transactionDetails.transactionRawData'))}
           </Typography>
         </Styles.TransactionRawDataToolbar>
       </AppBar>
@@ -78,7 +79,7 @@ const TransactionRawData: React.FC<ITransactionRawDataProps> = ({
           </code>
         </Styles.TransactionRawData>
       ) : (
-        translate('common.noData')
+        parse(translate('common.noData'))
       )}
     </Dialog>
   );

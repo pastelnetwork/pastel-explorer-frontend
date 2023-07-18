@@ -1,5 +1,6 @@
 // react
 import { useEffect, useState } from 'react';
+import parse from 'html-react-parser';
 
 import { PeriodTypes, transformTransactionsChartData } from '@utils/helpers/statisticsLib';
 import { periods, info, cacheList } from '@utils/constants/statistics';
@@ -53,13 +54,13 @@ function StatisticsTransactionsCount() {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title={translate('pages.historicalStatistics.transactionCount')}
+      title={parse(translate('pages.historicalStatistics.transactionCount'))}
     >
       <EChartsLineChart
         chartName="transactionCount"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title={translate('pages.historicalStatistics.transactionCount')}
+        title={parse(translate('pages.historicalStatistics.transactionCount'))}
         period={period}
         info={info}
         offset={1000}

@@ -6,6 +6,7 @@ import { decode } from 'js-base64';
 import AlertTitle from '@material-ui/lab/AlertTitle';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
+import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';
 import * as ascii85 from '@utils/helpers/ascii85';
@@ -138,20 +139,20 @@ const CascadeDetails = () => {
   const getSummaryTitle = () => {
     const cascadeInfo = getCascadeInfo();
     if (!cascadeInfo?.make_publicly_accessible) {
-      return translate('pages.cascade.fileInfo');
+      return parse(translate('pages.cascade.fileInfo'));
     }
 
     return (
       <NftDetailsStyles.SummaryTitleWrapper>
-        {translate('pages.cascade.fileInfo')}
+        {parse(translate('pages.cascade.fileInfo'))}
         <NftDetailsStyles.DownloadButton
           type="button"
           onClick={handleDownloadFile}
           disabled={!cascadeInfo.file_name || status === 'downloading'}
         >
           {status === 'downloading'
-            ? translate('pages.cascade.downloading')
-            : translate('pages.nftDetails.downloadThisFile')}
+            ? parse(translate('pages.cascade.downloading'))
+            : parse(translate('pages.nftDetails.downloadThisFile'))}
         </NftDetailsStyles.DownloadButton>
       </NftDetailsStyles.SummaryTitleWrapper>
     );
@@ -163,7 +164,7 @@ const CascadeDetails = () => {
         <TransactionStyles.TransactionDesc item className="alert-wrapper">
           <TransactionStyles.ViewTransactionRawMuiAlert severity="info">
             <AlertTitle className="alert-title">
-              {translate('pages.cascade.ticketDetail')}:{' '}
+              {parse(translate('pages.cascade.ticketDetail'))}:{' '}
               <RouterLink
                 route={`${ROUTES.TRANSACTION_DETAILS}/${cascadeData?.txid}`}
                 value={cascadeData?.txid || ''}
@@ -184,7 +185,7 @@ const CascadeDetails = () => {
             <FileInfo data={getCascadeInfo()} />
           </BlockItemLayout>
           <BlockItemLayout
-            title={translate('pages.cascade.transfers')}
+            title={parse(translate('pages.cascade.transfers'))}
             childrenClassName="no-spacing"
           >
             <Transfers />
@@ -198,7 +199,9 @@ const CascadeDetails = () => {
         autoHideDuration={7000}
       >
         <Alert elevation={6} variant="filled" severity="info">
-          <Styles.SnackbarContent>{translate('pages.cascade.downloadInfo')}</Styles.SnackbarContent>
+          <Styles.SnackbarContent>
+            {parse(translate('pages.cascade.downloadInfo'))}
+          </Styles.SnackbarContent>
         </Alert>
       </Snackbar>
       <Snackbar
@@ -213,7 +216,7 @@ const CascadeDetails = () => {
           severity="error"
           onClose={() => setStatus('')}
         >
-          {translate('pages.cascade.downloadFailedNetworkError')}
+          {parse(translate('pages.cascade.downloadFailedNetworkError'))}
         </Styles.AlterDownload>
       </Snackbar>
     </Styles.Wrapper>
@@ -222,12 +225,12 @@ const CascadeDetails = () => {
       <Grid container justify="center" alignItems="center" direction="column" spacing={2}>
         <Grid item>
           <Typography component="h1" variant="h1" align="center" gutterBottom>
-            {translate('pages.cascade.404')}
+            {parse(translate('pages.cascade.404'))}
           </Typography>
         </Grid>
       </Grid>
       <Typography component="h2" variant="h5" align="center" gutterBottom>
-        {translate('pages.cascade.cascadeNotFound')}
+        {parse(translate('pages.cascade.cascadeNotFound'))}
       </Typography>
     </Styles.Wrapper>
   );

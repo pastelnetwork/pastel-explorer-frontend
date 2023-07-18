@@ -1,5 +1,6 @@
 // react
 import { useEffect, useState } from 'react';
+import parse from 'html-react-parser';
 
 import { PeriodTypes, transformNetTotals } from '@utils/helpers/statisticsLib';
 import { periods, info, cacheList } from '@utils/constants/statistics';
@@ -54,14 +55,14 @@ function Nettotals() {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title={translate('pages.historicalStatistics.networkTotal')}
+      title={parse(translate('pages.historicalStatistics.networkTotal'))}
     >
       <EChartsLineChart
         chartName="networktotals"
         dataX={chartData?.dataX}
         dataY1={chartData?.dataY1}
         dataY2={chartData?.dataY2}
-        title={translate('pages.historicalStatistics.networkTotal')}
+        title={parse(translate('pages.historicalStatistics.networkTotal'))}
         info={info}
         period={period}
         offset={0}

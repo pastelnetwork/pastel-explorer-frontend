@@ -3,8 +3,9 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import parse from 'html-react-parser';
 
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
 import useNftDetails from '@hooks/useNftDetails';
 import { TagDropdown, OptionsProps } from '@components/Dropdown/Dropdown';
 import { getParameterByName } from '@utils/helpers/url';
@@ -122,21 +123,27 @@ export const BlockLayout: React.FC<IBlockItemLayout> = ({
 
 const NftDetails = () => {
   const csvHeaders = [
-    { key: 'rank', label: translate('pages.senseDetails.rank') },
-    { key: 'image', label: translate('pages.senseDetails.thumbnail') },
-    { key: 'imageHash', label: translate('pages.senseDetails.imageHash') },
-    { key: 'dateTimeAdded', label: translate('pages.senseDetails.dateTimeAdded') },
-    { key: 'matchType', label: translate('pages.senseDetails.matchType') },
-    { key: 'finalDupeProbability', label: translate('pages.senseDetails.dupeProbability') },
-    { key: 'cosineSimilarity', label: translate('pages.senseDetails.cosineSimilarity') },
-    { key: 'cosineGain', label: translate('pages.senseDetails.cosineGain') },
-    { key: 'hoeffdingDependency', label: translate('pages.senseDetails.hoeffdingsDependency') },
-    { key: 'hoeffdingGain', label: translate('pages.senseDetails.hoeffdingGain') },
+    { key: 'rank', label: translateDropdown('pages.senseDetails.rank') },
+    { key: 'image', label: translateDropdown('pages.senseDetails.thumbnail') },
+    { key: 'imageHash', label: translateDropdown('pages.senseDetails.imageHash') },
+    { key: 'dateTimeAdded', label: translateDropdown('pages.senseDetails.dateTimeAdded') },
+    { key: 'matchType', label: translateDropdown('pages.senseDetails.matchType') },
+    { key: 'finalDupeProbability', label: translateDropdown('pages.senseDetails.dupeProbability') },
+    { key: 'cosineSimilarity', label: translateDropdown('pages.senseDetails.cosineSimilarity') },
+    { key: 'cosineGain', label: translateDropdown('pages.senseDetails.cosineGain') },
+    {
+      key: 'hoeffdingDependency',
+      label: translateDropdown('pages.senseDetails.hoeffdingsDependency'),
+    },
+    { key: 'hoeffdingGain', label: translateDropdown('pages.senseDetails.hoeffdingGain') },
     {
       key: 'hilbertSchmidtInformationCriteria',
-      label: translate('pages.senseDetails.hilbertSchmidtInformationCriteria'),
+      label: translateDropdown('pages.senseDetails.hilbertSchmidtInformationCriteria'),
     },
-    { key: 'hilbertSchmidtGain', label: translate('pages.senseDetails.hilbertSchmidtGain') },
+    {
+      key: 'hilbertSchmidtGain',
+      label: translateDropdown('pages.senseDetails.hilbertSchmidtGain'),
+    },
   ];
   const downloadRef = useRef(null);
   const txid = getParameterByName('txid');
@@ -164,14 +171,14 @@ const NftDetails = () => {
 
   const getSummaryTitle = () => {
     if (!nftData?.makePubliclyAccessible) {
-      return translate('pages.nftDetails.details');
+      return parse(translate('pages.nftDetails.details'));
     }
 
     return (
       <Styles.SummaryTitleWrapper>
-        {translate('pages.nftDetails.details')}
+        {parse(translate('pages.nftDetails.details'))}
         <Styles.DownloadButton type="button" onClick={handleDownloadFile} disabled={!nftData.image}>
-          {translate('pages.nftDetails.downloadThisFile')}
+          {parse(translate('pages.nftDetails.downloadThisFile'))}
         </Styles.DownloadButton>
       </Styles.SummaryTitleWrapper>
     );
@@ -217,7 +224,7 @@ const NftDetails = () => {
               </Box>
               <div className="hidden-lg hide-down-1024">
                 <BlockLayout
-                  title={translate('pages.nftDetails.creator')}
+                  title={parse(translate('pages.nftDetails.creator'))}
                   className="creator"
                   childrenClassName="creator-content"
                 >
@@ -227,7 +234,10 @@ const NftDetails = () => {
                     website={nftData.creatorWebsite}
                   />
                 </BlockLayout>
-                <BlockLayout title={translate('pages.senseDetails.summary')} className="summary">
+                <BlockLayout
+                  title={parse(translate('pages.senseDetails.summary'))}
+                  className="summary"
+                >
                   <Summary
                     isLikelyDupe={nftData?.is_likely_dupe}
                     senseVersion={nftData?.dupe_detection_system_version}
@@ -269,7 +279,7 @@ const NftDetails = () => {
               </BlockLayout>
               <div className="hidden-lg hide-down-1024">
                 <BlockLayout
-                  title={translate('pages.nftDetails.offers')}
+                  title={parse(translate('pages.nftDetails.offers'))}
                   className="item-activity"
                   childrenClassName="no-spacing offers-content"
                   id="offers"
@@ -277,12 +287,12 @@ const NftDetails = () => {
                   <Offers />
                 </BlockLayout>
                 <BlockLayout
-                  title={translate('pages.nftDetails.itemActivity')}
+                  title={parse(translate('pages.nftDetails.itemActivity'))}
                   className="item-activity"
                   childrenClassName="no-spacing item-activity-content"
                   options={activityItems}
                   onDropdownChange={handleDropdownChange}
-                  placeholder={translate('pages.nftDetails.all')}
+                  placeholder={translateDropdown('pages.nftDetails.all')}
                 >
                   <ItemActivity activitiesType={activitiesType} />
                 </BlockLayout>
@@ -291,7 +301,7 @@ const NftDetails = () => {
           </Styles.ItemWrapper>
           <div className="hide-up-1020 summary-section">
             <BlockLayout
-              title={translate('pages.nftDetails.creator')}
+              title={parse(translate('pages.nftDetails.creator'))}
               className="creator"
               childrenClassName="creator-content"
             >
@@ -301,7 +311,7 @@ const NftDetails = () => {
                 website={nftData.creatorWebsite}
               />
             </BlockLayout>
-            <BlockLayout title={translate('pages.senseDetails.summary')} className="summary">
+            <BlockLayout title={parse(translate('pages.senseDetails.summary'))} className="summary">
               <Summary
                 isLikelyDupe={nftData?.is_likely_dupe}
                 senseVersion={nftData?.dupe_detection_system_version}
@@ -311,7 +321,7 @@ const NftDetails = () => {
           <Styles.ItemWrapper className="show-lg show-down-1024 offers-section">
             <Box className="submitted-image-creator-section hide-down-1024">
               <BlockLayout
-                title={translate('pages.nftDetails.creator')}
+                title={parse(translate('pages.nftDetails.creator'))}
                 className="creator"
                 childrenClassName="creator-content"
               >
@@ -324,7 +334,7 @@ const NftDetails = () => {
             </Box>
             <Box className="nft-data">
               <BlockLayout
-                title={translate('pages.nftDetails.offers')}
+                title={parse(translate('pages.nftDetails.offers'))}
                 className="item-activity"
                 childrenClassName="no-spacing offers-content"
                 id="offers"
@@ -335,7 +345,10 @@ const NftDetails = () => {
           </Styles.ItemWrapper>
           <Styles.ItemWrapper className="show-lg show-down-1024 item-activity-section">
             <Box className="submitted-image-creator-section hide-down-1024">
-              <BlockLayout title={translate('pages.senseDetails.summary')} className="summary">
+              <BlockLayout
+                title={parse(translate('pages.senseDetails.summary'))}
+                className="summary"
+              >
                 <Summary
                   isLikelyDupe={nftData?.is_likely_dupe}
                   senseVersion={nftData?.dupe_detection_system_version}
@@ -344,12 +357,12 @@ const NftDetails = () => {
             </Box>
             <Box className="nft-data">
               <BlockLayout
-                title={translate('pages.nftDetails.itemActivity')}
+                title={parse(translate('pages.nftDetails.itemActivity'))}
                 className="item-activity"
                 childrenClassName="no-spacing item-activity-content"
                 options={activityItems}
                 onDropdownChange={handleDropdownChange}
-                placeholder={translate('pages.nftDetails.all')}
+                placeholder={translateDropdown('pages.nftDetails.all')}
               >
                 <ItemActivity activitiesType={activitiesType} />
               </BlockLayout>
@@ -358,7 +371,7 @@ const NftDetails = () => {
           <Grid container spacing={5}>
             <Grid item xs={12} sm={6} lg={3}>
               <BlockLayout
-                title={translate('pages.senseDetails.openNSFW')}
+                title={parse(translate('pages.senseDetails.openNSFW'))}
                 className="open-nsfw"
                 childrenClassName="open-nsfw-content"
               >
@@ -367,7 +380,7 @@ const NftDetails = () => {
             </Grid>
             <Grid item xs={12} sm={6} lg={3}>
               <BlockLayout
-                title={translate('pages.senseDetails.rarenessScore')}
+                title={parse(translate('pages.senseDetails.rarenessScore'))}
                 className="rareness-score"
                 childrenClassName="rareness-score-content"
               >
@@ -376,7 +389,7 @@ const NftDetails = () => {
             </Grid>
             <Grid item xs={12} sm={6} lg={3}>
               <BlockLayout
-                title={translate('pages.senseDetails.prevalenceOfSimilarImages')}
+                title={parse(translate('pages.senseDetails.prevalenceOfSimilarImages'))}
                 className="prevalence-of-similar-images"
                 childrenClassName="prevalence-of-similar-images-content"
               >
@@ -391,7 +404,7 @@ const NftDetails = () => {
             </Grid>
             <Grid item xs={12} sm={6} lg={3}>
               <BlockLayout
-                title={translate('pages.senseDetails.categoryProbabilities')}
+                title={parse(translate('pages.senseDetails.categoryProbabilities'))}
                 className="category-probabilities"
                 childrenClassName="category-probabilities-content"
               >
@@ -406,7 +419,7 @@ const NftDetails = () => {
             customTitle={
               <SenseStyles.TitleWrapper>
                 <TableStyles.BlockTitle>
-                  {translate('pages.senseDetails.top10MostSimilarRegisteredImages')}
+                  {parse(translate('pages.senseDetails.top10MostSimilarRegisteredImages'))}
                 </TableStyles.BlockTitle>
                 <ChartStyles.CSVLinkButton
                   data={getCsvData()}
@@ -416,7 +429,7 @@ const NftDetails = () => {
                   ref={downloadRef}
                   className="space-nowrap"
                 >
-                  {translate('pages.senseDetails.exportToCSV')}
+                  {parse(translate('pages.senseDetails.exportToCSV'))}
                 </ChartStyles.CSVLinkButton>
               </SenseStyles.TitleWrapper>
             }
@@ -428,7 +441,7 @@ const NftDetails = () => {
           <Grid container spacing={3}>
             <Grid item xs={12} md={4}>
               <BlockLayout
-                title={translate('pages.senseDetails.rareOnTheInternetResultsGraph')}
+                title={parse(translate('pages.senseDetails.rareOnTheInternetResultsGraph'))}
                 className="rare-on-the-internet-results-graph"
               >
                 <RareOnTheInternetResultsGraph data={nftData?.internet_rareness} />
@@ -436,7 +449,7 @@ const NftDetails = () => {
             </Grid>
             <Grid item xs={12} md={4}>
               <BlockLayout
-                title={translate('pages.senseDetails.rareOnTheInternetAlternativeResults')}
+                title={parse(translate('pages.senseDetails.rareOnTheInternetAlternativeResults'))}
                 className="rare-on-the-internet-alternative-results"
               >
                 <RareOnTheInternetAlternativeResults data={nftData?.internet_rareness} />
@@ -444,7 +457,7 @@ const NftDetails = () => {
             </Grid>
             <Grid item xs={12} md={4}>
               <BlockLayout
-                title={translate('pages.senseDetails.fingerprintVectorHeatmap')}
+                title={parse(translate('pages.senseDetails.fingerprintVectorHeatmap'))}
                 className="fingerprint-vector-heatmap"
               >
                 <FingerprintVectorHeatmap
@@ -458,7 +471,7 @@ const NftDetails = () => {
             </Grid>
           </Grid>
           <BlockLayout
-            title={translate('pages.nftDetails.ddAndFingerprints')}
+            title={parse(translate('pages.nftDetails.ddAndFingerprints'))}
             className="item-activity"
           >
             <DdAndFingerprints
@@ -470,7 +483,7 @@ const NftDetails = () => {
 
           {nftData.collectionAlias ? (
             <BlockLayout
-              title={translate('pages.nftDetails.moreFromThisCollection')}
+              title={parse(translate('pages.nftDetails.moreFromThisCollection'))}
               className="more-items"
               childrenClassName="relative"
             >
@@ -485,12 +498,12 @@ const NftDetails = () => {
       <Grid container justify="center" alignItems="center" direction="column" spacing={2}>
         <Grid item>
           <Typography component="h1" variant="h1" align="center" gutterBottom>
-            {translate('pages.nftDetails.404')}
+            {parse(translate('pages.nftDetails.404'))}
           </Typography>
         </Grid>
       </Grid>
       <Typography component="h2" variant="h5" align="center" gutterBottom>
-        {translate('pages.nftDetails.nftNotFound')}
+        {parse(translate('pages.nftDetails.nftNotFound'))}
       </Typography>
     </Styles.Wrapper>
   );

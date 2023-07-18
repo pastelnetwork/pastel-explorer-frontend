@@ -1,5 +1,9 @@
+import { useState } from 'react';
 import Typography from '@material-ui/core/Typography';
 import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
+import parse from 'html-react-parser';
+import IconButton from '@material-ui/core/IconButton';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import { Link } from '@components/Link/Link.styles';
 import * as ROUTES from '@utils/constants/routes';
@@ -23,6 +27,7 @@ const MiscOtherTicketTypes: React.FC<IMiscOtherTicketTypesProps> = ({
   usdPrice,
 }) => {
   const { data, total, isLoading, size, setSize } = ticketsData;
+  const [showLess, setShowLess] = useState(false);
 
   const handleFetchMoreMovements = (reachedTableBottom: boolean) => {
     if (!reachedTableBottom) return null;
@@ -32,17 +37,25 @@ const MiscOtherTicketTypes: React.FC<IMiscOtherTicketTypesProps> = ({
 
   const getTitle = () => {
     return (
-      <Styles.BlockTitle className="latest-blocks">
-        {translate('pages.tickets.senseAndNFTCollectionTickets')} (
+      <Styles.BlockTitle className="latest-blocks ticket-block-title">
+        {parse(translate('pages.tickets.senseAndNFTCollectionTickets'))} (
         {total > 1
-          ? translate('pages.tickets.totalTickets', { total: formatNumber(total) })
-          : translate('pages.tickets.totalTicket', { total: formatNumber(total) })}
+          ? parse(translate('pages.tickets.totalTickets', { total: formatNumber(total) }))
+          : parse(translate('pages.tickets.totalTicket', { total: formatNumber(total) }))}
         )
-        <Link to={`${ROUTES.TICKETS_TYPE}/other`} className="view-all">
-          <Typography align="center" className="p-16">
-            {translate('pages.tickets.viewAll')} <ArrowForwardIos />
-          </Typography>
-        </Link>
+        <Styles.LinkWrapper>
+          <Link to={`${ROUTES.TICKETS_TYPE}/other`} className="view-all">
+            <Typography align="center" className="p-16">
+              {parse(translate('pages.tickets.viewAll'))} <ArrowForwardIos />
+            </Typography>
+          </Link>
+          <IconButton
+            onClick={() => setShowLess(!showLess)}
+            className={`btn-toggle ${showLess ? 'show-less' : ''}`}
+          >
+            <ExpandMoreIcon className="toggle-icon" />
+          </IconButton>
+        </Styles.LinkWrapper>
       </Styles.BlockTitle>
     );
   };
@@ -76,6 +89,7 @@ const MiscOtherTicketTypes: React.FC<IMiscOtherTicketTypesProps> = ({
         headerBackground
         customLoading={isLoading}
         rowHeight={getRowHeight()}
+        showLess={showLess}
       />
     </Styles.OtherTicketContainer>
   );

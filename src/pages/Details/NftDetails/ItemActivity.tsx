@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Table, TableBody, TableHead, TableRow } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import parse from 'html-react-parser';
 
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { getCurrencyName } from '@utils/appInfo';
@@ -56,7 +57,7 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
           <>
             <Styles.ContentItem>
               <TicketStyles.TicketTitle as="span" className="event-details-title">
-                {translate('pages.nftDetails.offerTxId')}:{' '}
+                {parse(translate('pages.nftDetails.offerTxId'))}:{' '}
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
                 {(ticket as ITransferTicket)?.offer_txid ? (
@@ -72,13 +73,13 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
                     />
                   </span>
                 ) : (
-                  translate('common.na')
+                  parse(translate('common.na'))
                 )}
               </TicketStyles.TicketContent>
             </Styles.ContentItem>
             <Styles.ContentItem>
               <TicketStyles.TicketTitle as="span" className="event-details-title">
-                {translate('pages.nftDetails.acceptTxID')}:{' '}
+                {parse(translate('pages.nftDetails.acceptTxID'))}:{' '}
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
                 {(ticket as ITransferTicket)?.accept_txid ? (
@@ -94,16 +95,16 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
                     />
                   </span>
                 ) : (
-                  translate('common.na')
+                  parse(translate('common.na'))
                 )}
               </TicketStyles.TicketContent>
             </Styles.ContentItem>
             <Styles.ContentItem>
               <TicketStyles.TicketTitle as="span" className="event-details-title">
-                {translate('pages.nftDetails.copySerialNr')}:{' '}
+                {parse(translate('pages.nftDetails.copySerialNr'))}:{' '}
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
-                {(ticket as ITransferTicket)?.copy_serial_nr || translate('common.na')}
+                {(ticket as ITransferTicket)?.copy_serial_nr || parse(translate('common.na'))}
               </TicketStyles.TicketContent>
             </Styles.ContentItem>
           </>
@@ -113,7 +114,7 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
           <>
             <Styles.ContentItem>
               <TicketStyles.TicketTitle as="span" className="event-details-title">
-                {translate('pages.nftDetails.offerTxId')}:{' '}
+                {parse(translate('pages.nftDetails.offerTxId'))}:{' '}
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
                 {(ticket as IAcceptTicket)?.offer_txid ? (
@@ -129,13 +130,13 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
                     />
                   </span>
                 ) : (
-                  translate('common.na')
+                  parse(translate('common.na'))
                 )}
               </TicketStyles.TicketContent>
             </Styles.ContentItem>
             <Styles.ContentItem>
               <TicketStyles.TicketTitle as="span" className="event-details-title">
-                {translate('pages.nftDetails.price')}:{' '}
+                {parse(translate('pages.nftDetails.price'))}:{' '}
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
                 {formatNumber((ticket as IAcceptTicket)?.price || 0)} {getCurrencyName()}
@@ -148,15 +149,15 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
           <>
             <Styles.ContentItem>
               <TicketStyles.TicketTitle as="span" className="event-details-title">
-                {translate('pages.nftDetails.copyNumber')}:{' '}
+                {parse(translate('pages.nftDetails.copyNumber'))}:{' '}
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
-                {(ticket as IOfferTicket)?.copy_number || translate('common.na')}
+                {(ticket as IOfferTicket)?.copy_number || parse(translate('common.na'))}
               </TicketStyles.TicketContent>
             </Styles.ContentItem>
             <Styles.ContentItem>
               <TicketStyles.TicketTitle as="span" className="event-details-title">
-                {translate('pages.nftDetails.askedPrice')}:{' '}
+                {parse(translate('pages.nftDetails.askedPrice'))}:{' '}
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
                 {formatNumber((ticket as IOfferTicket)?.asked_price || 0)} {getCurrencyName()}
@@ -164,23 +165,23 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
             </Styles.ContentItem>
             <Styles.ContentItem>
               <TicketStyles.TicketTitle as="span" className="event-details-title">
-                {translate('pages.nftDetails.validAfter')}:{' '}
+                {parse(translate('pages.nftDetails.validAfter'))}:{' '}
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
-                {(ticket as IOfferTicket)?.valid_after || translate('common.na')}
+                {(ticket as IOfferTicket)?.valid_after || parse(translate('common.na'))}
               </TicketStyles.TicketContent>
             </Styles.ContentItem>
             <Styles.ContentItem>
               <TicketStyles.TicketTitle as="span" className="event-details-title">
-                {translate('pages.nftDetails.validBefore')}:{' '}
+                {parse(translate('pages.nftDetails.validBefore'))}:{' '}
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
-                {(ticket as IOfferTicket)?.valid_before || translate('common.na')}
+                {(ticket as IOfferTicket)?.valid_before || parse(translate('common.na'))}
               </TicketStyles.TicketContent>
             </Styles.ContentItem>
             <Styles.ContentItem>
               <TicketStyles.TicketTitle as="span" className="event-details-title">
-                {translate('pages.nftDetails.lockedRecipient')}:{' '}
+                {parse(translate('pages.nftDetails.lockedRecipient'))}:{' '}
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent as="span">
                 {(ticket as IOfferTicket)?.locked_recipient &&
@@ -194,7 +195,7 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
                     className="address-link read-more"
                   />
                 ) : (
-                  translate('common.na')
+                  parse(translate('common.na'))
                 )}
               </TicketStyles.TicketContent>
             </Styles.ContentItem>
@@ -204,7 +205,7 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
         return (
           <Styles.ContentItem>
             <TicketStyles.TicketTitle as="span" className="event-details-title">
-              {translate('pages.nftDetails.fee')}:{' '}
+              {parse(translate('pages.nftDetails.fee'))}:{' '}
             </TicketStyles.TicketTitle>
             <TicketStyles.TicketContent as="span">
               {formatNumber((ticket as INftActivationTicket)?.storage_fee || 0)} {getCurrencyName()}
@@ -215,7 +216,7 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
         return (
           <Styles.ContentItem>
             <TicketStyles.TicketTitle as="span" className="event-details-title">
-              {translate('pages.nftDetails.fee')}:{' '}
+              {parse(translate('pages.nftDetails.fee'))}:{' '}
             </TicketStyles.TicketTitle>
             <TicketStyles.TicketContent as="span">
               {formatNumber((ticket as INftRegistrationTicket)?.storage_fee || 0)}{' '}
@@ -256,16 +257,20 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
           <Table className="custom-table activities-table">
             <TableHead className="table__row-header">
               <TableRow>
-                <TableStyles.TableCell>{translate('pages.nftDetails.event')}</TableStyles.TableCell>
-                <TableStyles.TableCell>{translate('pages.nftDetails.txID')}</TableStyles.TableCell>
                 <TableStyles.TableCell>
-                  {translate('pages.nftDetails.version')}
+                  {parse(translate('pages.nftDetails.event'))}
                 </TableStyles.TableCell>
                 <TableStyles.TableCell>
-                  {translate('pages.nftDetails.eventDetails')}
+                  {parse(translate('pages.nftDetails.txID'))}
                 </TableStyles.TableCell>
                 <TableStyles.TableCell>
-                  {translate('pages.nftDetails.timestamp')}
+                  {parse(translate('pages.nftDetails.version'))}
+                </TableStyles.TableCell>
+                <TableStyles.TableCell>
+                  {parse(translate('pages.nftDetails.eventDetails'))}
+                </TableStyles.TableCell>
+                <TableStyles.TableCell>
+                  {parse(translate('pages.nftDetails.timestamp'))}
                 </TableStyles.TableCell>
               </TableRow>
             </TableHead>
@@ -273,13 +278,13 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
               {data.map(item => (
                 <TableRow className="table__row" key={item.transactionHash}>
                   <TableStyles.RowCell
-                    data-title={`${translate('pages.nftDetails.event')}:`}
+                    data-title={`${parse(translate('pages.nftDetails.event'))}:`}
                     className="cell-content"
                   >
                     {getActivityType(item.ticket.type)}
                   </TableStyles.RowCell>
                   <TableStyles.RowCell
-                    data-title={`${translate('pages.nftDetails.txID')}:`}
+                    data-title={`${parse(translate('pages.nftDetails.txID'))}:`}
                     className="cell-content"
                   >
                     <div className="copy-wrapper">
@@ -293,7 +298,7 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
                     </div>
                   </TableStyles.RowCell>
                   <TableStyles.RowCell
-                    data-title={`${translate('pages.nftDetails.version')}:`}
+                    data-title={`${parse(translate('pages.nftDetails.version'))}:`}
                     className="cell-content"
                   >
                     {item.ticket.version}
@@ -302,7 +307,7 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
                     {getEventDetails(item)}
                   </TableStyles.RowCell>
                   <TableStyles.RowCell
-                    data-title={`${translate('pages.nftDetails.timestamp')}:`}
+                    data-title={`${parse(translate('pages.nftDetails.timestamp'))}:`}
                     className="cell-content"
                   >
                     {formatFullDate(item.transactionTime, { dayName: false })}
@@ -326,7 +331,7 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
   ) : (
     <Styles.Wrapper className="no-data">
       <Typography component="h2" variant="h5" gutterBottom>
-        {translate('common.noData')}
+        {parse(translate('common.noData'))}
       </Typography>
     </Styles.Wrapper>
   );

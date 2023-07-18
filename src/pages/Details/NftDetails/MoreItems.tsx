@@ -1,5 +1,6 @@
 import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';
 import * as ROUTES from '@utils/constants/routes';
@@ -29,13 +30,13 @@ const MoreItems: React.FC<IMoreItems> = ({ collectionId }) => {
                 <Styles.LinkButton
                   to={`${ROUTES.COLLECTION_DETAILS_PAGE}/test-collection-jXa6Qiopiv`}
                 >
-                  {translate('pages.nftDetails.viewCollection')}
+                  {parse(translate('pages.nftDetails.viewCollection'))}
                 </Styles.LinkButton>
               </Box>
             </>
           ) : (
             <Box>
-              <Box className="no-data">{translate('common.noData')}</Box>
+              <Box className="no-data">{parse(translate('common.noData'))}</Box>
             </Box>
           )}
         </>

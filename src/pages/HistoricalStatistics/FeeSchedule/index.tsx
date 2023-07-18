@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import parse from 'html-react-parser';
 
 import { PeriodTypes, transformFeeSchedule } from '@utils/helpers/statisticsLib';
 import { periods, info, cacheList } from '@utils/constants/statistics';
@@ -53,13 +54,13 @@ const FeeSchedule = () => {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title={translate('pages.historicalStatistics.feeSchedule')}
+      title={parse(translate('pages.historicalStatistics.feeSchedule'))}
     >
       <EChartsLineChart
         chartName="feeSchedule"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title={translate('pages.historicalStatistics.feeSchedule')}
+        title={parse(translate('pages.historicalStatistics.feeSchedule'))}
         info={info}
         offset={100}
         period={period}

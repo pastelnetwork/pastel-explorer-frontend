@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import parse from 'html-react-parser';
 
 import { PeriodTypes, transformMarketCapPriceInfo } from '@utils/helpers/statisticsLib';
 import { periods, info, cacheList } from '@utils/constants/statistics';
@@ -9,7 +10,7 @@ import { TMultiLineChartData } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout/HistoricalStatisticsLayout';
 import useMarketCapPrice from '@hooks/useMarketCapPrice';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
 
 import { EChartsMultiLineChart } from '../Chart/EChartsMultiLineChart';
 
@@ -57,20 +58,20 @@ function MarketCapPrice() {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title={translate('pages.historicalStatistics.marketPriceAndCircCap')}
+      title={parse(translate('pages.historicalStatistics.marketPriceAndCircCap'))}
     >
       <EChartsMultiLineChart
         chartName="marketCapPrice"
         dataX={transformLineChartData?.dataX}
         dataY1={transformLineChartData?.dataY1}
         dataY2={transformLineChartData?.dataY2}
-        yaxisName={translate('pages.historicalStatistics.priceUSD')}
-        yaxisName1={translate('pages.historicalStatistics.circCapUSD')}
-        seriesName={translate('pages.historicalStatistics.price')}
-        seriesName1={translate('pages.historicalStatistics.marketCap')}
+        yaxisName={translateDropdown('pages.historicalStatistics.priceUSD')}
+        yaxisName1={translateDropdown('pages.historicalStatistics.circCapUSD')}
+        seriesName={translateDropdown('pages.historicalStatistics.price')}
+        seriesName1={translateDropdown('pages.historicalStatistics.marketCap')}
         fixedNum={5}
         fixedNum1={2}
-        title={translate('pages.historicalStatistics.marketPriceAndCircCap')}
+        title={parse(translate('pages.historicalStatistics.marketPriceAndCircCap'))}
         info={info}
         offset={0.0001}
         period={period}

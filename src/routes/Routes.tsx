@@ -39,6 +39,7 @@ const childRoutes = (
                     <Helmet
                       title={t(`${element.seoTitle || seoTitle}.message`, {
                         currency: getCurrencyName(),
+                        defaultValue: '',
                       })}
                     />
                     <ElementComponent {...props} />

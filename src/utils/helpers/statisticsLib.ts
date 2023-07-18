@@ -25,7 +25,7 @@ import { IBlock } from '@utils/types/IBlocks';
 import { formattedDate } from '@utils/helpers/date/date';
 import { IRawTransactions, ITransaction } from '@utils/types/ITransactions';
 import { ISocketData } from '@utils/types/ISocketData';
-import { translate } from '@utils/helpers/i18n';
+import { translateDropdown } from '@utils/helpers/i18n';
 
 import { getCurrencyName } from '../appInfo';
 
@@ -561,12 +561,12 @@ export const generatePeriodToDropdownOptions = (periods: PeriodTypes[]) => {
   for (let i = 0; i < periods.length; i += 1) {
     if (periods[i] !== 'max') {
       results.push({
-        name: translate('pages.statistics.filterLabel', { period: periods[i] }),
+        name: translateDropdown('pages.statistics.filterLabel', { period: periods[i] }),
         value: periods[i],
       });
     } else {
       results.push({
-        name: translate('pages.statistics.filterLabelMax'),
+        name: translateDropdown('pages.statistics.filterLabelMax'),
         value: periods[i],
       });
     }

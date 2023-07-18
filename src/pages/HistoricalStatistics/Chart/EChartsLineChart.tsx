@@ -5,6 +5,7 @@ import { saveAs } from 'file-saver';
 import * as htmlToImage from 'html-to-image';
 import { useSelector } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
+import parse from 'html-react-parser';
 
 import { Data } from 'react-csv/components/CommonPropTypes';
 import {
@@ -17,7 +18,7 @@ import { TLineChartProps, TThemeInitOption, TThemeColor } from '@utils/constants
 import { getThemeInitOption, getThemeUpdateOption } from '@utils/helpers/chartOptions';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import useWindowDimensions from '@hooks/useWindowDimensions';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
 
 import { eChartLineStyles } from './styles';
 import * as Styles from './Chart.styles';
@@ -190,7 +191,9 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
           }
         })
         .catch(function getError(error) {
-          throw new Error(`${translate('pages.historicalStatistics.pngDownloadError')}: ${error}`);
+          throw new Error(
+            `${translateDropdown('pages.historicalStatistics.pngDownloadError')}: ${error}`,
+          );
         });
     }
   };
@@ -245,7 +248,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     const headers = csvHeaders[chartName];
     return headers.map(header => ({
       ...header,
-      label: translate(header.label),
+      label: translateDropdown(header.label),
     }));
   };
 
@@ -264,7 +267,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
         <Styles.ChartFilterWrapper>
           {granularities && (
             <Styles.GranularitySelect>
-              <span>{translate('pages.historicalStatistics.granularity')}: </span>
+              <span>{parse(translate('pages.historicalStatistics.granularity'))}: </span>
               {granularities?.map(granularity => {
                 return (
                   <Styles.PeriodButton
@@ -288,7 +291,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
           {customHtml}
           {periods && periods.length ? (
             <Styles.PeriodSelect>
-              <span>{translate('pages.historicalStatistics.period')}: </span>
+              <span>{parse(translate('pages.historicalStatistics.period'))}: </span>
               {periods.map(period => (
                 <Styles.PeriodButton
                   className={getActivePriodButtonStyle(period)}
@@ -316,7 +319,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
         {isLoading || !dataX?.length ? (
           <Styles.LoadingWrapper>
             <Skeleton animation="wave" variant="rect" height={386} />
-            <Styles.LoadingText>{translate('common.loadingData')}</Styles.LoadingText>
+            <Styles.LoadingText>{parse(translate('common.loadingData'))}</Styles.LoadingText>
           </Styles.LoadingWrapper>
         ) : (
           <ReactECharts
@@ -348,7 +351,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
         </div>
         <div className={styles.lineChartDownloadButtonBar}>
           <Styles.DonwloadButton type="button" onClick={downloadPNG}>
-            {translate('pages.historicalStatistics.downloadPNG')}
+            {parse(translate('pages.historicalStatistics.downloadPNG'))}
           </Styles.DonwloadButton>
           <Styles.CSVLinkButton
             data={csvData}
@@ -357,7 +360,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
             separator=","
             ref={downloadRef}
           >
-            {translate('pages.historicalStatistics.downloadCSV')}
+            {parse(translate('pages.historicalStatistics.downloadCSV'))}
           </Styles.CSVLinkButton>
         </div>
       </Styles.LineChartFooter>

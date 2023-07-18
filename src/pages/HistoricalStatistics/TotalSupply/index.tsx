@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import parse from 'html-react-parser';
 
 import { PeriodTypes, transformTotalSupplyDataChart } from '@utils/helpers/statisticsLib';
 import { periods, info, cacheList } from '@utils/constants/statistics';
@@ -54,13 +55,17 @@ function TotalSupply() {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title={translate('pages.historicalStatistics.totalSupply', { currency: getCurrencyName() })}
+      title={parse(
+        translate('pages.historicalStatistics.totalSupply', { currency: getCurrencyName() }),
+      )}
     >
       <EChartsLineChart
         chartName="totalSupply"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title={translate('pages.historicalStatistics.totalSupply', { currency: getCurrencyName() })}
+        title={parse(
+          translate('pages.historicalStatistics.totalSupply', { currency: getCurrencyName() }),
+        )}
         info={info}
         period={period}
         offset={10000000}

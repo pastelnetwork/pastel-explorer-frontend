@@ -1,6 +1,6 @@
 import Tooltip from '@material-ui/core/Tooltip';
 
-import { translate } from '@utils/helpers/i18n';
+import { translateDropdown } from '@utils/helpers/i18n';
 import databaseIcon from '@assets/images/database.png';
 import * as Styles from './TransactionDetails.styles';
 
@@ -14,9 +14,9 @@ const BurnAddressIcon: React.FC<IBurnAddressIcon> = ({ type }) => {
   }
 
   return (
-    <Tooltip title={translate('pages.transactionDetails.burnAddress')}>
+    <Tooltip title={translateDropdown('pages.transactionDetails.burnAddress')}>
       <Styles.FireWrapper>
-        <img src={databaseIcon} alt={translate('pages.transactionDetails.burnAddress')} />
+        <img src={databaseIcon} alt={translateDropdown('pages.transactionDetails.burnAddress')} />
       </Styles.FireWrapper>
     </Tooltip>
   );

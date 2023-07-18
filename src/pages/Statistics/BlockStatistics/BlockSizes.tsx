@@ -1,6 +1,7 @@
 import { useState, ChangeEvent, useEffect } from 'react';
 import { Skeleton } from '@material-ui/lab';
 import { format, fromUnixTime } from 'date-fns';
+import parse from 'html-react-parser';
 
 import { PeriodTypes, generatePeriodToDropdownOptions } from '@utils/helpers/statisticsLib';
 import { periods, cacheList } from '@utils/constants/statistics';
@@ -98,7 +99,7 @@ const BlockSizes: React.FC<IBlockSizes> = ({ blockElements }) => {
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
           <SummaryStyles.Typography variant="h6">
-            {translate('pages.statistics.blockSizes')}
+            {parse(translate('pages.statistics.blockSizes'))}
           </SummaryStyles.Typography>
         </SummaryStyles.ValueWrapper>
         <SummaryStyles.PercentageWrapper>
@@ -116,7 +117,7 @@ const BlockSizes: React.FC<IBlockSizes> = ({ blockElements }) => {
         {isLoading ? (
           <StatisticsStyles.Loader>
             <StatisticsStyles.LoadingText>
-              {translate('common.loadingData')}
+              {parse(translate('common.loadingData'))}
             </StatisticsStyles.LoadingText>
           </StatisticsStyles.Loader>
         ) : null}
@@ -124,7 +125,7 @@ const BlockSizes: React.FC<IBlockSizes> = ({ blockElements }) => {
           <>
             <Skeleton animation="wave" variant="rect" height={300} />
             <StatisticsStyles.LoadingText>
-              {translate('common.loadingData')}
+              {parse(translate('common.loadingData'))}
             </StatisticsStyles.LoadingText>
           </>
         ) : (

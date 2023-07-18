@@ -33,6 +33,8 @@ import { themeLight, themeDark } from './theme';
 import Routes from './routes/Routes';
 import * as Styles from './App.styles';
 
+import './global.styles.css';
+
 const jss = create({
   ...jssPreset(),
   insertionPoint: document.getElementById('jss-insertion-point') as HTMLElement,

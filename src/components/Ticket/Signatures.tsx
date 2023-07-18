@@ -1,5 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import parse from 'html-react-parser';
 
 import { ISignature } from '@utils/types/ITransactions';
 import { translate } from '@utils/helpers/i18n';
@@ -18,7 +19,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature, variant
         <Grid container spacing={3}>
           <Grid item xs={12} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.signatures.signature')}
+              {parse(translate('components.ticket.signatures.signature'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={12} sm={9}>
@@ -31,7 +32,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature, variant
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.signatures.signature')}
+            {parse(translate('components.ticket.signatures.signature'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -47,7 +48,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature, variant
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.signatures.pastelIDOfUserSubmittingTicket')}
+              {parse(translate('components.ticket.signatures.pastelIDOfUserSubmittingTicket'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -57,7 +58,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature, variant
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.signatures.signatureOfUser')}
+              {parse(translate('components.ticket.signatures.signatureOfUser'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -69,7 +70,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature, variant
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.signatures.supernode1')}
+              {parse(translate('components.ticket.signatures.supernode1'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -81,7 +82,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature, variant
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.signatures.signature1')}
+              {parse(translate('components.ticket.signatures.signature1'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -93,7 +94,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature, variant
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.signatures.supernode2')}
+              {parse(translate('components.ticket.signatures.supernode2'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -105,7 +106,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature, variant
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.signatures.signature2')}
+              {parse(translate('components.ticket.signatures.signature2'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -117,7 +118,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature, variant
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.signatures.supernode3')}
+              {parse(translate('components.ticket.signatures.supernode3'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -129,7 +130,7 @@ const Signatures: React.FC<ISignaturesProps> = ({ signatures, signature, variant
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.signatures.signature3')}
+              {parse(translate('components.ticket.signatures.signature3'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>

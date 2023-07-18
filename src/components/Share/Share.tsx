@@ -3,6 +3,7 @@ import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon } fr
 import ShareIcon from '@material-ui/icons/Share';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import Tooltip from '@material-ui/core/Tooltip';
+import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';
 
@@ -62,7 +63,7 @@ const Share: React.FC<IShare> = ({ shareUrl, className }) => {
               <span className="share-icon">
                 <FileCopyIcon />
               </span>{' '}
-              <span className="share-text">{tooltipText}</span>
+              <span className="share-text">{parse(tooltipText)}</span>
             </button>
           </Styles.ShareItem>
           <Styles.ShareItem>
@@ -70,7 +71,9 @@ const Share: React.FC<IShare> = ({ shareUrl, className }) => {
               <span className="share-icon">
                 <FacebookIcon />
               </span>{' '}
-              <span className="share-text">{translate('components.share.shareOnFacebook')}</span>
+              <span className="share-text">
+                {parse(translate('components.share.shareOnFacebook'))}
+              </span>
             </FacebookShareButton>
           </Styles.ShareItem>
           <Styles.ShareItem>
@@ -78,7 +81,9 @@ const Share: React.FC<IShare> = ({ shareUrl, className }) => {
               <span className="share-icon">
                 <TwitterIcon />
               </span>{' '}
-              <span className="share-text">{translate('components.share.shareOnTwitter')}</span>
+              <span className="share-text">
+                {parse(translate('components.share.shareOnTwitter'))}
+              </span>
             </TwitterShareButton>
           </Styles.ShareItem>
         </Styles.ShareList>

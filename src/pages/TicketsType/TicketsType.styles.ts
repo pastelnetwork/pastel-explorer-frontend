@@ -47,9 +47,15 @@ export const TicketsContainer = styled.div`
     }
   }
 
+  ${props => props.theme.breakpoints.down(680)} {
+    .filter-wrapper {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
+
   ${props => props.theme.breakpoints.down('xs')} {
     .dropdown-ticket-type,
-    .dropdown-status,
     .list-filter {
       margin-left: 0;
     }

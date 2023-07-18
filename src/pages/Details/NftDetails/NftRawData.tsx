@@ -2,6 +2,8 @@ import * as React from 'react';
 import { Typography, Dialog, AppBar, IconButton, Slide } from '@material-ui/core';
 import { TransitionProps } from '@material-ui/core/transitions';
 import CloseIcon from '@material-ui/icons/Close';
+import parse from 'html-react-parser';
+
 import { translate } from '@utils/helpers/i18n';
 
 import * as Styles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
@@ -29,7 +31,7 @@ const NftRawData: React.FC<INftRawDataProps> = ({ rawData, open, toggleOpen }) =
             <CloseIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            {translate('pages.nftDetails.viewNFTRawData')}
+            {parse(translate('pages.nftDetails.viewNFTRawData'))}
           </Typography>
         </Styles.TransactionRawDataToolbar>
       </AppBar>
@@ -38,7 +40,7 @@ const NftRawData: React.FC<INftRawDataProps> = ({ rawData, open, toggleOpen }) =
           <code>{JSON.stringify(JSON.parse(JSON.parse(rawData)), null, 2)}</code>
         </Styles.TransactionRawData>
       ) : (
-        translate('pages.senseDetails.noData')
+        parse(translate('pages.senseDetails.noData'))
       )}
     </Dialog>
   );

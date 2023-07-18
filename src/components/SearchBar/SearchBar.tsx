@@ -1,12 +1,15 @@
 import * as React from 'react';
+import { NavLink } from 'react-router-dom';
 import { withTheme } from 'styled-components/macro';
 import _debounce from 'lodash.debounce';
 import { darken } from 'polished';
+import parse from 'html-react-parser';
 
-import { Grid, Hidden, Theme, TextField, CircularProgress, makeStyles } from '@material-ui/core';
-import { Menu as MenuIcon, Search as SearchIcon } from '@material-ui/icons';
+import { Theme, TextField, CircularProgress, makeStyles } from '@material-ui/core';
+import { Search as SearchIcon } from '@material-ui/icons';
 import MuiAutocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import Box from '@material-ui/core/Box';
+import Hidden from '@material-ui/core/Hidden';
 import CancelIcon from '@material-ui/icons/Cancel';
 
 import Social from '@components/Social/Social';
@@ -17,8 +20,13 @@ import ChooseCluster from '@components/ChooseCluster/ChooseCluster';
 import RouterLink from '@components/RouterLink/RouterLink';
 import { TAppTheme } from '@theme/index';
 import breakpoints from '@theme/breakpoints';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
+import * as ROUTES from '@utils/constants/routes';
 
+import PastelLogoWhite from '@assets/images/pastel-logo-white.svg';
+import PastelLogo from '@assets/images/pastel-logo.svg';
+
+import * as SidebarStyles from '../Sidebar/Sidebar.styles';
 import SwitchMode from './SwitchMode';
 import * as Styles from './SearchBar.styles';
 import {
@@ -51,7 +59,7 @@ import {
 
 interface AppBarProps {
   theme: Theme;
-  onDrawerToggle: React.MouseEventHandler<HTMLElement>;
+  isDarkMode: boolean;
 }
 
 export interface ISearchData {
@@ -89,7 +97,7 @@ const filterOptions = createFilterOptions({
   trim: true,
 });
 
-const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
+const SearchBar: React.FC<AppBarProps> = ({ isDarkMode }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
   const optionSelectedFromList = React.useRef(false);
@@ -134,43 +142,47 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
       ...collectData(
         data.address,
         ADDRESSES_LABEL,
-        translate(ADDRESSES_TEXT_LABEL) as TOptionsCategories,
+        parse(translate(ADDRESSES_TEXT_LABEL)) as TOptionsCategories,
       ),
       ...collectData(
         data.blocksIds,
         BLOCKS_IDS_LABEL,
-        translate(BLOCKS_IDS_TEXT_LABEL) as TOptionsCategories,
+        parse(translate(BLOCKS_IDS_TEXT_LABEL)) as TOptionsCategories,
       ),
       ...collectData(
         data.blocksHeights,
         BLOCKS_HEIGHTS_LABEL,
-        translate(BLOCKS_HEIGHTS_TEXT_LABEL) as TOptionsCategories,
+        parse(translate(BLOCKS_HEIGHTS_TEXT_LABEL)) as TOptionsCategories,
       ),
       ...collectData(
         data.transactions,
         TRANSACTIONS_LABEL,
-        translate(TRANSACTIONS_TEXT_LABEL) as TOptionsCategories,
+        parse(translate(TRANSACTIONS_TEXT_LABEL)) as TOptionsCategories,
       ),
-      ...collectData(data.senses, SENSES_LABEL, translate(SENSES_TEXT_LABEL) as TOptionsCategories),
+      ...collectData(
+        data.senses,
+        SENSES_LABEL,
+        parse(translate(SENSES_TEXT_LABEL)) as TOptionsCategories,
+      ),
       ...collectData(
         data.pastelIds,
         PASTEL_ID_LABEL,
-        translate(PASTEL_ID_TEXT_LABEL) as TOptionsCategories,
+        parse(translate(PASTEL_ID_TEXT_LABEL)) as TOptionsCategories,
       ),
       ...collectUsernameData(
         data.usernameList,
         USERNAME,
-        translate(USERNAME_TEXT_LABEL) as TOptionsCategories,
+        parse(translate(USERNAME_TEXT_LABEL)) as TOptionsCategories,
       ),
       ...collectCascadeData(
         data.cascadeList,
         CASCADE,
-        translate(CASCADE_LABEL) as TOptionsCategories,
+        parse(translate(CASCADE_LABEL)) as TOptionsCategories,
       ),
       ...collectCollectionData(
         data.collectionNameList,
         COLLECTION,
-        translate(COLLECTION_LABEL) as TOptionsCategories,
+        parse(translate(COLLECTION_LABEL)) as TOptionsCategories,
       ),
     ];
     setNoResult(!groupedData.length);
@@ -219,8 +231,8 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
     return (
       <Styles.SearchFooter>
         <div className="search-footer-left">
-          <h6>{translate('components.searchBar.findMore')}</h6>
-          <p>{translate('components.searchBar.connectCommunity')}</p>
+          <h6>{parse(translate('components.searchBar.findMore'))}</h6>
+          <p>{parse(translate('components.searchBar.connectCommunity'))}</p>
         </div>
         <Social className="social-search" />
       </Styles.SearchFooter>
@@ -228,7 +240,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
   };
 
   const renderNoResult = () => {
-    return <Styles.EmptyBox>{translate('components.searchBar.noResults')}</Styles.EmptyBox>;
+    return <Styles.EmptyBox>{parse(translate('components.searchBar.noResults'))}</Styles.EmptyBox>;
   };
 
   const handleCloseSearch = () => {
@@ -261,7 +273,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
           (option as TAutocompleteOptions).value === (value as TAutocompleteOptions).value
         }
         noOptionsText={renderNoResult()}
-        loadingText={translate('components.searchBar.loadingResults')}
+        loadingText={parse(translate('components.searchBar.loadingResults'))}
         size="small"
         debug
         renderOption={option => {
@@ -322,7 +334,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         renderInput={params => (
           <TextField
             {...params}
-            placeholder={translate('components.searchBar.search')}
+            placeholder={translateDropdown('components.searchBar.search')}
             InputLabelProps={{
               ...params.InputLabelProps,
               classes: {
@@ -374,10 +386,6 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
     }
   };
 
-  const onOpenDrawerClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    onDrawerToggle(event);
-  };
-
   const handleFakeButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setSearchData([]);
     setAnchorEl(event.currentTarget);
@@ -391,7 +399,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
   const renderFakeInput = () => {
     return (
       <Styles.FakeInput type="button" onClick={handleFakeButtonClick}>
-        {translate('components.searchBar.search')}
+        {parse(translate('components.searchBar.search'))}
       </Styles.FakeInput>
     );
   };
@@ -421,36 +429,38 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
             {!dropdownOpen ? (
               <Box>
                 {noResult ? (
-                  <Styles.EmptyBox>{translate('components.searchBar.noResults')}</Styles.EmptyBox>
+                  <Styles.EmptyBox>
+                    {parse(translate('components.searchBar.noResults'))}
+                  </Styles.EmptyBox>
                 ) : (
                   <Box className="search-feature">
                     <p className="search-feature-title">
-                      {translate('components.searchBar.searchBy')}:
+                      {parse(translate('components.searchBar.searchBy'))}:
                     </p>
                     <ul className="search-feature-list">
                       <li className="search-feature-item">
-                        {translate('components.searchBar.blocksHeights')}
+                        {parse(translate('components.searchBar.blocksHeights'))}
                       </li>
                       <li className="search-feature-item">
-                        {translate('components.searchBar.blocksIds')}
+                        {parse(translate('components.searchBar.blocksIds'))}
                       </li>
                       <li className="search-feature-item">
-                        {translate('components.searchBar.txID')}
+                        {parse(translate('components.searchBar.txID'))}
                       </li>
                       <li className="search-feature-item">
-                        {translate('components.searchBar.addresses')}
+                        {parse(translate('components.searchBar.addresses'))}
                       </li>
                       <li className="search-feature-item">
-                        {translate('components.searchBar.pastelID')}
+                        {parse(translate('components.searchBar.pastelID'))}
                       </li>
                       <li className="search-feature-item">
-                        {translate('components.searchBar.username')}
+                        {parse(translate('components.searchBar.username'))}
                       </li>
                       <li className="search-feature-item">
-                        {translate('components.searchBar.cascadeFilename')}
+                        {parse(translate('components.searchBar.cascadeFilename'))}
                       </li>
                       <li className="search-feature-item">
-                        {translate('components.searchBar.senseImageHash')}
+                        {parse(translate('components.searchBar.senseImageHash'))}
                       </li>
                     </ul>
                   </Box>
@@ -471,6 +481,21 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
       className={`${isShowSearchInput ? 'search-show' : ''} ${forceShowSearchInput ? 'force' : ''}`}
     >
       <Styles.ToolbarStyle className="disable-padding">
+        <Hidden smUp>
+          <SidebarStyles.Brand
+            className="mobile-logo"
+            component={NavLink}
+            to={ROUTES.EXPLORER}
+            button
+          >
+            <Box ml={1}>
+              <SidebarStyles.BrandLogo
+                src={isDarkMode ? PastelLogoWhite : PastelLogo}
+                alt="Pastel Logo"
+              />
+            </Box>
+          </SidebarStyles.Brand>
+        </Hidden>
         <Styles.GridStyle
           className={`top ${isInputFocus ? 'autocomplete-focus' : ''}`}
           container
@@ -488,17 +513,6 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         >
           <SearchIcon />
         </Styles.IconButton>
-        <Hidden mdUp>
-          <Grid item>
-            <Styles.IconButton
-              color="inherit"
-              aria-label={translate('components.searchBar.openDrawer')}
-              onClick={onOpenDrawerClick}
-            >
-              <MenuIcon />
-            </Styles.IconButton>
-          </Grid>
-        </Hidden>
         <SwitchMode />
         <ChooseCluster />
       </Styles.ToolbarStyle>

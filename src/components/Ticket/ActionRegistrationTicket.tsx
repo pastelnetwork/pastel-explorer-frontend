@@ -5,6 +5,7 @@ import Box from '@material-ui/core/Box';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
+import parse from 'html-react-parser';
 
 import {
   IActionRegistrationTicket,
@@ -50,7 +51,7 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket, actionType }) => {
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.actionRegistrationTicket.actionTicketVersion')}:
+            {parse(translate('components.ticket.actionRegistrationTicket.actionTicketVersion'))}:
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -60,7 +61,7 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket, actionType }) => {
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.actionRegistrationTicket.actionType')}
+            {parse(translate('components.ticket.actionRegistrationTicket.actionType'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -70,7 +71,7 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket, actionType }) => {
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.actionRegistrationTicket.caller')}:
+            {parse(translate('components.ticket.actionRegistrationTicket.caller'))}:
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -88,7 +89,7 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket, actionType }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.actionRegistrationTicket.blockNumber')}:
+              {parse(translate('components.ticket.actionRegistrationTicket.blockNumber'))}:
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -107,7 +108,7 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket, actionType }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.actionRegistrationTicket.blockHash')}:
+              {parse(translate('components.ticket.actionRegistrationTicket.blockHash'))}:
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -131,14 +132,16 @@ const ActionTicket: React.FC<IActionTicketProps> = ({ ticket, actionType }) => {
             <Grid container spacing={3}>
               <Grid item xs={4} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.actionRegistrationTicket.apiTicket')}:
+                  {parse(translate('components.ticket.actionRegistrationTicket.apiTicket'))}:
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={8} sm={9}>
                 <Styles.TicketContent className="expand-more">
                   {isExpanded
-                    ? translate('components.ticket.actionRegistrationTicket.hideDetail')
-                    : translate('components.ticket.actionRegistrationTicket.clickToSeeDetail')}{' '}
+                    ? parse(translate('components.ticket.actionRegistrationTicket.hideDetail'))
+                    : parse(
+                        translate('components.ticket.actionRegistrationTicket.clickToSeeDetail'),
+                      )}{' '}
                   <ExpandMoreIcon />
                 </Styles.TicketContent>
               </Grid>
@@ -175,14 +178,16 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
       <Grid container spacing={3}>
         <Grid item xs={12} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.actionRegistrationTicket.actionActivationTicketDetail')}
+            {parse(
+              translate('components.ticket.actionRegistrationTicket.actionActivationTicketDetail'),
+            )}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={12} sm={9}>
           <Grid container spacing={3}>
             <Styles.ActivationTicketItem className="item">
               <Styles.TicketTitle className="mr-5">
-                {translate('components.ticket.actionRegistrationTicket.txId')}
+                {parse(translate('components.ticket.actionRegistrationTicket.txId'))}
               </Styles.TicketTitle>
               <Styles.TicketContent>
                 <Grid container alignItems="center" wrap="nowrap">
@@ -200,7 +205,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
           <Grid container spacing={3}>
             <Styles.ActivationTicketItem className="item">
               <Styles.TicketTitle className="mr-5">
-                {translate('components.ticket.actionRegistrationTicket.type')}
+                {parse(translate('components.ticket.actionRegistrationTicket.type'))}
               </Styles.TicketTitle>
               <Styles.TicketContent>
                 {getTicketTitle(ticket.activationTicket.type as TTicketType)}
@@ -211,7 +216,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
             <Grid container spacing={3}>
               <Styles.ActivationTicketItem className="item">
                 <Styles.TicketTitle className="mr-5">
-                  {translate('components.ticket.actionRegistrationTicket.calledAt')}
+                  {parse(translate('components.ticket.actionRegistrationTicket.calledAt'))}
                 </Styles.TicketTitle>
                 <Styles.TicketContent>
                   <RouterLink
@@ -227,7 +232,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
           <Grid container spacing={3}>
             <Styles.ActivationTicketItem className="item">
               <Styles.TicketTitle className="mr-5">
-                {translate('components.ticket.actionRegistrationTicket.version')}
+                {parse(translate('components.ticket.actionRegistrationTicket.version'))}
               </Styles.TicketTitle>
               <Styles.TicketContent>{activationTicket.version}</Styles.TicketContent>
             </Styles.ActivationTicketItem>
@@ -235,7 +240,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
           <Grid container spacing={3}>
             <Styles.ActivationTicketItem className="item">
               <Styles.TicketTitle className="mr-5">
-                {translate('components.ticket.actionRegistrationTicket.pastelID')}
+                {parse(translate('components.ticket.actionRegistrationTicket.pastelID'))}
               </Styles.TicketTitle>
               <Styles.TicketContent>
                 <RouterLink
@@ -251,7 +256,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
             <Grid container spacing={3}>
               <Styles.ActivationTicketItem className="item">
                 <Styles.TicketTitle className="mr-5">
-                  {translate('components.ticket.actionRegistrationTicket.regTxId')}
+                  {parse(translate('components.ticket.actionRegistrationTicket.regTxId'))}
                 </Styles.TicketTitle>
                 <Styles.TicketContent>
                   <Grid container alignItems="center" wrap="nowrap">
@@ -270,9 +275,11 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
           <Grid container spacing={3}>
             <Styles.ActivationTicketItem className="item">
               <Styles.TicketTitle className="mr-5">
-                {translate('components.ticket.actionRegistrationTicket.storageFee', {
-                  currency: getCurrencyName(),
-                })}
+                {parse(
+                  translate('components.ticket.actionRegistrationTicket.storageFee', {
+                    currency: getCurrencyName(),
+                  }),
+                )}
               </Styles.TicketTitle>
               <Styles.TicketContent>
                 {formatNumber(activationTicket.storage_fee)} {getCurrencyName()}{' '}
@@ -284,7 +291,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
             <Grid container spacing={3}>
               <Styles.ActivationTicketItem className="item">
                 <Styles.TicketTitle className="mr-5">
-                  {translate('components.ticket.actionRegistrationTicket.timestamp')}
+                  {parse(translate('components.ticket.actionRegistrationTicket.timestamp'))}
                 </Styles.TicketTitle>
                 <Styles.TicketContent>
                   {formatFullDate(activationTicket.transactionTime, { dayName: false })}
@@ -303,7 +310,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.actionRegistrationTicket.collectionName')}
+              {parse(translate('components.ticket.actionRegistrationTicket.collectionName'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -316,7 +323,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
                   className="address-link small"
                 />
               ) : (
-                translate('common.na')
+                parse(translate('common.na'))
               )}
             </Styles.TicketContent>
           </Grid>
@@ -325,7 +332,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.actionRegistrationTicket.actionType')}
+            {parse(translate('components.ticket.actionRegistrationTicket.actionType'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -337,7 +344,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
                 (
                 <RouterLink
                   route={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}
-                  value={translate('components.ticket.actionRegistrationTicket.viewDetails')}
+                  value={parse(translate('components.ticket.actionRegistrationTicket.viewDetails'))}
                   title={ticket.activation_txId}
                   className="address-link"
                 />
@@ -350,7 +357,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.actionRegistrationTicket.status')}
+            {parse(translate('components.ticket.actionRegistrationTicket.status'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -359,12 +366,12 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
               className={ticket?.activation_ticket ? 'active' : ''}
             >
               {ticket?.activation_ticket
-                ? translate('components.ticket.actionRegistrationTicket.activated')
-                : translate('components.ticket.actionRegistrationTicket.notYetActivated')}
+                ? parse(translate('components.ticket.actionRegistrationTicket.activated'))
+                : parse(translate('components.ticket.actionRegistrationTicket.notYetActivated'))}
             </Styles.ActionRegistrationTicketStatus>
             {ticket?.activation_ticket && ticket?.activation_txId ? (
               <Styles.TicketContent>
-                ({translate('components.ticket.actionRegistrationTicket.activationTXID')}{' '}
+                ({parse(translate('components.ticket.actionRegistrationTicket.activationTXID'))}{' '}
                 <CopyButton copyText={ticket?.activation_txId} />
                 <RouterLink
                   route={`${ROUTES.TRANSACTION_DETAILS}/${ticket?.activation_txId}`}
@@ -382,7 +389,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.actionRegistrationTicket.version')}
+            {parse(translate('components.ticket.actionRegistrationTicket.version'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -393,7 +400,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.actionRegistrationTicket.key')}
+              {parse(translate('components.ticket.actionRegistrationTicket.key'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -405,7 +412,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.actionRegistrationTicket.txIdOfPreburn')}
+              {parse(translate('components.ticket.actionRegistrationTicket.txIdOfPreburn'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -417,7 +424,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.actionRegistrationTicket.calledAt')}
+              {parse(translate('components.ticket.actionRegistrationTicket.calledAt'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -435,9 +442,11 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.actionRegistrationTicket.storageFee', {
-              currency: getCurrencyName(),
-            })}
+            {parse(
+              translate('components.ticket.actionRegistrationTicket.storageFee', {
+                currency: getCurrencyName(),
+              }),
+            )}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -451,7 +460,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.actionRegistrationTicket.timestamp')}
+              {parse(translate('components.ticket.actionRegistrationTicket.timestamp'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -467,14 +476,16 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
             <Grid container spacing={3}>
               <Grid item xs={4} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.actionRegistrationTicket.actionTicket')}
+                  {parse(translate('components.ticket.actionRegistrationTicket.actionTicket'))}
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={8} sm={9}>
                 <Styles.TicketContent className="expand-more">
                   {isExpanded
-                    ? translate('components.ticket.actionRegistrationTicket.hideDetail')
-                    : translate('components.ticket.actionRegistrationTicket.clickToSeeDetail')}{' '}
+                    ? parse(translate('components.ticket.actionRegistrationTicket.hideDetail'))
+                    : parse(
+                        translate('components.ticket.actionRegistrationTicket.clickToSeeDetail'),
+                      )}{' '}
                   <ExpandMoreIcon />
                 </Styles.TicketContent>
               </Grid>

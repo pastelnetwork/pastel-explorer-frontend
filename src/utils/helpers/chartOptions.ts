@@ -17,7 +17,7 @@ import {
   convertYAxisLabel,
 } from '@utils/helpers/statisticsLib';
 import { TChartParams } from '@utils/types/IStatistics';
-import { translate } from '@utils/helpers/i18n';
+import { translateDropdown } from '@utils/helpers/i18n';
 
 type TAxisPointerProps = {
   axisDimension: string;
@@ -205,7 +205,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
               <div class="tooltip-value">${params[0].marker} ${formatNumber(
             params[0].value / 1000000,
             { decimalsLength: 2 },
-          )} ${translate('chartOptions.mSolS')}</div>
+          )} ${translateDropdown('chartOptions.mSolS')}</div>
             </div>
           `;
         },
@@ -299,7 +299,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
               <div class="tooltip-item">
                 <div class="item-label">${item.marker} ${item.seriesName}:</div>
                 <div class="item-value">${formatNumber(item.value, { decimalsLength: 2 })}
-                ${translate('chartOptions.kBS')}</div>
+                ${translateDropdown('chartOptions.kBS')}</div>
               </div>
             `;
           });
@@ -314,7 +314,10 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       legend: {
         top: 10,
         right: 10,
-        data: [translate('chartOptions.trafficReceived'), translate('chartOptions.trafficSent')],
+        data: [
+          translateDropdown('chartOptions.trafficReceived'),
+          translateDropdown('chartOptions.trafficSent'),
+        ],
         textStyle: {
           color: theme?.color,
         },
@@ -371,7 +374,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       series: [
         {
-          name: translate('chartOptions.trafficReceived'),
+          name: translateDropdown('chartOptions.trafficReceived'),
           type: 'line',
           lineStyle: {
             width: 2,
@@ -384,7 +387,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           zlevel: 2,
         },
         {
-          name: translate('chartOptions.trafficSent'),
+          name: translateDropdown('chartOptions.trafficSent'),
           type: 'line',
           lineStyle: {
             width: 2,
@@ -422,7 +425,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
               )}</div>
               <div class="item-value">${params[0].marker} ${formatNumber(params[0].value, {
             decimalsLength: 2,
-          })} ${translate('chartOptions.kB')}</div>
+          })} ${translateDropdown('chartOptions.kB')}</div>
             </div>
           `;
         },
@@ -513,16 +516,16 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       tooltip: {
         trigger: 'axis',
         formatter(params: TChartParams[]) {
-          let label = translate('chartOptions.averagePerHour');
+          let label = translateDropdown('chartOptions.averagePerHour');
           switch (granularity) {
             case '1d':
-              label = translate('chartOptions.averagePerDay');
+              label = translateDropdown('chartOptions.averagePerDay');
               break;
             case '30d':
-              label = translate('chartOptions.averagePerMonth');
+              label = translateDropdown('chartOptions.averagePerMonth');
               break;
             case '1y':
-              label = translate('chartOptions.averagePerYear');
+              label = translateDropdown('chartOptions.averagePerYear');
               break;
             default:
               break;
@@ -538,7 +541,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             {
               decimalsLength: 5,
             },
-          )} ${translate('chartOptions.mb')}</div>
+          )} ${translateDropdown('chartOptions.mb')}</div>
             </div>
           `;
         },
@@ -1029,7 +1032,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
               )}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
             decimalsLength: 2,
-          })} ${translate('chartOptions.mb')}</div>
+          })} ${translateDropdown('chartOptions.mb')}</div>
             </div>
           `;
         },
@@ -1475,10 +1478,10 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             formatter(params: TTxInBlock) {
               return `
                 <div class="tooltip-item-wrapper">
-                  <div class="item-label">${translate('chartOptions.blockId')}: ${
+                  <div class="item-label">${translateDropdown('chartOptions.blockId')}: ${
                 params.value[0]
               }</div>
-                  <div class="tooltip-data-date">${translate('chartOptions.count')}: ${
+                  <div class="tooltip-data-date">${translateDropdown('chartOptions.count')}: ${
                 params.value[1]
               }</div>
                 </div>
@@ -1563,7 +1566,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       series: {
         type: 'line',
-        name: translate('chartOptions.accounts'),
+        name: translateDropdown('chartOptions.accounts'),
         data: dataY,
         showSymbol: false,
         areaStyle: {
@@ -1654,7 +1657,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       series: {
         type: 'line',
-        name: translate('chartOptions.totalSupply', { currency: getCurrencyName() }),
+        name: translateDropdown('chartOptions.totalSupply', { currency: getCurrencyName() }),
         data: dataY,
         showSymbol: false,
         areaStyle: {
@@ -1749,7 +1752,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       series: {
         type: 'line',
-        name: translate('chartOptions.circulatingSupply', { currency: getCurrencyName() }),
+        name: translateDropdown('chartOptions.circulatingSupply', { currency: getCurrencyName() }),
         data: dataY,
         showSymbol: false,
         areaStyle: {
@@ -1847,7 +1850,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       series: {
         type: 'bar',
         sampling: 'lttb',
-        name: translate('chartOptions.percentOfPSLStaked', { currency: getCurrencyName() }),
+        name: translateDropdown('chartOptions.percentOfPSLStaked', { currency: getCurrencyName() }),
         data: dataY?.map((d: number) => parseFloat((d * 100).toString())),
         showSymbol: false,
       },
@@ -2232,7 +2235,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: translate('chartOptions.network'),
+        name: translateDropdown('chartOptions.network'),
         type: 'line',
         data: dataY,
         showSymbol: false,
@@ -2309,7 +2312,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: translate('chartOptions.difficulty'),
+        name: translateDropdown('chartOptions.difficulty'),
         type: 'line',
         showSymbol: false,
         data: dataY,
@@ -2371,7 +2374,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: translate('chartOptions.coinSupply', { currency: getCurrencyName() }),
+        name: translateDropdown('chartOptions.coinSupply', { currency: getCurrencyName() }),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -2435,7 +2438,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: translate('chartOptions.accountsSeriesName'),
+        name: translateDropdown('chartOptions.accountsSeriesName'),
         type: 'line',
         data: dataY,
         showSymbol: false,
@@ -2503,7 +2506,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: translate('chartOptions.avgTransactionsPerSecond'),
+        name: translateDropdown('chartOptions.avgTransactionsPerSecond'),
         type: 'line',
         data: dataY,
         showSymbol: false,
@@ -2571,7 +2574,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: translate('chartOptions.avgBlockSizeLast24Hour'),
+        name: translateDropdown('chartOptions.avgBlockSizeLast24Hour'),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -2639,7 +2642,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: translate('chartOptions.avgTransactionPerBlockLast24Hour'),
+        name: translateDropdown('chartOptions.avgTransactionPerBlockLast24Hour'),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -2708,7 +2711,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: translate('chartOptions.avgTransactionFeeLast24Hour'),
+        name: translateDropdown('chartOptions.avgTransactionFeeLast24Hour'),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -2770,7 +2773,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: translate('chartOptions.memPoolSize'),
+        name: translateDropdown('chartOptions.memPoolSize'),
         type: 'line',
         sampling: 'lttb',
         lineStyle: {
@@ -2853,7 +2856,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: translate('chartOptions.circulatingSupplySeriesName', {
+        name: translateDropdown('chartOptions.circulatingSupplySeriesName', {
           currency: getCurrencyName(),
         }),
         type: 'line',
@@ -2925,7 +2928,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         min: 0,
       },
       series: {
-        name: translate('chartOptions.percentPSLStaked', { currency: getCurrencyName() }),
+        name: translateDropdown('chartOptions.percentPSLStaked', { currency: getCurrencyName() }),
         type: 'bar',
         data: dataY?.map((d: number) => parseFloat((d * 100).toString())),
       },
@@ -2954,7 +2957,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           for (let i = 0; i < params.length; i += 1) {
             html += `<div>${params[i].marker} ${params[i].seriesName}: ${
               params[i].value ? formatNumber(params[i].value, { decimalsLength: 2 }) : '0'
-            } ${translate('chartOptions.mb')}</div>`;
+            } ${translateDropdown('chartOptions.mb')}</div>`;
           }
           return `
             <div>
@@ -3011,13 +3014,13 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       ],
       series: [
         {
-          name: translate('chartOptions.highestSizeOfNFTStored'),
+          name: translateDropdown('chartOptions.highestSizeOfNFTStored'),
           type: 'bar',
           data: dataY,
           color: '#cd6661',
         },
         {
-          name: translate('chartOptions.averageSizeOfNFTStored'),
+          name: translateDropdown('chartOptions.averageSizeOfNFTStored'),
           type: 'line',
           data: dataY1,
           color: !darkMode ? '#2f2a03' : theme?.color,
@@ -3098,13 +3101,13 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       ],
       series: [
         {
-          name: translate('chartOptions.HighestRarenessScore'),
+          name: translateDropdown('chartOptions.HighestRarenessScore'),
           type: 'bar',
           data: dataY,
           color: blueColor,
         },
         {
-          name: translate('chartOptions.averageRarenessScore'),
+          name: translateDropdown('chartOptions.averageRarenessScore'),
           type: 'line',
           data: dataY1,
           color: !darkMode ? '#2f2a03' : theme?.color,
@@ -3133,8 +3136,8 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             params[0].seriesName
           }:&nbsp;${params[0].data ? formatNumber(params[0].data) : '0'} ${
             params[0].data > 1
-              ? translate('chartOptions.requests')
-              : translate('chartOptions.request')
+              ? translateDropdown('chartOptions.requests')
+              : translateDropdown('chartOptions.request')
           }`;
         },
       },
@@ -3184,7 +3187,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       ],
       series: {
-        name: translate('chartOptions.cascadeRequests'),
+        name: translateDropdown('chartOptions.cascadeRequests'),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -3224,8 +3227,8 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             params[0].seriesName
           }:&nbsp;${params[0].data ? formatNumber(params[0].data) : '0'} ${
             params[0].data > 1
-              ? translate('chartOptions.requests')
-              : translate('chartOptions.request')
+              ? translateDropdown('chartOptions.requests')
+              : translateDropdown('chartOptions.request')
           }`;
         },
       },
@@ -3269,7 +3272,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
-        name: translate('chartOptions.senseRequests'),
+        name: translateDropdown('chartOptions.senseRequests'),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -3309,7 +3312,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             params[0].seriesName
           }:&nbsp;${
             params[0].data ? formatNumber(params[0].data, { decimalsLength: 2 }) : '0'
-          } ${translate('chartOptions.mb')}`;
+          } ${translateDropdown('chartOptions.mb')}`;
         },
       },
       xAxis: {
@@ -3352,7 +3355,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
-        name: translate('chartOptions.totalDataStored'),
+        name: translateDropdown('chartOptions.totalDataStored'),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -3433,7 +3436,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
-        name: translate('chartOptions.totalFingerprints'),
+        name: translateDropdown('chartOptions.totalFingerprints'),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -3474,7 +3477,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
               <div class="item-label">${params[0].axisValue}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
             decimalsLength: 2,
-          })} ${translate('chartOptions.kB')}</div>
+          })} ${translateDropdown('chartOptions.kB')}</div>
             </div>
           `;
         },
@@ -3551,7 +3554,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
               <div class="item-label">${params[0].axisValue}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
             decimalsLength: 3,
-          })} ${translate('chartOptions.mSolS')}</div>
+          })} ${translateDropdown('chartOptions.mSolS')}</div>
             </div>
           `;
         },
@@ -3878,7 +3881,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
-        name: translate(seriesName || 'pages.addressDetails.balanceHistory.balance') || '',
+        name: translateDropdown(seriesName || 'pages.addressDetails.balanceHistory.balance') || '',
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -3969,7 +3972,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
-        name: translate('pages.addressDetails.balanceHistory.sentByMonth') || '',
+        name: translateDropdown('pages.addressDetails.balanceHistory.sentByMonth') || '',
         type: 'bar',
         data: dataY?.map((d, index) => {
           return {
@@ -4067,7 +4070,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
-        name: translate(seriesName || 'pages.addressDetails.balanceHistory.receivedByMonth') || '',
+        name:
+          translateDropdown(seriesName || 'pages.addressDetails.balanceHistory.receivedByMonth') ||
+          '',
         type: 'bar',
         data: dataY?.map((d, index) => {
           return {
@@ -4182,7 +4187,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
-        name: translate('pages.burned.totalBurned', { currency: getCurrencyName() }) || '',
+        name: translateDropdown('pages.burned.totalBurned', { currency: getCurrencyName() }) || '',
         type: 'line',
         sampling: 'lttb',
         data: dataY,

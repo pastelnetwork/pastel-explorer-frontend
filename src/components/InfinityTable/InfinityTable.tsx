@@ -10,9 +10,11 @@ import {
   Index,
   OverscanIndicesGetterParams,
 } from 'react-virtualized';
+import parse from 'html-react-parser';
 import { CSSProperties } from '@material-ui/styles';
 import { CircularProgress, darken } from '@material-ui/core';
 import { ArrowDropDown, ArrowDropUp } from '@material-ui/icons';
+
 import { useGetThemeMode } from '@redux/reducers/appThemeReducer';
 import themeVariant from '@theme/variants';
 import { TFilter } from '@utils/types/IFilter';
@@ -72,6 +74,7 @@ interface IInfinityTableComponentProps {
     startDate: number;
     endDate: number | null;
   };
+  showLess?: boolean;
 }
 
 type ITableCellRendererProps = TableCellProps & { dataTitle?: string };
@@ -90,7 +93,7 @@ const headerRenderer = ({
 
   return (
     <Styles.HeaderCell component="div" variant="head" $disabledSort={Boolean(disableSort)}>
-      {translate(label as string, { currency: getCurrencyName() })}
+      {parse(translate(label as string, { currency: getCurrencyName() }))}
       {showSort && renderSortIcon()}
     </Styles.HeaderCell>
   );
@@ -98,7 +101,9 @@ const headerRenderer = ({
 const TableCellRenderer = ({ cellData, dataTitle }: ITableCellRendererProps) => (
   <Styles.Cell
     component="div"
-    data-title={dataTitle ? translate(dataTitle, { currency: getCurrencyName() }) : undefined}
+    data-title={
+      dataTitle ? parse(translate(dataTitle, { currency: getCurrencyName() })) : undefined
+    }
     className="cell-content"
   >
     {cellData}
@@ -137,6 +142,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   customLoading,
   showDateTimePicker = false,
   dateRange,
+  showLess = false,
 }) => {
   const [loading, setLoading] = React.useState(false);
   const isDarkMode = useGetThemeMode();
@@ -210,60 +216,62 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   return (
     <Styles.Card className={className}>
       {renderTitle()}
-      <Styles.TableContainer>
-        {loading || customLoading ? (
-          <Styles.Loader>
-            <CircularProgress size={40} />
-          </Styles.Loader>
-        ) : null}
-        {!isLoading ? (
-          <Styles.TableWrapper className={`table-wrapper ${rows.length ? '' : 'empty-table'}`}>
-            <AutoSizer disableHeight>
-              {({ width }) => (
-                <div style={{ width }}>
-                  <Table
-                    headerHeight={rowHeight}
-                    height={tableHeight}
-                    noRowsRenderer={noRowsRenderer}
-                    rowHeight={rowHeight}
-                    rowGetter={({ index }: { index: number }) => rows[index]}
-                    rowCount={rows.length}
-                    rowStyle={(info: Index) => handleRowStyle(info)}
-                    width={100}
-                    sortBy={sortBy}
-                    sort={handleSort}
-                    sortDirection={sortDirection}
-                    style={{ backgroundColor: 'inherit' }}
-                    onScroll={handleReachBottom}
-                    overscanIndicesGetter={renderAllRows ? getOverscanIndices : undefined}
-                  >
-                    {columns.map(({ dataKey, dataTitle, ...other }, index) => (
-                      <Column
-                        key={dataKey}
-                        headerRenderer={headerProps =>
-                          headerRenderer({
-                            ...headerProps,
-                            columnIndex: index,
-                          })
-                        }
-                        cellRenderer={props => TableCellRenderer({ ...props, dataTitle })}
-                        dataKey={dataKey}
-                        {...other}
-                      />
-                    ))}
-                  </Table>
-                </div>
-              )}
-            </AutoSizer>
-          </Styles.TableWrapper>
-        ) : (
-          <div style={{ height: tableHeight }}>
+      {!showLess ? (
+        <Styles.TableContainer>
+          {loading || customLoading ? (
             <Styles.Loader>
               <CircularProgress size={40} />
             </Styles.Loader>
-          </div>
-        )}
-      </Styles.TableContainer>
+          ) : null}
+          {!isLoading ? (
+            <Styles.TableWrapper className={`table-wrapper ${rows.length ? '' : 'empty-table'}`}>
+              <AutoSizer disableHeight>
+                {({ width }) => (
+                  <div style={{ width }}>
+                    <Table
+                      headerHeight={rowHeight}
+                      height={tableHeight}
+                      noRowsRenderer={noRowsRenderer}
+                      rowHeight={rowHeight}
+                      rowGetter={({ index }: { index: number }) => rows[index]}
+                      rowCount={rows.length}
+                      rowStyle={(info: Index) => handleRowStyle(info)}
+                      width={100}
+                      sortBy={sortBy}
+                      sort={handleSort}
+                      sortDirection={sortDirection}
+                      style={{ backgroundColor: 'inherit' }}
+                      onScroll={handleReachBottom}
+                      overscanIndicesGetter={renderAllRows ? getOverscanIndices : undefined}
+                    >
+                      {columns.map(({ dataKey, dataTitle, ...other }, index) => (
+                        <Column
+                          key={dataKey}
+                          headerRenderer={headerProps =>
+                            headerRenderer({
+                              ...headerProps,
+                              columnIndex: index,
+                            })
+                          }
+                          cellRenderer={props => TableCellRenderer({ ...props, dataTitle })}
+                          dataKey={dataKey}
+                          {...other}
+                        />
+                      ))}
+                    </Table>
+                  </div>
+                )}
+              </AutoSizer>
+            </Styles.TableWrapper>
+          ) : (
+            <div style={{ height: tableHeight }}>
+              <Styles.Loader>
+                <CircularProgress size={40} />
+              </Styles.Loader>
+            </div>
+          )}
+        </Styles.TableContainer>
+      ) : null}
     </Styles.Card>
   );
 };

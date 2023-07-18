@@ -2,7 +2,7 @@ import { MarkerProps } from '@components/Map/Map';
 
 import { INetworkSupernodes, INetworkPeers } from '@utils/types/INetwork';
 import themeVariant from '@theme/variants';
-import { translate } from '@utils/helpers/i18n';
+import { translateDropdown } from '@utils/helpers/i18n';
 
 const { supernode, peer } = themeVariant.map;
 
@@ -70,10 +70,10 @@ export const groupGeoLocationConnections = (
     const counter: string[] = [];
     if (hasPeerData) {
       if (peerList.length) {
-        counter.push(`${translate('pages.explorer.peer')}: ${peerList.length}`);
+        counter.push(`${translateDropdown('pages.explorer.peer')}: ${peerList.length}`);
       }
       if (supernodeList.length) {
-        counter.push(`${translate('pages.explorer.supernode')}: ${supernodeList.length}`);
+        counter.push(`${translateDropdown('pages.explorer.supernode')}: ${supernodeList.length}`);
       }
     } else {
       counter.push(`${locationElements.length}`);

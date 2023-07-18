@@ -2,7 +2,7 @@ import ReactECharts from 'echarts-for-react';
 import { useSelector } from 'react-redux';
 
 import { getThemeState } from '@redux/reducers/appThemeReducer';
-import { translate } from '@utils/helpers/i18n';
+import { translateDropdown } from '@utils/helpers/i18n';
 
 import { openNSFWColors, openNSFWScoreData } from './mockup';
 import EmptyOverlay from './EmptyOverlay';
@@ -93,7 +93,7 @@ const OpenNSFW: React.FC<IOpenNSFWProps> = ({ openNSFWScore }) => {
         data: [
           {
             value: openNSFWScore || openNSFWScoreData,
-            name: translate('pages.senseDetails.nsfw'),
+            name: translateDropdown('pages.senseDetails.nsfw'),
           },
         ],
       },

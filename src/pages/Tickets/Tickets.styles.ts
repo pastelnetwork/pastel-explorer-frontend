@@ -276,6 +276,18 @@ export const TicketsContainer = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 1279px) {
+    .MuiGrid-spacing-xs-6 > .MuiGrid-item {
+      padding-top: 0;
+      padding-bottom: 0;
+      margin-bottom: 12px;
+    }
+
+    .MuiGrid-spacing-xs-6 {
+      margin-bottom: 12px;
+    }
+  }
 `;
 
 export const SenseContainer = styled.div`
@@ -308,14 +320,11 @@ export const GirdStyle = styled(Grid)`
     width: 100%;
   }
 
-  ${props => props.theme.breakpoints.down(1024)} {
-    &.left {
-      padding-right: 12px;
-    }
-
+  @media screen and (max-width: 1279px) {
+    &.left,
     &.right {
-      padding-left: 12px;
-      padding-top: 0;
+      padding-left: 6px;
+      padding-right: 6px;
     }
   }
 `;
@@ -350,6 +359,12 @@ export const BlockTitle = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 1279px) {
+    &.ticket-block-title {
+      padding-right: 0;
+    }
+  }
 `;
 
 export const TicketSummaryContainer = styled.div`
@@ -357,8 +372,9 @@ export const TicketSummaryContainer = styled.div`
   justify-content: space-between;
   margin-bottom: 10px;
 
-  @media screen and (max-width: 1200px) {
-    flex-wrap: wrap;
+  @media screen and (max-width: 1279px) {
+    padding-bottom: 15px;
+    overflow-x: scroll;
   }
 `;
 
@@ -413,46 +429,50 @@ export const TicketSummaryBox = styled(RouterLink)`
     text-overflow: ellipsis;
     color: ${props => props.theme.card.color};
     transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    white-space: nowrap;
   }
 
-  @media screen and (max-width: 1200px) {
-    flex-wrap: wrap;
-    width: 32%;
-    margin-right: 10px;
-    margin-bottom: 10px;
+  @media screen and (max-width: 1279px) {
+    width: auto;
+  }
+`;
 
-    &:nth-child(3) {
-      margin-right: 0;
-    }
+export const LinkWrapper = styled.div`
+  display: flex;
+  align-item: center;
+  padding: 16px;
+
+  .btn-toggle,
+  .view-all {
+    padding: 0;
   }
 
-  @media screen and (max-width: 768px) {
-    width: 49%;
-    margin-bottom: 10px;
-
-    &:nth-child(3) {
-      margin-right: 10px;
-    }
-
-    &:nth-child(2n) {
-      margin-right: 0;
-    }
-
-    &.offerTicketsAndTransferTickets {
-      min-width: unset;
-    }
-
-    &.pastelIDAndUsernameTickets {
-      min-width: unset;
+  .view-all {
+    .MuiTypography-root {
+      padding: 0;
     }
   }
 
-  @media screen and (max-width: 525px) {
-    width: 100%;
-    margin-right: 0;
+  .btn-toggle {
+    display: none;
 
-    &:nth-child(3) {
-      margin-right: 0;
+    @media screen and (max-width: 1279px) {
+      display: inline-flex;
+      margin-top: -2px;
+    }
+
+    &.show-less {
+      .MuiSvgIcon-root {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .MuiSvgIcon-root {
+    &.toggle-icon {
+      width: 30px;
+      transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      color: ${props => props.theme.link.main};
     }
   }
 `;

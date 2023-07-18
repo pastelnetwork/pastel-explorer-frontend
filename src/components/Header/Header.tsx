@@ -4,7 +4,7 @@ import { Grid } from '@material-ui/core';
 import * as Styles from './Header.styles';
 
 interface HeaderProps {
-  title: string;
+  title: string | React.ReactNode;
   className?: string;
 }
 

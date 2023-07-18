@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Box from '@material-ui/core/Box';
 
-import { translate } from '@utils/helpers/i18n';
+import { translateDropdown } from '@utils/helpers/i18n';
 
 import imagePlaceholder from '@assets/images/no-image-placeholder.svg';
 import * as Styles from './SenseDetails.styles';
@@ -29,7 +29,7 @@ const SubmittedImage: React.FC<ISubmittedImageProps> = ({ imageUrl, imageHash })
           <button
             type="button"
             onClick={handleClickOpen}
-            title={translate('pages.senseDetails.viewFull')}
+            title={translateDropdown('pages.senseDetails.viewFull')}
           >
             <img src={`data:image/jpeg;base64,${imageUrl}`} alt={imageHash} />
           </button>

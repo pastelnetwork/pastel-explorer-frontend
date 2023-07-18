@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';
 import useCollectionDetails, { useCollectionItems } from '@hooks/useCollectionDetails';
@@ -47,12 +48,12 @@ const CollectionDetails = () => {
       <Grid container justify="center" alignItems="center" direction="column" spacing={2}>
         <Grid item>
           <Typography component="h1" variant="h1" align="center" gutterBottom>
-            {translate('pages.collection.404')}
+            {parse(translate('pages.collection.404'))}
           </Typography>
         </Grid>
       </Grid>
       <Typography component="h2" variant="h5" align="center" gutterBottom>
-        {translate('pages.collection.cascadeNotFound')}
+        {parse(translate('pages.collection.cascadeNotFound'))}
       </Typography>
     </Styles.Wrapper>
   );

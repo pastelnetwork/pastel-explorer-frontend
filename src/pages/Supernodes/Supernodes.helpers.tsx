@@ -1,4 +1,4 @@
-import { translate } from '@utils/helpers/i18n';
+import { translateDropdown } from '@utils/helpers/i18n';
 import { formattedTimeElapsed, formatFullDate } from '@utils/helpers/date/date';
 import { INetworkSupernodes } from '@utils/types/INetwork';
 
@@ -52,18 +52,21 @@ export const generateStatusData = (status: string) => {
 
 export const getCsvHeaders = () => {
   return [
-    { key: 'masternodeRank', label: translate('pages.supernodes.rank') },
-    { key: 'supernodeIP', label: translate('pages.supernodes.supernodeIP') },
-    { key: 'address', label: translate('pages.supernodes.address') },
-    { key: 'status', label: translate('pages.supernodes.status') },
-    { key: 'lastPaid', label: translate('pages.supernodes.lastPaid') },
-    { key: 'lastPaidBlock', label: translate('pages.supernodes.lastPaidBlock') },
-    { key: 'dateTimeLastSeen', label: translate('pages.supernodes.dateTimeLastSeen') },
-    { key: 'activeSeconds', label: translate('pages.supernodes.activeSeconds') },
-    { key: 'rankAsOfBlockHeight', label: translate('pages.supernodes.rankAsOfBlockHeight') },
-    { key: 'protocolVersion', label: translate('pages.supernodes.protocolVersion') },
-    { key: 'country', label: translate('pages.supernodes.country') },
-    { key: 'snPastelIdPubkey', label: translate('pages.supernodes.snPastelIdPubkey') },
+    { key: 'masternodeRank', label: translateDropdown('pages.supernodes.rank') },
+    { key: 'supernodeIP', label: translateDropdown('pages.supernodes.supernodeIP') },
+    { key: 'address', label: translateDropdown('pages.supernodes.address') },
+    { key: 'status', label: translateDropdown('pages.supernodes.status') },
+    { key: 'lastPaid', label: translateDropdown('pages.supernodes.lastPaid') },
+    { key: 'lastPaidBlock', label: translateDropdown('pages.supernodes.lastPaidBlock') },
+    { key: 'dateTimeLastSeen', label: translateDropdown('pages.supernodes.dateTimeLastSeen') },
+    { key: 'activeSeconds', label: translateDropdown('pages.supernodes.activeSeconds') },
+    {
+      key: 'rankAsOfBlockHeight',
+      label: translateDropdown('pages.supernodes.rankAsOfBlockHeight'),
+    },
+    { key: 'protocolVersion', label: translateDropdown('pages.supernodes.protocolVersion') },
+    { key: 'country', label: translateDropdown('pages.supernodes.country') },
+    { key: 'snPastelIdPubkey', label: translateDropdown('pages.supernodes.snPastelIdPubkey') },
   ];
 };
 
@@ -72,7 +75,7 @@ export const getCsvData = (supernodes: INetworkSupernodes[]) => {
     return [];
   }
   return supernodes.map(item => ({
-    masternodeRank: item.masternodeRank < 0 ? translate('common.na') : item.masternodeRank,
+    masternodeRank: item.masternodeRank < 0 ? translateDropdown('common.na') : item.masternodeRank,
     supernodeIP: `${item.ip}:${item.port}`,
     address: item.address,
     status: item.status,
@@ -81,7 +84,7 @@ export const getCsvData = (supernodes: INetworkSupernodes[]) => {
     dateTimeLastSeen: formatFullDate(item.dateTimeLastSeen * 1000),
     activeSeconds: item.activeSeconds,
     rankAsOfBlockHeight:
-      item.rankAsOfBlockHeight < 0 ? translate('common.na') : item.rankAsOfBlockHeight,
+      item.rankAsOfBlockHeight < 0 ? translateDropdown('common.na') : item.rankAsOfBlockHeight,
     protocolVersion: item.protocolVersion,
     country: item.country,
     snPastelIdPubkey: item.snPastelIdPubkey,

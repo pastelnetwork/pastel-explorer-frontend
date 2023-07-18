@@ -1,4 +1,5 @@
 import { Skeleton } from '@material-ui/lab';
+import parse from 'html-react-parser';
 
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { getCurrencyName, isPastelBurnAddress } from '@utils/appInfo';
@@ -43,7 +44,7 @@ const Summary: React.FC<ISummaryProps> = ({
         </Styles.SummaryIcon>
         <Styles.ItemWrapper>
           <Styles.SummaryLabel>
-            {translate('pages.addressDetails.balance', { currency: getCurrencyName() })}
+            {parse(translate('pages.addressDetails.balance', { currency: getCurrencyName() }))}
           </Styles.SummaryLabel>
           <Styles.SummaryValue>
             {isBalanceLoading ? (
@@ -69,7 +70,7 @@ const Summary: React.FC<ISummaryProps> = ({
         </Styles.SummaryIcon>
         <Styles.ItemWrapper>
           <Styles.SummaryLabel>
-            {translate('pages.addressDetails.totalSent', { currency: getCurrencyName() })}
+            {parse(translate('pages.addressDetails.totalSent', { currency: getCurrencyName() }))}
           </Styles.SummaryLabel>
           <Styles.SummaryValue>
             {isBalanceLoading ? (
@@ -93,9 +94,11 @@ const Summary: React.FC<ISummaryProps> = ({
         </Styles.SummaryIcon>
         <Styles.ItemWrapper>
           <Styles.SummaryLabel>
-            {translate(`pages.addressDetails.${isBurnAddress ? 'totalBurned' : 'totalReceived'}`, {
-              currency: getCurrencyName(),
-            })}
+            {parse(
+              translate(`pages.addressDetails.${isBurnAddress ? 'totalBurned' : 'totalReceived'}`, {
+                currency: getCurrencyName(),
+              }),
+            )}
           </Styles.SummaryLabel>
           <Styles.SummaryValue>
             {isBalanceLoading ? (

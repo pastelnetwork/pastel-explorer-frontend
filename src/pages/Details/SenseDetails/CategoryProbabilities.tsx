@@ -1,5 +1,6 @@
 import ReactECharts from 'echarts-for-react';
 import { useSelector } from 'react-redux';
+import parse from 'html-react-parser';
 
 import { sense_chart_colors } from '@utils/constants/statistics';
 import { getMinMax } from '@utils/helpers/statisticsLib';
@@ -112,7 +113,9 @@ const CategoryProbabilities: React.FC<ICategoryProbabilities> = ({ data }) => {
           <div class="tooltip-wrapper">
             <div class="tooltip-label">${params[0].axisValue}</div>
             <div class="tooltip-value">
-              ${params[0].marker} ${translate('pages.senseDetails.nsfwScores')}: ${params[0].value}
+              ${params[0].marker} ${parse(translate('pages.senseDetails.nsfwScores'))}: ${
+          params[0].value
+        }
             </div>
           </div>
         `;

@@ -1,5 +1,6 @@
 import { useEffect, useState, ChangeEvent } from 'react';
 import { Skeleton } from '@material-ui/lab';
+import parse from 'html-react-parser';
 
 import { PeriodTypes, generatePeriodToDropdownOptions } from '@utils/helpers/statisticsLib';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
@@ -68,7 +69,7 @@ const AverageSizeOfNFTStoredOnCascade: React.FC = () => {
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
           <SummaryStyles.Typography variant="h6">
-            {translate('pages.cascadeAndSenseStatistics.averageSizeOfNFTStoredOnCascade')}
+            {parse(translate('pages.cascadeAndSenseStatistics.averageSizeOfNFTStoredOnCascade'))}
           </SummaryStyles.Typography>
           <SummaryStyles.Typography variant="h4">
             <SummaryStyles.Values>
@@ -77,7 +78,7 @@ const AverageSizeOfNFTStoredOnCascade: React.FC = () => {
               ) : (
                 <>
                   {formatNumber(swrData.currentValue / 10e6, { decimalsLength: 2 })}{' '}
-                  {translate('pages.cascadeAndSenseStatistics.mb')}
+                  {parse(translate('pages.cascadeAndSenseStatistics.mb'))}
                 </>
               )}
             </SummaryStyles.Values>
@@ -147,7 +148,7 @@ const AverageSizeOfNFTStoredOnCascade: React.FC = () => {
           <StatisticsStyles.Loader>
             <Skeleton animation="wave" variant="rect" height={170} width="100%" />
             <StatisticsStyles.LoadingText>
-              {translate('common.loadingData')}
+              {parse(translate('common.loadingData'))}
             </StatisticsStyles.LoadingText>
           </StatisticsStyles.Loader>
         ) : (

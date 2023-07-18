@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
+import parse from 'html-react-parser';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
@@ -54,7 +55,7 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
               <Grid item xs={12} sm={6} md={4}>
                 <Box>
                   <TicketStyles.TicketTitle>
-                    {translate('pages.cascade.fileSize')}:
+                    {parse(translate('pages.cascade.fileSize'))}:
                   </TicketStyles.TicketTitle>
                   <TicketStyles.TicketContent>
                     {formatBytes(data.original_file_size_in_bytes)}
@@ -64,7 +65,7 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
               <Grid item xs={12} sm={6} md={4}>
                 <Box>
                   <TicketStyles.TicketTitle>
-                    {translate('pages.cascade.dataHash')}:
+                    {parse(translate('pages.cascade.dataHash'))}:
                   </TicketStyles.TicketTitle>
                   <TicketStyles.TicketContent className="view-more">
                     {data.data_hash}
@@ -74,7 +75,7 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
               <Grid item xs={12} sm={6} md={4}>
                 <Box>
                   <TicketStyles.TicketTitle>
-                    {translate('pages.cascade.makePubliclyAccessible')}:
+                    {parse(translate('pages.cascade.makePubliclyAccessible'))}:
                   </TicketStyles.TicketTitle>
                   <TicketStyles.TicketContent>
                     <TicketStyles.ActionRegistrationTicketStatus
@@ -90,7 +91,7 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
               <Grid item xs={12} sm={6} md={4}>
                 <Box>
                   <TicketStyles.TicketTitle>
-                    {translate('pages.cascade.creatorPastelID')}:
+                    {parse(translate('pages.cascade.creatorPastelID'))}:
                   </TicketStyles.TicketTitle>
                   <TicketStyles.TicketContent>
                     {data.creatorPastelID ? (
@@ -101,7 +102,7 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
                         className="address-link nowrap inline-block read-more full"
                       />
                     ) : (
-                      translate('common.na')
+                      parse(translate('common.na'))
                     )}
                   </TicketStyles.TicketContent>
                 </Box>
@@ -109,7 +110,7 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
               <Grid item xs={12} sm={6} md={4}>
                 <Box>
                   <TicketStyles.TicketTitle>
-                    {translate('pages.cascade.currentOwnerPastelID')}:
+                    {parse(translate('pages.cascade.currentOwnerPastelID'))}:
                   </TicketStyles.TicketTitle>
                   <TicketStyles.TicketContent>
                     {data.creatorPastelID ? (
@@ -120,7 +121,7 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
                         className="address-link nowrap inline-block read-more full"
                       />
                     ) : (
-                      translate('common.na')
+                      parse(translate('common.na'))
                     )}
                   </TicketStyles.TicketContent>
                 </Box>
@@ -130,13 +131,15 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
         </Box>
       </Box>
       <Box className="raptor-q-parameters">
-        <Typography className="title">{translate('pages.cascade.raptorQParameters')}</Typography>
+        <Typography className="title">
+          {parse(translate('pages.cascade.raptorQParameters'))}
+        </Typography>
         <Box className="mt-10">
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} md={3}>
               <Box>
                 <TicketStyles.TicketTitle>
-                  {translate('pages.cascade.rqIc')}:
+                  {parse(translate('pages.cascade.rqIc'))}:
                 </TicketStyles.TicketTitle>
                 <TicketStyles.TicketContent>{data.rq_ic}</TicketStyles.TicketContent>
               </Box>
@@ -144,7 +147,7 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
             <Grid item xs={12} sm={6} md={3}>
               <Box>
                 <TicketStyles.TicketTitle>
-                  {translate('pages.cascade.rqMax')}:
+                  {parse(translate('pages.cascade.rqMax'))}:
                 </TicketStyles.TicketTitle>
                 <TicketStyles.TicketContent>{data.rq_max}</TicketStyles.TicketContent>
               </Box>
@@ -152,7 +155,7 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
             <Grid item xs={12} sm={6} md={3}>
               <Box>
                 <TicketStyles.TicketTitle>
-                  {translate('pages.cascade.rqOti')}:
+                  {parse(translate('pages.cascade.rqOti'))}:
                 </TicketStyles.TicketTitle>
                 <TicketStyles.TicketContent>{data.rq_oti}</TicketStyles.TicketContent>
               </Box>
@@ -160,15 +163,15 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
             <Grid item xs={12} sm={6} md={3}>
               <Box>
                 <TicketStyles.TicketTitle>
-                  {translate('pages.cascade.rqIds')}:
+                  {parse(translate('pages.cascade.rqIds'))}:
                 </TicketStyles.TicketTitle>
                 <TicketStyles.TicketContent
                   className={`expand-more ${opened ? 'opened' : ''}`}
                   onClick={() => setOpened(!opened)}
                 >
                   {opened
-                    ? translate('pages.cascade.hideAllRqIds')
-                    : translate('pages.cascade.displayAllRqIds')}
+                    ? parse(translate('pages.cascade.hideAllRqIds'))
+                    : parse(translate('pages.cascade.displayAllRqIds'))}
                   <ExpandMoreIcon />
                 </TicketStyles.TicketContent>
               </Box>

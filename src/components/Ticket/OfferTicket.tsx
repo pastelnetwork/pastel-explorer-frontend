@@ -1,5 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import parse from 'html-react-parser';
 
 import RouterLink, { ExternalLink } from '@components/RouterLink/RouterLink';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
@@ -68,11 +69,11 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
     const getOfferType = () => {
       switch (ticket.otherData.offerType) {
         case 'sense':
-          return translate('components.ticket.offerTicket.sense');
+          return parse(translate('components.ticket.offerTicket.sense'));
         case 'cascade':
-          return translate('components.ticket.offerTicket.cascade');
+          return parse(translate('components.ticket.offerTicket.cascade'));
         default:
-          return translate('components.ticket.offerTicket.nft');
+          return parse(translate('components.ticket.offerTicket.nft'));
       }
     };
 
@@ -86,7 +87,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
             <Grid container spacing={3} className="mb-sm-8">
               <Grid item xs={12} md={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.offerTicket.pastelID')}
+                  {parse(translate('components.ticket.offerTicket.pastelID'))}
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} md={9}>
@@ -99,7 +100,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
                       className="address-link"
                     />
                   ) : (
-                    translate('common.na')
+                    parse(translate('common.na'))
                   )}
                 </Styles.TicketContent>
               </Grid>
@@ -107,7 +108,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
             <Grid container spacing={3} className="mb-sm-8">
               <Grid item xs={12} md={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.offerTicket.copyNumber')}
+                  {parse(translate('components.ticket.offerTicket.copyNumber'))}
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} sm={9}>
@@ -117,7 +118,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
             <Grid container spacing={3} className="mb-sm-8">
               <Grid item xs={12} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.offerTicket.askedPrice')}
+                  {parse(translate('components.ticket.offerTicket.askedPrice'))}
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} sm={9}>
@@ -129,7 +130,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
             <Grid container spacing={3} className="mb-sm-8">
               <Grid item xs={12} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.offerTicket.itemTxId')}
+                  {parse(translate('components.ticket.offerTicket.itemTxId'))}
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} sm={9}>
@@ -148,7 +149,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
             <Grid container spacing={3} className="mb-sm-8">
               <Grid item xs={12} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.offerTicket.type')}:
+                  {parse(translate('components.ticket.offerTicket.type'))}:
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} sm={9}>
@@ -158,7 +159,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
             <Grid container spacing={3} className="mb-sm-8">
               <Grid item xs={12} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.offerTicket.version')}
+                  {parse(translate('components.ticket.offerTicket.version'))}
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} sm={9}>
@@ -168,7 +169,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
             <Grid container spacing={3} className="mb-sm-8">
               <Grid item xs={12} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.offerTicket.validAfter')}
+                  {parse(translate('components.ticket.offerTicket.validAfter'))}
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} sm={9}>
@@ -189,7 +190,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
             <Grid container spacing={3} className="mb-sm-8">
               <Grid item xs={12} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.offerTicket.validBefore')}
+                  {parse(translate('components.ticket.offerTicket.validBefore'))}
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} sm={9}>
@@ -210,7 +211,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
             <Grid container spacing={3} className="mb-sm-8">
               <Grid item xs={12} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.offerTicket.lockedRecipient')}
+                  {parse(translate('components.ticket.offerTicket.lockedRecipient'))}
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} sm={9}>
@@ -233,7 +234,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
               <Grid container spacing={3}>
                 <Grid item xs={12} sm={3} className="max-w-355">
                   <Styles.TicketTitle>
-                    {translate('components.ticket.offerTicket.timestamp')}
+                    {parse(translate('components.ticket.offerTicket.timestamp'))}
                   </Styles.TicketTitle>
                 </Grid>
                 <Grid item xs={12} sm={9}>
@@ -253,7 +254,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.offerTicket.version')}
+            {parse(translate('components.ticket.offerTicket.version'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -263,7 +264,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.offerTicket.pastelID')}
+            {parse(translate('components.ticket.offerTicket.pastelID'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -276,7 +277,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
                 className="address-link"
               />
             ) : (
-              translate('common.na')
+              parse(translate('common.na'))
             )}
           </Styles.TicketContent>
         </Grid>
@@ -284,7 +285,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.offerTicket.copyNumber')}
+            {parse(translate('components.ticket.offerTicket.copyNumber'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -294,7 +295,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.offerTicket.askedPrice')}
+            {parse(translate('components.ticket.offerTicket.askedPrice'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -306,7 +307,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.offerTicket.itemTxId')}
+            {parse(translate('components.ticket.offerTicket.itemTxId'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -324,7 +325,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.offerTicket.validAfter')}
+            {parse(translate('components.ticket.offerTicket.validAfter'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -345,7 +346,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.offerTicket.validBefore')}
+            {parse(translate('components.ticket.offerTicket.validBefore'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -366,7 +367,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.offerTicket.lockedRecipient')}
+            {parse(translate('components.ticket.offerTicket.lockedRecipient'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -378,7 +379,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.offerTicket.timestamp')}
+              {parse(translate('components.ticket.offerTicket.timestamp'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>

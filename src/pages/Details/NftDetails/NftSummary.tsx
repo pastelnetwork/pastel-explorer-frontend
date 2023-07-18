@@ -2,6 +2,7 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
+import parse from 'html-react-parser';
 
 import { formatFullDate } from '@utils/helpers/date/date';
 import { ExternalLink } from '@components/RouterLink/RouterLink';
@@ -46,17 +47,17 @@ const NftSummary: React.FC<INftSummary> = ({
         <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
-              {translate('pages.nftDetails.nftSeriesName')}
+              {parse(translate('pages.nftDetails.nftSeriesName'))}
             </TicketStyles.TicketTitle>
             <TicketStyles.TicketContent>
-              {nftSeriesName || translate('common.na')}
+              {nftSeriesName || parse(translate('common.na'))}
             </TicketStyles.TicketContent>
           </Styles.ContentItem>
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
-              {translate('pages.nftDetails.royalty')}
+              {parse(translate('pages.nftDetails.royalty'))}
             </TicketStyles.TicketTitle>
             <TicketStyles.TicketContent>
               {royalty ? parseFloat(royalty.toFixed(2)) : 0}
@@ -66,27 +67,29 @@ const NftSummary: React.FC<INftSummary> = ({
         <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
-              {translate('pages.nftDetails.fileType')}
+              {parse(translate('pages.nftDetails.fileType'))}
             </TicketStyles.TicketTitle>
             <TicketStyles.TicketContent>
-              {fileType || translate('common.na')}
+              {fileType || parse(translate('common.na'))}
             </TicketStyles.TicketContent>
           </Styles.ContentItem>
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
-              {translate('pages.nftDetails.nftKeyword')}
+              {parse(translate('pages.nftDetails.nftKeyword'))}
             </TicketStyles.TicketTitle>
             <TicketStyles.TicketContent>
-              {nftKeyword?.length ? nftKeyword.replaceAll(',', ', ') : translate('common.na')}
+              {nftKeyword?.length
+                ? nftKeyword.replaceAll(',', ', ')
+                : parse(translate('common.na'))}
             </TicketStyles.TicketContent>
           </Styles.ContentItem>
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
-              {translate('pages.nftDetails.totalCopies')}
+              {parse(translate('pages.nftDetails.totalCopies'))}
             </TicketStyles.TicketTitle>
             <TicketStyles.TicketContent>{totalCopies || 0}</TicketStyles.TicketContent>
           </Styles.ContentItem>
@@ -94,15 +97,15 @@ const NftSummary: React.FC<INftSummary> = ({
         <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
-              {translate('pages.nftDetails.originalFileSize')}
+              {parse(translate('pages.nftDetails.originalFileSize'))}
             </TicketStyles.TicketTitle>
             <TicketStyles.TicketContent>
               {originalFileSize ? (
                 <>
-                  {(originalFileSize / 1024).toFixed(2)} {translate('pages.nftDetails.kb')}
+                  {(originalFileSize / 1024).toFixed(2)} {parse(translate('pages.nftDetails.kb'))}
                 </>
               ) : (
-                translate('common.na')
+                parse(translate('common.na'))
               )}
             </TicketStyles.TicketContent>
           </Styles.ContentItem>
@@ -110,13 +113,13 @@ const NftSummary: React.FC<INftSummary> = ({
         <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
-              {translate('pages.nftDetails.video')}
+              {parse(translate('pages.nftDetails.video'))}
             </TicketStyles.TicketTitle>
             <TicketStyles.TicketContent className="read-more">
               {video ? (
                 <ExternalLink href={video} target="_blank" value={video} />
               ) : (
-                translate('common.na')
+                parse(translate('common.na'))
               )}
             </TicketStyles.TicketContent>
           </Styles.ContentItem>
@@ -124,7 +127,7 @@ const NftSummary: React.FC<INftSummary> = ({
         <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
-              {translate('pages.nftDetails.isPubliclyAccessible')}
+              {parse(translate('pages.nftDetails.isPubliclyAccessible'))}
             </TicketStyles.TicketTitle>
             <TicketStyles.TicketContent>
               <TicketStyles.ActionRegistrationTicketStatus
@@ -140,42 +143,44 @@ const NftSummary: React.FC<INftSummary> = ({
         <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
-              {translate('pages.nftDetails.dataHash')}
+              {parse(translate('pages.nftDetails.dataHash'))}
             </TicketStyles.TicketTitle>
             <TicketStyles.TicketContent className="read-more">
-              {dataHash || translate('common.na')}
+              {dataHash || parse(translate('common.na'))}
             </TicketStyles.TicketContent>
           </Styles.ContentItem>
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
-              {translate('pages.nftDetails.nftType')}
+              {parse(translate('pages.nftDetails.nftType'))}
             </TicketStyles.TicketTitle>
             <TicketStyles.TicketContent>
-              {nftType || translate('common.na')}
+              {nftType || parse(translate('common.na'))}
             </TicketStyles.TicketContent>
           </Styles.ContentItem>
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
-              {translate('pages.senseDetails.isPastelOpenapiRequest')}
+              {parse(translate('pages.senseDetails.isPastelOpenapiRequest'))}
             </TicketStyles.TicketTitle>
             <TicketStyles.TicketContent>
               {isPastelOpenapiRequest === 1
-                ? translate('pages.senseDetails.true')
-                : translate('pages.senseDetails.false')}
+                ? parse(translate('pages.senseDetails.true'))
+                : parse(translate('pages.senseDetails.false'))}
             </TicketStyles.TicketContent>
           </Styles.ContentItem>
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
           <Styles.ContentItem>
             <TicketStyles.TicketTitle>
-              {translate('pages.nftDetails.timestamp')}
+              {parse(translate('pages.nftDetails.timestamp'))}
             </TicketStyles.TicketTitle>
             <TicketStyles.TicketContent>
-              {timestamp ? formatFullDate(timestamp, { dayName: false }) : translate('common.na')}
+              {timestamp
+                ? formatFullDate(timestamp, { dayName: false })
+                : parse(translate('common.na'))}
             </TicketStyles.TicketContent>
           </Styles.ContentItem>
         </Grid>

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import subDays from 'date-fns/subDays';
 import format from 'date-fns/format';
+import parse from 'html-react-parser';
 
 import { periods } from '@utils/constants/statistics';
 import { translate } from '@utils/helpers/i18n';
@@ -161,7 +162,7 @@ const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
           incomingSum={swrData?.data?.totalReceived}
         />
         <ChartStyles.PeriodSelect className="period">
-          <span>{translate('pages.historicalStatistics.period')}: </span>
+          <span>{parse(translate('pages.historicalStatistics.period'))}: </span>
           <div className="balance-history-period">
             {periods[1].map(_period => (
               <ChartStyles.PeriodButton
@@ -182,7 +183,7 @@ const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
         {isLoading || swrData.isLoading ? (
           <Styles.Loader>
             <CircularProgress size={40} />
-            <Styles.LoadingText>{translate('common.loadingData')}</Styles.LoadingText>
+            <Styles.LoadingText>{parse(translate('common.loadingData'))}</Styles.LoadingText>
           </Styles.Loader>
         ) : (
           <LineChart

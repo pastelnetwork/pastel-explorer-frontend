@@ -4,7 +4,7 @@ import parse from 'html-react-parser';
 import { decompress_zstd_compressed_data_func } from '@utils/helpers/encryption';
 import { TChartParams } from '@utils/types/IStatistics';
 import { TCurrentNode } from '@utils/types/ITransactions';
-import { translate } from '@utils/helpers/i18n';
+import { translateDropdown } from '@utils/helpers/i18n';
 
 import { rareOnTheInternetAlternativeResultsData } from './mockup';
 import EmptyOverlay from './EmptyOverlay';
@@ -116,7 +116,7 @@ const RareOnTheInternetAlternativeResults: React.FC<IRareOnTheInternetAlternativ
               <div class="tooltip-url">${item.img_src}</div>
               <div class="tooltip-content-wrapper">
                 <div class="tooltip-item">
-                  <div class="label">${translate(
+                  <div class="label">${translateDropdown(
                     'pages.senseDetails.relevantTextStringInResults',
                   )}:</div>
                   <div class="description">${parse(item.text_strings_on_page)}</div>

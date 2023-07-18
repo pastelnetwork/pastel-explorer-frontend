@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo, MouseEvent } from 'react';
 import { Grid } from '@material-ui/core';
+import parse from 'html-react-parser';
 
 import Table, { RowsProps } from '@components/Table/Table';
 import { IRichlist } from '@utils/types/IRichlists';
@@ -89,7 +90,7 @@ const Richlist: React.FC = () => {
     <Styles.Wrapper>
       <Grid item>
         <Styles.BlockWrapper>
-          <Styles.Title>{translate('pages.richlist.wealthDistribution')}</Styles.Title>
+          <Styles.Title>{parse(translate('pages.richlist.wealthDistribution'))}</Styles.Title>
           <Styles.ContentWrapper>
             <Styles.Info>
               <Styles.InfoItem>{wealthDistributionData?.[0]?.data}</Styles.InfoItem>
@@ -109,7 +110,7 @@ const Richlist: React.FC = () => {
         <Table
           headers={balanceHeaders}
           rows={richlist ? richlist.slice(0, 100) : []}
-          title={translate('pages.richlist.top100')}
+          title={parse(translate('pages.richlist.top100'))}
           handleClickSort={handleClickSort}
           className="richlist"
           tableWrapperClassName="richlist-table-wrapper"

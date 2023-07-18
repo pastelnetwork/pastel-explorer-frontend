@@ -1,5 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import parse from 'html-react-parser';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
@@ -26,7 +27,7 @@ const ActionActivationTicket: React.FC<IActionActivationTicketProps> = ({ ticket
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.actionActivationTicket.calledAt')}
+              {parse(translate('components.ticket.actionActivationTicket.calledAt'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -44,7 +45,7 @@ const ActionActivationTicket: React.FC<IActionActivationTicketProps> = ({ ticket
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.actionActivationTicket.version')}
+            {parse(translate('components.ticket.actionActivationTicket.version'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -54,7 +55,7 @@ const ActionActivationTicket: React.FC<IActionActivationTicketProps> = ({ ticket
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.actionActivationTicket.pastelID')}
+            {parse(translate('components.ticket.actionActivationTicket.pastelID'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -73,7 +74,7 @@ const ActionActivationTicket: React.FC<IActionActivationTicketProps> = ({ ticket
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.actionActivationTicket.regTxId')}
+              {parse(translate('components.ticket.actionActivationTicket.regTxId'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -92,9 +93,11 @@ const ActionActivationTicket: React.FC<IActionActivationTicketProps> = ({ ticket
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.actionActivationTicket.storageFee', {
-              currency: getCurrencyName(),
-            })}
+            {parse(
+              translate('components.ticket.actionActivationTicket.storageFee', {
+                currency: getCurrencyName(),
+              }),
+            )}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -107,7 +110,7 @@ const ActionActivationTicket: React.FC<IActionActivationTicketProps> = ({ ticket
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.actionActivationTicket.timestamp')}
+              {parse(translate('components.ticket.actionActivationTicket.timestamp'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>

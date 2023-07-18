@@ -1,5 +1,6 @@
 import { memo, FC, useCallback, MouseEvent, useMemo } from 'react';
 import { Drawer, Button, Tooltip } from '@material-ui/core';
+import parse from 'html-react-parser';
 
 import { useLocation, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
@@ -143,7 +144,9 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
           <Button type="button" className={classes.close} onClick={handleClusterClose}>
             ×
           </Button>
-          <h1 className={classes.title}>{translate('components.chooseCluster.chooseACluster')}</h1>
+          <h1 className={classes.title}>
+            {parse(translate('components.chooseCluster.chooseACluster'))}
+          </h1>
           {data.map(({ id, name, value, api }) => {
             if (!api) {
               return null;
@@ -159,7 +162,7 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
                 variant="outlined"
                 className={currentCluster.value === value ? 'active' : ''}
               >
-                <span className={classes.itemTitle}>{name}:</span>
+                <span className={classes.itemTitle}>{parse(name)}:</span>
                 <span className={classes.itemTitle}>{api}</span>
               </Styles.ButtonStyle>
             );

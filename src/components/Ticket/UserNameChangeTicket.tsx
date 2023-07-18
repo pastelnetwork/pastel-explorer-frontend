@@ -1,5 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import parse from 'html-react-parser';
 
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { IUserNameChangeTicket } from '@utils/types/ITransactions';
@@ -24,7 +25,7 @@ const UserNameChangeTicket: React.FC<IUserNameChangeTicketProps> = ({ ticket }) 
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.userNameChangeTicket.username')}
+            {parse(translate('components.ticket.userNameChangeTicket.username'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -34,7 +35,7 @@ const UserNameChangeTicket: React.FC<IUserNameChangeTicketProps> = ({ ticket }) 
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.userNameChangeTicket.version')}
+            {parse(translate('components.ticket.userNameChangeTicket.version'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -44,7 +45,7 @@ const UserNameChangeTicket: React.FC<IUserNameChangeTicketProps> = ({ ticket }) 
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.userNameChangeTicket.pastelID')}
+            {parse(translate('components.ticket.userNameChangeTicket.pastelID'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -62,7 +63,7 @@ const UserNameChangeTicket: React.FC<IUserNameChangeTicketProps> = ({ ticket }) 
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.userNameChangeTicket.fee')}
+            {parse(translate('components.ticket.userNameChangeTicket.fee'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -75,7 +76,7 @@ const UserNameChangeTicket: React.FC<IUserNameChangeTicketProps> = ({ ticket }) 
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.userNameChangeTicket.timestamp')}
+              {parse(translate('components.ticket.userNameChangeTicket.timestamp'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>

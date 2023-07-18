@@ -1,5 +1,6 @@
 import { useState, ChangeEvent, useEffect } from 'react';
 import { Skeleton } from '@material-ui/lab';
+import parse from 'html-react-parser';
 
 import { TMiningInfo, TLineChartData } from '@utils/types/IStatistics';
 import {
@@ -79,7 +80,7 @@ const NetworkStatistics: React.FC<NetworkStatistics> = ({ blockElements }) => {
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
           <SummaryStyles.Typography variant="h6">
-            {translate('pages.statistics.hashrate')}
+            {parse(translate('pages.statistics.hashrate'))}
           </SummaryStyles.Typography>
         </SummaryStyles.ValueWrapper>
         <SummaryStyles.PercentageWrapper>
@@ -97,7 +98,7 @@ const NetworkStatistics: React.FC<NetworkStatistics> = ({ blockElements }) => {
         {isLoading ? (
           <StatisticsStyles.Loader>
             <StatisticsStyles.LoadingText>
-              {translate('common.loadingData')}
+              {parse(translate('common.loadingData'))}
             </StatisticsStyles.LoadingText>
           </StatisticsStyles.Loader>
         ) : null}
@@ -105,7 +106,7 @@ const NetworkStatistics: React.FC<NetworkStatistics> = ({ blockElements }) => {
           <>
             <Skeleton animation="wave" variant="rect" height={300} />
             <StatisticsStyles.LoadingText>
-              {translate('common.loadingData')}
+              {parse(translate('common.loadingData'))}
             </StatisticsStyles.LoadingText>
           </>
         ) : (

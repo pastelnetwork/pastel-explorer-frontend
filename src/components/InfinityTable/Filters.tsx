@@ -8,8 +8,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
 import { useDispatch, useSelector } from 'react-redux';
+import parse from 'html-react-parser';
 
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
 import DateTimePicker from '@components/DateTimePicker/DateTimePicker';
 import { setFilterValueAction } from '@redux/actions/filterAction';
 import { TAppTheme } from '@theme/index';
@@ -142,7 +143,7 @@ const Filters: FC<IProps> = ({
       return selected
         ?.map(i => {
           const item = dropdownFilters.find(f => f.value === i);
-          return translate(item?.name || '');
+          return translateDropdown(item?.name || '');
         })
         .join(', ');
     };
@@ -161,7 +162,7 @@ const Filters: FC<IProps> = ({
           input={<Input />}
           renderValue={selected => {
             if ((selected as string[]).length === 0) {
-              return <>{translate('components.infinityTable.filters.all')}</>;
+              return <>{translateDropdown('components.infinityTable.filters.all')}</>;
             }
 
             return renderValue(selected as string[]);
@@ -171,15 +172,15 @@ const Filters: FC<IProps> = ({
           {dropdownFilters.map(item => (
             <Styles.MenuItem key={item.value} value={item.value}>
               <Checkbox checked={ticketType?.indexOf(item.value) > -1} />
-              <ListItemText primary={translate(item.name)} />
+              <ListItemText primary={parse(translate(item.name))} />
             </Styles.MenuItem>
           ))}
           <Styles.FilterButtonWrapper>
             <Button className="btn-close" type="button" onClick={handleClose}>
-              {translate('components.infinityTable.filters.close')}
+              {parse(translate('components.infinityTable.filters.close'))}
             </Button>
             <Button className="btn-filter" type="button" onClick={handleFilter}>
-              {translate('components.infinityTable.filters.filter')}
+              {parse(translate('components.infinityTable.filters.filter'))}
             </Button>
           </Styles.FilterButtonWrapper>
         </Select>
@@ -208,7 +209,7 @@ const Filters: FC<IProps> = ({
                 value={value}
                 onClick={handleSelectTime}
               >
-                {translate(name)}
+                {parse(translate(name))}
               </Button>
             </MenuItem>
           ))}

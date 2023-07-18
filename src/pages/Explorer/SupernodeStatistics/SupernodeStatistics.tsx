@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Skeleton from '@material-ui/lab/Skeleton';
+import parse from 'html-react-parser';
 
 import DoughnutChart from '@components/Charts/DoughnutChart/DoughnutChart';
 import { INetworkSupernodes } from '@utils/types/INetwork';
@@ -50,7 +51,7 @@ const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ link = '' }) 
     return (
       <ExplorerStyles.BlockWrapper>
         <ExplorerStyles.BlockTitle>
-          {translate('pages.explorer.supernodeStatistics')}
+          {parse(translate('pages.explorer.supernodeStatistics'))}
         </ExplorerStyles.BlockTitle>
         <Skeleton animation="wave" variant="rect" height={355} />
       </ExplorerStyles.BlockWrapper>
@@ -60,8 +61,8 @@ const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ link = '' }) 
   return (
     <ExplorerMapStyles.Container>
       <DoughnutChart
-        title={translate('pages.explorer.supernodeStatistics')}
-        innerTitle={translate('pages.explorer.total')}
+        title={parse(translate('pages.explorer.supernodeStatistics'))}
+        innerTitle={parse(translate('pages.explorer.total'))}
         innerSubtitle={countryQuantity}
         data={
           countryChartData &&

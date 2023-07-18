@@ -5,6 +5,7 @@ import { saveAs } from 'file-saver';
 import * as htmlToImage from 'html-to-image';
 import { useSelector } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
+import parse from 'html-react-parser';
 
 import { Data } from 'react-csv/components/CommonPropTypes';
 import { csvHeaders, themes } from '@utils/constants/statistics';
@@ -18,7 +19,7 @@ import {
 import { getThemeInitOption, getThemeUpdateOption } from '@utils/helpers/chartOptions';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import useWindowDimensions from '@hooks/useWindowDimensions';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
 
 import { eChartLineStyles } from './styles';
 import * as Styles from './Chart.styles';
@@ -115,7 +116,9 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
           }
         })
         .catch(function onError(error) {
-          throw new Error(`${translate('pages.historicalStatistics.pngDownloadError')}: ${error}`);
+          throw new Error(
+            `${translateDropdown('pages.historicalStatistics.pngDownloadError')}: ${error}`,
+          );
         });
     }
   };
@@ -155,7 +158,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
     const headers = csvHeaders[chartName];
     return headers.map(header => ({
       ...header,
-      label: translate(header.label),
+      label: translateDropdown(header.label),
     }));
   };
 
@@ -170,7 +173,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
           <Styles.ChartTitle>{title}</Styles.ChartTitle>
         )}
         <Styles.PeriodSelect>
-          <span>{translate('pages.historicalStatistics.period')}: </span>
+          <span>{parse(translate('pages.historicalStatistics.period'))}: </span>
           {periods.map(period => (
             <Styles.PeriodButton
               className={getActivePriodButtonStyle(period)}
@@ -191,7 +194,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
         {isLoading || !dataX?.length ? (
           <Styles.LoadingWrapper>
             <Skeleton animation="wave" variant="rect" height={386} />
-            <Styles.LoadingText>{translate('common.loadingData')}</Styles.LoadingText>
+            <Styles.LoadingText>{parse(translate('common.loadingData'))}</Styles.LoadingText>
           </Styles.LoadingWrapper>
         ) : (
           <ReactECharts
@@ -221,7 +224,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
         </div>
         <div className={styles.lineChartDownloadButtonBar}>
           <Styles.DonwloadButton type="button" onClick={downloadPNG}>
-            {translate('pages.historicalStatistics.downloadPNG')}
+            {parse(translate('pages.historicalStatistics.downloadPNG'))}
           </Styles.DonwloadButton>
           <Styles.CSVLinkButton
             data={csvData}
@@ -231,7 +234,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
             ref={downloadRef}
             className={styles.uploadButton}
           >
-            {translate('pages.historicalStatistics.downloadCSV')}
+            {parse(translate('pages.historicalStatistics.downloadCSV'))}
           </Styles.CSVLinkButton>
         </div>
       </Styles.LineChartFooter>

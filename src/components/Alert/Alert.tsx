@@ -8,8 +8,8 @@ interface AlertComponentProps {
   isOpen: boolean;
   severity?: AlertProps['severity'];
   autoHideDuration?: number;
-  message?: string;
-  title?: string;
+  message?: React.ReactNode;
+  title?: React.ReactNode;
   outsideClickClose?: boolean;
   onClose?: () => void;
 }

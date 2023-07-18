@@ -5,6 +5,7 @@ import { useCallback } from 'react';
 import { Collapse, List, Hidden, Button, Box } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import parse from 'html-react-parser';
 
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import * as ROUTES from '@utils/constants/routes';
@@ -29,7 +30,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 interface SidebarLinkPropsType {
-  name: string;
+  name: string | React.ReactNode;
   to: string;
   badge?: string | number;
   icon?: JSX.Element;
@@ -40,7 +41,7 @@ const SidebarLink: React.FC<SidebarLinkPropsType> = ({ name, to, badge }) => {
 
   return (
     <Styles.NavLinkStyle exact to={to} className={isActive ? 'active' : ''}>
-      <Styles.LinkText>{name}</Styles.LinkText>
+      <Styles.LinkText>{parse(name)}</Styles.LinkText>
       {badge ? <Styles.LinkBadge label={badge} /> : ''}
     </Styles.NavLinkStyle>
   );
@@ -103,7 +104,7 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
   return (
     <Styles.Category {...rest}>
       <Styles.CategoryText className={`menu-text ${active}`}>
-        {t(`${name}.message`)}
+        {parse(t(`${name}.message`, { defaultValue: '<span class="skeleton-text"></span>' }))}
         {isCollapsable ? categoryIcon : null}
       </Styles.CategoryText>
       {badge ? <Styles.CategoryBadge label={badge} /> : ''}
@@ -112,7 +113,9 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
           {category.children.map((route: RouteChildType) => (
             <SidebarLink
               key={route.name}
-              name={t(`${route.name}.message`)}
+              name={t(`${route.name}.message`, {
+                defaultValue: '<span class="skeleton-text"></span>',
+              })}
               to={route.path}
               icon={route.icon}
               badge={route.badge}
@@ -242,7 +245,7 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
             <Box ml={1}>
               <Styles.BrandLogo
                 src={isDarkMode ? PastelLogoWhite : PastelLogo}
-                alt={t('components.footer.pastelLogo.message') || ''}
+                alt={t('components.footer.pastelLogo.message', { defaultValue: '' }) || ''}
               />
             </Box>
           </Styles.Brand>

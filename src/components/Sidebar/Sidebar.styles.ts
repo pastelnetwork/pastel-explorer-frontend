@@ -85,6 +85,11 @@ export const Brand = styled(ListItem)<{
   ${props => props.theme.breakpoints.down('sm')} {
     margin-right: 5px;
   }
+  ${props => props.theme.breakpoints.down(600)} {
+    &.desktop-logo {
+      display: none;
+    }
+  }
 
   ${props => props.theme.breakpoints.down('md')} {
     margin-right: 10px;

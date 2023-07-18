@@ -17,6 +17,17 @@ export const ToolbarStyle = styled(Toolbar)`
   justify-content: flex-end;
   width: 100%;
   padding-right: 0;
+
+  .mobile-logo {
+    margin-left: 27%;
+    margin-right: auto;
+  }
+
+  ${props => props.theme.breakpoints.down(440)} {
+    .mobile-logo {
+      margin-left: 20%;
+    }
+  }
 `;
 
 export const GridStyle = styled(Grid)`
@@ -83,6 +94,10 @@ export const AppBar = styled(MuiAppBar)`
 
   ${props => props.theme.breakpoints.up('lg')} {
     max-width: calc(100% - 783px);
+  }
+
+  ${props => props.theme.breakpoints.down(600)} {
+    width: calc(100% - 50px);
   }
 
   fieldset {

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import parse from 'html-react-parser';
 
 import { PeriodTypes, transformStatisticsChart } from '@utils/helpers/statisticsLib';
 import { periods, info, cacheList } from '@utils/constants/statistics';
@@ -54,17 +55,21 @@ function CirculatingSupply() {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title={translate('pages.historicalStatistics.circulatingSupply', {
-        currency: getCurrencyName(),
-      })}
+      title={parse(
+        translate('pages.historicalStatistics.circulatingSupply', {
+          currency: getCurrencyName(),
+        }),
+      )}
     >
       <EChartsLineChart
         chartName="circulatingSupply"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title={translate('pages.historicalStatistics.circulatingSupply', {
-          currency: getCurrencyName(),
-        })}
+        title={parse(
+          translate('pages.historicalStatistics.circulatingSupply', {
+            currency: getCurrencyName(),
+          }),
+        )}
         info={info}
         period={period}
         offset={0}

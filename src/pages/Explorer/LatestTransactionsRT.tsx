@@ -15,6 +15,7 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
 import Grid from '@material-ui/core/Grid';
 import { useDispatch } from 'react-redux';
+import parse from 'html-react-parser';
 // application
 import { TAppTheme } from '@theme/index';
 import RouterLink from '@components/RouterLink/RouterLink';
@@ -25,7 +26,7 @@ import { AppThunkDispatch } from '@redux/types';
 import { useTransactionLatestTransactions } from '@redux/hooks/transactionsHooks';
 import { ITransaction } from '@utils/types/ITransactions';
 import { TRANSACTION_DETAILS } from '@utils/constants/routes';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
 import Hourglass from '@components/Hourglass/Hourglass';
 import CopyButton from '@components/CopyButton/CopyButton';
 import * as BlockStyles from '@pages/Blocks/Blocks.styles';
@@ -71,10 +72,10 @@ function LatestTransactions() {
   return (
     <Styles.BlockWrapper className="mt-24 latest-transactions-wrapper">
       <Styles.BlockTitle className="latest-blocks">
-        {translate('pages.explorer.latestTransactionsLive')}
+        {parse(translate('pages.explorer.latestTransactionsLive'))}
         <Link to="/movement" className="view-all">
           <Typography align="center" className={classes.viewAll}>
-            {translate('pages.explorer.viewAll')} <ArrowForwardIos />
+            {parse(translate('pages.explorer.viewAll'))} <ArrowForwardIos />
           </Typography>
         </Link>
       </Styles.BlockTitle>
@@ -83,20 +84,20 @@ function LatestTransactions() {
           <TableHead className="table__row-header">
             <TableRow>
               <StyledTableCell className="th-block">
-                {translate('pages.explorer.block')}
+                {parse(translate('pages.explorer.block'))}
               </StyledTableCell>
-              <StyledTableCell>{translate('pages.explorer.txId')}</StyledTableCell>
+              <StyledTableCell>{parse(translate('pages.explorer.txId'))}</StyledTableCell>
               <StyledTableCell className="th-amount" align="right">
-                {translate('pages.explorer.amount', { currency: getCurrencyName() })}
+                {parse(translate('pages.explorer.amount', { currency: getCurrencyName() }))}
               </StyledTableCell>
               <StyledTableCell className="th-recipents" align="right">
-                {translate('pages.explorer.recipents')}
+                {parse(translate('pages.explorer.recipents'))}
               </StyledTableCell>
               <StyledTableCell className="th-amount" align="right">
-                {translate('pages.explorer.tickets')}
+                {parse(translate('pages.explorer.tickets'))}
               </StyledTableCell>
               <StyledTableCell className="th-fee" align="right">
-                {translate('pages.explorer.fee')}
+                {parse(translate('pages.explorer.fee'))}
               </StyledTableCell>
             </TableRow>
           </TableHead>
@@ -121,8 +122,10 @@ function LatestTransactions() {
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       {tx.isNonStandard ? (
-                        <Tooltip title={translate('pages.explorer.shieldedTransactionTooltip')}>
-                          <span>{translate('common.unknown')}</span>
+                        <Tooltip
+                          title={translateDropdown('pages.explorer.shieldedTransactionTooltip')}
+                        >
+                          <span>{parse(translate('common.unknown'))}</span>
                         </Tooltip>
                       ) : (
                         <>{(+tx.totalAmount.toFixed(2)).toLocaleString('en')}</>

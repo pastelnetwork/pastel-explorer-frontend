@@ -5,6 +5,7 @@ import * as echarts from 'echarts';
 import { saveAs } from 'file-saver';
 import { useSelector } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
+import parse from 'html-react-parser';
 
 import { Data } from 'react-csv/components/CommonPropTypes';
 import {
@@ -23,7 +24,7 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { TChartParams } from '@utils/types/IStatistics';
 import useWindowDimensions from '@hooks/useWindowDimensions';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
 
 import { eChartLineStyles } from './styles';
 import * as Styles from './Chart.styles';
@@ -41,10 +42,10 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
     period: selectedPeriodButton,
     periods = [],
     title,
-    seriesName = translate('pages.historicalStatistics.usdPrice'),
-    seriesName1 = translate('pages.historicalStatistics.btcPrice'),
-    yaxisName = translate('pages.historicalStatistics.usdPrice'),
-    yaxisName1 = translate('pages.historicalStatistics.btcPrice'),
+    seriesName = translateDropdown('pages.historicalStatistics.usdPrice'),
+    seriesName1 = translateDropdown('pages.historicalStatistics.btcPrice'),
+    yaxisName = translateDropdown('pages.historicalStatistics.usdPrice'),
+    yaxisName1 = translateDropdown('pages.historicalStatistics.btcPrice'),
     handlePeriodFilterChange,
     handleBgColorChange,
     setHeaderBackground,
@@ -308,7 +309,9 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
           }
         })
         .catch(function getError(error) {
-          throw new Error(`${translate('pages.historicalStatistics.pngDownloadError')}: ${error}`);
+          throw new Error(
+            `${translateDropdown('pages.historicalStatistics.pngDownloadError')}: ${error}`,
+          );
         });
     }
   };
@@ -395,7 +398,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
   const getCsvHeaders = () => {
     return pricesCSVHeaders.map(header => ({
       ...header,
-      label: translate(header.label),
+      label: translateDropdown(header.label),
     }));
   };
 
@@ -410,7 +413,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
           <Styles.ChartTitle>{title}</Styles.ChartTitle>
         )}
         <Styles.PeriodSelect>
-          <span>{translate('pages.historicalStatistics.period')}: </span>
+          <span>{parse(translate('pages.historicalStatistics.period'))}: </span>
           {periods.length &&
             periods.map(period => (
               <Styles.PeriodButton
@@ -429,7 +432,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
         {isLoading || !dataX?.length ? (
           <Styles.LoadingWrapper>
             <Skeleton animation="wave" variant="rect" height={386} />
-            <Styles.LoadingText>{translate('common.loadingData')}</Styles.LoadingText>
+            <Styles.LoadingText>{parse(translate('common.loadingData'))}</Styles.LoadingText>
           </Styles.LoadingWrapper>
         ) : (
           <ReactECharts
@@ -459,7 +462,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
         </div>
         <div className={styles.lineChartDownloadButtonBar}>
           <Styles.DonwloadButton type="button" onClick={downloadPNG}>
-            {translate('pages.historicalStatistics.downloadPNG')}
+            {parse(translate('pages.historicalStatistics.downloadPNG'))}
           </Styles.DonwloadButton>
           <Styles.CSVLinkButton
             data={csvData}
@@ -469,7 +472,7 @@ export const EChartsMultiLineChart = (props: TLineChartProps): JSX.Element => {
             ref={downloadRef}
             className={styles.uploadButton}
           >
-            {translate('pages.historicalStatistics.downloadCSV')}
+            {parse(translate('pages.historicalStatistics.downloadCSV'))}
           </Styles.CSVLinkButton>
         </div>
       </Styles.LineChartFooter>

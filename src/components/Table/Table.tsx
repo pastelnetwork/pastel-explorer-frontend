@@ -1,8 +1,9 @@
 import { MouseEvent, useCallback, ReactNode } from 'react';
 import { CircularProgress, Table, TableBody, TableHead, TableRow } from '@material-ui/core';
 import { CSSProperties } from '@material-ui/styles';
+import parse from 'html-react-parser';
 
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
 import { getCurrencyName } from '@utils/appInfo';
 
 import * as Styles from './Table.styles';
@@ -17,7 +18,7 @@ export interface RowsProps {
 type RowsDataType = { value: number | string | JSX.Element; id: number };
 
 interface TableComponentProps {
-  title?: JSX.Element | string;
+  title?: JSX.Element | string | ReactNode;
   headers: Array<HeaderType>;
   rows: Array<RowsProps> | null;
   styles?: Partial<CSSProperties>;
@@ -58,7 +59,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
                   <TableRow>
                     {headers.map(({ id, header, key }) => (
                       <Styles.TableCell key={id} data-id={key} onClick={onClickHeader}>
-                        {translate(header, { currency: getCurrencyName() })}
+                        {parse(translate(header, { currency: getCurrencyName() }))}
                       </Styles.TableCell>
                     ))}
                   </TableRow>
@@ -69,7 +70,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
                       {data.map((dataElement, index) => (
                         <Styles.RowCell
                           key={dataElement.id}
-                          data-title={translate(headers[index].header, {
+                          data-title={translateDropdown(headers[index].header, {
                             currency: getCurrencyName(),
                           })}
                           className="cell-content"

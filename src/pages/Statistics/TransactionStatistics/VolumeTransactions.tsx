@@ -1,5 +1,6 @@
 import { useState, ChangeEvent, useEffect } from 'react';
 import { Skeleton } from '@material-ui/lab';
+import parse from 'html-react-parser';
 
 import {
   PeriodTypes,
@@ -81,7 +82,9 @@ const VolumeTransactions: React.FC<IVolumeTransactions> = ({ blockElements }) =>
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
           <SummaryStyles.Typography variant="h6">
-            {translate('pages.statistics.volumeOfTransactions', { currency: getCurrencyName() })}
+            {parse(
+              translate('pages.statistics.volumeOfTransactions', { currency: getCurrencyName() }),
+            )}
           </SummaryStyles.Typography>
         </SummaryStyles.ValueWrapper>
         <SummaryStyles.PercentageWrapper>
@@ -99,7 +102,7 @@ const VolumeTransactions: React.FC<IVolumeTransactions> = ({ blockElements }) =>
         {isLoading ? (
           <StatisticsStyles.Loader>
             <StatisticsStyles.LoadingText>
-              {translate('common.loadingData')}
+              {parse(translate('common.loadingData'))}
             </StatisticsStyles.LoadingText>
           </StatisticsStyles.Loader>
         ) : null}
@@ -107,7 +110,7 @@ const VolumeTransactions: React.FC<IVolumeTransactions> = ({ blockElements }) =>
           <>
             <Skeleton animation="wave" variant="rect" height={300} />
             <StatisticsStyles.LoadingText>
-              {translate('common.loadingData')}
+              {parse(translate('common.loadingData'))}
             </StatisticsStyles.LoadingText>
           </>
         ) : (
