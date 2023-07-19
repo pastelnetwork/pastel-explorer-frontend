@@ -303,7 +303,7 @@ const TicketsList: React.FC<ITicketsList> = ({
         <Styles.BlockWrapper>
           <Styles.BlockTitle>
             {translate('pages.pastelIdDetails.ticketsCreatedUsingThisPastelID')}{' '}
-            <Styles.SubTitle>
+            <Styles.SubTitle className="nowrap">
               (
               {totalTickets > 1
                 ? translate('pages.pastelIdDetails.totalTickets', { totalTickets })
@@ -339,7 +339,7 @@ const TicketsList: React.FC<ITicketsList> = ({
                   </TicketStyles.TicketTitle>
                 </Grid>
                 <Grid item xs={8} sm={9}>
-                  <TicketStyles.TicketContent>
+                  <TicketStyles.TicketContent className="nowrap">
                     <CopyButton copyText={ticket.transactionHash} />
                     <RouterLink
                       route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.transactionHash}`}

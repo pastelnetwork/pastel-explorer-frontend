@@ -17,6 +17,10 @@ export const TicketsContainer = styled.div`
     }
   }
 
+  .nowrap {
+    white-space: nowrap;
+  }
+
   .list-filter {
     margin-left: 10px;
     border: 1px solid ${props => props.theme.filter.border};
@@ -35,6 +39,20 @@ export const TicketsContainer = styled.div`
     }
   }
 
+  ${props => props.theme.breakpoints.down(1167)} {
+    .filter-wrapper {
+      justify-content: flex-end;
+
+      .list-filter {
+        margin-top: 10px;
+      }
+    }
+
+    .ticket-title-section {
+      width: 50%;
+    }
+  }
+
   ${props => props.theme.breakpoints.down(960)} {
     .ticket-title-wrapper {
       display: block;
@@ -44,6 +62,16 @@ export const TicketsContainer = styled.div`
     .dropdown-status,
     .list-filter {
       margin-top: 10px;
+    }
+  }
+
+  ${props => props.theme.breakpoints.down(817)} {
+    .filter-wrapper {
+      justify-content: center;
+    }
+
+    .ticket-title-section {
+      width: 100%;
     }
   }
 

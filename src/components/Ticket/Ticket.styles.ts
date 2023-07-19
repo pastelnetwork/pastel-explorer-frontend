@@ -15,6 +15,10 @@ export const TicketContent = styled(Box)`
     text-transform: capitalize;
   }
 
+  &.nowrap {
+    white-space: nowrap;
+  }
+
   &.break-all {
     word-break: break-all;
   }

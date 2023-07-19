@@ -1,12 +1,13 @@
 import loadable from '@loadable/component';
 import SearchIcon from '@material-ui/icons/Search';
 import CallSplitIcon from '@material-ui/icons/CallSplit';
-import WidgetsIcon from '@material-ui/icons/Widgets';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import BarChartIcon from '@material-ui/icons/BarChart';
-import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
+import ConfirmationNumberOutlinedIcon from '@material-ui/icons/ConfirmationNumberOutlined';
 
 import * as ROUTES from '@utils/constants/routes';
+
+import { ReactComponent as BoxIcon } from '@assets/icons/box.svg';
 
 const Explorer = loadable(() => import('@pages/Explorer/Explorer'));
 const Movement = loadable(() => import('@pages/Movement/Movement'));
@@ -93,7 +94,7 @@ const movementRoutes = {
 const blocksRoutes = {
   id: 'routes.blocks',
   path: ROUTES.BLOCKS,
-  icon: <WidgetsIcon />,
+  icon: <BoxIcon />,
   component: Blocks,
   seoTitle: 'routes.blocksList',
   children: null,
@@ -425,7 +426,7 @@ const pastelIdDetailsRoutes = {
 const ticketsRoutes = {
   id: 'routes.tickets',
   path: ROUTES.TICKETS,
-  icon: <ConfirmationNumberIcon />,
+  icon: <ConfirmationNumberOutlinedIcon />,
   component: Tickets,
   seoTitle: 'routes.ticketsList',
   children: null,

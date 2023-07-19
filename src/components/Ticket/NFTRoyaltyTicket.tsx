@@ -72,7 +72,7 @@ const NFTRoyaltyTicket: React.FC<INFTRoyaltyTicketProps> = ({ ticket }) => {
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
-            <Styles.TicketContent>
+            <Styles.TicketContent className="nowrap">
               <CopyButton copyText={ticket.nft_txid} />
               <RouterLink
                 route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.nft_txid}`}

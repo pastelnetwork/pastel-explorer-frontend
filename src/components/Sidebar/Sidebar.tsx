@@ -72,7 +72,17 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
   ...rest
 }) => {
   const { t } = useTranslation();
-  const categoryIcon = isOpen ? <Styles.CategoryIconMore /> : <Styles.CategoryIconLess />;
+  const categoryIcon = isOpen ? (
+    <>
+      <Styles.CategoryIconMore />
+      <Styles.CategoryIconAddIcon />
+    </>
+  ) : (
+    <>
+      <Styles.CategoryIconLess />
+      <Styles.CategoryIconRemoveIcon />
+    </>
+  );
   let active = '';
   if (
     (window.location.pathname === ROUTES.STATISTICS ||
@@ -144,8 +154,17 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
       const isActive = pathName.indexOf(route.path) === 0;
       const isOpen = route.open;
       const isHome = route.containsHome && pathName === '/';
-
-      currentRoutes = { ...currentRoutes, [index]: isActive || isOpen || isHome };
+      let isActiveSub = false;
+      if (
+        (pathName === ROUTES.STATISTICS ||
+          pathName === ROUTES.STATISTICS_OVERTIME ||
+          pathName === ROUTES.CASCADE_AND_SENSE_STATISTICS ||
+          pathName.includes(ROUTES.STATISTICS_OVERTIME)) &&
+        route.path === ROUTES.STATISTICS_PARENT
+      ) {
+        isActiveSub = true;
+      }
+      currentRoutes = { ...currentRoutes, [index]: isActive || isOpen || isHome || isActiveSub };
     });
 
     return currentRoutes;
@@ -232,6 +251,18 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
   const { open, onClose, variant } = rest;
   const isDarkMode = useSelector(getThemeState).darkMode;
 
+  React.useEffect(() => {
+    if (location && onClose && open) {
+      onClose();
+    }
+  }, [location]);
+
+  React.useEffect(() => {
+    if (open) {
+      setOpenRoutes(initOpenRoutes());
+    }
+  }, [open]);
+
   return (
     <Styles.DrawerMobile
       variant={variant || 'permanent'}
@@ -261,7 +292,6 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
               {category.header ? (
                 <Styles.SidebarSection>{category.header}</Styles.SidebarSection>
               ) : null}
-
               {category.children && category.icon ? (
                 <React.Fragment key={category.id}>
                   <SidebarCategory

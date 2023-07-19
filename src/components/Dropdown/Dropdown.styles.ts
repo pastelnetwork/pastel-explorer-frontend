@@ -47,4 +47,5 @@ export const Label = styled.div`
   margin-right: 10px;
   color: ${props => props.theme.dropdown.color};
   font-weight: 500;
+  white-space: nowrap;
 `;

@@ -374,9 +374,9 @@ const TicketsList: React.FC<ITicketsList> = ({
     <BlockDetailsStyles.GridStyle item>
       <TableStyles.BlockWrapper className="mb-12 min-h-60vh">
         <Styles.BlockWrapper className="ticket-title-wrapper">
-          <Styles.BlockTitle>
+          <Styles.BlockTitle className="ticket-title-section">
             {getTitle()}{' '}
-            <Styles.SubTitle>
+            <Styles.SubTitle className="nowrap">
               (
               {totalTickets > 1
                 ? parse(
@@ -457,7 +457,7 @@ const TicketsList: React.FC<ITicketsList> = ({
                   </TicketStyles.TicketTitle>
                 </Grid>
                 <Grid item xs={8} sm={9}>
-                  <TicketStyles.TicketContent>
+                  <TicketStyles.TicketContent className="nowrap">
                     <CopyButton copyText={ticket.transactionHash} />
                     <RouterLink
                       route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.transactionHash}`}

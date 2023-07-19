@@ -12,7 +12,8 @@ export const columns = [
     label: 'pages.movement.txID',
     dataKey: TXID_KEY,
     disableSort: false,
-    className: 'col-txid',
+    className: 'col-block',
+    dataTitle: 'pages.movement.txID',
   },
   {
     width: 20,

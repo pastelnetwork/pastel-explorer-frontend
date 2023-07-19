@@ -30,7 +30,11 @@ export const ToolbarStyle = styled(Toolbar)`
 `;
 
 export const GridStyle = styled(Grid)`
-  max-width: 250px;
+  max-width: 430px;
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    max-width: 250px;
+  }
 
   &.search-popup {
     display: none;
@@ -85,14 +89,6 @@ export const AppBar = styled(MuiAppBar)`
 
   ${props => props.theme.breakpoints.up('md')} {
     max-width: 36%;
-  }
-
-  ${props => props.theme.breakpoints.up(1110)} {
-    max-width: 45%;
-  }
-
-  ${props => props.theme.breakpoints.up('lg')} {
-    max-width: calc(100% - 783px);
   }
 
   ${props => props.theme.breakpoints.down('sm')} {

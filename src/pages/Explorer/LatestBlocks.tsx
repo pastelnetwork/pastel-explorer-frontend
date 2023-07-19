@@ -24,6 +24,7 @@ import { useBlockLatestBlocks } from '@redux/hooks/blocksHooks';
 import Skeleton from '@material-ui/lab/Skeleton';
 import * as ROUTES from '@utils/constants/routes';
 import { translate } from '@utils/helpers/i18n';
+import { useShowLess } from '@pages/Tickets/Tickets.helpers';
 
 import { Link } from '@components/Link/Link.styles';
 import RouterLink from '@components/RouterLink/RouterLink';
@@ -61,10 +62,11 @@ const useStyles = makeStyles({
 
 function LatestBlocks() {
   const [showLess, setShowLess] = useState(false);
-
+  useShowLess(setShowLess);
   const classes = useStyles();
   const dispatch = useDispatch<AppThunkDispatch>();
   const latestBlocks = useBlockLatestBlocks();
+
   useEffect(() => {
     dispatch(BlockThunks.getLatestBlocks());
   }, []);

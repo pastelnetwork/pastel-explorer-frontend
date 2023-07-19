@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
@@ -16,6 +17,7 @@ import { formatFullDate } from '@utils/helpers/date/date';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { TicketsList, TTicketType } from '@utils/types/ITransactions';
 import { TAppTheme } from '@theme/index';
+import breakpoints from '@theme/breakpoints';
 import * as TicketsStyles from '@components/Ticket/Ticket.styles';
 import { translate, translateDropdown } from '@utils/helpers/i18n';
 import { getFileIcon } from '@pages/Details/CascadeDetails/CascadeDetails.helpers';
@@ -953,4 +955,19 @@ export const getTotalTickets = (field: string, fields: TFields) => {
 
 export const isLoading = (field: string, fields: TLoadingFields) => {
   return fields[field];
+};
+
+export const useShowLess = (setShowLess: (_val: boolean) => void) => {
+  const handleResize = () => {
+    if (window.innerWidth >= breakpoints.values.sm) {
+      setShowLess(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 };

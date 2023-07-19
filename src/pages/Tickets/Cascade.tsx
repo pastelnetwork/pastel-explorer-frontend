@@ -5,7 +5,7 @@ import InfinityTable from '@components/InfinityTable/InfinityTable';
 import { translate } from '@utils/helpers/i18n';
 
 import SectionTitle from './SectionTitle';
-import { transformCascadeData, TTicketResponse } from './Tickets.helpers';
+import { transformCascadeData, TTicketResponse, useShowLess } from './Tickets.helpers';
 import { cascadeColumns } from './Tickets.columns';
 import * as Styles from './Tickets.styles';
 
@@ -18,6 +18,7 @@ interface ICascadeProps {
 const Cascade: React.FC<ICascadeProps> = ({ ticketsData, innerWidth, usdPrice }) => {
   const { data, total, isLoading, size, setSize } = ticketsData;
   const [showLess, setShowLess] = useState(false);
+  useShowLess(setShowLess);
 
   const getTitle = () => {
     return (

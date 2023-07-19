@@ -4,6 +4,8 @@ import { NavLink, match } from 'react-router-dom';
 
 import { Chip, Drawer as MuiDrawer, ListItem, Typography, ListItemText } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 
 export const DrawerMobile = styled(MuiDrawer)`
   ${props => props.theme.breakpoints.down('sm')} {
@@ -42,6 +44,14 @@ export const Items = styled.div`
 
   .MuiListItem-root {
     padding: 10px 12px;
+  }
+
+  ${props => props.theme.breakpoints.between('sm', 1400)} {
+    padding: 0 10px;
+
+    .MuiListItem-root {
+      padding: 10px 0;
+    }
   }
 
   ${props => props.theme.breakpoints.down('sm')} {
@@ -86,6 +96,10 @@ export const Brand = styled(ListItem)<{
     display: flex;
     align-items: center;
     margin-left: 0;
+  }
+
+  ${props => props.theme.breakpoints.between('sm', 1400)} {
+    margin-right: 0;
   }
 
   ${props => props.theme.breakpoints.down('sm')} {
@@ -217,10 +231,6 @@ export const Category = styled(ListItem)<CategoryType>`
       margin-top: 4px;
       margin-left: 10px;
       padding-left: 5px;
-
-      span {
-        font-size: 14px;
-      }
     }
 
     ${props => props.theme.breakpoints.up('md')} {
@@ -341,7 +351,7 @@ export const CategoryText = styled(ListItemText)`
       margin: 0;
 
       svg {
-        margin-right: 10px;
+        margin-right: 17px;
       }
     }
   }
@@ -351,9 +361,20 @@ export const CategoryIconLess = styled(ExpandLess)`
   color: ${props => rgba(props.theme.sidebar.color, 0.5)};
 
   ${props => props.theme.breakpoints.down('sm')} {
+    display: none;
+  }
+`;
+
+export const CategoryIconRemoveIcon = styled(RemoveIcon)`
+  display: none;
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    display: inline-block;
+
+    color: ${props => rgba(props.theme.sidebar.color, 0.5)};
     &.MuiSvgIcon-root {
-      width: 26px;
-      height: 26px;
+      width: 20px;
+      height: 20px;
       margin-left: auto;
       margin-right: 0;
     }
@@ -365,8 +386,21 @@ export const CategoryIconMore = styled(ExpandMore)`
 
   ${props => props.theme.breakpoints.down('sm')} {
     &.MuiSvgIcon-root {
-      width: 26px;
-      height: 26px;
+      display: none;
+    }
+  }
+`;
+
+export const CategoryIconAddIcon = styled(AddIcon)`
+  display: none;
+
+  ${props => props.theme.breakpoints.down('sm')} {
+    display: inline-block;
+    color: ${props => rgba(props.theme.sidebar.color, 0.5)};
+
+    &.MuiSvgIcon-root {
+      width: 20px;
+      height: 20px;
       margin-left: auto;
       margin-right: 0;
     }

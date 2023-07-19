@@ -114,7 +114,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} sm={9}>
-                <Styles.TicketContent>
+                <Styles.TicketContent className="nowrap">
                   <CopyButton copyText={ticket.registration_txid} />
                   <RouterLink
                     route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.registration_txid}`}
@@ -132,7 +132,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} sm={9}>
-                <Styles.TicketContent>
+                <Styles.TicketContent className="nowrap">
                   <CopyButton copyText={ticket.item_txid || ticket.nft_txid} />
                   <RouterLink
                     route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.item_txid || ticket.nft_txid}`}
@@ -150,7 +150,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} sm={9}>
-                <Styles.TicketContent>
+                <Styles.TicketContent className="nowrap">
                   <CopyButton copyText={ticket.offer_txid} />
                   <RouterLink
                     route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.offer_txid}`}
@@ -168,7 +168,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} sm={9}>
-                <Styles.TicketContent>
+                <Styles.TicketContent className="nowrap">
                   <CopyButton copyText={ticket.accept_txid} />
                   <RouterLink
                     route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.accept_txid}`}
@@ -257,7 +257,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>
+          <Styles.TicketContent className="nowrap">
             <CopyButton copyText={ticket.offer_txid} />
             <RouterLink
               route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.offer_txid}`}
@@ -275,7 +275,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>
+          <Styles.TicketContent className="nowrap">
             <CopyButton copyText={ticket.accept_txid} />
             <RouterLink
               route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.accept_txid}`}
@@ -293,7 +293,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>
+          <Styles.TicketContent className="nowrap">
             <CopyButton copyText={ticket.item_txid || ticket.nft_txid} />
             <RouterLink
               route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.item_txid || ticket.nft_txid}`}
@@ -311,7 +311,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>
+          <Styles.TicketContent className="nowrap">
             <CopyButton copyText={ticket.registration_txid} />
             <RouterLink
               route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.registration_txid}`}

@@ -12,7 +12,8 @@ export const columns = [
     label: 'pages.blocks.block',
     dataKey: BLOCK_ID_KEY,
     disableSort: false,
-    className: 'col-block',
+    className: 'col-hash',
+    dataTitle: 'pages.blocks.block',
   },
   {
     width: 390,

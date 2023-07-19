@@ -134,7 +134,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} sm={9}>
-                <Styles.TicketContent>
+                <Styles.TicketContent className="nowrap">
                   <CopyButton copyText={ticket?.item_txid || ticket?.nft_txid} />
                   <RouterLink
                     route={`${ROUTES.TRANSACTION_DETAILS}/${ticket?.item_txid || ticket?.nft_txid}`}
@@ -311,7 +311,7 @@ const OfferTicket: React.FC<IOfferTicketProps> = ({ ticket, variant }) => {
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>
+          <Styles.TicketContent className="nowrap">
             <CopyButton copyText={ticket?.item_txid || ticket?.nft_txid} />
             <RouterLink
               route={`${ROUTES.TRANSACTION_DETAILS}/${ticket?.item_txid || ticket?.nft_txid}`}

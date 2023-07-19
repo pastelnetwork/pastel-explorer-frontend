@@ -32,6 +32,7 @@ import { translate, translateDropdown } from '@utils/helpers/i18n';
 import Hourglass from '@components/Hourglass/Hourglass';
 import CopyButton from '@components/CopyButton/CopyButton';
 import * as BlockStyles from '@pages/Blocks/Blocks.styles';
+import { useShowLess } from '@pages/Tickets/Tickets.helpers';
 
 import { Link } from '@components/Link/Link.styles';
 import { getCurrencyName } from '@utils/appInfo';
@@ -66,10 +67,11 @@ const useStyles = makeStyles({
 
 function LatestTransactions() {
   const [showLess, setShowLess] = useState(false);
-
+  useShowLess(setShowLess);
   const classes = useStyles();
   const dispatch = useDispatch<AppThunkDispatch>();
   const transactions = useTransactionLatestTransactions();
+
   useEffect(() => {
     dispatch(TransactionThunks.getLatestBlocks());
   }, []);

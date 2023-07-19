@@ -109,7 +109,7 @@ const AcceptTicket: React.FC<IAcceptTicketProps> = ({ ticket, variant }) => {
                   </Styles.TicketTitle>
                 </Grid>
                 <Grid item xs={12} sm={9}>
-                  <Styles.TicketContent>
+                  <Styles.TicketContent className="nowrap">
                     <CopyButton copyText={ticket.offer_txid} />
                     <RouterLink
                       route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.offer_txid}`}
@@ -213,7 +213,7 @@ const AcceptTicket: React.FC<IAcceptTicketProps> = ({ ticket, variant }) => {
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
-            <Styles.TicketContent>
+            <Styles.TicketContent className="nowrap">
               <CopyButton copyText={ticket.offer_txid} />
               <RouterLink
                 route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.offer_txid}`}

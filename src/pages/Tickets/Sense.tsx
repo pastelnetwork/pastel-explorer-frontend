@@ -5,7 +5,7 @@ import InfinityTable from '@components/InfinityTable/InfinityTable';
 import { translate } from '@utils/helpers/i18n';
 
 import SectionTitle from './SectionTitle';
-import { transformSenseData, TTicketResponse } from './Tickets.helpers';
+import { transformSenseData, TTicketResponse, useShowLess } from './Tickets.helpers';
 import { senseColumns } from './Tickets.columns';
 import * as Styles from './Tickets.styles';
 
@@ -17,7 +17,8 @@ interface ISenseProps {
 
 const Sense: React.FC<ISenseProps> = ({ ticketsData, innerWidth, usdPrice }) => {
   const { data, total, isLoading, size, setSize } = ticketsData;
-  const [showMore, setShowMore] = useState(false);
+  const [showLess, setShowLess] = useState(false);
+  useShowLess(setShowLess);
 
   const handleFetchMoreMovements = (reachedTableBottom: boolean) => {
     if (!reachedTableBottom) return null;
@@ -30,8 +31,8 @@ const Sense: React.FC<ISenseProps> = ({ ticketsData, innerWidth, usdPrice }) => 
       <SectionTitle
         title={translate('pages.tickets.senseTickets')}
         total={total}
-        toggleContent={() => setShowMore(!showMore)}
-        showMore={showMore}
+        toggleContent={() => setShowLess(!showLess)}
+        showMore={showLess}
         viewAllLink={`${ROUTES.TICKETS_TYPE}/sense`}
       />
     );
@@ -66,7 +67,7 @@ const Sense: React.FC<ISenseProps> = ({ ticketsData, innerWidth, usdPrice }) => 
         headerBackground
         customLoading={isLoading}
         rowHeight={getRowHeight()}
-        showLess={showMore}
+        showLess={showLess}
       />
     </Styles.SenseContainer>
   );

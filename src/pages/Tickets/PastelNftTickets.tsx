@@ -5,7 +5,7 @@ import InfinityTable from '@components/InfinityTable/InfinityTable';
 import { translate } from '@utils/helpers/i18n';
 
 import SectionTitle from './SectionTitle';
-import { transformPastelNftTicketsData, TTicketResponse } from './Tickets.helpers';
+import { transformPastelNftTicketsData, TTicketResponse, useShowLess } from './Tickets.helpers';
 import { pastelNftTicketsColumns } from './Tickets.columns';
 import * as Styles from './Tickets.styles';
 
@@ -22,6 +22,7 @@ const PastelNftTickets: React.FC<IPastelNftTicketsProps> = ({
 }) => {
   const { data, total, isLoading, size, setSize } = ticketsData;
   const [showLess, setShowLess] = useState(false);
+  useShowLess(setShowLess);
 
   const handleFetchMoreMovements = (reachedTableBottom: boolean) => {
     if (!reachedTableBottom) return null;

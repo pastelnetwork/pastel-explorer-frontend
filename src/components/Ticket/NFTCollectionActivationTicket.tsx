@@ -80,7 +80,7 @@ const NFTCollectionActivationTicket: React.FC<INFTCollectionActivationTicketProp
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
-            <Styles.TicketContent>
+            <Styles.TicketContent className="nowrap">
               <CopyButton copyText={ticket.reg_txid} />
               <RouterLink
                 route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.reg_txid}`}

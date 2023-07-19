@@ -370,7 +370,7 @@ const ActionRegistrationTicket: React.FC<IActionRegistrationTicketProps> = ({
                 : parse(translate('components.ticket.actionRegistrationTicket.notYetActivated'))}
             </Styles.ActionRegistrationTicketStatus>
             {ticket?.activation_ticket && ticket?.activation_txId ? (
-              <Styles.TicketContent>
+              <Styles.TicketContent className="nowrap">
                 ({parse(translate('components.ticket.actionRegistrationTicket.activationTXID'))}{' '}
                 <CopyButton copyText={ticket?.activation_txId} />
                 <RouterLink
