@@ -10,6 +10,62 @@ import {
 } from '@utils/types/ITransactions';
 import { SWR_OPTIONS } from '@utils/constants/statistics';
 
+export type TNftDetails = {
+  green: boolean;
+  royalty: number;
+  totalCopies: number;
+  author: string;
+  creatorName: string;
+  creatorWebsite: string;
+  creatorWrittenStatement: string;
+  nftTitle: string;
+  nftType: string;
+  nftSeriesName: string;
+  nftCreationVideoYoutubeUrl: string;
+  nftKeywordSet: string;
+  dataDash: string;
+  originalFileSizeInBytes: number;
+  fileType: string;
+  makePubliclyAccessible: boolean;
+  ddAndFingerprintsIc: number;
+  ddAndFingerprintsMax: number;
+  ddAndFingerprintsIds: string[];
+  rqIc: number;
+  rqMax: number;
+  rqOti: string;
+  collectionName: string;
+  collectionAlias: string;
+  transactionHash: string;
+  transactionTime: number;
+  username: string;
+  memberSince: number;
+  image: string;
+  pastel_block_hash_when_request_submitted: string;
+  pastel_block_height_when_request_submitted: string;
+  utc_timestamp_when_request_submitted: string;
+  pastel_id_of_submitter: string;
+  pastel_id_of_registering_supernode_1: string;
+  pastel_id_of_registering_supernode_2: string;
+  pastel_id_of_registering_supernode_3: string;
+  is_pastel_openapi_request: number;
+  dupe_detection_system_version: string;
+  is_likely_dupe: number;
+  overall_rareness_score: number;
+  is_rare_on_internet: number;
+  pct_of_top_10_most_similar_with_dupe_prob_above_25pct: number;
+  pct_of_top_10_most_similar_with_dupe_prob_above_33pct: number;
+  pct_of_top_10_most_similar_with_dupe_prob_above_50pct: number;
+  rareness_scores_table_json_compressed_b64: string;
+  open_nsfw_score: number;
+  nsfw_score: number;
+  internet_rareness: string;
+  alternative_nsfw_scores: string;
+  image_fingerprint_of_candidate_image_file: string;
+  blockHeight: number;
+  currentOwnerPastelID: string;
+  rawData: string;
+};
+
 export default function useNftDetails(txid: string) {
   const { data, isLoading } = useSWR<{ nft: INftDetails }>(
     `${URLS.GET_NFT_DETAILS_URL}?registration_ticket_txid=${txid}`,
@@ -18,7 +74,7 @@ export default function useNftDetails(txid: string) {
   );
 
   if (data?.nft?.transactionHash) {
-    const nftData = {
+    const nftData: TNftDetails = {
       green: !!data.nft.green,
       royalty: data.nft.royalty,
       totalCopies: data.nft.total_copies,
