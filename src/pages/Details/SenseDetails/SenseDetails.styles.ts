@@ -782,7 +782,7 @@ export const SimilarImagesControl = styled.div`
     display: none;
     padding: 0;
 
-    @media screen and (max-width: 1279px) {
+    @media screen and (max-width: 1101px) {
       display: inline-flex;
       margin-top: -2px;
     }

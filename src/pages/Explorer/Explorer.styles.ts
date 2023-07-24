@@ -322,7 +322,7 @@ export const LinkWrapper = styled.div`
   .btn-toggle {
     display: none;
 
-    @media screen and (max-width: 1279px) {
+    @media screen and (max-width: 1101px) {
       display: inline-flex;
       margin-top: -2px;
     }
