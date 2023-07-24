@@ -38,8 +38,9 @@ export const GridStyle = styled(Grid)`
 
   &.search-popup {
     display: none;
-    position: fixed;
+    position: absolute;
     right: 0;
+    left: 0;
     top: 45px;
     width: 100vw;
     max-width: unset;
@@ -47,6 +48,7 @@ export const GridStyle = styled(Grid)`
     margin-left: 0;
     padding: 10px;
     background: ${props => props.theme.sidebar.menu.background};
+    transform: translateX(-35%);
   }
 
   ${props => props.theme.breakpoints.down('xs')} {
