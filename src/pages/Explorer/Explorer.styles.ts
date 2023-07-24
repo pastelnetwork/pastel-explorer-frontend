@@ -57,6 +57,10 @@ export const BlockWrapper = styled.div`
     margin-top: 24px;
   }
 
+  .whitespace-nowrap {
+    white-space: nowrap;
+  }
+
   ${props => props.theme.breakpoints.down(1024)} {
     &.mt-24 {
       margin-top: 12px;
@@ -111,6 +115,10 @@ export const BlockWrapper = styled.div`
       td,
       th {
         padding: 12px 16px;
+
+        ${props => props.theme.breakpoints.up(960)} {
+          height: 54px;
+        }
       }
 
       &:last-child {
@@ -123,6 +131,7 @@ export const BlockWrapper = styled.div`
       &:hover {
         background-color: ${props => props.theme.table.hover} !important;
       }
+
     }
 
     .MuiTypography-root {

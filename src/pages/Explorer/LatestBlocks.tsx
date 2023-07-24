@@ -130,7 +130,7 @@ function LatestBlocks() {
                     <StyledTableCell align="right">
                       {formatNumber(block.size / 1024, { decimalsLength: 2 })}
                     </StyledTableCell>
-                    <StyledTableCell align="right">
+                    <StyledTableCell align="right" className="whitespace-nowrap">
                       {formattedDate(block.timestamp, { dayName: false })}
                     </StyledTableCell>
                   </StyledTableRow>
