@@ -102,7 +102,7 @@ const OpenNSFW: React.FC<IOpenNSFWProps> = ({ openNSFWScore }) => {
 
   return (
     <Styles.OpenNSFWChartWrapper>
-      <Styles.OpenNSFWContent className={!openNSFWScore ? 'empty' : ''}>
+      <Styles.OpenNSFWContent className={`${!openNSFWScore ? 'empty' : ''} OpenNSFWContent`}>
         <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '200px' }} />
         <Styles.OpenNSFWChartOverlay />
       </Styles.OpenNSFWContent>

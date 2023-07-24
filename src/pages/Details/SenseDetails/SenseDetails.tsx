@@ -5,6 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AlertTitle from '@material-ui/lab/AlertTitle';
 import parse from 'html-react-parser';
+import IconButton from '@material-ui/core/IconButton';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import * as TableStyles from '@components/Table/Table.styles';
 import CopyButton from '@components/CopyButton/CopyButton';
@@ -14,6 +16,8 @@ import * as ROUTES from '@utils/constants/routes';
 import useSenseDetails from '@hooks/useSenseDetails';
 import { getParameterByName } from '@utils/helpers/url';
 import { translate, translateDropdown } from '@utils/helpers/i18n';
+import { TSenseRequests } from '@utils/types/ITransactions';
+import { useShowLess } from '@pages/Tickets/Tickets.helpers';
 
 import * as ChartStyles from '@pages/HistoricalStatistics/Chart/Chart.styles';
 import PastelData from './PastelData';
@@ -32,11 +36,12 @@ import Transfers from './Transfers';
 import * as Styles from './SenseDetails.styles';
 
 interface IBlockItemLayout {
-  title: string | ReactNode;
+  title?: string | ReactNode;
   children: React.ReactNode;
   className?: string;
   childrenClassName?: string;
   customTitle?: React.ReactNode;
+  showLess?: boolean;
 }
 
 export const BlockItemLayout: React.FC<IBlockItemLayout> = ({
@@ -45,16 +50,288 @@ export const BlockItemLayout: React.FC<IBlockItemLayout> = ({
   className = '',
   childrenClassName = '',
   customTitle,
+  showLess = false,
 }) => {
   return (
     <TableStyles.BlockWrapper className={`mb-20 ${className}`}>
       {!customTitle ? <TableStyles.BlockTitle>{title}</TableStyles.BlockTitle> : customTitle}
-      <Styles.ContentWrapper className={childrenClassName}>{children}</Styles.ContentWrapper>
+      <Styles.ContentWrapper className={`${childrenClassName} ${showLess ? 'show-less' : ''}`}>
+        {children}
+      </Styles.ContentWrapper>
     </TableStyles.BlockWrapper>
   );
 };
 
-const SenseDetails: React.FC = () => {
+const getSectionTitle = (
+  title: string | React.ReactNode,
+  toggleContent: () => void,
+  showLess: boolean,
+) => {
+  return (
+    <Styles.BlockTitle className="ticket-block-title">
+      <span>{title}</span>
+      <Styles.LinkWrapper>
+        <IconButton onClick={toggleContent} className={`btn-toggle ${showLess ? 'show-less' : ''}`}>
+          <ExpandMoreIcon className="toggle-icon" />
+        </IconButton>
+      </Styles.LinkWrapper>
+    </Styles.BlockTitle>
+  );
+};
+
+const SubmittedImageWrapper = ({
+  imageFileCdnUrl,
+  imageFileHash,
+}: {
+  imageFileCdnUrl: string;
+  imageFileHash: string;
+}) => {
+  const [showLess, setShowLess] = useState(false);
+  useShowLess(setShowLess);
+
+  return (
+    <BlockItemLayout
+      title=""
+      customTitle={getSectionTitle(
+        parse(translate('pages.senseDetails.submittedImage')),
+        () => setShowLess(!showLess),
+        showLess,
+      )}
+      className="submitted-image min-height-650"
+      childrenClassName="submitted-image-content"
+      showLess={showLess}
+    >
+      <SubmittedImage imageUrl={imageFileCdnUrl} imageHash={imageFileHash} />
+    </BlockItemLayout>
+  );
+};
+
+const SummaryWrapper = ({
+  isLikelyDupe,
+  dupeDetectionSystemVersion,
+}: {
+  isLikelyDupe: number;
+  dupeDetectionSystemVersion: string;
+}) => {
+  const [showLess, setShowLess] = useState(false);
+  useShowLess(setShowLess);
+
+  return (
+    <BlockItemLayout
+      title=""
+      customTitle={getSectionTitle(
+        parse(translate('pages.senseDetails.summary')),
+        () => setShowLess(!showLess),
+        showLess,
+      )}
+      className="summary"
+      showLess={showLess}
+    >
+      <Summary isLikelyDupe={isLikelyDupe} senseVersion={dupeDetectionSystemVersion} />
+    </BlockItemLayout>
+  );
+};
+
+const OpenNSFWWrapper = ({ openNsfwScore }: { openNsfwScore: number }) => {
+  const [showLess, setShowLess] = useState(false);
+  useShowLess(setShowLess);
+
+  return (
+    <BlockItemLayout
+      title=""
+      customTitle={getSectionTitle(
+        parse(translate('pages.senseDetails.openNSFW')),
+        () => setShowLess(!showLess),
+        showLess,
+      )}
+      className="open-nsfw"
+      showLess={showLess}
+    >
+      <OpenNSFW openNSFWScore={openNsfwScore} />
+    </BlockItemLayout>
+  );
+};
+
+const RarenessScoreWrapper = ({ rarenessScore }: { rarenessScore: number }) => {
+  const [showLess, setShowLess] = useState(false);
+  useShowLess(setShowLess);
+
+  return (
+    <BlockItemLayout
+      title=""
+      customTitle={getSectionTitle(
+        parse(translate('pages.senseDetails.rarenessScore')),
+        () => setShowLess(!showLess),
+        showLess,
+      )}
+      className="rareness-score"
+      showLess={showLess}
+    >
+      <RarenessScore rarenessScore={rarenessScore} />
+    </BlockItemLayout>
+  );
+};
+
+const PrevalenceOfSimilarImagesWrapper = ({ sense }: { sense: TSenseRequests }) => {
+  const [showLess, setShowLess] = useState(false);
+  useShowLess(setShowLess);
+
+  return (
+    <BlockItemLayout
+      title=""
+      customTitle={getSectionTitle(
+        parse(translate('pages.senseDetails.prevalenceOfSimilarImages')),
+        () => setShowLess(!showLess),
+        showLess,
+      )}
+      className="prevalence-of-similar-images"
+      showLess={showLess}
+    >
+      <PrevalenceOfSimilarImages data={sense?.prevalenceOfSimilarImagesData} />
+    </BlockItemLayout>
+  );
+};
+
+const CategoryProbabilitiesWrapper = ({ sense }: { sense: TSenseRequests }) => {
+  const [showLess, setShowLess] = useState(false);
+  useShowLess(setShowLess);
+
+  return (
+    <BlockItemLayout
+      title=""
+      customTitle={getSectionTitle(
+        parse(translate('pages.senseDetails.categoryProbabilities')),
+        () => setShowLess(!showLess),
+        showLess,
+      )}
+      className="category-probabilities"
+      showLess={showLess}
+    >
+      <CategoryProbabilities data={sense?.alternativeNsfwScores} />
+    </BlockItemLayout>
+  );
+};
+
+const RareOnTheInternetResultsGraphWrapper = ({ sense }: { sense: TSenseRequests }) => {
+  const [showLess, setShowLess] = useState(false);
+  useShowLess(setShowLess);
+
+  return (
+    <BlockItemLayout
+      title=""
+      customTitle={getSectionTitle(
+        parse(translate('pages.senseDetails.rareOnTheInternetResultsGraph')),
+        () => setShowLess(!showLess),
+        showLess,
+      )}
+      className="rare-on-the-internet-results-graph"
+      showLess={showLess}
+    >
+      <RareOnTheInternetResultsGraph data={sense?.internetRareness} />
+    </BlockItemLayout>
+  );
+};
+
+const RareOnTheInternetAlternativeResultsWrapper = ({ sense }: { sense: TSenseRequests }) => {
+  const [showLess, setShowLess] = useState(false);
+  useShowLess(setShowLess);
+
+  return (
+    <BlockItemLayout
+      title=""
+      customTitle={getSectionTitle(
+        parse(translate('pages.senseDetails.rareOnTheInternetAlternativeResults')),
+        () => setShowLess(!showLess),
+        showLess,
+      )}
+      className="rare-on-the-internet-alternative-results"
+      showLess={showLess}
+    >
+      <RareOnTheInternetAlternativeResults data={sense?.internetRareness} />
+    </BlockItemLayout>
+  );
+};
+
+const FingerprintVectorHeatmapWrapper = ({ sense }: { sense: TSenseRequests }) => {
+  const [showLess, setShowLess] = useState(false);
+  useShowLess(setShowLess);
+
+  return (
+    <BlockItemLayout
+      title=""
+      customTitle={getSectionTitle(
+        parse(translate('pages.senseDetails.fingerprintVectorHeatmap')),
+        () => setShowLess(!showLess),
+        showLess,
+      )}
+      className="fingerprint-vector-heatmap"
+      showLess={showLess}
+    >
+      <FingerprintVectorHeatmap
+        data={
+          sense?.imageFingerprintOfCandidateImageFile
+            ? JSON.parse(sense?.imageFingerprintOfCandidateImageFile)
+            : []
+        }
+      />
+    </BlockItemLayout>
+  );
+};
+
+const PastelDataWrapper = ({ sense }: { sense: TSenseRequests }) => {
+  const [showLess, setShowLess] = useState(false);
+  useShowLess(setShowLess);
+
+  return (
+    <BlockItemLayout
+      title=""
+      customTitle={getSectionTitle(
+        parse(translate('pages.senseDetails.pastelData')),
+        () => setShowLess(!showLess),
+        showLess,
+      )}
+      className="pastel-data"
+      showLess={showLess}
+    >
+      <PastelData
+        blockHash={sense?.blockHash}
+        blockHeight={sense?.blockHeight}
+        utcTimestampWhenRequestSubmitted={sense?.utcTimestampWhenRequestSubmitted}
+        pastelIdOfSubmitter={sense?.pastelIdOfSubmitter}
+        pastelIdOfRegisteringSupernode1={sense?.pastelIdOfRegisteringSupernode1}
+        pastelIdOfRegisteringSupernode2={sense?.pastelIdOfRegisteringSupernode2}
+        pastelIdOfRegisteringSupernode3={sense?.pastelIdOfRegisteringSupernode3}
+        isPastelOpenapiRequest={sense?.isPastelOpenapiRequest}
+        currentOwnerPastelID={sense?.currentOwnerPastelID}
+      />
+    </BlockItemLayout>
+  );
+};
+
+const TransfersWrapper = () => {
+  const [showLess, setShowLess] = useState(false);
+  useShowLess(setShowLess);
+
+  return (
+    <BlockItemLayout
+      title=""
+      customTitle={getSectionTitle(
+        parse(translate('pages.senseDetails.transfers')),
+        () => setShowLess(!showLess),
+        showLess,
+      )}
+      className="pastel-data"
+      childrenClassName="no-spacing"
+      showLess={showLess}
+    >
+      <Transfers />
+    </BlockItemLayout>
+  );
+};
+
+const SimilarRegisteredImagesWrapper = ({ sense }: { sense: TSenseRequests }) => {
+  const downloadRef = useRef(null);
+  const [showLess, setShowLess] = useState(false);
   const csvHeaders = [
     { key: 'rank', label: translateDropdown('pages.senseDetails.rank') },
     { key: 'image', label: translateDropdown('pages.senseDetails.thumbnail') },
@@ -79,7 +356,69 @@ const SenseDetails: React.FC = () => {
     },
   ];
 
-  const downloadRef = useRef(null);
+  const getCsvData = () => {
+    if (!sense?.rarenessScoresTable) {
+      return [];
+    }
+    const results = [];
+    const data = getSimilarRegisteredImagesData(sense.rarenessScoresTable);
+    for (let i = 0; i < data.length; i += 1) {
+      results.push({
+        rank: i + 1,
+        image: data[i].image,
+        imageHash: data[i].imageHashOriginal,
+        dateTimeAdded: data[i].dateTimeAdded,
+        matchType: data[i].matchType,
+        finalDupeProbability: `${(data[i].finalDupeProbability * 100).toFixed(2)}%`,
+        cosineSimilarity: data[i].cosineSimilarity,
+        cosineGain: data[i].cosineGain,
+        hoeffdingDependency: data[i].hoeffdingDependency,
+        hoeffdingGain: data[i].hoeffdingGain,
+        hilbertSchmidtInformationCriteria: data[i].hilbertSchmidtInformationCriteria,
+        hilbertSchmidtGain: data[i].hilbertSchmidtGain,
+      });
+    }
+    return results;
+  };
+
+  return (
+    <BlockItemLayout
+      title=""
+      customTitle={
+        <Styles.TitleWrapper>
+          <TableStyles.BlockTitle className="similar_images">
+            {parse(translate('pages.senseDetails.top10MostSimilarRegisteredImages'))}
+          </TableStyles.BlockTitle>
+          <Styles.SimilarImagesControl>
+            <ChartStyles.CSVLinkButton
+              data={getCsvData()}
+              filename={`top_10_most_similar_images_to_image_hash__${sense.imageFileHash}.csv`}
+              headers={csvHeaders}
+              separator=","
+              ref={downloadRef}
+              className="space-nowrap"
+            >
+              {parse(translate('pages.senseDetails.exportToCSV'))}
+            </ChartStyles.CSVLinkButton>
+            <IconButton
+              onClick={() => setShowLess(!showLess)}
+              className={`btn-toggle ${showLess ? 'show-less' : ''}`}
+            >
+              <ExpandMoreIcon className="toggle-icon" />
+            </IconButton>
+          </Styles.SimilarImagesControl>
+        </Styles.TitleWrapper>
+      }
+      className="similar-registered-images"
+      childrenClassName="no-spacing"
+      showLess={showLess}
+    >
+      <SimilarRegisteredImages rarenessScoresTable={sense?.rarenessScoresTable} />
+    </BlockItemLayout>
+  );
+};
+
+const SenseDetails: React.FC = () => {
   const id = getParameterByName('hash');
   const txid = getParameterByName('txid');
   const matchType = getParameterByName('matchType');
@@ -104,31 +443,6 @@ const SenseDetails: React.FC = () => {
         },
       }),
     );
-  };
-
-  const getCsvData = () => {
-    if (!sense?.rarenessScoresTable) {
-      return [];
-    }
-    const results = [];
-    const data = getSimilarRegisteredImagesData(sense.rarenessScoresTable);
-    for (let i = 0; i < data.length; i += 1) {
-      results.push({
-        rank: i + 1,
-        image: data[i].image,
-        imageHash: data[i].imageHashOriginal,
-        dateTimeAdded: data[i].dateTimeAdded,
-        matchType: data[i].matchType,
-        finalDupeProbability: `${(data[i].finalDupeProbability * 100).toFixed(2)}%`,
-        cosineSimilarity: data[i].cosineSimilarity,
-        cosineGain: data[i].cosineGain,
-        hoeffdingDependency: data[i].hoeffdingDependency,
-        hoeffdingGain: data[i].hoeffdingGain,
-        hilbertSchmidtInformationCriteria: data[i].hilbertSchmidtInformationCriteria,
-        hilbertSchmidtGain: data[i].hilbertSchmidtGain,
-      });
-    }
-    return results;
   };
 
   if (isLoading) {
@@ -173,121 +487,28 @@ const SenseDetails: React.FC = () => {
           </TransactionStyles.ViewTransactionRawMuiAlert>
         </TransactionStyles.TransactionDesc>
         <Styles.ImagesWrapper>
-          <BlockItemLayout
-            title={parse(translate('pages.senseDetails.submittedImage'))}
-            className="submitted-image min-height-650"
-            childrenClassName="submitted-image-content"
-          >
-            <SubmittedImage imageUrl={sense.imageFileCdnUrl} imageHash={sense.imageFileHash} />
-          </BlockItemLayout>
+          <SubmittedImageWrapper
+            imageFileCdnUrl={sense.imageFileCdnUrl}
+            imageFileHash={sense.imageFileHash}
+          />
           <Box className="summary-group">
-            <BlockItemLayout
-              title={parse(translate('pages.senseDetails.summary'))}
-              className="summary"
-            >
-              <Summary
-                isLikelyDupe={sense?.isLikelyDupe}
-                senseVersion={sense?.dupeDetectionSystemVersion}
-              />
-            </BlockItemLayout>
-            <BlockItemLayout
-              title={parse(translate('pages.senseDetails.openNSFW'))}
-              className="open-nsfw"
-            >
-              <OpenNSFW openNSFWScore={sense?.openNsfwScore} />
-            </BlockItemLayout>
-            <BlockItemLayout
-              title={parse(translate('pages.senseDetails.rarenessScore'))}
-              className="rareness-score"
-            >
-              <RarenessScore rarenessScore={sense?.rarenessScore} />
-            </BlockItemLayout>
+            <SummaryWrapper
+              isLikelyDupe={sense?.isLikelyDupe}
+              dupeDetectionSystemVersion={sense?.dupeDetectionSystemVersion}
+            />
+            <OpenNSFWWrapper openNsfwScore={sense?.openNsfwScore} />
+            <RarenessScoreWrapper rarenessScore={sense?.rarenessScore} />
             <Box className="analytics-group">
-              <BlockItemLayout
-                title={parse(translate('pages.senseDetails.prevalenceOfSimilarImages'))}
-                className="prevalence-of-similar-images"
-              >
-                <PrevalenceOfSimilarImages data={sense?.prevalenceOfSimilarImagesData} />
-              </BlockItemLayout>
-              <BlockItemLayout
-                title={parse(translate('pages.senseDetails.categoryProbabilities'))}
-                className="category-probabilities"
-              >
-                <CategoryProbabilities data={sense?.alternativeNsfwScores} />
-              </BlockItemLayout>
+              <PrevalenceOfSimilarImagesWrapper sense={sense} />
+              <CategoryProbabilitiesWrapper sense={sense} />
             </Box>
           </Box>
-          <BlockItemLayout
-            title=""
-            customTitle={
-              <Styles.TitleWrapper>
-                <TableStyles.BlockTitle>
-                  {parse(translate('pages.senseDetails.top10MostSimilarRegisteredImages'))}
-                </TableStyles.BlockTitle>
-                <ChartStyles.CSVLinkButton
-                  data={getCsvData()}
-                  filename={`top_10_most_similar_images_to_image_hash__${sense.imageFileHash}.csv`}
-                  headers={csvHeaders}
-                  separator=","
-                  ref={downloadRef}
-                  className="space-nowrap"
-                >
-                  {parse(translate('pages.senseDetails.exportToCSV'))}
-                </ChartStyles.CSVLinkButton>
-              </Styles.TitleWrapper>
-            }
-            className="similar-registered-images"
-            childrenClassName="no-spacing"
-          >
-            <SimilarRegisteredImages rarenessScoresTable={sense?.rarenessScoresTable} />
-          </BlockItemLayout>
-          <BlockItemLayout
-            title={parse(translate('pages.senseDetails.rareOnTheInternetResultsGraph'))}
-            className="rare-on-the-internet-results-graph"
-          >
-            <RareOnTheInternetResultsGraph data={sense?.internetRareness} />
-          </BlockItemLayout>
-          <BlockItemLayout
-            title={parse(translate('pages.senseDetails.rareOnTheInternetAlternativeResults'))}
-            className="rare-on-the-internet-alternative-results"
-          >
-            <RareOnTheInternetAlternativeResults data={sense?.internetRareness} />
-          </BlockItemLayout>
-          <BlockItemLayout
-            title={parse(translate('pages.senseDetails.fingerprintVectorHeatmap'))}
-            className="fingerprint-vector-heatmap"
-          >
-            <FingerprintVectorHeatmap
-              data={
-                sense?.imageFingerprintOfCandidateImageFile
-                  ? JSON.parse(sense?.imageFingerprintOfCandidateImageFile)
-                  : []
-              }
-            />
-          </BlockItemLayout>
-          <BlockItemLayout
-            title={parse(translate('pages.senseDetails.pastelData'))}
-            className="pastel-data"
-          >
-            <PastelData
-              blockHash={sense?.blockHash}
-              blockHeight={sense?.blockHeight}
-              utcTimestampWhenRequestSubmitted={sense?.utcTimestampWhenRequestSubmitted}
-              pastelIdOfSubmitter={sense?.pastelIdOfSubmitter}
-              pastelIdOfRegisteringSupernode1={sense?.pastelIdOfRegisteringSupernode1}
-              pastelIdOfRegisteringSupernode2={sense?.pastelIdOfRegisteringSupernode2}
-              pastelIdOfRegisteringSupernode3={sense?.pastelIdOfRegisteringSupernode3}
-              isPastelOpenapiRequest={sense?.isPastelOpenapiRequest}
-              currentOwnerPastelID={sense?.currentOwnerPastelID}
-            />
-          </BlockItemLayout>
-          <BlockItemLayout
-            title={parse(translate('pages.senseDetails.transfers'))}
-            className="pastel-data"
-            childrenClassName="no-spacing"
-          >
-            <Transfers />
-          </BlockItemLayout>
+          <SimilarRegisteredImagesWrapper sense={sense} />
+          <RareOnTheInternetResultsGraphWrapper sense={sense} />
+          <RareOnTheInternetAlternativeResultsWrapper sense={sense} />
+          <FingerprintVectorHeatmapWrapper sense={sense} />
+          <PastelDataWrapper sense={sense} />
+          <TransfersWrapper />
         </Styles.ImagesWrapper>
       </Grid>
       <SenseRawData rawData={getRawData()} open={openRawDataModal} toggleOpen={toggleOpenRawData} />
