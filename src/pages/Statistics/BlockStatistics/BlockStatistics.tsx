@@ -1,4 +1,7 @@
 import * as React from 'react';
+import gsap from 'gsap';
+import Flip from 'gsap/Flip';
+
 // third party
 import { useHistory } from 'react-router-dom';
 import { Skeleton } from '@material-ui/lab';
@@ -14,8 +17,11 @@ import { translate, translateDropdown } from '@utils/helpers/i18n';
 import BlockVisualization from './BlockVisualization/BlockVisualization';
 import { ITransformBlocksData } from './BlockStatistics.helpers';
 import MempoolModal from './MempoolModal';
+import * as BlockVisualizationStyle from './BlockVisualization/BlockVisualization.styles';
 
 import * as Styles from '../Statistics.styles';
+
+gsap.registerPlugin(Flip);
 
 const useStyles = makeStyles((_theme: TAppTheme) => ({
   wrapper: {
@@ -41,10 +47,73 @@ interface IStatisticsBlocks {
   blocksUnconfirmed: BlockUnconfirmed[] | null;
 }
 
+type TLayout = {
+  state?: Flip.FlipState;
+  items: ITransformBlocksData[];
+};
+
 const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUnconfirmed }) => {
   const history = useHistory();
   const classes = useStyles();
   const [openMempoolModal, setMempoolModal] = React.useState(false);
+  const el = React.useRef(null);
+  const q = gsap.utils.selector(el);
+  const [ctx] = React.useState(() =>
+    gsap.context(() => {
+      // noop
+    }),
+  );
+  const [layout, setLayout] = React.useState<TLayout>({
+    items: [],
+  });
+
+  React.useEffect(() => {
+    return () => ctx.revert();
+  }, []);
+
+  React.useEffect(() => {
+    if (blockElements?.length) {
+      if (!layout.items.length) {
+        setLayout({
+          items: blockElements,
+        });
+      } else if (blockElements[0].id !== layout.items[0].id) {
+        setLayout({
+          items: [...blockElements],
+          state: Flip.getState([...q('.block-box')]),
+        });
+      }
+    }
+  }, [blockElements, q]);
+
+  React.useLayoutEffect(() => {
+    if (!layout.state) return;
+
+    ctx.add(() => {
+      Flip.from(layout.state as Flip.FlipState, {
+        absolute: true,
+        ease: 'power1.inOut',
+        targets: q('.block-box'),
+        scale: true,
+        simple: true,
+        onEnter: elements => {
+          return gsap.fromTo(
+            elements,
+            {
+              opacity: 0,
+              scale: 0,
+            },
+            {
+              opacity: 1,
+              scale: 1,
+              delay: 0.2,
+              duration: 0.3,
+            },
+          );
+        },
+      });
+    });
+  }, [ctx, layout]);
 
   const renderMempoolBlock = () => {
     const size =
@@ -119,20 +188,24 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
                   }}
                 />
               </Grid>
-              {blockElements
-                .slice(1, 8)
-                .map(({ id, height, size, transactionCount, minutesAgo, ticketsCount }) => (
-                  <Grid item key={id}>
-                    <BlockVisualization
-                      clickHandler={() => history.push(`${ROUTES.BLOCK_DETAILS}/${id}`)}
-                      height={height}
-                      size={size}
-                      transactionCount={transactionCount}
-                      minutesAgo={minutesAgo}
-                      ticketsCount={ticketsCount}
-                    />
-                  </Grid>
-                ))}
+              <BlockVisualizationStyle.BlockAnimationWrapper ref={el}>
+                {layout.items
+                  .slice(1, 8)
+                  .map(
+                    ({ id, height, size, transactionCount, minutesAgo, ticketsCount, status }) => (
+                      <div key={id} className={`block-box ${status}`}>
+                        <BlockVisualization
+                          clickHandler={() => history.push(`${ROUTES.BLOCK_DETAILS}/${id}`)}
+                          height={height}
+                          size={size}
+                          transactionCount={transactionCount}
+                          minutesAgo={minutesAgo}
+                          ticketsCount={ticketsCount}
+                        />
+                      </div>
+                    ),
+                  )}
+              </BlockVisualizationStyle.BlockAnimationWrapper>
             </Styles.GridBlocksStatisticsRoot>
           ) : (
             <Styles.ChartSection>

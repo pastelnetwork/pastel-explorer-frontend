@@ -21,6 +21,8 @@ export const BlockContainer = styled.div`
     rgb(147, 57, 244) 0.175375%,
     rgb(16, 95, 176) 100%
   );
+  transition: transform 0.3s ease-in;
+
   &.block-unconfirmed {
     background: repeating-linear-gradient(
       to right,
@@ -42,13 +44,6 @@ export const BlockContainer = styled.div`
       rgb(178, 125, 16) 100%
     );
   }
-  // background: repeating-linear-gradient(
-  //   ${themeVariant.palette.primary.main},
-  //   ${themeVariant.palette.primary.main} 0.018575%,
-  //   ${themeVariant.palette.secondary.main} 0.018575%,
-  //   ${themeVariant.palette.primary.main} 100%
-  // );
-  transition: transform 0.2s ease-in;
 
   &::before {
     content: '';
@@ -76,5 +71,20 @@ export const BlockContainer = styled.div`
 
   &:hover {
     transform: translateY(-2px);
+  }
+`;
+
+export const BlockAnimationWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 18px;
+  width: calc(100% - 232px);
+  min-width: 1223px;
+  height: 100%;
+
+  .block-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;
