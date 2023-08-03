@@ -61,6 +61,14 @@ export const BlockWrapper = styled.div`
     white-space: nowrap;
   }
 
+  ${props => props.theme.breakpoints.between(1299, 1453)} {
+    .MuiTableContainer-root {
+      &.table-container {
+        overflow-x: scroll;
+      }
+    }
+  }
+
   ${props => props.theme.breakpoints.down(1024)} {
     &.mt-24 {
       margin-top: 12px;
