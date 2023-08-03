@@ -1,8 +1,9 @@
-import { useRef, useEffect, useState, MouseEvent } from 'react';
+import { useEffect, useState, MouseEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import Pagination from '@components/Pagination/Pagination';
 import { getSubHours } from '@utils/helpers/date/date';
 import useTicketsType from '@hooks/useTicketsType';
 import { ITicket } from '@utils/types/ITransactions';
@@ -17,36 +18,16 @@ interface ParamTypes {
   type: string;
 }
 
-type TPastelIdDetailsRef = {
-  offset: number;
-  totalTickets: number;
-  type: string;
-  size: number;
-  defaultDateRange: {
-    startDate: number;
-    endDate: number | null;
-  };
-};
-
 const LIMIT = 6;
 
 const TicketsType: React.FC = () => {
-  let targetHeight = 0;
   const { type } = useParams<ParamTypes>();
-  const fetchParams = useRef<TPastelIdDetailsRef>({
-    offset: 0,
-    type,
-    totalTickets: 0,
-    size: 1,
-    defaultDateRange: {
-      startDate: 0,
-      endDate: null,
-    },
-  });
   const [selectedType, setTicketType] = useState<string>(type);
   const [selectedStatus, setSelectedStatus] = useState<string>(TICKET_STATUS_OPTIONS[0].value);
   const [selectedTime, setSelectedTime] = useState<string>(blocksPeriodFilters[4].value);
   const [tickets, setTickets] = useState<ITicket[]>([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
   const [customDateRange, setCustomDateRange] = useState<{
     startDate: number;
     endDate: number | null;
@@ -54,65 +35,36 @@ const TicketsType: React.FC = () => {
     startDate: 0,
     endDate: null,
   });
-  const { data, senses, total, isLoading, setSize } = useTicketsType(
+  const { data, senses, total, isLoading } = useTicketsType(
     selectedType,
     LIMIT,
     selectedTime,
     selectedStatus,
     customDateRange,
+    currentPage * LIMIT,
   );
 
   const handleTicketTypeChange = (val: string) => {
     setTicketType(val);
-    fetchParams.current.type = val;
-    fetchParams.current.offset = 0;
-    fetchParams.current.totalTickets = 0;
-    fetchParams.current.size = 1;
-    setSize(1);
-  };
-
-  const handleScroll = () => {
-    const list = document.getElementById('list');
-    const clientHeight = list?.clientHeight || 0;
-    const offsetTop = list?.offsetTop || 0;
-    if (
-      window.scrollY + window.innerHeight >= clientHeight / 2 + offsetTop + targetHeight &&
-      fetchParams.current.offset <= fetchParams.current.totalTickets
-    ) {
-      targetHeight = clientHeight / 2;
-      fetchParams.current.offset += LIMIT;
-      fetchParams.current.size += 1;
-      setSize(fetchParams.current.size);
-    }
+    setCurrentPage(0);
   };
 
   useEffect(() => {
     if (!isLoading) {
-      fetchParams.current.totalTickets = total;
       setTickets(data);
+      setTotalItems(total);
     }
   }, [isLoading, selectedType, data.length]);
 
   useEffect(() => {
     (async () => {
       setTicketType(type);
-      setSize(1);
-      fetchParams.current.size = 1;
-      fetchParams.current.offset = 0;
-      fetchParams.current.type = type;
-      window.addEventListener('scroll', handleScroll);
+      setCurrentPage(0);
     })();
-    return () => window.removeEventListener('scroll', handleScroll);
   }, [type]);
 
   const handleSelectTime = (event: MouseEvent<HTMLButtonElement>) => {
-    setSize(1);
-    fetchParams.current.size = 1;
-    fetchParams.current.offset = 0;
-    fetchParams.current.defaultDateRange = {
-      startDate: 0,
-      endDate: null,
-    };
+    setCurrentPage(0);
     let dateRange = null;
     if (event.currentTarget.value !== 'all') {
       dateRange = { startDate: getSubHours(event.currentTarget.value), endDate: Date.now() };
@@ -124,26 +76,23 @@ const TicketsType: React.FC = () => {
   };
 
   const handleStatusChange = (value: string) => {
-    setSize(1);
-    fetchParams.current.size = 1;
-    fetchParams.current.offset = 0;
+    setCurrentPage(0);
     setSelectedStatus(value);
   };
 
   const handleDateRangeApply = (_startDate: number, _endDate: number | null) => {
-    fetchParams.current.offset = 0;
-    fetchParams.current.totalTickets = 0;
-    fetchParams.current.size = 1;
-    fetchParams.current.defaultDateRange = {
-      startDate: _startDate,
-      endDate: _endDate,
-    };
-    setSize(1);
+    setCurrentPage(0);
     setCustomDateRange({
       startDate: _startDate,
       endDate: _endDate,
     });
     setSelectedTime('custom');
+  };
+
+  const totalPage = Math.ceil(totalItems / LIMIT);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -154,7 +103,7 @@ const TicketsType: React.FC = () => {
             data={tickets}
             ticketType={selectedType}
             onTicketTypeChange={handleTicketTypeChange}
-            totalTickets={total}
+            totalTickets={totalItems}
             isLoading={isLoading}
             senses={senses}
             handleSelectTime={handleSelectTime}
@@ -164,6 +113,15 @@ const TicketsType: React.FC = () => {
             onDateRangeApply={handleDateRangeApply}
           />
         </Styles.GridStyle>
+        {totalPage > 1 && totalItems > LIMIT ? (
+          <Styles.PaginationWrapper>
+            <Pagination
+              totalPage={totalPage}
+              onPageChange={handlePageChange}
+              defaultPage={currentPage}
+            />
+          </Styles.PaginationWrapper>
+        ) : null}
       </Grid>
       {isLoading ? (
         <Styles.LoadingWrapper>

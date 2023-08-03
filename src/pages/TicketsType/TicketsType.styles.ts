@@ -131,3 +131,9 @@ export const LoadingWrapper = styled.div`
   z-index: 10;
   background: rgba(1, 1, 1, 0.2);
 `;
+
+export const PaginationWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 10px;
+`;
