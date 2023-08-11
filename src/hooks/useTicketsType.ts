@@ -20,6 +20,7 @@ export default function useTicketsType(
   if (status) {
     qStatus = `&status=${status}`;
   }
+
   let dateParam = '';
   if (customDateRange.startDate) {
     dateParam = `&startDate=${customDateRange.startDate}`;
@@ -38,11 +39,10 @@ export default function useTicketsType(
     axiosGet,
     SWR_OPTIONS,
   );
-
   return {
-    data: data?.data || [],
+    data: data?.data?.length ? [...data?.data] : [],
     total: data?.total || 0,
-    senses: data?.senses || [],
+    senses: data?.senses?.length ? [...data?.senses] : [],
     isLoading,
   };
 }

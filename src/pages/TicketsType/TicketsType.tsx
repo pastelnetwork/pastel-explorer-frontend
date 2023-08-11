@@ -6,7 +6,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Pagination from '@components/Pagination/Pagination';
 import { getSubHours } from '@utils/helpers/date/date';
 import useTicketsType from '@hooks/useTicketsType';
-import { ITicket } from '@utils/types/ITransactions';
 import { blocksPeriodFilters } from '@utils/constants/filter';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 
@@ -25,9 +24,7 @@ const TicketsType: React.FC = () => {
   const [selectedType, setTicketType] = useState<string>(type);
   const [selectedStatus, setSelectedStatus] = useState<string>(TICKET_STATUS_OPTIONS[0].value);
   const [selectedTime, setSelectedTime] = useState<string>(blocksPeriodFilters[4].value);
-  const [tickets, setTickets] = useState<ITicket[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [totalItems, setTotalItems] = useState(0);
   const [customDateRange, setCustomDateRange] = useState<{
     startDate: number;
     endDate: number | null;
@@ -48,13 +45,6 @@ const TicketsType: React.FC = () => {
     setTicketType(val);
     setCurrentPage(0);
   };
-
-  useEffect(() => {
-    if (!isLoading) {
-      setTickets(data);
-      setTotalItems(total);
-    }
-  }, [isLoading, selectedType, data.length]);
 
   useEffect(() => {
     (async () => {
@@ -89,7 +79,7 @@ const TicketsType: React.FC = () => {
     setSelectedTime('custom');
   };
 
-  const totalPage = Math.ceil(totalItems / LIMIT);
+  const totalPage = Math.ceil(total / LIMIT);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -100,10 +90,10 @@ const TicketsType: React.FC = () => {
       <Grid container direction="column">
         <Styles.GridStyle item id="list">
           <TicketsList
-            data={tickets}
+            data={data}
             ticketType={selectedType}
             onTicketTypeChange={handleTicketTypeChange}
-            totalTickets={totalItems}
+            totalTickets={total}
             isLoading={isLoading}
             senses={senses}
             handleSelectTime={handleSelectTime}
@@ -113,7 +103,7 @@ const TicketsType: React.FC = () => {
             onDateRangeApply={handleDateRangeApply}
           />
         </Styles.GridStyle>
-        {totalPage > 1 && totalItems > LIMIT ? (
+        {totalPage > 1 && total > LIMIT ? (
           <Styles.PaginationWrapper>
             <Pagination
               totalPage={totalPage}

@@ -358,9 +358,7 @@ const TicketsList: React.FC<ITicketsList> = ({
       value: unknown;
     }>,
   ) => {
-    if (event.target.value) {
-      onStatusChange(event.target.value as string);
-    }
+    onStatusChange(event.target.value as string);
   };
 
   const getStatusOptions = () => {

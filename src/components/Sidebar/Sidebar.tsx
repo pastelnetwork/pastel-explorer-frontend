@@ -12,6 +12,7 @@ import { getThemeState } from '@redux/reducers/appThemeReducer';
 import * as ROUTES from '@utils/constants/routes';
 import { RouteType, RouteChildType } from '@utils/types/routes';
 import { sidebarRoutes as routes } from '@routes/index';
+import useWindowDimensions from '@hooks/useWindowDimensions';
 
 import PastelLogoWhite from '@assets/images/pastel-logo-white.png';
 import PastelLogo from '@assets/images/pastel-logo.png';
@@ -142,6 +143,7 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
   interface InitOptionsProps {
     [key: number]: boolean;
   }
+  const { width } = useWindowDimensions();
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -160,7 +162,8 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
           pathName === ROUTES.STATISTICS_OVERTIME ||
           pathName === ROUTES.CASCADE_AND_SENSE_STATISTICS ||
           pathName.includes(ROUTES.STATISTICS_OVERTIME)) &&
-        route.path === ROUTES.STATISTICS_PARENT
+        route.path === ROUTES.STATISTICS_PARENT &&
+        width < 960
       ) {
         isActiveSub = true;
       }
