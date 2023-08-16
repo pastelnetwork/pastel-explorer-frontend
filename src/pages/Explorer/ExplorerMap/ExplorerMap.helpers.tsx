@@ -1,6 +1,7 @@
 import { MarkerProps } from '@components/Map/Map';
 import { Typography, Grid, AccordionSummary, AccordionDetails } from '@material-ui/core';
 import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
+import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';
 
@@ -10,7 +11,7 @@ const generateDrawerInfoBlock = (description: string, value: string) => {
   return (
     <Styles.InfoBlock container direction="column">
       <Grid item>
-        <Typography variant="caption">{description}</Typography>
+        <Typography variant="caption">{parse(description)}</Typography>
       </Grid>
       <Grid item>
         <Typography variant="body1">{value}</Typography>
@@ -34,7 +35,7 @@ export const generateDrawerContent = ({ name, latLng, data }: MarkerProps) => {
           <Grid item key={id}>
             <Styles.Accordion>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>{`${translate(`pages.explorer.${type.toLowerCase()}`)} #${
+                <Typography>{`${parse(translate(`pages.explorer.${type.toLowerCase()}`))} #${
                   index + 1
                 }`}</Typography>
               </AccordionSummary>

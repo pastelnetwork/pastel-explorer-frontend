@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import parse from 'html-react-parser';
 
 import { PeriodTypes, transformStatisticsChart } from '@utils/helpers/statisticsLib';
 import { periods, info, cacheList } from '@utils/constants/statistics';
@@ -54,17 +55,21 @@ function PercentOfPSLStaked() {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title={translate('pages.historicalStatistics.percentOfPSLStaked', {
-        currency: getCurrencyName(),
-      })}
+      title={parse(
+        translate('pages.historicalStatistics.percentOfPSLStaked', {
+          currency: getCurrencyName(),
+        }),
+      )}
     >
       <EChartsLineChart
         chartName="percentOfPSLStaked"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title={translate('pages.historicalStatistics.percentOfPSLStaked', {
-          currency: getCurrencyName(),
-        })}
+        title={parse(
+          translate('pages.historicalStatistics.percentOfPSLStaked', {
+            currency: getCurrencyName(),
+          }),
+        )}
         info={info}
         period={period}
         offset={0.004}

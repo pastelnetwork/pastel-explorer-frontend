@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import parse from 'html-react-parser';
 
 import { PeriodTypes, transformAccountDataChart } from '@utils/helpers/statisticsLib';
 import { periods, info, cacheList } from '@utils/constants/statistics';
@@ -59,7 +60,7 @@ function Accounts() {
         chartName="accounts"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title={translate('pages.historicalStatistics.accounts')}
+        title={parse(translate('pages.historicalStatistics.accounts'))}
         info={info}
         period={period}
         offset={10}

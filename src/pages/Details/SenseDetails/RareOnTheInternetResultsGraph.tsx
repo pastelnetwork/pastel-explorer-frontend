@@ -4,7 +4,7 @@ import parse from 'html-react-parser';
 import { TChartParams } from '@utils/types/IStatistics';
 import { decompress_zstd_compressed_data_func } from '@utils/helpers/encryption';
 import { TCurrentNode, TEdges } from '@utils/types/ITransactions';
-import { translate } from '@utils/helpers/i18n';
+import { translateDropdown } from '@utils/helpers/i18n';
 
 import { rareOnTheInternetResultsGraphData } from './mockup';
 import EmptyOverlay from './EmptyOverlay';
@@ -102,7 +102,7 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
           let relatedImagesUrls = '';
           if (item?.misc_related_images_urls) {
             relatedImagesUrls = `<div class="tooltip-item">
-            <div class="label">${translate('pages.senseDetails.relatedImages')}:</div>
+            <div class="label">${translateDropdown('pages.senseDetails.relatedImages')}:</div>
             <div class="value"><img class="tooltip-image" src="${
               item.misc_related_images_urls
             }" /></div>
@@ -113,7 +113,7 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
               src = `data:image/jpeg;base64,${item.misc_related_images_as_b64_strings}`;
             }
             relatedImagesUrls = `<div class="tooltip-item">
-            <div class="label">${translate('pages.senseDetails.relatedImages')}:</div>
+            <div class="label">${translateDropdown('pages.senseDetails.relatedImages')}:</div>
             <div class="value"><img class="tooltip-image" src="${src}" /></div>
           </div>`;
           }
@@ -121,7 +121,7 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
           let dateString = '';
           if (item?.date_string) {
             dateString = `<div class="tooltip-item">
-            <div class="label">${translate('pages.senseDetails.imageDate')}:</div>
+            <div class="label">${translateDropdown('pages.senseDetails.imageDate')}:</div>
             <div class="value">${item.date_string}</div>
           </div>`;
           }
@@ -131,11 +131,11 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
               <div class="tooltip-url">${item.original_url}</div>
               <div class="tooltip-content-wrapper">
                 <div class="tooltip-item">
-                  <div class="label">${translate('pages.senseDetails.resultRanking')}:</div>
+                  <div class="label">${translateDropdown('pages.senseDetails.resultRanking')}:</div>
                   <div class="value">${item.search_result_ranking}&nbsp;</div>
                 </div>
                 <div class="tooltip-item">
-                  <div class="label">${translate(
+                  <div class="label">${translateDropdown(
                     'pages.senseDetails.originalImageResolution',
                   )}:</div>
                   <div class="value">${parse(item.resolution_string)}&nbsp;</div>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
+import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
@@ -26,7 +27,7 @@ const DdAndFingerprintsIdsData: React.FC<IDdAndFingerprintsIdsData> = ({ data, o
     <CascadeStyles.RqIdsWrapper>
       <Box className="mt-10">
         <TicketStyles.TicketTitle>
-          {translate('pages.nftDetails.allDdAndFingerprints')}
+          {parse(translate('pages.nftDetails.allDdAndFingerprints'))}
         </TicketStyles.TicketTitle>
       </Box>
       {opened ? (
@@ -54,27 +55,27 @@ const DdAndFingerprints: React.FC<IDdAndFingerprints> = ({
           <Grid item xs={12} sm={4}>
             <Box>
               <TicketStyles.TicketTitle>
-                {translate('pages.nftDetails.ddAndFingerprintsIc')}:
+                {parse(translate('pages.nftDetails.ddAndFingerprintsIc'))}:
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent>
-                {ddAndFingerprintsIc || translate('common.na')}
+                {ddAndFingerprintsIc || parse(translate('common.na'))}
               </TicketStyles.TicketContent>
             </Box>
           </Grid>
           <Grid item xs={12} sm={4}>
             <Box>
               <TicketStyles.TicketTitle>
-                {translate('pages.nftDetails.ddAndFingerprintsMax')}:
+                {parse(translate('pages.nftDetails.ddAndFingerprintsMax'))}:
               </TicketStyles.TicketTitle>
               <TicketStyles.TicketContent>
-                {ddAndFingerprintsMax || translate('common.na')}
+                {ddAndFingerprintsMax || parse(translate('common.na'))}
               </TicketStyles.TicketContent>
             </Box>
           </Grid>
           <Grid item xs={12} sm={4}>
             <Box>
               <TicketStyles.TicketTitle>
-                {translate('pages.nftDetails.ddAndFingerprintsIds')}:
+                {parse(translate('pages.nftDetails.ddAndFingerprintsIds'))}:
               </TicketStyles.TicketTitle>
               {ddAndFingerprintsIds.length ? (
                 <TicketStyles.TicketContent
@@ -82,12 +83,14 @@ const DdAndFingerprints: React.FC<IDdAndFingerprints> = ({
                   onClick={() => setOpened(!opened)}
                 >
                   {opened
-                    ? translate('pages.nftDetails.hideAllDdAndFingerprints')
-                    : translate('pages.nftDetails.displayAllDdAndFingerprints')}
+                    ? parse(translate('pages.nftDetails.hideAllDdAndFingerprints'))
+                    : parse(translate('pages.nftDetails.displayAllDdAndFingerprints'))}
                   <ExpandMoreIcon />
                 </TicketStyles.TicketContent>
               ) : (
-                <TicketStyles.TicketContent>{translate('common.na')}</TicketStyles.TicketContent>
+                <TicketStyles.TicketContent>
+                  {parse(translate('common.na'))}
+                </TicketStyles.TicketContent>
               )}
             </Box>
           </Grid>

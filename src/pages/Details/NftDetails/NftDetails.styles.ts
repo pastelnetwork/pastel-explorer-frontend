@@ -397,7 +397,11 @@ export const MainWrapper = styled.div`
       gap: 20px;
 
       .creator-content {
-        min-height: unset;
+        min-height: 272px;
+
+        ${props => props.theme.breakpoints.down(600)} {
+          min-height: unset;
+        }
       }
     }
   }

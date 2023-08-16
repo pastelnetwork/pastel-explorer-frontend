@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import makeStyles from '@material-ui/styles/makeStyles';
 import { decode } from 'js-base64';
+import parse from 'html-react-parser';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
@@ -53,7 +54,7 @@ import * as FilterStyles from '@components/InfinityTable/InfinityTable.styles';
 import DateTimePicker from '@components/DateTimePicker/DateTimePicker';
 import { blocksPeriodFilters } from '@utils/constants/filter';
 import { TAppTheme } from '@theme/index';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
 import * as ascii85 from '@utils/helpers/ascii85';
 import { getFileIcon } from '@pages/Details/CascadeDetails/CascadeDetails.helpers';
 import CopyButton from '@components/CopyButton/CopyButton';
@@ -152,7 +153,7 @@ const TicketsList: React.FC<ITicketsList> = ({
           <Grid container spacing={3}>
             <Grid item xs={4} sm={3} className="max-w-355">
               <TicketStyles.TicketTitle>
-                {translate('pages.blockDetails.cascadeFileType')}
+                {parse(translate('pages.blockDetails.cascadeFileType'))}
               </TicketStyles.TicketTitle>
             </Grid>
             <Grid item xs={8} sm={9}>
@@ -172,7 +173,7 @@ const TicketsList: React.FC<ITicketsList> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <TicketStyles.TicketTitle>
-              {translate('pages.ticketsType.senseOutputDetails')}:
+              {parse(translate('pages.ticketsType.senseOutputDetails'))}:
             </TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -192,7 +193,7 @@ const TicketsList: React.FC<ITicketsList> = ({
                   />
                 </Link>
               ) : (
-                translate('pages.tickets.pendingSenseGenerate')
+                parse(translate('pages.tickets.pendingSenseGenerate'))
               )}
             </TicketStyles.TicketContent>
           </Grid>
@@ -200,7 +201,7 @@ const TicketsList: React.FC<ITicketsList> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <TicketStyles.TicketTitle>
-              {translate('pages.ticketsType.imageHash')}:
+              {parse(translate('pages.ticketsType.imageHash'))}:
             </TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -217,7 +218,7 @@ const TicketsList: React.FC<ITicketsList> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <TicketStyles.TicketTitle>
-              {translate('pages.ticketsType.senseVersion')}:
+              {parse(translate('pages.ticketsType.senseVersion'))}:
             </TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -304,20 +305,21 @@ const TicketsList: React.FC<ITicketsList> = ({
 
   const getTitle = () => {
     if (ticketType === 'pastelid-usename') {
-      return translate('pages.ticketsType.pastelIDAndUsernameTickets');
+      return parse(translate('pages.ticketsType.pastelIDAndUsernameTickets'));
     }
     if (ticketType === 'offer-transfer') {
-      return translate('pages.ticketsType.offerTicketsAndTransferTickets');
+      return parse(translate('pages.ticketsType.offerTicketsAndTransferTickets'));
     }
     if (ticketType === 'pastel-nft') {
-      return translate('pages.ticketsType.pastelNFTTickets');
+      return parse(translate('pages.ticketsType.pastelNFTTickets'));
     }
     if (ticketType === 'other') {
-      return translate('pages.ticketsType.senseAndNFTCollectionTickets');
+      return parse(translate('pages.ticketsType.senseAndNFTCollectionTickets'));
     }
     const ticket = TICKET_TYPE_OPTIONS.find(t => t.value === ticketType);
     return (
-      translate(ticket?.name || '') || translate('pages.ticketsType.senseAndNFTCollectionTickets')
+      parse(translate(ticket?.name || '')) ||
+      parse(translate('pages.ticketsType.senseAndNFTCollectionTickets'))
     );
   };
 
@@ -325,29 +327,29 @@ const TicketsList: React.FC<ITicketsList> = ({
     const result = [];
     if (ticketType === 'other') {
       result.push({
-        name: translate('pages.ticketsType.senseAndNFTCollectionTickets'),
+        name: translateDropdown('pages.ticketsType.senseAndNFTCollectionTickets'),
         value: 'other',
       });
     } else if (ticketType === 'pastelid-usename') {
       result.push({
-        name: translate('pages.ticketsType.pastelIDAndUsernameTickets'),
+        name: translateDropdown('pages.ticketsType.pastelIDAndUsernameTickets'),
         value: 'pastelid-usename',
       });
     } else if (ticketType === 'pastel-nft') {
       result.push({
-        name: translate('pages.ticketsType.pastelNFTTickets'),
+        name: translateDropdown('pages.ticketsType.pastelNFTTickets'),
         value: 'pastel-nft',
       });
     } else if (ticketType === 'offer-transfer') {
       result.push({
-        name: translate('pages.ticketsType.offerTicketsAndTransferTickets'),
+        name: translateDropdown('pages.ticketsType.offerTicketsAndTransferTickets'),
         value: 'offer-transfer',
       });
     }
 
     return [
       ...result,
-      ...TICKET_TYPE_OPTIONS.map(item => ({ ...item, name: translate(item.name) })),
+      ...TICKET_TYPE_OPTIONS.map(item => ({ ...item, name: translateDropdown(item.name) })),
     ];
   };
 
@@ -356,15 +358,13 @@ const TicketsList: React.FC<ITicketsList> = ({
       value: unknown;
     }>,
   ) => {
-    if (event.target.value) {
-      onStatusChange(event.target.value as string);
-    }
+    onStatusChange(event.target.value as string);
   };
 
   const getStatusOptions = () => {
     return TICKET_STATUS_OPTIONS.map(option => ({
       ...option,
-      name: translate(option.name),
+      name: translateDropdown(option.name),
     }));
   };
 
@@ -372,23 +372,31 @@ const TicketsList: React.FC<ITicketsList> = ({
     <BlockDetailsStyles.GridStyle item>
       <TableStyles.BlockWrapper className="mb-12 min-h-60vh">
         <Styles.BlockWrapper className="ticket-title-wrapper">
-          <Styles.BlockTitle>
+          <Styles.BlockTitle className="ticket-title-section">
             {getTitle()}{' '}
-            <Styles.SubTitle>
+            <Styles.SubTitle className="nowrap">
               (
               {totalTickets > 1
-                ? translate('pages.ticketsType.totalTickets', { total: formatNumber(totalTickets) })
-                : translate('pages.ticketsType.totalTicket', { total: formatNumber(totalTickets) })}
+                ? parse(
+                    translate('pages.ticketsType.totalTickets', {
+                      total: formatNumber(totalTickets),
+                    }),
+                  )
+                : parse(
+                    translate('pages.ticketsType.totalTicket', {
+                      total: formatNumber(totalTickets),
+                    }),
+                  )}
               )
             </Styles.SubTitle>
           </Styles.BlockTitle>
           <Styles.FilterBlock>
-            <FilterStyles.FilterWrapper>
+            <FilterStyles.FilterWrapper className="filter-wrapper">
               <Dropdown
                 value={ticketType}
                 onChange={handleTicketTypeChange}
                 options={getDropdownOptions()}
-                label={translate('pages.ticketsType.ticketType')}
+                label={translateDropdown('pages.ticketsType.ticketType')}
                 classNameWrapper="dropdown-ticket-type"
               />
               {['sense', 'cascade'].includes(ticketType) ? (
@@ -396,7 +404,7 @@ const TicketsList: React.FC<ITicketsList> = ({
                   value={selectedStatus}
                   onChange={handleStatusChange}
                   options={getStatusOptions()}
-                  label={translate('pages.ticketsType.status')}
+                  label={translateDropdown('pages.ticketsType.status')}
                   classNameWrapper="dropdown-status"
                 />
               ) : null}
@@ -416,7 +424,7 @@ const TicketsList: React.FC<ITicketsList> = ({
                       value={value}
                       onClick={handleSelectTime}
                     >
-                      {translate(name)}
+                      {parse(translate(name))}
                     </Button>
                   </MenuItem>
                 ))}
@@ -443,11 +451,11 @@ const TicketsList: React.FC<ITicketsList> = ({
               <Grid container spacing={3}>
                 <Grid item xs={4} sm={3} className="max-w-355">
                   <TicketStyles.TicketTitle>
-                    {translate('pages.ticketsType.txId')}:
+                    {parse(translate('pages.ticketsType.txId'))}:
                   </TicketStyles.TicketTitle>
                 </Grid>
                 <Grid item xs={8} sm={9}>
-                  <TicketStyles.TicketContent>
+                  <TicketStyles.TicketContent className="nowrap">
                     <CopyButton copyText={ticket.transactionHash} />
                     <RouterLink
                       route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.transactionHash}`}
@@ -461,7 +469,7 @@ const TicketsList: React.FC<ITicketsList> = ({
               <Grid container spacing={3}>
                 <Grid item xs={4} sm={3} className="max-w-355">
                   <TicketStyles.TicketTitle>
-                    {translate('pages.ticketsType.type')}:
+                    {parse(translate('pages.ticketsType.type'))}:
                   </TicketStyles.TicketTitle>
                 </Grid>
                 <Grid item xs={8} sm={9}>
@@ -479,7 +487,9 @@ const TicketsList: React.FC<ITicketsList> = ({
           ))}
           {!data.length && !isLoading ? (
             <BlockDetailsStyles.GridStyle className="table__row">
-              <TicketStyles.TicketTitle>{translate('common.noData')}</TicketStyles.TicketTitle>
+              <TicketStyles.TicketTitle>
+                {parse(translate('common.noData'))}
+              </TicketStyles.TicketTitle>
             </BlockDetailsStyles.GridStyle>
           ) : null}
         </Box>

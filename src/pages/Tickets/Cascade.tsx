@@ -1,13 +1,11 @@
-import Typography from '@material-ui/core/Typography';
-import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
+import { useState } from 'react';
 
-import { Link } from '@components/Link/Link.styles';
 import * as ROUTES from '@utils/constants/routes';
-import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import InfinityTable from '@components/InfinityTable/InfinityTable';
 import { translate } from '@utils/helpers/i18n';
 
-import { transformCascadeData, TTicketResponse } from './Tickets.helpers';
+import SectionTitle from './SectionTitle';
+import { transformCascadeData, TTicketResponse, useShowLess } from './Tickets.helpers';
 import { cascadeColumns } from './Tickets.columns';
 import * as Styles from './Tickets.styles';
 
@@ -19,21 +17,18 @@ interface ICascadeProps {
 
 const Cascade: React.FC<ICascadeProps> = ({ ticketsData, innerWidth, usdPrice }) => {
   const { data, total, isLoading, size, setSize } = ticketsData;
+  const [showLess, setShowLess] = useState(false);
+  useShowLess(setShowLess);
 
   const getTitle = () => {
     return (
-      <Styles.BlockTitle className="latest-blocks">
-        {translate('pages.tickets.cascadeTickets')} (
-        {total > 1
-          ? translate('pages.tickets.totalTickets', { total: formatNumber(total) })
-          : translate('pages.tickets.totalTicket', { total: formatNumber(total) })}
-        )
-        <Link to={`${ROUTES.TICKETS_TYPE}/cascade`} className="view-all">
-          <Typography align="center" className="p-16">
-            {translate('pages.tickets.viewAll')} <ArrowForwardIos />
-          </Typography>
-        </Link>
-      </Styles.BlockTitle>
+      <SectionTitle
+        title={translate('pages.tickets.cascadeTickets')}
+        total={total}
+        toggleContent={() => setShowLess(!showLess)}
+        showMore={showLess}
+        viewAllLink={`${ROUTES.TICKETS_TYPE}/cascade`}
+      />
     );
   };
 
@@ -72,6 +67,7 @@ const Cascade: React.FC<ICascadeProps> = ({ ticketsData, innerWidth, usdPrice })
         headerBackground
         customLoading={isLoading}
         rowHeight={getRowHeight()}
+        showLess={showLess}
       />
     </Styles.CascadeContainer>
   );

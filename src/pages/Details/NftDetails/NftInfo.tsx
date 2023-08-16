@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
+import parse from 'html-react-parser';
 
 import Share from '@components/Share/Share';
 import { formatAddress } from '@utils/helpers/format';
@@ -79,7 +80,7 @@ const NftInfo: React.FC<INftInfo> = ({
           <Box className="created-by">
             <Box component="span">
               <TicketStyles.TicketTitle as="span">
-                {translate('pages.nftDetails.by')}:
+                {parse(translate('pages.nftDetails.by'))}:
               </TicketStyles.TicketTitle>{' '}
               <RouterLink
                 route={`${ROUTES.PASTEL_ID_DETAILS}/${creator}`}
@@ -90,7 +91,7 @@ const NftInfo: React.FC<INftInfo> = ({
             </Box>
             <Box className="txt-id">
               <TicketStyles.TicketTitle as="span">
-                {translate('pages.nftDetails.txID')}:
+                {parse(translate('pages.nftDetails.txID'))}:
               </TicketStyles.TicketTitle>{' '}
               <CopyButton copyText={txId} />
               <RouterLink
@@ -102,7 +103,7 @@ const NftInfo: React.FC<INftInfo> = ({
             </Box>
             <Box className="txt-id">
               <TicketStyles.TicketTitle as="span">
-                {translate('pages.nftDetails.collection')}:
+                {parse(translate('pages.nftDetails.collection'))}:
               </TicketStyles.TicketTitle>{' '}
               {collectionName ? (
                 <RouterLink
@@ -112,17 +113,17 @@ const NftInfo: React.FC<INftInfo> = ({
                   className="address-link"
                 />
               ) : (
-                translate('common.na')
+                parse(translate('common.na'))
               )}
             </Box>
             <Box className="txt-id">
               <TicketStyles.TicketTitle as="span">
-                {translate('pages.nftDetails.rawData')}:
+                {parse(translate('pages.nftDetails.rawData'))}:
               </TicketStyles.TicketTitle>{' '}
               <SenseStyles.RawDataWrapper>
                 <CopyButton copyText={rawData ? JSON.parse(getRawData()) : ''} />
                 <SenseStyles.ViewTransactionRaw type="button" onClick={toggleOpenRawData}>
-                  {translate('pages.nftDetails.viewNFTRawData')}
+                  {parse(translate('pages.nftDetails.viewNFTRawData'))}
                 </SenseStyles.ViewTransactionRaw>
               </SenseStyles.RawDataWrapper>
             </Box>

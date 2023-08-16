@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import parse from 'html-react-parser';
 
 import { PeriodTypes, transformTransactionPerSecond } from '@utils/helpers/statisticsLib';
 import { periods, info, cacheList } from '@utils/constants/statistics';
@@ -53,13 +54,13 @@ function TransactionPerSecond() {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title={translate('pages.historicalStatistics.transactionsPerSecond')}
+      title={parse(translate('pages.historicalStatistics.transactionsPerSecond'))}
     >
       <EChartsLineChart
         chartName="transactionspersecond"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title={translate('pages.historicalStatistics.transactionsPerSecond')}
+        title={parse(translate('pages.historicalStatistics.transactionsPerSecond'))}
         period={period}
         info={info}
         offset={100000}

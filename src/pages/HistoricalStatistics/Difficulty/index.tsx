@@ -1,5 +1,6 @@
 // react
 import { useEffect, useState } from 'react';
+import parse from 'html-react-parser';
 
 // application
 import { PeriodTypes, transformDifficultyInfo } from '@utils/helpers/statisticsLib';
@@ -55,13 +56,13 @@ function Difficulty() {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title={translate('pages.historicalStatistics.difficulty')}
+      title={parse(translate('pages.historicalStatistics.difficulty'))}
     >
       <EChartsLineChart
         chartName="difficulty"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title={translate('pages.historicalStatistics.networkDifficulty')}
+        title={parse(translate('pages.historicalStatistics.networkDifficulty'))}
         period={period}
         info={info}
         offset={100000}

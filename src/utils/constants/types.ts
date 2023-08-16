@@ -42,7 +42,7 @@ export type TLineChartProps = {
   dataY?: number[];
   dataY1?: number[];
   dataY2?: number[];
-  title?: string;
+  title?: string | ReactNode;
   granularity?: TGranularity;
   info: TStatisticsInfo;
   granularities?: TGranularity[];
@@ -81,7 +81,7 @@ export type TScatterChartProps = {
   chartName: string;
   data?: number[][];
   dataX?: string[];
-  title?: string;
+  title?: string | ReactNode;
   period?: PeriodTypes;
   info: TStatisticsInfo;
   offset: number;

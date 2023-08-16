@@ -33,7 +33,7 @@ export const TableContainer = styled(Grid)`
 
   ${props => props.theme.breakpoints.down(960)} {
     .ReactVirtualized__Table__headerRow {
-      display: none;
+      display: none !important;
     }
 
     .ReactVirtualized__Table__row {

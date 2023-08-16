@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import DateFnsUtils from '@date-io/date-fns';
+import { H } from 'highlight.run';
 
 import { ThemeProvider } from 'styled-components/macro';
 import { create } from 'jss';
@@ -33,9 +34,24 @@ import { themeLight, themeDark } from './theme';
 import Routes from './routes/Routes';
 import * as Styles from './App.styles';
 
+import './global.styles.css';
+
 const jss = create({
   ...jssPreset(),
   insertionPoint: document.getElementById('jss-insertion-point') as HTMLElement,
+});
+
+H.init(process.env.REACT_APP_EXPLORER_HIGHLIGHT_PROJECT_ID, {
+  tracingOrigins: true,
+  networkRecording: {
+    enabled: true,
+    recordHeadersAndBody: true,
+    urlBlocklist: [
+      // insert full or partial urls that you don't want to record here
+      // Out of the box, Highlight will not record these URLs (they can be safely removed):
+      'https://fonts.googleapis.com',
+    ],
+  },
 });
 
 const App: React.FC = () => {

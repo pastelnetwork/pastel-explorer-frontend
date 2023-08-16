@@ -1,0 +1,25 @@
+@keyframes skeleton-keyframes-pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.skeleton-text {
+  display: inline-block;
+  background-color: rgba(0, 0, 0, 0.11);
+  height: 18px;
+  min-width: 40px;
+  transform: scale(1, 0.60);
+  margin-top: 0;
+  border-radius: 4px;
+  margin-bottom: 0;
+  transform-origin: 0 60%;
+  animation: skeleton-keyframes-pulse 1.5s ease-in-out 0.5s infinite;
+  vertical-align: middle;
+}

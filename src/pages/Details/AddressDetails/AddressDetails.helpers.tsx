@@ -1,5 +1,6 @@
 import { Grid } from '@material-ui/core';
 import format from 'date-fns/format';
+import parse from 'html-react-parser';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import CopyButton from '@components/CopyButton/CopyButton';
@@ -60,11 +61,13 @@ export const generateLatestTransactions = (
         }`}
       >
         {direction === 'Outgoing'
-          ? translate('pages.addressDetails.balanceHistory.sent')
-          : translate(
-              `pages.addressDetails.balanceHistory.${
-                isPastelBurnAddress(address) ? 'burned' : 'received'
-              }`,
+          ? parse(translate('pages.addressDetails.balanceHistory.sent'))
+          : parse(
+              translate(
+                `pages.addressDetails.balanceHistory.${
+                  isPastelBurnAddress(address) ? 'burned' : 'received'
+                }`,
+              ),
             )}
       </div>
     ),

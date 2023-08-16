@@ -4,6 +4,7 @@ import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
 import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import TouchAppIcon from '@material-ui/icons/TouchApp';
+import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';
 
@@ -12,31 +13,32 @@ export const getActivityType = (type: string) => {
     case 'offer':
       return (
         <Box className="event">
-          <LocalGroceryStoreIcon className="offer" /> {translate('pages.nftDetails.offer')}
+          <LocalGroceryStoreIcon className="offer" /> {parse(translate('pages.nftDetails.offer'))}
         </Box>
       );
     case 'accept':
       return (
         <Box className="event">
-          <DoneAllIcon className="accept" /> {translate('pages.nftDetails.accept')}
+          <DoneAllIcon className="accept" /> {parse(translate('pages.nftDetails.accept'))}
         </Box>
       );
     case 'nft-reg':
       return (
         <Box className="event">
-          <TouchAppIcon className="accept" /> {translate('pages.nftDetails.registration')}
+          <TouchAppIcon className="accept" /> {parse(translate('pages.nftDetails.registration'))}
         </Box>
       );
     case 'nft-act':
       return (
         <Box className="event">
-          <AssignmentTurnedInIcon className="accept" /> {translate('pages.nftDetails.activation')}
+          <AssignmentTurnedInIcon className="accept" />{' '}
+          {parse(translate('pages.nftDetails.activation'))}
         </Box>
       );
     default:
       return (
         <Box className="event">
-          <SwapHorizIcon className="transfer" /> {translate('pages.nftDetails.transfer')}
+          <SwapHorizIcon className="transfer" /> {parse(translate('pages.nftDetails.transfer'))}
         </Box>
       );
   }

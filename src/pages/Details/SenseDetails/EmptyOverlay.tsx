@@ -1,4 +1,5 @@
 import { translate } from '@utils/helpers/i18n';
+import parse from 'html-react-parser';
 
 import * as Styles from './SenseDetails.styles';
 
@@ -12,7 +13,7 @@ const EmptyOverlay: React.FC<IEmptyOverlay> = ({ isShow }) => {
   }
   return (
     <Styles.EmptyOverlay>
-      <Styles.EmptyData>{translate('common.noData')}</Styles.EmptyData>
+      <Styles.EmptyData>{parse(translate('common.noData'))}</Styles.EmptyData>
     </Styles.EmptyOverlay>
   );
 };

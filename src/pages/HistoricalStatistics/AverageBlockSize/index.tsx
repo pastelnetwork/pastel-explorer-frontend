@@ -1,5 +1,6 @@
 // react
 import { useEffect, useState } from 'react';
+import parse from 'html-react-parser';
 
 // application
 import { TLineChartData } from '@utils/types/IStatistics';
@@ -80,13 +81,13 @@ const AverageBlockSize = (): JSX.Element => {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title={translate('pages.historicalStatistics.averageblocksizePageTitle')}
+      title={parse(translate('pages.historicalStatistics.averageblocksizePageTitle'))}
     >
       <EChartsLineChart
         chartName="averageblocksize"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title={translate('pages.historicalStatistics.averageblocksizeChartTitle')}
+        title={parse(translate('pages.historicalStatistics.averageblocksizeChartTitle'))}
         info={info}
         offset={10000}
         period={period}

@@ -1,5 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import parse from 'html-react-parser';
 
 import { TSenseRequests } from '@utils/types/ITransactions';
 import RouterLink from '@components/RouterLink/RouterLink';
@@ -25,7 +26,7 @@ const SenseItem: React.FC<ISenseItem> = ({ sense }) => {
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <TicketStyles.TicketTitle>
-            {translate('pages.transactionDetails.imageHash')}:
+            {parse(translate('pages.transactionDetails.imageHash'))}:
           </TicketStyles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -46,7 +47,7 @@ const SenseItem: React.FC<ISenseItem> = ({ sense }) => {
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <TicketStyles.TicketTitle>
-            {translate('pages.transactionDetails.senseVersion')}:
+            {parse(translate('pages.transactionDetails.senseVersion'))}:
           </TicketStyles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -64,7 +65,7 @@ const SensesList: React.FC<ISensesList> = ({ data }) => {
     <BlockStyles.GridStyle item>
       <TableStyles.BlockWrapper className="mb-0">
         <TableStyles.BlockTitle>
-          {translate('pages.transactionDetails.senses')}
+          {parse(translate('pages.transactionDetails.senses'))}
         </TableStyles.BlockTitle>
         <Box className="custom-table tickets-table">
           {data.map(sense => (

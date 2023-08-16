@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Box from '@material-ui/core/Box';
 import format from 'date-fns/format';
+import parse from 'html-react-parser';
 
 import { ExternalLink } from '@components/RouterLink/RouterLink';
 import { translate } from '@utils/helpers/i18n';
@@ -47,29 +48,29 @@ const Creator: React.FC<ICreator> = ({ writtenStatement, memberSince, website })
     <Box>
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>
-          {translate('pages.nftDetails.creatorWrittenStatement')}
+          {parse(translate('pages.nftDetails.creatorWrittenStatement'))}
         </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent>
-          {getWrittenStatement() || translate('common.na')}
+          {getWrittenStatement() || parse(translate('common.na'))}
         </TicketStyles.TicketContent>
       </Styles.ContentItem>
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>
-          {translate('pages.nftDetails.memberSince')}
+          {parse(translate('pages.nftDetails.memberSince'))}
         </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent>
-          {memberSince ? format(memberSince, 'MMM yyyy') : translate('common.na')}
+          {memberSince ? format(memberSince, 'MMM yyyy') : parse(translate('common.na'))}
         </TicketStyles.TicketContent>
       </Styles.ContentItem>
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>
-          {translate('pages.nftDetails.creatorWebsite')}
+          {parse(translate('pages.nftDetails.creatorWebsite'))}
         </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent>
           {website ? (
             <ExternalLink href={website} target="_blank" value={website} />
           ) : (
-            translate('common.na')
+            parse(translate('common.na'))
           )}
         </TicketStyles.TicketContent>
       </Styles.ContentItem>

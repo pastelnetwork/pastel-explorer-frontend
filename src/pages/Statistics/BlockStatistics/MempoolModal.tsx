@@ -7,6 +7,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { Table, TableBody, TableHead, TableRow } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TimeAgo from 'react-timeago';
+import parse from 'html-react-parser';
 
 import { IMempool } from '@utils/types/ITransactions';
 import * as URLS from '@utils/constants/urls';
@@ -73,7 +74,9 @@ const MempoolModal: React.FC<IMempoolModal> = ({ open, onClose }) => {
   const getModalContent = () => {
     return (
       <TableStyles.BlockWrapper className="mempool-wrapper">
-        <TableStyles.BlockTitle>{translate('pages.movement.mempool')}</TableStyles.BlockTitle>
+        <TableStyles.BlockTitle>
+          {parse(translate('pages.movement.mempool'))}
+        </TableStyles.BlockTitle>
         <Styles.ContentWrapper>
           {isLoading ? (
             <TransactionStyles.LoadingWrapper>
@@ -88,25 +91,25 @@ const MempoolModal: React.FC<IMempoolModal> = ({ open, onClose }) => {
                   <TableHead className="table__row-header">
                     <TableRow>
                       <TableStyles.TableCell className="table__row-header--cell">
-                        {translate('pages.movement.txID')}
+                        {parse(translate('pages.movement.txID'))}
                       </TableStyles.TableCell>
                       <TableStyles.TableCell className="table__row-header--cell">
-                        {translate('pages.movement.recipients')}
+                        {parse(translate('pages.movement.recipients'))}
                       </TableStyles.TableCell>
                       <TableStyles.TableCell className="table__row-header--cell">
-                        {translate('pages.movement.amount', { currency: getCurrencyName() })}
+                        {parse(translate('pages.movement.amount', { currency: getCurrencyName() }))}
                       </TableStyles.TableCell>
                       <TableStyles.TableCell className="table__row-header--cell">
-                        {translate('pages.movement.size')}
+                        {parse(translate('pages.movement.size'))}
                       </TableStyles.TableCell>
                       <TableStyles.TableCell className="table__row-header--cell">
-                        {translate('pages.movement.fee', { currency: getCurrencyName() })}
+                        {parse(translate('pages.movement.fee', { currency: getCurrencyName() }))}
                       </TableStyles.TableCell>
                       <TableStyles.TableCell className="table__row-header--cell">
-                        {translate('pages.movement.ticketQuantity')}
+                        {parse(translate('pages.movement.ticketQuantity'))}
                       </TableStyles.TableCell>
                       <TableStyles.TableCell className="table__row-header--cell">
-                        {translate('pages.movement.timestamp')}
+                        {parse(translate('pages.movement.timestamp'))}
                       </TableStyles.TableCell>
                     </TableRow>
                   </TableHead>
@@ -116,7 +119,7 @@ const MempoolModal: React.FC<IMempoolModal> = ({ open, onClose }) => {
                       return (
                         <TableRow className="table__row" key={mempool.id}>
                           <TableStyles.RowCell
-                            data-title={`${translate('pages.movement.txID')}:`}
+                            data-title={`${parse(translate('pages.movement.txID'))}:`}
                             className="cell-content"
                           >
                             <RouterLink
@@ -127,42 +130,48 @@ const MempoolModal: React.FC<IMempoolModal> = ({ open, onClose }) => {
                             />
                           </TableStyles.RowCell>
                           <TableStyles.RowCell
-                            data-title={`${translate('pages.movement.recipients')}:`}
+                            data-title={`${parse(translate('pages.movement.recipients'))}:`}
                             className="cell-content"
                           >
                             {formatNumber(mempool.recipientCount)}
                           </TableStyles.RowCell>
                           <TableStyles.RowCell
-                            data-title={`${translate('pages.movement.amount', {
-                              currency: getCurrencyName(),
-                            })}:`}
+                            data-title={`${parse(
+                              translate('pages.movement.amount', {
+                                currency: getCurrencyName(),
+                              }),
+                            )}:`}
                             className="cell-content"
                           >
                             {mempool.isNonStandard ? (
-                              <Tooltip title={translate('pages.movement.shieldedTransactionInfo')}>
-                                <span>{translate('common.unknown')}</span>
+                              <Tooltip
+                                title={parse(translate('pages.movement.shieldedTransactionInfo'))}
+                              >
+                                <span>{parse(translate('common.unknown'))}</span>
                               </Tooltip>
                             ) : (
                               formatNumber(mempool.totalAmount, { decimalsLength: 2 })
                             )}
                           </TableStyles.RowCell>
                           <TableStyles.RowCell
-                            data-title={`${translate('pages.movement.size')}:`}
+                            data-title={`${parse(translate('pages.movement.size'))}:`}
                             className="cell-content"
                           >
                             {formatNumber(mempool.size / 1024, { decimalsLength: 2 })}{' '}
                             {translate('pages.movement.kb')}
                           </TableStyles.RowCell>
                           <TableStyles.RowCell
-                            data-title={`${translate('pages.movement.fee', {
-                              currency: getCurrencyName(),
-                            })}:`}
+                            data-title={`${parse(
+                              translate('pages.movement.fee', {
+                                currency: getCurrencyName(),
+                              }),
+                            )}:`}
                             className="cell-content"
                           >
                             {formatNumber(mempool.fee, { decimalsLength: 2 })}
                           </TableStyles.RowCell>
                           <TableStyles.RowCell
-                            data-title={`${translate('pages.movement.ticketQuantity')}:`}
+                            data-title={`${parse(translate('pages.movement.ticketQuantity'))}:`}
                             className="cell-content"
                           >
                             {ticketsTypeList.total > 0 ? (
@@ -178,7 +187,7 @@ const MempoolModal: React.FC<IMempoolModal> = ({ open, onClose }) => {
                             )}
                           </TableStyles.RowCell>
                           <TableStyles.RowCell
-                            data-title={`${translate('pages.movement.timestamp')}:`}
+                            data-title={`${parse(translate('pages.movement.timestamp'))}:`}
                             className="cell-content"
                           >
                             <TimeAgo date={mempool.timestamp * 1000} live={false} />
@@ -189,7 +198,7 @@ const MempoolModal: React.FC<IMempoolModal> = ({ open, onClose }) => {
                     {!mempools?.length ? (
                       <TableRow className="table__row">
                         <TableStyles.RowCell className="cell-content" colSpan={8}>
-                          <Styles.NoContent>{translate('common.noData')}</Styles.NoContent>
+                          <Styles.NoContent>{parse(translate('common.noData'))}</Styles.NoContent>
                         </TableStyles.RowCell>
                       </TableRow>
                     ) : null}

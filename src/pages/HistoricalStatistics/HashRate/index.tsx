@@ -1,4 +1,5 @@
 import { useEffect, useState, ChangeEvent } from 'react';
+import parse from 'html-react-parser';
 
 import { PeriodTypes, transformHashRateCharts } from '@utils/helpers/statisticsLib';
 import { periods, info, cacheList } from '@utils/constants/statistics';
@@ -8,7 +9,7 @@ import { THashrateChartData, TSolpsData } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout/HistoricalStatisticsLayout';
 import { Dropdown } from '@components/Dropdown/Dropdown';
 import useHashRate from '@hooks/useHashRate';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
 
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
@@ -17,31 +18,31 @@ import * as Styles from './HashRate.styles';
 function HashRate() {
   const options = [
     {
-      name: translate('pages.historicalStatistics.hashRate5'),
+      name: translateDropdown('pages.historicalStatistics.hashRate5'),
       value: '5',
     },
     {
-      name: translate('pages.historicalStatistics.hashRate10'),
+      name: translateDropdown('pages.historicalStatistics.hashRate10'),
       value: '10',
     },
     {
-      name: translate('pages.historicalStatistics.hashRate25'),
+      name: translateDropdown('pages.historicalStatistics.hashRate25'),
       value: '25',
     },
     {
-      name: translate('pages.historicalStatistics.hashRate50'),
+      name: translateDropdown('pages.historicalStatistics.hashRate50'),
       value: '50',
     },
     {
-      name: translate('pages.historicalStatistics.hashRate100'),
+      name: translateDropdown('pages.historicalStatistics.hashRate100'),
       value: '100',
     },
     {
-      name: translate('pages.historicalStatistics.hashRate500'),
+      name: translateDropdown('pages.historicalStatistics.hashRate500'),
       value: '500',
     },
     {
-      name: translate('pages.historicalStatistics.hashRate1000'),
+      name: translateDropdown('pages.historicalStatistics.hashRate1000'),
       value: '1000',
     },
   ];
@@ -104,7 +105,7 @@ function HashRate() {
           value={numberOfBlocks}
           onChange={handleDropdownChange}
           options={options}
-          label={translate('pages.historicalStatistics.numberOfBlocks')}
+          label={translateDropdown('pages.historicalStatistics.numberOfBlocks')}
           classNameWrapper="number-of-blocks"
         />
       </Styles.DropdownWrapper>
@@ -113,13 +114,13 @@ function HashRate() {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title={translate('pages.historicalStatistics.hashrate')}
+      title={parse(translate('pages.historicalStatistics.hashrate'))}
     >
       <EChartsLineChart
         chartName="hashrate"
         dataX={chartData?.dataX}
         dataY={chartData?.networksolps?.[`solps${numberOfBlocks}` as keyof TSolpsData]}
-        title={translate('pages.historicalStatistics.hashrateMSolS')}
+        title={parse(translate('pages.historicalStatistics.hashrateMSolS'))}
         info={info}
         offset={10}
         period={period}

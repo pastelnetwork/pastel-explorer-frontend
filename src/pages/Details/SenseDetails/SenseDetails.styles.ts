@@ -125,6 +125,17 @@ export const ContentWrapper = styled.div`
   &.submitted-image-content {
     padding: 5px;
   }
+
+  &.show-less {
+    max-height: 0;
+    padding: 0;
+    opacity: 0;
+
+    .RarenessScoreContent,
+    .OpenNSFWContent {
+      margin: 0;
+    }
+  }
 `;
 
 export const ContentItem = styled.div`
@@ -378,6 +389,10 @@ export const ImagesWrapper = styled(Box)`
   .rare-on-the-internet-alternative-results {
     margin-right: 20px;
     overflow: unset;
+
+    @media screen and (max-width: 1100px) {
+      overflow: hidden;
+    }
 
     h4 {
       border-radius: 10px 10px 0 0;
@@ -663,6 +678,13 @@ export const TitleWrapper = styled.div`
   align-items: center;
   background: ${props => props.theme.card.titleColor};
   padding-right: 16px;
+
+  @media screen and (max-width: 1101px) {
+    .similar_images {
+      padding-top: 13px;
+      padding-bottom: 13px;
+    }
+  }
 `;
 
 export const FullImageWrapper = styled.div`
@@ -705,4 +727,78 @@ export const EmptyData = styled.div`
 
 export const EmptyWrapper = styled('div')`
   margin: 50px 0;
+`;
+
+export const BlockTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 13px 16px;
+  background: ${props => props.theme.card.titleColor};
+  font-weight: bold;
+  border-radius: 10px 10px 0 0;
+
+  @media screen and (max-width: 1101px) {
+    padding: 8px 16px;
+  }
+`;
+
+export const LinkWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 4px;
+
+  .btn-toggle {
+    display: none;
+    padding: 0;
+
+    @media screen and (max-width: 1101px) {
+      display: inline-flex;
+      margin-top: -2px;
+    }
+
+    &.show-less {
+      .MuiSvgIcon-root {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .MuiSvgIcon-root {
+    &.toggle-icon {
+      width: 30px;
+      transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      color: ${props => props.theme.link.main};
+    }
+  }
+`;
+
+export const SimilarImagesControl = styled.div`
+  display: inline-flex;
+  align-items: center;
+
+  .btn-toggle {
+    display: none;
+    padding: 0;
+
+    @media screen and (max-width: 1101px) {
+      display: inline-flex;
+      margin-top: -2px;
+    }
+
+    &.show-less {
+      .MuiSvgIcon-root {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .MuiSvgIcon-root {
+    &.toggle-icon {
+      width: 30px;
+      transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      color: ${props => props.theme.link.main};
+    }
+  }
 `;

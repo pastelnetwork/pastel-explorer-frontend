@@ -1,20 +1,27 @@
 import * as React from 'react';
+import gsap from 'gsap';
+import Flip from 'gsap/Flip';
+
 // third party
 import { useHistory } from 'react-router-dom';
 import { Skeleton } from '@material-ui/lab';
 import { Grid, darken } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import parse from 'html-react-parser';
 
 import { TAppTheme } from '@theme/index';
 import * as ROUTES from '@utils/constants/routes';
 import { BlockUnconfirmed } from '@utils/types/ITransactions';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
 
 import BlockVisualization from './BlockVisualization/BlockVisualization';
 import { ITransformBlocksData } from './BlockStatistics.helpers';
 import MempoolModal from './MempoolModal';
+import * as BlockVisualizationStyle from './BlockVisualization/BlockVisualization.styles';
 
 import * as Styles from '../Statistics.styles';
+
+gsap.registerPlugin(Flip);
 
 const useStyles = makeStyles((_theme: TAppTheme) => ({
   wrapper: {
@@ -40,10 +47,73 @@ interface IStatisticsBlocks {
   blocksUnconfirmed: BlockUnconfirmed[] | null;
 }
 
+type TLayout = {
+  state?: Flip.FlipState;
+  items: ITransformBlocksData[];
+};
+
 const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUnconfirmed }) => {
   const history = useHistory();
   const classes = useStyles();
   const [openMempoolModal, setMempoolModal] = React.useState(false);
+  const el = React.useRef(null);
+  const q = gsap.utils.selector(el);
+  const [ctx] = React.useState(() =>
+    gsap.context(() => {
+      // noop
+    }),
+  );
+  const [layout, setLayout] = React.useState<TLayout>({
+    items: [],
+  });
+
+  React.useEffect(() => {
+    return () => ctx.revert();
+  }, []);
+
+  React.useEffect(() => {
+    if (blockElements?.length) {
+      if (!layout.items.length) {
+        setLayout({
+          items: blockElements,
+        });
+      } else if (blockElements[0].id !== layout.items[0].id) {
+        setLayout({
+          items: [...blockElements],
+          state: Flip.getState([...q('.block-box')]),
+        });
+      }
+    }
+  }, [blockElements, q]);
+
+  React.useLayoutEffect(() => {
+    if (!layout.state) return;
+
+    ctx.add(() => {
+      Flip.from(layout.state as Flip.FlipState, {
+        absolute: true,
+        ease: 'power1.inOut',
+        targets: q('.block-box'),
+        scale: true,
+        simple: true,
+        onEnter: elements => {
+          return gsap.fromTo(
+            elements,
+            {
+              opacity: 0,
+              scale: 0,
+            },
+            {
+              opacity: 1,
+              scale: 1,
+              delay: 0.2,
+              duration: 0.3,
+            },
+          );
+        },
+      });
+    });
+  }, [ctx, layout]);
 
   const renderMempoolBlock = () => {
     const size =
@@ -62,23 +132,27 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
     return (
       <Grid item>
         <BlockVisualization
-          title={translate('pages.statistics.mempool')}
+          title={translateDropdown('pages.statistics.mempool')}
           height={
-            <span style={{ fontSize: 14 }}>{translate('pages.statistics.pendingBlock')}</span>
+            <span style={{ fontSize: 14 }}>
+              {parse(translate('pages.statistics.pendingBlock'))}
+            </span>
           }
           className="block-unconfirmed"
-          size={translate('pages.statistics.size', { size: size ? (size / 1024).toFixed(2) : 0 })}
+          size={translateDropdown('pages.statistics.size', {
+            size: size ? (size / 1024).toFixed(2) : 0,
+          })}
           transactionCount={
             txsCount > 1
-              ? translate('pages.statistics.transactions', { txsCount })
-              : translate('pages.statistics.transaction', { txsCount })
+              ? translateDropdown('pages.statistics.transactions', { txsCount })
+              : translateDropdown('pages.statistics.transaction', { txsCount })
           }
           ticketsCount={
             ticketsCount > 1
-              ? translate('pages.statistics.tickets', { ticketsCount })
-              : translate('pages.statistics.ticket', { ticketsCount })
+              ? translateDropdown('pages.statistics.tickets', { ticketsCount })
+              : translateDropdown('pages.statistics.ticket', { ticketsCount })
           }
-          minutesAgo={translate('pages.statistics.blocksUnconfirmedTime', {
+          minutesAgo={translateDropdown('pages.statistics.blocksUnconfirmedTime', {
             time: blocksUnconfirmed ? blocksUnconfirmed.length * 10 : 0,
           })}
           clickHandler={() => (txsCount ? setMempoolModal(!openMempoolModal) : null)}
@@ -90,7 +164,9 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
   return (
     <>
       <Styles.BlockWrapper>
-        <Styles.BlockTitle>{translate('pages.statistics.blocksStatistics')}</Styles.BlockTitle>
+        <Styles.BlockTitle>
+          {parse(translate('pages.statistics.blocksStatistics'))}
+        </Styles.BlockTitle>
         <Styles.GridStyle classes={{ root: classes.wrapper }} container>
           {blockElements?.length ? (
             <Styles.GridBlocksStatisticsRoot
@@ -112,26 +188,30 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
                   }}
                 />
               </Grid>
-              {blockElements
-                .slice(1, 8)
-                .map(({ id, height, size, transactionCount, minutesAgo, ticketsCount }) => (
-                  <Grid item key={id}>
-                    <BlockVisualization
-                      clickHandler={() => history.push(`${ROUTES.BLOCK_DETAILS}/${id}`)}
-                      height={height}
-                      size={size}
-                      transactionCount={transactionCount}
-                      minutesAgo={minutesAgo}
-                      ticketsCount={ticketsCount}
-                    />
-                  </Grid>
-                ))}
+              <BlockVisualizationStyle.BlockAnimationWrapper ref={el}>
+                {layout.items
+                  .slice(1, 8)
+                  .map(
+                    ({ id, height, size, transactionCount, minutesAgo, ticketsCount, status }) => (
+                      <div key={id} className={`block-box ${status}`}>
+                        <BlockVisualization
+                          clickHandler={() => history.push(`${ROUTES.BLOCK_DETAILS}/${id}`)}
+                          height={height}
+                          size={size}
+                          transactionCount={transactionCount}
+                          minutesAgo={minutesAgo}
+                          ticketsCount={ticketsCount}
+                        />
+                      </div>
+                    ),
+                  )}
+              </BlockVisualizationStyle.BlockAnimationWrapper>
             </Styles.GridBlocksStatisticsRoot>
           ) : (
             <Styles.ChartSection>
               <>
                 <Skeleton animation="wave" variant="rect" height={207} />
-                <Styles.LoadingText>{translate('common.loadingData')}</Styles.LoadingText>
+                <Styles.LoadingText>{parse(translate('common.loadingData'))}</Styles.LoadingText>
               </>
             </Styles.ChartSection>
           )}

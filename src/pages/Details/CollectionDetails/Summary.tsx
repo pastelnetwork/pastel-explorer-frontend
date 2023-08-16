@@ -1,6 +1,7 @@
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import format from 'date-fns/format';
+import parse from 'html-react-parser';
 
 import Share from '@components/Share/Share';
 import RouterLink from '@components/RouterLink/RouterLink';
@@ -69,7 +70,7 @@ const Summary: React.FC<ISummary> = ({ collection, totalItems }) => {
             <Box className="creator-info">
               <Box className="create-by">
                 <Typography component="span" className="bold">
-                  {translate('pages.collection.by')}:
+                  {parse(translate('pages.collection.by'))}:
                 </Typography>{' '}
                 <Typography component="span">
                   <RouterLink
@@ -82,7 +83,7 @@ const Summary: React.FC<ISummary> = ({ collection, totalItems }) => {
               </Box>
               <Box className="txt-id">
                 <Typography component="span" className="bold">
-                  {translate('pages.collection.txID')}:
+                  {parse(translate('pages.collection.txID'))}:
                 </Typography>{' '}
                 <CopyButton copyText={collection?.transactionHash || ''} />
                 <RouterLink
@@ -97,7 +98,7 @@ const Summary: React.FC<ISummary> = ({ collection, totalItems }) => {
           <ul className="info-list">
             <li>
               <Typography component="span" className="label">
-                {translate('pages.collection.items')}
+                {parse(translate('pages.collection.items'))}
               </Typography>
               <Typography component="span" className="value">
                 {formatNumber(totalItems)}
@@ -105,17 +106,17 @@ const Summary: React.FC<ISummary> = ({ collection, totalItems }) => {
             </li>
             <li>
               <Typography component="span" className="label">
-                {translate('pages.collection.created')}
+                {parse(translate('pages.collection.created'))}
               </Typography>
               <Typography component="span" className="value">
                 {collection?.transactionTime
                   ? format(collection?.transactionTime, 'dd MMM yyyy')
-                  : translate('common.na')}
+                  : parse(translate('common.na'))}
               </Typography>
             </li>
             <li>
               <Typography component="span" className="label">
-                {translate('pages.collection.royalty')}
+                {parse(translate('pages.collection.royalty'))}
               </Typography>
               <Typography component="span" className="value">
                 {collection?.royalty}%
@@ -123,7 +124,7 @@ const Summary: React.FC<ISummary> = ({ collection, totalItems }) => {
             </li>
             <li>
               <Typography component="span" className="label">
-                {translate('pages.collection.itemCopy')}
+                {parse(translate('pages.collection.itemCopy'))}
               </Typography>
               <Typography component="span" className="value">
                 {collection?.item_copy_count}
@@ -131,7 +132,7 @@ const Summary: React.FC<ISummary> = ({ collection, totalItems }) => {
             </li>
             <li>
               <Typography component="span" className="label">
-                {translate('pages.collection.maxCollectionEntries')}
+                {parse(translate('pages.collection.maxCollectionEntries'))}
               </Typography>
               <Typography component="span" className="value">
                 {collection?.max_collection_entries}

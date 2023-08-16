@@ -97,7 +97,9 @@ const RarenessScore: React.FC<IRarenessScore> = ({ rarenessScore }) => {
 
   return (
     <Styles.ContentItem className="chart-section">
-      <Styles.RarenessScoreContent className={!rarenessScore ? 'empty' : ''}>
+      <Styles.RarenessScoreContent
+        className={`${!rarenessScore ? 'empty' : ''} RarenessScoreContent`}
+      >
         <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '190px' }} />
       </Styles.RarenessScoreContent>
       <EmptyOverlay isShow={!rarenessScore} />

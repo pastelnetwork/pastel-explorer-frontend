@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import parse from 'html-react-parser';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import { formattedDate } from '@utils/helpers/date/date';
@@ -22,7 +23,7 @@ const PastelIDRegistrationTicket: React.FC<IPastelIDRegistrationTicketProps> = (
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.pastelIDRegistrationTicket.idType')}
+            {parse(translate('components.ticket.pastelIDRegistrationTicket.idType'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -32,7 +33,7 @@ const PastelIDRegistrationTicket: React.FC<IPastelIDRegistrationTicketProps> = (
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.pastelIDRegistrationTicket.version')}
+            {parse(translate('components.ticket.pastelIDRegistrationTicket.version'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -42,7 +43,7 @@ const PastelIDRegistrationTicket: React.FC<IPastelIDRegistrationTicketProps> = (
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.pastelIDRegistrationTicket.height')}
+            {parse(translate('components.ticket.pastelIDRegistrationTicket.height'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -59,7 +60,7 @@ const PastelIDRegistrationTicket: React.FC<IPastelIDRegistrationTicketProps> = (
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.pastelIDRegistrationTicket.pastelID')}
+            {parse(translate('components.ticket.pastelIDRegistrationTicket.pastelID'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -77,7 +78,7 @@ const PastelIDRegistrationTicket: React.FC<IPastelIDRegistrationTicketProps> = (
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.pastelIDRegistrationTicket.address')}
+            {parse(translate('components.ticket.pastelIDRegistrationTicket.address'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -95,7 +96,7 @@ const PastelIDRegistrationTicket: React.FC<IPastelIDRegistrationTicketProps> = (
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.pastelIDRegistrationTicket.pqKey')}
+              {parse(translate('components.ticket.pastelIDRegistrationTicket.pqKey'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -104,8 +105,12 @@ const PastelIDRegistrationTicket: React.FC<IPastelIDRegistrationTicketProps> = (
                 {!isExpanded ? `${ticket.pq_key.substring(0, 200)}...` : ticket.pq_key}
                 <Styles.ButtonLink onClick={() => setIsExpanded(!isExpanded)}>
                   {!isExpanded
-                    ? translate('components.ticket.pastelIDRegistrationTicket.clickToSeeMore')
-                    : translate('components.ticket.pastelIDRegistrationTicket.clickToSeeLess')}
+                    ? parse(
+                        translate('components.ticket.pastelIDRegistrationTicket.clickToSeeMore'),
+                      )
+                    : parse(
+                        translate('components.ticket.pastelIDRegistrationTicket.clickToSeeLess'),
+                      )}
                 </Styles.ButtonLink>
               </>
             </Styles.TicketContent>
@@ -116,7 +121,7 @@ const PastelIDRegistrationTicket: React.FC<IPastelIDRegistrationTicketProps> = (
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.pastelIDRegistrationTicket.timestamp')}
+              {parse(translate('components.ticket.pastelIDRegistrationTicket.timestamp'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>

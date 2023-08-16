@@ -1,5 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import parse from 'html-react-parser';
 
 import RouterLink, { ExternalLink } from '@components/RouterLink/RouterLink';
 import { ITransferTicket } from '@utils/types/ITransactions';
@@ -64,11 +65,11 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
     const getOfferType = () => {
       switch (ticket.otherData.offerType) {
         case 'sense':
-          return translate('components.ticket.offerTicket.sense');
+          return parse(translate('components.ticket.offerTicket.sense'));
         case 'cascade':
-          return translate('components.ticket.offerTicket.cascade');
+          return parse(translate('components.ticket.offerTicket.cascade'));
         default:
-          return translate('components.ticket.offerTicket.nft');
+          return parse(translate('components.ticket.offerTicket.nft'));
       }
     };
 
@@ -82,7 +83,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
             <Grid container spacing={3} className="mb-sm-8">
               <Grid item xs={12} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.transferTicket.pastelID')}
+                  {parse(translate('components.ticket.transferTicket.pastelID'))}
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} sm={9}>
@@ -99,7 +100,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
             <Grid container spacing={3} className="mb-sm-8">
               <Grid item xs={12} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.transferTicket.copySerialNr')}
+                  {parse(translate('components.ticket.transferTicket.copySerialNr'))}
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} sm={9}>
@@ -109,11 +110,11 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
             <Grid container spacing={3} className="mb-sm-8">
               <Grid item xs={12} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.transferTicket.registrationTxId')}
+                  {parse(translate('components.ticket.transferTicket.registrationTxId'))}
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} sm={9}>
-                <Styles.TicketContent>
+                <Styles.TicketContent className="nowrap">
                   <CopyButton copyText={ticket.registration_txid} />
                   <RouterLink
                     route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.registration_txid}`}
@@ -127,11 +128,11 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
             <Grid container spacing={3} className="mb-sm-8">
               <Grid item xs={12} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.transferTicket.itemTxId')}
+                  {parse(translate('components.ticket.transferTicket.itemTxId'))}
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} sm={9}>
-                <Styles.TicketContent>
+                <Styles.TicketContent className="nowrap">
                   <CopyButton copyText={ticket.item_txid || ticket.nft_txid} />
                   <RouterLink
                     route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.item_txid || ticket.nft_txid}`}
@@ -145,11 +146,11 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
             <Grid container spacing={3} className="mb-sm-8">
               <Grid item xs={12} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.transferTicket.offerTxid')}
+                  {parse(translate('components.ticket.transferTicket.offerTxid'))}
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} sm={9}>
-                <Styles.TicketContent>
+                <Styles.TicketContent className="nowrap">
                   <CopyButton copyText={ticket.offer_txid} />
                   <RouterLink
                     route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.offer_txid}`}
@@ -163,11 +164,11 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
             <Grid container spacing={3} className="mb-sm-8">
               <Grid item xs={12} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.transferTicket.acceptTxId')}
+                  {parse(translate('components.ticket.transferTicket.acceptTxId'))}
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} sm={9}>
-                <Styles.TicketContent>
+                <Styles.TicketContent className="nowrap">
                   <CopyButton copyText={ticket.accept_txid} />
                   <RouterLink
                     route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.accept_txid}`}
@@ -182,7 +183,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
             <Grid container spacing={3} className="mb-sm-8">
               <Grid item xs={12} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.offerTicket.type')}:
+                  {parse(translate('components.ticket.offerTicket.type'))}:
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} sm={9}>
@@ -192,7 +193,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
             <Grid container spacing={3} className="mb-sm-8">
               <Grid item xs={12} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.transferTicket.version')}
+                  {parse(translate('components.ticket.transferTicket.version'))}
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} sm={9}>
@@ -204,7 +205,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
               <Grid container spacing={3}>
                 <Grid item xs={12} sm={3} className="max-w-355">
                   <Styles.TicketTitle>
-                    {translate('components.ticket.transferTicket.timestamp')}
+                    {parse(translate('components.ticket.transferTicket.timestamp'))}
                   </Styles.TicketTitle>
                 </Grid>
                 <Grid item xs={12} sm={9}>
@@ -224,7 +225,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.transferTicket.version')}
+            {parse(translate('components.ticket.transferTicket.version'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -234,7 +235,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.transferTicket.pastelID')}
+            {parse(translate('components.ticket.transferTicket.pastelID'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -252,11 +253,11 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.transferTicket.offerTxid')}
+            {parse(translate('components.ticket.transferTicket.offerTxid'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>
+          <Styles.TicketContent className="nowrap">
             <CopyButton copyText={ticket.offer_txid} />
             <RouterLink
               route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.offer_txid}`}
@@ -270,11 +271,11 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.transferTicket.acceptTxId')}
+            {parse(translate('components.ticket.transferTicket.acceptTxId'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>
+          <Styles.TicketContent className="nowrap">
             <CopyButton copyText={ticket.accept_txid} />
             <RouterLink
               route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.accept_txid}`}
@@ -288,11 +289,11 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.transferTicket.itemTxId')}
+            {parse(translate('components.ticket.transferTicket.itemTxId'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>
+          <Styles.TicketContent className="nowrap">
             <CopyButton copyText={ticket.item_txid || ticket.nft_txid} />
             <RouterLink
               route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.item_txid || ticket.nft_txid}`}
@@ -306,11 +307,11 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.transferTicket.registrationTxId')}
+            {parse(translate('components.ticket.transferTicket.registrationTxId'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>
+          <Styles.TicketContent className="nowrap">
             <CopyButton copyText={ticket.registration_txid} />
             <RouterLink
               route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.registration_txid}`}
@@ -324,7 +325,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.transferTicket.copySerialNr')}
+            {parse(translate('components.ticket.transferTicket.copySerialNr'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -335,7 +336,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.transferTicket.timestamp')}
+              {parse(translate('components.ticket.transferTicket.timestamp'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>

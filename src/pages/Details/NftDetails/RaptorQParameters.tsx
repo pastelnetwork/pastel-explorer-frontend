@@ -1,4 +1,5 @@
 import Box from '@material-ui/core/Box';
+import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
@@ -15,16 +16,28 @@ const RaptorQParameters: React.FC<IRaptorQParameters> = ({ rqIc, rqMax, rqOti })
   return (
     <Box>
       <Styles.ContentItem>
-        <TicketStyles.TicketTitle>{translate('pages.nftDetails.rqIc')}</TicketStyles.TicketTitle>
-        <TicketStyles.TicketContent>{rqIc || translate('common.na')}</TicketStyles.TicketContent>
+        <TicketStyles.TicketTitle>
+          {parse(translate('pages.nftDetails.rqIc'))}
+        </TicketStyles.TicketTitle>
+        <TicketStyles.TicketContent>
+          {rqIc || parse(translate('common.na'))}
+        </TicketStyles.TicketContent>
       </Styles.ContentItem>
       <Styles.ContentItem>
-        <TicketStyles.TicketTitle>{translate('pages.nftDetails.rqMax')}</TicketStyles.TicketTitle>
-        <TicketStyles.TicketContent>{rqMax || translate('common.na')}</TicketStyles.TicketContent>
+        <TicketStyles.TicketTitle>
+          {parse(translate('pages.nftDetails.rqMax'))}
+        </TicketStyles.TicketTitle>
+        <TicketStyles.TicketContent>
+          {rqMax || parse(translate('common.na'))}
+        </TicketStyles.TicketContent>
       </Styles.ContentItem>
       <Styles.ContentItem>
-        <TicketStyles.TicketTitle>{translate('pages.nftDetails.rqOti')}</TicketStyles.TicketTitle>
-        <TicketStyles.TicketContent>{rqOti || translate('common.na')}</TicketStyles.TicketContent>
+        <TicketStyles.TicketTitle>
+          {parse(translate('pages.nftDetails.rqOti'))}
+        </TicketStyles.TicketTitle>
+        <TicketStyles.TicketContent>
+          {rqOti || parse(translate('common.na'))}
+        </TicketStyles.TicketContent>
       </Styles.ContentItem>
     </Box>
   );

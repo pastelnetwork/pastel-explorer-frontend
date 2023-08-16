@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import parse from 'html-react-parser';
 
 import { TLineChartData } from '@utils/types/IStatistics';
 import { PeriodTypes, transformTotalTransactionCount } from '@utils/helpers/statisticsLib';
@@ -60,13 +61,13 @@ function TotalTransactionFees() {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title={translate('pages.historicalStatistics.totalTransactionFees')}
+      title={parse(translate('pages.historicalStatistics.totalTransactionFees'))}
     >
       <EChartsLineChart
         chartName="totalTransactionFees"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title={translate('pages.historicalStatistics.totalTransactionFees')}
+        title={parse(translate('pages.historicalStatistics.totalTransactionFees'))}
         info={info}
         period={period}
         offset={10}

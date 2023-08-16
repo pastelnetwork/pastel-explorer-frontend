@@ -5,6 +5,7 @@ import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import format from 'date-fns/format';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';
 import { formatAddress } from '@utils/helpers/format';
@@ -79,7 +80,7 @@ const NFTCard: React.FC<INFTCard> = ({ src, title, type, txid, timestamp }) => {
             <span className={`label-box ${type?.toLocaleLowerCase()}`}>{type}</span>
           </Box>
           <Box className="card-price">
-            <span className="bold">{translate('pages.collection.txID')}:</span>{' '}
+            <span className="bold">{parse(translate('pages.collection.txID'))}:</span>{' '}
             <RouterLink
               route={`${ROUTES.TRANSACTION_DETAILS}/${txid}`}
               value={formatAddress(txid, 5, -5)}
@@ -87,7 +88,7 @@ const NFTCard: React.FC<INFTCard> = ({ src, title, type, txid, timestamp }) => {
             />
           </Box>
           <Box className="card-last-sale">
-            <span className="bold">{translate('pages.collection.created')}:</span>{' '}
+            <span className="bold">{parse(translate('pages.collection.created'))}:</span>{' '}
             {format(timestamp, 'dd MMM yyyy')}
           </Box>
         </Box>
@@ -105,7 +106,7 @@ export const NFTsContent: React.FC<INFTsContent> = ({ data }) => {
   if (!data) {
     return (
       <Styles.NFTsMainContent>
-        <Box className="no-data">{translate('common.noData')}</Box>
+        <Box className="no-data">{parse(translate('common.noData'))}</Box>
       </Styles.NFTsMainContent>
     );
   }

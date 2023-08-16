@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Table, TableBody, TableHead, TableRow } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import parse from 'html-react-parser';
 
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { formatAddress } from '@utils/helpers/format';
@@ -64,22 +65,22 @@ const Offers: React.FC = () => {
             <TableHead className="table__row-header">
               <TableRow>
                 <TableStyles.TableCell className="nowrap">
-                  {translate('pages.nftDetails.price')}
+                  {parse(translate('pages.nftDetails.price'))}
                 </TableStyles.TableCell>
                 <TableStyles.TableCell className="nowrap">
-                  {translate('pages.nftDetails.usdPrice')}
+                  {parse(translate('pages.nftDetails.usdPrice'))}
                 </TableStyles.TableCell>
                 <TableStyles.TableCell className="nowrap">
-                  {translate('pages.nftDetails.copyNumber')}
+                  {parse(translate('pages.nftDetails.copyNumber'))}
                 </TableStyles.TableCell>
                 <TableStyles.TableCell className="nowrap">
-                  {translate('pages.nftDetails.txID')}
+                  {parse(translate('pages.nftDetails.txID'))}
                 </TableStyles.TableCell>
                 <TableStyles.TableCell className="nowrap">
-                  {translate('pages.nftDetails.from')}
+                  {parse(translate('pages.nftDetails.from'))}
                 </TableStyles.TableCell>
                 <TableStyles.TableCell className="nowrap">
-                  {translate('pages.nftDetails.timestamp')}
+                  {parse(translate('pages.nftDetails.timestamp'))}
                 </TableStyles.TableCell>
               </TableRow>
             </TableHead>
@@ -87,7 +88,7 @@ const Offers: React.FC = () => {
               {data.map(item => (
                 <TableRow className="table__row" key={item.transactionHash}>
                   <TableStyles.RowCell
-                    data-title={`${translate('pages.nftDetails.price')}:`}
+                    data-title={`${parse(translate('pages.nftDetails.price'))}:`}
                     className="cell-content bold nowrap"
                   >
                     <TicketStyles.TicketTitle>
@@ -95,19 +96,19 @@ const Offers: React.FC = () => {
                     </TicketStyles.TicketTitle>
                   </TableStyles.RowCell>
                   <TableStyles.RowCell
-                    data-title={`${translate('pages.nftDetails.usdPrice')}:`}
+                    data-title={`${parse(translate('pages.nftDetails.usdPrice'))}:`}
                     className="cell-content nowrap"
                   >
                     ${formatNumber(item.price * usdPrice, { decimalsLength: 2 })}
                   </TableStyles.RowCell>
                   <TableStyles.RowCell
-                    data-title={`${translate('pages.nftDetails.copyNumber')}:`}
+                    data-title={`${parse(translate('pages.nftDetails.copyNumber'))}:`}
                     className="cell-content nowrap"
                   >
                     {item.copy_number}
                   </TableStyles.RowCell>
                   <TableStyles.RowCell
-                    data-title={`${translate('pages.nftDetails.txID')}:`}
+                    data-title={`${parse(translate('pages.nftDetails.txID'))}:`}
                     className="cell-content nowrap"
                   >
                     {item.transactionHash ? (
@@ -121,11 +122,11 @@ const Offers: React.FC = () => {
                         />
                       </div>
                     ) : (
-                      translate('common.na')
+                      parse(translate('common.na'))
                     )}
                   </TableStyles.RowCell>
                   <TableStyles.RowCell
-                    data-title={`${translate('pages.nftDetails.from')}:`}
+                    data-title={`${parse(translate('pages.nftDetails.from'))}:`}
                     className="cell-content nowrap"
                   >
                     {item.pastelID ? (
@@ -136,11 +137,11 @@ const Offers: React.FC = () => {
                         className="address-link nowrap inline-block read-more full"
                       />
                     ) : (
-                      translate('common.na')
+                      parse(translate('common.na'))
                     )}
                   </TableStyles.RowCell>
                   <TableStyles.RowCell
-                    data-title={`${translate('pages.nftDetails.timestamp')}:`}
+                    data-title={`${parse(translate('pages.nftDetails.timestamp'))}:`}
                     className="cell-content nowrap"
                   >
                     {formatFullDate(item.timestamp, { dayName: false })}
@@ -164,7 +165,7 @@ const Offers: React.FC = () => {
   ) : (
     <Styles.Wrapper className="no-data">
       <Typography component="h2" variant="h5" gutterBottom className="no-data-content">
-        {translate('common.noData')}
+        {parse(translate('common.noData'))}
       </Typography>
     </Styles.Wrapper>
   );

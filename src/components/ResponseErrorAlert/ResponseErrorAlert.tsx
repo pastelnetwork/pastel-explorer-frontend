@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
+import parse from 'html-react-parser';
 
 import { setResponseError } from '@redux/actions/responseErrorsActions';
 import { AppStateType } from '@redux/reducers';
@@ -19,8 +20,8 @@ const ResponseErrorAlert = () => {
   return (
     <AlertComponent
       isOpen={error}
-      title={translate('components.responseErrorAlert.title')}
-      message={message || translate('components.responseErrorAlert.content')}
+      title={parse(translate('components.responseErrorAlert.title'))}
+      message={message || parse(translate('components.responseErrorAlert.content'))}
       severity="error"
       outsideClickClose={false}
       onClose={handleClose}

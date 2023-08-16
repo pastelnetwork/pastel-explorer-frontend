@@ -52,6 +52,10 @@ export const BlockTitle = styled.h4`
 export const SubTitle = styled.span`
   font-size: 16px;
   font-weight: 400;
+
+  &.nowrap {
+    white-space: nowrap;
+  }
 `;
 
 export const BlockWrapper = styled.div`
@@ -61,10 +65,21 @@ export const BlockWrapper = styled.div`
   margin: 0;
   padding: 12px 16px;
   background: ${props => props.theme.card.titleColor};
+
+  ${props => props.theme.breakpoints.down(618)} {
+    flex-wrap: wrap;
+  }
 `;
 
 export const FilterBlock = styled.div`
   display: block;
+
+  ${props => props.theme.breakpoints.down(618)} {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px;
+  }
 `;
 
 export const PaginationWrapper = styled.div`

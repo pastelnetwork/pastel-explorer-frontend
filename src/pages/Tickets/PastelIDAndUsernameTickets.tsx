@@ -1,13 +1,11 @@
-import Typography from '@material-ui/core/Typography';
-import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
+import { useState } from 'react';
 
-import { Link } from '@components/Link/Link.styles';
 import * as ROUTES from '@utils/constants/routes';
-import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import InfinityTable from '@components/InfinityTable/InfinityTable';
 import { translate } from '@utils/helpers/i18n';
 
-import { transformPastelIdData, TTicketResponse } from './Tickets.helpers';
+import SectionTitle from './SectionTitle';
+import { transformPastelIdData, TTicketResponse, useShowLess } from './Tickets.helpers';
 import { pastelIDAndUsernameTicketsColumns } from './Tickets.columns';
 import * as Styles from './Tickets.styles';
 
@@ -21,6 +19,8 @@ const PastelIDAndUsernameTickets: React.FC<IPastelIDAndUsernameTicketsProps> = (
   ticketsData,
 }) => {
   const { data, total, isLoading, size, setSize } = ticketsData;
+  const [showLess, setShowLess] = useState(false);
+  useShowLess(setShowLess);
 
   const handleFetchMoreMovements = (reachedTableBottom: boolean) => {
     if (!reachedTableBottom) return null;
@@ -30,18 +30,13 @@ const PastelIDAndUsernameTickets: React.FC<IPastelIDAndUsernameTicketsProps> = (
 
   const getTitle = () => {
     return (
-      <Styles.BlockTitle className="latest-blocks">
-        {translate('pages.tickets.pastelIDAndUsernameTickets')} (
-        {total > 1
-          ? translate('pages.tickets.totalTickets', { total: formatNumber(total) })
-          : translate('pages.tickets.totalTicket', { total: formatNumber(total) })}
-        )
-        <Link to={`${ROUTES.TICKETS_TYPE}/pastelid-usename`} className="view-all">
-          <Typography align="center" className="p-16">
-            {translate('pages.tickets.viewAll')} <ArrowForwardIos />
-          </Typography>
-        </Link>
-      </Styles.BlockTitle>
+      <SectionTitle
+        title={translate('pages.tickets.pastelIDAndUsernameTickets')}
+        total={total}
+        toggleContent={() => setShowLess(!showLess)}
+        showMore={showLess}
+        viewAllLink={`${ROUTES.TICKETS_TYPE}/pastelid-usename`}
+      />
     );
   };
 
@@ -57,6 +52,7 @@ const PastelIDAndUsernameTickets: React.FC<IPastelIDAndUsernameTicketsProps> = (
         headerBackground
         customLoading={isLoading}
         rowHeight={isMobile ? 140 : 45}
+        showLess={showLess}
       />
     </Styles.PastelContainer>
   );

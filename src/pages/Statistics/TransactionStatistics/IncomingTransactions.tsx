@@ -1,5 +1,6 @@
 import { useState, ChangeEvent, useEffect } from 'react';
 import { Skeleton } from '@material-ui/lab';
+import parse from 'html-react-parser';
 
 import {
   transformChartData,
@@ -86,7 +87,9 @@ const IncomingTransactions: React.FC<IIncomingTransactions> = ({ blockElements }
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
           <SummaryStyles.Typography variant="h6">
-            {translate('pages.statistics.incomingTransactions', { currency: getCurrencyName() })}
+            {parse(
+              translate('pages.statistics.incomingTransactions', { currency: getCurrencyName() }),
+            )}
           </SummaryStyles.Typography>
         </SummaryStyles.ValueWrapper>
         <SummaryStyles.PercentageWrapper>
@@ -104,7 +107,7 @@ const IncomingTransactions: React.FC<IIncomingTransactions> = ({ blockElements }
         {isLoading ? (
           <StatisticsStyles.Loader>
             <StatisticsStyles.LoadingText>
-              {translate('common.loadingData')}
+              {parse(translate('common.loadingData'))}
             </StatisticsStyles.LoadingText>
           </StatisticsStyles.Loader>
         ) : null}
@@ -112,7 +115,7 @@ const IncomingTransactions: React.FC<IIncomingTransactions> = ({ blockElements }
           <>
             <Skeleton animation="wave" variant="rect" height={300} />
             <StatisticsStyles.LoadingText>
-              {translate('common.loadingData')}
+              {parse(translate('common.loadingData'))}
             </StatisticsStyles.LoadingText>
           </>
         ) : (

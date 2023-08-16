@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import parse from 'html-react-parser';
 
 import InfinityTable, {
   SortDirectionsType,
@@ -94,10 +95,10 @@ const Movement: React.FC = () => {
 
   const getMovementTransactionsTitle = () => (
     <Styles.TitleWrapper>
-      <Styles.Title>{translate('pages.movement.transactionsList')}</Styles.Title>{' '}
+      <Styles.Title>{parse(translate('pages.movement.transactionsList'))}</Styles.Title>{' '}
       {total > 0 ? (
         <Styles.SubTitle>
-          ({translate('pages.movement.transactionsList', { total: formatNumber(total) })})
+          ({parse(translate('pages.movement.transactionsList', { total: formatNumber(total) }))})
         </Styles.SubTitle>
       ) : null}
     </Styles.TitleWrapper>

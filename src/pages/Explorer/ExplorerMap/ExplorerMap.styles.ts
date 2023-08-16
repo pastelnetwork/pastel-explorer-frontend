@@ -31,7 +31,7 @@ export const Container = styled.div`
     height: 332px;
   }
 
-  @media (min-width: 1440px) {
+  @media (min-width: 1281px) {
     min-height: 414px;
   }
 `;

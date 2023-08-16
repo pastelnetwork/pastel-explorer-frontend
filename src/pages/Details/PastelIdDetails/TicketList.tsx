@@ -2,6 +2,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { Link } from 'react-router-dom';
 import { decode } from 'js-base64';
+import parse from 'html-react-parser';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
@@ -106,12 +107,12 @@ const TicketsList: React.FC<ITicketsList> = ({
           <Grid container spacing={3}>
             <Grid item xs={4} sm={3} className="max-w-355">
               <TicketStyles.TicketTitle>
-                {translate('pages.blockDetails.senseOutputDetails')}
+                {parse(translate('pages.blockDetails.senseOutputDetails'))}
               </TicketStyles.TicketTitle>
             </Grid>
             <Grid item xs={8} sm={9}>
               <TicketStyles.TicketContent>
-                {translate('pages.tickets.pendingSenseGenerate')}
+                {parse(translate('pages.tickets.pendingSenseGenerate'))}
               </TicketStyles.TicketContent>
             </Grid>
           </Grid>
@@ -128,7 +129,7 @@ const TicketsList: React.FC<ITicketsList> = ({
           <Grid container spacing={3}>
             <Grid item xs={4} sm={3} className="max-w-355">
               <TicketStyles.TicketTitle>
-                {translate('pages.blockDetails.cascadeFileType')}
+                {parse(translate('pages.blockDetails.cascadeFileType'))}
               </TicketStyles.TicketTitle>
             </Grid>
             <Grid item xs={8} sm={9}>
@@ -148,7 +149,7 @@ const TicketsList: React.FC<ITicketsList> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <TicketStyles.TicketTitle>
-              {translate('pages.pastelIdDetails.senseOutputDetails')}:
+              {parse(translate('pages.pastelIdDetails.senseOutputDetails'))}:
             </TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -168,7 +169,7 @@ const TicketsList: React.FC<ITicketsList> = ({
                   />
                 </Link>
               ) : (
-                translate('pages.tickets.pendingSenseGenerate')
+                parse(translate('pages.tickets.pendingSenseGenerate'))
               )}
             </TicketStyles.TicketContent>
           </Grid>
@@ -176,7 +177,7 @@ const TicketsList: React.FC<ITicketsList> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <TicketStyles.TicketTitle>
-              {translate('pages.pastelIdDetails.imageHash')}:
+              {parse(translate('pages.pastelIdDetails.imageHash'))}:
             </TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -193,7 +194,7 @@ const TicketsList: React.FC<ITicketsList> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <TicketStyles.TicketTitle>
-              {translate('pages.pastelIdDetails.senseVersion')}:
+              {parse(translate('pages.pastelIdDetails.senseVersion'))}:
             </TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -302,7 +303,7 @@ const TicketsList: React.FC<ITicketsList> = ({
         <Styles.BlockWrapper>
           <Styles.BlockTitle>
             {translate('pages.pastelIdDetails.ticketsCreatedUsingThisPastelID')}{' '}
-            <Styles.SubTitle>
+            <Styles.SubTitle className="nowrap">
               (
               {totalTickets > 1
                 ? translate('pages.pastelIdDetails.totalTickets', { totalTickets })
@@ -338,7 +339,7 @@ const TicketsList: React.FC<ITicketsList> = ({
                   </TicketStyles.TicketTitle>
                 </Grid>
                 <Grid item xs={8} sm={9}>
-                  <TicketStyles.TicketContent>
+                  <TicketStyles.TicketContent className="nowrap">
                     <CopyButton copyText={ticket.transactionHash} />
                     <RouterLink
                       route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.transactionHash}`}

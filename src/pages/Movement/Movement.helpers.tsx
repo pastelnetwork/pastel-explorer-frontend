@@ -1,4 +1,5 @@
 import { Tooltip, Grid } from '@material-ui/core';
+import parse from 'html-react-parser';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import CopyButton from '@components/CopyButton/CopyButton';
@@ -10,7 +11,7 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { formattedDate } from '@utils/helpers/date/date';
 import { ITransaction, TCounts, TTicketType } from '@utils/types/ITransactions';
 import { formatAddress } from '@utils/helpers/format';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
 import * as BlockStyles from '@pages/Blocks/Blocks.styles';
 
 import {
@@ -90,8 +91,8 @@ export const transformMovementData = (transactions: Array<ITransaction>) =>
         [AMOUNT_MOVEMENT_KEY]: (
           <>
             {isNonStandard ? (
-              <Tooltip title={translate('pages.movement.shieldedTransactionInfo')}>
-                <span>{translate('common.unknown')}</span>
+              <Tooltip title={translateDropdown('pages.movement.shieldedTransactionInfo')}>
+                <span>{parse(translate('common.unknown'))}</span>
               </Tooltip>
             ) : (
               formatNumber(totalAmount, { decimalsLength: 2 })

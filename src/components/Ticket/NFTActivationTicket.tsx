@@ -1,5 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import parse from 'html-react-parser';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
@@ -26,7 +27,7 @@ const NFTActivationTicket: React.FC<INFTActivationTicketProps> = ({ ticket }) =>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.nftActivationTicket.creatorHeight')}
+              {parse(translate('components.ticket.nftActivationTicket.creatorHeight'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -44,7 +45,7 @@ const NFTActivationTicket: React.FC<INFTActivationTicketProps> = ({ ticket }) =>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.nftActivationTicket.version')}
+            {parse(translate('components.ticket.nftActivationTicket.version'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -54,7 +55,7 @@ const NFTActivationTicket: React.FC<INFTActivationTicketProps> = ({ ticket }) =>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.nftActivationTicket.pastelID')}
+            {parse(translate('components.ticket.nftActivationTicket.pastelID'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -73,11 +74,11 @@ const NFTActivationTicket: React.FC<INFTActivationTicketProps> = ({ ticket }) =>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.nftActivationTicket.regTxId')}
+              {parse(translate('components.ticket.nftActivationTicket.regTxId'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
-            <Styles.TicketContent>
+            <Styles.TicketContent className="nowrap">
               <CopyButton copyText={ticket.reg_txid} />
               <RouterLink
                 route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.reg_txid}`}
@@ -92,9 +93,11 @@ const NFTActivationTicket: React.FC<INFTActivationTicketProps> = ({ ticket }) =>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.nftActivationTicket.storageFee', {
-              currency: getCurrencyName(),
-            })}
+            {parse(
+              translate('components.ticket.nftActivationTicket.storageFee', {
+                currency: getCurrencyName(),
+              }),
+            )}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -107,7 +110,7 @@ const NFTActivationTicket: React.FC<INFTActivationTicketProps> = ({ ticket }) =>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.nftActivationTicket.timestamp')}
+              {parse(translate('components.ticket.nftActivationTicket.timestamp'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>

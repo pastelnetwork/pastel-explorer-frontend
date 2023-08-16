@@ -1,6 +1,7 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
+import parse from 'html-react-parser';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
@@ -20,7 +21,7 @@ interface IOverviewProps {
   totalTickets: number;
   pastelId: string;
   ticketsTypeList: TTicketsTypeProps[];
-  registeredDate: string;
+  registeredDate: string | React.ReactNode;
   blockHeight: string;
   username?: string;
 }
@@ -40,10 +41,10 @@ const Overview: React.FC<IOverviewProps> = ({
       const total = getTicketTypeTotal(item.type, ticketsTypeList);
       return (
         <Box key={item.type}>
-          {translate(ticket?.name || '')} ({total}{' '}
+          {parse(translate(ticket?.name || ''))} ({total}{' '}
           {total > 1
-            ? translate('pages.pastelIdDetails.tickets')
-            : translate('pages.pastelIdDetails.ticket')}
+            ? parse(translate('pages.pastelIdDetails.tickets'))
+            : parse(translate('pages.pastelIdDetails.ticket'))}
           )
         </Box>
       );
@@ -54,14 +55,14 @@ const Overview: React.FC<IOverviewProps> = ({
     <BlockDetailsStyles.GridStyle item>
       <TableStyles.BlockWrapper className="mb-20">
         <TableStyles.BlockTitle>
-          {translate('pages.pastelIdDetails.pastelIDOverview')}
+          {parse(translate('pages.pastelIdDetails.pastelIDOverview'))}
         </TableStyles.BlockTitle>
         <Box className="custom-table tickets-table">
           <BlockDetailsStyles.GridStyle className="table__row">
             <Grid container spacing={3}>
               <Grid item xs={4} sm={3} className="max-w-355">
                 <TicketStyles.TicketTitle>
-                  {translate('pages.pastelIdDetails.pastelId')}:
+                  {parse(translate('pages.pastelIdDetails.pastelId'))}:
                 </TicketStyles.TicketTitle>
               </Grid>
               <Grid item xs={8} sm={9}>
@@ -74,7 +75,7 @@ const Overview: React.FC<IOverviewProps> = ({
               <Grid container spacing={3}>
                 <Grid item xs={4} sm={3} className="max-w-355">
                   <TicketStyles.TicketTitle>
-                    {translate('pages.pastelIdDetails.username')}:
+                    {parse(translate('pages.pastelIdDetails.username'))}:
                   </TicketStyles.TicketTitle>
                 </Grid>
                 <Grid item xs={8} sm={9}>
@@ -87,7 +88,7 @@ const Overview: React.FC<IOverviewProps> = ({
             <Grid container spacing={3}>
               <Grid item xs={4} sm={3} className="max-w-355">
                 <TicketStyles.TicketTitle>
-                  {translate('pages.pastelIdDetails.blockHeight')}:
+                  {parse(translate('pages.pastelIdDetails.blockHeight'))}:
                 </TicketStyles.TicketTitle>
               </Grid>
               <Grid item xs={8} sm={9}>
@@ -110,7 +111,7 @@ const Overview: React.FC<IOverviewProps> = ({
             <Grid container spacing={3}>
               <Grid item xs={4} sm={3} className="max-w-355">
                 <TicketStyles.TicketTitle>
-                  {translate('pages.pastelIdDetails.registeredDate')}:
+                  {parse(translate('pages.pastelIdDetails.registeredDate'))}:
                 </TicketStyles.TicketTitle>
               </Grid>
               <Grid item xs={8} sm={9}>
@@ -122,15 +123,15 @@ const Overview: React.FC<IOverviewProps> = ({
             <Grid container spacing={3}>
               <Grid item xs={4} sm={3} className="max-w-355">
                 <TicketStyles.TicketTitle>
-                  {translate('pages.pastelIdDetails.totalTicketsCreatedUsingThisPastelID')}:
+                  {parse(translate('pages.pastelIdDetails.totalTicketsCreatedUsingThisPastelID'))}:
                 </TicketStyles.TicketTitle>
               </Grid>
               <Grid item xs={8} sm={9}>
                 <TicketStyles.TicketContent>
                   {totalTickets}{' '}
                   {totalTickets > 1
-                    ? translate('pages.pastelIdDetails.tickets')
-                    : translate('pages.pastelIdDetails.ticket')}
+                    ? parse(translate('pages.pastelIdDetails.tickets'))
+                    : parse(translate('pages.pastelIdDetails.ticket'))}
                 </TicketStyles.TicketContent>
               </Grid>
             </Grid>
@@ -139,7 +140,7 @@ const Overview: React.FC<IOverviewProps> = ({
             <Grid container spacing={3}>
               <Grid item xs={4} sm={3} className="max-w-355">
                 <TicketStyles.TicketTitle>
-                  {translate('pages.pastelIdDetails.type')}:
+                  {parse(translate('pages.pastelIdDetails.type'))}:
                 </TicketStyles.TicketTitle>
               </Grid>
               <Grid item xs={8} sm={9}>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { CircularProgress, Grid, Tooltip, Typography } from '@material-ui/core';
+import parse from 'html-react-parser';
 
 import Header from '@components/Header/Header';
 import RouterLink from '@components/RouterLink/RouterLink';
@@ -21,7 +22,7 @@ import {
 } from '@utils/types/ITransactions';
 import { useSortData } from '@utils/hooks';
 import useTransactionDetails, { useUsdPrice } from '@hooks/useTransactionDetails';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
 import * as AddressDetailStyles from '@pages/Details/AddressDetails/AddressDetails.styles';
 import * as CascadeDetailsStyles from '@pages/Details/CascadeDetails/CascadeDetails.styles';
 
@@ -96,7 +97,7 @@ const TransactionDetails = () => {
                       className="address-link"
                     />
                     {isPastelBurnAddress(address) ? (
-                      <Tooltip title={translate('pages.addressDetails.pastelBurnAddress')}>
+                      <Tooltip title={translateDropdown('pages.addressDetails.pastelBurnAddress')}>
                         <AddressDetailStyles.FireIcon>
                           <Fire />
                         </AddressDetailStyles.FireIcon>
@@ -167,7 +168,7 @@ const TransactionDetails = () => {
 
   return transaction ? (
     <Styles.Wrapper>
-      <Header title={translate('pages.transactionDetails.transactionDetails')} />
+      <Header title={translateDropdown('pages.transactionDetails.transactionDetails')} />
       <Grid container direction="column">
         <Styles.TransactionDesc item>
           {generateTableTitle(transaction, toggleOpenRawData)}
@@ -186,7 +187,7 @@ const TransactionDetails = () => {
             className="transaction"
             blockWrapperClassName="transaction-wrapper"
             tableWrapperClassName="none-border-radius-top"
-            title={translate('pages.transactionDetails.overview')}
+            title={translateDropdown('pages.transactionDetails.overview')}
           />
         </Styles.GridStyle>
         <Styles.GridStyle item>
@@ -199,7 +200,7 @@ const TransactionDetails = () => {
                   generateCoinbaseInfo(transaction.totalAmount)
                 ) : (
                   <Table
-                    title={translate('pages.transactionDetails.inputAddresses')}
+                    title={translateDropdown('pages.transactionDetails.inputAddresses')}
                     headers={addressHeaders}
                     handleClickSort={handleClickSort}
                     rows={generateTransactionEvents(transactionEvents, 'Outgoing')}
@@ -211,7 +212,7 @@ const TransactionDetails = () => {
               </Styles.LeftColumn>
               <Styles.RightColumn>
                 <Table
-                  title={translate('pages.transactionDetails.recipients')}
+                  title={translateDropdown('pages.transactionDetails.recipients')}
                   headers={addressHeaders}
                   rows={generateTransactionEvents(transactionEvents, 'Incoming')}
                   handleClickSort={handleClickSort}
@@ -240,12 +241,12 @@ const TransactionDetails = () => {
       <Grid container justify="center" alignItems="center" direction="column" spacing={2}>
         <Grid item>
           <Typography component="h1" variant="h1" align="center" gutterBottom>
-            {translate('pages.cascade.404')}
+            {parse(translate('pages.cascade.404'))}
           </Typography>
         </Grid>
       </Grid>
       <Typography component="h2" variant="h5" align="center" gutterBottom>
-        {translate('pages.transactionDetails.transactionNotFound')}
+        {parse(translate('pages.transactionDetails.transactionNotFound'))}
       </Typography>
     </CascadeDetailsStyles.Wrapper>
   );

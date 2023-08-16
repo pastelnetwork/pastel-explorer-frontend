@@ -6,6 +6,7 @@ import Box from '@material-ui/core/Box';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
+import parse from 'html-react-parser';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import { INftRegistrationTicket, INftTicket } from '@utils/types/ITransactions';
@@ -44,7 +45,7 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.nftRegistrationTicket.nftTicketVersion')}
+            {parse(translate('components.ticket.nftRegistrationTicket.nftTicketVersion'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -54,7 +55,7 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.nftRegistrationTicket.author')}
+            {parse(translate('components.ticket.nftRegistrationTicket.author'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -72,7 +73,7 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.nftRegistrationTicket.blockNum')}
+              {parse(translate('components.ticket.nftRegistrationTicket.blockNum'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -91,7 +92,7 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.nftRegistrationTicket.blockHash')}
+              {parse(translate('components.ticket.nftRegistrationTicket.blockHash'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -109,7 +110,7 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.nftRegistrationTicket.copies')}
+            {parse(translate('components.ticket.nftRegistrationTicket.copies'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -119,7 +120,7 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.nftRegistrationTicket.royalty')}
+            {parse(translate('components.ticket.nftRegistrationTicket.royalty'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -129,7 +130,7 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.nftRegistrationTicket.green')}
+            {parse(translate('components.ticket.nftRegistrationTicket.green'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -140,7 +141,7 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.nftRegistrationTicket.nftCollectionTxId')}
+              {parse(translate('components.ticket.nftRegistrationTicket.nftCollectionTxId'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -157,14 +158,16 @@ const NFTTicket: React.FC<INFTTicketProps> = ({ nftTicket }) => {
             <Grid container spacing={3}>
               <Grid item xs={4} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.nftRegistrationTicket.appTicket')}
+                  {parse(translate('components.ticket.nftRegistrationTicket.appTicket'))}
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={8} sm={9}>
                 <Styles.TicketContent className="expand-more">
                   {isExpanded
-                    ? translate('components.ticket.nftRegistrationTicket.hideDetail')
-                    : translate('components.ticket.nftRegistrationTicket.clickToSeeDetail')}{' '}
+                    ? parse(translate('components.ticket.nftRegistrationTicket.hideDetail'))
+                    : parse(
+                        translate('components.ticket.nftRegistrationTicket.clickToSeeDetail'),
+                      )}{' '}
                   <ExpandMoreIcon />
                 </Styles.TicketContent>
               </Grid>
@@ -191,7 +194,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.actionRegistrationTicket.collectionName')}
+            {parse(translate('components.ticket.actionRegistrationTicket.collectionName'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -204,7 +207,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
                 className="address-link"
               />
             ) : (
-              translate('common.na')
+              parse(translate('common.na'))
             )}
           </Styles.TicketContent>
         </Grid>
@@ -212,7 +215,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.actionRegistrationTicket.status')}
+            {parse(translate('components.ticket.actionRegistrationTicket.status'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -221,12 +224,12 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
               className={ticket?.activation_ticket ? 'active' : ''}
             >
               {ticket?.activation_ticket
-                ? translate('components.ticket.actionRegistrationTicket.activated')
-                : translate('components.ticket.actionRegistrationTicket.notYetActivated')}
+                ? parse(translate('components.ticket.actionRegistrationTicket.activated'))
+                : parse(translate('components.ticket.actionRegistrationTicket.notYetActivated'))}
             </Styles.ActionRegistrationTicketStatus>
             {ticket?.activation_ticket && ticket?.activation_txId ? (
-              <Styles.TicketContent>
-                ({translate('components.ticket.actionRegistrationTicket.activationTXID')}{' '}
+              <Styles.TicketContent className="nowrap">
+                ({parse(translate('components.ticket.actionRegistrationTicket.activationTXID'))}{' '}
                 <CopyButton copyText={ticket?.activation_txId} />
                 <RouterLink
                   route={`${ROUTES.TRANSACTION_DETAILS}/${ticket?.activation_txId}`}
@@ -244,7 +247,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.nftRegistrationTicket.PastelNFTImage')}
+              {parse(translate('components.ticket.nftRegistrationTicket.PastelNFTImage'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -260,7 +263,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
                   />
                 </Link>
               ) : (
-                translate('pages.tickets.pendingPastelNftGenerate')
+                parse(translate('pages.tickets.pendingPastelNftGenerate'))
               )}
             </Styles.TicketContent>
           </Grid>
@@ -270,7 +273,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.nftRegistrationTicket.creatorHeight')}
+              {parse(translate('components.ticket.nftRegistrationTicket.creatorHeight'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -288,7 +291,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.nftRegistrationTicket.version')}
+            {parse(translate('components.ticket.nftRegistrationTicket.version'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -299,7 +302,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.nftRegistrationTicket.key')}
+              {parse(translate('components.ticket.nftRegistrationTicket.key'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -311,7 +314,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.nftRegistrationTicket.label')}
+              {parse(translate('components.ticket.nftRegistrationTicket.label'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -322,7 +325,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.nftRegistrationTicket.totalCopies')}
+            {parse(translate('components.ticket.nftRegistrationTicket.totalCopies'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -332,7 +335,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.nftRegistrationTicket.royalty')}
+            {parse(translate('components.ticket.nftRegistrationTicket.royalty'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -343,7 +346,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.nftRegistrationTicket.royaltyAddress')}
+              {parse(translate('components.ticket.nftRegistrationTicket.royaltyAddress'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -354,7 +357,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.nftRegistrationTicket.green')}
+            {parse(translate('components.ticket.nftRegistrationTicket.green'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -364,9 +367,11 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.nftRegistrationTicket.storageFee', {
-              currency: getCurrencyName(),
-            })}
+            {parse(
+              translate('components.ticket.nftRegistrationTicket.storageFee', {
+                currency: getCurrencyName(),
+              }),
+            )}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -380,7 +385,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.nftRegistrationTicket.timestamp')}
+              {parse(translate('components.ticket.nftRegistrationTicket.timestamp'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -396,14 +401,16 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
             <Grid container spacing={3}>
               <Grid item xs={4} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.nftRegistrationTicket.nftTicket')}
+                  {parse(translate('components.ticket.nftRegistrationTicket.nftTicket'))}
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={8} sm={9}>
                 <Styles.TicketContent className="expand-more">
                   {isExpanded
-                    ? translate('components.ticket.nftRegistrationTicket.hideDetail')
-                    : translate('components.ticket.nftRegistrationTicket.clickToSeeDetail')}{' '}
+                    ? parse(translate('components.ticket.nftRegistrationTicket.hideDetail'))
+                    : parse(
+                        translate('components.ticket.nftRegistrationTicket.clickToSeeDetail'),
+                      )}{' '}
                   <ExpandMoreIcon />
                 </Styles.TicketContent>
               </Grid>

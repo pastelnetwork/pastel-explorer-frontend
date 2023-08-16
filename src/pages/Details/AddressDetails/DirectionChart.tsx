@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ReactNode } from 'react';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import subMonths from 'date-fns/subMonths';
 import format from 'date-fns/format';
+import parse from 'html-react-parser';
 
 import { LineChart } from '@components/Summary/LineChart';
 import { useDirection } from '@hooks/useAddressDetails';
@@ -31,7 +32,7 @@ interface IDirectionItemProps {
   id: string;
   direction: string;
   chartName: string;
-  title: string;
+  title: ReactNode;
   seriesName?: string;
   chartColor?: string;
 }
@@ -138,7 +139,7 @@ const DirectionItem: React.FC<IDirectionItemProps> = ({
         <Styles.Heading className="direction-item">
           <Styles.HeadingTitle>{title}</Styles.HeadingTitle>
           <ChartStyles.PeriodSelect className="direction-period">
-            <span>{translate('pages.historicalStatistics.period')}: </span>
+            <span>{parse(translate('pages.historicalStatistics.period'))}: </span>
             {periods[10].map(_period => (
               <ChartStyles.PeriodButton
                 className={`${getActivePeriodButtonStyle(_period)} ${isLoading ? 'disable' : ''}`}
@@ -156,7 +157,7 @@ const DirectionItem: React.FC<IDirectionItemProps> = ({
         {isLoading ? (
           <Styles.Loader>
             <CircularProgress size={40} />
-            <Styles.LoadingText>{translate('common.loadingData')}</Styles.LoadingText>
+            <Styles.LoadingText>{parse(translate('common.loadingData'))}</Styles.LoadingText>
           </Styles.Loader>
         ) : (
           <LineChart
@@ -185,10 +186,12 @@ const DirectionChart: React.FC<IDirectionChartProps> = ({ id }) => {
             id={id}
             direction="Incoming"
             chartName="directionIncoming"
-            title={translate(
-              `pages.addressDetails.balanceHistory.${
-                isBurnAddress ? 'burnedByMonth' : 'receivedByMonth'
-              }`,
+            title={parse(
+              translate(
+                `pages.addressDetails.balanceHistory.${
+                  isBurnAddress ? 'burnedByMonth' : 'receivedByMonth'
+                }`,
+              ),
             )}
             seriesName={`pages.addressDetails.balanceHistory.${
               isBurnAddress ? 'burnedByMonth' : 'receivedByMonth'
@@ -201,7 +204,7 @@ const DirectionChart: React.FC<IDirectionChartProps> = ({ id }) => {
             id={id}
             direction="Outgoing"
             chartName="directionOutgoing"
-            title={translate('pages.addressDetails.balanceHistory.sentByMonth')}
+            title={parse(translate('pages.addressDetails.balanceHistory.sentByMonth'))}
           />
         </Grid>
       </Grid>

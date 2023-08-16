@@ -6,7 +6,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import ListItemText from '@material-ui/core/ListItemText';
 import Input from '@material-ui/core/Input';
 
-import { translate } from '@utils/helpers/i18n';
+import { translateDropdown } from '@utils/helpers/i18n';
 
 import * as Styles from './Dropdown.styles';
 
@@ -112,7 +112,7 @@ export const TagDropdown: React.FC<ITagDropdown> = ({
           }
           const items = options
             .filter(o => o.value && (selected as string[]).indexOf(o.value.toString()) !== -1)
-            .map(o => translate(o.name));
+            .map(o => translateDropdown(o.name));
           return items.join(', ');
         }}
         MenuProps={MenuProps}
@@ -120,7 +120,7 @@ export const TagDropdown: React.FC<ITagDropdown> = ({
         {options.map(option => (
           <MenuItem key={option.value} value={option.value}>
             <Checkbox checked={values.indexOf(option.value.toString()) > -1} />
-            <ListItemText primary={translate(option.name)} />
+            <ListItemText primary={translateDropdown(option.name)} />
           </MenuItem>
         ))}
       </Select>

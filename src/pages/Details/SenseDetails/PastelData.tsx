@@ -1,4 +1,5 @@
 import Box from '@material-ui/core/Box';
+import parse from 'html-react-parser';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
@@ -35,7 +36,7 @@ const PastelData: React.FC<IPastelData> = ({
     <Box>
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>
-          {translate('pages.senseDetails.creatorPastelID')}:
+          {parse(translate('pages.senseDetails.creatorPastelID'))}:
         </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent className="break-all">
           <RouterLink
@@ -49,7 +50,7 @@ const PastelData: React.FC<IPastelData> = ({
       </Styles.ContentItem>
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>
-          {translate('pages.senseDetails.currentOwnerPastelID')}:
+          {parse(translate('pages.senseDetails.currentOwnerPastelID'))}:
         </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent className="break-all">
           <RouterLink
@@ -63,7 +64,7 @@ const PastelData: React.FC<IPastelData> = ({
       </Styles.ContentItem>
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>
-          {translate('pages.senseDetails.blockHash')}:
+          {parse(translate('pages.senseDetails.blockHash'))}:
         </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent className="break-all">
           <RouterLink
@@ -76,7 +77,7 @@ const PastelData: React.FC<IPastelData> = ({
       </Styles.ContentItem>
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>
-          {translate('pages.senseDetails.blockHeight')}:
+          {parse(translate('pages.senseDetails.blockHeight'))}:
         </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent>
           <RouterLink
@@ -89,7 +90,7 @@ const PastelData: React.FC<IPastelData> = ({
       </Styles.ContentItem>
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>
-          {translate('pages.senseDetails.utcTimestampWhenRequestSubmitted')}
+          {parse(translate('pages.senseDetails.utcTimestampWhenRequestSubmitted'))}
         </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent>
           {utcTimestampWhenRequestSubmitted}&nbsp;
@@ -97,7 +98,7 @@ const PastelData: React.FC<IPastelData> = ({
       </Styles.ContentItem>
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>
-          {translate('pages.senseDetails.pastelIdOfRegisteringSupernode1')}:
+          {parse(translate('pages.senseDetails.pastelIdOfRegisteringSupernode1'))}:
         </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent className="break-all">
           {pastelIdOfRegisteringSupernode1}&nbsp;
@@ -105,7 +106,7 @@ const PastelData: React.FC<IPastelData> = ({
       </Styles.ContentItem>
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>
-          {translate('pages.senseDetails.pastelIdOfRegisteringSupernode2')}:
+          {parse(translate('pages.senseDetails.pastelIdOfRegisteringSupernode2'))}:
         </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent className="break-all">
           {pastelIdOfRegisteringSupernode2}&nbsp;
@@ -113,7 +114,7 @@ const PastelData: React.FC<IPastelData> = ({
       </Styles.ContentItem>
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>
-          {translate('pages.senseDetails.pastelIdOfRegisteringSupernode3')}:
+          {parse(translate('pages.senseDetails.pastelIdOfRegisteringSupernode3'))}:
         </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent className="break-all">
           {pastelIdOfRegisteringSupernode3}&nbsp;
@@ -121,12 +122,12 @@ const PastelData: React.FC<IPastelData> = ({
       </Styles.ContentItem>
       <Styles.ContentItem>
         <TicketStyles.TicketTitle>
-          {translate('pages.senseDetails.isPastelOpenapiRequest')}
+          {parse(translate('pages.senseDetails.isPastelOpenapiRequest'))}
         </TicketStyles.TicketTitle>
         <TicketStyles.TicketContent>
           {isPastelOpenapiRequest === 1
-            ? translate('pages.senseDetails.true')
-            : translate('pages.senseDetails.false')}
+            ? parse(translate('pages.senseDetails.true'))
+            : parse(translate('pages.senseDetails.false'))}
         </TicketStyles.TicketContent>
       </Styles.ContentItem>
     </Box>

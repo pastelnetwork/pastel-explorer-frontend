@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Table, TableBody, TableHead, TableRow } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import parse from 'html-react-parser';
 
 import { formatAddress } from '@utils/helpers/format';
 import RouterLink from '@components/RouterLink/RouterLink';
@@ -47,25 +48,25 @@ const Transfers = () => {
             <TableHead className="table__row-header">
               <TableRow>
                 <TableStyles.TableCell className="nowrap">
-                  {translate('pages.cascade.pastelID')}
+                  {parse(translate('pages.cascade.pastelID'))}
                 </TableStyles.TableCell>
                 <TableStyles.TableCell className="nowrap">
-                  {translate('pages.cascade.copySerialNr')}
+                  {parse(translate('pages.cascade.copySerialNr'))}
                 </TableStyles.TableCell>
                 <TableStyles.TableCell className="nowrap">
-                  {translate('pages.cascade.registrationTxId')}
+                  {parse(translate('pages.cascade.registrationTxId'))}
                 </TableStyles.TableCell>
                 <TableStyles.TableCell className="nowrap">
-                  {translate('pages.cascade.offerTxId')}
+                  {parse(translate('pages.cascade.offerTxId'))}
                 </TableStyles.TableCell>
                 <TableStyles.TableCell className="nowrap">
-                  {translate('pages.cascade.acceptTxId')}
+                  {parse(translate('pages.cascade.acceptTxId'))}
                 </TableStyles.TableCell>
                 <TableStyles.TableCell className="nowrap">
-                  {translate('pages.cascade.itemTxId')}
+                  {parse(translate('pages.cascade.itemTxId'))}
                 </TableStyles.TableCell>
                 <TableStyles.TableCell className="nowrap">
-                  {translate('pages.cascade.timestamp')}
+                  {parse(translate('pages.cascade.timestamp'))}
                 </TableStyles.TableCell>
               </TableRow>
             </TableHead>
@@ -73,7 +74,7 @@ const Transfers = () => {
               {data.map(item => (
                 <TableRow className="table__row" key={item.transactionHash}>
                   <TableStyles.RowCell
-                    data-title={`${translate('pages.cascade.pastelID')}:`}
+                    data-title={`${parse(translate('pages.cascade.pastelID'))}:`}
                     className="cell-content nowrap"
                   >
                     {item.pastelID ? (
@@ -84,17 +85,17 @@ const Transfers = () => {
                         className="address-link nowrap inline-block read-more full"
                       />
                     ) : (
-                      translate('common.na')
+                      parse(translate('common.na'))
                     )}
                   </TableStyles.RowCell>
                   <TableStyles.RowCell
-                    data-title={`${translate('pages.cascade.copySerialNr')}:`}
+                    data-title={`${parse(translate('pages.cascade.copySerialNr'))}:`}
                     className="cell-content nowrap"
                   >
-                    {item.copy_serial_nr ? item.copy_serial_nr : translate('common.na')}
+                    {item.copy_serial_nr ? item.copy_serial_nr : parse(translate('common.na'))}
                   </TableStyles.RowCell>
                   <TableStyles.RowCell
-                    data-title={`${translate('pages.cascade.registrationTxId')}:`}
+                    data-title={`${parse(translate('pages.cascade.registrationTxId'))}:`}
                     className="cell-content nowrap"
                   >
                     {item.registration_txid ? (
@@ -108,11 +109,11 @@ const Transfers = () => {
                         />
                       </div>
                     ) : (
-                      translate('common.na')
+                      parse(translate('common.na'))
                     )}
                   </TableStyles.RowCell>
                   <TableStyles.RowCell
-                    data-title={`${translate('pages.cascade.offerTxId')}:`}
+                    data-title={`${parse(translate('pages.cascade.offerTxId'))}:`}
                     className="cell-content nowrap"
                   >
                     {item.offer_txid ? (
@@ -126,11 +127,11 @@ const Transfers = () => {
                         />
                       </div>
                     ) : (
-                      translate('common.na')
+                      parse(translate('common.na'))
                     )}
                   </TableStyles.RowCell>
                   <TableStyles.RowCell
-                    data-title={`${translate('pages.cascade.acceptTxId')}:`}
+                    data-title={`${parse(translate('pages.cascade.acceptTxId'))}:`}
                     className="cell-content nowrap"
                   >
                     {item.accept_txid ? (
@@ -144,11 +145,11 @@ const Transfers = () => {
                         />
                       </div>
                     ) : (
-                      translate('common.na')
+                      parse(translate('common.na'))
                     )}
                   </TableStyles.RowCell>
                   <TableStyles.RowCell
-                    data-title={`${translate('pages.cascade.itemTxId')}:`}
+                    data-title={`${parse(translate('pages.cascade.itemTxId'))}:`}
                     className="cell-content nowrap"
                   >
                     {item.item_txid ? (
@@ -162,11 +163,11 @@ const Transfers = () => {
                         />
                       </div>
                     ) : (
-                      translate('common.na')
+                      parse(translate('common.na'))
                     )}
                   </TableStyles.RowCell>
                   <TableStyles.RowCell
-                    data-title={`${translate('pages.cascade.timestamp')}:`}
+                    data-title={`${parse(translate('pages.cascade.timestamp'))}:`}
                     className="cell-content nowrap"
                   >
                     {formatFullDate(item.transactionTime, { dayName: false })}
@@ -190,7 +191,7 @@ const Transfers = () => {
   ) : (
     <NftDetailStyles.Wrapper className="no-data">
       <Typography component="h2" variant="h5" gutterBottom className="no-data-content">
-        {translate('common.noData')}
+        {parse(translate('common.noData'))}
       </Typography>
     </NftDetailStyles.Wrapper>
   );

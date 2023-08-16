@@ -8,12 +8,13 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Tooltip from '@material-ui/core/Tooltip';
 import InfoIcon from '@material-ui/icons/Info';
+import parse from 'html-react-parser';
 
 import { TAppTheme } from '@theme/index';
 import { decompress_zstd_compressed_data_func } from '@utils/helpers/encryption';
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
 
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
 import imagePlaceholder from '@assets/images/no-image-placeholder.svg';
@@ -194,7 +195,7 @@ const SimilarRegisteredImageRow: React.FC<ISimilarRegisteredImageRow> = ({
         >
           {item.matchType}
           {item.matchType === 'Seed Image' ? (
-            <Tooltip title={translate('pages.senseDetails.seedImagesInfo')}>
+            <Tooltip title={translateDropdown('pages.senseDetails.seedImagesInfo')}>
               <InfoIcon className="seed-images-info" />
             </Tooltip>
           ) : null}
@@ -236,7 +237,7 @@ const SimilarRegisteredImages: React.FC<ISimilarRegisteredImages> = ({ rarenessS
   if (!rarenessScoresTable) {
     return (
       <Styles.EmptyWrapper>
-        <Styles.EmptyData>{translate('common.noData')}</Styles.EmptyData>
+        <Styles.EmptyData>{parse(translate('common.noData'))}</Styles.EmptyData>
       </Styles.EmptyWrapper>
     );
   }
@@ -249,43 +250,43 @@ const SimilarRegisteredImages: React.FC<ISimilarRegisteredImages> = ({ rarenessS
           <TableHead className="table__row-header">
             <TableRow>
               <StyledTableCell component="th" className="rank" align="center">
-                {translate('pages.senseDetails.rank')}
+                {parse(translate('pages.senseDetails.rank'))}
               </StyledTableCell>
               <StyledTableCell component="th" className="thumbnail">
-                {translate('pages.senseDetails.thumbnail')}
+                {parse(translate('pages.senseDetails.thumbnail'))}
               </StyledTableCell>
               <StyledTableCell component="th" className="imageHash">
-                {translate('pages.senseDetails.imageHash')}
+                {parse(translate('pages.senseDetails.imageHash'))}
               </StyledTableCell>
               <StyledTableCell component="th" className="dateTimeAdded">
-                {translate('pages.senseDetails.dateTimeAdded')}
+                {parse(translate('pages.senseDetails.dateTimeAdded'))}
               </StyledTableCell>
               <StyledTableCell component="th" className="matchType">
-                {translate('pages.senseDetails.matchType')}
+                {parse(translate('pages.senseDetails.matchType'))}
               </StyledTableCell>
               <StyledTableCell component="th" className="dupeProbability">
-                {translate('pages.senseDetails.dupeProbability')}
+                {parse(translate('pages.senseDetails.dupeProbability'))}
               </StyledTableCell>
               <StyledTableCell component="th" className="dupeProbability chart">
-                {translate('pages.senseDetails.dupeProbability')}
+                {parse(translate('pages.senseDetails.dupeProbability'))}
               </StyledTableCell>
               <StyledTableCell component="th" className="cosineSimilarity">
-                {translate('pages.senseDetails.cosineSimilarity')}
+                {parse(translate('pages.senseDetails.cosineSimilarity'))}
               </StyledTableCell>
               <StyledTableCell component="th" className="cosineGain">
-                {translate('pages.senseDetails.cosineGain')}
+                {parse(translate('pages.senseDetails.cosineGain'))}
               </StyledTableCell>
               <StyledTableCell component="th" className="hoeffdingsDependency">
-                {translate('pages.senseDetails.hoeffdingsDependency')}
+                {parse(translate('pages.senseDetails.hoeffdingsDependency'))}
               </StyledTableCell>
               <StyledTableCell component="th" className="hoeffdingGain">
-                {translate('pages.senseDetails.hoeffdingGain')}
+                {parse(translate('pages.senseDetails.hoeffdingGain'))}
               </StyledTableCell>
               <StyledTableCell component="th" className="hilbertSchmidtInformationCriteria">
-                {translate('pages.senseDetails.hilbertSchmidtInformationCriteria')}
+                {parse(translate('pages.senseDetails.hilbertSchmidtInformationCriteria'))}
               </StyledTableCell>
               <StyledTableCell component="th" className="hilbertSchmidtGain">
-                {translate('pages.senseDetails.hilbertSchmidtGain')}
+                {parse(translate('pages.senseDetails.hilbertSchmidtGain'))}
               </StyledTableCell>
             </TableRow>
           </TableHead>

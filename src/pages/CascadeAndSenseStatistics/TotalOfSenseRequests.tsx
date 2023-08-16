@@ -1,5 +1,6 @@
 import { useState, ChangeEvent, useEffect } from 'react';
 import { Skeleton } from '@material-ui/lab';
+import parse from 'html-react-parser';
 
 import { PeriodTypes, generatePeriodToDropdownOptions } from '@utils/helpers/statisticsLib';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
@@ -66,7 +67,7 @@ const TotalOfSenseRequests: React.FC = () => {
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
           <SummaryStyles.Typography variant="h6">
-            {translate('pages.cascadeAndSenseStatistics.senseRequests')}
+            {parse(translate('pages.cascadeAndSenseStatistics.senseRequests'))}
           </SummaryStyles.Typography>
           <SummaryStyles.Typography variant="h4">
             <SummaryStyles.Values>
@@ -76,8 +77,8 @@ const TotalOfSenseRequests: React.FC = () => {
                 <>
                   {formatNumber(swrData.currentValue)}{' '}
                   {swrData.currentValue > 1
-                    ? translate('pages.cascadeAndSenseStatistics.requests')
-                    : translate('pages.cascadeAndSenseStatistics.request')}
+                    ? parse(translate('pages.cascadeAndSenseStatistics.requests'))
+                    : parse(translate('pages.cascadeAndSenseStatistics.request'))}
                 </>
               )}
             </SummaryStyles.Values>
@@ -147,7 +148,7 @@ const TotalOfSenseRequests: React.FC = () => {
           <StatisticsStyles.Loader>
             <Skeleton animation="wave" variant="rect" height={170} width="100%" />
             <StatisticsStyles.LoadingText>
-              {translate('common.loadingData')}
+              {parse(translate('common.loadingData'))}
             </StatisticsStyles.LoadingText>
           </StatisticsStyles.Loader>
         ) : (

@@ -1,4 +1,5 @@
 import Box from '@material-ui/core/Box';
+import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
@@ -17,7 +18,9 @@ const RqIds: React.FC<IRqIds> = ({ data, opened }) => {
   return (
     <Styles.RqIdsWrapper>
       <Box>
-        <TicketStyles.TicketTitle>{translate('pages.cascade.allRqIds')}</TicketStyles.TicketTitle>
+        <TicketStyles.TicketTitle>
+          {parse(translate('pages.cascade.allRqIds'))}
+        </TicketStyles.TicketTitle>
       </Box>
       {opened ? (
         <ul className="list">

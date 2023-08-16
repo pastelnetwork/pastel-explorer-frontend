@@ -3,6 +3,7 @@ import { Skeleton } from '@material-ui/lab';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import parse from 'html-react-parser';
 
 import { LineChart } from '@components/Summary/LineChart';
 import { RedReceived } from '@components/SvgIcon/Received';
@@ -75,10 +76,10 @@ const BurnedByMonth = () => {
       <Box>
         <AddressDetailsStyles.Heading className="direction-item">
           <AddressDetailsStyles.HeadingTitle>
-            {translate('pages.burned.burnedByMonth')}
+            {parse(translate('pages.burned.burnedByMonth'))}
           </AddressDetailsStyles.HeadingTitle>
           <ChartStyles.PeriodSelect className="direction-period">
-            <span>{translate('pages.historicalStatistics.period')}: </span>
+            <span>{parse(translate('pages.historicalStatistics.period'))}: </span>
             {periods[10].map(_period => (
               <ChartStyles.PeriodButton
                 className={`${getActivePeriodButtonStyle(_period)} ${isLoading ? 'disable' : ''}`}
@@ -97,7 +98,7 @@ const BurnedByMonth = () => {
           <AddressDetailsStyles.Loader>
             <CircularProgress size={40} />
             <AddressDetailsStyles.LoadingText>
-              {translate('common.loadingData')}
+              {parse(translate('common.loadingData'))}
             </AddressDetailsStyles.LoadingText>
           </AddressDetailsStyles.Loader>
         ) : (
@@ -172,7 +173,7 @@ const Summary = () => {
         <TableStyles.Card>
           <AddressDetailsStyles.Heading className="direction-item">
             <AddressDetailsStyles.HeadingTitle>
-              {translate('pages.burned.title', { currency: getCurrencyName() })}
+              {parse(translate('pages.burned.title', { currency: getCurrencyName() }))}
             </AddressDetailsStyles.HeadingTitle>
           </AddressDetailsStyles.Heading>
 
@@ -188,9 +189,11 @@ const Summary = () => {
                     </AddressDetailsStyles.SummaryIcon>
                     <AddressDetailsStyles.ItemWrapper>
                       <AddressDetailsStyles.SummaryLabel>
-                        {translate(`pages.burned.totalBurned`, {
-                          currency: getCurrencyName(),
-                        })}
+                        {parse(
+                          translate(`pages.burned.totalBurned`, {
+                            currency: getCurrencyName(),
+                          }),
+                        )}
                       </AddressDetailsStyles.SummaryLabel>
                       <AddressDetailsStyles.SummaryValue>
                         {isLoading ? (
@@ -204,7 +207,7 @@ const Summary = () => {
                 </AddressDetailsStyles.SummaryWrapper>
 
                 <ChartStyles.PeriodSelect className="period">
-                  <span>{translate('pages.historicalStatistics.period')}: </span>
+                  <span>{parse(translate('pages.historicalStatistics.period'))}: </span>
                   <div className="balance-history-period">
                     {periods[1].map(period => (
                       <ChartStyles.PeriodButton
@@ -227,7 +230,7 @@ const Summary = () => {
                 <AddressDetailsStyles.Loader>
                   <CircularProgress size={40} />
                   <AddressDetailsStyles.LoadingText>
-                    {translate('common.loadingData')}
+                    {parse(translate('common.loadingData'))}
                   </AddressDetailsStyles.LoadingText>
                 </AddressDetailsStyles.Loader>
               ) : (

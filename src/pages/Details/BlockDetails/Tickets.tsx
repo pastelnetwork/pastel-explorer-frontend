@@ -2,6 +2,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { Link } from 'react-router-dom';
 import { decode } from 'js-base64';
+import parse from 'html-react-parser';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
@@ -91,12 +92,12 @@ const TicketsList: React.FC<ITicketsList> = ({
           <Grid container spacing={3}>
             <Grid item xs={4} sm={3} className="max-w-355">
               <TicketStyles.TicketTitle>
-                {translate('pages.blockDetails.senseOutputDetails')}
+                {parse(translate('pages.blockDetails.senseOutputDetails'))}
               </TicketStyles.TicketTitle>
             </Grid>
             <Grid item xs={8} sm={9}>
               <TicketStyles.TicketContent>
-                {translate('pages.tickets.pendingSenseGenerate')}
+                {parse(translate('pages.tickets.pendingSenseGenerate'))}
               </TicketStyles.TicketContent>
             </Grid>
           </Grid>
@@ -115,7 +116,7 @@ const TicketsList: React.FC<ITicketsList> = ({
           <Grid container spacing={3}>
             <Grid item xs={4} sm={3} className="max-w-355">
               <TicketStyles.TicketTitle>
-                {translate('pages.blockDetails.cascadeFileType')}
+                {parse(translate('pages.blockDetails.cascadeFileType'))}
               </TicketStyles.TicketTitle>
             </Grid>
             <Grid item xs={8} sm={9}>
@@ -135,7 +136,7 @@ const TicketsList: React.FC<ITicketsList> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <TicketStyles.TicketTitle>
-              {translate('pages.blockDetails.senseOutputDetails')}
+              {parse(translate('pages.blockDetails.senseOutputDetails'))}
             </TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -155,7 +156,7 @@ const TicketsList: React.FC<ITicketsList> = ({
                   />
                 </Link>
               ) : (
-                translate('pages.tickets.pendingSenseGenerate')
+                parse(translate('pages.tickets.pendingSenseGenerate'))
               )}
             </TicketStyles.TicketContent>
           </Grid>
@@ -163,7 +164,7 @@ const TicketsList: React.FC<ITicketsList> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <TicketStyles.TicketTitle>
-              {translate('pages.blockDetails.imageHash')}
+              {parse(translate('pages.blockDetails.imageHash'))}
             </TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -180,7 +181,7 @@ const TicketsList: React.FC<ITicketsList> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <TicketStyles.TicketTitle>
-              {translate('pages.blockDetails.senseVersion')}
+              {parse(translate('pages.blockDetails.senseVersion'))}
             </TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -260,7 +261,7 @@ const TicketsList: React.FC<ITicketsList> = ({
       <TableStyles.BlockWrapper className="mb-12">
         <TableStyles.BlockTitle>
           {variant !== 'transaction'
-            ? translate('pages.blockDetails.tickets')
+            ? parse(translate('pages.blockDetails.tickets'))
             : getTicketTitle(
                 data[0].type as TTicketType,
                 (data[0].data.ticket as INftCollectionRegistrationTicket)?.collection_ticket
@@ -280,7 +281,7 @@ const TicketsList: React.FC<ITicketsList> = ({
                   <Grid container spacing={3}>
                     <Grid item xs={4} sm={3} className="max-w-355">
                       <TicketStyles.TicketTitle>
-                        {translate('pages.blockDetails.txId')}:
+                        {parse(translate('pages.blockDetails.txId'))}:
                       </TicketStyles.TicketTitle>
                     </Grid>
                     <Grid item xs={8} sm={9}>
@@ -297,7 +298,7 @@ const TicketsList: React.FC<ITicketsList> = ({
                   <Grid container spacing={3}>
                     <Grid item xs={4} sm={3} className="max-w-355">
                       <TicketStyles.TicketTitle>
-                        {translate('pages.blockDetails.type')}:
+                        {parse(translate('pages.blockDetails.type'))}:
                       </TicketStyles.TicketTitle>
                     </Grid>
                     <Grid item xs={8} sm={9}>

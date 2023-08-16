@@ -1,6 +1,7 @@
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import { decode } from 'js-base64';
+import parse from 'html-react-parser';
 
 import { IAppTicket } from '@utils/types/ITransactions';
 import { translate } from '@utils/helpers/i18n';
@@ -38,7 +39,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.apiTicket.creatorName')}
+              {parse(translate('components.ticket.apiTicket.creatorName'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -50,7 +51,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.apiTicket.creatorWebsite')}
+              {parse(translate('components.ticket.apiTicket.creatorWebsite'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -62,7 +63,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.apiTicket.creatorWrittenStatement')}
+              {parse(translate('components.ticket.apiTicket.creatorWrittenStatement'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -74,7 +75,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.apiTicket.nftCreationVideoYoutubeUrl')}
+              {parse(translate('components.ticket.apiTicket.nftCreationVideoYoutubeUrl'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -86,7 +87,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.apiTicket.nftKeywordSet')}
+              {parse(translate('components.ticket.apiTicket.nftKeywordSet'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -100,7 +101,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.apiTicket.nftSeriesName')}
+              {parse(translate('components.ticket.apiTicket.nftSeriesName'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -112,7 +113,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.apiTicket.nftTitle')}
+              {parse(translate('components.ticket.apiTicket.nftTitle'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -124,7 +125,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.apiTicket.nftType')}
+              {parse(translate('components.ticket.apiTicket.nftType'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -136,7 +137,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.apiTicket.previewHash')}
+              {parse(translate('components.ticket.apiTicket.previewHash'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -148,7 +149,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.apiTicket.thumbnail1Hash')}
+              {parse(translate('components.ticket.apiTicket.thumbnail1Hash'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -160,7 +161,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.apiTicket.thumbnail2Hash')}
+              {parse(translate('components.ticket.apiTicket.thumbnail2Hash'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -172,7 +173,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.apiTicket.dataHash')}
+              {parse(translate('components.ticket.apiTicket.dataHash'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -184,7 +185,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.apiTicket.totalCopies')}
+              {parse(translate('components.ticket.apiTicket.totalCopies'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -196,7 +197,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.apiTicket.ddAndFingerprintsIc')}
+              {parse(translate('components.ticket.apiTicket.ddAndFingerprintsIc'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -208,7 +209,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.apiTicket.ddAndFingerprintsMax')}
+              {parse(translate('components.ticket.apiTicket.ddAndFingerprintsMax'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -220,7 +221,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.apiTicket.ddAndFingerprintsIds')}
+              {parse(translate('components.ticket.apiTicket.ddAndFingerprintsIds'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -231,7 +232,9 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
       {data?.rq_ic ? (
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
-            <Styles.TicketTitle>{translate('components.ticket.apiTicket.rqIc')}</Styles.TicketTitle>
+            <Styles.TicketTitle>
+              {parse(translate('components.ticket.apiTicket.rqIc'))}
+            </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
             <Styles.TicketContent>{data.rq_ic}</Styles.TicketContent>
@@ -242,7 +245,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.apiTicket.rqMax')}
+              {parse(translate('components.ticket.apiTicket.rqMax'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -254,7 +257,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.apiTicket.rqOti')}
+              {parse(translate('components.ticket.apiTicket.rqOti'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -266,7 +269,7 @@ const AppTicket: React.FC<IAppTicketProps> = ({ appTicket }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.apiTicket.rqIds')}
+              {parse(translate('components.ticket.apiTicket.rqIds'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>

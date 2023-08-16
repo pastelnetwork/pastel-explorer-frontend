@@ -1,6 +1,7 @@
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import { decode } from 'js-base64';
+import parse from 'html-react-parser';
 
 import * as ascii85 from '@utils/helpers/ascii85';
 import { IApiTicket } from '@utils/types/ITransactions';
@@ -39,7 +40,7 @@ const ApiTicket: React.FC<IApiTicketProps> = ({ apiTicket, actionType }) => {
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.apiTicket.dataHash')}
+              {parse(translate('components.ticket.apiTicket.dataHash'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
@@ -53,7 +54,7 @@ const ApiTicket: React.FC<IApiTicketProps> = ({ apiTicket, actionType }) => {
             <Grid container spacing={3}>
               <Grid item xs={4} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.apiTicket.ddAndFingerprintsMax')}
+                  {parse(translate('components.ticket.apiTicket.ddAndFingerprintsMax'))}
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={8} sm={9}>
@@ -65,7 +66,7 @@ const ApiTicket: React.FC<IApiTicketProps> = ({ apiTicket, actionType }) => {
             <Grid container spacing={3}>
               <Grid item xs={4} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.apiTicket.ddAndFingerprintsIc')}
+                  {parse(translate('components.ticket.apiTicket.ddAndFingerprintsIc'))}
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={8} sm={9}>
@@ -77,7 +78,7 @@ const ApiTicket: React.FC<IApiTicketProps> = ({ apiTicket, actionType }) => {
             <Grid container spacing={3}>
               <Grid item xs={4} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {translate('components.ticket.apiTicket.ddAndFingerprintsIds')}
+                  {parse(translate('components.ticket.apiTicket.ddAndFingerprintsIds'))}
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={8} sm={9}>

@@ -9,6 +9,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
+import parse from 'html-react-parser';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import ExplorerMap from '@pages/Explorer/ExplorerMap/ExplorerMap';
@@ -20,7 +21,7 @@ import { formattedTimeElapsed, formatFullDate } from '@utils/helpers/date/date';
 import { formatAddress } from '@utils/helpers/format';
 import { Dropdown, OptionsProps } from '@components/Dropdown/Dropdown';
 import useSupernodes from '@hooks/useSupernodes';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
 import * as ROUTES from '@utils/constants/routes';
 import * as TableStyles from '@components/Table/Table.styles';
 import * as PastelIdStyles from '@pages/Details/PastelIdDetails/PastelIdDetails.styles';
@@ -98,7 +99,7 @@ const Supernodes: React.FC = () => {
 
       return results.push({
         value: item.value,
-        name: `${translate(item.name)} (${total})`,
+        name: `${translateDropdown(item.name)} (${total})`,
       });
     });
 
@@ -153,13 +154,15 @@ const Supernodes: React.FC = () => {
             <PastelIdStyles.BlockWrapper className="ticket-title-wrapper">
               <Styles.TitleWrapper>
                 <TableStyles.BlockTitle>
-                  <Styles.Title>{translate('pages.supernodes.supernodeList')}</Styles.Title>{' '}
+                  <Styles.Title>{parse(translate('pages.supernodes.supernodeList'))}</Styles.Title>{' '}
                   {supernodes.length > 0 ? (
                     <Styles.SubTitle>
                       (
-                      {translate('pages.supernodes.totalSupernodes', {
-                        total: formatNumber(originalSupernodes.length),
-                      })}
+                      {parse(
+                        translate('pages.supernodes.totalSupernodes', {
+                          total: formatNumber(originalSupernodes.length),
+                        }),
+                      )}
                       )
                     </Styles.SubTitle>
                   ) : null}
@@ -169,7 +172,7 @@ const Supernodes: React.FC = () => {
                     value={status}
                     onChange={handleChange}
                     options={generateStatusOptions()}
-                    label={translate('pages.supernodes.supernodeStatus')}
+                    label={translateDropdown('pages.supernodes.supernodeStatus')}
                     classNameWrapper="supernode-status"
                   />
                   <Styles.CSVLinkButton
@@ -180,7 +183,7 @@ const Supernodes: React.FC = () => {
                     ref={downloadRef}
                     className="download"
                   >
-                    {translate('pages.historicalStatistics.downloadCSV')}
+                    {parse(translate('pages.historicalStatistics.downloadCSV'))}
                   </Styles.CSVLinkButton>
                 </div>
               </Styles.TitleWrapper>
@@ -196,7 +199,7 @@ const Supernodes: React.FC = () => {
                           onClick={() => handleRequestSort('ip')}
                         >
                           <span className="header-cell">
-                            {translate('pages.supernodes.supernodeIP')}
+                            {parse(translate('pages.supernodes.supernodeIP'))}
                             {renderSortIcon('ip')}
                           </span>
                         </TableStyles.TableCell>
@@ -205,7 +208,7 @@ const Supernodes: React.FC = () => {
                           onClick={() => handleRequestSort('port')}
                         >
                           <span className="header-cell">
-                            {translate('pages.supernodes.port')}
+                            {parse(translate('pages.supernodes.port'))}
                             {renderSortIcon('port')}
                           </span>
                         </TableStyles.TableCell>
@@ -214,7 +217,7 @@ const Supernodes: React.FC = () => {
                           onClick={() => handleRequestSort('address')}
                         >
                           <span className="header-cell">
-                            {translate('pages.supernodes.address')}
+                            {parse(translate('pages.supernodes.address'))}
                             {renderSortIcon('address')}
                           </span>
                         </TableStyles.TableCell>
@@ -223,7 +226,7 @@ const Supernodes: React.FC = () => {
                           onClick={() => handleRequestSort('status')}
                         >
                           <span className="header-cell">
-                            {translate('pages.supernodes.status')}
+                            {parse(translate('pages.supernodes.status'))}
                             {renderSortIcon('status')}
                           </span>
                         </TableStyles.TableCell>
@@ -232,7 +235,7 @@ const Supernodes: React.FC = () => {
                           onClick={() => handleRequestSort('country')}
                         >
                           <span className="header-cell">
-                            {translate('pages.supernodes.country')}
+                            {parse(translate('pages.supernodes.country'))}
                             {renderSortIcon('country')}
                           </span>
                         </TableStyles.TableCell>
@@ -241,7 +244,7 @@ const Supernodes: React.FC = () => {
                           onClick={() => handleRequestSort('lastPaidTime')}
                         >
                           <span className="header-cell">
-                            {translate('pages.supernodes.lastPaid')}
+                            {parse(translate('pages.supernodes.lastPaid'))}
                             {renderSortIcon('lastPaidTime')}
                           </span>
                         </TableStyles.TableCell>
@@ -257,19 +260,19 @@ const Supernodes: React.FC = () => {
                             }`}
                           >
                             <TableStyles.RowCell
-                              data-title={`${translate('pages.supernodes.supernodeIP')}:`}
+                              data-title={`${translateDropdown('pages.supernodes.supernodeIP')}:`}
                               className="cell-content nowrap"
                             >
                               {masternode.ip}
                             </TableStyles.RowCell>
                             <TableStyles.RowCell
-                              data-title={`${translate('pages.supernodes.port')}:`}
+                              data-title={`${translateDropdown('pages.supernodes.port')}:`}
                               className="cell-content nowrap"
                             >
                               {masternode.port}
                             </TableStyles.RowCell>
                             <TableStyles.RowCell
-                              data-title={`${translate('pages.supernodes.address')}:`}
+                              data-title={`${translateDropdown('pages.supernodes.address')}:`}
                               className="cell-content nowrap read-more"
                             >
                               <span className="wrapper-content">
@@ -284,33 +287,33 @@ const Supernodes: React.FC = () => {
                               </span>
                             </TableStyles.RowCell>
                             <TableStyles.RowCell
-                              data-title={`${translate('pages.supernodes.status')}:`}
+                              data-title={`${translateDropdown('pages.supernodes.status')}:`}
                               className="cell-content nowrap"
                             >
                               {generateStatusData(masternode.status)}
                             </TableStyles.RowCell>
                             <TableStyles.RowCell
-                              data-title={`${translate('pages.supernodes.country')}:`}
+                              data-title={`${translateDropdown('pages.supernodes.country')}:`}
                               className="cell-content nowrap"
                             >
                               {masternode.country}
                             </TableStyles.RowCell>
                             <TableStyles.RowCell
-                              data-title={`${translate('pages.supernodes.lastPaid')}:`}
+                              data-title={`${translateDropdown('pages.supernodes.lastPaid')}:`}
                               className="cell-content nowrap"
                             >
                               {formattedTimeElapsed(masternode.lastPaidTime)}
                             </TableStyles.RowCell>
                             <TableStyles.RowCell
-                              data-title={`${translate('pages.supernodes.seeMore')}:`}
+                              data-title={`${translateDropdown('pages.supernodes.seeMore')}:`}
                               className="cell-content nowrap see-more"
                               width="50px"
                             >
                               <Tooltip
                                 title={
                                   selected.includes(masternode.address)
-                                    ? translate('pages.supernodes.seeLess')
-                                    : translate('pages.supernodes.seeMore')
+                                    ? translateDropdown('pages.supernodes.seeLess')
+                                    : translateDropdown('pages.supernodes.seeMore')
                                 }
                               >
                                 <IconButton
@@ -328,17 +331,17 @@ const Supernodes: React.FC = () => {
                                 <div className="masternode-detail">
                                   <div>
                                     <Box className="title">
-                                      {translate('pages.supernodes.rank')}
+                                      {parse(translate('pages.supernodes.rank'))}
                                     </Box>
                                     <Box className="bold">
                                       {masternode.masternodeRank < 0
-                                        ? translate('common.na')
+                                        ? parse(translate('common.na'))
                                         : masternode.masternodeRank}
                                     </Box>
                                   </div>
                                   <div>
                                     <Box className="title">
-                                      {translate('pages.supernodes.lastPaidBlock')}
+                                      {parse(translate('pages.supernodes.lastPaidBlock'))}
                                     </Box>
                                     <Box className="bold">
                                       <RouterLink
@@ -352,7 +355,7 @@ const Supernodes: React.FC = () => {
                                   </div>
                                   <div>
                                     <Box className="title">
-                                      {translate('pages.supernodes.snPastelIdPubkey')}
+                                      {parse(translate('pages.supernodes.snPastelIdPubkey'))}
                                     </Box>
                                     <Box className="bold">
                                       <span className="wrapper-content">
@@ -369,17 +372,17 @@ const Supernodes: React.FC = () => {
                                   </div>
                                   <div>
                                     <Box className="title">
-                                      {translate('pages.supernodes.city')}
+                                      {parse(translate('pages.supernodes.city'))}
                                     </Box>
                                     <Box className="bold">{masternode.city}</Box>
                                   </div>
                                   <div>
                                     <Box className="title">
-                                      {translate('pages.supernodes.rankAsOfBlockHeight')}
+                                      {parse(translate('pages.supernodes.rankAsOfBlockHeight'))}
                                     </Box>
                                     <Box className="bold">
                                       {masternode.rankAsOfBlockHeight < 0 ? (
-                                        translate('common.na')
+                                        parse(translate('common.na'))
                                       ) : (
                                         <RouterLink
                                           route={`${ROUTES.BLOCK_DETAILS}/${masternode.rankAsOfBlockHeight}`}
@@ -393,19 +396,19 @@ const Supernodes: React.FC = () => {
                                   </div>
                                   <div>
                                     <Box className="title">
-                                      {translate('pages.supernodes.activeSeconds')}
+                                      {parse(translate('pages.supernodes.activeSeconds'))}
                                     </Box>
                                     <Box className="bold">{masternode.activeSeconds}</Box>
                                   </div>
                                   <div>
                                     <Box className="title">
-                                      {translate('pages.supernodes.protocolVersion')}
+                                      {parse(translate('pages.supernodes.protocolVersion'))}
                                     </Box>
                                     <Box className="bold">{masternode.protocolVersion}</Box>
                                   </div>
                                   <div>
                                     <Box className="title">
-                                      {translate('pages.supernodes.dateTimeLastSeen')}
+                                      {parse(translate('pages.supernodes.dateTimeLastSeen'))}
                                     </Box>
                                     <Box className="bold">
                                       {formatFullDate(masternode.dateTimeLastSeen * 1000)}
