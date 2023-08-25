@@ -10,7 +10,7 @@ import { blocksPeriodFilters } from '@utils/constants/filter';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 
 import TicketsList from './TicketList';
-import { TICKET_STATUS_OPTIONS } from './TicketsType.helpers';
+import { TICKET_STATUS_OPTIONS, TICKET_SORT_OPTIONS } from './TicketsType.helpers';
 import * as Styles from './TicketsType.styles';
 
 interface ParamTypes {
@@ -22,6 +22,7 @@ const LIMIT = 6;
 const TicketsType: React.FC = () => {
   const { type } = useParams<ParamTypes>();
   const [selectedType, setTicketType] = useState<string>(type);
+  const [selectedSort, setTicketSort] = useState<string>(TICKET_SORT_OPTIONS[0].value);
   const [selectedStatus, setSelectedStatus] = useState<string>(TICKET_STATUS_OPTIONS[0].value);
   const [selectedTime, setSelectedTime] = useState<string>(blocksPeriodFilters[4].value);
   const [currentPage, setCurrentPage] = useState(0);
@@ -39,10 +40,16 @@ const TicketsType: React.FC = () => {
     selectedStatus,
     customDateRange,
     currentPage * LIMIT,
+    selectedSort,
   );
 
   const handleTicketTypeChange = (val: string) => {
     setTicketType(val);
+    setCurrentPage(0);
+  };
+
+  const handleTicketSortChange = (val: string) => {
+    setTicketSort(val);
     setCurrentPage(0);
   };
 
@@ -92,7 +99,9 @@ const TicketsType: React.FC = () => {
           <TicketsList
             data={data}
             ticketType={selectedType}
+            ticketSort={selectedSort}
             onTicketTypeChange={handleTicketTypeChange}
+            onTicketSortChange={handleTicketSortChange}
             totalTickets={total}
             isLoading={isLoading}
             senses={senses}
