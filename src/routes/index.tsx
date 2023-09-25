@@ -71,6 +71,7 @@ const CollectionDetails = loadable(
 const CascadeDetails = loadable(() => import('@pages/Details/CascadeDetails/CascadeDetails'));
 const NftDetails = loadable(() => import('@pages/Details/NftDetails/NftDetails'));
 const FeeSchedule = loadable(() => import('@pages/HistoricalStatistics/FeeSchedule'));
+const SenseMap = loadable(() => import('@pages/SenseMap/SenseMap'));
 
 const explorerRoutes = {
   id: 'routes.explorer',
@@ -478,6 +479,15 @@ const nftDetailsRoutes = {
   children: null,
 };
 
+const senseMapRoutes = {
+  id: 'routes.senseMap',
+  path: ROUTES.SENSE_MAP,
+  icon: <LocalAtmIcon />,
+  component: SenseMap,
+  seoTitle: 'routes.senseMap',
+  children: null,
+};
+
 export const pageRoutes = [
   explorerRoutes,
   movementRoutes,
@@ -520,6 +530,7 @@ export const pageRoutes = [
   cascadeDetailsRoutes,
   nftDetailsRoutes,
   feeScheduleStatisticsRoutes,
+  senseMapRoutes,
 ];
 
 export const sidebarRoutes = [

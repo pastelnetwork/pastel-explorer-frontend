@@ -21,3 +21,21 @@ export const decompress_zstd_compressed_data_func = (compressed_data_input: stri
     return {};
   }
 };
+
+type TZstdCompressedData = {
+  [key: string]: string;
+};
+export const decompress_zstd_compressed_data_func_2 = (
+  dict_of_zstd_compressed_data_blobs: TZstdCompressedData,
+) => {
+  const list_of_uncompressed_graphs = [];
+  for (let i = 0; i < Object.keys(dict_of_zstd_compressed_data_blobs).length; i += 1) {
+    const current_b64_blob = Object.values(dict_of_zstd_compressed_data_blobs)[i];
+    const compressedBuf = prepare_data_for_zstd(current_b64_blob);
+    const compressed_data = new Uint8Array(compressedBuf);
+    const decompressed_data = fzstd.decompress(compressed_data);
+    const enc = new TextDecoder('utf-8');
+    list_of_uncompressed_graphs[i] = JSON.parse(enc.decode(decompressed_data));
+  }
+  return list_of_uncompressed_graphs;
+};

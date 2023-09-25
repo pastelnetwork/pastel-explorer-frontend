@@ -3315,6 +3315,32 @@
         "message": "View NFT Raw Data",
         "description": "Used for the NFT Details page"
       }
+    },
+    "senseMap": {
+      "pageTitle": {
+        "message": "Sense Map",
+        "description": "Used for the Sense Map page"
+      },
+      "density": {
+        "message": "Density",
+        "description": "Used for the Sense Map page"
+      },
+      "linkStrength": {
+        "message": "Link Strength",
+        "description": "Used for the Sense Map page"
+      },
+      "clustering": {
+        "message": "Clustering",
+        "description": "Used for the Sense Map page"
+      },
+      "nodeImportance": {
+        "message": "Node Importance",
+        "description": "Used for the Sense Map page"
+      },
+      "scaleExponent": {
+        "message": "Scale Exponent",
+        "description": "Used for the Sense Map page"
+      }
     }
   },
   "routes": {
@@ -3512,6 +3538,10 @@
     },
     "feeSchedule": {
       "message": "Fee Schedule",
+      "description": "Used for the routes"
+    },
+    "senseMap": {
+      "message": "Sense Map",
       "description": "Used for the routes"
     }
   },

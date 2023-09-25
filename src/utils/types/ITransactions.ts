@@ -782,3 +782,31 @@ export type TTransfer = {
   copy_serial_nr: number;
   transactionTime: number;
 };
+
+export type TRareOnTheInternetAlternativeResultsNode =
+  | TCurrentNode
+  | {
+      id: number;
+      image_label: string;
+      image_base64_string: string;
+      sha3_256_hash_of_image_base64_string: string;
+      img_src: string;
+      img_alt: string;
+      original_url: string;
+      text_strings_on_page: string;
+    };
+export type TRareOnTheInternetResultsGraphNode =
+  | TCurrentNode
+  | {
+      id: number;
+      image_label: string;
+      title: string;
+      search_result_ranking: number;
+      img_src_string: string;
+      resolution_string: string;
+      original_url: string;
+      date_string: string;
+      misc_related_images_urls: string;
+      misc_related_images_as_b64_strings: string;
+      node_size: number;
+    };
