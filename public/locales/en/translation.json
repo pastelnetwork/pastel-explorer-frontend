@@ -1029,6 +1029,10 @@
         "signature3": {
           "message": "Registering Supernode #3 - Signature:",
           "description": "Used for the signatures component"
+        },
+        "registeringSupernode": {
+          "message": "Registering Supernode",
+          "description": "Used for the signatures component"
         }
       },
       "transferTicket": {
@@ -2861,6 +2865,30 @@
       },
       "senseAndNFTCollectionTickets": {
         "message": "Sense and NFT Collection Tickets",
+        "description": "Used for the Tickets page"
+      },
+      "sortingBy": {
+        "message": "Sorting by:",
+        "description": "Used for the Tickets page"
+      },
+      "timestamp": {
+        "message": "Timestamp",
+        "description": "Used for the Tickets page"
+      },
+      "blockNumber": {
+        "message": "Block Height of the TXID",
+        "description": "Used for the Tickets page"
+      },
+      "blockNumberRegistered": {
+        "message": "Block Height When Ticket Registered",
+        "description": "Used for the Tickets page"
+      },
+      "totalCost": {
+        "message": "Total Cost",
+        "description": "Used for the Tickets page"
+      },
+      "registeringSupernode": {
+        "message": "Registering Supernode",
         "description": "Used for the Tickets page"
       }
     },

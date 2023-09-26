@@ -161,6 +161,9 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
     );
   };
 
+  const start = blocksUnconfirmed?.length ? 1 : 0;
+  const end = blocksUnconfirmed?.length ? 8 : 7;
+
   return (
     <>
       <Styles.BlockWrapper>
@@ -190,7 +193,7 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
               </Grid>
               <BlockVisualizationStyle.BlockAnimationWrapper ref={el}>
                 {layout.items
-                  .slice(1, 8)
+                  .slice(start, end)
                   .map(
                     ({ id, height, size, transactionCount, minutesAgo, ticketsCount, status }) => (
                       <div key={id} className={`block-box ${status}`}>

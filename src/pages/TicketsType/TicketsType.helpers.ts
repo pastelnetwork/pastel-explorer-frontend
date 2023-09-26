@@ -67,3 +67,22 @@ export const TICKET_STATUS_OPTIONS = [
     value: 'inactivated',
   },
 ];
+
+export const TICKET_SORT_OPTIONS = [
+  {
+    name: 'pages.ticketsType.timestamp',
+    value: 'transactionTime',
+  },
+  {
+    name: 'pages.ticketsType.blockNumberRegistered',
+    value: 'blockHeightRegistered',
+  },
+  {
+    name: 'pages.ticketsType.blockNumber',
+    value: 'height',
+  },
+  {
+    name: 'pages.ticketsType.totalCost',
+    value: 'totalCost',
+  },
+];
