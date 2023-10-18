@@ -1,4 +1,5 @@
 import * as fzstd from 'fzstd';
+import JSON5 from 'json5';
 
 const prepare_data_for_zstd = (base64_input_string: string) => {
   const binary_string = window.atob(base64_input_string);
@@ -38,4 +39,12 @@ export const decompress_zstd_compressed_data_func_2 = (
     list_of_uncompressed_graphs[i] = JSON.parse(enc.decode(decompressed_data));
   }
   return list_of_uncompressed_graphs;
+};
+
+export const alt_decompress_zstd_compressed_data_func = (compressed_data_input: string) => {
+  const compressedBuf = prepare_data_for_zstd(compressed_data_input);
+  const compressed_data = new Uint8Array(compressedBuf);
+  const decompressed_data = fzstd.decompress(compressed_data);
+  const enc = new TextDecoder('utf-8');
+  return JSON5.parse(enc.decode(decompressed_data));
 };

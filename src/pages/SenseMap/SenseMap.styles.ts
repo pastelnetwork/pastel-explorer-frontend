@@ -31,6 +31,10 @@ export const Wrapper = styled.div`
       }
     }
   }
+
+  .node-color {
+    color: ${props => props.theme.palette.text.primary};
+  }
 `;
 
 export const FilterWrapper = styled.div`

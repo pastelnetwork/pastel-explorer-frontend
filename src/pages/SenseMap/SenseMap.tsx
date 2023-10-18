@@ -7,6 +7,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Slider from '@material-ui/core/Slider';
 import { withStyles } from '@material-ui/core/styles';
 import * as THREE from 'three';
+import * as d3 from 'd3';
 
 import { Dropdown } from '@components/Dropdown/Dropdown';
 import { translate } from '@utils/helpers/i18n';
@@ -20,12 +21,35 @@ import {
   CLUSTERING_OPTIONS,
   NODE_IMPORTANCE_OPTIONS,
   getUncompressedData,
+  getAltDecompressZstdCompressedData,
 } from './SenseMap.helpers';
 import * as Styles from './SenseMap.styles';
 
 type TNode = {
-  img_link: string;
+  creator_pastelid: string;
+  datetime_fingerprint_added_to_database: string;
+  drawing_probability: number;
   file_hash: string;
+  hentai_probability: number;
+  id: number;
+  img_link: string;
+  index: number;
+  is_pastel_openapi_request: number;
+  is_rare_on_internet: number;
+  min_number_of_exact_matches_in_page: number;
+  open_api_subsetid: string;
+  open_nsfw_score: number;
+  overall_rareness_score: number;
+  pastel_block_hash: string;
+  pastel_block_height: string;
+  sexy_probability: number;
+  utc_timestamp: string;
+  vx: number;
+  vy: number;
+  vz: number;
+  x: number;
+  y: number;
+  z: number;
 };
 
 const PastelSlider = withStyles({
@@ -64,9 +88,12 @@ const PastelSlider = withStyles({
 const HIGHLIGHT_IMG_COLOR = '#FFB1B1';
 const HIGHLIGHT_BORDER_COLOR = 'red';
 const DEFAULT_NODE_SIZE = 12;
+const MAX_NODE_SIZE = 30;
+const MIN_NODE_SIZE = 3;
 // eslint-disable-next-line
 const spriteCache: any = {};
 const nodeHighlightObjs = new Map();
+const uncompressed_graph_analysis_df_obj = getAltDecompressZstdCompressedData();
 
 const SenseMap: React.FC = () => {
   const [clustering, setClustering] = useState('');
@@ -104,6 +131,33 @@ const SenseMap: React.FC = () => {
     setLinkStrength(event.target.checked);
   };
 
+  const linkStrengthColorScale = d3.scalePow([0, 1], ['rgba(200, 190, 210, 0.7)', '#000']);
+
+  const getNodeCluster = (n: TNode) => {
+    return uncompressed_graph_analysis_df_obj.graph_stats_table_df[
+      `nk_${clustering}_communities_vector`
+    ][n.file_hash];
+  };
+
+  const getClustering = () => {
+    if (!clustering) {
+      return {
+        d3Force: 'link',
+        nodeLabel: '',
+      };
+    }
+
+    return {
+      d3Force: 'cluster',
+      nodeLabel: (n: TNode) => {
+        return `<div class="node-color">Cluster: ${getNodeCluster(n)}</div>`;
+      },
+    };
+  };
+
+  const getMetricVal = (node: TNode) =>
+    uncompressed_graph_analysis_df_obj.graph_stats_table_df[nodeImportance][node.file_hash];
+
   const getForceGraph3DOptions = () => {
     return {
       height: window.innerHeight - 150,
@@ -112,13 +166,14 @@ const SenseMap: React.FC = () => {
       cooldownTicks: 6000,
       warmupTicks: 200,
       d3VelocityDecay: 0.5,
-      linkColor: 'rgba(200, 190, 210, 0.7)',
-      linkOpacity: 0.18,
-      linkWidth: 1,
+      linkColor: () => {
+        return linkStrengthColorScale(linkStrength ? 1 : 0);
+      },
+      linkOpacity: linkStrength ? 0.35 : 0.18,
+      linkWidth: 2,
       linkDirectionalParticleWidth: 1,
       linkDirectionalParticleSpeed: 0.008,
       linkDirectionalParticles: 4,
-      d3Force: 'link',
       nodeThreeObject: (node: TNode) => {
         const { img_link } = node;
         const imgTexture = new THREE.TextureLoader().load(img_link);
@@ -178,11 +233,27 @@ const SenseMap: React.FC = () => {
         const nodeGroup = new THREE.Group();
         nodeGroup.add(imgSprite);
         nodeGroup.add(highlightGroup);
-        nodeGroup.scale.set(DEFAULT_NODE_SIZE / 2, DEFAULT_NODE_SIZE / 2, DEFAULT_NODE_SIZE / 2);
+        if (nodeImportance || scaleExponent) {
+          if (nodeImportance) {
+            const vals = graphData().nodes.map(getMetricVal);
+            const max = d3.max(vals);
+            const min = d3.min(vals);
+            const sizeScale = d3
+              .scalePow()
+              .exponent(Number(scaleExponent))
+              .domain([Number(min), Number(max)])
+              .range([MIN_NODE_SIZE, MAX_NODE_SIZE]);
+            const size = sizeScale(getMetricVal(node));
+            nodeGroup.scale.set(size, size, size);
+          } else {
+            nodeGroup.scale.set(DEFAULT_NODE_SIZE, DEFAULT_NODE_SIZE, DEFAULT_NODE_SIZE);
+          }
+        } else {
+          nodeGroup.scale.set(DEFAULT_NODE_SIZE / 2, DEFAULT_NODE_SIZE / 2, DEFAULT_NODE_SIZE / 2);
+        }
         return nodeGroup;
       },
-      // eslint-disable-next-line
-      onNodeHover: (d: any, prevD: any) => {
+      onNodeHover: (d: TNode | null, prevD: TNode | null) => {
         const highlightObj = nodeHighlightObjs.get(d);
         const prevHighlightObj = nodeHighlightObjs.get(prevD);
         highlightObj && (highlightObj.visible = true);
@@ -192,6 +263,7 @@ const SenseMap: React.FC = () => {
         const out_url = `https://sensedemo.pastel.network/sense_requests/${node.file_hash}`;
         window.open(out_url);
       },
+      ...getClustering(),
     };
   };
 
