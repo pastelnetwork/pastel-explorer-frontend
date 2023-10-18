@@ -519,6 +519,10 @@ export const TableWrapper = styled.div`
   max-width: 100%;
   overflow-x: auto;
 
+  .MuiTableSortLabel-icon {
+    display: none;
+  }
+
   .table__row-header {
     th {
       white-space: nowrap;
