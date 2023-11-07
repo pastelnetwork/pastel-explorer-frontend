@@ -22,6 +22,10 @@ export const Wrapper = styled('div')`
     margin-bottom: 20px;
   }
 
+  .mt-24px {
+    margin-top: 24px;
+  }
+
   .none-border-radius-top {
     border-top-left-radius: 0;
     border-top-right-radius: 0;

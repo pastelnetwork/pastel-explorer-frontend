@@ -225,7 +225,7 @@ const TransactionDetails = () => {
           )}
         </Styles.GridStyle>
         {tickets.length ? (
-          <Styles.GridStyle item>
+          <Styles.GridStyle item className="mt-24px">
             <TicketsList
               data={tickets}
               senses={senses}
