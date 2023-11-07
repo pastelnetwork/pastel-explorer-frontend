@@ -1,18 +1,60 @@
+import { useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import Box from '@material-ui/core/Box';
+import Tooltip from '@material-ui/core/Tooltip';
+import Grid from '@material-ui/core/Grid';
+import { Link } from 'react-router-dom';
+import parse from 'html-react-parser';
 
+import CopyButton from '@components/CopyButton/CopyButton';
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
 import { getCurrencyName } from '@utils/appInfo';
-import { formatAddress } from '@utils/helpers/format';
+import { formatAddress, formatBytes } from '@utils/helpers/format';
 import { formatFullDate } from '@utils/helpers/date/date';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { TicketsList, TTicketType } from '@utils/types/ITransactions';
 import { TAppTheme } from '@theme/index';
+import breakpoints from '@theme/breakpoints';
 import * as TicketsStyles from '@components/Ticket/Ticket.styles';
-import { getTicketTitle } from '@components/Ticket';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
+import { getFileIcon } from '@pages/Details/CascadeDetails/CascadeDetails.helpers';
+import noImagePlaceholder from '@assets/images/no-image-placeholder.svg';
+
+import { TXID_KEY, TIMESTAMP_KEY, PASTEL_ID_KEY, USERNAME_KEY } from './Tickets.columns';
+
+const getTicketTitle = (type: TTicketType) => {
+  switch (type) {
+    case 'pastelid':
+      return parse(translate('pages.tickets.ticketsTitle.pastelid'));
+    case 'username-change':
+      return parse(translate('pages.tickets.ticketsTitle.usernameChange'));
+    case 'nft-reg':
+      return parse(translate('pages.tickets.ticketsTitle.nftReg'));
+    case 'nft-act':
+      return parse(translate('pages.tickets.ticketsTitle.nftAct'));
+    case 'collection-reg':
+      return parse(translate('pages.tickets.ticketsTitle.nftCollectionReg'));
+    case 'collection-act':
+      return parse(translate('pages.tickets.ticketsTitle.nftCollectionAct'));
+    case 'nft-royalty':
+      return parse(translate('pages.tickets.ticketsTitle.nftRoyalty'));
+    case 'action-reg':
+      return parse(translate('pages.tickets.ticketsTitle.actionReg'));
+    case 'action-act':
+      return parse(translate('pages.tickets.ticketsTitle.actionAct'));
+    case 'offer':
+      return parse(translate('pages.tickets.ticketsTitle.offer'));
+    case 'accept':
+      return parse(translate('pages.tickets.ticketsTitle.accept'));
+    case 'transfer':
+      return parse(translate('pages.tickets.ticketsTitle.transfer'));
+    default:
+      return '';
+  }
+};
 
 export const DATA_LIMIT = 15;
 
@@ -35,296 +77,897 @@ export const StyledTableRow = withStyles((theme: TAppTheme) => ({
   },
 }))(TableRow);
 
-const TXID_KEY = 'transactionHash';
-const STATUS_KEY = 'activation_ticket';
-const FEE_KEY = 'fee';
-const TIMESTAMP_KEY = 'timestamp';
-const PASTEL_ID_KEY = 'pastelID';
-const ID_TYPE_KEY = 'id_type';
-const VERSION_KEY = 'version';
-const TYPE_KEY = 'type';
+const getStorageFee = (pslPrice: number, usdPrice: number) => {
+  if (pslPrice && usdPrice) {
+    return ` (${formatNumber(pslPrice * usdPrice, { decimalsLength: 2 })} ${translateDropdown(
+      'common.usd',
+    )})`;
+  }
+  return ` (0 ${translateDropdown('common.usd')})`;
+};
 
-export const cascadeColumns = [
-  {
-    width: 80,
-    flexGrow: 1,
-    label: 'pages.tickets.txID',
-    dataKey: TXID_KEY,
-    disableSort: true,
-    className: 'txID',
-    dataTitle: 'pages.tickets.txID',
-  },
-  {
-    width: 120,
-    flexGrow: 1,
-    label: 'pages.tickets.status',
-    dataKey: STATUS_KEY,
-    disableSort: true,
-    className: 'status',
-    dataTitle: 'pages.tickets.status',
-  },
-  {
-    width: 60,
-    flexGrow: 1,
-    label: 'pages.tickets.fee',
-    dataKey: FEE_KEY,
-    disableSort: true,
-    className: 'fee',
-    dataTitle: 'pages.tickets.fee',
-  },
-  {
-    width: 160,
-    flexGrow: 1,
-    label: 'pages.tickets.timestamp',
-    dataKey: TIMESTAMP_KEY,
-    disableSort: true,
-    className: 'timestamp',
-    dataTitle: 'pages.tickets.timestamp',
-  },
-];
+export const transformCascadeData = (cascade: TicketsList[], usdPrice: number) =>
+  cascade.map(
+    ({
+      transactionHash,
+      activation_ticket,
+      fee,
+      timestamp,
+      activation_txId,
+      fileType,
+      fileName,
+      fileSize,
+    }) => {
+      return {
+        id: transactionHash,
+        [TXID_KEY]: (
+          <>
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={6} md={2}>
+                <Box className="title">{parse(translate('pages.tickets.txID'))}</Box>
+                <Box className="bold">
+                  <Grid container alignItems="center" wrap="nowrap">
+                    <CopyButton copyText={transactionHash} />
+                    <RouterLink
+                      route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
+                      value={formatAddress(transactionHash, 5, -5)}
+                      title={transactionHash}
+                      className="address-link"
+                    />
+                  </Grid>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{parse(translate('pages.tickets.status'))}</Box>
+                <Box className="bold">
+                  <Tooltip
+                    arrow
+                    title={
+                      activation_ticket
+                        ? translateDropdown('pages.tickets.activated')
+                        : translateDropdown('pages.tickets.notYetActivated')
+                    }
+                  >
+                    <Box className="ticket-status">
+                      <TicketsStyles.ActionRegistrationTicketStatus
+                        className={`space-nowrap action-ticket-status ${
+                          activation_ticket ? 'active' : ''
+                        }`}
+                      >
+                        {activation_ticket
+                          ? parse(translate('pages.tickets.activated'))
+                          : parse(translate('pages.tickets.notYetActivated'))}
+                      </TicketsStyles.ActionRegistrationTicketStatus>
+                    </Box>
+                  </Tooltip>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{parse(translate('pages.tickets.fileName'))}</Box>
+                <Box className="bold read-more">
+                  <Tooltip title={fileName}>
+                    <span>{fileName}</span>
+                  </Tooltip>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <Box className="title">{parse(translate('pages.tickets.cascadeOutput'))}</Box>
+                <Box className="bold">
+                  {activation_ticket ? (
+                    <>
+                      <span className="nowrap">
+                        {parse(translate('pages.tickets.fileSize'))}: {formatBytes(fileSize || 0)}
+                      </span>
+                      {' - '}
+                      <RouterLink
+                        route={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}
+                        value={parse(translate('pages.tickets.senseDetail'))}
+                        title={transactionHash}
+                        className="address-link"
+                      />
+                    </>
+                  ) : (
+                    parse(translate('pages.tickets.pendingActivation'))
+                  )}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} className="ticket-output image-mobile xs">
+                {activation_txId ? (
+                  <Box className="cascade-image">
+                    <Link to={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}>
+                      {getFileIcon(fileType || '')}
+                    </Link>
+                  </Box>
+                ) : null}
+              </Grid>
+              <Grid item xs={12} sm={6} md={2}>
+                <Box className="title">{parse(translate('pages.tickets.activationTXID'))}</Box>
+                <Box className={activation_txId ? 'bold' : ''}>
+                  {activation_txId ? (
+                    <Grid container alignItems="center" wrap="nowrap">
+                      <CopyButton copyText={activation_txId} />
+                      <RouterLink
+                        route={`${ROUTES.TRANSACTION_DETAILS}/${activation_txId}`}
+                        value={activation_txId ? formatAddress(activation_txId, 5, -5) : ''}
+                        title={activation_txId}
+                        className="address-link"
+                      />
+                    </Grid>
+                  ) : (
+                    parse(translate('common.na'))
+                  )}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} className="ticket-output image-mobile sm">
+                {activation_txId ? (
+                  <Box className="cascade-image">
+                    <Link to={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}>
+                      {getFileIcon(fileType || '')}
+                    </Link>
+                  </Box>
+                ) : null}
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{parse(translate('pages.tickets.fee'))}</Box>
+                <Box className="bold">
+                  {formatNumber(fee)} {getCurrencyName()} {getStorageFee(fee, usdPrice)}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{parse(translate('pages.tickets.timestamp'))}</Box>
+                <Box className="bold">
+                  {timestamp ? formatFullDate(timestamp, { dayName: false }) : '--'}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} className="ticket-output image-desktop">
+                {activation_txId ? (
+                  <Box className="cascade-image">
+                    <Link to={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}>
+                      {getFileIcon(fileType || '')}
+                    </Link>
+                  </Box>
+                ) : null}
+              </Grid>
+            </Grid>
+          </>
+        ),
+      };
+    },
+  );
 
-export const transformCascadeData = (cascade: TicketsList[]) =>
-  cascade.map(({ transactionHash, activation_ticket, fee, timestamp }) => {
-    return {
-      id: transactionHash,
-      [TXID_KEY]: (
-        <>
-          <RouterLink
-            route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
-            value={formatAddress(transactionHash, 8, -3)}
-            title={transactionHash}
-            className="address-link"
-          />
-        </>
-      ),
-      [STATUS_KEY]: (
-        <>
-          <TicketsStyles.ActionRegistrationTicketStatus
-            className={`space-nowrap ${activation_ticket ? 'active' : ''}`}
-          >
-            {activation_ticket
-              ? translate('pages.tickets.activated')
-              : translate('pages.tickets.notYetActivated')}
-          </TicketsStyles.ActionRegistrationTicketStatus>
-        </>
-      ),
-      [FEE_KEY]: (
-        <>
-          {formatNumber(fee)} {getCurrencyName()}
-        </>
-      ),
-      [TIMESTAMP_KEY]: timestamp ? formatFullDate(timestamp, { dayName: false }) : '--',
-    };
-  });
+export const transformSenseData = (sense: TicketsList[], usdPrice: number) =>
+  sense.map(
+    ({
+      transactionHash,
+      activation_ticket,
+      timestamp,
+      imageHash,
+      activation_txId,
+      collectionName,
+      collectionAlias,
+      dupeDetectionSystemVersion,
+      fee,
+      imageFileCdnUrl,
+    }) => {
+      return {
+        id: transactionHash,
+        [TXID_KEY]: (
+          <>
+            <Grid container spacing={3} className="sense-col">
+              <Grid item xs={12} sm={6} md={3} className="col-txid">
+                <Box className="title">{parse(translate('pages.tickets.txID'))}</Box>
+                <Box className="bold">
+                  <CopyButton copyText={transactionHash} />
+                  <RouterLink
+                    route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
+                    value={formatAddress(transactionHash, 5, -5)}
+                    title={transactionHash}
+                    className="address-link"
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3} className="col-status">
+                <Box className="title">{parse(translate('pages.tickets.status'))}</Box>
+                <Box className="bold">
+                  <Tooltip
+                    arrow
+                    title={
+                      activation_ticket
+                        ? translateDropdown('pages.tickets.activated')
+                        : translateDropdown('pages.tickets.notYetActivated')
+                    }
+                  >
+                    <Box className="ticket-status">
+                      <TicketsStyles.ActionRegistrationTicketStatus
+                        className={`space-nowrap action-ticket-status ${
+                          activation_ticket ? 'active' : ''
+                        }`}
+                      >
+                        {activation_ticket
+                          ? parse(translate('pages.tickets.activated'))
+                          : parse(translate('pages.tickets.notYetActivated'))}
+                      </TicketsStyles.ActionRegistrationTicketStatus>
+                    </Box>
+                  </Tooltip>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3} className="col-time">
+                <Box className="title">{parse(translate('pages.tickets.collectionName'))}</Box>
+                <Box className={collectionName ? 'bold' : ''}>
+                  {collectionName ? (
+                    <RouterLink
+                      route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${collectionAlias}`}
+                      value={collectionName}
+                      title={collectionName}
+                      className="address-link read-more"
+                    />
+                  ) : (
+                    parse(translate('common.na'))
+                  )}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3} className="sense-output">
+                <Box className="title">{parse(translate('pages.tickets.senseOutput'))}</Box>
+                <Box className="bold">
+                  {activation_ticket ? (
+                    <>
+                      {!dupeDetectionSystemVersion && !imageFileCdnUrl ? (
+                        <>{parse(translate('pages.tickets.pendingSenseGenerate'))}</>
+                      ) : (
+                        <>
+                          <span className="nowrap">
+                            {parse(translate('pages.tickets.version'))}:{' '}
+                            {dupeDetectionSystemVersion}
+                          </span>{' '}
+                          -{' '}
+                          <RouterLink
+                            route={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${imageHash}`}
+                            value={parse(translate('pages.tickets.senseDetail'))}
+                            title={imageHash}
+                            className="address-link nowrap"
+                          />
+                        </>
+                      )}
+                    </>
+                  ) : (
+                    parse(translate('pages.tickets.pendingActivation'))
+                  )}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={2} className="ticket-output image-mobile xs">
+                {activation_ticket ? (
+                  <>
+                    {dupeDetectionSystemVersion && imageFileCdnUrl ? (
+                      <Link
+                        to={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${imageHash}`}
+                      >
+                        <img
+                          src={
+                            imageFileCdnUrl
+                              ? `data:image/jpeg;base64,${imageFileCdnUrl}`
+                              : noImagePlaceholder
+                          }
+                          alt={imageHash}
+                          className="sense-img"
+                        />
+                      </Link>
+                    ) : null}
+                  </>
+                ) : null}
+              </Grid>
+              <Grid item xs={12} sm={6} md={3} className="col-txid">
+                <Box className="title">{parse(translate('pages.tickets.activationTXID'))}</Box>
+                <Box className={activation_txId ? 'bold' : ''}>
+                  {activation_txId ? (
+                    <>
+                      <CopyButton copyText={activation_txId} />
+                      <RouterLink
+                        route={`${ROUTES.TRANSACTION_DETAILS}/${activation_txId}`}
+                        value={activation_txId ? formatAddress(activation_txId, 5, -5) : ''}
+                        title={activation_txId}
+                        className="address-link"
+                      />
+                    </>
+                  ) : (
+                    parse(translate('common.na'))
+                  )}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={2} className="ticket-output image-mobile sm">
+                {activation_ticket ? (
+                  <>
+                    {dupeDetectionSystemVersion && imageFileCdnUrl ? (
+                      <Link
+                        to={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${imageHash}`}
+                      >
+                        <img
+                          src={
+                            imageFileCdnUrl
+                              ? `data:image/jpeg;base64,${imageFileCdnUrl}`
+                              : noImagePlaceholder
+                          }
+                          alt={imageHash}
+                          className="sense-img"
+                        />
+                      </Link>
+                    ) : null}
+                  </>
+                ) : null}
+              </Grid>
+              <Grid item xs={12} sm={6} md={3} className="col-status">
+                <Box className="title">{parse(translate('pages.tickets.fee'))}</Box>
+                <Box className="bold">
+                  {formatNumber(fee)} {getCurrencyName()} {getStorageFee(fee, usdPrice)}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3} className="col-time">
+                <Box className="title">{parse(translate('pages.tickets.timestamp'))}</Box>
+                <Box className="bold">
+                  {timestamp ? formatFullDate(timestamp, { dayName: false }) : '--'}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={2} className="ticket-output image-desktop">
+                {activation_ticket ? (
+                  <>
+                    {dupeDetectionSystemVersion && imageFileCdnUrl ? (
+                      <Link
+                        to={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${imageHash}`}
+                      >
+                        <img
+                          src={
+                            imageFileCdnUrl
+                              ? `data:image/jpeg;base64,${imageFileCdnUrl}`
+                              : noImagePlaceholder
+                          }
+                          alt={imageHash}
+                          className="sense-img"
+                        />
+                      </Link>
+                    ) : null}
+                  </>
+                ) : null}
+              </Grid>
+            </Grid>
+          </>
+        ),
+      };
+    },
+  );
 
-export const senseColumns = [
-  {
-    width: 80,
-    flexGrow: 1,
-    label: 'pages.tickets.txID',
-    dataKey: TXID_KEY,
-    disableSort: true,
-    className: 'txID',
-    dataTitle: 'pages.tickets.txID',
-  },
-  {
-    width: 155,
-    flexGrow: 1,
-    label: 'pages.tickets.status',
-    dataKey: STATUS_KEY,
-    disableSort: true,
-    className: 'status',
-    dataTitle: 'pages.tickets.status',
-  },
-  {
-    width: 50,
-    flexGrow: 1,
-    label: 'pages.tickets.fee',
-    dataKey: FEE_KEY,
-    disableSort: true,
-    className: 'fee',
-    dataTitle: 'pages.tickets.fee',
-  },
-  {
-    width: 160,
-    flexGrow: 1,
-    label: 'pages.tickets.timestamp',
-    dataKey: TIMESTAMP_KEY,
-    disableSort: true,
-    className: 'timestamp',
-    dataTitle: 'pages.tickets.timestamp',
-  },
-];
-
-export const transformSenseData = (sense: TicketsList[]) =>
-  sense.map(({ transactionHash, activation_ticket, fee, timestamp, imageHash }) => {
-    return {
-      id: transactionHash,
-      [TXID_KEY]: (
-        <>
-          <RouterLink
-            route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
-            value={formatAddress(transactionHash, 8, -3)}
-            title={transactionHash}
-            className="address-link"
-          />
-        </>
-      ),
-      [STATUS_KEY]: (
-        <div className="sense-status">
-          <TicketsStyles.ActionRegistrationTicketStatus
-            className={`space-nowrap ${activation_ticket ? 'active' : ''}`}
-          >
-            {activation_ticket
-              ? translate('pages.tickets.activated')
-              : translate('pages.tickets.notYetActivated')}
-          </TicketsStyles.ActionRegistrationTicketStatus>
-          {activation_ticket ? (
-            <span className="view-detail">
-              (
-              <RouterLink
-                route={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${imageHash}`}
-                value={translate('pages.tickets.senseDetail')}
-                title={imageHash}
-                className="address-link"
-              />
-              )
-            </span>
-          ) : null}
-        </div>
-      ),
-      [FEE_KEY]: (
-        <>
-          {formatNumber(fee)} {getCurrencyName()}
-        </>
-      ),
-      [TIMESTAMP_KEY]: timestamp ? formatFullDate(timestamp, { dayName: false }) : '--',
-    };
-  });
-
-export const pastelIdColumns = [
-  {
-    width: 80,
-    flexGrow: 1,
-    label: 'pages.tickets.txID',
-    dataKey: TXID_KEY,
-    disableSort: true,
-    className: 'txID',
-    dataTitle: 'pages.tickets.txID',
-  },
-  {
-    width: 80,
-    flexGrow: 1,
-    label: 'pages.tickets.pastelID',
-    dataKey: PASTEL_ID_KEY,
-    disableSort: true,
-    className: 'pastelID',
-    dataTitle: 'pages.tickets.pastelID',
-  },
-  {
-    width: 35,
-    flexGrow: 1,
-    label: 'pages.tickets.idType',
-    dataKey: ID_TYPE_KEY,
-    disableSort: true,
-    className: 'idType',
-    dataTitle: 'pages.tickets.idType',
-  },
-  {
-    width: 160,
-    flexGrow: 1,
-    label: 'pages.tickets.timestamp',
-    dataKey: TIMESTAMP_KEY,
-    disableSort: true,
-    className: 'timestamp',
-    dataTitle: 'pages.tickets.timestamp',
-  },
-];
+export const transformOtherData = (data: TicketsList[], usdPrice: number) =>
+  data.map(
+    ({
+      transactionHash,
+      activation_ticket,
+      timestamp,
+      activation_txId,
+      fee,
+      collectionName,
+      collectionAlias,
+      item_type,
+      nft_copy_count,
+      nft_max_count,
+    }) => {
+      return {
+        id: transactionHash,
+        [TXID_KEY]: (
+          <>
+            <Grid container spacing={3} className="collection-col">
+              <Grid item xs={12} sm={6} md={2}>
+                <Box className="title">{parse(translate('pages.tickets.txID'))}</Box>
+                <Box className="bold">
+                  <CopyButton copyText={transactionHash} />
+                  <RouterLink
+                    route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
+                    value={formatAddress(transactionHash, 5, -5)}
+                    title={transactionHash}
+                    className="address-link"
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{parse(translate('pages.tickets.status'))}</Box>
+                <Box className="bold">
+                  <Tooltip
+                    arrow
+                    title={
+                      activation_ticket
+                        ? translateDropdown('pages.tickets.activated')
+                        : translateDropdown('pages.tickets.notYetActivated')
+                    }
+                  >
+                    <Box className="ticket-status">
+                      <TicketsStyles.ActionRegistrationTicketStatus
+                        className={`space-nowrap action-ticket-status ${
+                          activation_ticket ? 'active' : ''
+                        }`}
+                      >
+                        {activation_ticket
+                          ? parse(translate('pages.tickets.activated'))
+                          : parse(translate('pages.tickets.notYetActivated'))}
+                      </TicketsStyles.ActionRegistrationTicketStatus>
+                    </Box>
+                  </Tooltip>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} className="col-time">
+                <Box className="title">{parse(translate('pages.tickets.collectionName'))}</Box>
+                <Box className={collectionName ? 'bold' : ''}>
+                  {collectionName ? (
+                    <RouterLink
+                      route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${collectionAlias}`}
+                      value={collectionName}
+                      title={collectionName}
+                      className="address-link read-more"
+                    />
+                  ) : (
+                    parse(translate('common.na'))
+                  )}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3} className="col-type">
+                <Box className="title">{parse(translate('pages.tickets.collectionType'))}</Box>
+                <Box className={item_type ? 'bold' : ''}>
+                  {item_type ? item_type.toUpperCase() : parse(translate('common.na'))}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={2}>
+                <Box className="title">{parse(translate('pages.tickets.activationTXID'))}</Box>
+                <Box className={activation_txId ? 'bold' : ''}>
+                  {activation_txId ? (
+                    <>
+                      <CopyButton copyText={activation_txId} />
+                      <RouterLink
+                        route={`${ROUTES.TRANSACTION_DETAILS}/${activation_txId}`}
+                        value={activation_txId ? formatAddress(activation_txId, 5, -5) : ''}
+                        title={activation_txId}
+                        className="address-link"
+                      />
+                    </>
+                  ) : (
+                    parse(translate('common.na'))
+                  )}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{parse(translate('pages.tickets.fee'))}</Box>
+                <Box className="bold">
+                  {formatNumber(fee)} {getCurrencyName()} {getStorageFee(fee, usdPrice)}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} className="col-time">
+                <Box className="title">{parse(translate('pages.tickets.timestamp'))}</Box>
+                <Box className="bold">
+                  {timestamp ? formatFullDate(timestamp, { dayName: false }) : '--'}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} className="col-type">
+                <Box className="title">{parse(translate('pages.tickets.numberOfEntries'))}</Box>
+                <Box className={nft_max_count ? 'bold' : ''}>
+                  {nft_max_count
+                    ? `${formatNumber(nft_copy_count || 0)}/${formatNumber(nft_max_count)}`
+                    : parse(translate('common.na'))}
+                </Box>
+              </Grid>
+            </Grid>
+          </>
+        ),
+      };
+    },
+  );
 
 export const transformPastelIdData = (data: TicketsList[]) =>
-  data.map(({ transactionHash, pastelID, timestamp, id_type }) => {
+  data.map(({ transactionHash, pastelID, timestamp, userName, reTxId }) => {
     return {
       id: transactionHash,
       [TXID_KEY]: (
-        <>
+        <Grid container alignItems="center" wrap="nowrap">
+          <CopyButton copyText={transactionHash} />
           <RouterLink
             route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
-            value={formatAddress(transactionHash, 8, -3)}
+            value={formatAddress(transactionHash, 5, -5)}
             title={transactionHash}
             className="address-link"
           />
-        </>
+        </Grid>
       ),
       [PASTEL_ID_KEY]: (
         <>
           <RouterLink
             route={`${ROUTES.PASTEL_ID_DETAILS}/${pastelID}`}
-            value={formatAddress(pastelID, 8, -3)}
+            value={formatAddress(pastelID, 5, -5)}
             title={pastelID}
             className="address-link"
           />
         </>
       ),
-      [ID_TYPE_KEY]: <>{id_type}</>,
+      [USERNAME_KEY]: (
+        <>
+          {userName ? (
+            <RouterLink
+              route={`${ROUTES.TRANSACTION_DETAILS}/${reTxId}`}
+              value={userName}
+              title={userName}
+              className="address-link read-more"
+            />
+          ) : (
+            parse(translate('common.na'))
+          )}
+        </>
+      ),
       [TIMESTAMP_KEY]: timestamp ? formatFullDate(timestamp, { dayName: false }) : '--',
     };
   });
 
-export const otherColumns = [
+export const transformOfferAndTransferData = (data: TicketsList[]) =>
+  data.map(
+    ({
+      transactionHash,
+      type,
+      timestamp,
+      pastelID,
+      copyNumber,
+      image,
+      version,
+      reTxId,
+      ticketType,
+    }) => {
+      const getInfo = () => {
+        if (ticketType === 'sense') {
+          return {
+            link: `${ROUTES.SENSE_DETAILS}?txid=${reTxId}`,
+            label: parse(translate('pages.tickets.senseOutput')),
+          };
+        }
+
+        if (ticketType === 'cascade') {
+          return {
+            link: `${ROUTES.CASCADE_DETAILS}?txid=${reTxId}`,
+            label: parse(translate('pages.tickets.cascadeOutput')),
+          };
+        }
+
+        return {
+          link: `${ROUTES.NFT_DETAILS}?txid=${reTxId}`,
+          label: parse(translate('pages.tickets.pastelNFT')),
+        };
+      };
+
+      const getImage = () => {
+        return (
+          <Link to={getInfo().link}>
+            <img
+              src={image ? `data:image/jpeg;base64,${image}` : noImagePlaceholder}
+              alt={reTxId}
+              className="sense-img"
+            />
+          </Link>
+        );
+      };
+
+      return {
+        id: transactionHash,
+        [TXID_KEY]: (
+          <>
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{parse(translate('pages.tickets.txID'))}</Box>
+                <Box className="bold">
+                  <Grid container alignItems="center" wrap="nowrap">
+                    <CopyButton copyText={transactionHash} />
+                    <RouterLink
+                      route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
+                      value={formatAddress(transactionHash, 5, -5)}
+                      title={transactionHash}
+                      className="address-link"
+                    />
+                  </Grid>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={2}>
+                <Box className="title">{parse(translate('pages.tickets.type'))}</Box>
+                <Box className="bold">{getTicketTitle(type as TTicketType)}</Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <Box className="title">{parse(translate('pages.tickets.copyNumber'))}</Box>
+                <Box className="bold">{copyNumber ? formatNumber(copyNumber) : 0}</Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{getInfo().label}</Box>
+                <Box className="bold">
+                  <RouterLink
+                    route={getInfo().link}
+                    value={parse(translate('pages.tickets.senseDetail'))}
+                    title={reTxId}
+                    className="address-link"
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3} className="ticket-output image-mobile xs">
+                {getImage()}
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{parse(translate('pages.tickets.pastelID'))}</Box>
+                <Box className="bold">
+                  <RouterLink
+                    route={`${ROUTES.TRANSACTION_DETAILS}/${pastelID}`}
+                    value={formatAddress(pastelID, 5, -5)}
+                    title={pastelID}
+                    className="address-link"
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3} className="ticket-output image-mobile sm">
+                {getImage()}
+              </Grid>
+              <Grid item xs={12} sm={6} md={2}>
+                <Box className="title">{parse(translate('pages.tickets.version'))}</Box>
+                <Box className="bold">{version}</Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <Box className="title">{parse(translate('pages.tickets.timestamp'))}</Box>
+                <Box className="bold">
+                  {timestamp ? formatFullDate(timestamp, { dayName: false }) : '--'}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3} className="ticket-output image-desktop">
+                {getImage()}
+              </Grid>
+            </Grid>
+          </>
+        ),
+      };
+    },
+  );
+
+export const transformPastelNftTicketsData = (data: TicketsList[], usdPrice: number) =>
+  data.map(
+    ({
+      transactionHash,
+      timestamp,
+      activation_ticket,
+      activation_txId,
+      collectionName,
+      collectionAlias,
+      image,
+      fee,
+      nftId,
+    }) => {
+      return {
+        id: transactionHash,
+        [TXID_KEY]: (
+          <>
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{parse(translate('pages.tickets.txID'))}</Box>
+                <Box className="bold">
+                  <Grid container alignItems="center" wrap="nowrap">
+                    <CopyButton copyText={transactionHash} />
+                    <RouterLink
+                      route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
+                      value={formatAddress(transactionHash, 5, -5)}
+                      title={transactionHash}
+                      className="address-link"
+                    />
+                  </Grid>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{parse(translate('pages.tickets.status'))}</Box>
+                <Box className="bold">
+                  <Tooltip
+                    arrow
+                    title={
+                      activation_ticket
+                        ? translateDropdown('pages.tickets.activated')
+                        : translateDropdown('pages.tickets.notYetActivated')
+                    }
+                  >
+                    <Box className="ticket-status">
+                      <TicketsStyles.ActionRegistrationTicketStatus
+                        className={`space-nowrap action-ticket-status ${
+                          activation_ticket ? 'active' : ''
+                        }`}
+                      >
+                        {activation_ticket
+                          ? parse(translate('pages.tickets.activated'))
+                          : parse(translate('pages.tickets.notYetActivated'))}
+                      </TicketsStyles.ActionRegistrationTicketStatus>
+                    </Box>
+                  </Tooltip>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{parse(translate('pages.tickets.collectionName'))}</Box>
+                <Box className={collectionName ? 'bold' : ''}>
+                  {collectionName ? (
+                    <RouterLink
+                      route={`${ROUTES.COLLECTION_DETAILS_PAGE}/${collectionAlias}`}
+                      value={collectionName}
+                      title={collectionName}
+                      className="address-link read-more"
+                    />
+                  ) : (
+                    parse(translate('common.na'))
+                  )}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{parse(translate('pages.tickets.pastelNFT'))}</Box>
+                <Box className="bold">
+                  {activation_ticket ? (
+                    <>
+                      {nftId ? (
+                        <RouterLink
+                          route={`${ROUTES.NFT_DETAILS}?txid=${transactionHash}`}
+                          value={parse(translate('pages.tickets.senseDetail'))}
+                          title={transactionHash}
+                          className="address-link"
+                        />
+                      ) : (
+                        parse(translate('pages.tickets.pendingPastelNftGenerate'))
+                      )}
+                    </>
+                  ) : (
+                    parse(translate('pages.tickets.pendingActivation'))
+                  )}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3} className="ticket-output image-mobile xs">
+                {activation_ticket ? (
+                  <>
+                    {nftId ? (
+                      <Link to={`${ROUTES.NFT_DETAILS}?txid=${transactionHash}`}>
+                        <img
+                          src={image ? `data:image/jpeg;base64,${image}` : noImagePlaceholder}
+                          alt={transactionHash || ''}
+                          className="sense-img"
+                        />
+                      </Link>
+                    ) : null}
+                  </>
+                ) : null}
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{parse(translate('pages.tickets.activationTXID'))}</Box>
+                <Box className={activation_txId ? 'bold' : ''}>
+                  {activation_txId ? (
+                    <Grid container alignItems="center" wrap="nowrap">
+                      <CopyButton copyText={activation_txId} />
+                      <RouterLink
+                        route={`${ROUTES.TRANSACTION_DETAILS}/${activation_txId}`}
+                        value={activation_txId ? formatAddress(activation_txId, 5, -5) : ''}
+                        title={activation_txId}
+                        className="address-link"
+                      />
+                    </Grid>
+                  ) : (
+                    parse(translate('common.na'))
+                  )}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3} className="ticket-output image-mobile sm">
+                {activation_ticket ? (
+                  <>
+                    {nftId ? (
+                      <Link to={`${ROUTES.NFT_DETAILS}?txid=${transactionHash}`}>
+                        <img
+                          src={image ? `data:image/jpeg;base64,${image}` : noImagePlaceholder}
+                          alt={transactionHash || ''}
+                          className="sense-img"
+                        />
+                      </Link>
+                    ) : null}
+                  </>
+                ) : null}
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{parse(translate('pages.tickets.fee'))}</Box>
+                <Box className="bold">
+                  {formatNumber(fee)} {getCurrencyName()} {getStorageFee(fee, usdPrice)}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{parse(translate('pages.tickets.timestamp'))}</Box>
+                <Box className={timestamp ? 'bold' : ''}>
+                  {timestamp
+                    ? formatFullDate(timestamp, { dayName: false })
+                    : parse(translate('common.na'))}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3} className="ticket-output image-desktop">
+                {activation_ticket ? (
+                  <>
+                    {nftId ? (
+                      <Link to={`${ROUTES.NFT_DETAILS}?txid=${transactionHash}`}>
+                        <img
+                          src={image ? `data:image/jpeg;base64,${image}` : noImagePlaceholder}
+                          alt={transactionHash || ''}
+                          className="sense-img"
+                        />
+                      </Link>
+                    ) : null}
+                  </>
+                ) : null}
+              </Grid>
+            </Grid>
+          </>
+        ),
+      };
+    },
+  );
+
+export const ticketsSummary = [
   {
-    width: 80,
-    flexGrow: 1,
-    label: 'pages.tickets.txID',
-    dataKey: TXID_KEY,
-    disableSort: true,
-    className: 'txID',
-    dataTitle: 'pages.tickets.txID',
+    id: 'senseTickets',
+    name: parse(translate('pages.tickets.senseTickets')),
+    link: `${ROUTES.TICKETS_TYPE}/sense`,
   },
   {
-    width: 140,
-    flexGrow: 1,
-    label: 'pages.tickets.type',
-    dataKey: TYPE_KEY,
-    disableSort: true,
-    className: 'type',
-    dataTitle: 'pages.tickets.type',
+    id: 'cascadeTickets',
+    name: parse(translate('pages.tickets.cascadeTickets')),
+    link: `${ROUTES.TICKETS_TYPE}/cascade`,
   },
   {
-    width: 10,
-    flexGrow: 1,
-    label: 'pages.tickets.version',
-    dataKey: VERSION_KEY,
-    disableSort: true,
-    className: 'version',
-    dataTitle: 'pages.tickets.version',
+    id: 'pastelIDAndUsernameTickets',
+    name: parse(translate('pages.tickets.pastelIDAndUsernameTickets')),
+    link: `${ROUTES.TICKETS_TYPE}/pastelid-usename`,
   },
   {
-    width: 140,
-    flexGrow: 1,
-    label: 'pages.tickets.timestamp',
-    dataKey: TIMESTAMP_KEY,
-    disableSort: true,
-    className: 'timestamp',
-    dataTitle: 'pages.tickets.timestamp',
+    id: 'pastelNFTTickets',
+    name: parse(translate('pages.tickets.pastelNFTTickets')),
+    link: `${ROUTES.TICKETS_TYPE}/pastel-nft`,
+  },
+  {
+    id: 'offerTicketsAndTransferTickets',
+    name: parse(translate('pages.tickets.offerTicketsAndTransferTickets')),
+    link: `${ROUTES.TICKETS_TYPE}/offer-transfer`,
+  },
+  {
+    id: 'miscOtherTicketTypes',
+    name: parse(translate('pages.tickets.senseAndNFTCollectionTickets')),
+    link: `${ROUTES.TICKETS_TYPE}/other`,
   },
 ];
 
-export const transformOtherData = (data: TicketsList[]) =>
-  data.map(({ transactionHash, type, timestamp, version }) => {
-    return {
-      id: transactionHash,
-      [TXID_KEY]: (
-        <>
-          <RouterLink
-            route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
-            value={formatAddress(transactionHash, 8, -3)}
-            title={transactionHash}
-            className="address-link"
-          />
-        </>
-      ),
-      [TYPE_KEY]: getTicketTitle(type as TTicketType),
-      [VERSION_KEY]: <>{version}</>,
-      [TIMESTAMP_KEY]: timestamp ? formatFullDate(timestamp, { dayName: false }) : '--',
+type TFields = {
+  [key: string]: number;
+};
+
+type TLoadingFields = {
+  [key: string]: boolean | undefined;
+};
+
+export type TTicketResponse = {
+  data: TicketsList[];
+  total: number;
+  isLoading: boolean;
+  size: number;
+  setSize: (_size: number | ((_size: number) => number)) => void;
+};
+
+export const getTotalTickets = (field: string, fields: TFields) => {
+  const total = fields[field];
+  return total > 0
+    ? parse(translate('pages.tickets.ticketsTitle.totalTickets', { total: formatNumber(total) }))
+    : parse(translate('pages.tickets.ticketsTitle.totalTicket', { total: formatNumber(total) }));
+};
+
+export const isLoading = (field: string, fields: TLoadingFields) => {
+  return fields[field];
+};
+
+export const useShowLess = (setShowLess: (_val: boolean) => void) => {
+  const handleResize = () => {
+    if (window.innerWidth >= breakpoints.values.sm) {
+      setShowLess(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
     };
-  });
+  }, []);
+};

@@ -1,6 +1,6 @@
 import { Typography } from '@material-ui/core';
 
-import { translate } from '@utils/helpers/i18n';
+import { translateDropdown } from '@utils/helpers/i18n';
 
 import * as Styles from './BlockVisualization.styles';
 
@@ -14,15 +14,17 @@ interface BlockVisualizationProps {
   clickHandler?: () => void;
   className?: string;
   title?: string;
+  ticketsCount: BlockElementType;
 }
 
 const BlockVisualization: React.FC<BlockVisualizationProps> = ({
   height,
   size,
   transactionCount,
+  ticketsCount,
   minutesAgo,
   className = '',
-  title = translate('pages.statistics.block'),
+  title = translateDropdown('pages.statistics.block'),
   clickHandler,
 }) => {
   return (
@@ -31,6 +33,7 @@ const BlockVisualization: React.FC<BlockVisualizationProps> = ({
       <Typography variant="h3">{height}</Typography>
       <Typography variant="h4">{size}</Typography>
       <Typography variant="caption">{transactionCount}</Typography>
+      <Typography variant="caption">{ticketsCount}</Typography>
       <Typography variant="caption">{minutesAgo}</Typography>
     </Styles.BlockContainer>
   );

@@ -6,8 +6,10 @@ import i18next from '../../../utils/helpers/i18n';
 import Tickets from '../Tickets';
 import Sense from '../Sense';
 import Cascade from '../Cascade';
-import PastelNFT from '../PastelNFT';
-import Other from '../Other';
+import PastelIDAndUsernameTickets from '../PastelIDAndUsernameTickets';
+import MiscOtherTicketTypes from '../MiscOtherTicketTypes';
+import OfferAndTransferTickets from '../OfferAndTransferTickets';
+import PastelNftTickets from '../PastelNftTickets';
 import * as Styles from '../Tickets.styles';
 
 jest.mock('i18next-http-backend');
@@ -53,12 +55,20 @@ describe('pages/Tickets', () => {
     expect(wrapper.find(Cascade).length).toBeGreaterThanOrEqual(1);
   });
 
-  test('should render <PastelNFT>', () => {
-    expect(wrapper.find(PastelNFT).length).toBeGreaterThanOrEqual(1);
+  test('should render <PastelIDAndUsernameTickets>', () => {
+    expect(wrapper.find(PastelIDAndUsernameTickets).length).toBeGreaterThanOrEqual(1);
   });
 
-  test('should render <Other>', () => {
-    expect(wrapper.find(Other).length).toBeGreaterThanOrEqual(1);
+  test('should render <OfferAndTransferTickets>', () => {
+    expect(wrapper.find(OfferAndTransferTickets).length).toBeGreaterThanOrEqual(1);
+  });
+
+  test('should render <PastelNftTickets>', () => {
+    expect(wrapper.find(PastelNftTickets).length).toBeGreaterThanOrEqual(1);
+  });
+
+  test('should render <MiscOtherTicketTypes>', () => {
+    expect(wrapper.find(MiscOtherTicketTypes).length).toBeGreaterThanOrEqual(1);
   });
 
   test('should render <Styles.TicketsContainer>', () => {

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Box from '@material-ui/core/Box';
+import MuiDialog from '@material-ui/core/Dialog';
 
 export const Wrapper = styled('div')`
   display: block;
@@ -7,6 +8,25 @@ export const Wrapper = styled('div')`
   .copy-icon {
     svg {
       color: #2d3748 !important;
+    }
+  }
+
+  .copy-wrapper {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  .no-data {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 150px;
+    padding: 15px;
+
+    .no-data-content {
+      font-size: 22px;
+      font-weight: 700;
     }
   }
 
@@ -88,12 +108,6 @@ export const Wrapper = styled('div')`
       vertical-align: bottom;
     }
 
-    .address-link {
-      max-width: 50%;
-      display: inline-block;
-      vertical-align: bottom;
-    }
-
     .alert-wrapper {
       width: 100%;
       overflow: hidden;
@@ -107,6 +121,21 @@ export const ContentWrapper = styled.div`
   &.no-spacing {
     padding: 0;
   }
+
+  &.submitted-image-content {
+    padding: 5px;
+  }
+
+  &.show-less {
+    max-height: 0;
+    padding: 0;
+    opacity: 0;
+
+    .RarenessScoreContent,
+    .OpenNSFWContent {
+      margin: 0;
+    }
+  }
 `;
 
 export const ContentItem = styled.div`
@@ -118,6 +147,15 @@ export const ContentItem = styled.div`
 
   &.min-height-400 {
     min-height: 400px;
+  }
+
+  &.prevalence-of-similar-images-chart,
+  &.chart-section {
+    position: relative;
+
+    .empty {
+      opacity: 0.2;
+    }
   }
 
   .tooltip-wrapper {
@@ -165,6 +203,11 @@ export const ContentItem = styled.div`
         white-space: break-spaces;
       }
     }
+
+    .tooltip-image {
+      max-width: 80px;
+      max-height: 80px;
+    }
   }
 `;
 
@@ -175,6 +218,10 @@ export const OpenNSFWChartWrapper = styled.div`
 
 export const OpenNSFWContent = styled.div`
   margin: 15px 0;
+
+  &.empty {
+    opacity: 0.2;
+  }
 `;
 
 export const OpenNSFWChartOverlay = styled.div`
@@ -222,13 +269,79 @@ export const ImagesWrapper = styled(Box)`
     }
   }
 
-  .pastel-data {
+  .submitted-image {
     width: calc(40% - 20px);
     min-height: 650px;
     margin-right: 20px;
 
-    &.min-height-725 {
-      min-height: 725px;
+    &.min-height-650 {
+      min-height: 650px;
+    }
+
+    .submitted-image-wrapper {
+      width: 100%;
+      height: 580px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 10px;
+
+      button {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        cursor: zoom-in;
+      }
+
+      img {
+        max-height: 100%;
+        max-width: 100%;
+        width: auto;
+        height: auto;
+
+        &.no_submitted_image {
+          height: 200px;
+
+          ${props => props.theme.breakpoints.down(425)} {
+            height: 150px;
+          }
+        }
+      }
+
+      .image-placeholder-wrapper {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+      }
+
+      .content {
+        margin-top: -10px;
+        color: ${props => props.theme.sidebar.menu.default};
+        font-size: 30px;
+        font-size: 600;
+        text-align: center;
+        line-height: 1.1;
+
+        ${props => props.theme.breakpoints.down('sm')} {
+          font-size: 30px;
+        }
+      }
+
+      .image-placeholder {
+        font-size: 200px;
+        color: ${props => props.theme.table.hover};
+
+        ${props => props.theme.breakpoints.down('sm')} {
+          font-size: 200px;
+        }
+      }
     }
   }
 
@@ -275,29 +388,43 @@ export const ImagesWrapper = styled(Box)`
   .rare-on-the-internet-results-graph,
   .rare-on-the-internet-alternative-results {
     margin-right: 20px;
+    overflow: unset;
+
+    @media screen and (max-width: 1100px) {
+      overflow: hidden;
+    }
+
+    h4 {
+      border-radius: 10px 10px 0 0;
+    }
   }
 
-  .similar-registered-images {
+  .similar-registered-images,
+  .pastel-data {
     width: 100%;
   }
 
   @media screen and (max-width: 1100px) {
-    .pastel-data,
+    .submitted-image,
     .summary-group {
       width: 100%;
     }
 
     .summary-group {
-      order: 1;
+      order: 2;
     }
 
-    .pastel-data {
+    .submitted-image {
       min-height: unset;
       margin-right: 0;
-      order: 2;
+      order: 1;
 
-      &.min-height-725 {
+      &.min-height-650 {
         min-height: unset;
+      }
+
+      .submitted-image-wrapper {
+        height: 350px;
       }
     }
 
@@ -315,6 +442,10 @@ export const ImagesWrapper = styled(Box)`
 
     .fingerprint-vector-heatmap {
       order: 6;
+    }
+
+    .pastel-data {
+      order: 7;
     }
   }
 
@@ -394,15 +525,140 @@ export const TableWrapper = styled.div`
     }
   }
 
-  .table__row {
-    img {
-      width: 64px;
-      height: 64px;
+  .custom-table {
+    .image-row {
+      text-align: center;
+      vertical-align: middle;
+    }
+    .rank {
+      min-width: 65px;
+      max-width: 65px;
+    }
+    .thumbnail {
+      min-width: 120px;
+      max-width: 120px;
+    }
+    .imageHash {
+      min-width: 150px;
+      max-width: 150px;
+    }
+    .dateTimeAdded {
+      min-width: 206px;
+      max-width: 206px;
+    }
+    .matchType {
+      min-width: 148px;
+      max-width: 148px;
+    }
+    .dupeProbability {
+      min-width: 140px;
+      max-width: 140px;
+    }
+    .dupeProbability.chart {
+      min-width: 140px;
+      max-width: 140px;
+    }
+    .cosineSimilarity {
+      min-width: 150px;
+      max-width: 150px;
+    }
+    .cosineGain {
+      min-width: 150px;
+      max-width: 150px;
+    }
+    .hoeffdingsDependency {
+      min-width: 190px;
+      max-width: 190px;
+    }
+    .hoeffdingGain {
+      min-width: 130px;
+      max-width: 130px;
+    }
+    .hilbertSchmidtInformationCriteria {
+      min-width: 265px;
+      max-width: 265px;
+    }
+    .hilbertSchmidtGain {
+      min-width: 166px;
+      max-width: 166px;
+    }
+
+    .table__row {
+      height: 95px;
+
+      img {
+        width: 64px;
+        height: 64px;
+      }
+
+      img {
+        transition: all 0.3s ease;
+        transform-origin: center;
+        transition-duration: 0.4s;
+      }
+
+      &,
+      div,
+      p,
+      a,
+      .progress-bar-item {
+        transition: all 0.15s ease;
+        transform-origin: center;
+        transition-duration: 0.3s;
+      }
+
+      &.active {
+        height: 142px;
+
+        img {
+          transform: scale(2);
+        }
+
+        div,
+        a,
+        p {
+          font-size: 20px;
+        }
+
+        .progress-bar-item {
+          height: 28px;
+        }
+      }
+
+      &.prev_row_active,
+      &.next_row_active {
+        height: 110px;
+
+        img {
+          transform: scale(1.5);
+        }
+
+        div,
+        a,
+        p {
+          font-size: 18px;
+        }
+
+        .progress-bar-item {
+          height: 20px;
+        }
+      }
     }
   }
 
   .white-space-nowrap {
     white-space: nowrap;
+  }
+
+  .seed-images-info {
+    color: ${props => props.theme.palette.text.primary};
+    margin-left: 5px;
+    font-size: 20px;
+  }
+
+  .inline-flex {
+    display: inline-flex;
+    align-items: center;
   }
 `;
 
@@ -422,4 +678,127 @@ export const TitleWrapper = styled.div`
   align-items: center;
   background: ${props => props.theme.card.titleColor};
   padding-right: 16px;
+
+  @media screen and (max-width: 1101px) {
+    .similar_images {
+      padding-top: 13px;
+      padding-bottom: 13px;
+    }
+  }
+`;
+
+export const FullImageWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  max-height: 95vh;
+  overflow: hidden;
+`;
+
+export const Dialog = styled(MuiDialog)`
+  .MuiDialog-paperScrollPaper {
+    max-width: 90vw;
+    max-height: 95vh;
+
+    img {
+      max-height: 95vh;
+    }
+  }
+`;
+
+export const EmptyOverlay = styled.div`
+  position: absolute;
+  top: -9px;
+  left: -16px;
+  right: -16px;
+  bottom: -14px;
+  display: block;
+  background: ${props => props.theme.sense.overlay};
+`;
+
+export const EmptyData = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 22px;
+  font-weight: 700;
+`;
+
+export const EmptyWrapper = styled('div')`
+  margin: 50px 0;
+`;
+
+export const BlockTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 13px 16px;
+  background: ${props => props.theme.card.titleColor};
+  font-weight: bold;
+  border-radius: 10px 10px 0 0;
+
+  @media screen and (max-width: 1101px) {
+    padding: 8px 16px;
+  }
+`;
+
+export const LinkWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 4px;
+
+  .btn-toggle {
+    display: none;
+    padding: 0;
+
+    @media screen and (max-width: 1101px) {
+      display: inline-flex;
+      margin-top: -2px;
+    }
+
+    &.show-less {
+      .MuiSvgIcon-root {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .MuiSvgIcon-root {
+    &.toggle-icon {
+      width: 30px;
+      transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      color: ${props => props.theme.link.main};
+    }
+  }
+`;
+
+export const SimilarImagesControl = styled.div`
+  display: inline-flex;
+  align-items: center;
+
+  .btn-toggle {
+    display: none;
+    padding: 0;
+
+    @media screen and (max-width: 1101px) {
+      display: inline-flex;
+      margin-top: -2px;
+    }
+
+    &.show-less {
+      .MuiSvgIcon-root {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .MuiSvgIcon-root {
+    &.toggle-icon {
+      width: 30px;
+      transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      color: ${props => props.theme.link.main};
+    }
+  }
 `;

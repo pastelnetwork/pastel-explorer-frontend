@@ -2,6 +2,7 @@ import { Grid } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import Tooltip from '@material-ui/core/Tooltip';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import parse from 'html-react-parser';
 
 import { HeaderType } from '@components/Table/Table';
 import CopyButton from '@components/CopyButton/CopyButton';
@@ -9,7 +10,7 @@ import { ITransactionDetails } from '@utils/types/ITransactions';
 import { formattedDate } from '@utils/helpers/date/date';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { getCurrencyName } from '@utils/appInfo';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
 
 import * as Styles from './TransactionDetails.styles';
 
@@ -35,42 +36,50 @@ export const generateTableTitle = (
 ) => (
   <Styles.ViewTransactionRawMuiAlert severity="info">
     <AlertTitle style={{ wordBreak: 'break-word' }}>
-      {getCurrencyName()} {translate('pages.transactionDetails.txId')}: {transactionData.id}{' '}
+      {getCurrencyName()} {parse(translate('pages.transactionDetails.txId'))}: {transactionData.id}{' '}
       <span>
         (
         <Styles.RawDataWrapper>
           <CopyButton copyText={transactionData.rawData} />
           <Styles.ViewTransactionRaw type="button" onClick={toggleOpenRawData}>
-            {translate('pages.transactionDetails.viewTransactionRawData')}
+            {parse(translate('pages.transactionDetails.viewTransactionRawData'))}
           </Styles.ViewTransactionRaw>
         </Styles.RawDataWrapper>
         )
       </span>
     </AlertTitle>
-    {translate('pages.transactionDetails.transactionMessage', {
-      currency: getCurrencyName(),
-      timestamp: formattedDate(transactionData.timestamp, {
-        dayName: false,
+    {parse(
+      translate('pages.transactionDetails.transactionMessage', {
+        currency: getCurrencyName(),
+        timestamp: formattedDate(transactionData.timestamp, {
+          dayName: false,
+        }),
+        confirmations:
+          transactionData.block.confirmations >= BLOCK_CONFIRMED_NUMBER
+            ? parse(translate('pages.transactionDetails.confirmed'))
+            : parse(translate('pages.transactionDetails.unconfirmed')),
+        reason: transactionData.isNonStandard
+          ? parse(translate('pages.transactionDetails.shieldedTransactionInfo'))
+          : parse(
+              translate('pages.transactionDetails.transparentTransactionInfo', {
+                info: transactionData.totalAmount
+                  ? parse(
+                      translate('pages.transactionDetails.totalAmountTransactionInfo', {
+                        totalAmount: formatNumber(transactionData.totalAmount, {
+                          decimalsLength: 2,
+                        }),
+                        currency: getCurrencyName(),
+                      }),
+                    )
+                  : parse(
+                      translate('pages.transactionDetails.unknownTransactionInfo', {
+                        currency: getCurrencyName(),
+                      }),
+                    ),
+              }),
+            ),
       }),
-      confirmations:
-        transactionData.block.confirmations >= BLOCK_CONFIRMED_NUMBER
-          ? translate('pages.transactionDetails.confirmed')
-          : translate('pages.transactionDetails.unconfirmed'),
-      reason: transactionData.isNonStandard
-        ? translate('pages.transactionDetails.shieldedTransactionInfo')
-        : translate('pages.transactionDetails.transparentTransactionInfo', {
-            info: transactionData.totalAmount
-              ? translate('pages.transactionDetails.totalAmountTransactionInfo', {
-                  totalAmount: formatNumber(transactionData.totalAmount, {
-                    decimalsLength: 2,
-                  }),
-                  currency: getCurrencyName(),
-                })
-              : translate('pages.transactionDetails.unknownTransactionInfo', {
-                  currency: getCurrencyName(),
-                }),
-          }),
-    })}
+    )}
   </Styles.ViewTransactionRawMuiAlert>
 );
 
@@ -79,7 +88,7 @@ export const generateCoinbaseInfo = (info: number) => (
     severity="info"
     icon={
       <Tooltip
-        title={translate('pages.transactionDetails.coinbaseInfo', {
+        title={translateDropdown('pages.transactionDetails.coinbaseInfo', {
           currency: getCurrencyName(),
         })}
         arrow
@@ -89,7 +98,8 @@ export const generateCoinbaseInfo = (info: number) => (
     }
   >
     <AlertTitle>
-      {translate('pages.transactionDetails.newCoins')} ({formatNumber(info, { decimalsLength: 2 })})
+      {parse(translate('pages.transactionDetails.newCoins'))} (
+      {formatNumber(info, { decimalsLength: 2 })})
     </AlertTitle>
   </Alert>
 );
@@ -99,12 +109,15 @@ export const generateNonStandardTransactionInfo = () => (
     <Styles.Alert
       severity="info"
       icon={
-        <Tooltip title={translate('pages.transactionDetails.nonStandardTransactionInfo')} arrow>
+        <Tooltip
+          title={translateDropdown('pages.transactionDetails.nonStandardTransactionInfo')}
+          arrow
+        >
           <InfoOutlinedIcon fontSize="small" />
         </Tooltip>
       }
     >
-      <AlertTitle>{translate('pages.transactionDetails.shieldedTransaction')}</AlertTitle>
+      <AlertTitle>{parse(translate('pages.transactionDetails.shieldedTransaction'))}</AlertTitle>
     </Styles.Alert>
   </Grid>
 );

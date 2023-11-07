@@ -1,5 +1,6 @@
 // react
 import { useEffect, useState } from 'react';
+import parse from 'html-react-parser';
 
 import { PeriodTypes, transformMempoolInfo } from '@utils/helpers/statisticsLib';
 import { periods, info, cacheList } from '@utils/constants/statistics';
@@ -54,13 +55,13 @@ function MempoolSize() {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title={translate('pages.historicalStatistics.mempoolSize')}
+      title={parse(translate('pages.historicalStatistics.mempoolSize'))}
     >
       <EChartsLineChart
         chartName="mempoolsize"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title={translate('pages.historicalStatistics.mempoolSizeKB')}
+        title={parse(translate('pages.historicalStatistics.mempoolSizeKB'))}
         info={info}
         offset={1}
         period={period}

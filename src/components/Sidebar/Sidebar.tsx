@@ -2,15 +2,17 @@ import * as React from 'react';
 import { NavLink, withRouter, RouteComponentProps, match } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import { useCallback } from 'react';
-import { Collapse, List, Hidden, Button, Box } from '@material-ui/core';
+import { Collapse, List, Hidden, Box } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import parse from 'html-react-parser';
+import IconButton from '@material-ui/core/IconButton';
 
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import * as ROUTES from '@utils/constants/routes';
 import { RouteType, RouteChildType } from '@utils/types/routes';
 import { sidebarRoutes as routes } from '@routes/index';
-import breakpoints from '@theme/breakpoints';
+import useWindowDimensions from '@hooks/useWindowDimensions';
 
 import PastelLogoWhite from '@assets/images/pastel-logo-white.png';
 import PastelLogo from '@assets/images/pastel-logo.png';
@@ -29,7 +31,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 interface SidebarLinkPropsType {
-  name: string;
+  name: string | React.ReactNode;
   to: string;
   badge?: string | number;
   icon?: JSX.Element;
@@ -40,7 +42,7 @@ const SidebarLink: React.FC<SidebarLinkPropsType> = ({ name, to, badge }) => {
 
   return (
     <Styles.NavLinkStyle exact to={to} className={isActive ? 'active' : ''}>
-      <Styles.LinkText>{name}</Styles.LinkText>
+      <Styles.LinkText>{parse(name?.toString() || '')}</Styles.LinkText>
       {badge ? <Styles.LinkBadge label={badge} /> : ''}
     </Styles.NavLinkStyle>
   );
@@ -71,8 +73,17 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
   ...rest
 }) => {
   const { t } = useTranslation();
-  const [isMobile, setMobileView] = React.useState(false);
-  const categoryIcon = isOpen ? <Styles.CategoryIconMore /> : <Styles.CategoryIconLess />;
+  const categoryIcon = isOpen ? (
+    <>
+      <Styles.CategoryIconMore />
+      <Styles.CategoryIconAddIcon />
+    </>
+  ) : (
+    <>
+      <Styles.CategoryIconLess />
+      <Styles.CategoryIconRemoveIcon />
+    </>
+  );
   let active = '';
   if (
     (window.location.pathname === ROUTES.STATISTICS ||
@@ -84,35 +95,28 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
     active = 'active-submenu';
   }
 
-  const handleShowSubMenu = () => {
-    setMobileView(false);
-    if (window.innerWidth < breakpoints.values.md) {
-      setMobileView(true);
-    }
-  };
-
-  React.useEffect(() => {
-    handleShowSubMenu();
-
-    window.addEventListener('resize', handleShowSubMenu);
-    return () => {
-      window.removeEventListener('resize', handleShowSubMenu);
-    };
-  }, []);
-
   return (
-    <Styles.Category {...rest}>
-      <Styles.CategoryText className={`menu-text ${active}`}>
-        {t(`${name}.message`)}
+    <Styles.Category className={category?.children ? 'has-sub' : ''} {...rest}>
+      <Styles.CategoryText
+        className={`menu-text ${active} ${category?.children ? 'sub-menu' : ''} ${
+          !isOpen ? 'opened' : ''
+        }`}
+      >
+        <Hidden mdUp implementation="js">
+          {category?.icon}
+        </Hidden>
+        {parse(t(`${name}.message`, { defaultValue: '<span class="skeleton-text"></span>' }))}
         {isCollapsable ? categoryIcon : null}
       </Styles.CategoryText>
       {badge ? <Styles.CategoryBadge label={badge} /> : ''}
       {category?.children ? (
-        <Collapse in={!isOpen || isMobile} timeout="auto" unmountOnExit className="submenu">
+        <Collapse in={!isOpen} timeout="auto" unmountOnExit className="submenu">
           {category.children.map((route: RouteChildType) => (
             <SidebarLink
               key={route.name}
-              name={t(`${route.name}.message`)}
+              name={t(`${route.name}.message`, {
+                defaultValue: '<span class="skeleton-text"></span>',
+              })}
               to={route.path}
               icon={route.icon}
               badge={route.badge}
@@ -139,6 +143,7 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
   interface InitOptionsProps {
     [key: number]: boolean;
   }
+  const { width } = useWindowDimensions();
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -151,8 +156,18 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
       const isActive = pathName.indexOf(route.path) === 0;
       const isOpen = route.open;
       const isHome = route.containsHome && pathName === '/';
-
-      currentRoutes = { ...currentRoutes, [index]: isActive || isOpen || isHome };
+      let isActiveSub = false;
+      if (
+        (pathName === ROUTES.STATISTICS ||
+          pathName === ROUTES.STATISTICS_OVERTIME ||
+          pathName === ROUTES.CASCADE_AND_SENSE_STATISTICS ||
+          pathName.includes(ROUTES.STATISTICS_OVERTIME)) &&
+        route.path === ROUTES.STATISTICS_PARENT &&
+        width < 960
+      ) {
+        isActiveSub = true;
+      }
+      currentRoutes = { ...currentRoutes, [index]: isActive || isOpen || isHome || isActiveSub };
     });
 
     return currentRoutes;
@@ -192,14 +207,28 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
           el => locationLink.pathname.startsWith(el) && locationLink.search?.includes('p=richlist'),
         );
       }
-      if (path.startsWith('/tickets')) {
-        return !!['/tickets'].some(el => locationLink.pathname.startsWith(el));
+      if (
+        path.startsWith('/tickets') ||
+        path.startsWith('/cascade') ||
+        path.startsWith('/sense') ||
+        path.startsWith('/nft') ||
+        path.startsWith('/pastelid') ||
+        path.startsWith('/tickets') ||
+        path.startsWith('/collection')
+      ) {
+        if (locationLink.pathname === '/cascade-and-sense-statistics') {
+          return false;
+        }
+        return !!['/tickets', '/cascade', '/sense', '/nft', '/pastelid', '/collection'].some(el =>
+          locationLink.pathname.startsWith(el),
+        );
       }
 
       return false;
     },
     [],
   );
+
   const generateCategoryIcon = (category: RouteType): JSX.Element | null => {
     const { id, path, badge, exact = true } = category;
     if (id) {
@@ -212,6 +241,7 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
           component={NavLink}
           isActive={handleIsActiveLink(path)}
           exact={exact}
+          category={category}
           button
           badge={badge}
         />
@@ -224,6 +254,18 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
   const { open, onClose, variant } = rest;
   const isDarkMode = useSelector(getThemeState).darkMode;
 
+  React.useEffect(() => {
+    if (location && onClose && open) {
+      onClose();
+    }
+  }, [location]);
+
+  React.useEffect(() => {
+    if (open) {
+      setOpenRoutes(initOpenRoutes());
+    }
+  }, [open]);
+
   return (
     <Styles.DrawerMobile
       variant={variant || 'permanent'}
@@ -232,20 +274,18 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
       onClose={onClose}
     >
       <Hidden mdUp>
-        <Styles.SlideMenuMobileWrapper>
-          <Button type="button" className={classes.close} onClick={onClose}>
-            ×
-          </Button>
-        </Styles.SlideMenuMobileWrapper>
         <Styles.SlideLogoMobileWrapper>
           <Styles.Brand component={NavLink} to={ROUTES.EXPLORER} button>
             <Box ml={1}>
               <Styles.BrandLogo
                 src={isDarkMode ? PastelLogoWhite : PastelLogo}
-                alt={t('components.footer.pastelLogo.message') || ''}
+                alt={t('components.footer.pastelLogo.message', { defaultValue: '' }) || ''}
               />
             </Box>
           </Styles.Brand>
+          <IconButton type="button" className={classes.close} onClick={onClose}>
+            ×
+          </IconButton>
         </Styles.SlideLogoMobileWrapper>
       </Hidden>
       <List disablePadding>
@@ -255,7 +295,6 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
               {category.header ? (
                 <Styles.SidebarSection>{category.header}</Styles.SidebarSection>
               ) : null}
-
               {category.children && category.icon ? (
                 <React.Fragment key={category.id}>
                   <SidebarCategory

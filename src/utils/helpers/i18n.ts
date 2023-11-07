@@ -20,10 +20,24 @@ i18n
 
 export const translate = (key: string, option?: TOptions<StringMap> | undefined): string => {
   if (option) {
-    return i18n.t(`${key}.message`, option);
+    return i18n.t(`${key}.message`, {
+      ...option,
+      defaultValue: '<span class="skeleton-text"></span>',
+    });
   }
 
-  return i18n.t(`${key}.message`);
+  return i18n.t(`${key}.message`, { defaultValue: '<span class="skeleton-text"></span>' });
+};
+
+export const translateDropdown = (
+  key: string,
+  option?: TOptions<StringMap> | undefined,
+): string => {
+  if (option) {
+    return i18n.t(`${key}.message`, { ...option, defaultValue: '' });
+  }
+
+  return i18n.t(`${key}.message`, { defaultValue: '' });
 };
 
 export const changeLanguage = (lang: string): void => {

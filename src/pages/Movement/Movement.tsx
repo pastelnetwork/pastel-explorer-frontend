@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import parse from 'html-react-parser';
 
 import InfinityTable, {
   SortDirectionsType,
@@ -10,6 +11,7 @@ import { getFilterState } from '@redux/reducers/filterReducer';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import useMovement from '@hooks/useMovement';
 import { translate } from '@utils/helpers/i18n';
+import { getSubHours } from '@utils/helpers/date/date';
 
 import * as Styles from './Movement.styles';
 
@@ -77,22 +79,26 @@ const Movement: React.FC = () => {
   useEffect(() => {
     if (filter.dateRange || filter.customDateRange) {
       swrSetSize(1);
+      let customDateRange = filter.customDateRange || { startDate: 0, endDate: null };
+      if (!filter.customDateRange?.startDate && filter.dateRange !== 'all') {
+        customDateRange = { startDate: getSubHours(filter.dateRange), endDate: Date.now() };
+      } else {
+        customDateRange = { startDate: 0, endDate: null };
+      }
       setParams({
         ...apiParams,
         period: filter.dateRange || 'all',
-        customDateRange: filter.customDateRange?.startDate
-          ? filter.customDateRange
-          : { startDate: 0, endDate: null },
+        customDateRange,
       });
     }
   }, [filter.dateRange, filter.customDateRange]);
 
   const getMovementTransactionsTitle = () => (
     <Styles.TitleWrapper>
-      <Styles.Title>{translate('pages.movement.transactionsList')}</Styles.Title>{' '}
+      <Styles.Title>{parse(translate('pages.movement.transactionsList'))}</Styles.Title>{' '}
       {total > 0 ? (
         <Styles.SubTitle>
-          ({translate('pages.movement.transactionsList', { total: formatNumber(total) })})
+          ({parse(translate('pages.movement.transactionsList', { total: formatNumber(total) }))})
         </Styles.SubTitle>
       ) : null}
     </Styles.TitleWrapper>

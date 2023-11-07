@@ -1,14 +1,12 @@
 import { Skeleton } from '@material-ui/lab';
-import { useHistory } from 'react-router-dom';
+import parse from 'html-react-parser';
 
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { getCurrencyName, isPastelBurnAddress } from '@utils/appInfo';
 import { translate } from '@utils/helpers/i18n';
-import useAddressDetails from '@hooks/useAddressDetails';
 import Balance, { BurnBalance } from '@components/SvgIcon/Balance';
 import Sent from '@components/SvgIcon/Sent';
 import Received, { RedReceived } from '@components/SvgIcon/Received';
-import * as ROUTES from '@utils/constants/routes';
 
 import * as Styles from './AddressDetails.styles';
 
@@ -17,21 +15,24 @@ interface ISummaryProps {
   onChange: (_value: string) => void;
   selectedChart: string;
   isBalanceLoading: boolean;
+  outgoingSum: number;
+  incomingSum: number;
 }
 
-const Summary: React.FC<ISummaryProps> = ({ id, onChange, selectedChart, isBalanceLoading }) => {
-  const history = useHistory();
+const Summary: React.FC<ISummaryProps> = ({
+  id,
+  onChange,
+  selectedChart,
+  isBalanceLoading,
+  outgoingSum,
+  incomingSum,
+}) => {
   const isBurnAddress = isPastelBurnAddress(id);
-  const { outgoingSum, incomingSum, isLoading, error } = useAddressDetails(id);
-
-  if (error) {
-    history.push(ROUTES.NOT_FOUND);
-  }
 
   return (
     <Styles.SummaryWrapper>
       <Styles.SummaryItem
-        className={isBalanceLoading || isLoading ? 'disable' : ''}
+        className={isBalanceLoading ? 'disable' : ''}
         onClick={() => onChange('balance')}
       >
         <Styles.SummaryIcon
@@ -43,13 +44,13 @@ const Summary: React.FC<ISummaryProps> = ({ id, onChange, selectedChart, isBalan
         </Styles.SummaryIcon>
         <Styles.ItemWrapper>
           <Styles.SummaryLabel>
-            {translate('pages.addressDetails.balance', { currency: getCurrencyName() })}
+            {parse(translate('pages.addressDetails.balance', { currency: getCurrencyName() }))}
           </Styles.SummaryLabel>
           <Styles.SummaryValue>
-            {isLoading ? (
+            {isBalanceLoading ? (
               <Skeleton animation="wave" variant="text" />
             ) : (
-              formatNumber(incomingSum + outgoingSum, {
+              formatNumber(incomingSum - outgoingSum, {
                 decimalsLength: 2,
               })
             )}
@@ -57,7 +58,7 @@ const Summary: React.FC<ISummaryProps> = ({ id, onChange, selectedChart, isBalan
         </Styles.ItemWrapper>
       </Styles.SummaryItem>
       <Styles.SummaryItem
-        className={isBalanceLoading || isLoading ? 'disable' : ''}
+        className={isBalanceLoading ? 'disable' : ''}
         onClick={() => onChange('sent')}
       >
         <Styles.SummaryIcon
@@ -69,10 +70,10 @@ const Summary: React.FC<ISummaryProps> = ({ id, onChange, selectedChart, isBalan
         </Styles.SummaryIcon>
         <Styles.ItemWrapper>
           <Styles.SummaryLabel>
-            {translate('pages.addressDetails.totalSent', { currency: getCurrencyName() })}
+            {parse(translate('pages.addressDetails.totalSent', { currency: getCurrencyName() }))}
           </Styles.SummaryLabel>
           <Styles.SummaryValue>
-            {isLoading ? (
+            {isBalanceLoading ? (
               <Skeleton animation="wave" variant="text" />
             ) : (
               formatNumber(Math.abs(outgoingSum), { decimalsLength: 2 })
@@ -81,7 +82,7 @@ const Summary: React.FC<ISummaryProps> = ({ id, onChange, selectedChart, isBalan
         </Styles.ItemWrapper>
       </Styles.SummaryItem>
       <Styles.SummaryItem
-        className={isBalanceLoading || isLoading ? 'disable' : ''}
+        className={isBalanceLoading ? 'disable' : ''}
         onClick={() => onChange('received')}
       >
         <Styles.SummaryIcon
@@ -93,15 +94,17 @@ const Summary: React.FC<ISummaryProps> = ({ id, onChange, selectedChart, isBalan
         </Styles.SummaryIcon>
         <Styles.ItemWrapper>
           <Styles.SummaryLabel>
-            {translate(`pages.addressDetails.${isBurnAddress ? 'totalBurned' : 'totalReceived'}`, {
-              currency: getCurrencyName(),
-            })}
+            {parse(
+              translate(`pages.addressDetails.${isBurnAddress ? 'totalBurned' : 'totalReceived'}`, {
+                currency: getCurrencyName(),
+              }),
+            )}
           </Styles.SummaryLabel>
           <Styles.SummaryValue>
-            {isLoading ? (
+            {isBalanceLoading ? (
               <Skeleton animation="wave" variant="text" />
             ) : (
-              formatNumber(incomingSum, { decimalsLength: 2 })
+              formatNumber(Math.abs(incomingSum), { decimalsLength: 2 })
             )}
           </Styles.SummaryValue>
         </Styles.ItemWrapper>

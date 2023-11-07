@@ -9,6 +9,8 @@ import {
   transformFingerprintsData,
 } from '@utils/helpers/statisticsLib';
 
+import EmptyOverlay from './EmptyOverlay';
+import { fingerprintVectorHeatmapData } from './mockup';
 import * as Styles from './SenseDetails.styles';
 
 interface IFingerprintVectorHeatmap {
@@ -17,12 +19,9 @@ interface IFingerprintVectorHeatmap {
 
 const FingerprintVectorHeatmap: React.FC<IFingerprintVectorHeatmap> = ({ data }) => {
   const { darkMode } = useSelector(getThemeState);
-  if (!data.length) {
-    return <Styles.ContentItem className="min-height-400" />;
-  }
-
-  const { xData, yData, seriesData } = transformFingerprintsData(data);
-  const arr = getMinMax(data);
+  const newData = !data.length ? fingerprintVectorHeatmapData : data;
+  const { xData, yData, seriesData } = transformFingerprintsData(newData);
+  const arr = getMinMax(newData);
   const min = arr[0];
   const max = arr[1];
 
@@ -32,16 +31,16 @@ const FingerprintVectorHeatmap: React.FC<IFingerprintVectorHeatmap> = ({ data })
         return `
           <div class="tooltip-wrapper">
             <div class="flex">
-              <div class="tooltip-label">x:</div>
-              <div class="tooltip-value ml-5">${params.data[0]}</div>
+              <span class="tooltip-label">x:</span>
+              <span class="tooltip-value ml-5">${params.data[0]}</span>
             </div>
             <div class="flex">
-              <div class="tooltip-label">y:</div>
-              <div class="tooltip-value ml-5">${params.data[1]}</div>
+              <span class="tooltip-label">y:</span>
+              <span class="tooltip-value ml-5">${params.data[1]}</span>
             </div>
             <div class="flex">
-              <div class="tooltip-label">z:</div>
-              <div class="tooltip-value ml-5">${params.data[2]}</div>
+              <span class="tooltip-label">z:</span>
+              <span class="tooltip-value ml-5">${params.data[2]}</span>
             </div>
           </div>
         `;
@@ -79,19 +78,21 @@ const FingerprintVectorHeatmap: React.FC<IFingerprintVectorHeatmap> = ({ data })
       splitNumber: 12,
       precision: getFractionDigits(min, max),
       inRange: {
-        color: [
-          '#0309FF',
-          '#3091FF',
-          '#53B9FF',
-          '#80CCFF',
-          '#C2CCFF',
-          '#FFFDFF',
-          '#FFC0FF',
-          '#FF84EA',
-          '#FF669B',
-          '#FF5757',
-          '#FF0404',
-        ],
+        color: !data.length
+          ? ['#eff', '#aaa']
+          : [
+              '#0309FF',
+              '#3091FF',
+              '#53B9FF',
+              '#80CCFF',
+              '#C2CCFF',
+              '#FFFDFF',
+              '#FFC0FF',
+              '#FF84EA',
+              '#FF669B',
+              '#FF5757',
+              '#FF0404',
+            ],
       },
       textStyle: {
         color: darkMode ? '#fff' : '#2D3748',
@@ -115,8 +116,11 @@ const FingerprintVectorHeatmap: React.FC<IFingerprintVectorHeatmap> = ({ data })
   };
 
   return (
-    <Styles.ContentItem>
-      <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '400px' }} />
+    <Styles.ContentItem className="chart-section">
+      <div className={!data.length ? 'empty' : ''}>
+        <ReactECharts notMerge={false} lazyUpdate option={options} style={{ height: '400px' }} />
+      </div>
+      <EmptyOverlay isShow={!data.length} />
     </Styles.ContentItem>
   );
 };

@@ -1,22 +1,24 @@
-import Typography from '@material-ui/core/Typography';
-import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
+import { useState } from 'react';
 
-import { Link } from '@components/Link/Link.styles';
 import * as ROUTES from '@utils/constants/routes';
-import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import useTickets from '@hooks/useTickets';
 import InfinityTable from '@components/InfinityTable/InfinityTable';
 import { translate } from '@utils/helpers/i18n';
 
-import { senseColumns, transformSenseData, DATA_LIMIT } from './Tickets.helpers';
+import SectionTitle from './SectionTitle';
+import { transformSenseData, TTicketResponse, useShowLess } from './Tickets.helpers';
+import { senseColumns } from './Tickets.columns';
 import * as Styles from './Tickets.styles';
 
 interface ISenseProps {
-  isMobile: boolean;
+  ticketsData: TTicketResponse;
+  innerWidth: number;
+  usdPrice: number;
 }
 
-const Sense: React.FC<ISenseProps> = ({ isMobile }) => {
-  const { data, total, isLoading, size, setSize } = useTickets('sense', DATA_LIMIT);
+const Sense: React.FC<ISenseProps> = ({ ticketsData, innerWidth, usdPrice }) => {
+  const { data, total, isLoading, size, setSize } = ticketsData;
+  const [showLess, setShowLess] = useState(false);
+  useShowLess(setShowLess);
 
   const handleFetchMoreMovements = (reachedTableBottom: boolean) => {
     if (!reachedTableBottom) return null;
@@ -26,33 +28,46 @@ const Sense: React.FC<ISenseProps> = ({ isMobile }) => {
 
   const getTitle = () => {
     return (
-      <Styles.BlockTitle>
-        {translate('pages.tickets.senseTickets')} (
-        {total > 1
-          ? translate('pages.tickets.totalTickets', { total: formatNumber(total) })
-          : translate('pages.tickets.totalTicket', { total: formatNumber(total) })}
-        )
-        <Link to={`${ROUTES.TICKETS_TYPE}/sense`} className="view-all">
-          <Typography align="center" className="p-16">
-            {translate('pages.tickets.viewAll')} <ArrowForwardIos />
-          </Typography>
-        </Link>
-      </Styles.BlockTitle>
+      <SectionTitle
+        title={translate('pages.tickets.senseTickets')}
+        total={total}
+        toggleContent={() => setShowLess(!showLess)}
+        showMore={showLess}
+        viewAllLink={`${ROUTES.TICKETS_TYPE}/sense`}
+      />
     );
   };
 
+  const getRowHeight = () => {
+    if (innerWidth < 600) {
+      return 450;
+    }
+    if (innerWidth < 960) {
+      return 240;
+    }
+    return 140;
+  };
+
+  const gettableHeight = () => {
+    if (innerWidth < 600) {
+      return 1200;
+    }
+    return 600;
+  };
+
   return (
-    <Styles.SenseContainer>
+    <Styles.SenseContainer id="senseTickets">
       <InfinityTable
-        rows={data ? transformSenseData(data) : []}
+        rows={data ? transformSenseData(data, usdPrice) : []}
         columns={senseColumns}
-        tableHeight={495}
+        tableHeight={gettableHeight()}
         title={getTitle()}
         onBottomReach={handleFetchMoreMovements}
-        className="data-table"
+        className="data-table tickets-table"
         headerBackground
         customLoading={isLoading}
-        rowHeight={isMobile ? 180 : 45}
+        rowHeight={getRowHeight()}
+        showLess={showLess}
       />
     </Styles.SenseContainer>
   );

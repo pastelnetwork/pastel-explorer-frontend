@@ -17,6 +17,10 @@ export const TicketsContainer = styled.div`
     }
   }
 
+  .nowrap {
+    white-space: nowrap;
+  }
+
   .list-filter {
     margin-left: 10px;
     border: 1px solid ${props => props.theme.filter.border};
@@ -35,6 +39,20 @@ export const TicketsContainer = styled.div`
     }
   }
 
+  ${props => props.theme.breakpoints.down(1167)} {
+    .filter-wrapper {
+      justify-content: flex-end;
+
+      .list-filter {
+        margin-top: 10px;
+      }
+    }
+
+    .ticket-title-section {
+      width: 50%;
+    }
+  }
+
   ${props => props.theme.breakpoints.down(960)} {
     .ticket-title-wrapper {
       display: block;
@@ -47,9 +65,25 @@ export const TicketsContainer = styled.div`
     }
   }
 
+  ${props => props.theme.breakpoints.down(817)} {
+    .filter-wrapper {
+      justify-content: center;
+    }
+
+    .ticket-title-section {
+      width: 100%;
+    }
+  }
+
+  ${props => props.theme.breakpoints.down(680)} {
+    .filter-wrapper {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
+
   ${props => props.theme.breakpoints.down('xs')} {
     .dropdown-ticket-type,
-    .dropdown-status,
     .list-filter {
       margin-left: 0;
     }
@@ -96,4 +130,10 @@ export const LoadingWrapper = styled.div`
   height: 100%;
   z-index: 10;
   background: rgba(1, 1, 1, 0.2);
+`;
+
+export const PaginationWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 10px;
 `;

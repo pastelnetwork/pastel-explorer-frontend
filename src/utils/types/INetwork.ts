@@ -22,6 +22,12 @@ export interface INetworkSupernodes {
   longitude: number;
   port: string;
   status: string;
+  snPastelIdPubkey: string;
+  rankAsOfBlockHeight: number;
+  protocolVersion: number;
+  masternodeRank: number;
+  dateTimeLastSeen: number;
+  activeSeconds: number;
 }
 
 export interface INetwork {

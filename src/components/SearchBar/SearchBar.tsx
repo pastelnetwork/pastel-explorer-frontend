@@ -1,12 +1,18 @@
 import * as React from 'react';
+import { NavLink } from 'react-router-dom';
 import { withTheme } from 'styled-components/macro';
 import _debounce from 'lodash.debounce';
 import { darken } from 'polished';
+import parse from 'html-react-parser';
 
-import { Grid, Hidden, Theme, TextField, CircularProgress, makeStyles } from '@material-ui/core';
-import { Menu as MenuIcon, Search as SearchIcon } from '@material-ui/icons';
+import { Theme, TextField, CircularProgress, makeStyles } from '@material-ui/core';
+import { Search as SearchIcon } from '@material-ui/icons';
 import MuiAutocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
+import Box from '@material-ui/core/Box';
+import Hidden from '@material-ui/core/Hidden';
+import CancelIcon from '@material-ui/icons/Cancel';
 
+import Social from '@components/Social/Social';
 import * as URLS from '@utils/constants/urls';
 import { useFetch } from '@utils/helpers/useFetch/useFetch';
 import { ISearchResponse } from '@utils/types/ISearch';
@@ -14,8 +20,13 @@ import ChooseCluster from '@components/ChooseCluster/ChooseCluster';
 import RouterLink from '@components/RouterLink/RouterLink';
 import { TAppTheme } from '@theme/index';
 import breakpoints from '@theme/breakpoints';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
+import * as ROUTES from '@utils/constants/routes';
 
+import PastelLogoWhite from '@assets/images/pastel-logo-white.svg';
+import PastelLogo from '@assets/images/pastel-logo.svg';
+
+import * as SidebarStyles from '../Sidebar/Sidebar.styles';
 import SwitchMode from './SwitchMode';
 import * as Styles from './SearchBar.styles';
 import {
@@ -32,17 +43,23 @@ import {
   BLOCKS_HEIGHTS_LABEL,
   SENSES_LABEL,
   PASTEL_ID_LABEL,
+  COLLECTION_LABEL,
+  CASCADE_LABEL,
   USERNAME,
+  COLLECTION,
+  CASCADE,
   TOptionsCategories,
   getRoute,
   collectData,
   collectUsernameData,
   TAutocompleteOptions,
+  collectCascadeData,
+  collectCollectionData,
 } from './SearchBar.helpers';
 
 interface AppBarProps {
   theme: Theme;
-  onDrawerToggle: React.MouseEventHandler<HTMLElement>;
+  isDarkMode: boolean;
 }
 
 export interface ISearchData {
@@ -67,10 +84,10 @@ const useStyles = makeStyles((theme: TAppTheme) => ({
     },
   },
   listboxOptions: {
+    margin: 0,
     background: theme.palette.background.default,
-    border: '1px solid',
-    borderColor: darken(0.05, theme.palette.background.paper),
-    borderRadius: 5,
+    border: 0,
+    borderRadius: 4,
   },
 }));
 
@@ -80,8 +97,9 @@ const filterOptions = createFilterOptions({
   trim: true,
 });
 
-const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
+const SearchBar: React.FC<AppBarProps> = ({ isDarkMode }) => {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
   const optionSelectedFromList = React.useRef(false);
   const { fetchData } = useFetch<ISearchResponse>({ method: 'get', url: URLS.SEARCH_URL });
   const [searchData, setSearchData] = React.useState<Array<ISearchData>>([]);
@@ -89,6 +107,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
   const [isShowSearchInput, setShowSearchInput] = React.useState(false);
   const [forceShowSearchInput, setForceShowSearchInput] = React.useState(false);
   const [isInputFocus, setInputFocus] = React.useState(false);
+  const [noResult, setNoResult] = React.useState(false);
 
   const handleShowSearchInput = () => {
     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -119,41 +138,54 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
 
   const sortSearchData = ({ data }: ISearchResponse) => {
     if (!data) return [];
-
     const groupedData = [
       ...collectData(
         data.address,
         ADDRESSES_LABEL,
-        translate(ADDRESSES_TEXT_LABEL) as TOptionsCategories,
+        parse(translate(ADDRESSES_TEXT_LABEL)) as TOptionsCategories,
       ),
       ...collectData(
         data.blocksIds,
         BLOCKS_IDS_LABEL,
-        translate(BLOCKS_IDS_TEXT_LABEL) as TOptionsCategories,
+        parse(translate(BLOCKS_IDS_TEXT_LABEL)) as TOptionsCategories,
       ),
       ...collectData(
         data.blocksHeights,
         BLOCKS_HEIGHTS_LABEL,
-        translate(BLOCKS_HEIGHTS_TEXT_LABEL) as TOptionsCategories,
+        parse(translate(BLOCKS_HEIGHTS_TEXT_LABEL)) as TOptionsCategories,
       ),
       ...collectData(
         data.transactions,
         TRANSACTIONS_LABEL,
-        translate(TRANSACTIONS_TEXT_LABEL) as TOptionsCategories,
+        parse(translate(TRANSACTIONS_TEXT_LABEL)) as TOptionsCategories,
       ),
-      ...collectData(data.senses, SENSES_LABEL, translate(SENSES_TEXT_LABEL) as TOptionsCategories),
+      ...collectData(
+        data.senses,
+        SENSES_LABEL,
+        parse(translate(SENSES_TEXT_LABEL)) as TOptionsCategories,
+      ),
       ...collectData(
         data.pastelIds,
         PASTEL_ID_LABEL,
-        translate(PASTEL_ID_TEXT_LABEL) as TOptionsCategories,
+        parse(translate(PASTEL_ID_TEXT_LABEL)) as TOptionsCategories,
       ),
       ...collectUsernameData(
         data.usernameList,
         USERNAME,
-        translate(USERNAME_TEXT_LABEL) as TOptionsCategories,
+        parse(translate(USERNAME_TEXT_LABEL)) as TOptionsCategories,
+      ),
+      ...collectCascadeData(
+        data.cascadeList,
+        CASCADE,
+        parse(translate(CASCADE_LABEL)) as TOptionsCategories,
+      ),
+      ...collectCollectionData(
+        data.collectionNameList,
+        COLLECTION,
+        parse(translate(COLLECTION_LABEL)) as TOptionsCategories,
       ),
     ];
-
+    setNoResult(!groupedData.length);
     return setSearchData(groupedData.sort((a, b) => -b.category.localeCompare(a.category)));
   };
 
@@ -174,7 +206,6 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
   // Prevent component from fetching new data and changing component states
   const handleChange = () => {
     optionSelectedFromList.current = true;
-
     // Reset reference object when to allow user search again if he will click on some option from dropdown
     const id = setTimeout(() => {
       optionSelectedFromList.current = false;
@@ -193,7 +224,30 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
     setInputFocus(false);
   };
 
+  const isSearchOpen = Boolean(anchorEl);
   const dropdownOpen = Boolean(searchData.length) || loading;
+
+  const renderSearchFooter = () => {
+    return (
+      <Styles.SearchFooter>
+        <div className="search-footer-left">
+          <h6>{parse(translate('components.searchBar.findMore'))}</h6>
+          <p>{parse(translate('components.searchBar.connectCommunity'))}</p>
+        </div>
+        <Social className="social-search" />
+      </Styles.SearchFooter>
+    );
+  };
+
+  const renderNoResult = () => {
+    return <Styles.EmptyBox>{parse(translate('components.searchBar.noResults'))}</Styles.EmptyBox>;
+  };
+
+  const handleCloseSearch = () => {
+    setAnchorEl(null);
+    setNoResult(false);
+    setSearchData([]);
+  };
 
   const renderSearchInput = () => (
     <Styles.AutocompleteWrapper item>
@@ -218,8 +272,8 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         getOptionSelected={(option, value) =>
           (option as TAutocompleteOptions).value === (value as TAutocompleteOptions).value
         }
-        noOptionsText={translate('components.searchBar.noResults')}
-        loadingText={translate('components.searchBar.loadingResults')}
+        noOptionsText={renderNoResult()}
+        loadingText={parse(translate('components.searchBar.loadingResults'))}
         size="small"
         debug
         renderOption={option => {
@@ -245,6 +299,28 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
               />
             );
           }
+          if ((option as TAutocompleteOptions).category === CASCADE) {
+            return (
+              <RouterLink
+                styles={{ padding: '6px 24px 6px 16px' }}
+                route={`${getRoute((option as TAutocompleteOptions).category)}?txid=${
+                  (option as TAutocompleteOptions).transactionHash
+                }`}
+                value={(option as TAutocompleteOptions).value}
+              />
+            );
+          }
+          if ((option as TAutocompleteOptions).category === COLLECTION) {
+            return (
+              <RouterLink
+                styles={{ padding: '6px 24px 6px 16px' }}
+                route={`${getRoute((option as TAutocompleteOptions).category)}/${
+                  (option as TAutocompleteOptions).alias
+                }`}
+                value={(option as TAutocompleteOptions).value}
+              />
+            );
+          }
           return (
             <RouterLink
               styles={{ padding: '6px 24px 6px 16px' }}
@@ -258,13 +334,14 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         renderInput={params => (
           <TextField
             {...params}
-            label={translate('components.searchBar.inputSearchLabel')}
+            placeholder={translateDropdown('components.searchBar.search')}
             InputLabelProps={{
               ...params.InputLabelProps,
               classes: {
                 root: `${classes.labelInputRoot} label-input`,
               },
             }}
+            autoFocus
             InputProps={{
               ...params.InputProps,
               classes: {
@@ -272,13 +349,25 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
               },
               endAdornment: (
                 <>
-                  {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                  {loading ? (
+                    <CircularProgress color="inherit" size={20} />
+                  ) : (
+                    <button type="button" className="close-button" onClick={handleCloseSearch}>
+                      <CancelIcon className="cancel-icon" />
+                    </button>
+                  )}
                   {params.InputProps.endAdornment}
                 </>
               ),
             }}
             variant="outlined"
           />
+        )}
+        PaperComponent={({ children }) => (
+          <Styles.PaperComponentWrapper>
+            {loading ? <Styles.EmptyBox>{children}</Styles.EmptyBox> : children}
+            {renderSearchFooter()}
+          </Styles.PaperComponentWrapper>
         )}
       />
     </Styles.AutocompleteWrapper>
@@ -297,8 +386,92 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
     }
   };
 
-  const onOpenDrawerClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    onDrawerToggle(event);
+  const handleFakeButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setSearchData([]);
+    setAnchorEl(event.currentTarget);
+    setNoResult(false);
+  };
+
+  const handleSearchClose = () => {
+    setAnchorEl(null);
+  };
+
+  const renderFakeInput = () => {
+    return (
+      <Styles.FakeInput type="button" onClick={handleFakeButtonClick}>
+        {parse(translate('components.searchBar.search'))}
+      </Styles.FakeInput>
+    );
+  };
+
+  const searchId = isSearchOpen ? 'search-popover' : undefined;
+
+  const renderSearchContent = () => {
+    return (
+      <>
+        {renderFakeInput()}
+        <Styles.PopoverWrapper
+          id={searchId}
+          open={isSearchOpen}
+          anchorEl={anchorEl}
+          onClose={handleSearchClose}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          <Styles.SearchInputWrapper>
+            {renderSearchInput()}
+            {!dropdownOpen ? (
+              <Box>
+                {noResult ? (
+                  <Styles.EmptyBox>
+                    {parse(translate('components.searchBar.noResults'))}
+                  </Styles.EmptyBox>
+                ) : (
+                  <Box className="search-feature">
+                    <p className="search-feature-title">
+                      {parse(translate('components.searchBar.searchBy'))}:
+                    </p>
+                    <ul className="search-feature-list">
+                      <li className="search-feature-item">
+                        {parse(translate('components.searchBar.blocksHeights'))}
+                      </li>
+                      <li className="search-feature-item">
+                        {parse(translate('components.searchBar.blocksIds'))}
+                      </li>
+                      <li className="search-feature-item">
+                        {parse(translate('components.searchBar.txID'))}
+                      </li>
+                      <li className="search-feature-item">
+                        {parse(translate('components.searchBar.addresses'))}
+                      </li>
+                      <li className="search-feature-item">
+                        {parse(translate('components.searchBar.pastelID'))}
+                      </li>
+                      <li className="search-feature-item">
+                        {parse(translate('components.searchBar.username'))}
+                      </li>
+                      <li className="search-feature-item">
+                        {parse(translate('components.searchBar.cascadeFilename'))}
+                      </li>
+                      <li className="search-feature-item">
+                        {parse(translate('components.searchBar.senseImageHash'))}
+                      </li>
+                    </ul>
+                  </Box>
+                )}
+                {renderSearchFooter()}
+              </Box>
+            ) : null}
+          </Styles.SearchInputWrapper>
+        </Styles.PopoverWrapper>
+      </>
+    );
   };
 
   return (
@@ -307,6 +480,16 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
       elevation={0}
       className={`${isShowSearchInput ? 'search-show' : ''} ${forceShowSearchInput ? 'force' : ''}`}
     >
+      <Hidden mdUp>
+        <SidebarStyles.Brand component={NavLink} to={ROUTES.EXPLORER} button>
+          <Box ml={1}>
+            <SidebarStyles.BrandLogo
+              src={isDarkMode ? PastelLogoWhite : PastelLogo}
+              alt="Pastel Logo"
+            />
+          </Box>
+        </SidebarStyles.Brand>
+      </Hidden>
       <Styles.ToolbarStyle className="disable-padding">
         <Styles.GridStyle
           className={`top ${isInputFocus ? 'autocomplete-focus' : ''}`}
@@ -314,7 +497,7 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
           alignItems="center"
           wrap="nowrap"
         >
-          {renderSearchInput()}
+          {renderSearchContent()}
         </Styles.GridStyle>
         <Styles.IconButton
           className="search-icon"
@@ -325,22 +508,11 @@ const SearchBar: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
         >
           <SearchIcon />
         </Styles.IconButton>
-        <Hidden mdUp>
-          <Grid item>
-            <Styles.IconButton
-              color="inherit"
-              aria-label={translate('components.searchBar.openDrawer')}
-              onClick={onOpenDrawerClick}
-            >
-              <MenuIcon />
-            </Styles.IconButton>
-          </Grid>
-        </Hidden>
         <SwitchMode />
         <ChooseCluster />
       </Styles.ToolbarStyle>
       <Styles.GridStyle className="search-popup" container alignItems="center" wrap="nowrap">
-        {renderSearchInput()}
+        {renderFakeInput()}
       </Styles.GridStyle>
     </Styles.AppBar>
   );

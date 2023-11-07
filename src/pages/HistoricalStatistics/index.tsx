@@ -1,5 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
+import parse from 'html-react-parser';
 // application
 import { statistics } from '@utils/constants/statistics';
 import { translate } from '@utils/helpers/i18n';
@@ -16,7 +17,7 @@ const Statistics = () => {
             <Grid item key={id} className="card-item" xs={12} sm={6} lg={4} xl={3}>
               <Styles.CardItem>
                 <Styles.BlockTitle>
-                  <Link to={url}>{translate(title, { currency: getCurrencyName() })}</Link>
+                  <Link to={url}>{parse(translate(title, { currency: getCurrencyName() }))}</Link>
                 </Styles.BlockTitle>
                 <Styles.ChartImage>
                   <Link to={url}>

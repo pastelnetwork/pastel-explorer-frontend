@@ -1,4 +1,5 @@
 import { Grid, Typography } from '@material-ui/core';
+import parse from 'html-react-parser';
 
 import { HeaderType } from '@components/Table/Table';
 
@@ -21,7 +22,7 @@ export const transactionHeaders: Array<HeaderType> = [
 export const generateDetailsElement = (name: string, value: string) => (
   <Styles.DetailsContainer container>
     <Styles.DetailsDescription item>
-      <Typography>{name}</Typography>
+      <Typography>{parse(name)}</Typography>
     </Styles.DetailsDescription>
     <Grid item>
       <Styles.DetailsValueText>{value}</Styles.DetailsValueText>

@@ -1,11 +1,13 @@
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import parse from 'html-react-parser';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import { INftRoyaltyTicket } from '@utils/types/ITransactions';
 import * as ROUTES from '@utils/constants/routes';
 import { formatFullDate } from '@utils/helpers/date/date';
 import { translate } from '@utils/helpers/i18n';
+import CopyButton from '@components/CopyButton/CopyButton';
 
 import Signatures from './Signatures';
 import * as Styles from './Ticket.styles';
@@ -20,7 +22,7 @@ const NFTRoyaltyTicket: React.FC<INFTRoyaltyTicketProps> = ({ ticket }) => {
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.nftRoyaltyTicket.version')}
+            {parse(translate('components.ticket.nftRoyaltyTicket.version'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -30,7 +32,7 @@ const NFTRoyaltyTicket: React.FC<INFTRoyaltyTicketProps> = ({ ticket }) => {
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.nftRoyaltyTicket.pastelID')}
+            {parse(translate('components.ticket.nftRoyaltyTicket.pastelID'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -48,7 +50,7 @@ const NFTRoyaltyTicket: React.FC<INFTRoyaltyTicketProps> = ({ ticket }) => {
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {translate('components.ticket.nftRoyaltyTicket.newPastelID')}
+            {parse(translate('components.ticket.nftRoyaltyTicket.newPastelID'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
@@ -62,32 +64,31 @@ const NFTRoyaltyTicket: React.FC<INFTRoyaltyTicketProps> = ({ ticket }) => {
           </Styles.TicketContent>
         </Grid>
       </Grid>
-      <Grid container spacing={3}>
-        <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>
-            {translate('components.ticket.nftRoyaltyTicket.nftTxId')}
-          </Styles.TicketTitle>
-        </Grid>
-        <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>
-            {ticket.nft_txid ? (
+      {ticket?.nft_txid ? (
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3} className="max-w-355">
+            <Styles.TicketTitle>
+              {parse(translate('components.ticket.nftRoyaltyTicket.nftTxId'))}
+            </Styles.TicketTitle>
+          </Grid>
+          <Grid item xs={8} sm={9}>
+            <Styles.TicketContent className="nowrap">
+              <CopyButton copyText={ticket.nft_txid} />
               <RouterLink
                 route={`${ROUTES.TRANSACTION_DETAILS}/${ticket.nft_txid}`}
                 value={ticket.nft_txid}
                 title={ticket.nft_txid}
                 className="address-link"
               />
-            ) : (
-              translate('common.na')
-            )}
-          </Styles.TicketContent>
+            </Styles.TicketContent>
+          </Grid>
         </Grid>
-      </Grid>
+      ) : null}
       {ticket.transactionTime ? (
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {translate('components.ticket.nftRoyaltyTicket.timestamp')}
+              {parse(translate('components.ticket.nftRoyaltyTicket.timestamp'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>

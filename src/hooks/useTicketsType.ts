@@ -1,4 +1,4 @@
-import useSWRInfinite from 'swr/infinite';
+import useSWR from 'swr';
 
 import { SWR_OPTIONS } from '@utils/constants/statistics';
 import { axiosGet } from '@utils/helpers/useFetch/useFetch';
@@ -14,11 +14,13 @@ export default function useTicketsType(
     startDate: number;
     endDate: number | null;
   },
+  offset: number,
 ) {
   let qStatus = '';
   if (status) {
     qStatus = `&status=${status}`;
   }
+
   let dateParam = '';
   if (customDateRange.startDate) {
     dateParam = `&startDate=${customDateRange.startDate}`;
@@ -28,34 +30,19 @@ export default function useTicketsType(
   } else if (period && period !== 'custom') {
     dateParam = `&period=${period}`;
   }
-  const { data, isLoading, size, setSize } = useSWRInfinite<{
+  const { data, isLoading } = useSWR<{
     data: ITicket[];
     total: number;
     senses: TSenseRequests[];
   }>(
-    index =>
-      `${URLS.GET_TICKETS}/${type}?offset=${
-        index * limit
-      }&limit=${limit}&type=${type}${dateParam}${qStatus}&include=all`,
+    `${URLS.GET_TICKETS}/${type}?offset=${offset}&limit=${limit}&type=${type}${dateParam}${qStatus}&include=all`,
     axiosGet,
     SWR_OPTIONS,
   );
-  const isLoadingMore = isLoading || (size > 0 && data && typeof data[size - 1] === 'undefined');
-  const newData: ITicket[] = [];
-  if (data?.length) {
-    for (let i = 0; i < data.length; i += 1) {
-      if (data[i].data) {
-        newData.push(...data[i].data);
-      }
-    }
-  }
-
   return {
-    data: newData,
-    total: data?.[0]?.total || 0,
-    senses: data?.[0]?.senses || [],
-    isLoading: isLoadingMore,
-    size,
-    setSize,
+    data: data?.data?.length ? [...data?.data] : [],
+    total: data?.total || 0,
+    senses: data?.senses?.length ? [...data?.senses] : [],
+    isLoading,
   };
 }

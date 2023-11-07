@@ -26,7 +26,7 @@ export interface MarkerProps {
 }
 
 export interface MapProps {
-  title: string;
+  title: string | React.ReactNode;
   markers: Array<MarkerProps> | null;
   options?: typeof VectorMap;
 }

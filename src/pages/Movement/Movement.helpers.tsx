@@ -1,4 +1,5 @@
 import { Tooltip, Grid } from '@material-ui/core';
+import parse from 'html-react-parser';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import CopyButton from '@components/CopyButton/CopyButton';
@@ -10,7 +11,8 @@ import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { formattedDate } from '@utils/helpers/date/date';
 import { ITransaction, TCounts, TTicketType } from '@utils/types/ITransactions';
 import { formatAddress } from '@utils/helpers/format';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
+import * as BlockStyles from '@pages/Blocks/Blocks.styles';
 
 import {
   TIMESTAMP_MOVEMENT_KEY,
@@ -59,7 +61,17 @@ const generateBlockKeyValue = (blockHash: string, blockHeight: string) => {
 
 export const transformMovementData = (transactions: Array<ITransaction>) =>
   transactions.map(
-    ({ id, timestamp, totalAmount, block, blockHash, isNonStandard, tickets, recipientCount }) => {
+    ({
+      id,
+      timestamp,
+      totalAmount,
+      block,
+      blockHash,
+      isNonStandard,
+      tickets,
+      recipientCount,
+      ticketsTotal,
+    }) => {
       const ticketsTypeList = getTicketsTypeList(tickets || '');
       return {
         id,
@@ -79,8 +91,8 @@ export const transformMovementData = (transactions: Array<ITransaction>) =>
         [AMOUNT_MOVEMENT_KEY]: (
           <>
             {isNonStandard ? (
-              <Tooltip title={translate('pages.movement.shieldedTransactionInfo')}>
-                <span>{translate('common.unknown')}</span>
+              <Tooltip title={translateDropdown('pages.movement.shieldedTransactionInfo')}>
+                <span>{parse(translate('common.unknown'))}</span>
               </Tooltip>
             ) : (
               formatNumber(totalAmount, { decimalsLength: 2 })
@@ -89,16 +101,24 @@ export const transformMovementData = (transactions: Array<ITransaction>) =>
         ),
         [TICKETS_KEY]: (
           <div className="inline-block">
-            {ticketsTypeList.total > 0 ? (
-              <RouterLink
-                route={`${ROUTES.TRANSACTION_DETAILS}/${id}`}
-                value={ticketsTypeList.total}
-                textSize="large"
-                title={ticketsTypeList.text.join(', <br />')}
-                isUseTooltip
-              />
+            {ticketsTotal === -1 ? (
+              <BlockStyles.HourglassWrapper>
+                <Hourglass />
+              </BlockStyles.HourglassWrapper>
             ) : (
-              0
+              <>
+                {ticketsTypeList.total > 0 ? (
+                  <RouterLink
+                    route={`${ROUTES.TRANSACTION_DETAILS}/${id}`}
+                    value={ticketsTypeList.total}
+                    textSize="large"
+                    title={ticketsTypeList.text.join(', <br />')}
+                    isUseTooltip
+                  />
+                ) : (
+                  0
+                )}
+              </>
             )}
           </div>
         ),

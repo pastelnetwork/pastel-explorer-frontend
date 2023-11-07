@@ -4,18 +4,20 @@ import { CSVLink } from 'react-csv';
 import { CircularProgress, Grid } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Tooltip from '@material-ui/core/Tooltip';
+import parse from 'html-react-parser';
 
 import InfinityTable, {
   SortDirectionsType,
   ISortData,
 } from '@components/InfinityTable/InfinityTable';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
 
 import { getCurrencyName, isPastelBurnAddress } from '@utils/appInfo';
 import { eChartLineStyles } from '@pages/HistoricalStatistics/Chart/styles';
 import * as TableStyles from '@components/Table/Table.styles';
 import Fire from '@components/SvgIcon/Fire';
-import { useLatestTransactions } from '@hooks/useAddressDetails';
+import { useLatestTransactions, useBalanceHistory } from '@hooks/useAddressDetails';
+import BurnAddressIcon from '@pages/Details/TransactionDetails/BurnAddressIcon';
 
 import {
   DATA_FETCH_LIMIT,
@@ -38,13 +40,13 @@ interface IAddressDataRef {
 
 const AddressDetails = () => {
   const transactionHistoryCSVHeaders = [
-    { label: translate('pages.addressDetails.hash'), key: 'transactionHash' },
+    { label: translateDropdown('pages.addressDetails.hash'), key: 'transactionHash' },
     {
-      label: translate('pages.addressDetails.amount', { currency: getCurrencyName() }),
+      label: translateDropdown('pages.addressDetails.amount', { currency: getCurrencyName() }),
       key: 'amount',
     },
-    { label: translate('pages.addressDetails.direction'), key: 'direction' },
-    { label: translate('pages.addressDetails.timestamp'), key: 'timestamp' },
+    { label: translateDropdown('pages.addressDetails.direction'), key: 'direction' },
+    { label: translateDropdown('pages.addressDetails.timestamp'), key: 'timestamp' },
   ];
 
   const { id } = useParams<ParamTypes>();
@@ -58,6 +60,7 @@ const AddressDetails = () => {
     apiParams.sortBy,
     apiParams.sortDirection,
   );
+  const swrData = useBalanceHistory(id);
   const styles = eChartLineStyles();
   const downloadRef = useRef(null);
   const [isMobile, setMobileView] = useState(false);
@@ -100,10 +103,11 @@ const AddressDetails = () => {
   const generateAddTitle = () => {
     return (
       <Styles.AddressTitleBlock>
-        {translate('pages.addressDetails.address', { currency: getCurrencyName() })}:{' '}
+        {parse(translate('pages.addressDetails.address', { currency: getCurrencyName() }))}:{' '}
         <span>{id}</span>
+        <BurnAddressIcon type={swrData?.data?.type || ''} />
         {isBurnAddress ? (
-          <Tooltip title={translate('pages.addressDetails.pastelBurnAddress')}>
+          <Tooltip title={translateDropdown('pages.addressDetails.pastelBurnAddress')}>
             <Styles.FireIcon>
               <Fire />
             </Styles.FireIcon>
@@ -120,7 +124,7 @@ const AddressDetails = () => {
     }_${date.getDate()}.csv`;
     return (
       <Styles.TitleWrapper>
-        <h4>{translate('pages.addressDetails.latestTransactions')}</h4>
+        <h4>{parse(translate('pages.addressDetails.latestTransactions'))}</h4>
         <CSVLink
           data={csvData}
           filename={fileName}
@@ -129,7 +133,7 @@ const AddressDetails = () => {
           ref={downloadRef}
           className={`${styles.uploadButton} ${!addresses ? 'disable' : ''}`}
         >
-          {translate('pages.addressDetails.downloadCSV')}
+          {parse(translate('pages.addressDetails.downloadCSV'))}
         </CSVLink>
       </Styles.TitleWrapper>
     );
@@ -175,7 +179,9 @@ const AddressDetails = () => {
                   <Box className="transaction-table-mask">
                     <Styles.Loader>
                       <CircularProgress size={40} />
-                      <Styles.LoadingText>{translate('common.loadingData')}</Styles.LoadingText>
+                      <Styles.LoadingText>
+                        {parse(translate('common.loadingData'))}
+                      </Styles.LoadingText>
                     </Styles.Loader>
                   </Box>
                 </Box>

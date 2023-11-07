@@ -23,6 +23,10 @@
     "noData": {
       "message": "No data",
       "description": "Used for the common"
+    },
+    "usd": {
+      "message": "USD",
+      "description": "Used for the common"
     }
   },
   "components": {
@@ -174,31 +178,35 @@
     },
     "searchBar": {
       "addresses": {
-        "message": "Addresses",
+        "message": "Address",
         "description": "Used for the SearchBar component"
       },
       "blocksHeights": {
-        "message": "Blocks Heights",
+        "message": "Block Height",
         "description": "Used for the SearchBar component"
       },
       "blocksIds": {
-        "message": "Blocks Ids",
+        "message": "Block Hash",
         "description": "Used for the SearchBar component"
       },
       "transactions": {
-        "message": "Transactions",
+        "message": "Transaction",
         "description": "Used for the SearchBar component"
       },
       "senses": {
-        "message": "Senses",
+        "message": "Sense",
         "description": "Used for the SearchBar component"
       },
       "pastelID": {
-        "message": "Pastel ID",
+        "message": "PastelID",
         "description": "Used for the SearchBar component"
       },
       "username": {
         "message": "Username",
+        "description": "Used for the SearchBar component"
+      },
+      "collection": {
+        "message": "Collection",
         "description": "Used for the SearchBar component"
       },
       "noResults": {
@@ -210,7 +218,7 @@
         "description": "Used for the SearchBar component"
       },
       "inputSearchLabel": {
-        "message": "Search by Block Height, Block Hash, TxID, Address, PastelID, Username or Image File Hash",
+        "message": "Search by Block Height, Block Hash, TxID, Address, PastelID, Username, Cascade Filename or Image File Hash",
         "description": "Used for the SearchBar component"
       },
       "openSearch": {
@@ -226,6 +234,38 @@
           "message": "Toggle light/dark theme",
           "description": "Used for the SearchBar component"
         }
+      },
+      "cascade": {
+        "message": "Cascade",
+        "description": "Used for the SearchBar component"
+      },
+      "search": {
+        "message": "Search",
+        "description": "Used for the SearchBar component"
+      },
+      "searchBy": {
+        "message": "Search by",
+        "description": "Used for the SearchBar component"
+      },
+      "txID": {
+        "message": "TxID",
+        "description": "Used for the SearchBar component"
+      },
+      "cascadeFilename": {
+        "message": "Cascade (Filename)",
+        "description": "Used for the SearchBar component"
+      },
+      "senseImageHash": {
+        "message": "Sense (Image Hash)",
+        "description": "Used for the SearchBar component"
+      },
+      "findMore": {
+        "message": "Want to find more?",
+        "description": "Used for the SearchBar component"
+      },
+      "connectCommunity": {
+        "message": "Connect with our community!",
+        "description": "Used for the SearchBar component"
       }
     },
     "summary": {
@@ -247,7 +287,7 @@
           "description": "Used for the Summary component"
         },
         "gigaHashPerSec": {
-          "message": "Network (MH/s)",
+          "message": "Network (kB/s)",
           "description": "Used for the Summary component"
         },
         "difficulty": {
@@ -295,11 +335,11 @@
     "ticket": {
       "ticketsTitle": {
         "pastelid": {
-          "message": "Pastel ID Registration Ticket",
+          "message": "PastelID Registration Ticket",
           "description": "Used for the ticket title component"
         },
         "usernameChange": {
-          "message": "User Name Change Ticket",
+          "message": "Username Change Ticket",
           "description": "Used for the ticket title component"
         },
         "nftReg": {
@@ -308,6 +348,10 @@
         },
         "nftAct": {
           "message": "NFT Activation Ticket",
+          "description": "Used for the ticket title component"
+        },
+        "senseCollectionRegistrationTicket": {
+          "message": "Sense Collection Registration Ticket",
           "description": "Used for the ticket title component"
         },
         "nftCollectionReg": {
@@ -487,6 +531,14 @@
         "apiTicket": {
           "message": "Api ticket",
           "description": "Used for the ActionRegistrationTicket component"
+        },
+        "collectionName": {
+          "message": "Collection",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "viewDetails": {
+          "message": "View details",
+          "description": "Used for the ActionRegistrationTicket component"
         }
       },
       "apiTicket": {
@@ -629,7 +681,7 @@
           "description": "Used for the NFTCollectionRegistrationTicket component"
         },
         "nftCollectionName": {
-          "message": "NFT collection name:",
+          "message": "NFT collection:",
           "description": "Used for the NFTCollectionRegistrationTicket component"
         },
         "creator": {
@@ -694,6 +746,38 @@
         },
         "timestamp": {
           "message": "Timestamp",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "height": {
+          "message": "Height",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "collectionItemCopyCount": {
+          "message": "Collection item copy count",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "collectionName": {
+          "message": "Collection name",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "collectionTicketVersion": {
+          "message": "Collection ticket version",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "itemType": {
+          "message": "Item type",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "maxCollectionEntries": {
+          "message": "Max collection entries",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "listOfPastelidsOfAuthorizedContributors": {
+          "message": "List of PastelID of authorized contributors",
+          "description": "Used for the NFTCollectionRegistrationTicket component"
+        },
+        "collectionFinalAllowedBlockHeight": {
+          "message": "Collection final allowed block height",
           "description": "Used for the NFTCollectionRegistrationTicket component"
         }
       },
@@ -777,6 +861,22 @@
         "nftTicket": {
           "message": "NFT Ticket",
           "description": "Used for the NFTRegistrationTicket component"
+        },
+        "collectionName": {
+          "message": "Collection",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "pastelNFTOutput": {
+          "message": "Pastel NFT Output",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "viewDetails": {
+          "message": "View Details",
+          "description": "Used for the ActionRegistrationTicket component"
+        },
+        "PastelNFTImage": {
+          "message": "Pastel NFT Image",
+          "description": "Used for the ActionRegistrationTicket component"
         }
       },
       "nftRoyaltyTicket": {
@@ -807,7 +907,7 @@
           "description": "Used for the OfferTicket component"
         },
         "pastelID": {
-          "message": "Pastel ID:",
+          "message": "Owner:",
           "description": "Used for the OfferTicket component"
         },
         "itemTxId": {
@@ -836,6 +936,22 @@
         },
         "timestamp": {
           "message": "Timestamp:",
+          "description": "Used for the OfferTicket component"
+        },
+        "nft": {
+          "message": "NFT",
+          "description": "Used for the OfferTicket component"
+        },
+        "sense": {
+          "message": "Sense",
+          "description": "Used for the OfferTicket component"
+        },
+        "cascade": {
+          "message": "Cascade",
+          "description": "Used for the OfferTicket component"
+        },
+        "type": {
+          "message": "Type",
           "description": "Used for the OfferTicket component"
         }
       },
@@ -981,6 +1097,28 @@
         "message": "Historical statistic",
         "description": "Used for the HistoricalStatisticsLayout component"
       }
+    },
+    "share": {
+      "share": {
+        "message": "Share",
+        "description": "Used for the Share component"
+      },
+      "copyLink": {
+        "message": "Copy link",
+        "description": "Used for the Share component"
+      },
+      "shareOnFacebook": {
+        "message": "Share on Facebook",
+        "description": "Used for the Share component"
+      },
+      "shareOnTwitter": {
+        "message": "Share on Twitter",
+        "description": "Used for the Share component"
+      },
+      "copied": {
+        "message": "Copied",
+        "description": "Used for the Share component"
+      }
     }
   },
   "pages": {
@@ -1033,6 +1171,10 @@
       },
       "ticketType": {
         "message": "Ticket type:",
+        "description": "Used for the Blocks page"
+      },
+      "size": {
+        "message": "Size (kB)",
         "description": "Used for the Blocks page"
       }
     },
@@ -1233,6 +1375,10 @@
       },
       "senseOutputDetails": {
         "message": "Sense Output Details:",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "cascadeFileType": {
+        "message": "File type:",
         "description": "Used for the CascadeAndSenseStatistics page"
       },
       "imageHash": {
@@ -1500,7 +1646,7 @@
         "description": "Used for the SenseDetails page"
       },
       "ticketDetail": {
-        "message": "Ticket Detail",
+        "message": "Transaction detail",
         "description": "Used for the SenseDetails page"
       },
       "pastelData": {
@@ -1586,6 +1732,70 @@
       "senseVersion": {
         "message": "Sense Version",
         "description": "Used for the SenseDetails page"
+      },
+      "submittedImage": {
+        "message": "Submitted Image",
+        "description": "Used for the SenseDetails page"
+      },
+      "viewFull": {
+        "message": "View full",
+        "description": "Used for the SenseDetails page"
+      },
+      "noImageAvailable": {
+        "message": "No image available",
+        "description": "Used for the SenseDetails page"
+      },
+      "relatedImagesUrls": {
+        "message": "Related Images Urls",
+        "description": "Used for the SenseDetails page"
+      },
+      "relatedImagesB64Strings": {
+        "message": "Related Images B64 Strings",
+        "description": "Used for the SenseDetails page"
+      },
+      "relatedImages": {
+        "message": "Related Images",
+        "description": "Used for the SenseDetails page"
+      },
+      "creatorPastelID": {
+        "message": "Creator PastelID",
+        "description": "Used for the Cascade Details page"
+      },
+      "currentOwnerPastelID": {
+        "message": "Current Owner PastelID",
+        "description": "Used for the Cascade Details page"
+      },
+      "pastelID": {
+        "message": "PastelID",
+        "description": "Used for the Cascade Details page"
+      },
+      "offerTxId": {
+        "message": "Offer txId",
+        "description": "Used for the Cascade Details page"
+      },
+      "acceptTxId": {
+        "message": "Accept txId",
+        "description": "Used for the Cascade Details page"
+      },
+      "itemTxId": {
+        "message": "Item txId",
+        "description": "Used for the Cascade Details page"
+      },
+      "registrationTxId": {
+        "message": "Registration txId",
+        "description": "Used for the Cascade Details page"
+      },
+      "copySerialNr": {
+        "message": "Copy Serial Nr",
+        "description": "Used for the Cascade Details page"
+      },
+      "timestamp": {
+        "message": "Timestamp",
+        "description": "Used for the Cascade Details page"
+      },
+      "transfers": {
+        "message": "Transfers",
+        "description": "Used for the Cascade Details page"
       }
     },
     "transactionDetails": {
@@ -1695,6 +1905,14 @@
       },
       "transactionRawData": {
         "message": "Transaction Raw Data",
+        "description": "Used for the TransactionDetails page"
+      },
+      "burnAddress": {
+        "message": "Data storage address",
+        "description": "Used for the TransactionDetails page"
+      },
+      "transactionNotFound": {
+        "message": "Transaction not found",
         "description": "Used for the TransactionDetails page"
       }
     },
@@ -2034,6 +2252,10 @@
       "transactionsPerSecond": {
         "message": "Transactions Per Second",
         "description": "Used for the HistoricalStatistics page"
+      },
+      "feeSchedule": {
+        "message": "Fee Schedule",
+        "description": "Used for the HistoricalStatistics page"
       }
     },
     "movement": {
@@ -2072,6 +2294,22 @@
       "totalTxs": {
         "message": "Total {{total}} txs",
         "description": "Used for the Movement page"
+      },
+      "size": {
+        "message": "Size",
+        "description": "Used for the TransactionDetails page"
+      },
+      "fee": {
+        "message": "Fee ({{currency}})",
+        "description": "Used for the TransactionDetails page"
+      },
+      "kb": {
+        "message": "kB",
+        "description": "Used for the TransactionDetails page"
+      },
+      "mempool": {
+        "message": "Mempool",
+        "description": "Used for the TransactionDetails page"
       }
     },
     "richlist": {
@@ -2172,6 +2410,14 @@
       "filterLabelMax": {
         "message": "Max",
         "description": "Used for the Statistics page"
+      },
+      "ticket": {
+        "message": "{{ticketsCount}} ticket",
+        "description": "Used for the Statistics page"
+      },
+      "tickets": {
+        "message": "{{ticketsCount}} tickets",
+        "description": "Used for the Statistics page"
       }
     },
     "supernodes": {
@@ -2197,6 +2443,10 @@
       },
       "lastPaid": {
         "message": "Last paid",
+        "description": "Used for the Supernodes page"
+      },
+      "lastPaidBlock": {
+        "message": "Last paid block",
         "description": "Used for the Supernodes page"
       },
       "all": {
@@ -2246,6 +2496,42 @@
       "supernodeStatus": {
         "message": "Supernode's status",
         "description": "Used for the Supernodes page"
+      },
+      "snPastelIdPubkey": {
+        "message": "Sn PastelId Pubkey",
+        "description": "Used for the Supernodes page"
+      },
+      "rankAsOfBlockHeight": {
+        "message": "Rank as of block height",
+        "description": "Used for the Supernodes page"
+      },
+      "protocolVersion": {
+        "message": "Protocol version",
+        "description": "Used for the Supernodes page"
+      },
+      "rank": {
+        "message": "Rank",
+        "description": "Used for the Supernodes page"
+      },
+      "dateTimeLastSeen": {
+        "message": "Last seen",
+        "description": "Used for the Supernodes page"
+      },
+      "activeSeconds": {
+        "message": "Active seconds",
+        "description": "Used for the Supernodes page"
+      },
+      "city": {
+        "message": "City",
+        "description": "Used for the Supernodes page"
+      },
+      "seeMore": {
+        "message": "See more",
+        "description": "Used for the Supernodes page"
+      },
+      "seeLess": {
+        "message": "See less",
+        "description": "Used for the Supernodes page"
       }
     },
     "tickets": {
@@ -2265,12 +2551,12 @@
         "message": "View all",
         "description": "Used for the Tickets page"
       },
-      "otherTickets": {
-        "message": "Other tickets",
+      "pastelNFTTickets": {
+        "message": "Pastel NFT Tickets",
         "description": "Used for the Tickets page"
       },
-      "pastelNFTTickets": {
-        "message": "Pastel NFT tickets",
+      "pastelIDAndUsernameTickets": {
+        "message": "PastelID and Username Tickets",
         "description": "Used for the Tickets page"
       },
       "senseTickets": {
@@ -2302,7 +2588,7 @@
         "description": "Used for the Tickets page"
       },
       "senseDetail": {
-        "message": "Sense detail",
+        "message": "View detail",
         "description": "Used for the Tickets page"
       },
       "pastelID": {
@@ -2320,6 +2606,140 @@
       "version": {
         "message": "Version",
         "description": "Used for the Tickets page"
+      },
+      "offerTicketsAndTransferTickets": {
+        "message": "Offer Tickets and Transfer Tickets",
+        "description": "Used for the Tickets page"
+      },
+      "miscOtherTicketTypes": {
+        "message": "Misc. Other Ticket Types",
+        "description": "Used for the Tickets page"
+      },
+      "activationTXID": {
+        "message": "Activation TXID",
+        "description": "Used for the Tickets page"
+      },
+      "ticketsTitle": {
+        "pastelid": {
+          "message": "PastelID Registration",
+          "description": "Used for the Tickets page"
+        },
+        "usernameChange": {
+          "message": "Username Change",
+          "description": "Used for the Tickets page"
+        },
+        "nftReg": {
+          "message": "NFT Registration",
+          "description": "Used for the Tickets page"
+        },
+        "nftAct": {
+          "message": "NFT Activation",
+          "description": "Used for the Tickets page"
+        },
+        "nftCollectionReg": {
+          "message": "NFT Collection Registration",
+          "description": "Used for the Tickets page"
+        },
+        "nftCollectionAct": {
+          "message": "NFT Collection Activation",
+          "description": "Used for the Tickets page"
+        },
+        "nftRoyalty": {
+          "message": "NFT Royalty",
+          "description": "Used for the Tickets page"
+        },
+        "actionReg": {
+          "message": "Action Registration",
+          "description": "Used for the Tickets page"
+        },
+        "actionAct": {
+          "message": "Action Activation",
+          "description": "Used for the Tickets page"
+        },
+        "offer": {
+          "message": "Offer",
+          "description": "Used for the Tickets page"
+        },
+        "accept": {
+          "message": "Accept",
+          "description": "Used for the Tickets page"
+        },
+        "transfer": {
+          "message": "Transfer",
+          "description": "Used for the Tickets page"
+        },
+        "totalTickets": {
+          "message": "{{total}} tickets",
+          "description": "Used for the Tickets page"
+        },
+        "totalTicket": {
+          "message": "{{total}} ticket",
+          "description": "Used for the Tickets page"
+        }
+      },
+      "collectionName": {
+        "message": "Collection",
+        "description": "Used for the Tickets page"
+      },
+      "cascadeDetail": {
+        "message": "Cascade detail",
+        "description": "Used for the Tickets page"
+      },
+      "senseOutput": {
+        "message": "Sense Output",
+        "description": "Used for the Tickets page"
+      },
+      "cascadeOutput": {
+        "message": "Cascade Output",
+        "description": "Used for the Tickets page"
+      },
+      "pastelNFT": {
+        "message": "Pastel NFT Output",
+        "description": "Used for the Tickets page"
+      },
+      "fileName": {
+        "message": "File name",
+        "description": "Used for the Tickets page"
+      },
+      "senseAndNFTCollectionTickets": {
+        "message": "Sense and NFT Collection Tickets",
+        "description": "Used for the Tickets page"
+      },
+      "collectionType": {
+        "message": "Type",
+        "description": "Used for the Tickets page"
+      },
+      "numberOfEntries": {
+        "message": "Number of Entries",
+        "description": "Used for the Tickets page"
+      },
+      "copyNumber": {
+        "message": "Copy Number",
+        "description": "Used for the Tickets page"
+      },
+      "thumbnail": {
+        "message": "Thumbnail",
+        "description": "Used for the Tickets page"
+      },
+      "userName": {
+        "message": "Username",
+        "description": "Used for the Tickets page"
+      },
+      "pendingActivation": {
+        "message": "Pending Activation",
+        "description": "Used for the Tickets page"
+      },
+      "pendingSenseGenerate": {
+        "message": "Creating Sense",
+        "description": "Used for the Tickets page"
+      },
+      "pendingPastelNftGenerate": {
+        "message": "Creating Pastel NFT",
+        "description": "Used for the Tickets page"
+      },
+      "fileSize": {
+        "message": "File size",
+        "description": "Used for the Tickets page"
       }
     },
     "ticketsType": {
@@ -2336,7 +2756,7 @@
         "description": "Used for the TicketsType page"
       },
       "otherTickets": {
-        "message": "Other tickets",
+        "message": "Misc. Other Ticket Types",
         "description": "Used for the TicketsType page"
       },
       "totalTickets": {
@@ -2426,6 +2846,22 @@
       "inactivated": {
         "message": "Not Yet Activated",
         "description": "Used for the TicketsType page"
+      },
+      "pastelNFTTickets": {
+        "message": "Pastel NFT Tickets",
+        "description": "Used for the Tickets page"
+      },
+      "pastelIDAndUsernameTickets": {
+        "message": "PastelID and Username Tickets",
+        "description": "Used for the Tickets page"
+      },
+      "offerTicketsAndTransferTickets": {
+        "message": "Offer Tickets and Transfer Tickets",
+        "description": "Used for the Tickets page"
+      },
+      "senseAndNFTCollectionTickets": {
+        "message": "Sense and NFT Collection Tickets",
+        "description": "Used for the Tickets page"
       }
     },
     "burned": {
@@ -2448,6 +2884,436 @@
       "address": {
         "message": "Address",
         "description": "Used for the CascadeAndSenseStatistics page"
+      }
+    },
+    "cascade": {
+      "dataHash": {
+        "message": "Original Data SHA3-256 Hash",
+        "description": "Used for the Cascade Details page"
+      },
+      "ticketDetail": {
+        "message": "Transaction detail",
+        "description": "Used for the Cascade Details page"
+      },
+      "fileInfo": {
+        "message": "File info",
+        "description": "Used for the Cascade Details page"
+      },
+      "rqIds": {
+        "message": "Rq ids",
+        "description": "Used for the Cascade Details page"
+      },
+      "404": {
+        "message": "404",
+        "description": "Used for the Cascade Details page"
+      },
+      "cascadeNotFound": {
+        "message": "Cascade not found",
+        "description": "Used for the Cascade Details page"
+      },
+      "makePubliclyAccessible": {
+        "message": "Is Publicly Accessible",
+        "description": "Used for the Cascade Details page"
+      },
+      "rqIc": {
+        "message": "Rq ic",
+        "description": "Used for the Cascade Details page"
+      },
+      "rqMax": {
+        "message": "Rq max",
+        "description": "Used for the Cascade Details page"
+      },
+      "rqOti": {
+        "message": "Rq oti",
+        "description": "Used for the Cascade Details page"
+      },
+      "fileSize": {
+        "message": "Original File Size",
+        "description": "Used for the Cascade Details page"
+      },
+      "kb": {
+        "message": "KB",
+        "description": "Used for the Cascade Details page"
+      },
+      "raptorQParameters": {
+        "message": "RaptorQ Parameters",
+        "description": "Used for the Cascade Details page"
+      },
+      "displayAllRqIds": {
+        "message": "Display all RaptorQ Symbol IDs",
+        "description": "Used for the Cascade Details page"
+      },
+      "hideAllRqIds": {
+        "message": "Hide all RaptorQ Symbol IDs",
+        "description": "Used for the Cascade Details page"
+      },
+      "allRqIds": {
+        "message": "All RaptorQ Symbol IDs",
+        "description": "Used for the Cascade Details page"
+      },
+      "downloading": {
+        "message": "Downloading...",
+        "description": "Used for the Cascade Details page"
+      },
+      "downloadFailedNetworkError": {
+        "message": "Download Failed Network Error",
+        "description": "Used for the Cascade Details page"
+      },
+      "downloadInfo": {
+        "message": "Please be patient while the file is assembled from the network... this can take up to 2 minutes",
+        "description": "Used for the Cascade Details page"
+      },
+      "creatorPastelID": {
+        "message": "Creator PastelID",
+        "description": "Used for the Cascade Details page"
+      },
+      "currentOwnerPastelID": {
+        "message": "Current Owner PastelID",
+        "description": "Used for the Cascade Details page"
+      },
+      "pastelID": {
+        "message": "PastelID",
+        "description": "Used for the Cascade Details page"
+      },
+      "offerTxId": {
+        "message": "Offer txId",
+        "description": "Used for the Cascade Details page"
+      },
+      "acceptTxId": {
+        "message": "Accept txId",
+        "description": "Used for the Cascade Details page"
+      },
+      "itemTxId": {
+        "message": "Item txId",
+        "description": "Used for the Cascade Details page"
+      },
+      "registrationTxId": {
+        "message": "Registration txId",
+        "description": "Used for the Cascade Details page"
+      },
+      "copySerialNr": {
+        "message": "Copy Serial Nr",
+        "description": "Used for the Cascade Details page"
+      },
+      "timestamp": {
+        "message": "Timestamp",
+        "description": "Used for the Cascade Details page"
+      },
+      "transfers": {
+        "message": "Transfers",
+        "description": "Used for the Cascade Details page"
+      }
+    },
+    "collection": {
+      "404": {
+        "message": "404",
+        "description": "Used for the collection Details page"
+      },
+      "collectionNotFound": {
+        "message": "Collection not found",
+        "description": "Used for the collection Details page"
+      },
+      "by": {
+        "message": "By",
+        "description": "Used for the collection Details page"
+      },
+      "items": {
+        "message": "Items",
+        "description": "Used for the collection Details page"
+      },
+      "created": {
+        "message": "Created",
+        "description": "Used for the collection Details page"
+      },
+      "royalty": {
+        "message": "Royalty",
+        "description": "Used for the collection Details page"
+      },
+      "green": {
+        "message": "Green",
+        "description": "Used for the collection Details page"
+      },
+      "itemCopy": {
+        "message": "Item copy",
+        "description": "Used for the collection Details page"
+      },
+      "maxCollectionEntries": {
+        "message": "Max collection entries",
+        "description": "Used for the collection Details page"
+      },
+      "txID": {
+        "message": "txID",
+        "description": "Used for the collection Details page"
+      }
+    },
+    "nftDetails": {
+      "404": {
+        "message": "404",
+        "description": "Used for the NFT Details page"
+      },
+      "nftNotFound": {
+        "message": "NFT not found",
+        "description": "Used for the NFT Details page"
+      },
+      "viewCollection": {
+        "message": "View collection",
+        "description": "Used for the NFT Details page"
+      },
+      "event": {
+        "message": "Event",
+        "description": "Used for the NFT Details page"
+      },
+      "txID": {
+        "message": "txID",
+        "description": "Used for the NFT Details page"
+      },
+      "version": {
+        "message": "Version",
+        "description": "Used for the NFT Details page"
+      },
+      "pastelID": {
+        "message": "PastelID",
+        "description": "Used for the NFT Details page"
+      },
+      "timestamp": {
+        "message": "Timestamp",
+        "description": "Used for the NFT Details page"
+      },
+      "offer": {
+        "message": "Offer",
+        "description": "Used for the NFT Details page"
+      },
+      "accept": {
+        "message": "Accept",
+        "description": "Used for the NFT Details page"
+      },
+      "transfer": {
+        "message": "Transfer",
+        "description": "Used for the NFT Details page"
+      },
+      "submittedImage": {
+        "message": "Submitted Image",
+        "description": "Used for the NFT Details page"
+      },
+      "details": {
+        "message": "NFT Info",
+        "description": "Used for the NFT Details page"
+      },
+      "itemActivity": {
+        "message": "Item Activity",
+        "description": "Used for the NFT Details page"
+      },
+      "moreFromThisCollection": {
+        "message": "More From This Collection",
+        "description": "Used for the NFT Details page"
+      },
+      "by": {
+        "message": "By",
+        "description": "Used for the NFT Details page"
+      },
+      "creatorWrittenStatement": {
+        "message": "Creator written statement",
+        "description": "Used for the NFT Details page"
+      },
+      "nftKeyword": {
+        "message": "NFT keyword set",
+        "description": "Used for the NFT Details page"
+      },
+      "nftSeriesName": {
+        "message": "NFT series name",
+        "description": "Used for the NFT Details page"
+      },
+      "txIdOfPreburn": {
+        "message": "TXID of Preburn 20%",
+        "description": "Used for the NFT Details page"
+      },
+      "totalCopies": {
+        "message": "Total copies",
+        "description": "Used for the NFT Details page"
+      },
+      "royalty": {
+        "message": "Royalty",
+        "description": "Used for the NFT Details page"
+      },
+      "green": {
+        "message": "Green",
+        "description": "Used for the NFT Details page"
+      },
+      "originalFileSize": {
+        "message": "Original file size",
+        "description": "Used for the NFT Details page"
+      },
+      "kb": {
+        "message": "KB",
+        "description": "Used for the NFT Details page"
+      },
+      "dataHash": {
+        "message": "Data hash",
+        "description": "Used for the NFT Details page"
+      },
+      "creator": {
+        "message": "Creator Info",
+        "description": "Used for the NFT Details page"
+      },
+      "creatorWebsite": {
+        "message": "Creator website",
+        "description": "Used for the NFT Details page"
+      },
+      "creatorName": {
+        "message": "Creator name",
+        "description": "Used for the NFT Details page"
+      },
+      "video": {
+        "message": "NFT video",
+        "description": "Used for the NFT Details page"
+      },
+      "registration": {
+        "message": "Registration",
+        "description": "Used for the NFT Details page"
+      },
+      "activation": {
+        "message": "Activation",
+        "description": "Used for the NFT Details page"
+      },
+      "rqIc": {
+        "message": "Rq ic",
+        "description": "Used for the NFT Details page"
+      },
+      "rqMax": {
+        "message": "Rq max",
+        "description": "Used for the NFT Details page"
+      },
+      "rqOti": {
+        "message": "Rq oti",
+        "description": "Used for the NFT Details page"
+      },
+      "rqIds": {
+        "message": "Rq ids",
+        "description": "Used for the NFT Details page"
+      },
+      "raptorQParameters": {
+        "message": "RaptorQ Parameters",
+        "description": "Used for the NFT Details page"
+      },
+      "ddAndFingerprints": {
+        "message": "Dupe Detection and Fingerprints",
+        "description": "Used for the NFT Details page"
+      },
+      "ddAndFingerprintsIc": {
+        "message": "Dd and fingerprints ic",
+        "description": "Used for the NFT Details page"
+      },
+      "ddAndFingerprintsMax": {
+        "message": "Dd and fingerprints max",
+        "description": "Used for the NFT Details page"
+      },
+      "ddAndFingerprintsIds": {
+        "message": "Dd and fingerprints ids",
+        "description": "Used for the NFT Details page"
+      },
+      "hideAllDdAndFingerprints": {
+        "message": "Hide all Dd and fingerprints",
+        "description": "Used for the NFT Details page"
+      },
+      "displayAllDdAndFingerprints": {
+        "message": "Display all Dd and fingerprints",
+        "description": "Used for the NFT Details page"
+      },
+      "allDdAndFingerprints": {
+        "message": "All Dd and fingerprints",
+        "description": "Used for the NFT Details page"
+      },
+      "collection": {
+        "message": "Collection name",
+        "description": "Used for the NFT Details page"
+      },
+      "memberSince": {
+        "message": "Member since",
+        "description": "Used for the NFT Details page"
+      },
+      "nftType": {
+        "message": "NFT type",
+        "description": "Used for the NFT Details page"
+      },
+      "eventDetails": {
+        "message": "Event details",
+        "description": "Used for the NFT Details page"
+      },
+      "fileType": {
+        "message": "File type",
+        "description": "Used for the NFT Details page"
+      },
+      "isPubliclyAccessible": {
+        "message": "Is publicly accessible",
+        "description": "Used for the NFT Details page"
+      },
+      "fee": {
+        "message": "Fee",
+        "description": "Used for the NFT Details page"
+      },
+      "copyNumber": {
+        "message": "Copy number",
+        "description": "Used for the NFT Details page"
+      },
+      "askedPrice": {
+        "message": "Asked price",
+        "description": "Used for the NFT Details page"
+      },
+      "validAfter": {
+        "message": "Valid after",
+        "description": "Used for the NFT Details page"
+      },
+      "validBefore": {
+        "message": "Valid before",
+        "description": "Used for the NFT Details page"
+      },
+      "lockedRecipient": {
+        "message": "Locked recipient",
+        "description": "Used for the NFT Details page"
+      },
+      "offerTxId": {
+        "message": "Offer txID",
+        "description": "Used for the NFT Details page"
+      },
+      "acceptTxID": {
+        "message": "Accept txID",
+        "description": "Used for the NFT Details page"
+      },
+      "copySerialNr": {
+        "message": "Copy serial nr",
+        "description": "Used for the NFT Details page"
+      },
+      "price": {
+        "message": "Price",
+        "description": "Used for the NFT Details page"
+      },
+      "downloadThisFile": {
+        "message": "Download File",
+        "description": "Used for the NFT Details page"
+      },
+      "offers": {
+        "message": "Offers",
+        "description": "Used for the NFT Details page"
+      },
+      "usdPrice": {
+        "message": "USD Price",
+        "description": "Used for the NFT Details page"
+      },
+      "from": {
+        "message": "From",
+        "description": "Used for the NFT Details page"
+      },
+      "all": {
+        "message": "All",
+        "description": "Used for the NFT Details page"
+      },
+      "rawData": {
+        "message": "Raw Data",
+        "description": "Used for the NFT Details page"
+      },
+      "viewNFTRawData": {
+        "message": "View NFT Raw Data",
+        "description": "Used for the NFT Details page"
       }
     }
   },
@@ -2631,11 +3497,31 @@
     "burned": {
       "message": "Burned",
       "description": "Used for the routes"
+    },
+    "collectionDetails": {
+      "message": "Collection Details",
+      "description": "Used for the routes"
+    },
+    "cascadeDetails": {
+      "message": "Cascade Details",
+      "description": "Used for the routes"
+    },
+    "nftDetails": {
+      "message": "NFT Details",
+      "description": "Used for the routes"
+    },
+    "feeSchedule": {
+      "message": "Fee Schedule",
+      "description": "Used for the routes"
     }
   },
   "chartOptions": {
     "mSolS": {
       "message": "MSol/S",
+      "description": "Used for the chartOptions"
+    },
+    "kBS": {
+      "message": "kB/s",
       "description": "Used for the chartOptions"
     },
     "bytes": {
@@ -2699,7 +3585,7 @@
       "description": "Used for the chartOptions"
     },
     "network": {
-      "message": "Network (MH/s): ",
+      "message": "Network (kB/s): ",
       "description": "Used for the chartOptions"
     },
     "difficulty": {
@@ -2977,6 +3863,10 @@
       },
       "btcPrice": {
         "message": "BTC Price",
+        "description": "Used for the constants"
+      },
+      "feeSchedule": {
+        "message": "Fee Schedule",
         "description": "Used for the constants"
       }
     }

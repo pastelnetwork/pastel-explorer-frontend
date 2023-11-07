@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactECharts from 'echarts-for-react';
 import { Typography, Grid } from '@material-ui/core';
+import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';
 import { TChartParams } from '@utils/types/IStatistics';
@@ -24,8 +25,8 @@ type TChartDataProps = {
 
 interface DoughnutChartProps {
   data: TChartDataProps | null;
-  title?: string;
-  innerTitle?: string;
+  title?: string | React.ReactNode;
+  innerTitle?: React.ReactNode;
   innerSubtitle?: string | number;
   totalSuperNodes?: number;
   link?: string;
@@ -103,7 +104,7 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
           <Styles.StakingWrapper>
             {totalSuperNodes ? `${((51.84 / totalSuperNodes) * 100).toFixed(2)}%` : '--'}
             <Styles.StakingTitle>
-              {translate('components.charts.doughnutChart.stakingAPR')}
+              {parse(translate('components.charts.doughnutChart.stakingAPR'))}
             </Styles.StakingTitle>
           </Styles.StakingWrapper>
         </Styles.ChartWrapper>

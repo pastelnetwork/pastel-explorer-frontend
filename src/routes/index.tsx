@@ -1,11 +1,13 @@
 import loadable from '@loadable/component';
 import SearchIcon from '@material-ui/icons/Search';
 import CallSplitIcon from '@material-ui/icons/CallSplit';
-import WidgetsIcon from '@material-ui/icons/Widgets';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import BarChartIcon from '@material-ui/icons/BarChart';
+import ConfirmationNumberOutlinedIcon from '@material-ui/icons/ConfirmationNumberOutlined';
 
 import * as ROUTES from '@utils/constants/routes';
+
+import { ReactComponent as BoxIcon } from '@assets/icons/box.svg';
 
 const Explorer = loadable(() => import('@pages/Explorer/Explorer'));
 const Movement = loadable(() => import('@pages/Movement/Movement'));
@@ -63,6 +65,12 @@ const TotalTransactionFees = loadable(
 const Tickets = loadable(() => import('@pages/Tickets/Tickets'));
 const TicketsType = loadable(() => import('@pages/TicketsType/TicketsType'));
 const Burned = loadable(() => import('@pages/Burned/Burned'));
+const CollectionDetails = loadable(
+  () => import('@pages/Details/CollectionDetails/CollectionDetails'),
+);
+const CascadeDetails = loadable(() => import('@pages/Details/CascadeDetails/CascadeDetails'));
+const NftDetails = loadable(() => import('@pages/Details/NftDetails/NftDetails'));
+const FeeSchedule = loadable(() => import('@pages/HistoricalStatistics/FeeSchedule'));
 
 const explorerRoutes = {
   id: 'routes.explorer',
@@ -86,7 +94,7 @@ const movementRoutes = {
 const blocksRoutes = {
   id: 'routes.blocks',
   path: ROUTES.BLOCKS,
-  icon: <WidgetsIcon />,
+  icon: <BoxIcon />,
   component: Blocks,
   seoTitle: 'routes.blocksList',
   children: null,
@@ -390,6 +398,15 @@ const accountsStatisticsRoutes = {
   children: null,
 };
 
+const feeScheduleStatisticsRoutes = {
+  id: 'feeSchedule',
+  path: ROUTES.STATISTICS_FEE_SCHEDULE,
+  component: FeeSchedule,
+  icon: null,
+  seoTitle: 'routes.feeSchedule',
+  children: null,
+};
+
 const senseDetailsRoutes = {
   id: 'routes.senseDetails',
   path: ROUTES.SENSE_DETAILS,
@@ -409,7 +426,7 @@ const pastelIdDetailsRoutes = {
 const ticketsRoutes = {
   id: 'routes.tickets',
   path: ROUTES.TICKETS,
-  icon: <LocalAtmIcon />,
+  icon: <ConfirmationNumberOutlinedIcon />,
   component: Tickets,
   seoTitle: 'routes.ticketsList',
   children: null,
@@ -430,6 +447,34 @@ const burnedRoutes = {
   icon: <LocalAtmIcon />,
   component: Burned,
   seoTitle: 'routes.burned',
+  children: null,
+};
+
+const collectionDetailsRoutes = {
+  id: 'routes.collectionDetails',
+  path: `${ROUTES.COLLECTION_DETAILS_PAGE}/:id`,
+  icon: <LocalAtmIcon />,
+  component: CollectionDetails,
+  seoTitle: 'routes.collectionDetails',
+  children: null,
+  fluid: true,
+};
+
+const cascadeDetailsRoutes = {
+  id: 'routes.cascadeDetails',
+  path: ROUTES.CASCADE_DETAILS,
+  icon: <LocalAtmIcon />,
+  component: CascadeDetails,
+  seoTitle: 'routes.cascadeDetails',
+  children: null,
+};
+
+const nftDetailsRoutes = {
+  id: 'routes.nftDetails',
+  path: ROUTES.NFT_DETAILS,
+  icon: <LocalAtmIcon />,
+  component: NftDetails,
+  seoTitle: 'routes.nftDetails',
   children: null,
 };
 
@@ -471,10 +516,13 @@ export const pageRoutes = [
   pastelIdDetailsRoutes,
   ticketsTypeRoutes,
   burnedRoutes,
+  collectionDetailsRoutes,
+  cascadeDetailsRoutes,
+  nftDetailsRoutes,
+  feeScheduleStatisticsRoutes,
 ];
 
 export const sidebarRoutes = [
-  explorerRoutes,
   movementRoutes,
   blocksRoutes,
   ticketsRoutes,

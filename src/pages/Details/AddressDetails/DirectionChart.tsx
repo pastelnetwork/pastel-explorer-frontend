@@ -1,15 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ReactNode } from 'react';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import subMonths from 'date-fns/subMonths';
+import format from 'date-fns/format';
+import parse from 'html-react-parser';
 
 import { LineChart } from '@components/Summary/LineChart';
 import { useDirection } from '@hooks/useAddressDetails';
 import { translate } from '@utils/helpers/i18n';
 import { periods } from '@utils/constants/statistics';
-import { PeriodTypes } from '@utils/helpers/statisticsLib';
+import {
+  PeriodTypes,
+  marketPeriodByMonthData,
+  TPeriodByMonthDataTypes,
+} from '@utils/helpers/statisticsLib';
 import { isPastelBurnAddress } from '@utils/appInfo';
-import { TLineChartData } from '@utils/types/IStatistics';
+import { TLineChartData, TChartStatisticsResponse } from '@utils/types/IStatistics';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
 
 import * as ChartStyles from '@pages/HistoricalStatistics/Chart/Chart.styles';
@@ -25,7 +32,7 @@ interface IDirectionItemProps {
   id: string;
   direction: string;
   chartName: string;
-  title: string;
+  title: ReactNode;
   seriesName?: string;
   chartColor?: string;
 }
@@ -39,25 +46,61 @@ const DirectionItem: React.FC<IDirectionItemProps> = ({
   chartColor,
 }) => {
   const cacheName = `explorer${direction}${id}`;
-  const [period, setPeriod] = useState<PeriodTypes>(periods[10][0]);
+  const [selectedPeriod, setSelectedPeriod] = useState<PeriodTypes>(periods[10][0]);
+  const [period, setPeriod] = useState<PeriodTypes>(periods[10][2]);
   const [chartData, setChartData] = useState<TLineChartData | null>(null);
   const [isLoading, setLoading] = useState(false);
   const swrData = useDirection(id, period, direction);
 
+  const getBalanceHistoryData = (
+    value: TPeriodByMonthDataTypes,
+    directionData: TChartStatisticsResponse[],
+  ): TChartStatisticsResponse[] => {
+    if (directionData.length) {
+      const duration = marketPeriodByMonthData[value] ?? 0;
+      const target = subMonths(new Date(), duration).valueOf();
+      if (value !== periods[10][2]) {
+        const data = directionData.filter(b => b.time >= target);
+        const result = [];
+        for (let i = duration - 1; i >= 0; i -= 1) {
+          const date = subMonths(new Date(), i);
+          const item = data.find(d => format(d.time, 'yyyyMM') === format(date, 'yyyyMM'));
+          if (!item) {
+            result.push({
+              time: date.valueOf(),
+              value: 0,
+            });
+          } else {
+            result.push({
+              time: item.time,
+              value: item.value,
+            });
+          }
+        }
+        return result;
+      }
+      return directionData;
+    }
+
+    return [];
+  };
+
   useEffect(() => {
     let currentCache = readCacheValue(cacheName) || {};
-    if (currentCache[period]) {
-      setChartData(currentCache[period].parseData as TLineChartData);
+    if (currentCache[selectedPeriod]) {
+      setChartData(currentCache[selectedPeriod].parseData as TLineChartData);
       setLoading(false);
     } else {
       setLoading(true);
     }
     if (!swrData.isLoading && swrData.data) {
-      const parseData = transformDirectionChartData(swrData.data);
+      const parseData = transformDirectionChartData(
+        getBalanceHistoryData(selectedPeriod as TPeriodByMonthDataTypes, swrData.data),
+      );
       setChartData(parseData);
       currentCache = {
         ...currentCache,
-        [period]: {
+        [selectedPeriod]: {
           parseData,
         },
       };
@@ -70,14 +113,21 @@ const DirectionItem: React.FC<IDirectionItemProps> = ({
       );
       setLoading(false);
     }
-  }, [period, swrData.isLoading]);
+  }, [selectedPeriod, swrData.isLoading]);
 
   const handlePeriodChange = (_period: string) => {
-    setPeriod(_period as PeriodTypes);
+    setSelectedPeriod(_period as PeriodTypes);
+    if (!period) {
+      setPeriod(_period as PeriodTypes);
+    }
+    const parseData = transformDirectionChartData(
+      getBalanceHistoryData(_period as TPeriodByMonthDataTypes, swrData.data),
+    );
+    setChartData(parseData);
   };
 
   const getActivePeriodButtonStyle = (_period: string): string => {
-    if (period === _period) {
+    if (selectedPeriod === _period) {
       return 'active';
     }
     return '';
@@ -89,7 +139,7 @@ const DirectionItem: React.FC<IDirectionItemProps> = ({
         <Styles.Heading className="direction-item">
           <Styles.HeadingTitle>{title}</Styles.HeadingTitle>
           <ChartStyles.PeriodSelect className="direction-period">
-            <span>{translate('pages.historicalStatistics.period')}: </span>
+            <span>{parse(translate('pages.historicalStatistics.period'))}: </span>
             {periods[10].map(_period => (
               <ChartStyles.PeriodButton
                 className={`${getActivePeriodButtonStyle(_period)} ${isLoading ? 'disable' : ''}`}
@@ -107,7 +157,7 @@ const DirectionItem: React.FC<IDirectionItemProps> = ({
         {isLoading ? (
           <Styles.Loader>
             <CircularProgress size={40} />
-            <Styles.LoadingText>{translate('common.loadingData')}</Styles.LoadingText>
+            <Styles.LoadingText>{parse(translate('common.loadingData'))}</Styles.LoadingText>
           </Styles.Loader>
         ) : (
           <LineChart
@@ -136,10 +186,12 @@ const DirectionChart: React.FC<IDirectionChartProps> = ({ id }) => {
             id={id}
             direction="Incoming"
             chartName="directionIncoming"
-            title={translate(
-              `pages.addressDetails.balanceHistory.${
-                isBurnAddress ? 'burnedByMonth' : 'receivedByMonth'
-              }`,
+            title={parse(
+              translate(
+                `pages.addressDetails.balanceHistory.${
+                  isBurnAddress ? 'burnedByMonth' : 'receivedByMonth'
+                }`,
+              ),
             )}
             seriesName={`pages.addressDetails.balanceHistory.${
               isBurnAddress ? 'burnedByMonth' : 'receivedByMonth'
@@ -152,7 +204,7 @@ const DirectionChart: React.FC<IDirectionChartProps> = ({ id }) => {
             id={id}
             direction="Outgoing"
             chartName="directionOutgoing"
-            title={translate('pages.addressDetails.balanceHistory.sentByMonth')}
+            title={parse(translate('pages.addressDetails.balanceHistory.sentByMonth'))}
           />
         </Grid>
       </Grid>

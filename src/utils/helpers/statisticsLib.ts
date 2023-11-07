@@ -19,12 +19,13 @@ import {
   THashrateChartData,
   TMinMaxChartData,
   MarketCoinRespone,
+  TFeeSchedule,
 } from '@utils/types/IStatistics';
 import { IBlock } from '@utils/types/IBlocks';
 import { formattedDate } from '@utils/helpers/date/date';
 import { IRawTransactions, ITransaction } from '@utils/types/ITransactions';
 import { ISocketData } from '@utils/types/ISocketData';
-import { translate } from '@utils/helpers/i18n';
+import { translateDropdown } from '@utils/helpers/i18n';
 
 import { getCurrencyName } from '../appInfo';
 
@@ -35,7 +36,13 @@ export const marketPeriodData = {
   '1y': 365,
 };
 
+export const marketPeriodByMonthData = {
+  '1y': 12,
+  '2y': 24,
+};
+
 export type TPeriodDataTypes = '30d' | '60d' | '180d' | '1y';
+export type TPeriodByMonthDataTypes = '1y' | '2y';
 
 export type PeriodTypes =
   | '1h'
@@ -219,14 +226,15 @@ export function transformMempoolInfo(
 export function transformNetTotals(
   nettotals: TNettotalsInfo[],
   period: PeriodTypes,
+  range = 1024,
 ): TMultiLineChartData {
   const dataX: string[] = [];
   const dataY1: number[] = [];
   const dataY2: number[] = [];
   for (let i = 0; i < nettotals.length; i += 1) {
     if (nettotals[i].timemillis !== null) {
-      const recv = Number(nettotals[i].totalbytesrecv);
-      const sent = Number(nettotals[i].totalbytessent);
+      const recv = Number(nettotals[i].totalbytesrecv) / range;
+      const sent = Number(nettotals[i].totalbytessent) / range;
       dataY1.push(recv);
       dataY2.push(sent);
       dataX.push(new Date(Number(nettotals[i].timemillis)).toLocaleString());
@@ -553,12 +561,12 @@ export const generatePeriodToDropdownOptions = (periods: PeriodTypes[]) => {
   for (let i = 0; i < periods.length; i += 1) {
     if (periods[i] !== 'max') {
       results.push({
-        name: translate('pages.statistics.filterLabel', { period: periods[i] }),
+        name: translateDropdown('pages.statistics.filterLabel', { period: periods[i] }),
         value: periods[i],
       });
     } else {
       results.push({
-        name: translate('pages.statistics.filterLabelMax'),
+        name: translateDropdown('pages.statistics.filterLabelMax'),
         value: periods[i],
       });
     }
@@ -888,3 +896,32 @@ export const balanceHistoryXAxisInterval = (dataX?: string[], width?: number) =>
 
   return Math.floor(dataX.length / 8);
 };
+
+export function transformFeeSchedule(
+  trans: TFeeSchedule[],
+  period: PeriodTypes,
+  timestamp: string,
+): TLineChartData {
+  const dataX: string[] = [];
+  const dataY: number[] = [];
+  for (let i = 0; i < trans.length; i += 1) {
+    const fee = Number(trans[i].value);
+    if (fee) {
+      dataY.push(fee);
+      dataX.push(new Date(trans[i].time).toLocaleString());
+    }
+  }
+  if (
+    period === '24h' &&
+    !timestamp &&
+    trans.length &&
+    checkValidateData(trans[trans.length - 1]?.time)
+  ) {
+    dataX.push(new Date().toLocaleString());
+    dataY.push(dataY[dataY.length - 1]);
+  }
+  return {
+    dataX,
+    dataY,
+  };
+}

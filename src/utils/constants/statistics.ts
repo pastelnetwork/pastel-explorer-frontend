@@ -151,6 +151,12 @@ export const statistics = [
     url: routes.STATISTICS_ACCOUNTS,
     image: generatePreviewUrl(routes.STATISTICS_ACCOUNTS),
   },
+  {
+    id: 'feeSchedule',
+    title: 'constants.statistics.feeSchedule',
+    url: routes.STATISTICS_FEE_SCHEDULE,
+    image: generatePreviewUrl(routes.STATISTICS_FEE_SCHEDULE),
+  },
 ];
 
 export const themes = [
@@ -189,6 +195,7 @@ export const csvHeaders: TCsvHeaderType = {
   blockchainSize: commonCsvFields,
   transactionCount: commonCsvFields,
   totalTransactionCount: commonCsvFields,
+  feeSchedule: commonCsvFields,
   accounts: commonCsvFields,
   averageTransactionsPerBlock: commonCsvFields,
   totalTransactionFees: commonCsvFields,
@@ -233,6 +240,7 @@ export const periods: PeriodTypes[][] = [
   ['24h', '7d', '14d'],
   ['7d', '14d'],
   ['1y', '2y', 'max'],
+  ['7d', '14d', '30d', '90d', '180d', '1y', 'max'],
 ];
 
 export const CHART_THEME_BACKGROUND_DEFAULT_COLOR = '#2D3748';
@@ -287,6 +295,7 @@ export const cacheList = {
   incomingTransactions: 'explorerStatisticsIncomingTransactions',
   statisticsHashrate: 'explorerStatisticsHashrate',
   blockSizes: 'explorerStatisticsBlockSizes',
+  feeSchedule: 'explorerStatisticsFeeSchedule',
 };
 
 export const sense_chart_colors = [

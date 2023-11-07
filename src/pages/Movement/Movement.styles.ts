@@ -50,10 +50,6 @@ export const GridWrapper = styled(Grid)`
         margin-left: 0;
       }
 
-      &:first-child {
-        padding-left: 10px;
-      }
-
       .MuiTableCell-root {
         padding-left: 0;
         border-bottom: 0;
@@ -63,7 +59,7 @@ export const GridWrapper = styled(Grid)`
         &:before {
           content: attr(data-title);
           position: relative;
-          width: 130px;
+          min-width: 130px;
           font-weight: 600;
           font-size: 16px;
           color: ${props => props.theme.table.label};

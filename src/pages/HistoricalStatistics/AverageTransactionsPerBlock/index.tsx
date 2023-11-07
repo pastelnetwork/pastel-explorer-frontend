@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import parse from 'html-react-parser';
 
 import { PeriodTypes, transformLineChartData } from '@utils/helpers/statisticsLib';
 import { periods, info, cacheList } from '@utils/constants/statistics';
@@ -53,13 +54,13 @@ function AverageTransactionsPerBlock() {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title={translate('pages.historicalStatistics.averageTransactionsPerBlock')}
+      title={parse(translate('pages.historicalStatistics.averageTransactionsPerBlock'))}
     >
       <EChartsLineChart
         chartName="averageTransactionsPerBlock"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title={translate('pages.historicalStatistics.averageTransactionsPerBlock')}
+        title={parse(translate('pages.historicalStatistics.averageTransactionsPerBlock'))}
         info={info}
         offset={1}
         period={period}

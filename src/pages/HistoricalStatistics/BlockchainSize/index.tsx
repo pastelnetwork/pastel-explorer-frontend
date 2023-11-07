@@ -1,5 +1,6 @@
 // react
 import { useEffect, useState } from 'react';
+import parse from 'html-react-parser';
 // application
 import { PeriodTypes, transformBlockchainSizeData } from '@utils/helpers/statisticsLib';
 import { periods, info, cacheList } from '@utils/constants/statistics';
@@ -60,13 +61,13 @@ function BlockchainSize() {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title={translate('pages.historicalStatistics.blockchainSize')}
+      title={parse(translate('pages.historicalStatistics.blockchainSize'))}
     >
       <EChartsLineChart
         chartName="blockchainSize"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title={translate('pages.historicalStatistics.blockchainSizeMb')}
+        title={parse(translate('pages.historicalStatistics.blockchainSizeMb'))}
         info={info}
         period={period}
         offset={0}

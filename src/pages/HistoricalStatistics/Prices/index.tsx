@@ -1,5 +1,6 @@
 // react
 import { useEffect, useState } from 'react';
+import parse from 'html-react-parser';
 // application
 import { getCurrencyName } from '@utils/appInfo';
 import { PeriodTypes, transformPriceInfo } from '@utils/helpers/statisticsLib';
@@ -55,14 +56,16 @@ function PriceOvertime() {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title={translate('pages.historicalStatistics.prices', { currency: getCurrencyName() })}
+      title={parse(translate('pages.historicalStatistics.prices', { currency: getCurrencyName() }))}
     >
       <EChartsMultiLineChart
         chartName="prices"
         dataX={transformLineChartData?.dataX}
         dataY1={transformLineChartData?.dataY1}
         dataY2={transformLineChartData?.dataY2}
-        title={translate('pages.historicalStatistics.prices', { currency: getCurrencyName() })}
+        title={parse(
+          translate('pages.historicalStatistics.prices', { currency: getCurrencyName() }),
+        )}
         info={info}
         offset={0.0001}
         period={period}

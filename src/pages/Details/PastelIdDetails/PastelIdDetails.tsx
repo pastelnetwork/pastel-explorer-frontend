@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import parse from 'html-react-parser';
 
 import { formattedDate } from '@utils/helpers/date/date';
 import { ITicket, TSenseRequests } from '@utils/types/ITransactions';
@@ -122,7 +123,7 @@ const PastelIdDetails = () => {
                 ? formattedDate(Number(pastelIdData.registeredDate), {
                     dayName: false,
                   })
-                : translate('common.na')
+                : parse(translate('common.na'))
             }
             blockHeight={pastelIdData?.blockHeight?.toString() || ''}
             username={pastelIdData.username}

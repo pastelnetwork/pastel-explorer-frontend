@@ -17,7 +17,7 @@ import {
   convertYAxisLabel,
 } from '@utils/helpers/statisticsLib';
 import { TChartParams } from '@utils/types/IStatistics';
-import { translate } from '@utils/helpers/i18n';
+import { translateDropdown } from '@utils/helpers/i18n';
 
 type TAxisPointerProps = {
   axisDimension: string;
@@ -205,7 +205,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
               <div class="tooltip-value">${params[0].marker} ${formatNumber(
             params[0].value / 1000000,
             { decimalsLength: 2 },
-          )} ${translate('chartOptions.mSolS')}</div>
+          )} ${translateDropdown('chartOptions.mSolS')}</div>
             </div>
           `;
         },
@@ -298,9 +298,8 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             html += `
               <div class="tooltip-item">
                 <div class="item-label">${item.marker} ${item.seriesName}:</div>
-                <div class="item-value">${formatNumber(item.value)} ${translate(
-              'chartOptions.bytes',
-            )}</div>
+                <div class="item-value">${formatNumber(item.value, { decimalsLength: 2 })}
+                ${translateDropdown('chartOptions.kBS')}</div>
               </div>
             `;
           });
@@ -315,7 +314,10 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       legend: {
         top: 10,
         right: 10,
-        data: [translate('chartOptions.trafficReceived'), translate('chartOptions.trafficSent')],
+        data: [
+          translateDropdown('chartOptions.trafficReceived'),
+          translateDropdown('chartOptions.trafficSent'),
+        ],
         textStyle: {
           color: theme?.color,
         },
@@ -372,7 +374,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       series: [
         {
-          name: translate('chartOptions.trafficReceived'),
+          name: translateDropdown('chartOptions.trafficReceived'),
           type: 'line',
           lineStyle: {
             width: 2,
@@ -385,7 +387,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           zlevel: 2,
         },
         {
-          name: translate('chartOptions.trafficSent'),
+          name: translateDropdown('chartOptions.trafficSent'),
           type: 'line',
           lineStyle: {
             width: 2,
@@ -423,7 +425,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
               )}</div>
               <div class="item-value">${params[0].marker} ${formatNumber(params[0].value, {
             decimalsLength: 2,
-          })} ${translate('chartOptions.kB')}</div>
+          })} ${translateDropdown('chartOptions.kB')}</div>
             </div>
           `;
         },
@@ -514,16 +516,16 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       tooltip: {
         trigger: 'axis',
         formatter(params: TChartParams[]) {
-          let label = translate('chartOptions.averagePerHour');
+          let label = translateDropdown('chartOptions.averagePerHour');
           switch (granularity) {
             case '1d':
-              label = translate('chartOptions.averagePerDay');
+              label = translateDropdown('chartOptions.averagePerDay');
               break;
             case '30d':
-              label = translate('chartOptions.averagePerMonth');
+              label = translateDropdown('chartOptions.averagePerMonth');
               break;
             case '1y':
-              label = translate('chartOptions.averagePerYear');
+              label = translateDropdown('chartOptions.averagePerYear');
               break;
             default:
               break;
@@ -539,7 +541,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             {
               decimalsLength: 5,
             },
-          )} ${translate('chartOptions.mb')}</div>
+          )} ${translateDropdown('chartOptions.mb')}</div>
             </div>
           `;
         },
@@ -1030,7 +1032,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
               )}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
             decimalsLength: 2,
-          })} ${translate('chartOptions.mb')}</div>
+          })} ${translateDropdown('chartOptions.mb')}</div>
             </div>
           `;
         },
@@ -1476,10 +1478,10 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
             formatter(params: TTxInBlock) {
               return `
                 <div class="tooltip-item-wrapper">
-                  <div class="item-label">${translate('chartOptions.blockId')}: ${
+                  <div class="item-label">${translateDropdown('chartOptions.blockId')}: ${
                 params.value[0]
               }</div>
-                  <div class="tooltip-data-date">${translate('chartOptions.count')}: ${
+                  <div class="tooltip-data-date">${translateDropdown('chartOptions.count')}: ${
                 params.value[1]
               }</div>
                 </div>
@@ -1564,7 +1566,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       series: {
         type: 'line',
-        name: translate('chartOptions.accounts'),
+        name: translateDropdown('chartOptions.accounts'),
         data: dataY,
         showSymbol: false,
         areaStyle: {
@@ -1655,7 +1657,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       series: {
         type: 'line',
-        name: translate('chartOptions.totalSupply', { currency: getCurrencyName() }),
+        name: translateDropdown('chartOptions.totalSupply', { currency: getCurrencyName() }),
         data: dataY,
         showSymbol: false,
         areaStyle: {
@@ -1750,7 +1752,7 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       series: {
         type: 'line',
-        name: translate('chartOptions.circulatingSupply', { currency: getCurrencyName() }),
+        name: translateDropdown('chartOptions.circulatingSupply', { currency: getCurrencyName() }),
         data: dataY,
         showSymbol: false,
         areaStyle: {
@@ -1848,9 +1850,114 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       series: {
         type: 'bar',
         sampling: 'lttb',
-        name: translate('chartOptions.percentOfPSLStaked', { currency: getCurrencyName() }),
+        name: translateDropdown('chartOptions.percentOfPSLStaked', { currency: getCurrencyName() }),
         data: dataY?.map((d: number) => parseFloat((d * 100).toString())),
         showSymbol: false,
+      },
+      animation: false,
+    },
+    feeSchedule: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#cd6661'],
+      grid: {
+        top: 8,
+        right: 40,
+        bottom: 70,
+        left: 60,
+        show: false,
+      },
+      dataZoom: [
+        {
+          type: 'inside',
+          start: 0,
+          end: 100,
+        },
+        {
+          start: 0,
+          end: 100,
+        },
+      ],
+      tooltip: {
+        trigger: 'axis',
+        formatter(params: TChartParams[]) {
+          return `
+            <div class="tooltip-item-wrapper">
+              <div class="item-label">${generateTooltipLabel(
+                new Date(params[0].axisValue),
+                granularity,
+              )}</div>
+              <div class="item-value">${params[0].marker} ${formatNumber(params[0].value, {
+            decimalsLength: 2,
+          })}</div>
+            </div>
+          `;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        boundaryGap: false,
+        axisLabel: {
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
+            if (period && periods[9].indexOf(period) !== -1) {
+              const date = format(new Date(value), 'MM/dd/yyyy');
+              if (firstDay !== date) {
+                firstDay = date;
+                return generateXAxisLabel(new Date(value), period, isShowMinutesFor24h);
+              }
+              return null;
+            }
+            return value ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h) : null;
+          },
+          showMaxLabel: true,
+          interval: generateXAxisInterval('1d', period, dataX, width),
+        },
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        max: maxY,
+        interval: (maxY - minY) / 5,
+        splitLine: {
+          show: false,
+        },
+        axisLabel: {
+          formatter(value: string) {
+            return getYAxisLabel(Number(value), minY, maxY);
+          },
+        },
+        axisLine: {
+          show: true,
+        },
+      },
+      series: {
+        type: 'line',
+        data: dataY,
+        showSymbol: false,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#cd6661',
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor ?? '#F4F4F4',
+            },
+          ]),
+        },
+        emphasis: {
+          lineStyle: {
+            width: 2,
+          },
+        },
       },
       animation: false,
     },
@@ -2128,7 +2235,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: translate('chartOptions.network'),
+        name: translateDropdown('chartOptions.network'),
         type: 'line',
         data: dataY,
         showSymbol: false,
@@ -2205,7 +2312,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: translate('chartOptions.difficulty'),
+        name: translateDropdown('chartOptions.difficulty'),
         type: 'line',
         showSymbol: false,
         data: dataY,
@@ -2267,7 +2374,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: translate('chartOptions.coinSupply', { currency: getCurrencyName() }),
+        name: translateDropdown('chartOptions.coinSupply', { currency: getCurrencyName() }),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -2331,7 +2438,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: translate('chartOptions.accountsSeriesName'),
+        name: translateDropdown('chartOptions.accountsSeriesName'),
         type: 'line',
         data: dataY,
         showSymbol: false,
@@ -2399,7 +2506,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: translate('chartOptions.avgTransactionsPerSecond'),
+        name: translateDropdown('chartOptions.avgTransactionsPerSecond'),
         type: 'line',
         data: dataY,
         showSymbol: false,
@@ -2467,7 +2574,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: translate('chartOptions.avgBlockSizeLast24Hour'),
+        name: translateDropdown('chartOptions.avgBlockSizeLast24Hour'),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -2535,7 +2642,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: translate('chartOptions.avgTransactionPerBlockLast24Hour'),
+        name: translateDropdown('chartOptions.avgTransactionPerBlockLast24Hour'),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -2604,7 +2711,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: translate('chartOptions.avgTransactionFeeLast24Hour'),
+        name: translateDropdown('chartOptions.avgTransactionFeeLast24Hour'),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -2666,7 +2773,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: translate('chartOptions.memPoolSize'),
+        name: translateDropdown('chartOptions.memPoolSize'),
         type: 'line',
         sampling: 'lttb',
         lineStyle: {
@@ -2749,7 +2856,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         show: false,
       },
       series: {
-        name: translate('chartOptions.circulatingSupplySeriesName', {
+        name: translateDropdown('chartOptions.circulatingSupplySeriesName', {
           currency: getCurrencyName(),
         }),
         type: 'line',
@@ -2821,7 +2928,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         min: 0,
       },
       series: {
-        name: translate('chartOptions.percentPSLStaked', { currency: getCurrencyName() }),
+        name: translateDropdown('chartOptions.percentPSLStaked', { currency: getCurrencyName() }),
         type: 'bar',
         data: dataY?.map((d: number) => parseFloat((d * 100).toString())),
       },
@@ -2838,9 +2945,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       color: ['#cd6661'],
       grid: {
         top: 9,
-        right: 0,
-        bottom: 0,
-        left: 0,
+        right: 35,
+        bottom: 20,
+        left: 35,
         show: false,
       },
       tooltip: {
@@ -2850,7 +2957,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           for (let i = 0; i < params.length; i += 1) {
             html += `<div>${params[i].marker} ${params[i].seriesName}: ${
               params[i].value ? formatNumber(params[i].value, { decimalsLength: 2 }) : '0'
-            } ${translate('chartOptions.mb')}</div>`;
+            } ${translateDropdown('chartOptions.mb')}</div>`;
           }
           return `
             <div>
@@ -2864,34 +2971,56 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         {
           type: 'category',
           data: dataX,
-          axisLabel: {
+          boundaryGap: false,
+          splitLine: {
             show: false,
+          },
+          axisLine: {
+            show: true,
+          },
+          axisLabel: {
+            formatter(value: string, index: number) {
+              let isShowMinutesFor24h = false;
+              if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+                isShowMinutesFor24h = true;
+              }
+              return value
+                ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h)
+                : null;
+            },
+            showMaxLabel: true,
+            interval: dataX?.length ? Math.floor(dataX.length / 3) : 'auto',
           },
         },
       ],
       yAxis: [
         {
           type: 'value',
-          axisLine: {
+          min: 0,
+          max: maxY,
+          interval: maxY / 4,
+          splitLine: {
             show: false,
           },
           axisLabel: {
-            show: false,
+            formatter(value: string) {
+              return getYAxisLabel(Number(value), 0, maxY);
+            },
           },
-          splitLine: {
-            show: false,
+          axisLine: {
+            show: true,
           },
         },
       ],
       series: [
         {
-          name: translate('chartOptions.highestSizeOfNFTStored'),
+          name: translateDropdown('chartOptions.highestSizeOfNFTStored'),
           type: 'bar',
           data: dataY,
           color: '#cd6661',
         },
         {
-          name: translate('chartOptions.averageSizeOfNFTStored'),
+          name: translateDropdown('chartOptions.averageSizeOfNFTStored'),
           type: 'line',
           data: dataY1,
           color: !darkMode ? '#2f2a03' : theme?.color,
@@ -2920,44 +3049,65 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       grid: {
         top: 9,
-        right: 0,
-        bottom: 0,
-        left: 0,
+        right: 35,
+        bottom: 20,
+        left: 35,
         show: false,
       },
       xAxis: [
         {
           type: 'category',
           data: dataX,
-          axisLabel: {
+          boundaryGap: false,
+          splitLine: {
             show: false,
+          },
+          axisLine: {
+            show: true,
+          },
+          axisLabel: {
+            formatter(value: string, index: number) {
+              let isShowMinutesFor24h = false;
+              if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+                isShowMinutesFor24h = true;
+              }
+              return value
+                ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h)
+                : null;
+            },
+            showMaxLabel: true,
+            interval: dataX?.length ? Math.floor(dataX.length / 3) : 'auto',
           },
         },
       ],
       yAxis: [
         {
           type: 'value',
+          min: 0,
           max: maxY,
-          axisLine: {
+          interval: maxY / 4,
+          splitLine: {
             show: false,
           },
           axisLabel: {
-            show: false,
+            formatter(value: string) {
+              return getYAxisLabel(Number(value), 0, maxY);
+            },
           },
-          splitLine: {
-            show: false,
+          axisLine: {
+            show: true,
           },
         },
       ],
       series: [
         {
-          name: translate('chartOptions.HighestRarenessScore'),
+          name: translateDropdown('chartOptions.HighestRarenessScore'),
           type: 'bar',
           data: dataY,
           color: blueColor,
         },
         {
-          name: translate('chartOptions.averageRarenessScore'),
+          name: translateDropdown('chartOptions.averageRarenessScore'),
           type: 'line',
           data: dataY1,
           color: !darkMode ? '#2f2a03' : theme?.color,
@@ -2974,9 +3124,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       color: ['#cd6661'],
       grid: {
         top: 9,
-        right: 0,
-        bottom: 0,
-        left: 0,
+        right: 35,
+        bottom: 20,
+        left: 35,
         show: false,
       },
       tooltip: {
@@ -2986,34 +3136,58 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             params[0].seriesName
           }:&nbsp;${params[0].data ? formatNumber(params[0].data) : '0'} ${
             params[0].data > 1
-              ? translate('chartOptions.requests')
-              : translate('chartOptions.request')
+              ? translateDropdown('chartOptions.requests')
+              : translateDropdown('chartOptions.request')
           }`;
         },
       },
-      xAxis: {
-        type: 'category',
-        data: dataX,
-        boundaryGap: false,
-        axisLabel: {
-          show: false,
+      xAxis: [
+        {
+          type: 'category',
+          data: dataX,
+          boundaryGap: false,
+          splitLine: {
+            show: false,
+          },
+          axisLine: {
+            show: true,
+          },
+          axisLabel: {
+            formatter(value: string, index: number) {
+              let isShowMinutesFor24h = false;
+              if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+                isShowMinutesFor24h = true;
+              }
+              return value
+                ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h)
+                : null;
+            },
+            showMaxLabel: true,
+            interval: dataX?.length ? Math.floor(dataX.length / 3) : 'auto',
+          },
         },
-      },
-      yAxis: {
-        type: 'value',
-        max: maxY,
-        axisLine: {
-          show: false,
+      ],
+      yAxis: [
+        {
+          type: 'value',
+          min: 0,
+          max: maxY,
+          interval: maxY / 4,
+          splitLine: {
+            show: false,
+          },
+          axisLabel: {
+            formatter(value: string) {
+              return getYAxisLabel(Number(value), 0, maxY);
+            },
+          },
+          axisLine: {
+            show: true,
+          },
         },
-        axisLabel: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-      },
+      ],
       series: {
-        name: translate('chartOptions.cascadeRequests'),
+        name: translateDropdown('chartOptions.cascadeRequests'),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -3041,9 +3215,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       color: [blueColor],
       grid: {
         top: 9,
-        right: 0,
-        bottom: 0,
-        left: 0,
+        right: 35,
+        bottom: 20,
+        left: 35,
         show: false,
       },
       tooltip: {
@@ -3053,8 +3227,8 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             params[0].seriesName
           }:&nbsp;${params[0].data ? formatNumber(params[0].data) : '0'} ${
             params[0].data > 1
-              ? translate('chartOptions.requests')
-              : translate('chartOptions.request')
+              ? translateDropdown('chartOptions.requests')
+              : translateDropdown('chartOptions.request')
           }`;
         },
       },
@@ -3062,25 +3236,43 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         type: 'category',
         data: dataX,
         boundaryGap: false,
-        axisLabel: {
+        splitLine: {
           show: false,
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
+            return value ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h) : null;
+          },
+          showMaxLabel: true,
+          interval: dataX?.length ? Math.floor(dataX.length / 3) : 'auto',
         },
       },
       yAxis: {
         type: 'value',
+        min: 0,
         max: maxY,
-        axisLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
+        interval: maxY / 4,
         splitLine: {
           show: false,
         },
+        axisLabel: {
+          formatter(value: string) {
+            return getYAxisLabel(Number(value), 0, maxY);
+          },
+        },
+        axisLine: {
+          show: true,
+        },
       },
       series: {
-        name: translate('chartOptions.senseRequests'),
+        name: translateDropdown('chartOptions.senseRequests'),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -3108,9 +3300,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       color: ['#cd6661'],
       grid: {
         top: 9,
-        right: 0,
-        bottom: 0,
-        left: 0,
+        right: 35,
+        bottom: 20,
+        left: 35,
         show: false,
       },
       tooltip: {
@@ -3120,32 +3312,50 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             params[0].seriesName
           }:&nbsp;${
             params[0].data ? formatNumber(params[0].data, { decimalsLength: 2 }) : '0'
-          } ${translate('chartOptions.mb')}`;
+          } ${translateDropdown('chartOptions.mb')}`;
         },
       },
       xAxis: {
         type: 'category',
         data: dataX,
-        axisLabel: {
+        boundaryGap: false,
+        splitLine: {
           show: false,
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
+            return value ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h) : null;
+          },
+          showMaxLabel: true,
+          interval: dataX?.length ? Math.floor(dataX.length / 3) : 'auto',
         },
       },
       yAxis: {
         type: 'value',
         min: minY,
         max: maxY,
-        axisLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
+        interval: (maxY - minY) / 4,
         splitLine: {
           show: false,
         },
+        axisLabel: {
+          formatter(value: string) {
+            return getYAxisLabel(Number(value), minY, maxY);
+          },
+        },
+        axisLine: {
+          show: true,
+        },
       },
       series: {
-        name: translate('chartOptions.totalDataStored'),
+        name: translateDropdown('chartOptions.totalDataStored'),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -3173,9 +3383,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       color: [blueColor],
       grid: {
         top: 9,
-        right: 0,
-        bottom: 0,
-        left: 0,
+        right: 35,
+        bottom: 20,
+        left: 35,
         show: false,
       },
       tooltip: {
@@ -3189,26 +3399,44 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       xAxis: {
         type: 'category',
         data: dataX,
-        axisLabel: {
+        boundaryGap: false,
+        splitLine: {
           show: false,
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
+            return value ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h) : null;
+          },
+          showMaxLabel: true,
+          interval: dataX?.length ? Math.floor(dataX.length / 3) : 'auto',
         },
       },
       yAxis: {
         type: 'value',
         min: minY,
         max: maxY,
-        axisLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
+        interval: (maxY - minY) / 4,
         splitLine: {
           show: false,
         },
+        axisLabel: {
+          formatter(value: string) {
+            return getYAxisLabel(Number(value), minY, maxY);
+          },
+        },
+        axisLine: {
+          show: true,
+        },
       },
       series: {
-        name: translate('chartOptions.totalFingerprints'),
+        name: translateDropdown('chartOptions.totalFingerprints'),
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -3236,9 +3464,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       color: ['#cd6661'],
       grid: {
         top: 120,
-        right: 0,
-        bottom: 0,
-        left: 0,
+        right: 30,
+        bottom: 20,
+        left: 40,
         show: false,
       },
       tooltip: {
@@ -3249,7 +3477,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
               <div class="item-label">${params[0].axisValue}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
             decimalsLength: 2,
-          })} ${translate('chartOptions.kB')}</div>
+          })} ${translateDropdown('chartOptions.kB')}</div>
             </div>
           `;
         },
@@ -3261,10 +3489,14 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           show: false,
         },
         axisLine: {
-          show: false,
+          show: true,
         },
         axisLabel: {
-          show: false,
+          formatter(value: string) {
+            return generateXAxisLabel(new Date(value), '24h', true);
+          },
+          showMaxLabel: true,
+          interval: generateXAxisInterval('1d', '24h', dataX, width),
         },
         data: dataX,
       },
@@ -3272,14 +3504,17 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         type: 'value',
         min: minY,
         max: maxY,
+        interval: (maxY - minY) / 4,
         splitLine: {
           show: false,
         },
-        axisLine: {
-          show: false,
-        },
         axisLabel: {
-          show: false,
+          formatter(value: string) {
+            return getYAxisLabel(Number(value), minY, maxY);
+          },
+        },
+        axisLine: {
+          show: true,
         },
       },
       series: [
@@ -3306,9 +3541,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       grid: {
         top: 100,
-        right: 0,
-        bottom: 0,
-        left: 0,
+        right: 30,
+        bottom: 20,
+        left: 40,
         show: false,
       },
       tooltip: {
@@ -3319,7 +3554,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
               <div class="item-label">${params[0].axisValue}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
             decimalsLength: 3,
-          })} ${translate('chartOptions.mSolS')}</div>
+          })} ${translateDropdown('chartOptions.mSolS')}</div>
             </div>
           `;
         },
@@ -3332,10 +3567,14 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           show: false,
         },
         axisLine: {
-          show: false,
+          show: true,
         },
         axisLabel: {
-          show: false,
+          formatter(value: string) {
+            return generateXAxisLabel(new Date(value), '24h', true);
+          },
+          showMaxLabel: true,
+          interval: generateXAxisInterval('1d', '24h', dataX, width),
         },
         data: dataX,
       },
@@ -3343,14 +3582,17 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         type: 'value',
         min: minY,
         max: maxY,
+        interval: (maxY - minY) / 4,
         splitLine: {
           show: false,
         },
-        axisLine: {
-          show: false,
-        },
         axisLabel: {
-          show: false,
+          formatter(value: string) {
+            return getYAxisLabel(Number(value), minY, maxY);
+          },
+        },
+        axisLine: {
+          show: true,
         },
       },
       series: [
@@ -3386,9 +3628,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       },
       grid: {
         top: 100,
-        right: 0,
-        bottom: 0,
-        left: 0,
+        right: 30,
+        bottom: 20,
+        left: 40,
         show: false,
       },
       tooltip: {
@@ -3412,10 +3654,14 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           show: false,
         },
         axisLine: {
-          show: false,
+          show: true,
         },
         axisLabel: {
-          show: false,
+          formatter(value: string) {
+            return generateXAxisLabel(new Date(value), '24h', true);
+          },
+          showMaxLabel: true,
+          interval: generateXAxisInterval('1d', '24h', dataX, width),
         },
         data: dataX,
       },
@@ -3423,14 +3669,17 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         type: 'value',
         min: minY,
         max: maxY,
+        interval: (maxY - minY) / 4,
         splitLine: {
           show: false,
         },
-        axisLine: {
-          show: false,
-        },
         axisLabel: {
-          show: false,
+          formatter(value: string) {
+            return getYAxisLabel(Number(value), minY, maxY);
+          },
+        },
+        axisLine: {
+          show: true,
         },
       },
       series: [
@@ -3467,9 +3716,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
       color: ['#cd6661'],
       grid: {
         top: 100,
-        right: 0,
-        bottom: 0,
-        left: 0,
+        right: 30,
+        bottom: 20,
+        left: 40,
         show: false,
       },
       tooltip: {
@@ -3493,24 +3742,31 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
           show: false,
         },
         axisLine: {
-          show: false,
+          show: true,
         },
         axisLabel: {
-          show: false,
+          formatter(value: string) {
+            return generateXAxisLabel(new Date(value), '24h', true);
+          },
+          showMaxLabel: true,
+          interval: generateXAxisInterval('1d', '24h', dataX, width),
         },
       },
       yAxis: {
         type: 'value',
         min: 0,
         max: maxY,
+        interval: maxY / 4,
         splitLine: {
           show: false,
         },
-        axisLine: {
-          show: false,
-        },
         axisLabel: {
-          show: false,
+          formatter(value: string) {
+            return getYAxisLabel(Number(value), 0, maxY);
+          },
+        },
+        axisLine: {
+          show: true,
         },
       },
       series: {
@@ -3625,7 +3881,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
-        name: translate(seriesName || 'pages.addressDetails.balanceHistory.balance') || '',
+        name: translateDropdown(seriesName || 'pages.addressDetails.balanceHistory.balance') || '',
         type: 'line',
         sampling: 'lttb',
         data: dataY,
@@ -3716,7 +3972,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
-        name: translate('pages.addressDetails.balanceHistory.sentByMonth') || '',
+        name: translateDropdown('pages.addressDetails.balanceHistory.sentByMonth') || '',
         type: 'bar',
         data: dataY?.map((d, index) => {
           return {
@@ -3814,7 +4070,9 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
-        name: translate(seriesName || 'pages.addressDetails.balanceHistory.receivedByMonth') || '',
+        name:
+          translateDropdown(seriesName || 'pages.addressDetails.balanceHistory.receivedByMonth') ||
+          '',
         type: 'bar',
         data: dataY?.map((d, index) => {
           return {
@@ -3929,7 +4187,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
       },
       series: {
-        name: translate('pages.burned.totalBurned', { currency: getCurrencyName() }) || '',
+        name: translateDropdown('pages.burned.totalBurned', { currency: getCurrencyName() }) || '',
         type: 'line',
         sampling: 'lttb',
         data: dataY,

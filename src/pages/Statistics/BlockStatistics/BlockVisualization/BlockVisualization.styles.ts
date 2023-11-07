@@ -13,7 +13,7 @@ export const BlockContainer = styled.div`
   color: ${themeVariant.custom.white};
   text-align: center;
   width: 125px;
-  height: 125px;
+  height: 145px;
   cursor: pointer;
   background: repeating-linear-gradient(
     rgb(45, 51, 72),
@@ -21,6 +21,8 @@ export const BlockContainer = styled.div`
     rgb(147, 57, 244) 0.175375%,
     rgb(16, 95, 176) 100%
   );
+  transition: transform 0.3s ease-in;
+
   &.block-unconfirmed {
     background: repeating-linear-gradient(
       to right,
@@ -42,18 +44,11 @@ export const BlockContainer = styled.div`
       rgb(178, 125, 16) 100%
     );
   }
-  // background: repeating-linear-gradient(
-  //   ${themeVariant.palette.primary.main},
-  //   ${themeVariant.palette.primary.main} 0.018575%,
-  //   ${themeVariant.palette.secondary.main} 0.018575%,
-  //   ${themeVariant.palette.primary.main} 100%
-  // );
-  transition: transform 0.2s ease-in;
 
   &::before {
     content: '';
     width: 20px;
-    height: 125px;
+    height: 145px;
     position: absolute;
     top: -12px;
     left: -20px;
@@ -76,5 +71,20 @@ export const BlockContainer = styled.div`
 
   &:hover {
     transform: translateY(-2px);
+  }
+`;
+
+export const BlockAnimationWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 18px;
+  width: calc(100% - 232px);
+  min-width: 1223px;
+  height: 100%;
+
+  .block-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;

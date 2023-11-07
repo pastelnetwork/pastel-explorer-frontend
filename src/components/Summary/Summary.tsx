@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import Tooltip from '@material-ui/core/Tooltip';
 import Box from '@material-ui/core/Box';
+import parse from 'html-react-parser';
 
 // application
 import { TAppTheme } from '@theme/index';
@@ -63,6 +64,8 @@ const CustomTooltip = withStyles(theme => ({
     fontSize: 12,
   },
 }))(Tooltip);
+
+const NETWORK_RANGE = 1048576;
 
 const Summary: React.FC = () => {
   const { supernodeList, isLoading } = useNetwork(true);
@@ -168,6 +171,24 @@ const Summary: React.FC = () => {
     };
   };
 
+  const transformNetworkChartData = (key: string) => {
+    const dataX = [];
+    const dataY = [];
+    if (summaryChartData) {
+      const items = summaryChartData[key as keyof ISummaryChartStats] as TSummaryChartProps[];
+      if (items.length) {
+        for (let i = 0; i < items.length; i += 1) {
+          dataX.push(new Date(items[i].time).toLocaleString());
+          dataY.push(Number(items[i].value) * NETWORK_RANGE);
+        }
+      }
+    }
+    return {
+      dataX,
+      dataY,
+    };
+  };
+
   const generateChartData = (key: string): TChartDataProps => {
     let dataX;
     let dataY;
@@ -202,7 +223,7 @@ const Summary: React.FC = () => {
         offset = 1;
         break;
       case 'gigaHashPerSec':
-        parseChartData = transformChartData(key);
+        parseChartData = transformNetworkChartData(key);
         dataX = parseChartData?.dataX;
         dataY = parseChartData?.dataY;
         offset = 0;
@@ -252,30 +273,36 @@ const Summary: React.FC = () => {
               {sumKey === 'coinSupply' ? (
                 <>
                   <Box>
-                    {translate('components.summary.coinsCreated')}:{' '}
+                    {parse(translate('components.summary.coinsCreated'))}:{' '}
                     {formatNumber(currentStatsData?.totalCoinSupply || 0, { decimalsLength: 2 })}
                   </Box>
                   <Box>
-                    {translate('components.summary.lessPSLBurnt', { currency: getCurrencyName() })}:{' '}
-                    {formatNumber(currentStatsData?.totalBurnedPSL || 0, { decimalsLength: 2 })}
+                    {parse(
+                      translate('components.summary.lessPSLBurnt', { currency: getCurrencyName() }),
+                    )}
+                    : {formatNumber(currentStatsData?.totalBurnedPSL || 0, { decimalsLength: 2 })}
                   </Box>
                 </>
               ) : (
                 <>
                   <Box>
-                    {translate('components.summary.totalSupply')}:{' '}
+                    {parse(translate('components.summary.totalSupply'))}:{' '}
                     {formatNumber(currentStatsData?.coinSupply || 0, { decimalsLength: 2 })}
                   </Box>
                   <Box>
-                    {translate('components.summary.lessPSLStakedBySuperNodes', {
-                      currency: getCurrencyName(),
-                    })}
+                    {parse(
+                      translate('components.summary.lessPSLStakedBySuperNodes', {
+                        currency: getCurrencyName(),
+                      }),
+                    )}
                     : {formatNumber(totalLockedInSupernodes)}
                   </Box>
                   <Box>
-                    {translate('components.summary.lessPSLLockedByFoundation', {
-                      currency: getCurrencyName(),
-                    })}
+                    {parse(
+                      translate('components.summary.lessPSLLockedByFoundation', {
+                        currency: getCurrencyName(),
+                      }),
+                    )}
                     :{' '}
                     {formatNumber(currentStatsData?.pslLockedByFoundation || 0, {
                       decimalsLength: 0,
@@ -291,6 +318,10 @@ const Summary: React.FC = () => {
       );
     }
 
+    if (sumKey === 'gigaHashPerSec') {
+      return formatNumber(Number(value) * NETWORK_RANGE, { decimalsLength: 2 });
+    }
+
     return value;
   };
 
@@ -303,8 +334,8 @@ const Summary: React.FC = () => {
               <Styles.ValueWrapper>
                 <Styles.Typography variant="h6" className={classes.textTitle}>
                   {['circulatingSupply', 'coinSupply', 'percentPSLStaked'].includes(sumKey)
-                    ? translate(name, { currency: getCurrencyName() })
-                    : translate(name)}
+                    ? parse(translate(name, { currency: getCurrencyName() }))
+                    : parse(translate(name))}
                 </Styles.Typography>
                 <Styles.Typography variant="h4">
                   <Styles.Values>{renderCardHeaderValue(sumKey, value)}</Styles.Values>
@@ -326,8 +357,8 @@ const Summary: React.FC = () => {
                     }`}
                   >
                     {sumKey === 'percentPSLStaked'
-                      ? translate('components.summary.last30d')
-                      : translate('components.summary.last24h')}
+                      ? parse(translate('components.summary.last30d'))
+                      : parse(translate('components.summary.last24h'))}
                     <br />
                     <span>
                       {`${difference > 0 ? '+' : ''}`}

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import parse from 'html-react-parser';
 
 import InfinityTable, {
   SortDirectionsType,
@@ -9,7 +10,10 @@ import { blocksPeriodFilters, blocksFilters } from '@utils/constants/filter';
 import { getFilterState } from '@redux/reducers/filterReducer';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import useBlocks from '@hooks/useBlocks';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
+import { getSubHours } from '@utils/helpers/date/date';
+import BlockStatistics from '@pages/Statistics/BlockStatistics/BlockStatistics';
+import useBlockStatistics from '@hooks/useBlockStatistics';
 
 import { columns } from './Blocks.columns';
 import { transformTableData, DATA_DEFAULT_SORT, DATA_FETCH_LIMIT } from './Blocks.helpers';
@@ -28,6 +32,7 @@ interface IBlocksDataRef {
 
 const Blocks = () => {
   const filter = useSelector(getFilterState);
+  const { blockElements, blocksUnconfirmed } = useBlockStatistics();
   const [apiParams, setParams] = useState<IBlocksDataRef>({
     sortBy: 'blockId',
     sortDirection: DATA_DEFAULT_SORT,
@@ -83,23 +88,27 @@ const Blocks = () => {
   useEffect(() => {
     if (filter.dateRange || filter.dropdownType) {
       swrSetSize(1);
+      let customDateRange = filter.customDateRange || { startDate: 0, endDate: null };
+      if (!filter.customDateRange?.startDate && filter.dateRange !== 'all') {
+        customDateRange = { startDate: getSubHours(filter.dateRange), endDate: Date.now() };
+      } else {
+        customDateRange = { startDate: 0, endDate: null };
+      }
       setParams({
         ...apiParams,
         period: filter.dateRange || apiParams.period || '',
         types: filter.dropdownType || apiParams.types || '',
-        customDateRange: filter.customDateRange?.startDate
-          ? filter.customDateRange
-          : { startDate: 0, endDate: null },
+        customDateRange,
       });
     }
   }, [filter.dateRange, filter.dropdownType, filter.customDateRange]);
 
   const getMovementTransactionsTitle = () => (
     <Styles.TitleWrapper>
-      <Styles.Title>{translate('pages.blocks.blockList')}</Styles.Title>{' '}
+      <Styles.Title>{parse(translate('pages.blocks.blockList'))}</Styles.Title>{' '}
       {total > 0 ? (
         <Styles.SubTitle>
-          ({translate('pages.blocks.totalBlocks', { total: formatNumber(total) })})
+          ({parse(translate('pages.blocks.totalBlocks', { total: formatNumber(total) }))})
         </Styles.SubTitle>
       ) : null}
     </Styles.TitleWrapper>
@@ -107,13 +116,16 @@ const Blocks = () => {
 
   return (
     <Styles.TableContainer item>
+      <Styles.BlockStatistics>
+        <BlockStatistics blockElements={blockElements} blocksUnconfirmed={blocksUnconfirmed} />
+      </Styles.BlockStatistics>
       <InfinityTable
         sortBy={apiParams.sortBy}
         sortDirection={apiParams.sortDirection}
         rows={swrData ? transformTableData(swrData, isMobile) : []}
         filters={blocksPeriodFilters}
         dropdownFilters={blocksFilters}
-        dropdownLabel={translate('pages.blocks.ticketType')}
+        dropdownLabel={translateDropdown('pages.blocks.ticketType')}
         title={getMovementTransactionsTitle()}
         columns={columns}
         tableHeight={isMobile ? 750 : 650}
@@ -121,7 +133,7 @@ const Blocks = () => {
         onHeaderClick={handleSort}
         className="block-list-table"
         headerBackground
-        rowHeight={isMobile ? 180 : 45}
+        rowHeight={isMobile ? 200 : 45}
         customLoading={isLoading}
         showDateTimePicker
         dateRange={filter.customDateRange}

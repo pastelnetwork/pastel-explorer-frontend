@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
+import parse from 'html-react-parser';
 
 import InfinityTable, {
   RowsProps,
@@ -150,7 +151,7 @@ const LatestTransactions: React.FC = () => {
         columns={columns}
         tableHeight={isMobile ? 750 : 650}
         filters={defaultFilters}
-        title={translate('pages.explorer.latestTransactions')}
+        title={parse(translate('pages.explorer.latestTransactions'))}
         onBottomReach={handleFetchMoreTransactions}
         onHeaderClick={handleSort}
         className="latest-transactions-table"

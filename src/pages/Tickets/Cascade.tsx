@@ -1,37 +1,34 @@
-import Typography from '@material-ui/core/Typography';
-import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
+import { useState } from 'react';
 
-import { Link } from '@components/Link/Link.styles';
 import * as ROUTES from '@utils/constants/routes';
-import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import useTickets from '@hooks/useTickets';
 import InfinityTable from '@components/InfinityTable/InfinityTable';
 import { translate } from '@utils/helpers/i18n';
 
-import { cascadeColumns, transformCascadeData, DATA_LIMIT } from './Tickets.helpers';
+import SectionTitle from './SectionTitle';
+import { transformCascadeData, TTicketResponse, useShowLess } from './Tickets.helpers';
+import { cascadeColumns } from './Tickets.columns';
 import * as Styles from './Tickets.styles';
 
 interface ICascadeProps {
-  isMobile: boolean;
+  ticketsData: TTicketResponse;
+  innerWidth: number;
+  usdPrice: number;
 }
 
-const Cascade: React.FC<ICascadeProps> = ({ isMobile }) => {
-  const { data, total, isLoading, size, setSize } = useTickets('cascade', DATA_LIMIT);
+const Cascade: React.FC<ICascadeProps> = ({ ticketsData, innerWidth, usdPrice }) => {
+  const { data, total, isLoading, size, setSize } = ticketsData;
+  const [showLess, setShowLess] = useState(false);
+  useShowLess(setShowLess);
 
   const getTitle = () => {
     return (
-      <Styles.BlockTitle className="latest-blocks">
-        {translate('pages.tickets.cascadeTickets')} (
-        {total > 1
-          ? translate('pages.tickets.totalTickets', { total: formatNumber(total) })
-          : translate('pages.tickets.totalTicket', { total: formatNumber(total) })}
-        )
-        <Link to={`${ROUTES.TICKETS_TYPE}/cascade`} className="view-all">
-          <Typography align="center" className="p-16">
-            {translate('pages.tickets.viewAll')} <ArrowForwardIos />
-          </Typography>
-        </Link>
-      </Styles.BlockTitle>
+      <SectionTitle
+        title={translate('pages.tickets.cascadeTickets')}
+        total={total}
+        toggleContent={() => setShowLess(!showLess)}
+        showMore={showLess}
+        viewAllLink={`${ROUTES.TICKETS_TYPE}/cascade`}
+      />
     );
   };
 
@@ -41,18 +38,36 @@ const Cascade: React.FC<ICascadeProps> = ({ isMobile }) => {
     return true;
   };
 
+  const getRowHeight = () => {
+    if (innerWidth < 600) {
+      return 450;
+    }
+    if (innerWidth < 960) {
+      return 240;
+    }
+    return 140;
+  };
+
+  const gettableHeight = () => {
+    if (innerWidth < 600) {
+      return 1200;
+    }
+    return 600;
+  };
+
   return (
-    <Styles.CascadeContainer>
+    <Styles.CascadeContainer id="cascadeTickets">
       <InfinityTable
-        rows={data ? transformCascadeData(data) : []}
+        rows={data ? transformCascadeData(data, usdPrice) : []}
         columns={cascadeColumns}
-        tableHeight={495}
+        tableHeight={gettableHeight()}
         title={getTitle()}
         onBottomReach={handleFetchMoreMovements}
-        className="data-table"
+        className="data-table tickets-table"
         headerBackground
         customLoading={isLoading}
-        rowHeight={isMobile ? 140 : 45}
+        rowHeight={getRowHeight()}
+        showLess={showLess}
       />
     </Styles.CascadeContainer>
   );

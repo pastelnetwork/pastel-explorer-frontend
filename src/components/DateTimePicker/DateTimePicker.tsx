@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import differenceInDays from 'date-fns/differenceInDays';
 import subDays from 'date-fns/subDays';
+import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';
 import UseOnClickOutside from '@hooks/useOnClickOutside';
@@ -116,7 +117,7 @@ const DateTimePicker: React.FC<IDateTimePickerProps> = ({ onApply, defaultDateRa
               <DatePicker {...options} />
             </Styles.DatePicker>
             <Styles.PredefinedWrapper>
-              <p>{translate('components.dateTimePicker.predefinedDates')}</p>
+              <p>{parse(translate('components.dateTimePicker.predefinedDates'))}</p>
               <ul>
                 {predefinedList.map(item => (
                   <li
@@ -124,7 +125,7 @@ const DateTimePicker: React.FC<IDateTimePickerProps> = ({ onApply, defaultDateRa
                     className={`${selectedPredefined === item.value ? 'active' : ''}`}
                   >
                     <button type="button" onClick={() => handlePredefinedClick(item.value)}>
-                      {item.name}
+                      {parse(item.name)}
                     </button>
                   </li>
                 ))}
@@ -133,18 +134,20 @@ const DateTimePicker: React.FC<IDateTimePickerProps> = ({ onApply, defaultDateRa
           </Styles.DatePickerContent>
           <Styles.Footer>
             <Styles.CancelButton onClick={handleCloseDatePicker}>
-              {translate('components.dateTimePicker.cancel')}
+              {parse(translate('components.dateTimePicker.cancel'))}
             </Styles.CancelButton>
             <Styles.SelectedDay>
-              <span>{translate('components.dateTimePicker.selected')}</span>:{' '}
+              <span>{parse(translate('components.dateTimePicker.selected'))}</span>:{' '}
               {endDate && startDate
-                ? `${getDifferenceInDays(startDate.valueOf(), endDate.valueOf())} ${translate(
-                    'components.dateTimePicker.days',
-                  )}`
-                : `1 ${translate('components.dateTimePicker.day')}`}
+                ? parse(
+                    `${getDifferenceInDays(startDate.valueOf(), endDate.valueOf())} ${translate(
+                      'components.dateTimePicker.days',
+                    )}`,
+                  )
+                : parse(`1 ${translate('components.dateTimePicker.day')}`)}
             </Styles.SelectedDay>
             <Styles.ContinueButton onClick={handleContinueClick}>
-              {translate('components.dateTimePicker.continue')}
+              {parse(translate('components.dateTimePicker.continue'))}
             </Styles.ContinueButton>
           </Styles.Footer>
         </Styles.DatePickerPopper>

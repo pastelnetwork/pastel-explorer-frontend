@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Box, Hidden } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import { Menu as MenuIcon } from '@material-ui/icons';
 
 import SearchBar from '@components/SearchBar/SearchBar';
 import Sidebar from '@components/Sidebar/Sidebar';
 import { RouteType } from '@utils/types/routes';
-
+import { translate } from '@utils/helpers/i18n';
 import { useSelector } from 'react-redux';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import * as ROUTES from '@utils/constants/routes';
+import * as SearchBarStyles from '@components/SearchBar/SearchBar.styles';
 
 import PastelLogoWhite from '@assets/images/pastel-logo-white.svg';
 import PastelLogo from '@assets/images/pastel-logo.svg';
@@ -27,14 +30,32 @@ export default function Navbar({ routes }: { routes: Array<RouteType> }): JSX.El
   return (
     <Styles.NavContainer>
       <Styles.Menu>
-        <SidebarStyles.Brand component={NavLink} to={ROUTES.EXPLORER} button>
-          <Box ml={1}>
-            <SidebarStyles.BrandLogo
-              src={isDarkMode ? PastelLogoWhite : PastelLogo}
-              alt="Pastel Logo"
-            />
-          </Box>
-        </SidebarStyles.Brand>
+        <Hidden smDown implementation="js">
+          <SidebarStyles.Brand
+            className="desktop-logo"
+            component={NavLink}
+            to={ROUTES.EXPLORER}
+            button
+          >
+            <Box ml={1}>
+              <SidebarStyles.BrandLogo
+                src={isDarkMode ? PastelLogoWhite : PastelLogo}
+                alt="Pastel Logo"
+              />
+            </Box>
+          </SidebarStyles.Brand>
+        </Hidden>
+        <Hidden mdUp implementation="css">
+          <Grid item>
+            <SearchBarStyles.IconButton
+              color="inherit"
+              aria-label={translate('components.searchBar.openDrawer')}
+              onClick={handleDrawerToggle}
+            >
+              <MenuIcon />
+            </SearchBarStyles.IconButton>
+          </Grid>
+        </Hidden>
         <Hidden mdUp implementation="js">
           <Sidebar
             routes={routes}
@@ -47,7 +68,7 @@ export default function Navbar({ routes }: { routes: Array<RouteType> }): JSX.El
           <Sidebar routes={routes} />
         </Hidden>
       </Styles.Menu>
-      <SearchBar onDrawerToggle={handleDrawerToggle} />
+      <SearchBar isDarkMode={isDarkMode} />
     </Styles.NavContainer>
   );
 }

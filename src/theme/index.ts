@@ -90,6 +90,7 @@ export const themeLight = createMuiTheme(
       main: '#3F9AF7',
       hover: '#0E80F5',
       pressed: '#0971DC',
+      shareIcon: 'transparent',
     },
     table: {
       header: '#fff',
@@ -102,6 +103,9 @@ export const themeLight = createMuiTheme(
     filter: {
       border: 'rgba(0, 0, 0, 0.12)',
       background: '#B9BFCB',
+      footer: 'linear-gradient(270deg, rgb(210, 226, 255) 0%, rgb(234, 244, 255) 100%)',
+      group: '#FAFBFC',
+      text: '#2D3748',
     },
     card: {
       color: '#4A5568',
@@ -139,6 +143,10 @@ export const themeLight = createMuiTheme(
         },
         color: '#fff',
       },
+      table: {
+        active: '#ebeaea',
+        even: '#e0e0e0',
+      },
     },
     dropdown: {
       border: '#A0AEC0',
@@ -155,6 +163,9 @@ export const themeLight = createMuiTheme(
         300: '#C4C4C4',
         800: '#2D3748',
       },
+    },
+    sense: {
+      overlay: 'rgb(255 255 255 / 20%)',
     },
   },
 );
@@ -224,6 +235,7 @@ export const themeDark = createMuiTheme(
       main: '#00D097',
       hover: '#00C28D',
       pressed: '#00B282',
+      shareIcon: '#FCFCFD',
     },
     table: {
       header: '#4A5568',
@@ -236,6 +248,9 @@ export const themeDark = createMuiTheme(
     filter: {
       border: 'rgb(35, 38, 48)',
       background: 'rgb(35, 38, 48)',
+      footer: '#00d0978f',
+      group: '#434a52',
+      text: '#A0AEC0',
     },
     card: {
       color: '#fff',
@@ -272,6 +287,10 @@ export const themeDark = createMuiTheme(
         },
         color: '#fff',
       },
+      table: {
+        active: '#1a202c',
+        even: '#292e36',
+      },
     },
     dropdown: {
       border: '#A0AEC0',
@@ -288,6 +307,9 @@ export const themeDark = createMuiTheme(
         300: '#C4C4C4',
         800: '#F8F8FA',
       },
+    },
+    sense: {
+      overlay: 'rgb(0 0 0 / 20%)',
     },
   },
 );

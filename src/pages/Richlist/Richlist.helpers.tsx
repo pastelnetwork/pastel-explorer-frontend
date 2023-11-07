@@ -1,4 +1,5 @@
 import { Grid } from '@material-ui/core';
+import parse from 'html-react-parser';
 
 import { HeaderType } from '@components/Table/Table';
 import CopyButton from '@components/CopyButton/CopyButton';
@@ -9,7 +10,7 @@ import * as ROUTES from '@utils/constants/routes';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { IRichlist } from '@utils/types/IRichlists';
 import { getCurrencyName } from '@utils/appInfo';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
 import { ReactComponent as CrownIcon } from '@assets/icons/crown.svg';
 import { ReactComponent as CrownPolygonIcon1 } from '@assets/icons/crown-polygon-1.svg';
 import { ReactComponent as CrownPolygonIcon2 } from '@assets/icons/crown-polygon-2.svg';
@@ -124,7 +125,7 @@ const generateWealthDistributionItem = (
           </Styles.ValueWrapper>
           <Styles.PercentageWrapper>
             <Styles.PercentageTitle>
-              {translate('pages.richlist.percentage')}
+              {parse(translate('pages.richlist.percentage'))}
             </Styles.PercentageTitle>
             <Styles.PercentageValue>
               {formatNumber(percentage, { decimalsLength: 2 })}%
@@ -140,7 +141,7 @@ export const generateWealthDistributionData = (list: IRichlist[], coinSupply: nu
   const newList = list.sort((a, b) => a.rank - b.rank);
   const dividedLists = LIST_DIVIDERS.map(([firstDivider, lastDivider]) => {
     const currentWealthDistributionList = newList.slice(firstDivider, lastDivider);
-    const rowLabel = translate('pages.richlist.top', {
+    const rowLabel = translateDropdown('pages.richlist.top', {
       rank: `${firstDivider + 1}-${lastDivider}`,
     });
     return generateWealthDistributionItem(

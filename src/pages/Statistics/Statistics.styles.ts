@@ -148,3 +148,68 @@ export const LoadingText = styled.div`
   font-size: 20px;
   transform: translate(-50%, -50%);
 `;
+
+export const ModalContent = styled.div`
+  width: 100%;
+  max-width: 85%;
+  height: fit-content;
+  margin: auto;
+  padding: 0;
+  background: #fff;
+  border-radius: 10px;
+
+  &:focus {
+    outline: none;
+  }
+
+  .mempool-wrapper {
+    margin-bottom: 0;
+  }
+
+  .table__row-header--cell {
+    cursor: default;
+  }
+
+  ${props => props.theme.breakpoints.down(1024)} {
+    max-width: 92%;
+
+    .mempool-table {
+      .table__row-header {
+        display: none;
+      }
+
+      .table__row {
+        display: flex;
+        flex-direction: column;
+
+        .cell-content {
+          &:before {
+            content: attr(data-title);
+            position: relative;
+            display: block;
+            margin-right: 5px;
+            padding-right: 0;
+            font-weight: 600;
+            font-size: 16px;
+            color: ${props => props.theme.table.label};
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const NoContent = styled.div`
+  padding: 10px;
+  font-weight: 600;
+`;
+
+export const ContentWrapper = styled.div`
+  padding: 0;
+`;
+
+export const Pagination = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px;
+`;

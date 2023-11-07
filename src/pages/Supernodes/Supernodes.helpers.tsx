@@ -1,25 +1,12 @@
-import { Grid } from '@material-ui/core';
-
-import RouterLink from '@components/RouterLink/RouterLink';
-import CopyButton from '@components/CopyButton/CopyButton';
-
-import * as ROUTES from '@utils/constants/routes';
-import { formattedTimeElapsed } from '@utils/helpers/date/date';
+import { translateDropdown } from '@utils/helpers/i18n';
+import { formattedTimeElapsed, formatFullDate } from '@utils/helpers/date/date';
 import { INetworkSupernodes } from '@utils/types/INetwork';
 
-import {
-  SUPERNODE_IP_KEY,
-  SUPERNODE_PORT_KEY,
-  SUPERNODE_ADDRESS_KEY,
-  SUPERNODE_STATUS_KEY,
-  SUPERNODE_COUNTRY_KEY,
-  SUPERNODE_LAST_PAID_KEY,
-} from './Supernodes.columns';
 import * as Styles from './Supernodes.styles';
 
 export const DATA_FETCH_LIMIT = 20;
 export const DATA_OFFSET = 0;
-export const DATA_DEFAULT_SORT = 'DESC';
+export const DATA_DEFAULT_SORT = 'desc';
 export const STATUS_LIST = [
   {
     value: 'all',
@@ -59,27 +46,47 @@ export const STATUS_LIST = [
   },
 ];
 
-const generateStatusData = (status: string) => {
+export const generateStatusData = (status: string) => {
   return <Styles.Status className={status.toLowerCase()}>{status}</Styles.Status>;
 };
 
-export const transformSupernodesData = (masternodes: Array<INetworkSupernodes>) =>
-  masternodes.map(({ ip, port, address, status, country, lastPaidTime }) => ({
-    [SUPERNODE_IP_KEY]: ip,
-    [SUPERNODE_PORT_KEY]: port,
-    [SUPERNODE_ADDRESS_KEY]: (
-      <Grid container alignItems="center" wrap="nowrap">
-        <CopyButton copyText={address} />
-        <RouterLink
-          route={`${ROUTES.ADDRESS_DETAILS}/${address}`}
-          value={address}
-          textSize="large"
-          title={address}
-          className="address-link"
-        />
-      </Grid>
-    ),
-    [SUPERNODE_STATUS_KEY]: generateStatusData(status),
-    [SUPERNODE_COUNTRY_KEY]: country,
-    [SUPERNODE_LAST_PAID_KEY]: formattedTimeElapsed(lastPaidTime),
+export const getCsvHeaders = () => {
+  return [
+    { key: 'masternodeRank', label: translateDropdown('pages.supernodes.rank') },
+    { key: 'supernodeIP', label: translateDropdown('pages.supernodes.supernodeIP') },
+    { key: 'address', label: translateDropdown('pages.supernodes.address') },
+    { key: 'status', label: translateDropdown('pages.supernodes.status') },
+    { key: 'lastPaid', label: translateDropdown('pages.supernodes.lastPaid') },
+    { key: 'lastPaidBlock', label: translateDropdown('pages.supernodes.lastPaidBlock') },
+    { key: 'dateTimeLastSeen', label: translateDropdown('pages.supernodes.dateTimeLastSeen') },
+    { key: 'activeSeconds', label: translateDropdown('pages.supernodes.activeSeconds') },
+    {
+      key: 'rankAsOfBlockHeight',
+      label: translateDropdown('pages.supernodes.rankAsOfBlockHeight'),
+    },
+    { key: 'protocolVersion', label: translateDropdown('pages.supernodes.protocolVersion') },
+    { key: 'country', label: translateDropdown('pages.supernodes.country') },
+    { key: 'snPastelIdPubkey', label: translateDropdown('pages.supernodes.snPastelIdPubkey') },
+  ];
+};
+
+export const getCsvData = (supernodes: INetworkSupernodes[]) => {
+  if (!supernodes.length) {
+    return [];
+  }
+  return supernodes.map(item => ({
+    masternodeRank: item.masternodeRank < 0 ? translateDropdown('common.na') : item.masternodeRank,
+    supernodeIP: `${item.ip}:${item.port}`,
+    address: item.address,
+    status: item.status,
+    lastPaid: formattedTimeElapsed(item.lastPaidTime),
+    lastPaidBlock: item.lastPaidBlock,
+    dateTimeLastSeen: formatFullDate(item.dateTimeLastSeen * 1000),
+    activeSeconds: item.activeSeconds,
+    rankAsOfBlockHeight:
+      item.rankAsOfBlockHeight < 0 ? translateDropdown('common.na') : item.rankAsOfBlockHeight,
+    protocolVersion: item.protocolVersion,
+    country: item.country,
+    snPastelIdPubkey: item.snPastelIdPubkey,
   }));
+};

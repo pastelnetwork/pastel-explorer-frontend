@@ -6,6 +6,8 @@ export interface IBlockTransaction {
   totalAmount: number;
   isNonStandard?: boolean;
   tickets: string;
+  totalTickets: number;
+  ticketsTotal: number;
 }
 
 export interface IBlock {

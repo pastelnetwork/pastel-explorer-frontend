@@ -35,7 +35,7 @@ i18next.t = jest.fn().mockImplementation((...arg) => {
 
 describe('components/NFTCollectionActivationTicket', () => {
   const ticket = {
-    type: 'nft-collection-act',
+    type: 'collection-act',
     version: 1,
     pastelID:
       'jXXcKdSL8XAd1kMCkBwe4vMfyZj4Jo5D63nnGzZuXGZuPS7qjax8SayHDHj4Erk2kThZvH7JuoX9PkDeS3q8TY',

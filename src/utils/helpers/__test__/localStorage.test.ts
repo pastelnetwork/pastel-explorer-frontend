@@ -1,4 +1,4 @@
-import LZUTF8 from 'lzutf8';
+import LZString from 'lz-string';
 import { setCacheValue, readCacheValue } from '../localStorage';
 
 describe('utils/helpers/localStorage', () => {
@@ -12,10 +12,10 @@ describe('utils/helpers/localStorage', () => {
     JSON.parse = jest.fn().mockImplementationOnce(() => {
       return initial;
     });
-    LZUTF8.decompress = jest.fn().mockImplementationOnce(() => {
+    LZString.decompress = jest.fn().mockImplementationOnce(() => {
       return JSON.stringify(initial);
     });
-    const lzutf8Spy = jest.spyOn(LZUTF8, 'decompress');
+    const lzutf8Spy = jest.spyOn(LZString, 'decompress');
     const jsonSpy = jest.spyOn(JSON, 'parse');
     readCacheValue('key');
     expect(lzutf8Spy).toBeCalledTimes(1);

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import parse from 'html-react-parser';
 
 import {
   CircularProgress,
@@ -11,13 +12,14 @@ import {
 } from '@material-ui/core';
 import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+
 import RouterLink, { ExternalLink } from '@components/RouterLink/RouterLink';
 import Header from '@components/Header/Header';
 import Table, { RowsProps } from '@components/Table/Table';
 import CopyButton from '@components/CopyButton/CopyButton';
-
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import Hourglass from '@components/Hourglass/Hourglass';
 
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { formattedDate } from '@utils/helpers/date/date';
@@ -29,7 +31,8 @@ import { getCurrencyName } from '@utils/appInfo';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 import { getTicketsTypeList } from '@pages/Movement/Movement.helpers';
 import useBlockDetails from '@hooks/useBlockDetails';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
+import * as BlockStyles from '@pages/Blocks/Blocks.styles';
 
 import { blockHeaders, transactionHeaders, generateDetailsElement } from './BlockDetails.helpers';
 import * as Styles from './BlockDetails.styles';
@@ -114,18 +117,26 @@ const BlockDetails = () => {
             id: 3,
             value: (
               <div className="inline-block">
-                {ticketsTypeList.total > 0 ? (
-                  <div className="inline-block">
-                    <ExternalLink
-                      href={`#${transaction.id}`}
-                      value={ticketsTypeList.total.toString()}
-                      className="transaction-hash"
-                      title={ticketsTypeList.text.join(', <br />')}
-                      isUseTooltip
-                    />
-                  </div>
+                {transaction.ticketsTotal === -1 ? (
+                  <BlockStyles.HourglassWrapper>
+                    <Hourglass />
+                  </BlockStyles.HourglassWrapper>
                 ) : (
-                  <>0</>
+                  <>
+                    {ticketsTypeList.total > 0 ? (
+                      <div className="inline-block">
+                        <ExternalLink
+                          href={`#${transaction.id}`}
+                          value={ticketsTypeList.total.toString()}
+                          className="transaction-hash"
+                          title={ticketsTypeList.text.join(', <br />')}
+                          isUseTooltip
+                        />
+                      </div>
+                    ) : (
+                      <>0</>
+                    )}
+                  </>
                 )}
               </div>
             ),
@@ -135,8 +146,8 @@ const BlockDetails = () => {
             value: (
               <>
                 {transaction.totalAmount === 0 ? (
-                  <Tooltip title={translate('pages.blockDetails.shieldedTooltip')}>
-                    <span>{translate('common.unknown')}</span>
+                  <Tooltip title={translateDropdown('pages.blockDetails.shieldedTooltip')}>
+                    <span>{parse(translate('common.unknown'))}</span>
                   </Tooltip>
                 ) : (
                   formatNumber(transaction.totalAmount, { decimalsLength: 2 })
@@ -159,8 +170,8 @@ const BlockDetails = () => {
       const icon = type === 'previous' ? <NavigateBeforeIcon /> : <NavigateNextIcon />;
       const tooltip =
         type === 'previous'
-          ? translate('pages.blockDetails.previousBlock')
-          : translate('pages.blockDetails.nextBlock');
+          ? parse(translate('pages.blockDetails.previousBlock'))
+          : parse(translate('pages.blockDetails.nextBlock'));
 
       return (
         <Tooltip title={tooltip} arrow>
@@ -188,7 +199,7 @@ const BlockDetails = () => {
 
   return block ? (
     <Styles.Wrapper>
-      <Header title={translate('pages.blockDetails.blockDetails')} />
+      <Header title={parse(translate('pages.blockDetails.blockDetails'))} />
       <Grid container direction="column" spacing={2}>
         <Styles.GridStyle item>
           <Table
@@ -204,8 +215,8 @@ const BlockDetails = () => {
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography className="see-more">
                   {isExpanded
-                    ? translate('pages.blockDetails.seeLess')
-                    : translate('pages.blockDetails.seeMore')}
+                    ? parse(translate('pages.blockDetails.seeLess'))
+                    : parse(translate('pages.blockDetails.seeMore'))}
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
@@ -234,7 +245,7 @@ const BlockDetails = () => {
         </Styles.GridStyle>
         <Styles.GridStyle item>
           <Table
-            title={translate('pages.blockDetails.transactions')}
+            title={parse(translate('pages.blockDetails.transactions'))}
             headers={transactionHeaders}
             rows={generateLatestTransactions(transactions)}
             handleClickSort={handleClickSortTransaction}

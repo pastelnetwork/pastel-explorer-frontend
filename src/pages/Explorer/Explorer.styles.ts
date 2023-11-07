@@ -14,6 +14,10 @@ export const ExplorerWrapper = styled.div`
       }
     }
   }
+
+  .copy-icon {
+    margin-left: 0;
+  }
 `;
 
 export const Gird = styled.div`
@@ -51,6 +55,18 @@ export const BlockWrapper = styled.div`
 
   &.mt-24 {
     margin-top: 24px;
+  }
+
+  .whitespace-nowrap {
+    white-space: nowrap;
+  }
+
+  ${props => props.theme.breakpoints.between(1299, 1453)} {
+    .MuiTableContainer-root {
+      &.table-container {
+        overflow-x: scroll;
+      }
+    }
   }
 
   ${props => props.theme.breakpoints.down(1024)} {
@@ -107,6 +123,10 @@ export const BlockWrapper = styled.div`
       td,
       th {
         padding: 12px 16px;
+
+        ${props => props.theme.breakpoints.up(960)} {
+          height: 54px;
+        }
       }
 
       &:last-child {
@@ -119,6 +139,7 @@ export const BlockWrapper = styled.div`
       &:hover {
         background-color: ${props => props.theme.table.hover} !important;
       }
+
     }
 
     .MuiTypography-root {
@@ -286,6 +307,46 @@ export const GirdStyle = styled(Grid)`
     &.right {
       padding-left: 12px;
       padding-top: 0;
+    }
+  }
+`;
+
+export const LinkWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0;
+
+  .btn-toggle,
+  .view-all {
+    padding: 0;
+  }
+
+  .view-all {
+    .MuiTypography-root {
+      padding: 0;
+    }
+  }
+
+  .btn-toggle {
+    display: none;
+
+    @media screen and (max-width: 1101px) {
+      display: inline-flex;
+      margin-top: -2px;
+    }
+
+    &.show-less {
+      .MuiSvgIcon-root {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .MuiSvgIcon-root {
+    &.toggle-icon {
+      width: 30px;
+      transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      color: ${props => props.theme.link.main};
     }
   }
 `;

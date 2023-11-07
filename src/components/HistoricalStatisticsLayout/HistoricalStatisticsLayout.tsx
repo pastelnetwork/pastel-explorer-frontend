@@ -4,10 +4,11 @@ import { makeStyles } from '@material-ui/styles';
 import { useHistory } from 'react-router-dom';
 import { Skeleton } from '@material-ui/lab';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import parse from 'html-react-parser';
 // application
 import { Dropdown, OptionsProps } from '@components/Dropdown/Dropdown';
 import { statistics } from '@utils/constants/statistics';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
 import { getCurrencyName } from '@utils/appInfo';
 
 import * as Styles from './HistoricalStatisticsLayout.styles';
@@ -15,7 +16,7 @@ import * as Styles from './HistoricalStatisticsLayout.styles';
 interface IProps {
   children: ReactNode;
   currentBgColor: string;
-  title?: string;
+  title?: string | ReactNode;
 }
 
 const useStyles = makeStyles(() => ({
@@ -49,14 +50,14 @@ const HistoricalStatisticsLayout = ({ children, currentBgColor, title }: IProps)
   const generateChartOption = () => {
     const results: OptionsProps[] = [
       {
-        name: title?.toString() || '',
+        name: title && title !== '[object Object]' ? title?.toString() : '',
         value: '0',
       },
     ];
     for (let i = 0; i < statistics.length; i += 1) {
       if (statistics[i].title !== title) {
         results.push({
-          name: translate(statistics[i].title, { currency: getCurrencyName() }),
+          name: translateDropdown(statistics[i].title, { currency: getCurrencyName() }),
           value: statistics[i].url,
         });
       }
@@ -69,14 +70,16 @@ const HistoricalStatisticsLayout = ({ children, currentBgColor, title }: IProps)
       <div style={{ flex: 1 }}>
         <Styles.BackButtonWrapper>
           <Styles.BackButton type="button" onClick={() => history.goBack()}>
-            <NavigateBeforeIcon /> {translate('components.historicalStatisticsLayout.back')}
+            <NavigateBeforeIcon /> {parse(translate('components.historicalStatisticsLayout.back'))}
           </Styles.BackButton>
           <Styles.DropdownWrapper>
             <Dropdown
               value={selectedChart}
               onChange={handleDropdownChange}
               options={generateChartOption()}
-              label={`${translate('components.historicalStatisticsLayout.historicalStatistic')}:`}
+              label={`${translateDropdown(
+                'components.historicalStatisticsLayout.historicalStatistic',
+              )}:`}
               classNameWrapper="historical-statistics"
             />
           </Styles.DropdownWrapper>

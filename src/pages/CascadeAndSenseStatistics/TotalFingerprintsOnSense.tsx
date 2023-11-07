@@ -1,5 +1,6 @@
 import { useState, ChangeEvent, useEffect } from 'react';
 import { Skeleton } from '@material-ui/lab';
+import parse from 'html-react-parser';
 
 import { PeriodTypes, generatePeriodToDropdownOptions } from '@utils/helpers/statisticsLib';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
@@ -66,7 +67,7 @@ const TotalFingerprintsOnSense: React.FC = () => {
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
           <SummaryStyles.Typography variant="h6">
-            {translate('pages.cascadeAndSenseStatistics.totalFingerprintsOnSense')}
+            {parse(translate('pages.cascadeAndSenseStatistics.totalFingerprintsOnSense'))}
           </SummaryStyles.Typography>
           <SummaryStyles.Typography variant="h4">
             <SummaryStyles.Values>
@@ -142,7 +143,7 @@ const TotalFingerprintsOnSense: React.FC = () => {
           <StatisticsStyles.Loader>
             <Skeleton animation="wave" variant="rect" height={170} width="100%" />
             <StatisticsStyles.LoadingText>
-              {translate('common.loadingData')}
+              {parse(translate('common.loadingData'))}
             </StatisticsStyles.LoadingText>
           </StatisticsStyles.Loader>
         ) : (
@@ -152,6 +153,7 @@ const TotalFingerprintsOnSense: React.FC = () => {
             dataY={chartData?.dataY}
             offset={1}
             disableClick
+            period={period}
           />
         )}
       </Styles.ChartContentWrapper>

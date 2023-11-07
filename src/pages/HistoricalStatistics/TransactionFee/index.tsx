@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import parse from 'html-react-parser';
 
 import { PeriodTypes, transformLineChartData } from '@utils/helpers/statisticsLib';
 import { periods, info, cacheList } from '@utils/constants/statistics';
@@ -53,13 +54,13 @@ function TransactionFee() {
   return (
     <HistoricalStatisticsLayout
       currentBgColor={currentBgColor}
-      title={translate('pages.historicalStatistics.averageTransactionFee')}
+      title={parse(translate('pages.historicalStatistics.averageTransactionFee'))}
     >
       <EChartsLineChart
         chartName="transactionfee"
         dataX={chartData?.dataX}
         dataY={chartData?.dataY}
-        title={translate('pages.historicalStatistics.averageTransactionFeeUSD')}
+        title={parse(translate('pages.historicalStatistics.averageTransactionFeeUSD'))}
         info={info}
         offset={10000}
         period={period}
