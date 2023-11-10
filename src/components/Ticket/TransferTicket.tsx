@@ -62,14 +62,28 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
         />
       );
     };
+
     const getOfferType = () => {
       switch (ticket.otherData.offerType) {
         case 'sense':
+        case 'sense-offer':
           return parse(translate('components.ticket.offerTicket.sense'));
         case 'cascade':
           return parse(translate('components.ticket.offerTicket.cascade'));
         default:
           return parse(translate('components.ticket.offerTicket.nft'));
+      }
+    };
+
+    const itemUrl = () => {
+      switch (ticket.otherData.offerType) {
+        case 'sense':
+        case 'sense-offer':
+          return `/sense?txid=${ticket.otherData.regTxId}`;
+        case 'cascade':
+          return `/cascade?txid=${ticket.otherData.regTxId}`;
+        default:
+          return `/nft?txid=${ticket.otherData.regTxId}`;
       }
     };
 
@@ -128,7 +142,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
             <Grid container spacing={3} className="mb-sm-8">
               <Grid item xs={12} sm={3} className="max-w-355">
                 <Styles.TicketTitle>
-                  {parse(translate('components.ticket.transferTicket.itemTxId'))}
+                  {parse(translate('components.ticket.transferTicket.activationTxID'))}
                 </Styles.TicketTitle>
               </Grid>
               <Grid item xs={12} sm={9}>
@@ -157,7 +171,14 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
                     value={ticket.offer_txid}
                     title={ticket.offer_txid}
                     className="address-link"
+                  />{' '}
+                  (
+                  <RouterLink
+                    route={itemUrl()}
+                    value={parse(translate('components.ticket.transferTicket.ticketDetail'))}
+                    className="address-link"
                   />
+                  )
                 </Styles.TicketContent>
               </Grid>
             </Grid>

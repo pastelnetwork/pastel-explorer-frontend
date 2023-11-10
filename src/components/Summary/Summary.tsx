@@ -319,7 +319,7 @@ const Summary: React.FC = () => {
     }
 
     if (sumKey === 'gigaHashPerSec') {
-      return formatNumber(Number(value.toString().replace(/,/g, '')) * NETWORK_RANGE, {
+      return formatNumber(Number(value.toString().replaceAll(',', '')) * NETWORK_RANGE, {
         decimalsLength: 2,
       });
     }

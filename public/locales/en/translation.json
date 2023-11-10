@@ -1067,6 +1067,14 @@
         "timestamp": {
           "message": "Timestamp:",
           "description": "Used for the TransferTicket component"
+        },
+        "activationTxID": {
+          "message": "Activation txID:",
+          "description": "Used for the TransferTicket component"
+        },
+        "ticketDetail": {
+          "message": "Ticket detail",
+          "description": "Used for the TransferTicket component"
         }
       },
       "userNameChangeTicket": {
