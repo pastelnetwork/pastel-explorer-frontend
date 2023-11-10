@@ -157,6 +157,12 @@ export const statistics = [
     url: routes.STATISTICS_FEE_SCHEDULE,
     image: generatePreviewUrl(routes.STATISTICS_FEE_SCHEDULE),
   },
+  {
+    id: 'pslBurnt',
+    title: 'constants.statistics.pslBurnt',
+    url: routes.STATISTICS_PSL_BURNT,
+    image: generatePreviewUrl(routes.STATISTICS_PSL_BURNT),
+  },
 ];
 
 export const themes = [
@@ -203,6 +209,7 @@ export const csvHeaders: TCsvHeaderType = {
   circulatingSupply: commonCsvFields,
   totalSupply: commonCsvFields,
   percentOfPSLStaked: commonCsvFields,
+  pslBurnt: commonCsvFields,
   networktotals: [
     { label: 'constants.statistics.receiveSent', key: 'value' },
     { label: 'constants.statistics.createdTimeCSV', key: 'time' },
