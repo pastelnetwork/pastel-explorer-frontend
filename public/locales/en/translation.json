@@ -3583,6 +3583,10 @@
     "senseMap": {
       "message": "Sense Map",
       "description": "Used for the routes"
+    },
+    "pslBurnt": {
+      "message": "{{currency}} Burnt",
+      "description": "Used for the routes"
     }
   },
   "chartOptions": {
