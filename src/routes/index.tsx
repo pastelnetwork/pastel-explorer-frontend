@@ -71,6 +71,7 @@ const CollectionDetails = loadable(
 const CascadeDetails = loadable(() => import('@pages/Details/CascadeDetails/CascadeDetails'));
 const NftDetails = loadable(() => import('@pages/Details/NftDetails/NftDetails'));
 const FeeSchedule = loadable(() => import('@pages/HistoricalStatistics/FeeSchedule'));
+const PSLBurnt = loadable(() => import('@pages/HistoricalStatistics/PSLBurnt'));
 const SenseMap = loadable(() => import('@pages/SenseMap/SenseMap'));
 
 const explorerRoutes = {
@@ -408,6 +409,15 @@ const feeScheduleStatisticsRoutes = {
   children: null,
 };
 
+const pslBurntStatisticsRoutes = {
+  id: 'pslBurnt',
+  path: ROUTES.STATISTICS_PSL_BURNT,
+  component: PSLBurnt,
+  icon: null,
+  seoTitle: 'routes.pslBurnt',
+  children: null,
+};
+
 const senseDetailsRoutes = {
   id: 'routes.senseDetails',
   path: ROUTES.SENSE_DETAILS,
@@ -530,6 +540,7 @@ export const pageRoutes = [
   cascadeDetailsRoutes,
   nftDetailsRoutes,
   feeScheduleStatisticsRoutes,
+  pslBurntStatisticsRoutes,
   senseMapRoutes,
 ];
 

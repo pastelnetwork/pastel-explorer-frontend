@@ -2268,6 +2268,10 @@
       "feeSchedule": {
         "message": "Fee Schedule",
         "description": "Used for the HistoricalStatistics page"
+      },
+      "pslBurnt": {
+        "message": "{{currency}} Burnt",
+        "description": "Used for the HistoricalStatistics page"
       }
     },
     "movement": {
@@ -3733,6 +3737,10 @@
     "totalFingerprints": {
       "message": "Total fingerprints",
       "description": "Used for the chartOptions"
+    },
+    "pslBurnt": {
+      "message": "{{currency}} Burnt",
+      "description": "Used for the chartOptions"
     }
   },
   "constants": {
@@ -3933,6 +3941,10 @@
       },
       "feeSchedule": {
         "message": "Fee Schedule",
+        "description": "Used for the constants"
+      },
+      "pslBurnt": {
+        "message": "{{currency}} Burnt",
         "description": "Used for the constants"
       }
     }
