@@ -54,15 +54,24 @@ class ErrorHandler extends React.Component<IErrorHandlerProps, IErrorHandlerStat
               <Typography component="h2" variant="body1" align="center" gutterBottom>
                 {t('pages.errorHandler.refresh.message')}
               </Typography>
-
-              <Styles.Button
-                onClick={() => window.location.reload()}
-                variant="contained"
-                color="secondary"
-                mt={2}
-              >
-                {t('pages.errorHandler.btnRefresh.message')}
-              </Styles.Button>
+              <Styles.Box mt={2}>
+                <Styles.Button
+                  onClick={() => window.location.reload()}
+                  variant="contained"
+                  color="secondary"
+                >
+                  {t('pages.errorHandler.btnRefresh.message')}
+                </Styles.Button>
+                <Styles.Button
+                  onClick={() => {
+                    window.location.href = '/';
+                  }}
+                  variant="contained"
+                  color="secondary"
+                >
+                  {t('pages.404.backToHomepage.message')}
+                </Styles.Button>
+              </Styles.Box>
             </div>
           </Styles.ContentWrapper>
         </Styles.Wrapper>

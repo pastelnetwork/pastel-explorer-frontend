@@ -15,6 +15,7 @@ export default function useTicketsType(
     endDate: number | null;
   },
   offset: number,
+  sort: string,
 ) {
   let qStatus = '';
   if (status) {
@@ -35,7 +36,7 @@ export default function useTicketsType(
     total: number;
     senses: TSenseRequests[];
   }>(
-    `${URLS.GET_TICKETS}/${type}?offset=${offset}&limit=${limit}&type=${type}${dateParam}${qStatus}&include=all`,
+    `${URLS.GET_TICKETS}/${type}?offset=${offset}&limit=${limit}&sort=${sort}&type=${type}${dateParam}${qStatus}&include=all`,
     axiosGet,
     SWR_OPTIONS,
   );

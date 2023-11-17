@@ -33,7 +33,9 @@ export const transformBlocksData = (
       ticketsCount:
         totalTickets > 1
           ? translateDropdown('pages.statistics.tickets', { ticketsCount: totalTickets })
-          : translateDropdown('pages.statistics.ticket', { ticketsCount: totalTickets || 0 }),
+          : translateDropdown('pages.statistics.ticket', {
+              ticketsCount: totalTickets >= 0 ? totalTickets : 0,
+            }),
       status: 'entered',
     };
   });

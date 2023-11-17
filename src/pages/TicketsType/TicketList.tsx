@@ -60,7 +60,11 @@ import { getFileIcon } from '@pages/Details/CascadeDetails/CascadeDetails.helper
 import CopyButton from '@components/CopyButton/CopyButton';
 
 import noImagePlaceholder from '@assets/images/no-image-placeholder.svg';
-import { TICKET_TYPE_OPTIONS, TICKET_STATUS_OPTIONS } from './TicketsType.helpers';
+import {
+  TICKET_TYPE_OPTIONS,
+  TICKET_STATUS_OPTIONS,
+  TICKET_SORT_OPTIONS,
+} from './TicketsType.helpers';
 
 const useStyles = makeStyles((theme: TAppTheme) => {
   return {
@@ -91,7 +95,9 @@ const useStyles = makeStyles((theme: TAppTheme) => {
 interface ITicketsList {
   data: ITicket[];
   ticketType: string;
+  ticketSort: string;
   onTicketTypeChange: (_value: string) => void;
+  onTicketSortChange: (_value: string) => void;
   totalTickets: number;
   isLoading?: boolean;
   senses?: TSenseRequests[];
@@ -119,6 +125,8 @@ const TicketsList: React.FC<ITicketsList> = ({
   selectedStatus,
   onDateRangeApply,
   defaultDateRange,
+  ticketSort,
+  onTicketSortChange,
 }) => {
   const decodeApiTicket = (apiTicket: string) => {
     let result = null;
@@ -361,8 +369,23 @@ const TicketsList: React.FC<ITicketsList> = ({
     onStatusChange(event.target.value as string);
   };
 
+  const handleSortChange = (
+    event: React.ChangeEvent<{
+      value: unknown;
+    }>,
+  ) => {
+    onTicketSortChange(event.target.value as string);
+  };
+
   const getStatusOptions = () => {
     return TICKET_STATUS_OPTIONS.map(option => ({
+      ...option,
+      name: translateDropdown(option.name),
+    }));
+  };
+
+  const getSortOptions = () => {
+    return TICKET_SORT_OPTIONS.map(option => ({
       ...option,
       name: translateDropdown(option.name),
     }));
@@ -400,13 +423,22 @@ const TicketsList: React.FC<ITicketsList> = ({
                 classNameWrapper="dropdown-ticket-type"
               />
               {['sense', 'cascade'].includes(ticketType) ? (
-                <Dropdown
-                  value={selectedStatus}
-                  onChange={handleStatusChange}
-                  options={getStatusOptions()}
-                  label={translateDropdown('pages.ticketsType.status')}
-                  classNameWrapper="dropdown-status"
-                />
+                <>
+                  <Dropdown
+                    value={selectedStatus}
+                    onChange={handleStatusChange}
+                    options={getStatusOptions()}
+                    label={translateDropdown('pages.ticketsType.status')}
+                    classNameWrapper="dropdown-status"
+                  />
+                  <Dropdown
+                    value={ticketSort}
+                    onChange={handleSortChange}
+                    options={getSortOptions()}
+                    label={translateDropdown('pages.ticketsType.sortingBy')}
+                    classNameWrapper="dropdown-sort"
+                  />
+                </>
               ) : null}
               <div className={`${classes.listFilter} list-filter`}>
                 {blocksPeriodFilters.map(({ name, value }) => (
