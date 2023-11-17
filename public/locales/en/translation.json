@@ -1269,6 +1269,10 @@
         "message": "Download CSV",
         "description": "Used for the CascadeAndSenseStatistics page"
       },
+      "downloading": {
+        "message": "Downloading...",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
       "address": {
         "message": "{{currency}} Address",
         "description": "Used for the CascadeAndSenseStatistics page"

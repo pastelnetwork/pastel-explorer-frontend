@@ -108,7 +108,7 @@ export const getSimilarRegisteredImagesData = (rarenessScoresTable: string) => {
         ? `data:image/jpeg;base64,${uncompressedRarenessScoresTable.thumbnail[i]}`
         : '',
       imageHash: formatImageHash(uncompressedRarenessScoresTable.image_hash[i]),
-      imageHashOriginal: uncompressedRarenessScoresTable.image_hash[i],
+      imageHashOriginal: uncompressedRarenessScoresTable.image_hash[i].split('_')[0],
       dateTimeAdded: getRegisterTime(uncompressedRarenessScoresTable.register_time[i]),
       likelyDupe: uncompressedRarenessScoresTable.is_likely_dupe[i],
       matchType: uncompressedRarenessScoresTable.match_type[i],
