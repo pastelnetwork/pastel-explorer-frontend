@@ -419,7 +419,10 @@ const SimilarRegisteredImagesWrapper = ({ sense }: { sense: TSenseRequests }) =>
 };
 
 const SenseDetails: React.FC = () => {
-  const id = getParameterByName('hash');
+  let id = getParameterByName('hash');
+  if (id) {
+    id = id.split('_')[0] as string;
+  }
   const txid = getParameterByName('txid');
   const matchType = getParameterByName('matchType');
   const { senseData: sense, isLoading } = useSenseDetails(id, txid);

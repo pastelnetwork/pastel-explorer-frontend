@@ -1029,6 +1029,10 @@
         "signature3": {
           "message": "Registering Supernode #3 - Signature:",
           "description": "Used for the signatures component"
+        },
+        "registeringSupernode": {
+          "message": "Registering Supernode",
+          "description": "Used for the signatures component"
         }
       },
       "transferTicket": {
@@ -1062,6 +1066,14 @@
         },
         "timestamp": {
           "message": "Timestamp:",
+          "description": "Used for the TransferTicket component"
+        },
+        "activationTxID": {
+          "message": "Activation txID:",
+          "description": "Used for the TransferTicket component"
+        },
+        "ticketDetail": {
+          "message": "Ticket detail",
           "description": "Used for the TransferTicket component"
         }
       },
@@ -1255,6 +1267,10 @@
       },
       "downloadCSV": {
         "message": "Download CSV",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "downloading": {
+        "message": "Downloading...",
         "description": "Used for the CascadeAndSenseStatistics page"
       },
       "address": {
@@ -2256,6 +2272,10 @@
       "feeSchedule": {
         "message": "Fee Schedule",
         "description": "Used for the HistoricalStatistics page"
+      },
+      "pslBurnt": {
+        "message": "{{currency}} Burnt",
+        "description": "Used for the HistoricalStatistics page"
       }
     },
     "movement": {
@@ -2861,6 +2881,30 @@
       },
       "senseAndNFTCollectionTickets": {
         "message": "Sense and NFT Collection Tickets",
+        "description": "Used for the Tickets page"
+      },
+      "sortingBy": {
+        "message": "Sorting by:",
+        "description": "Used for the Tickets page"
+      },
+      "timestamp": {
+        "message": "Timestamp",
+        "description": "Used for the Tickets page"
+      },
+      "blockNumber": {
+        "message": "Block Height of the TXID",
+        "description": "Used for the Tickets page"
+      },
+      "blockNumberRegistered": {
+        "message": "Block Height When Ticket Registered",
+        "description": "Used for the Tickets page"
+      },
+      "totalCost": {
+        "message": "Total Cost",
+        "description": "Used for the Tickets page"
+      },
+      "registeringSupernode": {
+        "message": "Registering Supernode",
         "description": "Used for the Tickets page"
       }
     },
@@ -3513,6 +3557,10 @@
     "feeSchedule": {
       "message": "Fee Schedule",
       "description": "Used for the routes"
+    },
+    "pslBurnt": {
+      "message": "{{currency}} Burnt",
+      "description": "Used for the routes"
     }
   },
   "chartOptions": {
@@ -3666,6 +3714,10 @@
     },
     "totalFingerprints": {
       "message": "Total fingerprints",
+      "description": "Used for the chartOptions"
+    },
+    "pslBurnt": {
+      "message": "{{currency}} Burnt",
       "description": "Used for the chartOptions"
     }
   },
@@ -3867,6 +3919,10 @@
       },
       "feeSchedule": {
         "message": "Fee Schedule",
+        "description": "Used for the constants"
+      },
+      "pslBurnt": {
+        "message": "{{currency}} Burnt",
         "description": "Used for the constants"
       }
     }

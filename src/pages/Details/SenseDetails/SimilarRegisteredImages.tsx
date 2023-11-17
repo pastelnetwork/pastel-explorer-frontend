@@ -1,13 +1,17 @@
+import { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Tooltip from '@material-ui/core/Tooltip';
 import InfoIcon from '@material-ui/icons/Info';
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
 import parse from 'html-react-parser';
 
 import { TAppTheme } from '@theme/index';
@@ -64,7 +68,8 @@ const formatImageHash = (hash: string) => {
 };
 
 type TSimilarRegisteredImage = {
-  image: string | null;
+  rank: number;
+  image?: string;
   imageHash: string;
   imageHashOriginal: string;
   dateTimeAdded: string;
@@ -87,7 +92,7 @@ export const getSimilarRegisteredImagesData = (rarenessScoresTable: string) => {
 
   const getRegisterTime = (value: string | Array<string[]>) => {
     try {
-      if (value?.length) {
+      if (Array.isArray(value)) {
         return value[0][0];
       }
       return value?.toString()?.split('.')[0];
@@ -98,11 +103,12 @@ export const getSimilarRegisteredImagesData = (rarenessScoresTable: string) => {
   let fancyGridData = [];
   for (let i = 0; i < Object.values(uncompressedRarenessScoresTable.image_hash).length; i += 1) {
     fancyGridData.push({
+      rank: i + 1,
       image: uncompressedRarenessScoresTable.thumbnail[i]
         ? `data:image/jpeg;base64,${uncompressedRarenessScoresTable.thumbnail[i]}`
-        : null,
+        : '',
       imageHash: formatImageHash(uncompressedRarenessScoresTable.image_hash[i]),
-      imageHashOriginal: uncompressedRarenessScoresTable.image_hash[i],
+      imageHashOriginal: uncompressedRarenessScoresTable.image_hash[i].split('_')[0],
       dateTimeAdded: getRegisterTime(uncompressedRarenessScoresTable.register_time[i]),
       likelyDupe: uncompressedRarenessScoresTable.is_likely_dupe[i],
       matchType: uncompressedRarenessScoresTable.match_type[i],
@@ -161,7 +167,7 @@ const SimilarRegisteredImageRow: React.FC<ISimilarRegisteredImageRow> = ({
       }}
     >
       <StyledTableCell component="td" scope="row" align="center">
-        <TicketStyles.TicketContent>{index + 1}</TicketStyles.TicketContent>
+        <TicketStyles.TicketContent>{item.rank}</TicketStyles.TicketContent>
       </StyledTableCell>
       <StyledTableCell
         component="td"
@@ -233,7 +239,22 @@ const SimilarRegisteredImageRow: React.FC<ISimilarRegisteredImageRow> = ({
   );
 };
 
+type Order = 'asc' | 'desc';
+
+function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
 const SimilarRegisteredImages: React.FC<ISimilarRegisteredImages> = ({ rarenessScoresTable }) => {
+  const [order, setOrder] = useState<Order>('asc');
+  const [orderBy, setOrderBy] = useState<keyof TSimilarRegisteredImage>('rank');
+
   if (!rarenessScoresTable) {
     return (
       <Styles.EmptyWrapper>
@@ -243,6 +264,31 @@ const SimilarRegisteredImages: React.FC<ISimilarRegisteredImages> = ({ rarenessS
   }
   const fancyGridData = getSimilarRegisteredImagesData(rarenessScoresTable);
 
+  const handleRequestSort = (property: keyof TSimilarRegisteredImage) => () => {
+    const isAsc = (orderBy === property && order === 'asc') || orderBy !== property;
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
+
+  const renderHeaderItem = (field: keyof TSimilarRegisteredImage, langField: string) => {
+    const renderSortIcon = () => {
+      if (orderBy === field) {
+        return order === 'desc' ? <ArrowDropDown /> : <ArrowDropUp />;
+      }
+      return null;
+    };
+
+    return (
+      <TableSortLabel
+        active={orderBy === field}
+        direction={orderBy === field ? order : 'asc'}
+        onClick={handleRequestSort(field)}
+      >
+        {parse(translate(`pages.senseDetails.${langField}`))} {renderSortIcon()}
+      </TableSortLabel>
+    );
+  };
+
   return (
     <Styles.TableWrapper>
       <TableContainer component={Paper} className="table-container">
@@ -250,55 +296,64 @@ const SimilarRegisteredImages: React.FC<ISimilarRegisteredImages> = ({ rarenessS
           <TableHead className="table__row-header">
             <TableRow>
               <StyledTableCell component="th" className="rank" align="center">
-                {parse(translate('pages.senseDetails.rank'))}
+                {renderHeaderItem('rank', 'rank')}
               </StyledTableCell>
               <StyledTableCell component="th" className="thumbnail">
                 {parse(translate('pages.senseDetails.thumbnail'))}
               </StyledTableCell>
               <StyledTableCell component="th" className="imageHash">
-                {parse(translate('pages.senseDetails.imageHash'))}
+                {renderHeaderItem('imageHash', 'imageHash')}
               </StyledTableCell>
               <StyledTableCell component="th" className="dateTimeAdded">
-                {parse(translate('pages.senseDetails.dateTimeAdded'))}
+                {renderHeaderItem('dateTimeAdded', 'dateTimeAdded')}
               </StyledTableCell>
               <StyledTableCell component="th" className="matchType">
-                {parse(translate('pages.senseDetails.matchType'))}
+                {renderHeaderItem('matchType', 'matchType')}
               </StyledTableCell>
               <StyledTableCell component="th" className="dupeProbability">
-                {parse(translate('pages.senseDetails.dupeProbability'))}
+                {renderHeaderItem('finalDupeProbability', 'dupeProbability')}
               </StyledTableCell>
               <StyledTableCell component="th" className="dupeProbability chart">
                 {parse(translate('pages.senseDetails.dupeProbability'))}
               </StyledTableCell>
               <StyledTableCell component="th" className="cosineSimilarity">
-                {parse(translate('pages.senseDetails.cosineSimilarity'))}
+                {renderHeaderItem('cosineSimilarity', 'cosineSimilarity')}
               </StyledTableCell>
               <StyledTableCell component="th" className="cosineGain">
-                {parse(translate('pages.senseDetails.cosineGain'))}
+                {renderHeaderItem('cosineGain', 'cosineGain')}
               </StyledTableCell>
               <StyledTableCell component="th" className="hoeffdingsDependency">
-                {parse(translate('pages.senseDetails.hoeffdingsDependency'))}
+                {renderHeaderItem('hoeffdingDependency', 'hoeffdingsDependency')}
               </StyledTableCell>
               <StyledTableCell component="th" className="hoeffdingGain">
-                {parse(translate('pages.senseDetails.hoeffdingGain'))}
+                {renderHeaderItem('hoeffdingGain', 'hoeffdingGain')}
               </StyledTableCell>
               <StyledTableCell component="th" className="hilbertSchmidtInformationCriteria">
-                {parse(translate('pages.senseDetails.hilbertSchmidtInformationCriteria'))}
+                {renderHeaderItem(
+                  'hilbertSchmidtInformationCriteria',
+                  'hilbertSchmidtInformationCriteria',
+                )}
               </StyledTableCell>
               <StyledTableCell component="th" className="hilbertSchmidtGain">
-                {parse(translate('pages.senseDetails.hilbertSchmidtGain'))}
+                {renderHeaderItem('hilbertSchmidtGain', 'hilbertSchmidtGain')}
               </StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {fancyGridData?.map((item, index) => (
-              <SimilarRegisteredImageRow
-                key={item.imageHashOriginal}
-                item={item}
-                index={index}
-                totalItem={fancyGridData.length - 1}
-              />
-            ))}
+            {fancyGridData
+              ?.sort((a, b) =>
+                order === 'desc'
+                  ? descendingComparator(a, b, orderBy)
+                  : -descendingComparator(a, b, orderBy),
+              )
+              ?.map((item, index) => (
+                <SimilarRegisteredImageRow
+                  key={item.imageHashOriginal}
+                  item={item}
+                  index={index}
+                  totalItem={fancyGridData.length - 1}
+                />
+              ))}
             {!fancyGridData.length ? (
               <StyledTableRow className="table__row">
                 <StyledTableCell component="td" scope="row" align="center" colSpan={13}>

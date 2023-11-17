@@ -103,6 +103,11 @@ const Blocks = () => {
     }
   }, [filter.dateRange, filter.dropdownType, filter.customDateRange]);
 
+  useEffect(() => {
+    setParams({ ...apiParams });
+    swrSetSize(1);
+  }, [blockElements, blocksUnconfirmed]);
+
   const getMovementTransactionsTitle = () => (
     <Styles.TitleWrapper>
       <Styles.Title>{parse(translate('pages.blocks.blockList'))}</Styles.Title>{' '}

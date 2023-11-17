@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import { spacing } from '@material-ui/system';
-import { Button as MuiButton } from '@material-ui/core';
+import { Button as MuiButton, Box as MuiBox } from '@material-ui/core';
 
 import { MuiButtonSpacingType } from '@utils/types/styles';
 
@@ -29,5 +29,26 @@ export const ContentWrapper = styled.div`
   .content {
     display: inline-block;
     margin: auto;
+  }
+`;
+
+export const Box = styled(MuiBox)`
+  display: flex;
+  align-item: center;
+  justify-content: center;
+
+  .MuiButtonBase-root:last-child {
+    margin-left: 8px;
+  }
+
+  ${props => props.theme.breakpoints.down(425)} {
+    flex-direction: column;
+    max-width: 250px;
+    margin: auto;
+
+    .MuiButtonBase-root:last-child {
+      margin-left: 0;
+      margin-top: 8px;
+    }
   }
 `;
