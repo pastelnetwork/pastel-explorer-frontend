@@ -83,7 +83,7 @@ const IncomingTransactions: React.FC<IIncomingTransactions> = ({ blockElements }
   };
 
   return (
-    <SummaryStyles.Card className="cascade-sense-card">
+    <SummaryStyles.Card className="statistics-card">
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
           <SummaryStyles.Typography variant="h6">

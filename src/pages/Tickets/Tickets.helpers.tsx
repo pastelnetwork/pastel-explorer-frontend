@@ -690,7 +690,7 @@ export const transformOfferAndTransferData = (data: TicketsList[]) =>
                 <Box className="title">{parse(translate('pages.tickets.pastelID'))}</Box>
                 <Box className="bold">
                   <RouterLink
-                    route={`${ROUTES.TRANSACTION_DETAILS}/${pastelID}`}
+                    route={`${ROUTES.PASTEL_ID_DETAILS}/${pastelID}`}
                     value={formatAddress(pastelID, 5, -5)}
                     title={pastelID}
                     className="address-link"

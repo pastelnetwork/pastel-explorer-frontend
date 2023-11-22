@@ -23,7 +23,7 @@ export default function useCollectionDetails(id: string) {
 export function useCollectionItems(id: string) {
   const { data, isLoading, size, setSize } = useSWRInfinite(
     index =>
-      `${URLS.GET_COLLECTION_ITEMS}?collection_id=${id}*offset=${
+      `${URLS.GET_COLLECTION_ITEMS}?collection_id=${id}&offset=${
         index * DATA_FETCH_LIMIT
       }&limit=${DATA_FETCH_LIMIT}`,
     axiosGet,

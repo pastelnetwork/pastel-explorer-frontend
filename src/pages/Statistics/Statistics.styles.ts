@@ -43,7 +43,7 @@ export const BlockWrapper = styled.div`
     box-shadow: none;
   }
 
-  .cascade-sense-card {
+  .statistics-card {
     .echarts-for-react {
       height: 280px !important;
     }
@@ -94,7 +94,7 @@ export const ChartWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
 
-  .cascade-sense-card {
+  .statistics-card {
     width: calc(50% - 8px);
     margin-right: 16px;
     margin-bottom: 16px;
@@ -112,6 +112,10 @@ export const ChartWrapper = styled.div`
       width: 100%;
       margin-right: 0;
       margin-left: 0;
+
+      &:nth-child(3) {
+        margin-right: 0;
+      }
     }
   }
 `;
