@@ -137,12 +137,6 @@ const ApiList = {
     name: 'components.explorerAPI.supernodes',
     api: [
       {
-        name: 'components.explorerAPI.statistics',
-        urlDisplay: '/v1/stats/live-dashboard-statistics',
-        url: 'Other%20statistics/get_v1_stats_live_dashboard_statistics',
-        method: 'GET',
-      },
-      {
         name: 'components.explorerAPI.explorerMapSupernodeStatistics',
         urlDisplay: '/v1/network',
         url: 'Network/get_v1_network',
@@ -150,7 +144,7 @@ const ApiList = {
       },
       {
         name: 'components.explorerAPI.supernodeList',
-        urlDisplay: '/v1/network',
+        urlDisplay: '/v1/network?limit=20&offset=0',
         url: 'Network/get_v1_network',
         method: 'GET',
       },
@@ -267,12 +261,6 @@ const ApiList = {
       },
       {
         name: 'components.explorerAPI.receivedByMonth',
-        urlDisplay: '/v1/stats/direction/{psl_address}',
-        url: 'Other%20statistics/get_v1_stats_direction__psl_address_',
-        method: 'GET',
-      },
-      {
-        name: 'components.explorerAPI.sentByMonth',
         urlDisplay: '/v1/stats/direction/{psl_address}',
         url: 'Other%20statistics/get_v1_stats_direction__psl_address_',
         method: 'GET',
@@ -403,7 +391,7 @@ const ApiList = {
     api: [
       {
         name: 'components.explorerAPI.getCascadeDetail',
-        urlDisplay: '/v1/cascade?registration_ticket_txid={txid}',
+        urlDisplay: '/v1/cascade',
         url: 'Cascade/get_v1_cascade',
         method: 'GET',
       },
@@ -426,15 +414,15 @@ const ApiList = {
     name: 'components.explorerAPI.senseDetails',
     api: [
       {
-        name: 'components.explorerAPI.getTransfers',
-        urlDisplay: '/v1/sense/transfers',
-        url: 'NFTs/get_v1_sense_transfers',
-        method: 'GET',
-      },
-      {
         name: 'components.explorerAPI.getSenseDetail',
         urlDisplay: '/v1/sense',
         url: 'Sense/get_v1_sense',
+        method: 'GET',
+      },
+      {
+        name: 'components.explorerAPI.getTransfers',
+        urlDisplay: '/v1/sense/transfers',
+        url: 'NFTs/get_v1_sense_transfers',
         method: 'GET',
       },
     ],
