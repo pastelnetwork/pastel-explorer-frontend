@@ -1134,7 +1134,7 @@
     },
     "explorerAPI": {
       "viewFullDocs": {
-        "message": "View full docs",
+        "message": "View API Documentation",
         "description": "Used for the ExplorerAPI component"
       },
       "title": {
