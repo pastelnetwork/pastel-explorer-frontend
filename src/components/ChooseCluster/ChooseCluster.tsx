@@ -180,7 +180,7 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
             </Styles.ClusterWrapper>
             <Styles.LinkButtonWrapper>
               <Styles.LinkButton href={getBaseURL()} target="_blank" rel="noreferrer">
-                View full docs
+                {translate('components.explorerAPI.viewFullDocs')}
               </Styles.LinkButton>
             </Styles.LinkButtonWrapper>
           </Styles.ExplorerAPIWrapper>
