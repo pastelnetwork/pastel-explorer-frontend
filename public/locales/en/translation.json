@@ -1134,11 +1134,11 @@
     },
     "explorerAPI": {
       "viewFullDocs": {
-        "message": "View API Documentation",
+        "message": "API Documentation",
         "description": "Used for the ExplorerAPI component"
       },
       "title": {
-        "message": "The Explorer API",
+        "message": "API",
         "description": "Used for the ExplorerAPI component"
       },
       "homepage": {
@@ -1298,11 +1298,7 @@
         "description": "Used for the ExplorerAPI component"
       },
       "receivedByMonth": {
-        "message": "Received by Month",
-        "description": "Used for the ExplorerAPI component"
-      },
-      "sentByMonth": {
-        "message": "Sent by Month",
+        "message": "Received Or Sent by Month",
         "description": "Used for the ExplorerAPI component"
       },
       "transactions": {
@@ -1350,7 +1346,7 @@
         "description": "Used for the ExplorerAPI component"
       },
       "getSenseDetail": {
-        "message": "Home",
+        "message": "Get sense detail",
         "description": "Used for the ExplorerAPI component"
       },
       "nftDetails": {

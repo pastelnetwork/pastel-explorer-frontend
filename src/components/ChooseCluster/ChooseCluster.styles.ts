@@ -31,7 +31,7 @@ export const ClusterWrapper = styled.div`
   overflow-x: hidden;
 
   &.explorer-api {
-    max-height: 73%;
+    max-height: 100%;
     min-height: unset;
     height: auto;
     margin-top: 0;
@@ -42,6 +42,13 @@ export const ExplorerAPIWrapper = styled.div`
   width: 100%;
   max-height: 65vh;
   margin-top: 15px;
+
+  h2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0;
+  }
 `;
 
 export const ExplorerApiItem = styled.div`
@@ -67,19 +74,8 @@ export const ExplorerApiLink = styled.a`
 
   .item-title,
   .item-value {
-    color: ${props => props.theme.palette.text.primary};
-  }
-
-  &.active,
-  &:hover {
-    border-color: ${props => props.theme.sidebar.menu.active};
-    color: ${props => props.theme.sidebar.menu.active};
-    background: transparent;
-
-    .item-title,
-    .item-value {
-      color: ${props => props.theme.sidebar.menu.active};
-    }
+    color: ${props => props.theme.sidebar.menu.toggle.switch};
+    word-break: break-all;
   }
 `;
 
@@ -92,20 +88,13 @@ export const LinkButtonWrapper = styled.div`
 `;
 
 export const LinkButton = styled.a`
-  padding: 8px 25px;
-  background: ${props => props.theme.sidebar.menu.toggle.switch};
-  color: #fff;
-  font-size: 16px;
+  color: ${props => props.theme.sidebar.menu.toggle.switch};
+  font-size: 14px;
   font-weight: 400;
-  font-family: 'Gill Sans';
+  line-height: 1;
   cursor: pointer;
-  border-radius: 10px;
   border: 0;
   outline: none;
   transition: all 0.5s ease;
   text-decoration: none;
-
-  &:hover {
-    background: ${props => props.theme.sidebar.menu.toggle.hover};
-  }
 `;

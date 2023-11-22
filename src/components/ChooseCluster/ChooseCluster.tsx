@@ -174,15 +174,15 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
             })}
           </Styles.ClusterWrapper>
           <Styles.ExplorerAPIWrapper>
-            <h2 className={classes.title}>{parse(translate('components.explorerAPI.title'))}</h2>
-            <Styles.ClusterWrapper className="explorer-api">
-              <ExplorerAPI />
-            </Styles.ClusterWrapper>
-            <Styles.LinkButtonWrapper>
+            <h2 className={classes.title}>
+              <span>{parse(translate('components.explorerAPI.title'))}</span>
               <Styles.LinkButton href={getBaseURL()} target="_blank" rel="noreferrer">
                 {translate('components.explorerAPI.viewFullDocs')}
               </Styles.LinkButton>
-            </Styles.LinkButtonWrapper>
+            </h2>
+            <Styles.ClusterWrapper className="explorer-api">
+              <ExplorerAPI />
+            </Styles.ClusterWrapper>
           </Styles.ExplorerAPIWrapper>
         </div>
       </Drawer>
