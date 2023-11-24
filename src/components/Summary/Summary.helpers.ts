@@ -91,8 +91,8 @@ export const calculateDifference = (
   second: string | number,
   key: string,
 ) => {
-  const firstValue = Number(first.toString());
-  const secondValue = Number(second.toString());
+  const firstValue = parseFloat(first.toString());
+  const secondValue = parseFloat(second.toString());
 
   const difference = ((firstValue - secondValue) / ((firstValue + secondValue) / 2)) * 100;
 

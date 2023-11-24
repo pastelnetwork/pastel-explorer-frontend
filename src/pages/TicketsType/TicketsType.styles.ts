@@ -17,6 +17,12 @@ export const TicketsContainer = styled.div`
     }
   }
 
+  .dropdown-sort {
+    .MuiInputBase-root {
+      width: 130px;
+    }
+  }
+
   .nowrap {
     white-space: nowrap;
   }
@@ -26,7 +32,8 @@ export const TicketsContainer = styled.div`
     border: 1px solid ${props => props.theme.filter.border};
   }
 
-  .dropdown-status {
+  .dropdown-status,
+  .dropdown-sort {
     margin-left: 10px;
   }
 
@@ -60,6 +67,7 @@ export const TicketsContainer = styled.div`
 
     .dropdown-ticket-type,
     .dropdown-status,
+    .dropdown-sort,
     .list-filter {
       margin-top: 10px;
     }

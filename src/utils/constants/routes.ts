@@ -36,6 +36,7 @@ export const STATISTICS_TOTAL_SUPPLY = `${STATISTICS_OVERTIME}/total-supply`;
 export const STATISTICS_PERCENT_OF_PSL_STAKED = `${STATISTICS_OVERTIME}/percent-of-psl-staked`;
 export const STATISTICS_ACCOUNTS = `${STATISTICS_OVERTIME}/accounts`;
 export const STATISTICS_FEE_SCHEDULE = `${STATISTICS_OVERTIME}/fee-schedule`;
+export const STATISTICS_PSL_BURNT = `${STATISTICS_OVERTIME}/psl-burnt`;
 export const CASCADE_AND_SENSE_STATISTICS = '/cascade-and-sense-statistics';
 export const SENSE_DETAILS = '/sense';
 export const PASTEL_ID_DETAILS = '/pastelid';

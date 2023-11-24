@@ -155,7 +155,7 @@ export function transformMarketVolumePriceInfo(
     dataY1.push(+y1.toFixed(8));
     dataY2.push(Number(y2.toFixed(2)));
   }
-  if (period === '24h' && checkValidateData(prices[prices.length - 1][0])) {
+  if (period === '24h' && prices?.length && checkValidateData(prices[prices.length - 1][0])) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
     dataY1.push(Number(dataY1[dataY1.length - 1]));
     dataY2.push(Number(dataY2[dataY2.length - 1]));
@@ -180,7 +180,7 @@ export function transformMarketCapPriceInfo(
     dataY1.push(+y1.toFixed(8));
     dataY2.push(Math.round(y2));
   }
-  if (period === '24h' && checkValidateData(prices[prices.length - 1][0])) {
+  if (period === '24h' && prices?.length && checkValidateData(prices[prices.length - 1][0])) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy hh:mm aa') || '');
     dataY1.push(Number(dataY1[dataY1.length - 1]));
     dataY2.push(Number(dataY2[dataY2.length - 1]));

@@ -1,6 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { CSVLink } from 'react-csv';
 import { CircularProgress, Grid } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -13,11 +12,12 @@ import InfinityTable, {
 import { translate, translateDropdown } from '@utils/helpers/i18n';
 
 import { getCurrencyName, isPastelBurnAddress } from '@utils/appInfo';
-import { eChartLineStyles } from '@pages/HistoricalStatistics/Chart/styles';
 import * as TableStyles from '@components/Table/Table.styles';
 import Fire from '@components/SvgIcon/Fire';
 import { useLatestTransactions, useBalanceHistory } from '@hooks/useAddressDetails';
 import BurnAddressIcon from '@pages/Details/TransactionDetails/BurnAddressIcon';
+import * as NftDetailsStyles from '@pages/Details/NftDetails/NftDetails.styles';
+import { axiosInstance, getBaseURL } from '@utils/helpers/useFetch/useFetch';
 
 import {
   DATA_FETCH_LIMIT,
@@ -39,30 +39,20 @@ interface IAddressDataRef {
 }
 
 const AddressDetails = () => {
-  const transactionHistoryCSVHeaders = [
-    { label: translateDropdown('pages.addressDetails.hash'), key: 'transactionHash' },
-    {
-      label: translateDropdown('pages.addressDetails.amount', { currency: getCurrencyName() }),
-      key: 'amount',
-    },
-    { label: translateDropdown('pages.addressDetails.direction'), key: 'direction' },
-    { label: translateDropdown('pages.addressDetails.timestamp'), key: 'timestamp' },
-  ];
+  const [status, setStatus] = useState('');
 
   const { id } = useParams<ParamTypes>();
   const [apiParams, setParams] = useState<IAddressDataRef>({
     sortBy: ADDRESS_TRANSACTION_TIMESTAMP_KEY,
     sortDirection: DATA_DEFAULT_SORT,
   });
-  const { addresses, isLoading, swrSize, swrSetSize, csvData } = useLatestTransactions(
+  const { addresses, isLoading, swrSize, swrSetSize } = useLatestTransactions(
     id,
     DATA_FETCH_LIMIT,
     apiParams.sortBy,
     apiParams.sortDirection,
   );
   const swrData = useBalanceHistory(id);
-  const styles = eChartLineStyles();
-  const downloadRef = useRef(null);
   const [isMobile, setMobileView] = useState(false);
 
   const handleFetchMoreTransactions = (reachedTableBottom: boolean) => {
@@ -100,6 +90,29 @@ const AddressDetails = () => {
 
   const isBurnAddress = isPastelBurnAddress(id);
 
+  const handleDownloadFile = () => {
+    const date = new Date();
+    const fileName = `Transaction_History__${id}__${date.getFullYear()}_${
+      date.getMonth() + 1
+    }_${date.getDate()}.csv`;
+
+    setStatus('downloading');
+    const url = `${getBaseURL()}/v1/addresses/download-csv/${id}`;
+    const link = document.createElement('a');
+    link.target = '_blank';
+    link.download = fileName;
+    axiosInstance
+      .get(url, { responseType: 'blob' })
+      .then(res => {
+        link.href = URL.createObjectURL(new Blob([res.data], { type: 'text/csv' }));
+        link.click();
+        setStatus('done');
+      })
+      .catch(() => {
+        setStatus('error');
+      });
+  };
+
   const generateAddTitle = () => {
     return (
       <Styles.AddressTitleBlock>
@@ -118,23 +131,18 @@ const AddressDetails = () => {
   };
 
   const generateTitle = () => {
-    const date = new Date();
-    const fileName = `Transaction_History__${id}__${date.getFullYear()}_${
-      date.getMonth() + 1
-    }_${date.getDate()}.csv`;
     return (
       <Styles.TitleWrapper>
         <h4>{parse(translate('pages.addressDetails.latestTransactions'))}</h4>
-        <CSVLink
-          data={csvData}
-          filename={fileName}
-          headers={transactionHistoryCSVHeaders}
-          separator=","
-          ref={downloadRef}
-          className={`${styles.uploadButton} ${!addresses ? 'disable' : ''}`}
+        <NftDetailsStyles.DownloadButton
+          type="button"
+          onClick={handleDownloadFile}
+          disabled={status === 'downloading'}
         >
-          {parse(translate('pages.addressDetails.downloadCSV'))}
-        </CSVLink>
+          {status === 'downloading'
+            ? parse(translate('pages.addressDetails.downloading'))
+            : parse(translate('pages.addressDetails.downloadCSV'))}
+        </NftDetailsStyles.DownloadButton>
       </Styles.TitleWrapper>
     );
   };
