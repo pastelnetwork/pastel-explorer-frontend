@@ -41,4 +41,8 @@ const Dashboard: React.FC<DashboardPropsType> = ({ children, width, routes, flui
   );
 };
 
+Dashboard.defaultProps = {
+  fluid: false,
+};
+
 export default withWidth()(Dashboard);

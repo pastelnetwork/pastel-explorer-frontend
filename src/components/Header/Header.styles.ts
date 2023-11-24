@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { Divider as MuiDivider, Typography as MuiTypography } from '@material-ui/core';
 import { spacing } from '@material-ui/system';
 

@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
 import 'jest-styled-components';
 
+import { MyMockType } from '@utils/types/MockType';
 import i18next from '../../../utils/helpers/i18n';
 import HistoricalStatistics from '../index';
 import * as Styles from '../StatisticsOvertime.styles';
@@ -29,7 +30,7 @@ jest.mock('react-i18next', () => ({
 }));
 i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
-});
+}) as MyMockType;
 
 describe('pages/HistoricalStatistics', () => {
   const wrapper = shallow(<HistoricalStatistics />);

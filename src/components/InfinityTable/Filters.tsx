@@ -48,7 +48,6 @@ const useStyles = makeStyles((theme: TAppTheme) => {
 
 interface IProps {
   title: ReactNode;
-  id?: string;
   filters: TFilter[];
   headerBackground?: boolean;
   dropdownFilters?: TFilter[];
@@ -228,6 +227,14 @@ const Filters: FC<IProps> = ({
       </Styles.FilterWrapper>
     </Styles.Wrapper>
   );
+};
+
+Filters.defaultProps = {
+  headerBackground: false,
+  dropdownFilters: undefined,
+  dropdownLabel: undefined,
+  showDateTimePicker: undefined,
+  defaultDateRange: undefined,
 };
 
 export default memo<IProps>(Filters);

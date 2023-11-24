@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { LabelKeyObject } from 'react-csv/components/CommonPropTypes';
 import { PeriodTypes, TGranularity } from '@utils/helpers/statisticsLib';
 import { TStatisticsInfo } from '@utils/types/IStatistics';
 
@@ -71,6 +70,10 @@ export type TLineChartProps = {
   showLegend?: boolean;
   symbol?: string;
   symbol1?: string;
+};
+
+type LabelKeyObject = {
+  [key: string]: string | number;
 };
 
 export type TCsvHeaderType = {

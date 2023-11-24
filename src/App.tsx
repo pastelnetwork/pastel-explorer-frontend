@@ -3,15 +3,10 @@ import { HelmetProvider, Helmet } from 'react-helmet-async';
 import DateFnsUtils from '@date-io/date-fns';
 import { H } from 'highlight.run';
 
-import { ThemeProvider } from 'styled-components/macro';
-import { create } from 'jss';
+import { ThemeProvider } from 'styled-components';
 
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import {
-  StylesProvider,
-  ThemeProvider as MuiThemeProvider,
-  jssPreset,
-} from '@material-ui/core/styles';
+import { StylesProvider, ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 
 import ErrorHandler from '@pages/ErrorHandler/ErrorHandler';
 import ResponseErrorAlert from '@components/ResponseErrorAlert/ResponseErrorAlert';
@@ -35,11 +30,6 @@ import Routes from './routes/Routes';
 import * as Styles from './App.styles';
 
 import './global.styles.css';
-
-const jss = create({
-  ...jssPreset(),
-  insertionPoint: document.getElementById('jss-insertion-point') as HTMLElement,
-});
 
 H.init(process.env.REACT_APP_EXPLORER_HIGHLIGHT_PROJECT_ID, {
   tracingOrigins: true,
@@ -97,7 +87,7 @@ const App: React.FC = () => {
     <HelmetProvider>
       <Helmet titleTemplate="%s | Pastel Explorer" defaultTitle="Pastel Explorer" />
       <SocketContext.Provider value={socket}>
-        <StylesProvider jss={jss}>
+        <StylesProvider>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <MuiThemeProvider theme={isDarkMode ? themeDark : themeLight}>
               <ThemeProvider theme={isDarkMode ? themeDark : themeLight}>

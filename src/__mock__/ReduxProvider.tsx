@@ -1,5 +1,5 @@
 import { Provider } from 'react-redux';
-import { ThemeProvider } from 'styled-components/macro';
+import { ThemeProvider } from 'styled-components';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 
 import { themeLight } from '../theme';

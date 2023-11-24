@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 import { Card as MuiCard, TableCell, Paper } from '@material-ui/core';
 import MuiMenuItem from '@material-ui/core/MenuItem';

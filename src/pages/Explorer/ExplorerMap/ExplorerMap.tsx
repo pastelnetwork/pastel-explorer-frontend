@@ -74,4 +74,8 @@ const ExplorerMap: React.FC<ExplorerMapProps> = ({ hidePeer = false }) => {
   );
 };
 
+ExplorerMap.defaultProps = {
+  hidePeer: false,
+};
+
 export default ExplorerMap;

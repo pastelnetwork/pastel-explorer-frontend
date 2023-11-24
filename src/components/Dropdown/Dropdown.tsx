@@ -127,3 +127,9 @@ export const TagDropdown: React.FC<ITagDropdown> = ({
     </Styles.Wrapper>
   );
 };
+
+TagDropdown.defaultProps = {
+  defaultValues: [],
+  placeholder: '',
+  onChange: () => {},
+};

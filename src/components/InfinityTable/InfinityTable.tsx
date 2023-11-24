@@ -276,4 +276,26 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   );
 };
 
+InfinityTableComponent.defaultProps = {
+  title: undefined,
+  customTitle: undefined,
+  filters: undefined,
+  sortBy: undefined,
+  sortDirection: undefined,
+  rowHeight: 45,
+  tableHeight: 500,
+  loadMoreFrom: 0,
+  disableLoading: undefined,
+  renderAllRows: undefined,
+  className: undefined,
+  headerBackground: undefined,
+  isLoading: undefined,
+  dropdownFilters: undefined,
+  dropdownLabel: undefined,
+  customLoading: undefined,
+  showDateTimePicker: false,
+  dateRange: undefined,
+  showLess: false,
+};
+
 export default InfinityTableComponent;

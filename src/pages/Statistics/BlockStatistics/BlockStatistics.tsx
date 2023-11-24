@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import Flip from 'gsap/Flip';
 
 // third party
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Skeleton } from '@material-ui/lab';
 import { Grid, darken } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
@@ -53,7 +53,7 @@ type TLayout = {
 };
 
 const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUnconfirmed }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const classes = useStyles();
   const [openMempoolModal, setMempoolModal] = React.useState(false);
   const el = React.useRef(null);
@@ -195,7 +195,7 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
                     ({ id, height, size, transactionCount, minutesAgo, ticketsCount, status }) => (
                       <div key={id} className={`block-box ${status}`}>
                         <BlockVisualization
-                          clickHandler={() => history.push(`${ROUTES.BLOCK_DETAILS}/${id}`)}
+                          clickHandler={() => navigate(`${ROUTES.BLOCK_DETAILS}/${id}`)}
                           height={height}
                           size={size}
                           transactionCount={transactionCount}

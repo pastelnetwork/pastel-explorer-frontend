@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 import { Typography as MuiTypography, Grid } from '@material-ui/core';
 

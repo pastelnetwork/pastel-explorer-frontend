@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
-import { withTheme } from 'styled-components/macro';
+import { withTheme } from 'styled-components';
 import _debounce from 'lodash.debounce';
 import { darken } from 'polished';
 import parse from 'html-react-parser';
@@ -97,7 +97,7 @@ const filterOptions = createFilterOptions({
   trim: true,
 });
 
-const SearchBar: React.FC<AppBarProps> = ({ isDarkMode }) => {
+const SearchBar = ({ isDarkMode }: AppBarProps) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
   const optionSelectedFromList = React.useRef(false);

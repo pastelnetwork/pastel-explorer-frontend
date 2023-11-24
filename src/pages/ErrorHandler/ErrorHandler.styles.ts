@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { spacing } from '@material-ui/system';
 import { Button as MuiButton } from '@material-ui/core';
 

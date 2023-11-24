@@ -75,4 +75,8 @@ const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ link = '' }) 
   );
 };
 
+SupernodeStatistics.defaultProps = {
+  link: '',
+};
+
 export default SupernodeStatistics;

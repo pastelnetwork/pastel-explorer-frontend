@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NavLink, withRouter, RouteComponentProps, match } from 'react-router-dom';
+import { NavLink, useParams, RouteComponentProps, match } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import { useCallback } from 'react';
 import { Collapse, List, Hidden, Box } from '@material-ui/core';
@@ -34,7 +34,6 @@ interface SidebarLinkPropsType {
   name: string | React.ReactNode;
   to: string;
   badge?: string | number;
-  icon?: JSX.Element;
 }
 
 const SidebarLink: React.FC<SidebarLinkPropsType> = ({ name, to, badge }) => {
@@ -46,6 +45,10 @@ const SidebarLink: React.FC<SidebarLinkPropsType> = ({ name, to, badge }) => {
       {badge ? <Styles.LinkBadge label={badge} /> : ''}
     </Styles.NavLinkStyle>
   );
+};
+
+SidebarLink.defaultProps = {
+  badge: undefined,
 };
 
 interface SidebarCategoryPropsType {
@@ -127,6 +130,19 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
     </Styles.Category>
   );
 };
+
+SidebarCategory.defaultProps = {
+  classes: undefined,
+  isOpen: undefined,
+  badge: undefined,
+  activeClassName: undefined,
+  onClick: undefined,
+  to: undefined,
+  exact: undefined,
+  component: undefined,
+  isActive: undefined,
+  category: undefined,
+}
 
 interface SidebarPropsType {
   staticContext: string | undefined;
@@ -317,4 +333,10 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
   );
 };
 
-export default withRouter(Sidebar);
+Sidebar.defaultProps = {
+  variant: undefined,
+  open: undefined,
+  onClose: undefined,
+};
+
+export default useParams(Sidebar);

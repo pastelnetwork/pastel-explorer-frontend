@@ -2,6 +2,7 @@ import { shallow } from 'enzyme';
 import { Grid } from '@material-ui/core';
 import 'jest-styled-components';
 
+import { MyMockType } from '@utils/types/MockType';
 import Table from '../../../components/Table/Table';
 import i18next from '../../../utils/helpers/i18n';
 import Richlist from '../Richlist';
@@ -29,7 +30,7 @@ jest.mock('react-i18next', () => ({
 }));
 i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
-});
+}) as MyMockType;
 
 describe('pages/Richlist', () => {
   const wrapper = shallow(<Richlist />);

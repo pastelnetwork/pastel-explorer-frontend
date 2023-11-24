@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { rgba } from 'polished';
 import { NavLink, match } from 'react-router-dom';
 

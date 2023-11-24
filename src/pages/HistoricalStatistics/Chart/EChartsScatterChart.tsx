@@ -158,7 +158,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
     const headers = csvHeaders[chartName];
     return headers.map(header => ({
       ...header,
-      label: translateDropdown(header.label),
+      label: translateDropdown(header.label as string) as string,
     }));
   };
 

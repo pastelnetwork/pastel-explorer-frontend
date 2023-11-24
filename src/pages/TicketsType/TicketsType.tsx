@@ -13,15 +13,11 @@ import TicketsList from './TicketList';
 import { TICKET_STATUS_OPTIONS } from './TicketsType.helpers';
 import * as Styles from './TicketsType.styles';
 
-interface ParamTypes {
-  type: string;
-}
-
 const LIMIT = 6;
 
 const TicketsType: React.FC = () => {
-  const { type } = useParams<ParamTypes>();
-  const [selectedType, setTicketType] = useState<string>(type);
+  const { type } = useParams();
+  const [selectedType, setTicketType] = useState<string>(type as string);
   const [selectedStatus, setSelectedStatus] = useState<string>(TICKET_STATUS_OPTIONS[0].value);
   const [selectedTime, setSelectedTime] = useState<string>(blocksPeriodFilters[4].value);
   const [currentPage, setCurrentPage] = useState(0);
@@ -48,7 +44,7 @@ const TicketsType: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      setTicketType(type);
+      setTicketType(type as string);
       setCurrentPage(0);
     })();
   }, [type]);

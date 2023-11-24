@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
 
 import {

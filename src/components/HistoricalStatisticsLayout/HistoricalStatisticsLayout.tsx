@@ -1,7 +1,7 @@
 import { memo, ReactNode, useState } from 'react';
 // import { BackIcon } from '@components/Icons';
 import { makeStyles } from '@material-ui/styles';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Skeleton } from '@material-ui/lab';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import parse from 'html-react-parser';
@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
 const HistoricalStatisticsLayout = ({ children, currentBgColor, title }: IProps) => {
   const classes = useStyles();
   const [selectedChart, setSelectedChart] = useState('0');
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleDropdownChange = (
     event: React.ChangeEvent<{
@@ -42,7 +42,7 @@ const HistoricalStatisticsLayout = ({ children, currentBgColor, title }: IProps)
       const url = event.target.value as string;
       setSelectedChart(url);
       if (url !== '0') {
-        history.push(url);
+        navigate(url);
       }
     }
   };
@@ -69,7 +69,7 @@ const HistoricalStatisticsLayout = ({ children, currentBgColor, title }: IProps)
     <div className={classes.root}>
       <div style={{ flex: 1 }}>
         <Styles.BackButtonWrapper>
-          <Styles.BackButton type="button" onClick={() => history.goBack()}>
+          <Styles.BackButton type="button" onClick={() => navigate(-1)}>
             <NavigateBeforeIcon /> {parse(translate('components.historicalStatisticsLayout.back'))}
           </Styles.BackButton>
           <Styles.DropdownWrapper>

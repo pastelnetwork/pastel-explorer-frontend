@@ -156,4 +156,8 @@ const Overview: React.FC<IOverviewProps> = ({
   );
 };
 
+Overview.defaultProps = {
+  username: undefined,
+};
+
 export default Overview;

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { BrowserRouter as Router, Route, Switch, RouteComponentProps } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes as Switch } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { TOptions, StringMap } from 'i18next';
+import { TOptions } from 'i18next';
 
 import DashboardLayout from '@layouts/Dashboard/Dashboard';
 import Page404 from '@pages/404/404';
@@ -13,6 +13,9 @@ import ScrollToTop from '@utils/helpers/scrollToTop/scrollToTop';
 import { pageRoutes } from './index';
 
 import '@utils/perfect-scrollbar.css';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type StringMap = { [key: string]: any };
 
 const childRoutes = (
   Layout: React.ElementType,
@@ -32,8 +35,8 @@ const childRoutes = (
             <Route
               key={id}
               path={element.path}
-              exact
-              render={(props: RouteComponentProps) => (
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              element={(props: any) => (
                 <Layout fluid={fluid}>
                   <ChildrenGuard>
                     <Helmet
@@ -56,8 +59,8 @@ const childRoutes = (
           <Route
             key={id}
             path={path}
-            exact
-            render={props => (
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            element={(props: any) => (
               <Layout fluid={fluid}>
                 <Guard>
                   <Helmet
@@ -85,7 +88,7 @@ const Routes: React.FC = () => {
       <ScrollToTop />
       <Switch>
         {childRoutes(DashboardLayout, pageRoutes, t)}
-        <Route render={() => <Page404 />} />
+        <Route element={() => <Page404 />} />
       </Switch>
     </Router>
   );

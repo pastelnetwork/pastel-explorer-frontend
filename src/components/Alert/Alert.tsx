@@ -45,3 +45,12 @@ const AlertComponent: React.FC<AlertComponentProps> = ({
 };
 
 export default AlertComponent;
+
+AlertComponent.defaultProps = {
+  severity: 'success',
+  autoHideDuration: 4000,
+  message: '',
+  title: '',
+  outsideClickClose: true,
+  onClose: () => {},
+};

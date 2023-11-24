@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from 'styled-components/macro';
+import styled, { createGlobalStyle } from 'styled-components';
 import { spacing } from '@material-ui/system';
 import { Paper as MuiPaper } from '@material-ui/core';
 

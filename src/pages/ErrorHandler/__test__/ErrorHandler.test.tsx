@@ -2,6 +2,7 @@ import { shallow } from 'enzyme';
 import { Typography, Grid } from '@material-ui/core';
 import 'jest-styled-components';
 
+import { MyMockType } from '@utils/types/MockType';
 import i18next from '../../../utils/helpers/i18n';
 import ErrorHandler from '../ErrorHandler';
 import * as Styles from '../ErrorHandler.styles';
@@ -9,7 +10,7 @@ import * as Styles from '../ErrorHandler.styles';
 jest.mock('i18next-http-backend');
 i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
-});
+}) as MyMockType;
 
 describe('pages/ErrorHandler', () => {
   const wrapper = shallow(

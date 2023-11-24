@@ -6,6 +6,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 import 'jest-styled-components';
 
+import { MyMockType } from '@utils/types/MockType';
 import RouterLink from '../../RouterLink/RouterLink';
 import i18next from '../../../utils/helpers/i18n';
 import ActionRegistrationTicket from '../ActionRegistrationTicket';
@@ -34,7 +35,7 @@ jest.mock('react-i18next', () => ({
 }));
 i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
-});
+}) as MyMockType;
 
 describe('components/ActionRegistrationTicket', () => {
   const ticket = {

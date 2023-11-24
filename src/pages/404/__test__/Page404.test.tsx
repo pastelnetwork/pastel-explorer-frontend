@@ -2,6 +2,7 @@ import { shallow } from 'enzyme';
 import { Typography, Grid } from '@material-ui/core';
 import 'jest-styled-components';
 
+import { MyMockType } from '@utils/types/MockType';
 import i18next from '../../../utils/helpers/i18n';
 import Page404 from '../404';
 import * as Styles from '../404.styles';
@@ -28,7 +29,7 @@ jest.mock('react-i18next', () => ({
 }));
 i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
-});
+}) as MyMockType;
 
 describe('pages/Page404', () => {
   const wrapper = shallow(<Page404 />);

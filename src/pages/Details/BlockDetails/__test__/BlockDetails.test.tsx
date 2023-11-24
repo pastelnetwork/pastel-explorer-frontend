@@ -1,9 +1,10 @@
 import { shallow } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import { ThemeProvider } from 'styled-components/macro';
+import { ThemeProvider } from 'styled-components';
 import 'jest-styled-components';
 
+import { MyMockType } from '@utils/types/MockType';
 import i18next from '../../../../utils/helpers/i18n';
 import { themeLight } from '../../../../theme';
 import BlockDetails from '../BlockDetails';
@@ -36,7 +37,7 @@ jest.mock('react-i18next', () => ({
 }));
 i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
-});
+}) as MyMockType;
 const mockStore = configureMockStore();
 const store = mockStore({});
 

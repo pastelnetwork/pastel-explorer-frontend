@@ -2,7 +2,7 @@ import { memo, FC, useCallback, MouseEvent, useMemo } from 'react';
 import { Drawer, Button, Tooltip } from '@material-ui/core';
 import parse from 'html-react-parser';
 
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
 import { AppStateType } from '@redux/reducers';
@@ -93,7 +93,7 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
 
   const [open, { toggle }] = useBooleanState();
   const classes = useStyles();
-  const { replace } = useHistory();
+  const navigate = useNavigate();
   const { search } = useLocation();
 
   const currentCluster = useMemo(() => {
@@ -112,13 +112,11 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
       const queryParams = new URLSearchParams(search);
       queryParams.set('cluster', value);
       if (value === 'mainnet') queryParams.delete('cluster');
-      replace({
-        search: queryParams.toString(),
-      });
+      navigate({ search: queryParams.toString() })
       setApiHosting(id, value === 'mainnet' ? DEFAULT_CURRENCY : TEST_CURRENCY_NAME);
       window.location.reload();
     },
-    [replace],
+    [navigate],
   );
 
   const handleClusterClose = () => {

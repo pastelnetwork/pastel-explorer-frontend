@@ -122,3 +122,11 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
 };
 
 export default DoughnutChart;
+
+DoughnutChart.defaultProps = {
+  title: '',
+  innerTitle: '',
+  innerSubtitle: '',
+  totalSuperNodes: 0,
+  link: '',
+};

@@ -351,7 +351,7 @@ const Summary: React.FC = () => {
                     color="textSecondary"
                     noWrap
                     percentagecolor={`${
-                      difference > 0
+                      Number(difference) > 0
                         ? themeVariant.custom.green.success
                         : themeVariant.custom.red.error
                     }`}
@@ -361,9 +361,9 @@ const Summary: React.FC = () => {
                       : parse(translate('components.summary.last24h'))}
                     <br />
                     <span>
-                      {`${difference > 0 ? '+' : ''}`}
+                      {`${Number(difference) > 0 ? '+' : ''}`}
                       {difference}%&nbsp;
-                      {difference > 0 ? (
+                      {Number(difference) > 0 ? (
                         <svg
                           width="10"
                           height="10"

@@ -156,4 +156,12 @@ const DateTimePicker: React.FC<IDateTimePickerProps> = ({ onApply, defaultDateRa
   );
 };
 
+DateTimePicker.defaultProps = {
+  onApply: () => {},
+  defaultDateRange: {
+    startDate: Date.now(),
+    endDate: null,
+  },
+};
+
 export default DateTimePicker;
