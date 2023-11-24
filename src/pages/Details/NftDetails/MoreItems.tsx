@@ -22,7 +22,7 @@ const MoreItems: React.FC<IMoreItems> = ({ collectionId }) => {
   return (
     <Styles.MoreItemsWrapper>
       {!isLoading ? (
-        <>
+        <div>
           {data ? (
             <>
               <NFTsContent data={data || []} />
@@ -39,7 +39,7 @@ const MoreItems: React.FC<IMoreItems> = ({ collectionId }) => {
               <Box className="no-data">{parse(translate('common.noData'))}</Box>
             </Box>
           )}
-        </>
+        </div>
       ) : (
         <Styles.LoadingSection>
           <Styles.LoadingWrapper>

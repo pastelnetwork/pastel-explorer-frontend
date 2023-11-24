@@ -228,12 +228,13 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
   };
 
   const getActiveGranularityButtonStyle = useMemo(
-    () => (granularity: string): string => {
-      if (selectedGranularityButton === granularity) {
-        return 'active';
-      }
-      return '';
-    },
+    () =>
+      (granularity: string): string => {
+        if (selectedGranularityButton === granularity) {
+          return 'active';
+        }
+        return '';
+      },
     [selectedGranularityButton],
   );
 
@@ -248,7 +249,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     const headers = csvHeaders[chartName];
     return headers.map(header => ({
       ...header,
-      label: translateDropdown(header.label),
+      label: translateDropdown(header.label as string),
     }));
   };
 

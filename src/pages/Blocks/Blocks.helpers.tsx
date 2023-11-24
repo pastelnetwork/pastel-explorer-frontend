@@ -57,7 +57,7 @@ export const transformTableData = (transactions: Array<IBlock>, isMobile: boolea
                 <Hourglass />
               </Styles.HourglassWrapper>
             ) : (
-              <>
+              <div>
                 {ticketsTypeList.total > 0 ? (
                   <RouterLink
                     className="hash-link"
@@ -67,9 +67,9 @@ export const transformTableData = (transactions: Array<IBlock>, isMobile: boolea
                     isUseTooltip
                   />
                 ) : (
-                  <>0</>
+                  <div>0</div>
                 )}
-              </>
+              </div>
             )}
           </div>
         ),

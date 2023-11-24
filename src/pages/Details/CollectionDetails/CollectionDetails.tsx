@@ -13,14 +13,12 @@ import NFTs from './NFTs';
 
 import * as Styles from './CollectionDetails.styles';
 
-interface IParamTypes {
-  id: string;
-}
-
 const CollectionDetails = () => {
-  const { id } = useParams<IParamTypes>();
-  const { collection, isLoading } = useCollectionDetails(id);
-  const { items, isLoadingMore, totalItems, swrSetSize, swrSize } = useCollectionItems(id);
+  const { id } = useParams();
+  const { collection, isLoading } = useCollectionDetails(id as string);
+  const { items, isLoadingMore, totalItems, swrSetSize, swrSize } = useCollectionItems(
+    id as string,
+  );
 
   if (isLoading) {
     return (

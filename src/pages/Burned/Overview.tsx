@@ -168,7 +168,7 @@ const Summary = () => {
   };
 
   return (
-    <>
+    <div>
       <TableStyles.BlockWrapper className="address-wrapper">
         <TableStyles.Card>
           <AddressDetailsStyles.Heading className="direction-item">
@@ -249,7 +249,7 @@ const Summary = () => {
           </AddressDetailsStyles.ChartWrapper>
         </TableStyles.Card>
       </TableStyles.BlockWrapper>
-    </>
+    </div>
   );
 };
 

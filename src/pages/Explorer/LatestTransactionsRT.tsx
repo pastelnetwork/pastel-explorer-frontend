@@ -153,7 +153,7 @@ function LatestTransactions() {
                             <Hourglass />
                           </BlockStyles.HourglassWrapper>
                         ) : (
-                          <>
+                          <div>
                             {ticketsTypeList.total > 0 ? (
                               <RouterLink
                                 route={`${TRANSACTION_DETAILS}/${tx.id}`}
@@ -165,7 +165,7 @@ function LatestTransactions() {
                             ) : (
                               0
                             )}
-                          </>
+                          </div>
                         )}
                       </StyledTableCell>
                       <StyledTableCell align="right">{tx.fee || '--'}</StyledTableCell>

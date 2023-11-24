@@ -181,7 +181,7 @@ const SimilarRegisteredImageRow: React.FC<ISimilarRegisteredImageRow> = ({
       <StyledTableCell component="td" scope="row">
         <TicketStyles.TicketContent>
           {item.matchType === 'Seed Image' ? (
-            <>{item.imageHash}</>
+            <span>{item.imageHash}</span>
           ) : (
             <RouterLink
               route={`${ROUTES.SENSE_DETAILS}?hash=${item.imageHashOriginal}`}

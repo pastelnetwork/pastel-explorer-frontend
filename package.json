@@ -89,7 +89,7 @@
     "@types/loadable__component": "5.13.6",
     "@types/lodash.debounce": "4.0.8",
     "@types/node": "20.8.6",
-    "@types/react": "17.0.5",
+    "@types/react": "18.2.38",
     "@types/react-csv": "1.1.9",
     "@types/react-datepicker": "4.19.0",
     "@types/react-dom": "18.2.17",
@@ -127,7 +127,6 @@
     "typescript": "5.2.2"
   },
   "resolutions": {
-    "jss": "10.6.0",
-    "@types/react": "17.0.5"
+    "jss": "10.6.0"
   }
 }

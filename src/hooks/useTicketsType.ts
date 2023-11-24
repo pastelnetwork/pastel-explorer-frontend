@@ -41,9 +41,9 @@ export default function useTicketsType(
     SWR_OPTIONS,
   );
   return {
-    data: data?.data?.length ? [...data?.data] : [],
+    data: data?.data?.length ? [...data.data] : [],
     total: data?.total || 0,
-    senses: data?.senses?.length ? [...data?.senses] : [],
+    senses: data?.senses?.length ? [...data.senses] : [],
     isLoading,
   };
 }

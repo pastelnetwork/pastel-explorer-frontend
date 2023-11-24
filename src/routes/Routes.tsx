@@ -35,8 +35,7 @@ const childRoutes = (
             <Route
               key={id}
               path={element.path}
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              element={(props: any) => (
+              element={
                 <Layout fluid={fluid}>
                   <ChildrenGuard>
                     <Helmet
@@ -45,10 +44,10 @@ const childRoutes = (
                         defaultValue: '',
                       })}
                     />
-                    <ElementComponent {...props} />
+                    <ElementComponent />
                   </ChildrenGuard>
                 </Layout>
-              )}
+              }
             />
           );
         });
@@ -59,8 +58,7 @@ const childRoutes = (
           <Route
             key={id}
             path={path}
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            element={(props: any) => (
+            element={
               <Layout fluid={fluid}>
                 <Guard>
                   <Helmet
@@ -68,10 +66,10 @@ const childRoutes = (
                       currency: getCurrencyName(),
                     })}
                   />
-                  <Component {...props} />
+                  <Component />
                 </Guard>
               </Layout>
-            )}
+            }
           />
         );
       }
@@ -88,7 +86,7 @@ const Routes: React.FC = () => {
       <ScrollToTop />
       <Switch>
         {childRoutes(DashboardLayout, pageRoutes, t)}
-        <Route element={() => <Page404 />} />
+        <Route element={<Page404 />} />
       </Switch>
     </Router>
   );

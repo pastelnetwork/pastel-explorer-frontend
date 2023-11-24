@@ -37,14 +37,10 @@ import {
 import TransactionRawData from './TransactionRawData';
 import BurnAddressIcon from './BurnAddressIcon';
 
-interface ParamTypes {
-  id: string;
-}
-
 const TransactionDetails = () => {
-  const { id } = useParams<ParamTypes>();
+  const { id } = useParams();
   const { usdPrice } = useUsdPrice();
-  const { data, isLoading } = useTransactionDetails(id);
+  const { data, isLoading } = useTransactionDetails(id as string);
   const [transaction, setTransaction] = useState<ITransactionDetails | null>(null);
   const [tickets, setTickets] = useState<ITicket[]>([]);
   const [senses, setSenses] = useState<TSenseRequests[]>([]);

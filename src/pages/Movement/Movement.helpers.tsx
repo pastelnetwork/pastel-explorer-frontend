@@ -89,7 +89,7 @@ export const transformMovementData = (transactions: Array<ITransaction>) =>
         [BLOCK_KEY]: generateBlockKeyValue(blockHash, block.height),
         [RECIPIENT_COUNT_KEY]: recipientCount,
         [AMOUNT_MOVEMENT_KEY]: (
-          <>
+          <div>
             {isNonStandard ? (
               <Tooltip title={translateDropdown('pages.movement.shieldedTransactionInfo')}>
                 <span>{parse(translate('common.unknown'))}</span>
@@ -97,7 +97,7 @@ export const transformMovementData = (transactions: Array<ITransaction>) =>
             ) : (
               formatNumber(totalAmount, { decimalsLength: 2 })
             )}
-          </>
+          </div>
         ),
         [TICKETS_KEY]: (
           <div className="inline-block">
@@ -106,7 +106,7 @@ export const transformMovementData = (transactions: Array<ITransaction>) =>
                 <Hourglass />
               </BlockStyles.HourglassWrapper>
             ) : (
-              <>
+              <div>
                 {ticketsTypeList.total > 0 ? (
                   <RouterLink
                     route={`${ROUTES.TRANSACTION_DETAILS}/${id}`}
@@ -118,7 +118,7 @@ export const transformMovementData = (transactions: Array<ITransaction>) =>
                 ) : (
                   0
                 )}
-              </>
+              </div>
             )}
           </div>
         ),

@@ -29,10 +29,6 @@ import BalanceHistory from './BalanceHistory';
 import DirectionChart from './DirectionChart';
 import * as Styles from './AddressDetails.styles';
 
-interface ParamTypes {
-  id: string;
-}
-
 interface IAddressDataRef {
   sortBy: string;
   sortDirection: SortDirectionsType;
@@ -41,18 +37,18 @@ interface IAddressDataRef {
 const AddressDetails = () => {
   const [status, setStatus] = useState('');
 
-  const { id } = useParams<ParamTypes>();
+  const { id } = useParams();
   const [apiParams, setParams] = useState<IAddressDataRef>({
     sortBy: ADDRESS_TRANSACTION_TIMESTAMP_KEY,
     sortDirection: DATA_DEFAULT_SORT,
   });
   const { addresses, isLoading, swrSize, swrSetSize } = useLatestTransactions(
-    id,
+    id as string,
     DATA_FETCH_LIMIT,
     apiParams.sortBy,
     apiParams.sortDirection,
   );
-  const swrData = useBalanceHistory(id);
+  const swrData = useBalanceHistory(id as string);
   const [isMobile, setMobileView] = useState(false);
 
   const handleFetchMoreTransactions = (reachedTableBottom: boolean) => {
@@ -88,7 +84,7 @@ const AddressDetails = () => {
     };
   }, []);
 
-  const isBurnAddress = isPastelBurnAddress(id);
+  const isBurnAddress = isPastelBurnAddress(id as string);
 
   const handleDownloadFile = () => {
     const date = new Date();
@@ -157,7 +153,7 @@ const AddressDetails = () => {
                 <Styles.HeadingTitle>{generateAddTitle()}</Styles.HeadingTitle>
               </Styles.Heading>
               <Styles.ChartWrapper>
-                <BalanceHistory id={id} />
+                <BalanceHistory id={id as string} />
               </Styles.ChartWrapper>
             </TableStyles.Card>
           </TableStyles.BlockWrapper>
@@ -170,7 +166,7 @@ const AddressDetails = () => {
                   title={generateTitle()}
                   sortBy={apiParams.sortBy}
                   sortDirection={apiParams.sortDirection}
-                  rows={generateLatestTransactions(addresses, id)}
+                  rows={generateLatestTransactions(addresses, id as string)}
                   columns={columns}
                   onBottomReach={handleFetchMoreTransactions}
                   onHeaderClick={handleSort}
@@ -196,7 +192,7 @@ const AddressDetails = () => {
               ) : null}
             </Grid>
             <Grid item xs={12} lg={4}>
-              <DirectionChart id={id} />
+              <DirectionChart id={id as string} />
             </Grid>
           </Grid>
         </Styles.TableWrapper>

@@ -157,22 +157,20 @@ const TicketsList: React.FC<ITicketsList> = ({
         return null;
       }
       return (
-        <>
-          <Grid container spacing={3}>
-            <Grid item xs={4} sm={3} className="max-w-355">
-              <TicketStyles.TicketTitle>
-                {parse(translate('pages.blockDetails.cascadeFileType'))}
-              </TicketStyles.TicketTitle>
-            </Grid>
-            <Grid item xs={8} sm={9}>
-              <TicketStyles.TicketContent>
-                <Link to={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}>
-                  {getFileIcon(apiTicket.file_type)}
-                </Link>
-              </TicketStyles.TicketContent>
-            </Grid>
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3} className="max-w-355">
+            <TicketStyles.TicketTitle>
+              {parse(translate('pages.blockDetails.cascadeFileType'))}
+            </TicketStyles.TicketTitle>
           </Grid>
-        </>
+          <Grid item xs={8} sm={9}>
+            <TicketStyles.TicketContent>
+              <Link to={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}>
+                {getFileIcon(apiTicket.file_type)}
+              </Link>
+            </TicketStyles.TicketContent>
+          </Grid>
+        </Grid>
       );
     }
 

@@ -45,6 +45,14 @@ describe('components/AcceptTicket', () => {
     signature:
       '3424e8a2ecbef0064193d503754bde123693089ae26ae9838cab09be15eea95b79f68d9d186120c733bbfd0c37d6fa553c3c6a56c4329f19000b9c74e5473b82bef35bd21bfaac958cdadd46fd92f5502ddbb741f74cfcc6db885d998d3e923d5cf10cbdbf18ca27be6f844575c7953f3a00',
     transactionTime: 1678937408698,
+    image: 'path',
+    otherData: {
+      offerType: '',
+      txId: '',
+      regTxId: '',
+      ticketType: '',
+      ticketId: 'ead40b73c1f1c8d5a551a3f05a8d8030651c84f026f0ee865ecf1666c0eb6255',
+    },
   };
   const wrapper = shallow(<AcceptTicket ticket={ticket} />);
 
