@@ -3,7 +3,7 @@ import {
   Card as MuiCard,
   CardContent as MuiCardContent,
   Typography as MuiTypography,
-} from '@material-ui/core';
+} from '@mui/material';
 import { rgba } from 'polished';
 
 export const Wrapper = styled.div`

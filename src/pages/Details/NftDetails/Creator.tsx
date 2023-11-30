@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Box from '@material-ui/core/Box';
+import Box from '@mui/material/Box';
 import format from 'date-fns/format';
 import parse from 'html-react-parser';
 

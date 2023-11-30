@@ -4,9 +4,9 @@ import Flip from 'gsap/Flip';
 
 // third party
 import { useNavigate } from 'react-router-dom';
-import { Skeleton } from '@material-ui/lab';
-import { Grid, darken } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { Skeleton } from '@mui/lab';
+import { Grid, darken } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import parse from 'html-react-parser';
 
 import { TAppTheme } from '@theme/index';
@@ -175,8 +175,7 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
             <Styles.GridBlocksStatisticsRoot
               wrap="nowrap"
               container
-              justify="space-between"
-              alignItems="center"
+              sx={{ alignItems: 'center', justifyContent: 'space-between' }}
               spacing={8}
             >
               {renderMempoolBlock()}
@@ -213,7 +212,7 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
           ) : (
             <Styles.ChartSection>
               <>
-                <Skeleton animation="wave" variant="rect" height={207} />
+                <Skeleton animation="wave" variant="rectangular" height={207} />
                 <Styles.LoadingText>{parse(translate('common.loadingData'))}</Styles.LoadingText>
               </>
             </Styles.ChartSection>

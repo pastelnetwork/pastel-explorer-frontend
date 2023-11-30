@@ -1,16 +1,14 @@
 import styled from 'styled-components';
 
-import { Card as MuiCard, TableCell as MuiTableCell, Paper } from '@material-ui/core';
+import { Card as MuiCard, TableCell as MuiTableCell, Paper } from '@mui/material';
 
-import { spacing } from '@material-ui/system';
-
-const StyledCard = styled(MuiCard)`
+export const StyledCard = styled(MuiCard)`
   margin-bottom: 1px !important;
   box-shadow: none;
   overflow: unset;
 `;
 
-export const Card = styled(StyledCard)(spacing);
+export const Card = styled(StyledCard);
 
 export const TableWrapper = styled.div`
   overflow-y: auto;
@@ -29,7 +27,9 @@ export const RowCell = styled(MuiTableCell)`
 `;
 
 export const PaperWrapper = styled(Paper)`
-  box-shadow: rgb(50 50 93 / 3%) 0px 2px 5px -1px, rgb(0 0 0 / 5%) 0px 1px 3px -1px !important;
+  box-shadow:
+    rgb(50 50 93 / 3%) 0px 2px 5px -1px,
+    rgb(0 0 0 / 5%) 0px 1px 3px -1px !important;
   background: transparent;
 `;
 

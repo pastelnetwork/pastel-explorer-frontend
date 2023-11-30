@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo, MouseEvent } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import parse from 'html-react-parser';
 
 import Table, { RowsProps } from '@components/Table/Table';

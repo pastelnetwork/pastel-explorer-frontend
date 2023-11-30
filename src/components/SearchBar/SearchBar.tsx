@@ -1,16 +1,17 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
-import { withTheme } from 'styled-components';
 import _debounce from 'lodash.debounce';
 import { darken } from 'polished';
 import parse from 'html-react-parser';
 
-import { Theme, TextField, CircularProgress, makeStyles } from '@material-ui/core';
-import { Search as SearchIcon } from '@material-ui/icons';
-import MuiAutocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
-import Box from '@material-ui/core/Box';
-import Hidden from '@material-ui/core/Hidden';
-import CancelIcon from '@material-ui/icons/Cancel';
+import { TextField, CircularProgress } from '@mui/material';
+import { createStyles, makeStyles } from '@mui/styles';
+import { Search as SearchIcon } from '@mui/icons-material';
+import MuiAutocomplete from '@mui/lab/Autocomplete';
+import { createFilterOptions } from '@mui/material/Autocomplete';
+import Box from '@mui/material/Box';
+import Hidden from '@mui/material/Hidden';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 import Social from '@components/Social/Social';
 import * as URLS from '@utils/constants/urls';
@@ -58,7 +59,6 @@ import {
 } from './SearchBar.helpers';
 
 interface AppBarProps {
-  theme: Theme;
   isDarkMode: boolean;
 }
 
@@ -67,29 +67,31 @@ export interface ISearchData {
   category: TOptionsCategories;
 }
 
-const useStyles = makeStyles((theme: TAppTheme) => ({
-  option: {
-    padding: 0,
-  },
-  labelInputRoot: {
-    background: theme.palette.background.default,
-    width: '80%',
-  },
-  inputRoot: {
-    border: '1px solid',
-    borderColor: darken(0.1, theme.palette.background.paper),
-    marginRight: 16,
-    [theme.breakpoints.down(960)]: {
-      marginRight: 0,
+const useStyles = makeStyles((theme: TAppTheme) =>
+  createStyles({
+    option: {
+      padding: 0,
     },
-  },
-  listboxOptions: {
-    margin: 0,
-    background: theme.palette.background.default,
-    border: 0,
-    borderRadius: 4,
-  },
-}));
+    labelInputRoot: {
+      background: theme.palette.background.default,
+      width: '80%',
+    },
+    inputRoot: {
+      border: '1px solid',
+      borderColor: darken(0.1, theme.palette.background.paper),
+      marginRight: 16,
+      [theme.breakpoints.down(960)]: {
+        marginRight: 0,
+      },
+    },
+    listboxOptions: {
+      margin: 0,
+      background: theme.palette.background.default,
+      border: 0,
+      borderRadius: 4,
+    },
+  }),
+);
 
 let isClicked = false;
 
@@ -97,7 +99,7 @@ const filterOptions = createFilterOptions({
   trim: true,
 });
 
-const SearchBar = ({ isDarkMode }: AppBarProps) => {
+const SearchBar: React.FC<AppBarProps> = ({ isDarkMode }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
   const optionSelectedFromList = React.useRef(false);
@@ -189,18 +191,15 @@ const SearchBar = ({ isDarkMode }: AppBarProps) => {
     return setSearchData(groupedData.sort((a, b) => -b.category.localeCompare(a.category)));
   };
 
-  const handleInputChange = _debounce(
-    (_: React.ChangeEvent<Record<string, unknown>>, _value: string) => {
-      const value = _value.replace(/\s\s+/g, ' ').trim();
-      if (optionSelectedFromList.current || !value.length) return null;
-      !loading && setLoading(true);
-      searchData.length && setSearchData([]);
-      return fetchData({ params: { keyword: value } })
-        .then(response => response && sortSearchData(response))
-        .finally(() => setLoading(false));
-    },
-    500,
-  );
+  const handleInputChange = _debounce((_: React.SyntheticEvent<Element, Event>, _value: string) => {
+    const value = _value.replace(/\s\s+/g, ' ').trim();
+    if (optionSelectedFromList.current || !value.length) return null;
+    !loading && setLoading(true);
+    searchData.length && setSearchData([]);
+    return fetchData({ params: { keyword: value } })
+      .then(response => response && sortSearchData(response))
+      .finally(() => setLoading(false));
+  }, 500);
 
   // When user will select option from list
   // Prevent component from fetching new data and changing component states
@@ -269,13 +268,13 @@ const SearchBar = ({ isDarkMode }: AppBarProps) => {
         onFocus={handleFocus}
         onBlur={handleBlur}
         forcePopupIcon={false}
-        getOptionSelected={(option, value) =>
-          (option as TAutocompleteOptions).value === (value as TAutocompleteOptions).value
-        }
+        // getOptionSelected={(option, value) =>
+        //   (option as TAutocompleteOptions).value === (value as TAutocompleteOptions).value
+        // }
         noOptionsText={renderNoResult()}
         loadingText={parse(translate('components.searchBar.loadingResults'))}
         size="small"
-        debug
+        // debug
         renderOption={option => {
           if ((option as TAutocompleteOptions).category === USERNAME) {
             return (
@@ -518,4 +517,4 @@ const SearchBar = ({ isDarkMode }: AppBarProps) => {
   );
 };
 
-export default withTheme(SearchBar);
+export default SearchBar;

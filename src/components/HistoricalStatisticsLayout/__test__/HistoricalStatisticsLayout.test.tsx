@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
-import { Skeleton } from '@material-ui/lab';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import { Skeleton } from '@mui/lab';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import 'jest-styled-components';
 
 import { MyMockType } from '@utils/types/MockType';

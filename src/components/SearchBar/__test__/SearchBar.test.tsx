@@ -32,10 +32,9 @@ i18next.t = jest.fn().mockImplementation((...arg) => {
 }) as MyMockType;
 
 describe('components/SearchBar', () => {
-  const onDrawerToggle = jest.fn();
   const wrapper = shallow(
     <ThemeProvider theme={themeLight}>
-      <SearchBar onDrawerToggle={onDrawerToggle} />
+      <SearchBar isDarkMode />
     </ThemeProvider>,
   );
 

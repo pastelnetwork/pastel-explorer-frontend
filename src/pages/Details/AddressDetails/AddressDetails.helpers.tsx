@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import format from 'date-fns/format';
 import parse from 'html-react-parser';
 

@@ -1,14 +1,15 @@
 import { memo, FC, useCallback, MouseEvent, useEffect, ReactNode, useState } from 'react';
-import makeStyles from '@material-ui/styles/makeStyles';
-import Button from '@material-ui/core/Button';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Select from '@material-ui/core/Select';
-import Checkbox from '@material-ui/core/Checkbox';
-import Input from '@material-ui/core/Input';
-import FormControl from '@material-ui/core/FormControl';
+import makeStyles from '@mui/styles/makeStyles';
+import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemText from '@mui/material/ListItemText';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Checkbox from '@mui/material/Checkbox';
+import Input from '@mui/material/Input';
+import FormControl from '@mui/material/FormControl';
 import { useDispatch, useSelector } from 'react-redux';
 import parse from 'html-react-parser';
+
 
 import { translate, translateDropdown } from '@utils/helpers/i18n';
 import DateTimePicker from '@components/DateTimePicker/DateTimePicker';
@@ -114,7 +115,7 @@ const Filters: FC<IProps> = ({
     };
   }, [dispatch]);
 
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleChange = (event: SelectChangeEvent<typeof ticketType>) => {
     setTicketType((event.target.value as string[]).filter(v => v));
   };
 

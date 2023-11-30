@@ -1,5 +1,5 @@
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import { Link } from 'react-router-dom';
 import { decode } from 'js-base64';
 import parse from 'html-react-parser';

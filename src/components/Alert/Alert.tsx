@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Snackbar from '@material-ui/core/Snackbar';
-import Alert, { AlertProps } from '@material-ui/lab/Alert';
+import Snackbar from '@mui/material/Snackbar';
+import Alert, { AlertProps } from '@mui/lab/Alert';
 
 import * as Styles from './Alert.styles';
 

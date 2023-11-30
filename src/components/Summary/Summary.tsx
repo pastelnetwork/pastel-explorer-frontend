@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import { Skeleton } from '@material-ui/lab';
-import { withStyles, makeStyles } from '@material-ui/styles';
+import { Skeleton } from '@mui/lab';
+import { withStyles, makeStyles } from '@mui/styles';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import Tooltip from '@material-ui/core/Tooltip';
-import Box from '@material-ui/core/Box';
+import Tooltip from '@mui/material/Tooltip';
+import Box from '@mui/material/Box';
 import parse from 'html-react-parser';
 
 // application

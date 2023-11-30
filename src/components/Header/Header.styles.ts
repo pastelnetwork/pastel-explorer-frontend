@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-import { Divider as MuiDivider, Typography as MuiTypography } from '@material-ui/core';
-import { spacing } from '@material-ui/system';
+import { Divider as MuiDivider, Typography as MuiTypography } from '@mui/material';
 
-export const Divider = styled(MuiDivider)(spacing);
+export const Divider = styled(MuiDivider);
 
-export const Typography = styled(MuiTypography)(spacing);
+export const Typography = styled(MuiTypography);
 
 export const Container = styled.div`
   margin-bottom: ${props => props.theme.spacing(5)}px;

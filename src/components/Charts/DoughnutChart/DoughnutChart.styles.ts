@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { Card as MuiCard, CardContent as MuiCardContent, Grid } from '@material-ui/core';
+import { Card as MuiCard, CardContent as MuiCardContent, Grid } from '@mui/material';
 
 export const Card = styled(MuiCard)`
   background: transparent;

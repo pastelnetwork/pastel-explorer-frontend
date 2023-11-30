@@ -1,7 +1,7 @@
 import { useEffect, useState, MouseEvent } from 'react';
 import { useParams } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from '@mui/material/Grid';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import Pagination from '@components/Pagination/Pagination';
 import { getSubHours } from '@utils/helpers/date/date';

@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
-import Grid from '@material-ui/core/Grid';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from '@mui/material/Grid';
+import CircularProgress from '@mui/material/CircularProgress';
 import 'jest-styled-components';
 
 import { MyMockType } from '@utils/types/MockType';

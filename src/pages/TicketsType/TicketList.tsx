@@ -1,12 +1,13 @@
 import { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import MenuItem from '@material-ui/core/MenuItem';
-import makeStyles from '@material-ui/styles/makeStyles';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
+import makeStyles from '@mui/styles/makeStyles';
 import { decode } from 'js-base64';
 import parse from 'html-react-parser';
+import { SelectChangeEvent } from '@mui/material/Select';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
@@ -299,11 +300,7 @@ const TicketsList: React.FC<ITicketsList> = ({
     }
   };
 
-  const handleTicketTypeChange = (
-    event: React.ChangeEvent<{
-      value: unknown;
-    }>,
-  ) => {
+  const handleTicketTypeChange = (event: SelectChangeEvent) => {
     if (event.target.value) {
       onTicketTypeChange(event.target.value as string);
     }
@@ -359,19 +356,11 @@ const TicketsList: React.FC<ITicketsList> = ({
     ];
   };
 
-  const handleStatusChange = (
-    event: React.ChangeEvent<{
-      value: unknown;
-    }>,
-  ) => {
+  const handleStatusChange = (event: SelectChangeEvent) => {
     onStatusChange(event.target.value as string);
   };
 
-  const handleSortChange = (
-    event: React.ChangeEvent<{
-      value: unknown;
-    }>,
-  ) => {
+  const handleSortChange = (event: SelectChangeEvent) => {
     onTicketSortChange(event.target.value as string);
   };
 

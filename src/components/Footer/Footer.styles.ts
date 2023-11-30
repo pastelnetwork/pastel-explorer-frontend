@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Typography as MuiTypography, Grid } from '@material-ui/core';
+import { Typography as MuiTypography, Grid } from '@mui/material';
 
 import themeVariant from '@theme/variants';
 

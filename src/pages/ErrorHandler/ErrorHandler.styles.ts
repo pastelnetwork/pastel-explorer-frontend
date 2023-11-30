@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { spacing } from '@material-ui/system';
-import { Button as MuiButton, Box as MuiBox } from '@material-ui/core';
+import { spacing } from '@mui/system';
+import { Button as MuiButton, Box as MuiBox } from '@mui/material';
 
 import { MuiButtonSpacingType } from '@utils/types/styles';
 

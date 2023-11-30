@@ -1,12 +1,12 @@
 import { useState, useRef, ReactNode } from 'react';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import AlertTitle from '@material-ui/lab/AlertTitle';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
+import AlertTitle from '@mui/lab/AlertTitle';
 import parse from 'html-react-parser';
-import IconButton from '@material-ui/core/IconButton';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import IconButton from '@mui/material/IconButton';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import * as TableStyles from '@components/Table/Table.styles';
 import CopyButton from '@components/CopyButton/CopyButton';

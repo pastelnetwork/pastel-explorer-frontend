@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactECharts from 'echarts-for-react';
-import { Typography, Grid } from '@material-ui/core';
+import { Typography, Grid } from '@mui/material';
 import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';
@@ -92,7 +92,7 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
 
   const renderChart = () => {
     return (
-      <Grid container justify="center" alignItems="flex-start">
+      <Grid container sx={{ justifyContent: 'center', alignItems: 'flex-start' }}>
         <Styles.ChartWrapper item xs={12} sm={6} md={5}>
           <Styles.DoughnutInner>
             {innerTitle && <Typography variant="h4">{innerTitle}</Typography>}

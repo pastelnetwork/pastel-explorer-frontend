@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Grid, darken } from '@material-ui/core';
+import { Grid, darken } from '@mui/material';
 
 import themeVariant from '@theme/variants';
 

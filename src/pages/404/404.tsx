@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 
-import { Typography, Grid } from '@material-ui/core';
+import { Typography, Grid } from '@mui/material';
 
 import PastelLogo from '@assets/images/pastel-logo.png';
 
@@ -16,7 +16,11 @@ const Page404: React.FC = () => {
       <Helmet title="404 Error" />
       <Styles.ContentWrapper>
         <div className="content">
-          <Grid container justify="center" alignItems="center" direction="column" spacing={5}>
+          <Grid
+            container
+            sx={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}
+            spacing={5}
+          >
             <Grid item>
               <Styles.Logo src={PastelLogo} alt={t('common.pastelLogo.message') || ''} />
             </Grid>

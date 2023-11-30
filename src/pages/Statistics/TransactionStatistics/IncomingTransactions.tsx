@@ -1,6 +1,7 @@
-import { useState, ChangeEvent, useEffect } from 'react';
-import { Skeleton } from '@material-ui/lab';
+import { useState, useEffect } from 'react';
+import { Skeleton } from '@mui/lab';
 import parse from 'html-react-parser';
+import { SelectChangeEvent } from '@mui/material/Select';
 
 import {
   transformChartData,
@@ -72,11 +73,7 @@ const IncomingTransactions: React.FC<IIncomingTransactions> = ({ blockElements }
     }
   }, [period, incomingTransactionsData.isLoading]);
 
-  const handleDropdownChange = (
-    event: ChangeEvent<{
-      value: unknown;
-    }>,
-  ) => {
+  const handleDropdownChange = (event: SelectChangeEvent) => {
     if (event.target.value) {
       setPeriod(event.target.value as PeriodTypes);
     }
@@ -113,7 +110,7 @@ const IncomingTransactions: React.FC<IIncomingTransactions> = ({ blockElements }
         ) : null}
         {!chartData ? (
           <>
-            <Skeleton animation="wave" variant="rect" height={300} />
+            <Skeleton animation="wave" variant="rectangular" height={300} />
             <StatisticsStyles.LoadingText>
               {parse(translate('common.loadingData'))}
             </StatisticsStyles.LoadingText>

@@ -1,4 +1,4 @@
-import { Box, Hidden } from '@material-ui/core';
+import { Box, Hidden } from '@mui/material';
 import getYear from 'date-fns/getYear';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';

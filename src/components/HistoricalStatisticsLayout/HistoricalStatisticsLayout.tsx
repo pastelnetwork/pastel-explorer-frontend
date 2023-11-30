@@ -1,10 +1,11 @@
 import { memo, ReactNode, useState } from 'react';
 // import { BackIcon } from '@components/Icons';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@mui/styles';
 import { useNavigate } from 'react-router-dom';
-import { Skeleton } from '@material-ui/lab';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import Skeleton from '@mui/material/Skeleton';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import parse from 'html-react-parser';
+import { SelectChangeEvent } from '@mui/material/Select';
 // application
 import { Dropdown, OptionsProps } from '@components/Dropdown/Dropdown';
 import { statistics } from '@utils/constants/statistics';
@@ -32,12 +33,7 @@ const HistoricalStatisticsLayout = ({ children, currentBgColor, title }: IProps)
   const [selectedChart, setSelectedChart] = useState('0');
   const navigate = useNavigate();
 
-  const handleDropdownChange = (
-    event: React.ChangeEvent<{
-      name?: string | undefined;
-      value: unknown;
-    }>,
-  ) => {
+  const handleDropdownChange = (event: SelectChangeEvent) => {
     if (event.target.value) {
       const url = event.target.value as string;
       setSelectedChart(url);
@@ -85,7 +81,7 @@ const HistoricalStatisticsLayout = ({ children, currentBgColor, title }: IProps)
           </Styles.DropdownWrapper>
         </Styles.BackButtonWrapper>
         <Styles.ChartWrapper style={{ backgroundColor: currentBgColor }}>
-          {children || <Skeleton animation="wave" variant="rect" height={386} />}
+          {children || <Skeleton animation="wave" variant="rectangular" height={386} />}
         </Styles.ChartWrapper>
       </div>
     </div>

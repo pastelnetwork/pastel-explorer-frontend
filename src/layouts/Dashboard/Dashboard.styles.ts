@@ -1,12 +1,11 @@
 import styled, { createGlobalStyle } from 'styled-components';
-import { spacing } from '@material-ui/system';
-import { Paper as MuiPaper } from '@material-ui/core';
+import { Paper as MuiPaper } from '@mui/material';
 
-import { GlobalStyleProps } from '@utils/types/styles';
+// import { GlobalStyleProps } from '@utils/types/styles';
 
 export const drawerWidth = 258;
 
-export const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
+export const GlobalStyle = createGlobalStyle`
   html,
   body,
   #root {
@@ -37,13 +36,13 @@ export const Root = styled.div`
   min-height: 100vh;
 `;
 
-export const Paper = styled(MuiPaper)(spacing);
+export const Paper = styled(MuiPaper);
 
 export const MainWrapper = styled.main`
   min-height: auto;
 `;
 
-export const MainContent = styled(Paper)`
+export const MainContent = styled(MuiPaper)`
   padding: 0 12px 20px;
   flex: 1;
   background: ${props => props.theme.palette.background.paper};

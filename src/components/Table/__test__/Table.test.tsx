@@ -1,9 +1,9 @@
 import { shallow } from 'enzyme';
-import MuiTable from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import MuiTable from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import CircularProgress from '@mui/material/CircularProgress';
 import 'jest-styled-components';
 
 import { MyMockType } from '@utils/types/MockType';

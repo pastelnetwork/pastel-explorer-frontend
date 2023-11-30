@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
-import DateFnsUtils from '@date-io/date-fns';
 import { H } from 'highlight.run';
 
 import { ThemeProvider } from 'styled-components';
 
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { StylesProvider, ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 
 import ErrorHandler from '@pages/ErrorHandler/ErrorHandler';
 import ResponseErrorAlert from '@components/ResponseErrorAlert/ResponseErrorAlert';
@@ -87,19 +87,17 @@ const App: React.FC = () => {
     <HelmetProvider>
       <Helmet titleTemplate="%s | Pastel Explorer" defaultTitle="Pastel Explorer" />
       <SocketContext.Provider value={socket}>
-        <StylesProvider>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <MuiThemeProvider theme={isDarkMode ? themeDark : themeLight}>
-              <ThemeProvider theme={isDarkMode ? themeDark : themeLight}>
-                <ErrorHandler>
-                  <Routes />
-                  <ResponseErrorAlert />
-                </ErrorHandler>
-                <InfoDrawer />
-              </ThemeProvider>
-            </MuiThemeProvider>
-          </MuiPickersUtilsProvider>
-        </StylesProvider>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <MuiThemeProvider theme={isDarkMode ? themeDark : themeLight}>
+            <ThemeProvider theme={isDarkMode ? themeDark : themeLight}>
+              <ErrorHandler>
+                <Routes />
+                <ResponseErrorAlert />
+              </ErrorHandler>
+              <InfoDrawer />
+            </ThemeProvider>
+          </MuiThemeProvider>
+        </LocalizationProvider>
       </SocketContext.Provider>
     </HelmetProvider>
   );

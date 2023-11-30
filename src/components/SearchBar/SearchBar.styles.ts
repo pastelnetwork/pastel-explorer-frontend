@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Paper from '@material-ui/core/Paper';
+import Paper from '@mui/material/Paper';
 
 import {
   AppBar as MuiAppBar,
@@ -7,7 +7,7 @@ import {
   Grid,
   Toolbar,
   Popover,
-} from '@material-ui/core';
+} from '@mui/material';
 
 import sun from '@assets/icons/sun.svg';
 import moon from '@assets/icons/moon.svg';

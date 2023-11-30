@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@mui/styles';
 
 import useBlockStatistics from '@hooks/useBlockStatistics';
 import { TAppTheme } from '@theme/index';

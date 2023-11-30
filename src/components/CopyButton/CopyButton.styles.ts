@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { IconButton as MuiIconButton } from '@material-ui/core';
+import { IconButton as MuiIconButton } from '@mui/material';
 
 export const IconButton = styled(MuiIconButton)`
   margin: 0 3px;

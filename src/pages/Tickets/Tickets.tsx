@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Grid } from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
+import { Grid } from '@mui/material';
+import { Skeleton } from '@mui/lab';
 
 import { useUsdPrice } from '@hooks/useTransactionDetails';
 import useTickets from '@hooks/useTickets';

@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-import Box from '@material-ui/core/Box';
-import Tooltip from '@material-ui/core/Tooltip';
-import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@mui/styles';
+import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
+import Box from '@mui/material/Box';
+import Tooltip from '@mui/material/Tooltip';
+import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
 import parse from 'html-react-parser';
 

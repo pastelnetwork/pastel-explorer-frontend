@@ -1,5 +1,5 @@
-import { CSSProperties } from '@material-ui/styles';
-import Tooltip from '@material-ui/core/Tooltip';
+import { CSSProperties } from '@mui/styles';
+import Tooltip from '@mui/material/Tooltip';
 import parse from 'html-react-parser';
 
 import * as Styles from './RouterLink.styles';

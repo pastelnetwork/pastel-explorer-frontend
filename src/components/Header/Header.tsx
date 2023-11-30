@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 
 import * as Styles from './Header.styles';
 
@@ -11,14 +13,14 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ title, className = '' }) => {
   return (
     <Styles.Container className={className}>
-      <Grid justify="space-between" container>
+      <Grid sx={{ justifyContent: 'space-between' }} container>
         <Grid item>
-          <Styles.Typography variant="h3" gutterBottom>
+          <Typography variant="h3" gutterBottom>
             {title}
-          </Styles.Typography>
+          </Typography>
         </Grid>
       </Grid>
-      <Styles.Divider my={1} />
+      <Divider sx={{ my: 1 }} />
     </Styles.Container>
   );
 };

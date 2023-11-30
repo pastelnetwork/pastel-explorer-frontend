@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { CircularProgress, Grid, Tooltip, Typography } from '@material-ui/core';
+import { CircularProgress, Grid, Tooltip, Typography } from '@mui/material';
 import parse from 'html-react-parser';
 
 import Header from '@components/Header/Header';

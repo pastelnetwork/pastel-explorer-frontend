@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@mui/styles';
 
-import { Drawer, Button } from '@material-ui/core';
+import { Drawer, Button } from '@mui/material';
 
 import { setInfoDrawer } from '@redux/actions/infoDrawerActions';
 import { AppStateType } from '@redux/reducers';

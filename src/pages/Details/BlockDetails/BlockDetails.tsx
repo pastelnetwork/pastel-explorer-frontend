@@ -9,11 +9,11 @@ import {
   AccordionSummary,
   AccordionDetails,
   Typography,
-} from '@material-ui/core';
-import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
+} from '@mui/material';
+import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 import RouterLink, { ExternalLink } from '@components/RouterLink/RouterLink';
 import Header from '@components/Header/Header';

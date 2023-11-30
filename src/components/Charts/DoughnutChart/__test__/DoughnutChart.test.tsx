@@ -1,5 +1,5 @@
 import { shallow } from 'enzyme';
-import { Typography, Grid } from '@material-ui/core';
+import { Typography, Grid } from '@mui/material';
 import ReactECharts from 'echarts-for-react';
 
 import 'jest-styled-components';

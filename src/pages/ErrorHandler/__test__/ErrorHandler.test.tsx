@@ -1,5 +1,5 @@
 import { shallow } from 'enzyme';
-import { Typography, Grid } from '@material-ui/core';
+import { Typography, Grid } from '@mui/material';
 import 'jest-styled-components';
 
 import { MyMockType } from '@utils/types/MockType';

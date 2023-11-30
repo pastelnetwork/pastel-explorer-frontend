@@ -1,9 +1,9 @@
 import { memo, FC, useCallback, MouseEvent, useMemo } from 'react';
-import { Drawer, Button, Tooltip } from '@material-ui/core';
+import { Drawer, Button, Tooltip } from '@mui/material';
 import parse from 'html-react-parser';
 
 import { useLocation, useNavigate } from 'react-router-dom';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@mui/styles';
 import { connect } from 'react-redux';
 import { AppStateType } from '@redux/reducers';
 import { setApiHostingAction } from '@redux/actions/clusterAction';
@@ -126,12 +126,11 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
   return (
     <>
       <Button
-        classes={{ label: classes.rootButtonLabel }}
         type="button"
         onClick={toggle}
         variant="outlined"
         color="primary"
-        className="cluster-button"
+        className={`cluster-button ${classes.rootButtonLabel}`}
       >
         <Tooltip title={translate('components.chooseCluster.chooseACluster') || ''}>
           <SettingIcon className="cluster-icon" />

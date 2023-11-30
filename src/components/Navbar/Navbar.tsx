@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Box, Hidden } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
-import { Menu as MenuIcon } from '@material-ui/icons';
+import { Box, Hidden } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import { Menu as MenuIcon } from '@mui/icons-material';
 
 import SearchBar from '@components/SearchBar/SearchBar';
 import Sidebar from '@components/Sidebar/Sidebar';

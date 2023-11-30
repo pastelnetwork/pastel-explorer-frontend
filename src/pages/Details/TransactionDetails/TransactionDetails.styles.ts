@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Alert as MuiAlert } from '@material-ui/lab';
-import { Grid, Toolbar } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
+import { Theme } from '@mui/material/styles';
+import { createStyles, makeStyles } from '@mui/styles';
+import { Alert as MuiAlert } from '@mui/lab';
+import { Grid, Toolbar } from '@mui/material';
+import Typography from '@mui/material/Typography';
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({

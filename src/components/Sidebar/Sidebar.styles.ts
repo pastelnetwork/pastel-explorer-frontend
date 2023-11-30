@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import { rgba } from 'polished';
 import { NavLink, match } from 'react-router-dom';
 
-import { Chip, Drawer as MuiDrawer, ListItem, Typography, ListItemText } from '@material-ui/core';
-import { ExpandLess, ExpandMore } from '@material-ui/icons';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
+import { Chip, Drawer as MuiDrawer, ListItem, Typography, ListItemText } from '@mui/material';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 export const DrawerMobile = styled(MuiDrawer)`
   ${props => props.theme.breakpoints.down('sm')} {

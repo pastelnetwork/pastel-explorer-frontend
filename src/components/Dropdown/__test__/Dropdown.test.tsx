@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import 'jest-styled-components';
 
 import { MyMockType } from '@utils/types/MockType';

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Skeleton from '@material-ui/lab/Skeleton';
+import Skeleton from '@mui/lab/Skeleton';
 import parse from 'html-react-parser';
 
 import DoughnutChart from '@components/Charts/DoughnutChart/DoughnutChart';
@@ -53,7 +53,7 @@ const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ link = '' }) 
         <ExplorerStyles.BlockTitle>
           {parse(translate('pages.explorer.supernodeStatistics'))}
         </ExplorerStyles.BlockTitle>
-        <Skeleton animation="wave" variant="rect" height={355} />
+        <Skeleton animation="wave" variant="rectangular" height={355} />
       </ExplorerStyles.BlockWrapper>
     );
   }

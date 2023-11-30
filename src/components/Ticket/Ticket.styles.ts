@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import MuiAccordion from '@material-ui/core/Accordion';
-import Grid from '@material-ui/core/Grid';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import MuiAccordion from '@mui/material/Accordion';
+import Grid from '@mui/material/Grid';
 
 import themeVariant from '@theme/variants';
 

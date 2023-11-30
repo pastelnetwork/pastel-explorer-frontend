@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, useEffect } from 'react';
-import { Skeleton } from '@material-ui/lab';
+import { Skeleton } from '@mui/lab';
 import parse from 'html-react-parser';
 
 import { PeriodTypes, generatePeriodToDropdownOptions } from '@utils/helpers/statisticsLib';
@@ -145,7 +145,7 @@ const AverageRarenessScoreOfNFTsOnSense: React.FC = () => {
       <Styles.ChartContentWrapper>
         {isLoading ? (
           <StatisticsStyles.Loader>
-            <Skeleton animation="wave" variant="rect" height={170} width="100%" />
+            <Skeleton animation="wave" variant="rectangular" height={170} width="100%" />
             <StatisticsStyles.LoadingText>
               {parse(translate('common.loadingData'))}
             </StatisticsStyles.LoadingText>

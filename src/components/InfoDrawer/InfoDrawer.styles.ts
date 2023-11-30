@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@mui/material';
 
 export const TitleRow = styled(Grid)`
   width: 100%;

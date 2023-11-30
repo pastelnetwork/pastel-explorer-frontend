@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 import DatePicker from 'react-datepicker';
-import DateRangeIcon from '@material-ui/icons/DateRange';
+import DateRangeIcon from '@mui/icons-material/DateRange';
 import 'jest-styled-components';
 
 import { MyMockType } from '@utils/types/MockType';

@@ -1,5 +1,5 @@
 import { shallow } from 'enzyme';
-import Grid from '@material-ui/core/Grid';
+import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
 import 'jest-styled-components';
 

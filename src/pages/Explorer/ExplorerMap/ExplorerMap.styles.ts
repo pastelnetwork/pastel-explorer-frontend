@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Grid, Accordion as MuiAccordion, Typography } from '@material-ui/core';
+import { Grid, Accordion as MuiAccordion, Typography } from '@mui/material';
 
 import themeVariant from '@theme/variants';
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Card as MuiCard, CardContent as MuiCardContent } from '@material-ui/core';
+import { Card as MuiCard, CardContent as MuiCardContent } from '@mui/material';
 
 export const MapContainer = styled.div`
   height: 340px;

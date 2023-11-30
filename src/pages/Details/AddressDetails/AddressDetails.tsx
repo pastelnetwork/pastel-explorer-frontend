@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { CircularProgress, Grid } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
-import Tooltip from '@material-ui/core/Tooltip';
+import { CircularProgress, Grid } from '@mui/material';
+import Box from '@mui/material/Box';
+import Tooltip from '@mui/material/Tooltip';
 import parse from 'html-react-parser';
 
 import InfinityTable, {
@@ -148,14 +148,14 @@ const AddressDetails = () => {
       <Grid container direction="column">
         <Grid item>
           <TableStyles.BlockWrapper className="address-wrapper">
-            <TableStyles.Card>
+            <TableStyles.StyledCard>
               <Styles.Heading>
                 <Styles.HeadingTitle>{generateAddTitle()}</Styles.HeadingTitle>
               </Styles.Heading>
               <Styles.ChartWrapper>
                 <BalanceHistory id={id as string} />
               </Styles.ChartWrapper>
-            </TableStyles.Card>
+            </TableStyles.StyledCard>
           </TableStyles.BlockWrapper>
         </Grid>
         <Styles.TableWrapper item>

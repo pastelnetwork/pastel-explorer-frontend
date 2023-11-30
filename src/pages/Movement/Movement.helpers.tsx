@@ -1,4 +1,4 @@
-import { Tooltip, Grid } from '@material-ui/core';
+import { Tooltip, Grid } from '@mui/material';
 import parse from 'html-react-parser';
 
 import RouterLink from '@components/RouterLink/RouterLink';

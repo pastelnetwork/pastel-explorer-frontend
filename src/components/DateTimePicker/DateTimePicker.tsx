@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import DatePicker from 'react-datepicker';
-import DateRangeIcon from '@material-ui/icons/DateRange';
+import DateRangeIcon from '@mui/icons-material/DateRange';
 import differenceInDays from 'date-fns/differenceInDays';
 import subDays from 'date-fns/subDays';
 import parse from 'html-react-parser';

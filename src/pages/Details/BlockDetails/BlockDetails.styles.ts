@@ -5,7 +5,7 @@ import {
   Accordion as MuiAccordion,
   Grid,
   IconButton,
-} from '@material-ui/core';
+} from '@mui/material';
 
 export const Wrapper = styled('div')`
   .block-wrapper {

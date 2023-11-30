@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { NavLink, useParams, RouteComponentProps, match } from 'react-router-dom';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@mui/styles';
 import { useCallback } from 'react';
-import { Collapse, List, Hidden, Box } from '@material-ui/core';
+import { Collapse, List, Hidden, Box } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import parse from 'html-react-parser';
-import IconButton from '@material-ui/core/IconButton';
+import IconButton from '@mui/material/IconButton';
 
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import * as ROUTES from '@utils/constants/routes';

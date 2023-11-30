@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
-import { Tooltip } from '@material-ui/core';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
+import { Tooltip } from '@mui/material';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 import 'jest-styled-components';
 
 import { MyMockType } from '@utils/types/MockType';
