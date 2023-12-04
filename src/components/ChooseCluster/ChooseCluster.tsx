@@ -7,6 +7,7 @@ import { makeStyles } from '@mui/styles';
 import { connect } from 'react-redux';
 import { AppStateType } from '@redux/reducers';
 import { setApiHostingAction } from '@redux/actions/clusterAction';
+import { InitialClusterProps } from '@redux/reducers/clusterReducer';
 import { TAppTheme } from '@theme/index';
 import useBooleanState from '@hooks/useBooleanState';
 import { BASE_URL, BASE_URL_TESTNET, BASE_URL_DEVNET } from '@utils/constants/urls';
@@ -112,7 +113,7 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
       const queryParams = new URLSearchParams(search);
       queryParams.set('cluster', value);
       if (value === 'mainnet') queryParams.delete('cluster');
-      navigate({ search: queryParams.toString() })
+      navigate({ search: queryParams.toString() });
       setApiHosting(id, value === 'mainnet' ? DEFAULT_CURRENCY : TEST_CURRENCY_NAME);
       window.location.reload();
     },
@@ -171,7 +172,7 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
 };
 
 const Cluster = connect(
-  ({ cluster }: AppStateType) => ({ url: cluster.url }),
+  ({ cluster }: AppStateType) => ({ url: (cluster as InitialClusterProps).url }),
   dispatch => ({
     setApiHosting: (url: string, currencyName: string) =>
       dispatch(setApiHostingAction(url, currencyName)),

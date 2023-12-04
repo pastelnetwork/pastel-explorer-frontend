@@ -1,6 +1,7 @@
-import { useEffect, useState, ChangeEvent } from 'react';
+import { useEffect, useState } from 'react';
 import { Skeleton } from '@mui/lab';
 import parse from 'html-react-parser';
+import { SelectChangeEvent } from '@mui/material/Select';
 
 import { PeriodTypes, generatePeriodToDropdownOptions } from '@utils/helpers/statisticsLib';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
@@ -54,11 +55,7 @@ const AverageSizeOfNFTStoredOnCascade: React.FC = () => {
     }
   }, [period, swrData.isLoading]);
 
-  const handleDropdownChange = (
-    event: ChangeEvent<{
-      value: unknown;
-    }>,
-  ) => {
+  const handleDropdownChange = (event: SelectChangeEvent) => {
     if (event.target.value) {
       setPeriod(event.target.value as PeriodTypes);
     }

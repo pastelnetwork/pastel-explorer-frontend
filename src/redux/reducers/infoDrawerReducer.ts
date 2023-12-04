@@ -15,7 +15,10 @@ const initialState: InitialInfoDrawerProps = {
   title: null,
 };
 
-const reducer = (state = initialState, actions: ActionTypes): InitialInfoDrawerProps => {
+const reducer = (state: InitialInfoDrawerProps, actions: ActionTypes): InitialInfoDrawerProps => {
+  if (typeof state === 'undefined') {
+    return initialState;
+  }
   switch (actions.type) {
     case types.INFO_DRAWER_SET:
       return {

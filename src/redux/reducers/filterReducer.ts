@@ -22,7 +22,10 @@ const initialState: IFilterState = {
   },
 };
 
-const reducer = (state = initialState, actions: ActionTypes): IFilterState => {
+const reducer = (state: IFilterState, actions: ActionTypes): IFilterState => {
+  if (typeof state === 'undefined') {
+    return initialState;
+  }
   switch (actions.type) {
     case SET_FILTER_VALUE:
       return {
@@ -35,6 +38,6 @@ const reducer = (state = initialState, actions: ActionTypes): IFilterState => {
   }
 };
 
-export const getFilterState = (state: AppStateType) => state[stateKey];
+export const getFilterState = (state: AppStateType): IFilterState => state[stateKey];
 
 export default { [stateKey]: reducer };

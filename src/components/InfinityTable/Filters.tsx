@@ -10,7 +10,6 @@ import FormControl from '@mui/material/FormControl';
 import { useDispatch, useSelector } from 'react-redux';
 import parse from 'html-react-parser';
 
-
 import { translate, translateDropdown } from '@utils/helpers/i18n';
 import DateTimePicker from '@components/DateTimePicker/DateTimePicker';
 import { setFilterValueAction } from '@redux/actions/filterAction';

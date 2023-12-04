@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import { Link } from 'react-router-dom';
 import { decode } from 'js-base64';
 import parse from 'html-react-parser';
+import { SelectChangeEvent } from '@mui/material/Select';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
@@ -267,12 +268,7 @@ const TicketsList: React.FC<ITicketsList> = ({
     }
   };
 
-  const handleTicketTypeChange = (
-    event: React.ChangeEvent<{
-      name?: string | undefined;
-      value: unknown;
-    }>,
-  ) => {
+  const handleTicketTypeChange = (event: SelectChangeEvent) => {
     if (event.target.value) {
       onTicketTypeChange(event.target.value as string);
     }

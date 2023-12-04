@@ -268,65 +268,79 @@ const SearchBar: React.FC<AppBarProps> = ({ isDarkMode }) => {
         onFocus={handleFocus}
         onBlur={handleBlur}
         forcePopupIcon={false}
-        // getOptionSelected={(option, value) =>
-        //   (option as TAutocompleteOptions).value === (value as TAutocompleteOptions).value
-        // }
+        isOptionEqualToValue={(option, value) =>
+          (option as TAutocompleteOptions).value === (value as TAutocompleteOptions).value
+        }
         noOptionsText={renderNoResult()}
         loadingText={parse(translate('components.searchBar.loadingResults'))}
         size="small"
-        // debug
-        renderOption={option => {
+        renderOption={(props, option) => {
           if ((option as TAutocompleteOptions).category === USERNAME) {
             return (
               <RouterLink
-                styles={{ padding: '6px 24px 6px 16px' }}
+                styles={{ padding: '6px 24px 6px 16px', display: 'block' }}
                 route={`${getRoute((option as TAutocompleteOptions).category)}/${
                   (option as TAutocompleteOptions).pastelID
                 }#${(option as TAutocompleteOptions).value}`}
                 value={(option as TAutocompleteOptions).value}
+                key={`${(option as TAutocompleteOptions).category}-${
+                  (option as TAutocompleteOptions).value
+                }`}
               />
             );
           }
           if ((option as TAutocompleteOptions).category === SENSES_LABEL) {
             return (
               <RouterLink
-                styles={{ padding: '6px 24px 6px 16px' }}
+                styles={{ padding: '6px 24px 6px 16px', display: 'block' }}
                 route={`${getRoute((option as TAutocompleteOptions).category)}?hash=${
                   (option as TAutocompleteOptions).value
                 }`}
                 value={(option as TAutocompleteOptions).value}
+                key={`${(option as TAutocompleteOptions).category}-${
+                  (option as TAutocompleteOptions).value
+                }`}
               />
             );
           }
           if ((option as TAutocompleteOptions).category === CASCADE) {
             return (
               <RouterLink
-                styles={{ padding: '6px 24px 6px 16px' }}
+                styles={{ padding: '6px 24px 6px 16px', display: 'block' }}
                 route={`${getRoute((option as TAutocompleteOptions).category)}?txid=${
                   (option as TAutocompleteOptions).transactionHash
                 }`}
                 value={(option as TAutocompleteOptions).value}
+                key={`${(option as TAutocompleteOptions).category}-${
+                  (option as TAutocompleteOptions).value
+                }`}
               />
             );
           }
           if ((option as TAutocompleteOptions).category === COLLECTION) {
             return (
               <RouterLink
-                styles={{ padding: '6px 24px 6px 16px' }}
+                styles={{ padding: '6px 24px 6px 16px', display: 'block' }}
                 route={`${getRoute((option as TAutocompleteOptions).category)}/${
                   (option as TAutocompleteOptions).alias
                 }`}
                 value={(option as TAutocompleteOptions).value}
+                key={`${(option as TAutocompleteOptions).category}-${
+                  (option as TAutocompleteOptions).value
+                }`}
               />
             );
           }
           return (
             <RouterLink
-              styles={{ padding: '6px 24px 6px 16px' }}
+              styles={{ padding: '6px 24px 6px 16px', display: 'block' }}
               route={`${getRoute((option as TAutocompleteOptions).category)}/${
                 (option as TAutocompleteOptions).value
               }`}
               value={(option as TAutocompleteOptions).value}
+              key={`${(option as TAutocompleteOptions).category}-${
+                (option as TAutocompleteOptions).value
+              }`}
             />
           );
         }}

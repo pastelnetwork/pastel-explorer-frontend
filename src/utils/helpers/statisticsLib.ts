@@ -434,7 +434,7 @@ export function setTransactionsLive(
       item?.vout?.forEach(({ value }) => {
         pslPrice += value;
       });
-      const fee = prev.get(item.txid)?.fee || item.fee || 0;
+      const fee = prev?.get(item.txid)?.fee || item.fee || 0;
       newTxs.set(item.txid, {
         // ...item,
         block: {
@@ -462,7 +462,7 @@ export function setTransactionsLive(
       item.vout.forEach(({ value }) => {
         pslPrice += value;
       });
-      const fee = prev.get(item.txid)?.fee || item.fee || 0;
+      const fee = prev?.get(item.txid)?.fee || item.fee || 0;
       newTxs.set(item.txid, {
         block: {
           height: '',

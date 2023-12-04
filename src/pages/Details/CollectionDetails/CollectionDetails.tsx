@@ -43,7 +43,11 @@ const CollectionDetails = () => {
     </Styles.Wrapper>
   ) : (
     <Styles.Wrapper className="content-center-wrapper">
-      <Grid container justify="center" alignItems="center" direction="column" spacing={2}>
+      <Grid
+        container
+        sx={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}
+        spacing={2}
+      >
         <Grid item>
           <Typography component="h1" variant="h1" align="center" gutterBottom>
             {parse(translate('pages.collection.404'))}

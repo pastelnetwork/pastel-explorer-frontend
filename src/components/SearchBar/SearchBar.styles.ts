@@ -89,6 +89,10 @@ export const AppBar = styled(MuiAppBar)`
   transition: min-height 0.5s ease-in;
   z-index: 10;
 
+  &.MuiPaper-root {
+    background: ${props => props.theme.sidebar.menu.background};
+  }
+
   ${props => props.theme.breakpoints.up('md')} {
     max-width: 36%;
   }
@@ -268,7 +272,7 @@ export const ModeToggle = styled.div`
       }
 
       & + .toggle-switch {
-        :before {
+        &:before {
           left: 30px;
           background-color: ${props => props.theme.sidebar.menu.toggle.switch};
           background-image: url(${moon});
@@ -298,7 +302,9 @@ export const ModeToggle = styled.div`
       line-height: 18px;
       color: #fff;
       background-color: ${props => props.theme.sidebar.menu.toggle.switch};
-      transition: all 0.3s ease, left 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15);
+      transition:
+        all 0.3s ease,
+        left 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15);
       background-image: url(${sun});
       background-size: 14px;
       background-repeat: no-repeat;

@@ -1,4 +1,3 @@
-import { createElement } from 'react';
 import { mount, shallow } from 'enzyme';
 import { Provider } from 'react-redux';
 import * as redux from 'react-redux';
@@ -48,11 +47,9 @@ jest.spyOn(redux, 'useSelector').mockReturnValue(initialMockStore);
 
 describe('pages/Blocks', () => {
   const wrapper = mount(
-    createElement(() => (
-      <ReduxProvider store={store}>
-        <Blocks />
-      </ReduxProvider>
-    )),
+    <ReduxProvider store={store}>
+      <Blocks />
+    </ReduxProvider>,
   );
 
   test('renders correctly', () => {
@@ -73,6 +70,6 @@ describe('pages/Blocks', () => {
   });
 
   test('should render title', () => {
-    expect(wrapper.html().search(Styles.Title).valueOf()).not.toEqual(-1);
+    expect(wrapper.html().search(Styles.Title.toString()).valueOf()).not.toEqual(-1);
   });
 });

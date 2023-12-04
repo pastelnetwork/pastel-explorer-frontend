@@ -47,8 +47,8 @@ export function useSortData<T>({
       const newList = [...list];
       const sortBy = sort.sortBy as keyof T;
       newList.sort((a: T, b: T) => {
-        let keyA = (a[sortBy] as unknown) as string | number;
-        let keyB = (b[sortBy] as unknown) as string | number;
+        let keyA = a[sortBy] as unknown as string | number;
+        let keyB = b[sortBy] as unknown as string | number;
         if (typeof keyA === 'string' && typeof keyB === 'string') {
           keyA = keyA.toUpperCase();
           keyB = keyB.toUpperCase();

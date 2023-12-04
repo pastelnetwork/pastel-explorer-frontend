@@ -30,7 +30,7 @@ function useWidth() {
 interface DashboardPropsType {
   routes: Array<RouteType>;
   fluid?: boolean;
-  children: React.ReactNode,
+  children: React.ReactNode;
 }
 
 const Dashboard: React.FC<DashboardPropsType> = ({ children, routes, fluid = false }) => {

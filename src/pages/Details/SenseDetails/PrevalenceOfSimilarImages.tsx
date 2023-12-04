@@ -53,8 +53,8 @@ const PrevalenceOfSimilarImages: React.FC<IPrevalenceOfSimilarImages> = ({ data 
             <div class="tooltip-label">${params[0].axisValue}</div>
             <div class="tooltip-value">
               ${params[0].marker} ${translateDropdown('pages.senseDetails.top10SimilarImages')}: ${
-          params[0].value
-        }
+                params[0].value
+              }
             </div>
           </div>
         `;

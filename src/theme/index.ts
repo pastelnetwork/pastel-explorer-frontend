@@ -1,4 +1,4 @@
-import { createMuiTheme, Theme } from '@mui/material/styles';
+import { createTheme as createMuiTheme, Theme } from '@mui/material/styles';
 import themeVariant from './variants';
 import typography from './typography';
 import overrides from './overrides';

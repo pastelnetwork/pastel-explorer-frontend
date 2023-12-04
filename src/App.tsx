@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { H } from 'highlight.run';
-
+import jssPreset from 'jss-preset-default';
 import { ThemeProvider } from 'styled-components';
-
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { create } from 'jss';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers';
-import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
+import { ThemeProvider as MuiThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import { StylesProvider } from '@mui/styles';
 
 import ErrorHandler from '@pages/ErrorHandler/ErrorHandler';
 import ResponseErrorAlert from '@components/ResponseErrorAlert/ResponseErrorAlert';
@@ -42,6 +43,11 @@ H.init(process.env.REACT_APP_EXPLORER_HIGHLIGHT_PROJECT_ID, {
       'https://fonts.googleapis.com',
     ],
   },
+});
+
+const jss = create({
+  ...jssPreset(),
+  insertionPoint: document.getElementById('jss-insertion-point') as HTMLElement,
 });
 
 const App: React.FC = () => {
@@ -87,17 +93,21 @@ const App: React.FC = () => {
     <HelmetProvider>
       <Helmet titleTemplate="%s | Pastel Explorer" defaultTitle="Pastel Explorer" />
       <SocketContext.Provider value={socket}>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <MuiThemeProvider theme={isDarkMode ? themeDark : themeLight}>
-            <ThemeProvider theme={isDarkMode ? themeDark : themeLight}>
-              <ErrorHandler>
-                <Routes />
-                <ResponseErrorAlert />
-              </ErrorHandler>
-              <InfoDrawer />
-            </ThemeProvider>
-          </MuiThemeProvider>
-        </LocalizationProvider>
+        <StylesProvider jss={jss}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <StyledEngineProvider injectFirst>
+              <MuiThemeProvider theme={isDarkMode ? themeDark : themeLight}>
+                <ThemeProvider theme={isDarkMode ? themeDark : themeLight}>
+                  <ErrorHandler>
+                    <Routes />
+                    <ResponseErrorAlert />
+                  </ErrorHandler>
+                  <InfoDrawer />
+                </ThemeProvider>
+              </MuiThemeProvider>
+            </StyledEngineProvider>
+          </LocalizationProvider>
+        </StylesProvider>
       </SocketContext.Provider>
     </HelmetProvider>
   );

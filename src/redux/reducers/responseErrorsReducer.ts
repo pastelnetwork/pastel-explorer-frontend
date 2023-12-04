@@ -15,7 +15,13 @@ const initialState: InitialResponseErrorsProps = {
   message: null,
 };
 
-const reducer = (state = initialState, actions: ActionTypes): InitialResponseErrorsProps => {
+const reducer = (
+  state: InitialResponseErrorsProps,
+  actions: ActionTypes,
+): InitialResponseErrorsProps => {
+  if (typeof state === 'undefined') {
+    return initialState;
+  }
   switch (actions.type) {
     case types.RESPONSE_ERROR_SET:
       return {

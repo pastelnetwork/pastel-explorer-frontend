@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
-import { NavLink, match } from 'react-router-dom';
+import { NavLink, UIMatch } from 'react-router-dom';
 
 import { Chip, Drawer as MuiDrawer, ListItem, Typography, ListItemText } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
@@ -119,7 +119,7 @@ type CategoryType = {
   to?: string;
   component?: typeof NavLink;
   exact?: boolean;
-  isActive?: (_match: match, _location: Location) => boolean;
+  isActive?: (_match: UIMatch, _location: Location) => boolean;
 };
 
 export const Category = styled(ListItem)<CategoryType>`

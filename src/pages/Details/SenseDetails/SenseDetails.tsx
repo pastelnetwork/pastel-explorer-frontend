@@ -518,7 +518,11 @@ const SenseDetails: React.FC = () => {
     </Styles.Wrapper>
   ) : (
     <Styles.Wrapper className="content-center-wrapper">
-      <Grid container justify="center" alignItems="center" direction="column" spacing={2}>
+      <Grid
+        sx={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}
+        container
+        spacing={2}
+      >
         <Grid item>
           <Typography component="h1" variant="h1" align="center" gutterBottom>
             {parse(translate('pages.senseDetails.404'))}

@@ -187,7 +187,7 @@ const BlockDetails = () => {
     const { previousBlockHash, nextBlockHash } = currentBlock;
 
     return (
-      <Grid container justify="space-evenly" alignItems="center">
+      <Grid container sx={{ justifyContent: 'space-evenly', alignItems: 'center' }}>
         {generateHeaderNavigationElement(previousBlockHash, 'previous')}
         <Styles.Typography>{`${getCurrencyName()} block: ${currentBlock.id}`}</Styles.Typography>
         {generateHeaderNavigationElement(nextBlockHash, 'next')}

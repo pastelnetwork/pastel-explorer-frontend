@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NavLink, useParams, RouteComponentProps, match } from 'react-router-dom';
+import { NavLink, UIMatch, useLocation } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import { useCallback } from 'react';
 import { Collapse, List, Hidden, Box } from '@mui/material';
@@ -40,7 +40,7 @@ const SidebarLink: React.FC<SidebarLinkPropsType> = ({ name, to, badge }) => {
   const isActive = window.location.pathname.includes(to);
 
   return (
-    <Styles.NavLinkStyle exact to={to} className={isActive ? 'active' : ''}>
+    <Styles.NavLinkStyle to={to} className={isActive ? 'active' : ''}>
       <Styles.LinkText>{parse(name?.toString() || '')}</Styles.LinkText>
       {badge ? <Styles.LinkBadge label={badge} /> : ''}
     </Styles.NavLinkStyle>
@@ -63,7 +63,7 @@ interface SidebarCategoryPropsType {
   to?: string;
   exact?: boolean;
   component?: typeof NavLink;
-  isActive?: (_match: match, _location: Location) => boolean;
+  isActive?: (_match: UIMatch, _location: Location) => boolean;
   category?: RouteType;
 }
 
@@ -121,7 +121,6 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
                 defaultValue: '<span class="skeleton-text"></span>',
               })}
               to={route.path}
-              icon={route.icon}
               badge={route.badge}
             />
           ))}
@@ -142,23 +141,20 @@ SidebarCategory.defaultProps = {
   component: undefined,
   isActive: undefined,
   category: undefined,
-}
+};
 
 interface SidebarPropsType {
-  staticContext: string | undefined;
-  location: {
-    pathname: string;
-  };
   routes: Array<RouteType>;
   variant?: 'permanent' | 'persistent' | 'temporary';
   open?: boolean;
   onClose?: () => void;
 }
 
-const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, ...rest }) => {
+const Sidebar: React.FC<SidebarPropsType> = ({ ...rest }) => {
   interface InitOptionsProps {
     [key: number]: boolean;
   }
+  const location = useLocation();
   const { width } = useWindowDimensions();
   const { t } = useTranslation();
   const classes = useStyles();
@@ -201,7 +197,7 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
   };
 
   const handleIsActiveLink = useCallback(
-    (path: string) => (matchLink: match, locationLink: Location) => {
+    (path: string) => (matchLink: UIMatch, locationLink: Location) => {
       if (matchLink) {
         return true;
       }
@@ -339,4 +335,4 @@ Sidebar.defaultProps = {
   onClose: undefined,
 };
 
-export default useParams(Sidebar);
+export default Sidebar;

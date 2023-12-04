@@ -57,6 +57,7 @@
     "i18next-http-backend": "2.2.2",
     "js-base64": "3.7.5",
     "jss": "10.10.0",
+    "jss-preset-default": "10.10.0",
     "lodash.debounce": "4.0.8",
     "lz-string": "1.5.0",
     "polished": "4.2.2",
@@ -126,8 +127,5 @@
     "redux-mock-store": "1.5.4",
     "ts-jest": "29.1.1",
     "typescript": "5.2.2"
-  },
-  "resolutions": {
-    "jss": "10.6.0"
   }
 }

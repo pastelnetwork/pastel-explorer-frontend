@@ -3,7 +3,7 @@ import { setLoadingBlock, setLatestBlocks } from '@redux/actions/blocksAction';
 import blockApis from '@apis/blocks';
 import { setResponseError } from '@redux/actions/responseErrorsActions';
 import { IBlock, IRawBlock } from '@utils/types/IBlocks';
-import { BLOCK_NAMESPACE } from '@redux/reducers/blockReducer';
+import { BLOCK_NAMESPACE, IBlockState } from '@redux/reducers/blockReducer';
 
 export const getLatestBlocks: () => AppThunk<Promise<void>> =
   (limit = 6) =>
@@ -28,7 +28,7 @@ export const getLatestBlocks: () => AppThunk<Promise<void>> =
 export const updateBlocksNewest: (_block: IRawBlock) => AppThunk<Promise<void>> =
   block =>
   async (dispatch, getState): Promise<void> => {
-    const prevBlocks = getState()[BLOCK_NAMESPACE].latestBlocks;
+    const prevBlocks = (getState()[BLOCK_NAMESPACE] as IBlockState).latestBlocks;
     const newBlocks = new Map<string, IBlock>();
     newBlocks.set(block.hash, {
       id: block.hash,
@@ -50,7 +50,7 @@ export const updateBlocksNewest: (_block: IRawBlock) => AppThunk<Promise<void>> 
       senses: block.senses,
     });
     let i = 1;
-    prevBlocks.forEach((value, key) => {
+    prevBlocks?.forEach((value, key) => {
       if (i < 6) {
         newBlocks.set(key, value);
       }
