@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: TAppTheme) => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'flex-end',
-      borderRadius: `${theme.spacing(1)}px`,
+      borderRadius: `4px`,
       [theme.breakpoints.down('xs')]: {
         maxWidth: '98%',
         margin: 'auto',
@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme: TAppTheme) => {
       textAlign: 'left',
       backgroundColor: 'inherit !important',
       padding: '2px 10px',
+      color: theme.palette.text.primary,
     },
   };
 });

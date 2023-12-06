@@ -21,6 +21,7 @@ type DropdownProps = {
   options: OptionsProps[];
   label?: React.ReactNode;
   classNameWrapper?: string;
+  showFieldset?: boolean;
 };
 
 export const Dropdown = ({
@@ -29,9 +30,10 @@ export const Dropdown = ({
   options,
   label,
   classNameWrapper,
+  showFieldset = true,
 }: DropdownProps): JSX.Element => {
   return (
-    <Styles.Wrapper className={classNameWrapper}>
+    <Styles.Wrapper className={`${classNameWrapper} ${showFieldset ? '' : 'hidden-fieldset'}`}>
       {label ? <Styles.Label>{label}</Styles.Label> : null}
       <Select
         value={value as string}
@@ -55,6 +57,7 @@ export const Dropdown = ({
 Dropdown.defaultProps = {
   label: undefined,
   classNameWrapper: '',
+  showFieldset: true,
 };
 
 const ITEM_HEIGHT = 48;

@@ -7,10 +7,8 @@ import parse from 'html-react-parser';
 import { TextField, CircularProgress } from '@mui/material';
 import { createStyles, makeStyles } from '@mui/styles';
 import { Search as SearchIcon } from '@mui/icons-material';
-import MuiAutocomplete from '@mui/lab/Autocomplete';
-import { createFilterOptions } from '@mui/material/Autocomplete';
+import MuiAutocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
-import Hidden from '@mui/material/Hidden';
 import CancelIcon from '@mui/icons-material/Cancel';
 
 import Social from '@components/Social/Social';
@@ -286,6 +284,8 @@ const SearchBar: React.FC<AppBarProps> = ({ isDarkMode }) => {
                 key={`${(option as TAutocompleteOptions).category}-${
                   (option as TAutocompleteOptions).value
                 }`}
+                className="search-link"
+                onClick={handleCloseSearch}
               />
             );
           }
@@ -300,6 +300,8 @@ const SearchBar: React.FC<AppBarProps> = ({ isDarkMode }) => {
                 key={`${(option as TAutocompleteOptions).category}-${
                   (option as TAutocompleteOptions).value
                 }`}
+                className="search-link"
+                onClick={handleCloseSearch}
               />
             );
           }
@@ -314,6 +316,8 @@ const SearchBar: React.FC<AppBarProps> = ({ isDarkMode }) => {
                 key={`${(option as TAutocompleteOptions).category}-${
                   (option as TAutocompleteOptions).value
                 }`}
+                className="search-link"
+                onClick={handleCloseSearch}
               />
             );
           }
@@ -328,6 +332,8 @@ const SearchBar: React.FC<AppBarProps> = ({ isDarkMode }) => {
                 key={`${(option as TAutocompleteOptions).category}-${
                   (option as TAutocompleteOptions).value
                 }`}
+                className="search-link"
+                onClick={handleCloseSearch}
               />
             );
           }
@@ -341,6 +347,8 @@ const SearchBar: React.FC<AppBarProps> = ({ isDarkMode }) => {
               key={`${(option as TAutocompleteOptions).category}-${
                 (option as TAutocompleteOptions).value
               }`}
+              className="search-link"
+              onClick={handleCloseSearch}
             />
           );
         }}
@@ -493,16 +501,19 @@ const SearchBar: React.FC<AppBarProps> = ({ isDarkMode }) => {
       elevation={0}
       className={`${isShowSearchInput ? 'search-show' : ''} ${forceShowSearchInput ? 'force' : ''}`}
     >
-      <Hidden mdUp>
-        <SidebarStyles.Brand component={NavLink} to={ROUTES.EXPLORER} button>
-          <Box ml={1}>
-            <SidebarStyles.BrandLogo
-              src={isDarkMode ? PastelLogoWhite : PastelLogo}
-              alt="Pastel Logo"
-            />
-          </Box>
-        </SidebarStyles.Brand>
-      </Hidden>
+      <SidebarStyles.Brand
+        component={NavLink}
+        to={ROUTES.EXPLORER}
+        button
+        sx={{ display: { xs: 'inline-flex', md: 'none' } }}
+      >
+        <Box ml={1}>
+          <SidebarStyles.BrandLogo
+            src={isDarkMode ? PastelLogoWhite : PastelLogo}
+            alt="Pastel Logo"
+          />
+        </Box>
+      </SidebarStyles.Brand>
       <Styles.ToolbarStyle className="disable-padding">
         <Styles.GridStyle
           className={`top ${isInputFocus ? 'autocomplete-focus' : ''}`}

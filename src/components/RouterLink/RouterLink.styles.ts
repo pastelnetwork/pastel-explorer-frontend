@@ -17,6 +17,10 @@ export const RouterLink = styled(Link)<{ textsize: 'normal' | 'large' }>`
   &:active {
     color: ${props => props.theme.link.pressed};
   }
+
+  &.search-link:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
 `;
 
 export const ExternalLink = styled.a`

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Skeleton } from '@mui/lab';
+import Skeleton from '@mui/material/Skeleton';
 import parse from 'html-react-parser';
 import { SelectChangeEvent } from '@mui/material/Select';
 
@@ -88,6 +88,7 @@ const AverageSizeOfNFTStoredOnCascade: React.FC = () => {
               onChange={handleDropdownChange}
               options={generatePeriodToDropdownOptions(periods[7])}
               classNameWrapper="cascade-sense-statistics"
+              showFieldset={false}
             />
             <br />
             <Styles.PercentageValue

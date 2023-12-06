@@ -1,5 +1,5 @@
 import { shallow } from 'enzyme';
-import { Skeleton } from '@mui/lab';
+import Skeleton from '@mui/material/Skeleton';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import 'jest-styled-components';
 

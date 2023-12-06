@@ -4,7 +4,7 @@ import Flip from 'gsap/Flip';
 
 // third party
 import { useNavigate } from 'react-router-dom';
-import { Skeleton } from '@mui/lab';
+import Skeleton from '@mui/material/Skeleton';
 import { Grid, darken } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import parse from 'html-react-parser';
@@ -130,7 +130,7 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
       }, 0) || 0;
 
     return (
-      <Grid item>
+      <Grid item className="p-16">
         <BlockVisualization
           title={translateDropdown('pages.statistics.mempool')}
           height={
@@ -179,7 +179,7 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
               spacing={8}
             >
               {renderMempoolBlock()}
-              <Grid item>
+              <Grid item className="p-16">
                 <div
                   style={{
                     width: 3,

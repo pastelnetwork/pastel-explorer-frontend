@@ -1,4 +1,4 @@
-import { Skeleton } from '@mui/lab';
+import Skeleton from '@mui/material/Skeleton';
 import parse from 'html-react-parser';
 
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';

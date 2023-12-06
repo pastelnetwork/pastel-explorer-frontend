@@ -7,6 +7,8 @@ export const ButtonStyle = styled(Button)`
   width: 100%;
   text-align: left;
   border-color: ${props => props.theme.sidebar.menu.default};
+  color: ${props => props.theme.palette.text.primary};
+  flex-direction: column;
 
   .MuiButton-label {
     flex-direction: column;

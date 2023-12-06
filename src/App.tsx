@@ -93,9 +93,9 @@ const App: React.FC = () => {
     <HelmetProvider>
       <Helmet titleTemplate="%s | Pastel Explorer" defaultTitle="Pastel Explorer" />
       <SocketContext.Provider value={socket}>
-        <StylesProvider jss={jss}>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <StyledEngineProvider injectFirst>
+        <StyledEngineProvider injectFirst>
+          <StylesProvider jss={jss}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
               <MuiThemeProvider theme={isDarkMode ? themeDark : themeLight}>
                 <ThemeProvider theme={isDarkMode ? themeDark : themeLight}>
                   <ErrorHandler>
@@ -105,9 +105,9 @@ const App: React.FC = () => {
                   <InfoDrawer />
                 </ThemeProvider>
               </MuiThemeProvider>
-            </StyledEngineProvider>
-          </LocalizationProvider>
-        </StylesProvider>
+            </LocalizationProvider>
+          </StylesProvider>
+        </StyledEngineProvider>
       </SocketContext.Provider>
     </HelmetProvider>
   );

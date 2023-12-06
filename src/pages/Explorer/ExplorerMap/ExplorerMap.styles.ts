@@ -45,6 +45,11 @@ export const Wrapper = styled.div`
   color: ${props => props.theme.palette.text.primary};
   height: 100%;
 
+  .MuiGrid-container {
+    width: 100%;
+    margin: 0;
+  }
+
   ${props => props.theme.breakpoints.down('xs')} {
     width: 310px;
   }
@@ -71,6 +76,11 @@ export const InfoBlock = styled(Grid)`
   border: 1px solid ${themeVariant.sidebar.background};
   border-radius: 3px;
   text-align: center;
+
+  &.MuiGrid-container {
+    width: 100%;
+    margin: 5px 0;
+  }
 `;
 
 export const Accordion = styled(MuiAccordion)`

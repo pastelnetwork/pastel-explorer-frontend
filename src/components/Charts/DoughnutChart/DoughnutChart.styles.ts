@@ -23,7 +23,7 @@ export const CardContent = styled(MuiCardContent)`
 
   &:last-child {
     padding-top: 0;
-    padding-bottom: ${props => props.theme.spacing(2)}px;
+    padding-bottom: 8px;
   }
 
   ${props => props.theme.breakpoints.down('sm')} {

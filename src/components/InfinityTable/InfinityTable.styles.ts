@@ -5,12 +5,12 @@ import MuiMenuItem from '@mui/material/MenuItem';
 
 export const StyledCard = styled(MuiCard)`
   background-color: ${props => props.theme.palette.background.paper} !important;
-  padding: 0 ${props => props.theme.spacing(9)}px;
+  padding: 0 36px;
   padding-bottom: 0 !important;
   box-shadow: none;
 
   @media (max-width: 960px) {
-    padding: 0 ${props => props.theme.spacing(2)}px;
+    padding: 0 8px;
     padding-bottom: 8px !important;
   }
 
@@ -231,7 +231,7 @@ export const FilterWrapper = styled.div`
     }
   }
 
-  ${props => props.theme.breakpoints.down('xs')} {
+  ${props => props.theme.breakpoints.down('sm')} {
     .filter-item {
       button {
         min-width: unset;

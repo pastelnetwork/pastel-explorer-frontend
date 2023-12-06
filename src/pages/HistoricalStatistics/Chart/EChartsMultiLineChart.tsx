@@ -4,7 +4,7 @@ import * as htmlToImage from 'html-to-image';
 import * as echarts from 'echarts';
 import { saveAs } from 'file-saver';
 import { useSelector } from 'react-redux';
-import { Skeleton } from '@mui/lab';
+import Skeleton from '@mui/material/Skeleton';
 import parse from 'html-react-parser';
 import { Headers, Data } from 'react-csv/lib/core';
 

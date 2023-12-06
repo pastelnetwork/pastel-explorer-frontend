@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Skeleton } from '@mui/lab';
+import Skeleton from '@mui/material/Skeleton';
 import parse from 'html-react-parser';
 import { SelectChangeEvent } from '@mui/material/Select';
 
@@ -96,6 +96,7 @@ const IncomingTransactions: React.FC<IIncomingTransactions> = ({ blockElements }
               onChange={handleDropdownChange}
               options={generatePeriodToDropdownOptions(periods[2])}
               classNameWrapper="cascade-sense-statistics"
+              showFieldset={false}
             />
           </Styles.Percentage>
         </SummaryStyles.PercentageWrapper>

@@ -14,7 +14,7 @@ export const Container = styled.footer`
   box-shadow: -1px 7px 12px 0px ${themeVariant.footer.color};
   z-index: 99;
 
-  ${props => props.theme.breakpoints.down('xs')} {
+  ${props => props.theme.breakpoints.down('sm')} {
     display: block;
     padding-top: 15px;
     padding-bottom: 15px;
@@ -25,7 +25,7 @@ export const Typography = styled(MuiTypography)`
   font-size: 1rem;
   color: ${props => props.theme.sidebar.menu.default};
 
-  ${props => props.theme.breakpoints.down('xs')} {
+  ${props => props.theme.breakpoints.down('sm')} {
     text-align: center;
   }
 `;
@@ -33,7 +33,7 @@ export const Typography = styled(MuiTypography)`
 export const FooterMenuWrapper = styled.div`
   display: flex;
 
-  ${props => props.theme.breakpoints.down('xs')} {
+  ${props => props.theme.breakpoints.down('sm')} {
     justify-content: center;
   }
 `;
@@ -45,7 +45,7 @@ export const FooterMenuBlock = styled.div`
     margin-right: 0;
   }
 
-  ${props => props.theme.breakpoints.down('xs')} {
+  ${props => props.theme.breakpoints.down('sm')} {
     margin-right: 78px;
   }
 `;

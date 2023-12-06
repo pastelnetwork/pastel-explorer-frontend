@@ -1,8 +1,6 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import { Paper as MuiPaper } from '@mui/material';
 
-// import { GlobalStyleProps } from '@utils/types/styles';
-
 export const drawerWidth = 258;
 
 export const GlobalStyle = createGlobalStyle`
@@ -20,6 +18,16 @@ export const GlobalStyle = createGlobalStyle`
     padding: 4px;
     width: 28px;
     height: 28px;
+  }
+
+  .MuiGrid-root.MuiGrid-container {
+    width: calc(100% + 12px);
+    margin: -6px;
+  }
+
+  .MuiGrid-spacing-xs-3 > .MuiGrid-item,
+  .MuiGrid-spacing-xs-6 > .MuiGrid-item {
+    padding: 6px;
   }
 
   .max-w-355 {

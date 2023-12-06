@@ -26,6 +26,6 @@ export const Card = styled(MuiCard)`
 export const CardContent = styled(MuiCardContent)`
   &:last-child {
     padding-top: 0;
-    padding-bottom: ${props => props.theme.spacing(4)}px;
+    padding-bottom: 16px;
   }
 `;

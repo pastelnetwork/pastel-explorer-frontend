@@ -13,9 +13,9 @@ import * as Styles from './Statistics.styles';
 
 const useStyles = makeStyles((theme: TAppTheme) => ({
   blockSpace: {
-    marginBottom: `${theme.spacing(4)}px`,
+    marginBottom: `16px`,
     [theme.breakpoints.down('sm')]: {
-      marginBottom: `${theme.spacing(2)}px`,
+      marginBottom: `8px`,
     },
   },
 }));

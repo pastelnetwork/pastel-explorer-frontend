@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Skeleton } from '@mui/lab';
+import Skeleton from '@mui/material/Skeleton';
 import CircularProgress from '@mui/material/CircularProgress';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';

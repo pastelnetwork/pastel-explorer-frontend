@@ -3,9 +3,9 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import { decode } from 'js-base64';
-import AlertTitle from '@mui/lab/AlertTitle';
+import AlertTitle from '@mui/material/AlertTitle';
 import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/lab/Alert';
+import Alert from '@mui/material/Alert';
 import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';

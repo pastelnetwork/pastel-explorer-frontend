@@ -11,7 +11,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import Skeleton from '@mui/lab/Skeleton';
+import Skeleton from '@mui/material/Skeleton';
 import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
 import Grid from '@mui/material/Grid';
 import { useDispatch } from 'react-redux';

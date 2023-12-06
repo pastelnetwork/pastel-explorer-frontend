@@ -39,6 +39,10 @@ export const BlockWrapper = styled.div`
   border-radius: 10px;
   overflow: hidden;
 
+  .p-16 {
+    padding: 16px;
+  }
+
   &.no-shadow {
     box-shadow: none;
   }
@@ -108,7 +112,7 @@ export const ChartWrapper = styled.div`
       margin-right: 0;
     }
 
-    ${props => props.theme.breakpoints.down('xs')} {
+    ${props => props.theme.breakpoints.down('sm')} {
       width: 100%;
       margin-right: 0;
       margin-left: 0;

@@ -21,7 +21,7 @@ import { TAppTheme } from '@theme/index';
 import { BlockThunks } from '@redux/thunk';
 import { AppThunkDispatch } from '@redux/types';
 import { useBlockLatestBlocks } from '@redux/hooks/blocksHooks';
-import Skeleton from '@mui/lab/Skeleton';
+import Skeleton from '@mui/material/Skeleton';
 import * as ROUTES from '@utils/constants/routes';
 import { translate } from '@utils/helpers/i18n';
 import { useShowLess } from '@pages/Tickets/Tickets.helpers';

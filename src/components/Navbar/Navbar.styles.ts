@@ -48,7 +48,7 @@ export const Menu = styled.div`
     min-width: 33%;
   }
 
-  ${props => props.theme.breakpoints.down('xs')} {
+  ${props => props.theme.breakpoints.down('sm')} {
     align-items: flex-start;
     margin-top: 12px;
   }

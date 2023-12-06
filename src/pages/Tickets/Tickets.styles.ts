@@ -320,6 +320,10 @@ export const GirdStyle = styled(Grid)`
     width: 100%;
   }
 
+  &.pb-12 {
+    padding-bottom: 12px;
+  }
+
   @media screen and (max-width: 1279px) {
     &.left,
     &.right {

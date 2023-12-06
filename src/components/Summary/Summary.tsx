@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Skeleton } from '@mui/lab';
+import Skeleton from '@mui/material/Skeleton';
 import { withStyles, makeStyles } from '@mui/styles';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';

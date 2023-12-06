@@ -178,11 +178,13 @@ export const DetailsDescription = styled(Grid)`
 `;
 
 export const DetailsContainer = styled(Grid)`
-  margin: 5px 0;
+  &.MuiGrid-container {
+    margin: 5px 0;
 
-  ${props => props.theme.breakpoints.down('sm')} {
-    flex-wrap: nowrap;
-    padding-right: 10px;
+    ${props => props.theme.breakpoints.down('sm')} {
+      flex-wrap: nowrap;
+      padding-right: 10px;
+    }
   }
 `;
 

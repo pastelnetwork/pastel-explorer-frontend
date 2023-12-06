@@ -31,7 +31,7 @@ export const Card = styled(MuiCard)`
     margin-right: 0;
   }
 
-  ${props => props.theme.breakpoints.down('lg')} {
+  ${props => props.theme.breakpoints.down('xl')} {
     width: calc(25% - 10px);
 
     &:nth-child(4),
@@ -45,7 +45,7 @@ export const Card = styled(MuiCard)`
     }
   }
 
-  ${props => props.theme.breakpoints.down('md')} {
+  ${props => props.theme.breakpoints.down('lg')} {
     width: calc(33.33% - 10px);
 
     &:nth-child(3),
@@ -62,7 +62,7 @@ export const Card = styled(MuiCard)`
     }
   }
 
-  ${props => props.theme.breakpoints.down('sm')} {
+  ${props => props.theme.breakpoints.down('md')} {
     width: calc(50% - 10px);
 
     &:nth-child(5),
@@ -78,7 +78,7 @@ export const Card = styled(MuiCard)`
     }
   }
 
-  ${props => props.theme.breakpoints.down('xs')} {
+  ${props => props.theme.breakpoints.down('sm')} {
     width: 100%;
     margin-right: 0;
     margin-left: 0;
@@ -133,7 +133,7 @@ export const Percentage = styled(MuiTypography)<{
 
   span {
     display: inline-block;
-    margin-top: ${props => props.theme.spacing(1)}px;
+    margin-top: 4px;
     color: ${props => props.theme.palette.text.secondary};
     background: ${props => rgba(props.percentagecolor, 0.2)};
     padding: 2px 6px;

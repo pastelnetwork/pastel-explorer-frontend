@@ -1,5 +1,5 @@
 import { shallow } from 'enzyme';
-import MuiAlert from '@mui/lab/Alert';
+import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import 'jest-styled-components';
 

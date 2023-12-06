@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { Grid, Typography } from '@mui/material';
-import Skeleton from '@mui/lab/Skeleton';
+import Skeleton from '@mui/material/Skeleton';
 import parse from 'html-react-parser';
 
 import Map from '@components/Map/Map';

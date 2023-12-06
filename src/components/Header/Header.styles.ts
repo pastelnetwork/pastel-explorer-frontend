@@ -6,5 +6,10 @@ export const Divider = styled(MuiDivider);
 export const Typography = styled(MuiTypography);
 
 export const Container = styled.div`
-  margin-bottom: ${props => props.theme.spacing(5)}px;
+  margin-bottom: 20px;
+
+  .MuiGrid-container {
+    width: 100%;
+    margin: 0;
+  }
 `;

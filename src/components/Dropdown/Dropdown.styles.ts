@@ -10,10 +10,15 @@ export const Wrapper = styled.div`
     transform: translateY(-50%);
   }
 
+  &.hidden-fieldset {
+    fieldset {
+      display: none;
+    }
+  }
+
   .MuiSelect-select {
     width: 150px;
-    padding-right: 28px;
-    padding-left: 10px;
+    padding: 6px 28px 7px 10px !important;
     border: 1px solid ${props => props.theme.dropdown.border};
     color: ${props => props.theme.dropdown.color};
     border-radius: 4px;

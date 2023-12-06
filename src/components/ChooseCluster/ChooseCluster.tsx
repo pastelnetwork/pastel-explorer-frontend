@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme: TAppTheme) => ({
     left: 5,
     borderRadius: '100%',
     padding: '6px 14px',
+    color: theme.palette.text.primary,
   },
   title: {
     marginTop: 53,
