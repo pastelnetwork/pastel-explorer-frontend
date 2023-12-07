@@ -1,12 +1,13 @@
 import { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import MenuItem from '@material-ui/core/MenuItem';
-import makeStyles from '@material-ui/styles/makeStyles';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
+import makeStyles from '@mui/styles/makeStyles';
 import { decode } from 'js-base64';
 import parse from 'html-react-parser';
+import { SelectChangeEvent } from '@mui/material/Select';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
@@ -72,7 +73,7 @@ const useStyles = makeStyles((theme: TAppTheme) => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'flex-end',
-      borderRadius: `${theme.spacing(1)}px`,
+      borderRadius: `4px`,
       [theme.breakpoints.down('xs')]: {
         maxWidth: '100%',
       },
@@ -88,6 +89,7 @@ const useStyles = makeStyles((theme: TAppTheme) => {
       textAlign: 'left',
       backgroundColor: 'inherit !important',
       padding: '2px 10px',
+      color: theme.palette.text.primary,
     },
   };
 });
@@ -157,22 +159,20 @@ const TicketsList: React.FC<ITicketsList> = ({
         return null;
       }
       return (
-        <>
-          <Grid container spacing={3}>
-            <Grid item xs={4} sm={3} className="max-w-355">
-              <TicketStyles.TicketTitle>
-                {parse(translate('pages.blockDetails.cascadeFileType'))}
-              </TicketStyles.TicketTitle>
-            </Grid>
-            <Grid item xs={8} sm={9}>
-              <TicketStyles.TicketContent>
-                <Link to={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}>
-                  {getFileIcon(apiTicket.file_type)}
-                </Link>
-              </TicketStyles.TicketContent>
-            </Grid>
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3} className="max-w-355">
+            <TicketStyles.TicketTitle>
+              {parse(translate('pages.blockDetails.cascadeFileType'))}
+            </TicketStyles.TicketTitle>
           </Grid>
-        </>
+          <Grid item xs={8} sm={9}>
+            <TicketStyles.TicketContent>
+              <Link to={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}>
+                {getFileIcon(apiTicket.file_type)}
+              </Link>
+            </TicketStyles.TicketContent>
+          </Grid>
+        </Grid>
       );
     }
 
@@ -301,11 +301,7 @@ const TicketsList: React.FC<ITicketsList> = ({
     }
   };
 
-  const handleTicketTypeChange = (
-    event: React.ChangeEvent<{
-      value: unknown;
-    }>,
-  ) => {
+  const handleTicketTypeChange = (event: SelectChangeEvent) => {
     if (event.target.value) {
       onTicketTypeChange(event.target.value as string);
     }
@@ -361,19 +357,11 @@ const TicketsList: React.FC<ITicketsList> = ({
     ];
   };
 
-  const handleStatusChange = (
-    event: React.ChangeEvent<{
-      value: unknown;
-    }>,
-  ) => {
+  const handleStatusChange = (event: SelectChangeEvent) => {
     onStatusChange(event.target.value as string);
   };
 
-  const handleSortChange = (
-    event: React.ChangeEvent<{
-      value: unknown;
-    }>,
-  ) => {
+  const handleSortChange = (event: SelectChangeEvent) => {
     onTicketSortChange(event.target.value as string);
   };
 

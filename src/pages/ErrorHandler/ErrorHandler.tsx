@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Typography, Grid } from '@material-ui/core';
+import { Typography, Grid } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { withTranslation } from 'react-i18next';
 
@@ -38,7 +38,11 @@ class ErrorHandler extends React.Component<IErrorHandlerProps, IErrorHandlerStat
           <Helmet title={t('pages.errorHandler.pageError.message')} />
           <Styles.ContentWrapper>
             <div className="content">
-              <Grid container justify="center" alignItems="center" direction="column" spacing={5}>
+              <Grid
+                container
+                sx={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}
+                spacing={5}
+              >
                 <Grid item>
                   <Styles.Logo src={PastelLogo} alt={t('common.pastelLogo.message') || ''} />
                 </Grid>

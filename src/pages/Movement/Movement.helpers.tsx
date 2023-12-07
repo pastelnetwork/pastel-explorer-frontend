@@ -1,4 +1,4 @@
-import { Tooltip, Grid } from '@material-ui/core';
+import { Tooltip, Grid } from '@mui/material';
 import parse from 'html-react-parser';
 
 import { HIDE_TO_BLOCK } from '@utils/appInfo';
@@ -90,7 +90,7 @@ export const transformMovementData = (transactions: Array<ITransaction>) =>
         [BLOCK_KEY]: generateBlockKeyValue(blockHash, block.height),
         [RECIPIENT_COUNT_KEY]: recipientCount,
         [AMOUNT_MOVEMENT_KEY]: (
-          <>
+          <div>
             {isNonStandard ? (
               <Tooltip title={translateDropdown('pages.movement.shieldedTransactionInfo')}>
                 <span>{parse(translate('common.unknown'))}</span>
@@ -98,18 +98,30 @@ export const transformMovementData = (transactions: Array<ITransaction>) =>
             ) : (
               formatNumber(totalAmount, { decimalsLength: 2 })
             )}
-          </>
+          </div>
         ),
         [TICKETS_KEY]: (
           <div className="inline-block">
             {Number(block.height) < HIDE_TO_BLOCK ? (
               <>0</>
             ) : (
+<<<<<<< HEAD
               <>
                 {ticketsTotal === -1 ? (
                   <BlockStyles.HourglassWrapper>
                     <Hourglass />
                   </BlockStyles.HourglassWrapper>
+=======
+              <div>
+                {ticketsTypeList.total > 0 ? (
+                  <RouterLink
+                    route={`${ROUTES.TRANSACTION_DETAILS}/${id}`}
+                    value={ticketsTypeList.total}
+                    textSize="large"
+                    title={ticketsTypeList.text.join(', <br />')}
+                    isUseTooltip
+                  />
+>>>>>>> 5463ae6f02d562ccad09387d2b81c8d0ff3a50c4
                 ) : (
                   <>
                     {ticketsTypeList.total > 0 ? (
@@ -125,7 +137,7 @@ export const transformMovementData = (transactions: Array<ITransaction>) =>
                     )}
                   </>
                 )}
-              </>
+              </div>
             )}
           </div>
         ),

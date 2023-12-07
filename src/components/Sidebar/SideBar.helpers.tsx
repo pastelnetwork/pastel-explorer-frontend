@@ -2,7 +2,7 @@ import {
   Twitter as TwitterIcon,
   Telegram as TelegramIcon,
   GitHub as GitHubIcon,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
 import * as URLS from '@utils/constants/urls';
 

@@ -14,7 +14,10 @@ const initialState: ITransactionState = {
   isLoading: true,
 };
 
-const reducer = (state: ITransactionState = initialState, actions: TransactionActionsTypes) => {
+const reducer = (state: ITransactionState, actions: TransactionActionsTypes) => {
+  if (typeof state === 'undefined') {
+    return initialState;
+  }
   switch (actions.type) {
     case types.SET_LOADING_TRANSACTION:
       return { ...state, isLoading: true };

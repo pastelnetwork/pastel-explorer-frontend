@@ -1,6 +1,6 @@
 import { MouseEvent, useCallback, ReactNode } from 'react';
-import { CircularProgress, Table, TableBody, TableHead, TableRow } from '@material-ui/core';
-import { CSSProperties } from '@material-ui/styles';
+import { CircularProgress, Table, TableBody, TableHead, TableRow } from '@mui/material';
+import { CSSProperties } from '@mui/styles';
 import parse from 'html-react-parser';
 
 import { translate, translateDropdown } from '@utils/helpers/i18n';
@@ -49,7 +49,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
   }, []);
   return (
     <Styles.BlockWrapper className={blockWrapperClassName}>
-      <Styles.Card mb={3} style={styles}>
+      <Styles.StyledCard sx={{ mb: 3 }} style={styles}>
         {title && <Styles.BlockTitle>{title}</Styles.BlockTitle>}
         <Styles.PaperWrapper>
           {!isLoading ? (
@@ -89,7 +89,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
             </Styles.Loader>
           )}
         </Styles.PaperWrapper>
-      </Styles.Card>
+      </Styles.StyledCard>
       {children}
     </Styles.BlockWrapper>
   );

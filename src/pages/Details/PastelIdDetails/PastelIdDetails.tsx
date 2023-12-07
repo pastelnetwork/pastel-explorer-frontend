@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from '@mui/material/Grid';
+import CircularProgress from '@mui/material/CircularProgress';
 import parse from 'html-react-parser';
 
 import { formattedDate } from '@utils/helpers/date/date';
@@ -15,14 +15,6 @@ import TicketsList from './TicketList';
 import Overview from './Overview';
 import { TICKET_TYPE_OPTIONS, TTicketsTypeProps } from './PastelIdDetails.helpers';
 
-interface IParamTypes {
-  id: string;
-}
-
-interface ILocationTypes {
-  hash: string;
-}
-
 const limit = 6;
 
 type TPastelIdDetailsRef = {
@@ -35,8 +27,8 @@ const PastelIdDetails = () => {
     type: TICKET_TYPE_OPTIONS[0].value,
     totalTickets: 0,
   });
-  const { id } = useParams<IParamTypes>();
-  const location = useLocation<ILocationTypes>();
+  const { id } = useParams();
+  const location = useLocation();
   const currentUser = location.hash ? location.hash.substring(1, location.hash.length) : '';
   const [ticketType, setTicketType] = useState<string>(TICKET_TYPE_OPTIONS[0].value);
   const [tickets, setTickets] = useState<ITicket[]>([]);
@@ -44,7 +36,13 @@ const PastelIdDetails = () => {
   const [ticketsTypeList, setTicketsTypeList] = useState<TTicketsTypeProps[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [firstLoad, setFistLoad] = useState(false);
-  const pastelIdData = usePastelIdDetails(id, limit, ticketType, currentUser, currentPage * limit);
+  const pastelIdData = usePastelIdDetails(
+    id as string,
+    limit,
+    ticketType,
+    currentUser,
+    currentPage * limit,
+  );
 
   const handleTicketTypeChange = (val: string) => {
     setTicketType(val);
@@ -116,7 +114,7 @@ const PastelIdDetails = () => {
         <Styles.GridStyle item>
           <Overview
             totalTickets={pastelIdData.totalAllTickets}
-            pastelId={id}
+            pastelId={id as string}
             ticketsTypeList={ticketsTypeList}
             registeredDate={
               pastelIdData?.registeredDate

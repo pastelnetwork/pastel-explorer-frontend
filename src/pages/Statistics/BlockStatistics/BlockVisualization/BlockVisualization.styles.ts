@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { lighten } from '@material-ui/core';
+import { lighten } from '@mui/material';
 
 import themeVariant from '@theme/variants';
 

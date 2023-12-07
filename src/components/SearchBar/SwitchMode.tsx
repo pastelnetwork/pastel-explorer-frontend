@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Tooltip } from '@material-ui/core';
+import { Tooltip } from '@mui/material';
 import { setAppThemeAction } from '@redux/actions/appThemeAction';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { translate } from '@utils/helpers/i18n';

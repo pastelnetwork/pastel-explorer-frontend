@@ -44,4 +44,8 @@ const Map: React.FC<MapProps> = ({ title, markers, options }) => {
   );
 };
 
+Map.defaultProps = {
+  options: undefined,
+};
+
 export default Map;

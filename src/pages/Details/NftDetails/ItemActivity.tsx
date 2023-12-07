@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Table, TableBody, TableHead, TableRow } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { Table, TableBody, TableHead, TableRow } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
 import parse from 'html-react-parser';
 
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
@@ -64,9 +64,8 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
                   <span className="link-copy-wrapper">
                     <CopyButton copyText={(ticket as ITransferTicket)?.offer_txid} />
                     <RouterLink
-                      route={`${ROUTES.TRANSACTION_DETAILS}/${
-                        (ticket as ITransferTicket)?.offer_txid
-                      }`}
+                      route={`${ROUTES.TRANSACTION_DETAILS}/${(ticket as ITransferTicket)
+                        ?.offer_txid}`}
                       value={(ticket as ITransferTicket)?.offer_txid}
                       title={(ticket as ITransferTicket)?.offer_txid}
                       className="address-link read-more"
@@ -86,9 +85,8 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
                   <span className="link-copy-wrapper">
                     <CopyButton copyText={(ticket as ITransferTicket)?.accept_txid} />
                     <RouterLink
-                      route={`${ROUTES.TRANSACTION_DETAILS}/${
-                        (ticket as ITransferTicket)?.accept_txid
-                      }`}
+                      route={`${ROUTES.TRANSACTION_DETAILS}/${(ticket as ITransferTicket)
+                        ?.accept_txid}`}
                       value={(ticket as ITransferTicket)?.accept_txid}
                       title={(ticket as ITransferTicket)?.accept_txid}
                       className="address-link read-more"
@@ -121,9 +119,8 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
                   <span className="link-copy-wrapper">
                     <CopyButton copyText={(ticket as IAcceptTicket)?.offer_txid} />
                     <RouterLink
-                      route={`${ROUTES.TRANSACTION_DETAILS}/${
-                        (ticket as IAcceptTicket)?.offer_txid
-                      }`}
+                      route={`${ROUTES.TRANSACTION_DETAILS}/${(ticket as IAcceptTicket)
+                        ?.offer_txid}`}
                       value={(ticket as IAcceptTicket)?.offer_txid}
                       title={(ticket as IAcceptTicket)?.offer_txid}
                       className="address-link read-more"
@@ -187,9 +184,8 @@ const ItemActivity: React.FC<IItemActivity> = ({ activitiesType }) => {
                 {(ticket as IOfferTicket)?.locked_recipient &&
                 (ticket as IOfferTicket)?.locked_recipient !== 'not defined' ? (
                   <RouterLink
-                    route={`${ROUTES.PASTEL_ID_DETAILS}/${
-                      (ticket as IOfferTicket)?.locked_recipient
-                    }`}
+                    route={`${ROUTES.PASTEL_ID_DETAILS}/${(ticket as IOfferTicket)
+                      ?.locked_recipient}`}
                     value={(ticket as IOfferTicket)?.locked_recipient}
                     title={(ticket as IOfferTicket)?.locked_recipient}
                     className="address-link read-more"

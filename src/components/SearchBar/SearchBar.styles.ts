@@ -1,5 +1,5 @@
-import styled from 'styled-components/macro';
-import Paper from '@material-ui/core/Paper';
+import styled from 'styled-components';
+import Paper from '@mui/material/Paper';
 
 import {
   AppBar as MuiAppBar,
@@ -7,7 +7,7 @@ import {
   Grid,
   Toolbar,
   Popover,
-} from '@material-ui/core';
+} from '@mui/material';
 
 import sun from '@assets/icons/sun.svg';
 import moon from '@assets/icons/moon.svg';
@@ -32,7 +32,7 @@ export const ToolbarStyle = styled(Toolbar)`
 export const GridStyle = styled(Grid)`
   max-width: 430px;
 
-  ${props => props.theme.breakpoints.down('sm')} {
+  ${props => props.theme.breakpoints.down('md')} {
     max-width: 250px;
   }
 
@@ -49,9 +49,14 @@ export const GridStyle = styled(Grid)`
     padding: 10px;
     background: ${props => props.theme.sidebar.menu.background};
     transform: translateX(-35%);
+
+    &.MuiGrid-container {
+      width: 100vw;
+      margin: 0;
+    }
   }
 
-  ${props => props.theme.breakpoints.down('xs')} {
+  ${props => props.theme.breakpoints.down('sm')} {
     &.top {
       display: none;
     }
@@ -89,16 +94,20 @@ export const AppBar = styled(MuiAppBar)`
   transition: min-height 0.5s ease-in;
   z-index: 10;
 
+  &.MuiPaper-root {
+    background: ${props => props.theme.sidebar.menu.background};
+  }
+
   ${props => props.theme.breakpoints.up('md')} {
     max-width: 36%;
   }
 
-  ${props => props.theme.breakpoints.down('sm')} {
+  ${props => props.theme.breakpoints.down('md')} {
     width: calc(100% - 33%);
     flex-direction: row;
   }
 
-  ${props => props.theme.breakpoints.down(600)} {
+  ${props => props.theme.breakpoints.down('sm')} {
     align-items: baseline;
   }
 
@@ -136,7 +145,7 @@ export const AppBar = styled(MuiAppBar)`
     color: ${props => props.theme.sidebar.menu.default};
   }
 
-  ${props => props.theme.breakpoints.down('xs')} {
+  ${props => props.theme.breakpoints.down('sm')} {
     &.search-show,
     &.force {
       min-height: 108px;
@@ -170,7 +179,7 @@ export const IconButton = styled(MuiIconButton)`
     margin-left: -12px;
   }
 
-  ${props => props.theme.breakpoints.down('xs')} {
+  ${props => props.theme.breakpoints.down('sm')} {
     padding: 6px;
     margin-top: 0;
 
@@ -268,7 +277,7 @@ export const ModeToggle = styled.div`
       }
 
       & + .toggle-switch {
-        :before {
+        &:before {
           left: 30px;
           background-color: ${props => props.theme.sidebar.menu.toggle.switch};
           background-image: url(${moon});
@@ -298,7 +307,9 @@ export const ModeToggle = styled.div`
       line-height: 18px;
       color: #fff;
       background-color: ${props => props.theme.sidebar.menu.toggle.switch};
-      transition: all 0.3s ease, left 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15);
+      transition:
+        all 0.3s ease,
+        left 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15);
       background-image: url(${sun});
       background-size: 14px;
       background-repeat: no-repeat;
@@ -371,7 +382,7 @@ export const SearchInputWrapper = styled.div`
     color: ${props => props.theme.filter.text};
   }
 
-  ${props => props.theme.breakpoints.down('xs')} {
+  ${props => props.theme.breakpoints.down('sm')} {
     min-width: calc(100vw - 18px);
   }
 `;
@@ -413,9 +424,9 @@ export const PopoverWrapper = styled(Popover)`
       }
     }
 
-    ${props => props.theme.breakpoints.down('xs')} {
-      top: 58px !important;
-      left: 8px !important;
+    ${props => props.theme.breakpoints.down('sm')} {
+      top: 55px !important;
+      left: 5px !important;
       max-width: 100vw;
     }
   }

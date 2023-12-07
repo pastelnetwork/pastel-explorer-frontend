@@ -1,8 +1,9 @@
 import { shallow } from 'enzyme';
-import { ThemeProvider } from 'styled-components/macro';
+import { ThemeProvider } from 'styled-components';
 
 import 'jest-styled-components';
 
+import { MyMockType } from '@utils/types/MockType';
 import i18next from '../../../../utils/helpers/i18n';
 import { themeLight } from '../../../../theme';
 import BlockStatistics from '../BlockStatistics';
@@ -29,7 +30,7 @@ jest.mock('react-i18next', () => ({
 }));
 i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
-});
+}) as MyMockType;
 
 describe('pages/Statistics/BlockStatistics', () => {
   const blockElements = [
@@ -39,6 +40,8 @@ describe('pages/Statistics/BlockStatistics', () => {
       height: '245684',
       size: '2.5kB',
       minutesAgo: '3 minutes',
+      ticketsCount: '0',
+      status: 'entered',
     },
   ];
   const blocksUnconfirmed = null;

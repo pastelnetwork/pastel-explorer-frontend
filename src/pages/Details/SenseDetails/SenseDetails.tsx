@@ -1,12 +1,12 @@
 import { useState, useRef, ReactNode } from 'react';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import AlertTitle from '@material-ui/lab/AlertTitle';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
+import AlertTitle from '@mui/material/AlertTitle';
 import parse from 'html-react-parser';
-import IconButton from '@material-ui/core/IconButton';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import IconButton from '@mui/material/IconButton';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import * as TableStyles from '@components/Table/Table.styles';
 import CopyButton from '@components/CopyButton/CopyButton';
@@ -518,7 +518,11 @@ const SenseDetails: React.FC = () => {
     </Styles.Wrapper>
   ) : (
     <Styles.Wrapper className="content-center-wrapper">
-      <Grid container justify="center" alignItems="center" direction="column" spacing={2}>
+      <Grid
+        sx={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}
+        container
+        spacing={2}
+      >
         <Grid item>
           <Typography component="h1" variant="h1" align="center" gutterBottom>
             {parse(translate('pages.senseDetails.404'))}

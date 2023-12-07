@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from '@mui/material/CircularProgress';
 import subDays from 'date-fns/subDays';
 import format from 'date-fns/format';
 import parse from 'html-react-parser';

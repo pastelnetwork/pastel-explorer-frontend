@@ -11,9 +11,9 @@ import {
   OverscanIndicesGetterParams,
 } from 'react-virtualized';
 import parse from 'html-react-parser';
-import { CSSProperties } from '@material-ui/styles';
-import { CircularProgress, darken } from '@material-ui/core';
-import { ArrowDropDown, ArrowDropUp } from '@material-ui/icons';
+import { CSSProperties } from '@mui/styles';
+import { CircularProgress, darken } from '@mui/material';
+import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 
 import { useGetThemeMode } from '@redux/reducers/appThemeReducer';
 import themeVariant from '@theme/variants';
@@ -214,7 +214,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   };
 
   return (
-    <Styles.Card className={className}>
+    <Styles.StyledCard className={className}>
       {renderTitle()}
       {!showLess ? (
         <Styles.TableContainer>
@@ -272,8 +272,30 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
           )}
         </Styles.TableContainer>
       ) : null}
-    </Styles.Card>
+    </Styles.StyledCard>
   );
+};
+
+InfinityTableComponent.defaultProps = {
+  title: undefined,
+  customTitle: undefined,
+  filters: undefined,
+  sortBy: undefined,
+  sortDirection: undefined,
+  rowHeight: 45,
+  tableHeight: 500,
+  loadMoreFrom: 0,
+  disableLoading: undefined,
+  renderAllRows: undefined,
+  className: undefined,
+  headerBackground: undefined,
+  isLoading: undefined,
+  dropdownFilters: undefined,
+  dropdownLabel: undefined,
+  customLoading: undefined,
+  showDateTimePicker: false,
+  dateRange: undefined,
+  showLess: false,
 };
 
 export default InfinityTableComponent;

@@ -4,10 +4,10 @@ import ReactECharts from 'echarts-for-react';
 import { saveAs } from 'file-saver';
 import * as htmlToImage from 'html-to-image';
 import { useSelector } from 'react-redux';
-import { Skeleton } from '@material-ui/lab';
+import Skeleton from '@mui/material/Skeleton';
 import parse from 'html-react-parser';
+import { Headers, Data } from 'react-csv/lib/core';
 
-import { Data } from 'react-csv/components/CommonPropTypes';
 import { csvHeaders, themes } from '@utils/constants/statistics';
 // import { PrevButton } from '../PrevButton';
 import { TScatterChartProps, TThemeColor, TThemeInitOption } from '@utils/constants/types';
@@ -158,7 +158,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
     const headers = csvHeaders[chartName];
     return headers.map(header => ({
       ...header,
-      label: translateDropdown(header.label),
+      label: translateDropdown(header.label as string) as string,
     }));
   };
 
@@ -193,7 +193,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
       <Styles.LineChartWrap className={isLoading ? 'no-spacing' : ''}>
         {isLoading || !dataX?.length ? (
           <Styles.LoadingWrapper>
-            <Skeleton animation="wave" variant="rect" height={386} />
+            <Skeleton animation="wave" variant="rectangular" height={386} />
             <Styles.LoadingText>{parse(translate('common.loadingData'))}</Styles.LoadingText>
           </Styles.LoadingWrapper>
         ) : (
@@ -229,7 +229,7 @@ export const EChartsScatterChart = (props: TScatterChartProps): JSX.Element => {
           <Styles.CSVLinkButton
             data={csvData}
             filename={`${makeDownloadFileName(info.currencyName, chartName)}.csv`}
-            headers={getCsvHeaders()}
+            headers={getCsvHeaders() as Headers}
             separator=","
             ref={downloadRef}
             className={styles.uploadButton}

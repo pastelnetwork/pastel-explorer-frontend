@@ -1,12 +1,13 @@
 import { memo, FC, useCallback, MouseEvent, useMemo } from 'react';
-import { Drawer, Button, Tooltip } from '@material-ui/core';
+import { Drawer, Button, Tooltip } from '@mui/material';
 import parse from 'html-react-parser';
 
-import { useLocation, useHistory } from 'react-router-dom';
-import { makeStyles } from '@material-ui/styles';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { makeStyles } from '@mui/styles';
 import { connect } from 'react-redux';
 import { AppStateType } from '@redux/reducers';
 import { setApiHostingAction } from '@redux/actions/clusterAction';
+import { InitialClusterProps } from '@redux/reducers/clusterReducer';
 import { TAppTheme } from '@theme/index';
 import useBooleanState from '@hooks/useBooleanState';
 import { BASE_URL, BASE_URL_TESTNET, BASE_URL_DEVNET } from '@utils/constants/urls';
@@ -39,6 +40,7 @@ const useStyles = makeStyles((theme: TAppTheme) => ({
     left: 5,
     borderRadius: '100%',
     padding: '6px 14px',
+    color: theme.palette.text.primary,
   },
   title: {
     fontSize: 20,
@@ -97,7 +99,7 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
 
   const [open, { toggle }] = useBooleanState();
   const classes = useStyles();
-  const { replace } = useHistory();
+  const navigate = useNavigate();
   const { search } = useLocation();
 
   const currentCluster = useMemo(() => {
@@ -116,13 +118,11 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
       const queryParams = new URLSearchParams(search);
       queryParams.set('cluster', value);
       if (value === 'mainnet') queryParams.delete('cluster');
-      replace({
-        search: queryParams.toString(),
-      });
+      navigate({ search: queryParams.toString() });
       setApiHosting(id, value === 'mainnet' ? DEFAULT_CURRENCY : TEST_CURRENCY_NAME);
       window.location.reload();
     },
-    [replace],
+    [navigate],
   );
 
   const handleClusterClose = () => {
@@ -132,12 +132,11 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
   return (
     <>
       <Button
-        classes={{ label: classes.rootButtonLabel }}
         type="button"
         onClick={toggle}
         variant="outlined"
         color="primary"
-        className="cluster-button"
+        className={`cluster-button ${classes.rootButtonLabel}`}
       >
         <Tooltip title={translate('components.chooseCluster.chooseACluster') || ''}>
           <SettingIcon className="cluster-icon" />
@@ -191,7 +190,7 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
 };
 
 const Cluster = connect(
-  ({ cluster }: AppStateType) => ({ url: cluster.url }),
+  ({ cluster }: AppStateType) => ({ url: (cluster as InitialClusterProps).url }),
   dispatch => ({
     setApiHosting: (url: string, currencyName: string) =>
       dispatch(setApiHostingAction(url, currencyName)),

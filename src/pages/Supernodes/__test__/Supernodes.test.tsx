@@ -2,6 +2,7 @@ import { shallow } from 'enzyme';
 
 import 'jest-styled-components';
 
+import { MyMockType } from '@utils/types/MockType';
 import InfinityTable from '../../../components/InfinityTable/InfinityTable';
 import i18next from '../../../utils/helpers/i18n';
 import ExplorerMap from '../../Explorer/ExplorerMap/ExplorerMap';
@@ -31,7 +32,7 @@ jest.mock('react-i18next', () => ({
 }));
 i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
-});
+}) as MyMockType;
 
 describe('pages/Supernodes', () => {
   const wrapper = shallow(<Supernodes />);

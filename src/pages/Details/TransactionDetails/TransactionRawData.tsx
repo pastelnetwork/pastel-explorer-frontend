@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Typography, Dialog, AppBar, IconButton, Slide } from '@material-ui/core';
-import { TransitionProps } from '@material-ui/core/transitions';
-import CloseIcon from '@material-ui/icons/Close';
+import { Typography, Dialog, AppBar, IconButton, Slide } from '@mui/material';
+import { TransitionProps } from '@mui/material/transitions';
+import CloseIcon from '@mui/icons-material/Close';
 import parse from 'html-react-parser';
 
 import { ITicket, TSenseRequests } from '@utils/types/ITransactions';
@@ -10,7 +10,10 @@ import { translate } from '@utils/helpers/i18n';
 import * as Styles from './TransactionDetails.styles';
 
 const Transition = React.forwardRef(function Transition(
-  props: TransitionProps,
+  props: TransitionProps & {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    children: React.ReactElement<any, any>;
+  },
   ref: React.Ref<unknown>,
 ) {
   return <Slide direction="up" ref={ref} {...props} />;

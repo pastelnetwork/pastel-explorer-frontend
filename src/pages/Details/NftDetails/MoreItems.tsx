@@ -1,5 +1,5 @@
-import Box from '@material-ui/core/Box';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';
@@ -22,7 +22,7 @@ const MoreItems: React.FC<IMoreItems> = ({ collectionId }) => {
   return (
     <Styles.MoreItemsWrapper>
       {!isLoading ? (
-        <>
+        <div>
           {data ? (
             <>
               <NFTsContent data={data || []} />
@@ -39,7 +39,7 @@ const MoreItems: React.FC<IMoreItems> = ({ collectionId }) => {
               <Box className="no-data">{parse(translate('common.noData'))}</Box>
             </Box>
           )}
-        </>
+        </div>
       ) : (
         <Styles.LoadingSection>
           <Styles.LoadingWrapper>

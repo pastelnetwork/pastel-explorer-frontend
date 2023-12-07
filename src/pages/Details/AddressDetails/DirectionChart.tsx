@@ -1,7 +1,7 @@
 import { useState, useEffect, ReactNode } from 'react';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import CircularProgress from '@mui/material/CircularProgress';
 import subMonths from 'date-fns/subMonths';
 import format from 'date-fns/format';
 import parse from 'html-react-parser';

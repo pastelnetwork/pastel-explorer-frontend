@@ -2,6 +2,7 @@ import { shallow } from 'enzyme';
 
 import 'jest-styled-components';
 
+import { MyMockType } from '@utils/types/MockType';
 import i18next from '../../../../../utils/helpers/i18n';
 import BlockVisualization from '../BlockVisualization';
 
@@ -27,7 +28,7 @@ jest.mock('react-i18next', () => ({
 }));
 i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
-});
+}) as MyMockType;
 
 describe('pages/Statistics/BlockStatistics/BlockVisualization', () => {
   const data = {
@@ -36,6 +37,7 @@ describe('pages/Statistics/BlockStatistics/BlockVisualization', () => {
     height: '245684',
     size: '2.5kB',
     minutesAgo: '3 minutes',
+    ticketsCount: '0',
   };
   const wrapper = shallow(<BlockVisualization {...data} />);
 

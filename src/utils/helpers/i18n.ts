@@ -1,4 +1,4 @@
-import i18n, { TOptions, StringMap } from 'i18next';
+import i18n, { TOptions } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { setDefaultLocale } from 'react-datepicker';
 
@@ -18,23 +18,20 @@ i18n
     },
   });
 
-export const translate = (key: string, option?: TOptions<StringMap> | undefined): string => {
+export const translate = (key: string, option?: TOptions | undefined): string => {
   if (option) {
     return i18n.t(`${key}.message`, {
       ...option,
       defaultValue: '<span class="skeleton-text"></span>',
-    });
+    }) as string;
   }
 
   return i18n.t(`${key}.message`, { defaultValue: '<span class="skeleton-text"></span>' });
 };
 
-export const translateDropdown = (
-  key: string,
-  option?: TOptions<StringMap> | undefined,
-): string => {
+export const translateDropdown = (key: string, option?: TOptions | undefined): string => {
   if (option) {
-    return i18n.t(`${key}.message`, { ...option, defaultValue: '' });
+    return i18n.t(`${key}.message`, { ...option, defaultValue: '' }) as string;
   }
 
   return i18n.t(`${key}.message`, { defaultValue: '' });

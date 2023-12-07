@@ -13,7 +13,10 @@ const initialState: InitialAppThemeProps = {
   darkMode: false,
 };
 
-const reducer = (state = initialState, actions: ActionTypes): InitialAppThemeProps => {
+const reducer = (state: InitialAppThemeProps, actions: ActionTypes): InitialAppThemeProps => {
+  if (typeof state === 'undefined') {
+    return initialState;
+  }
   switch (actions.type) {
     case types.SET_APP_THEME:
       return {
@@ -25,7 +28,7 @@ const reducer = (state = initialState, actions: ActionTypes): InitialAppThemePro
       return state;
   }
 };
-export const getThemeState = (state: AppStateType) => state[stateKey];
+export const getThemeState = (state: AppStateType): InitialAppThemeProps => state[stateKey];
 
 export const useGetThemeMode = () => useSelector(getThemeState).darkMode;
 

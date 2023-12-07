@@ -15,7 +15,10 @@ const initialState: InitialClusterProps = {
   currencyName: DEFAULT_CURRENCY,
 };
 
-const reducer = (state = initialState, actions: ActionTypes): InitialClusterProps => {
+const reducer = (state: InitialClusterProps, actions: ActionTypes): InitialClusterProps => {
+  if (typeof state === 'undefined') {
+    return initialState;
+  }
   switch (actions.type) {
     case types.SET_API_HOSTING:
       return {

@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const DropdownWrapper = styled.div`
   margin-right: 10px;

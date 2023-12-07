@@ -1,5 +1,5 @@
 import { shallow } from 'enzyme';
-import { ThemeProvider } from 'styled-components/macro';
+import { ThemeProvider } from 'styled-components';
 import 'jest-styled-components';
 
 import { themeLight } from '../../../theme';

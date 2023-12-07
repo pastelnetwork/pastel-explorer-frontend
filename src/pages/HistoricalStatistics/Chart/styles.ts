@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 import { TAppTheme } from '@theme/index';
 
 export const eChartLineStyles = makeStyles((theme: TAppTheme) => ({

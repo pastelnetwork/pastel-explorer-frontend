@@ -1,7 +1,7 @@
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import CloseIcon from '@material-ui/icons/Close';
-import DoneIcon from '@material-ui/icons/Done';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import CloseIcon from '@mui/icons-material/Close';
+import DoneIcon from '@mui/icons-material/Done';
 import parse from 'html-react-parser';
 
 import { formatFullDate } from '@utils/helpers/date/date';

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 
 export const GridWrapper = styled(Grid)`
   .MuiTableCell-root {

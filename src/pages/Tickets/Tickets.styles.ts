@@ -1,5 +1,5 @@
-import styled from 'styled-components/macro';
-import { Grid } from '@material-ui/core';
+import styled from 'styled-components';
+import { Grid } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
 import themeVariant from '@theme/variants';
@@ -318,6 +318,10 @@ export const GirdStyle = styled(Grid)`
 
   &.full {
     width: 100%;
+  }
+
+  &.pb-12 {
+    padding-bottom: 12px;
   }
 
   @media screen and (max-width: 1279px) {

@@ -1,8 +1,9 @@
 import { shallow } from 'enzyme';
 import DatePicker from 'react-datepicker';
-import DateRangeIcon from '@material-ui/icons/DateRange';
+import DateRangeIcon from '@mui/icons-material/DateRange';
 import 'jest-styled-components';
 
+import { MyMockType } from '@utils/types/MockType';
 import i18next from '../../../utils/helpers/i18n';
 import DateTimePicker from '../DateTimePicker';
 import * as Styles from '../DateTimePicker.styles';
@@ -29,7 +30,7 @@ jest.mock('react-i18next', () => ({
 }));
 i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
-});
+}) as MyMockType;
 
 describe('components/DateTimePicker', () => {
   const wrapper = shallow(<DateTimePicker />);

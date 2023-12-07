@@ -1,12 +1,14 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 
 export const ButtonStyle = styled(Button)`
   margin-bottom: 20px;
   width: 100%;
   text-align: left;
   border-color: ${props => props.theme.sidebar.menu.default};
+  color: ${props => props.theme.palette.text.primary};
+  flex-direction: column;
 
   .MuiButton-label {
     flex-direction: column;

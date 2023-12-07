@@ -1,15 +1,16 @@
-import { useState, useEffect, ChangeEvent, useRef, Fragment } from 'react';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import IconButton from '@material-ui/core/IconButton';
-import Box from '@material-ui/core/Box';
-import Tooltip from '@material-ui/core/Tooltip';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
-import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
+import { useState, useEffect, useRef, Fragment } from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
+import Tooltip from '@mui/material/Tooltip';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUp from '@mui/icons-material/ArrowDropUp';
 import parse from 'html-react-parser';
+import { SelectChangeEvent } from '@mui/material/Select';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import ExplorerMap from '@pages/Explorer/ExplorerMap/ExplorerMap';
@@ -64,12 +65,7 @@ const Supernodes: React.FC = () => {
     }
   }, [isLoading, masternodes]);
 
-  const handleChange = (
-    event: ChangeEvent<{
-      name?: string | undefined;
-      value: unknown;
-    }>,
-  ) => {
+  const handleChange = (event: SelectChangeEvent) => {
     if (event.target.value) {
       setStatus(event.target.value as string);
       let newSupernodes: INetworkSupernodes[] = [];
@@ -88,8 +84,9 @@ const Supernodes: React.FC = () => {
   const generateStatusOptions = () => {
     const results: OptionsProps[] = [];
     STATUS_LIST.map((item: OptionsProps) => {
-      let total = originalSupernodes.filter((i: INetworkSupernodes) => i.status === item.value)
-        .length;
+      let total = originalSupernodes.filter(
+        (i: INetworkSupernodes) => i.status === item.value,
+      ).length;
       if (item.value === 'all') {
         total = originalSupernodes.length;
       }

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon } from 'react-share';
-import ShareIcon from '@material-ui/icons/Share';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
-import Tooltip from '@material-ui/core/Tooltip';
+import ShareIcon from '@mui/icons-material/Share';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import Tooltip from '@mui/material/Tooltip';
 import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';

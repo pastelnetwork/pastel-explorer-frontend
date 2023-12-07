@@ -61,8 +61,8 @@ export const BarChart = ({ data }: BarChartProps): JSX.Element => {
           <div class="tooltip-amount">${translateDropdown('pages.richlist.amount', {
             currency: getCurrencyName(),
           })}: ${formatNumber(params.value, {
-          decimalsLength: 2,
-        })}</div>
+            decimalsLength: 2,
+          })}</div>
         </div>`;
       },
     },

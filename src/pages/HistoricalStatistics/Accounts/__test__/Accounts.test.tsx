@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import 'jest-styled-components';
 
+import { MyMockType } from '@utils/types/MockType';
 import i18next from '../../../../utils/helpers/i18n';
 import Accounts from '../index';
 
@@ -31,7 +32,7 @@ jest.mock('react-i18next', () => ({
 }));
 i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
-});
+}) as MyMockType;
 
 describe('pages/HistoricalStatistics/Accounts', () => {
   const wrapper = shallow(

@@ -56,6 +56,7 @@ export const transformTableData = (transactions: Array<IBlock>, isMobile: boolea
             {height < HIDE_TO_BLOCK ? (
               <>0</>
             ) : (
+<<<<<<< HEAD
               <>
                 {totalTickets === -1 ? (
                   <Styles.HourglassWrapper>
@@ -75,8 +76,21 @@ export const transformTableData = (transactions: Array<IBlock>, isMobile: boolea
                       <>0</>
                     )}
                   </>
+=======
+              <div>
+                {ticketsTypeList.total > 0 ? (
+                  <RouterLink
+                    className="hash-link"
+                    route={`${ROUTES.BLOCK_DETAILS}/${id}`}
+                    value={ticketsTypeList.total}
+                    title={ticketsTypeList.text.join(', <br />')}
+                    isUseTooltip
+                  />
+                ) : (
+                  <div>0</div>
+>>>>>>> 5463ae6f02d562ccad09387d2b81c8d0ff3a50c4
                 )}
-              </>
+              </div>
             )}
           </div>
         ),

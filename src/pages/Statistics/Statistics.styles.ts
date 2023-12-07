@@ -1,6 +1,6 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
-import { Grid, darken } from '@material-ui/core';
+import { Grid, darken } from '@mui/material';
 
 import themeVariant from '@theme/variants';
 
@@ -38,6 +38,10 @@ export const BlockWrapper = styled.div`
   box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
   border-radius: 10px;
   overflow: hidden;
+
+  .p-16 {
+    padding: 16px;
+  }
 
   &.no-shadow {
     box-shadow: none;
@@ -108,7 +112,7 @@ export const ChartWrapper = styled.div`
       margin-right: 0;
     }
 
-    ${props => props.theme.breakpoints.down('xs')} {
+    ${props => props.theme.breakpoints.down('sm')} {
       width: 100%;
       margin-right: 0;
       margin-left: 0;

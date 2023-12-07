@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import Box from '@material-ui/core/Box';
-import MuiDialog from '@material-ui/core/Dialog';
+import Box from '@mui/material/Box';
+import MuiDialog from '@mui/material/Dialog';
 
 export const Wrapper = styled('div')`
   display: block;

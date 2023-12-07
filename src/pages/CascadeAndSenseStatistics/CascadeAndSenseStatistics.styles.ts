@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Typography as MuiTypography } from '@material-ui/core';
+import { Typography as MuiTypography } from '@mui/material';
 import { rgba } from 'polished';
 
 export const Wrapper = styled.div`

@@ -32,12 +32,16 @@ export const readCacheValue = (key: string, isMicroseconds = false) => {
 
     const item = window.localStorage.getItem(key);
     const result = item ? JSON.parse(LZString.decompress(JSON.parse(item))) : initialValue;
-    if (
-      differenceInHours(Date.now(), isMicroseconds ? result?.lastDate * 1000 : result?.lastDate) > 4
-    ) {
-      return initialValue;
+    if (result) {
+      if (
+        differenceInHours(Date.now(), isMicroseconds ? result.lastDate * 1000 : result?.lastDate) >
+        4
+      ) {
+        return initialValue;
+      }
+      return result?.currentCache || initialValue;
     }
-    return result?.currentCache || initialValue;
+    return initialValue;
   } catch (error) {
     console.warn(`Error reading localStorage key “${key}”:`, error);
     return initialValue;
