@@ -101,6 +101,24 @@ export const Wrapper = styled.div`
     background: ${props => props.theme.sidebar.menu.background};
   }
 
+  .MuiGrid-root.MuiGrid-container {
+    width: 100%;
+    margin: 0;
+  }
+
+  .MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-5 {
+    width: calc(100% + 20px);
+    margin: -10px;
+  }
+
+  .MuiGrid-root.MuiGrid-item.MuiGrid-grid-lg-8 {
+    padding: 10px;
+  }
+
+  .MuiGrid-root.MuiGrid-item.MuiGrid-grid-lg-4 {
+    padding: 0;
+  }
+
   .ReactVirtualized__Grid {
     min-width: unset;
   }
@@ -473,6 +491,15 @@ export const DirectionChartWrapper = styled.div`
 
   .line-chart {
     padding: 16px;
+  }
+
+  .MuiGrid-spacing-xs-4 {
+    width: calc(100% + 16px);
+    margin: -8px;
+  }
+
+  .MuiGrid-spacing-xs-4 > .MuiGrid-item {
+    padding: 8px;
   }
 `;
 
