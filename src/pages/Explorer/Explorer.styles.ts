@@ -285,6 +285,12 @@ export const BlockTitle = styled.h4`
       p {
         display: flex;
         align-items: center;
+
+        ${props => props.theme.breakpoints.down(1101)} {
+          .MuiSvgIcon-root {
+            display: none;
+          }
+        }
       }
     }
   }
@@ -324,6 +330,12 @@ export const LinkWrapper = styled.div`
   .view-all {
     .MuiTypography-root {
       padding: 0;
+    }
+
+    ${props => props.theme.breakpoints.down(1101)} {
+      .MuiSvgIcon-root {
+        display: none;
+      }
     }
   }
 
