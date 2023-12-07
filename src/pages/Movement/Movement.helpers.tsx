@@ -105,25 +105,13 @@ export const transformMovementData = (transactions: Array<ITransaction>) =>
             {Number(block.height) < HIDE_TO_BLOCK ? (
               <>0</>
             ) : (
-<<<<<<< HEAD
-              <>
+              <div>
                 {ticketsTotal === -1 ? (
                   <BlockStyles.HourglassWrapper>
                     <Hourglass />
                   </BlockStyles.HourglassWrapper>
-=======
-              <div>
-                {ticketsTypeList.total > 0 ? (
-                  <RouterLink
-                    route={`${ROUTES.TRANSACTION_DETAILS}/${id}`}
-                    value={ticketsTypeList.total}
-                    textSize="large"
-                    title={ticketsTypeList.text.join(', <br />')}
-                    isUseTooltip
-                  />
->>>>>>> 5463ae6f02d562ccad09387d2b81c8d0ff3a50c4
                 ) : (
-                  <>
+                  <div>
                     {ticketsTypeList.total > 0 ? (
                       <RouterLink
                         route={`${ROUTES.TRANSACTION_DETAILS}/${id}`}
@@ -135,7 +123,7 @@ export const transformMovementData = (transactions: Array<ITransaction>) =>
                     ) : (
                       0
                     )}
-                  </>
+                  </div>
                 )}
               </div>
             )}

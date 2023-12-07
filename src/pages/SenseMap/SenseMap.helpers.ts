@@ -105,9 +105,8 @@ const senseData = {
 };
 
 export const getUncompressedData = (target_density_rate: number) => {
-  const list_of_zstd_decompressed_graph_json_objects = decompress_zstd_compressed_data_func_2(
-    senseData,
-  );
+  const list_of_zstd_decompressed_graph_json_objects =
+    decompress_zstd_compressed_data_func_2(senseData);
   for (let i = 0; i < list_of_zstd_decompressed_graph_json_objects.length; i += 1) {
     const current_graph_metadata = list_of_zstd_decompressed_graph_json_objects[i].graph_metadata;
     if (current_graph_metadata.target_link_density_rate === target_density_rate) {

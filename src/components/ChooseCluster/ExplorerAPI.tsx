@@ -11,7 +11,7 @@ const ExplorerAPI: React.FC = () => {
   const apis = getApiList(document.location.pathname);
 
   return (
-    <div>
+    <Styles.ExplorerApiWrapper>
       {apis?.api?.map(item => {
         const domain = item?.url ? getBaseURL() : process.env.REACT_APP_EXPLORER_OPENNODE_API_URL;
         return (
@@ -29,7 +29,7 @@ const ExplorerAPI: React.FC = () => {
           </Styles.ExplorerApiItem>
         );
       })}
-    </div>
+    </Styles.ExplorerApiWrapper>
   );
 };
 

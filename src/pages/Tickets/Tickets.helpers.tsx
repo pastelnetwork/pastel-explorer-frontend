@@ -645,43 +645,8 @@ export const transformOfferAndTransferData = (data: TicketsList[]) =>
                     title={transactionHash}
                     className="address-link"
                   />
-<<<<<<< HEAD
-                </Box>
-              </Grid>
-              <Grid item xs={12} sm={6} md={3} className="ticket-output image-mobile xs">
-                {getImage()}
-              </Grid>
-              <Grid item xs={12} sm={6} md={3}>
-                <Box className="title">{parse(translate('pages.tickets.pastelID'))}</Box>
-                <Box className="bold">
-                  <RouterLink
-                    route={`${ROUTES.PASTEL_ID_DETAILS}/${pastelID}`}
-                    value={formatAddress(pastelID, 5, -5)}
-                    title={pastelID}
-                    className="address-link"
-                  />
-                </Box>
-              </Grid>
-              <Grid item xs={12} sm={6} md={3} className="ticket-output image-mobile sm">
-                {getImage()}
-              </Grid>
-              <Grid item xs={12} sm={6} md={2}>
-                <Box className="title">{parse(translate('pages.tickets.version'))}</Box>
-                <Box className="bold">{version}</Box>
-              </Grid>
-              <Grid item xs={12} sm={6} md={4}>
-                <Box className="title">{parse(translate('pages.tickets.timestamp'))}</Box>
-                <Box className="bold">
-                  {timestamp ? formatFullDate(timestamp, { dayName: false }) : '--'}
-                </Box>
-              </Grid>
-              <Grid item xs={12} sm={6} md={3} className="ticket-output image-desktop">
-                {getImage()}
-              </Grid>
-=======
                 </Grid>
               </Box>
->>>>>>> 5463ae6f02d562ccad09387d2b81c8d0ff3a50c4
             </Grid>
             <Grid item xs={12} sm={6} md={2}>
               <Box className="title">{parse(translate('pages.tickets.type'))}</Box>

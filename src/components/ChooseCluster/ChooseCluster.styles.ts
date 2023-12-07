@@ -100,3 +100,9 @@ export const LinkButton = styled.a`
   transition: all 0.5s ease;
   text-decoration: none;
 `;
+
+export const ExplorerApiWrapper = styled.div`
+  max-height: 100%;
+  padding-bottom: 10px;
+  overflow-y: auto;
+`;

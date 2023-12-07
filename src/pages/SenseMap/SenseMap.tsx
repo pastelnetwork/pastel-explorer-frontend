@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { ForceGraph3D } from 'react-force-graph';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Slider from '@material-ui/core/Slider';
-import { withStyles } from '@material-ui/core/styles';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Slider from '@mui/material/Slider';
+import { withStyles } from '@mui/styles';
+import { SelectChangeEvent } from '@mui/material/Select';
 import * as THREE from 'three';
 import * as d3 from 'd3';
 
@@ -102,15 +103,15 @@ const SenseMap: React.FC = () => {
   const [linkStrength, setLinkStrength] = useState(false);
   const [density, setDensity] = useState(0.02);
 
-  const handleClusteringChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleClusteringChange = (event: SelectChangeEvent) => {
     setClustering(event.target.value as string);
   };
 
-  const handleNodeImportanceChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleNodeImportanceChange = (event: SelectChangeEvent) => {
     setNodeImportance(event.target.value as string);
   };
 
-  const handleScaleExponentChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleScaleExponentChange = (event: SelectChangeEvent) => {
     setScaleExponent(event.target.value as string);
   };
 
@@ -216,9 +217,7 @@ const SenseMap: React.FC = () => {
             spriteMaterial.map.needsUpdate = true;
           }
 
-          spriteCache.highlight = new (class extends THREE.Sprite {
-            raycast = () => null;
-          })(spriteMaterial);
+          spriteCache.highlight = new (class extends THREE.Sprite {})(spriteMaterial);
           spriteCache.highlight.scale.set(1 + bw + sw, 1 + bw + sw);
         }
         const highlightBorderSprite = spriteCache.highlight.clone();
