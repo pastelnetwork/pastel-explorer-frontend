@@ -362,6 +362,12 @@ export const BlockTitle = styled.div`
         padding-left: 0;
       }
     }
+
+    ${props => props.theme.breakpoints.down(1101)} {
+      .MuiSvgIcon-root {
+        display: none;
+      }
+    }
   }
 
   @media screen and (max-width: 1279px) {
@@ -459,6 +465,12 @@ export const LinkWrapper = styled.div`
   .view-all {
     .MuiTypography-root {
       padding: 0;
+    }
+
+    ${props => props.theme.breakpoints.down(1101)} {
+      .MuiSvgIcon-root {
+        display: none;
+      }
     }
   }
 
