@@ -232,8 +232,7 @@ const ApiList = {
       {
         name: 'components.explorerAPI.averageSizeOfNFTStoredOnCascade',
         urlDisplay: '/v1/stats/average-size-of-nft-stored-on-cascade',
-        url:
-          'Cascade%20and%20Sense%20Statistics/get_v1_stats_average_size_of_nft_stored_on_cascade',
+        url: 'Cascade%20and%20Sense%20Statistics/get_v1_stats_average_size_of_nft_stored_on_cascade',
         method: 'GET',
       },
       {
