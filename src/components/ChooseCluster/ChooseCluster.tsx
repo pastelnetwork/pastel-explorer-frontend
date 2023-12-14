@@ -12,11 +12,13 @@ import { TAppTheme } from '@theme/index';
 import useBooleanState from '@hooks/useBooleanState';
 import { BASE_URL, BASE_URL_TESTNET, BASE_URL_DEVNET } from '@utils/constants/urls';
 import { DEFAULT_CURRENCY, TEST_CURRENCY_NAME } from '@utils/appInfo';
+import { getBaseURL } from '@utils/helpers/useFetch/useFetch';
 
 import { ReactComponent as SettingIcon } from '@assets/icons/setting.svg';
 
 import { translate } from '@utils/helpers/i18n';
 
+import ExplorerAPI from './ExplorerAPI';
 import * as Styles from './ChooseCluster.styles';
 
 const useStyles = makeStyles((theme: TAppTheme) => ({
@@ -24,9 +26,12 @@ const useStyles = makeStyles((theme: TAppTheme) => ({
     padding: 20,
   },
   list: {
-    width: 325,
-    padding: '0 20px 20px 20px',
     position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    maxHeight: '100%',
+    width: 325,
+    padding: '0 20px 10px 20px',
   },
   close: {
     minWidth: 'auto',
@@ -38,10 +43,9 @@ const useStyles = makeStyles((theme: TAppTheme) => ({
     color: theme.palette.text.primary,
   },
   title: {
-    marginTop: 53,
     fontSize: 20,
     fontWeight: 500,
-    textAlign: 'center',
+    textAlign: 'left',
   },
   item: {
     marginBottom: 20,
@@ -143,29 +147,42 @@ const ChooseCluster: FC<IProps> = ({ setApiHosting, url: apiURL }) => {
           <Button type="button" className={classes.close} onClick={handleClusterClose}>
             ×
           </Button>
-          <h1 className={classes.title}>
-            {parse(translate('components.chooseCluster.chooseACluster'))}
-          </h1>
-          {data.map(({ id, name, value, api }) => {
-            if (!api) {
-              return null;
-            }
+          <Styles.ClusterWrapper>
+            <h1 className={classes.title}>
+              {parse(translate('components.chooseCluster.chooseACluster'))}
+            </h1>
+            {data.map(({ id, name, value, api }) => {
+              if (!api) {
+                return null;
+              }
 
-            return (
-              <Styles.ButtonStyle
-                type="button"
-                key={id}
-                id={api}
-                value={value}
-                onClick={onChangeCluster}
-                variant="outlined"
-                className={currentCluster.value === value ? 'active' : ''}
-              >
-                <span className={classes.itemTitle}>{parse(name)}:</span>
-                <span className={classes.itemTitle}>{api}</span>
-              </Styles.ButtonStyle>
-            );
-          })}
+              return (
+                <Styles.ButtonStyle
+                  type="button"
+                  key={id}
+                  id={api}
+                  value={value}
+                  onClick={onChangeCluster}
+                  variant="outlined"
+                  className={currentCluster.value === value ? 'active' : ''}
+                >
+                  <span className={classes.itemTitle}>{parse(name)}:</span>
+                  <span className={classes.itemTitle}>{api}</span>
+                </Styles.ButtonStyle>
+              );
+            })}
+          </Styles.ClusterWrapper>
+          <Styles.ExplorerAPIWrapper>
+            <h2 className={classes.title}>
+              <span>{parse(translate('components.explorerAPI.title'))}</span>
+              <Styles.LinkButton href={getBaseURL()} target="_blank" rel="noreferrer">
+                {translate('components.explorerAPI.viewFullDocs')}
+              </Styles.LinkButton>
+            </h2>
+            <Styles.ClusterWrapper className="explorer-api">
+              <ExplorerAPI />
+            </Styles.ClusterWrapper>
+          </Styles.ExplorerAPIWrapper>
         </div>
       </Drawer>
     </>

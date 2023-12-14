@@ -1,6 +1,7 @@
 import RouterLink from '@components/RouterLink/RouterLink';
 import Hourglass from '@components/Hourglass/Hourglass';
 
+import { HIDE_TO_BLOCK } from '@utils/appInfo';
 import * as ROUTES from '@utils/constants/routes';
 import { formattedDate } from '@utils/helpers/date/date';
 import { IBlock } from '@utils/types/IBlocks';
@@ -52,22 +53,28 @@ export const transformTableData = (transactions: Array<IBlock>, isMobile: boolea
         [TRANSACTIONS_QTY_KEY]: transactionCount,
         [TOTAL_TICKETS]: (
           <div className="inline-block">
-            {totalTickets === -1 ? (
-              <Styles.HourglassWrapper>
-                <Hourglass />
-              </Styles.HourglassWrapper>
+            {height < HIDE_TO_BLOCK ? (
+              <>0</>
             ) : (
               <div>
-                {ticketsTypeList.total > 0 ? (
-                  <RouterLink
-                    className="hash-link"
-                    route={`${ROUTES.BLOCK_DETAILS}/${id}`}
-                    value={ticketsTypeList.total}
-                    title={ticketsTypeList.text.join(', <br />')}
-                    isUseTooltip
-                  />
+                {totalTickets === -1 ? (
+                  <Styles.HourglassWrapper>
+                    <Hourglass />
+                  </Styles.HourglassWrapper>
                 ) : (
-                  <div>0</div>
+                  <div>
+                    {ticketsTypeList.total > 0 ? (
+                      <RouterLink
+                        className="hash-link"
+                        route={`${ROUTES.BLOCK_DETAILS}/${id}`}
+                        value={ticketsTypeList.total}
+                        title={ticketsTypeList.text.join(', <br />')}
+                        isUseTooltip
+                      />
+                    ) : (
+                      <div>0</div>
+                    )}
+                  </div>
                 )}
               </div>
             )}
