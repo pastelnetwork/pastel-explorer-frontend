@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
 import { decode } from 'js-base64';
-import AlertTitle from '@material-ui/lab/AlertTitle';
-import Snackbar from '@material-ui/core/Snackbar';
-import Alert from '@material-ui/lab/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';
@@ -222,7 +222,11 @@ const CascadeDetails = () => {
     </Styles.Wrapper>
   ) : (
     <Styles.Wrapper className="content-center-wrapper">
-      <Grid container justify="center" alignItems="center" direction="column" spacing={2}>
+      <Grid
+        container
+        sx={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}
+        spacing={2}
+      >
         <Grid item>
           <Typography component="h1" variant="h1" align="center" gutterBottom>
             {parse(translate('pages.cascade.404'))}

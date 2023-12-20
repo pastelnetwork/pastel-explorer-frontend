@@ -1,5 +1,5 @@
-import styled from 'styled-components/macro';
-import { Grid } from '@material-ui/core';
+import styled from 'styled-components';
+import { Grid } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
 import themeVariant from '@theme/variants';
@@ -320,6 +320,10 @@ export const GirdStyle = styled(Grid)`
     width: 100%;
   }
 
+  &.pb-12 {
+    padding-bottom: 12px;
+  }
+
   @media screen and (max-width: 1279px) {
     &.left,
     &.right {
@@ -356,6 +360,12 @@ export const BlockTitle = styled.div`
       ${props => props.theme.breakpoints.down(500)} {
         padding-right: 0;
         padding-left: 0;
+      }
+    }
+
+    ${props => props.theme.breakpoints.down(1101)} {
+      .MuiSvgIcon-root {
+        display: none;
       }
     }
   }
@@ -455,6 +465,12 @@ export const LinkWrapper = styled.div`
   .view-all {
     .MuiTypography-root {
       padding: 0;
+    }
+
+    ${props => props.theme.breakpoints.down(1101)} {
+      .MuiSvgIcon-root {
+        display: none;
+      }
     }
   }
 

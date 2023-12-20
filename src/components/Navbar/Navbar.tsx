@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Box, Hidden } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
-import { Menu as MenuIcon } from '@material-ui/icons';
+import { Box } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import { Menu as MenuIcon } from '@mui/icons-material';
 
 import SearchBar from '@components/SearchBar/SearchBar';
 import Sidebar from '@components/Sidebar/Sidebar';
@@ -30,7 +30,7 @@ export default function Navbar({ routes }: { routes: Array<RouteType> }): JSX.El
   return (
     <Styles.NavContainer>
       <Styles.Menu>
-        <Hidden smDown implementation="js">
+        <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
           <SidebarStyles.Brand
             className="desktop-logo"
             component={NavLink}
@@ -44,8 +44,10 @@ export default function Navbar({ routes }: { routes: Array<RouteType> }): JSX.El
               />
             </Box>
           </SidebarStyles.Brand>
-        </Hidden>
-        <Hidden mdUp implementation="css">
+        </Box>
+        <Box
+          sx={{ display: { xs: 'inline-block', md: 'none' }, paddingTop: { xs: '0', sm: '12px' } }}
+        >
           <Grid item>
             <SearchBarStyles.IconButton
               color="inherit"
@@ -55,18 +57,18 @@ export default function Navbar({ routes }: { routes: Array<RouteType> }): JSX.El
               <MenuIcon />
             </SearchBarStyles.IconButton>
           </Grid>
-        </Hidden>
-        <Hidden mdUp implementation="js">
+        </Box>
+        <Box sx={{ display: { xs: 'none', md: 'block' } }}>
           <Sidebar
             routes={routes}
             variant="temporary"
             open={mobileOpen}
             onClose={handleDrawerToggle}
           />
-        </Hidden>
-        <Hidden smDown implementation="css">
+        </Box>
+        <Box sx={{ display: { xs: 'none', md: 'block' } }}>
           <Sidebar routes={routes} />
-        </Hidden>
+        </Box>
       </Styles.Menu>
       <SearchBar isDarkMode={isDarkMode} />
     </Styles.NavContainer>

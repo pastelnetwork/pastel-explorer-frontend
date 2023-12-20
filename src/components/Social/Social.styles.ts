@@ -1,5 +1,5 @@
-import styled from 'styled-components/macro';
-import { IconButton } from '@material-ui/core';
+import styled from 'styled-components';
+import { IconButton } from '@mui/material';
 
 export const IconButtonLink = styled(IconButton)<{
   target: string;
@@ -37,7 +37,7 @@ export const Items = styled.ul`
   list-style: none;
   margin-top: 25px;
 
-  ${props => props.theme.breakpoints.down('xs')} {
+  ${props => props.theme.breakpoints.down('sm')} {
     justify-content: center;
     margin: 20px 0 0;
     padding: 0;

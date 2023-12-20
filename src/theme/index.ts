@@ -1,9 +1,8 @@
-import { createMuiTheme, Theme } from '@material-ui/core/styles';
+import { createTheme as createMuiTheme, Theme } from '@mui/material/styles';
 import themeVariant from './variants';
 import typography from './typography';
 import overrides from './overrides';
 import breakpoints from './breakpoints';
-import props from './props';
 import shadows from './shadows';
 
 const createTheme = (): Theme => {
@@ -11,8 +10,7 @@ const createTheme = (): Theme => {
     {
       spacing: 4,
       breakpoints,
-      overrides,
-      props,
+      components: overrides,
       typography,
       shadows,
       palette: themeVariant.palette,
@@ -40,8 +38,7 @@ export const themeLight = createMuiTheme(
     },
     spacing: 4,
     breakpoints,
-    overrides,
-    props,
+    components: overrides,
     typography,
     shadows,
   },
@@ -185,8 +182,7 @@ export const themeDark = createMuiTheme(
     },
     spacing: 4,
     breakpoints,
-    overrides,
-    props,
+    components: overrides,
     typography,
     shadows,
   },

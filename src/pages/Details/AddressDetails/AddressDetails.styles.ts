@@ -1,5 +1,5 @@
-import styled from 'styled-components/macro';
-import { Grid } from '@material-ui/core';
+import styled from 'styled-components';
+import { Grid } from '@mui/material';
 
 import themeVariant from '@theme/variants';
 
@@ -99,6 +99,24 @@ export const Wrapper = styled.div`
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     background: ${props => props.theme.sidebar.menu.background};
+  }
+
+  .MuiGrid-root.MuiGrid-container {
+    width: 100%;
+    margin: 0;
+  }
+
+  .MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-5 {
+    width: calc(100% + 20px);
+    margin: -10px;
+  }
+
+  .MuiGrid-root.MuiGrid-item.MuiGrid-grid-lg-8 {
+    padding: 10px;
+  }
+
+  .MuiGrid-root.MuiGrid-item.MuiGrid-grid-lg-4 {
+    padding: 0;
   }
 
   .ReactVirtualized__Grid {
@@ -473,6 +491,15 @@ export const DirectionChartWrapper = styled.div`
 
   .line-chart {
     padding: 16px;
+  }
+
+  .MuiGrid-spacing-xs-4 {
+    width: calc(100% + 16px);
+    margin: -8px;
+  }
+
+  .MuiGrid-spacing-xs-4 > .MuiGrid-item {
+    padding: 8px;
   }
 `;
 

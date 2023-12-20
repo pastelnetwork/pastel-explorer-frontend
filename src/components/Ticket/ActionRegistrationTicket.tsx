@@ -1,10 +1,10 @@
 import { useState, ReactNode } from 'react';
 import { decode } from 'js-base64';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 import parse from 'html-react-parser';
 
 import {

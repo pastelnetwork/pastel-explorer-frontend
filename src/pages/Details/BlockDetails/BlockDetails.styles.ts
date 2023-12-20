@@ -5,7 +5,7 @@ import {
   Accordion as MuiAccordion,
   Grid,
   IconButton,
-} from '@material-ui/core';
+} from '@mui/material';
 
 export const Wrapper = styled('div')`
   .block-wrapper {
@@ -178,11 +178,13 @@ export const DetailsDescription = styled(Grid)`
 `;
 
 export const DetailsContainer = styled(Grid)`
-  margin: 5px 0;
+  &.MuiGrid-container {
+    margin: 5px 0;
 
-  ${props => props.theme.breakpoints.down('sm')} {
-    flex-wrap: nowrap;
-    padding-right: 10px;
+    ${props => props.theme.breakpoints.down('sm')} {
+      flex-wrap: nowrap;
+      padding-right: 10px;
+    }
   }
 `;
 

@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { CssBaseline, withWidth } from '@material-ui/core';
-import { isWidthUp } from '@material-ui/core/withWidth';
+import { CssBaseline } from '@mui/material';
 import { useLocation } from 'react-router-dom';
+import { Breakpoint, Theme, useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import Footer from '@components/Footer/Footer';
 import Summary from '@components/Summary/Summary';
@@ -12,14 +13,29 @@ import { RouteType } from '@utils/types/routes';
 
 import * as Styles from './Dashboard.styles';
 
-interface DashboardPropsType {
-  routes: Array<RouteType>;
-  width: 'md' | 'xs' | 'sm' | 'lg' | 'xl';
-  fluid?: boolean;
+type BreakpointOrNull = Breakpoint | null;
+
+function useWidth() {
+  const theme: Theme = useTheme();
+  const keys: readonly Breakpoint[] = [...theme.breakpoints.keys].reverse();
+  return (
+    keys.reduce((output: BreakpointOrNull, key: Breakpoint) => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const matches = useMediaQuery(theme.breakpoints.up(key));
+      return !output && matches ? key : output;
+    }, null) || 'xs'
+  );
 }
 
-const Dashboard: React.FC<DashboardPropsType> = ({ children, width, routes, fluid = false }) => {
+interface DashboardPropsType {
+  routes: Array<RouteType>;
+  fluid?: boolean;
+  children: React.ReactNode;
+}
+
+const Dashboard: React.FC<DashboardPropsType> = ({ children, routes, fluid = false }) => {
   const location = useLocation();
+  const width = useWidth();
 
   return (
     <Styles.Root>
@@ -32,7 +48,7 @@ const Dashboard: React.FC<DashboardPropsType> = ({ children, width, routes, flui
         ) : (
           <Styles.EmptySection className={fluid ? 'hidden' : ''} />
         )}
-        <Styles.MainContent className={fluid ? 'fluid' : ''} p={isWidthUp('lg', width) ? 12 : 5}>
+        <Styles.MainContent className={fluid ? 'fluid' : ''} sx={{ p: width === 'lg' ? 12 : 5 }}>
           {children}
         </Styles.MainContent>
       </Styles.MainWrapper>
@@ -41,4 +57,8 @@ const Dashboard: React.FC<DashboardPropsType> = ({ children, width, routes, flui
   );
 };
 
-export default withWidth()(Dashboard);
+Dashboard.defaultProps = {
+  fluid: false,
+};
+
+export default Dashboard;

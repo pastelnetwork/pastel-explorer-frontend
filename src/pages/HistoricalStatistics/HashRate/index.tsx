@@ -1,5 +1,6 @@
-import { useEffect, useState, ChangeEvent } from 'react';
+import { useEffect, useState } from 'react';
 import parse from 'html-react-parser';
+import { SelectChangeEvent } from '@mui/material/Select';
 
 import { PeriodTypes, transformHashRateCharts } from '@utils/helpers/statisticsLib';
 import { periods, info, cacheList } from '@utils/constants/statistics';
@@ -86,12 +87,7 @@ function HashRate() {
     setPeriod(value);
   };
 
-  const handleDropdownChange = (
-    event: ChangeEvent<{
-      name?: string | undefined;
-      value: unknown;
-    }>,
-  ) => {
+  const handleDropdownChange = (event: SelectChangeEvent) => {
     const val = event.target.value as string;
     if (val) {
       setNumberOfBlocks(val);

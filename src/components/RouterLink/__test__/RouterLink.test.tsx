@@ -1,5 +1,5 @@
 import { shallow } from 'enzyme';
-import Tooltip from '@material-ui/core/Tooltip';
+import Tooltip from '@mui/material/Tooltip';
 import 'jest-styled-components';
 
 import RouterLink, { ExternalLink } from '../RouterLink';

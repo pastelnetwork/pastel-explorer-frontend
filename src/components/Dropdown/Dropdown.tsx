@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import Checkbox from '@material-ui/core/Checkbox';
-import ListItemText from '@material-ui/core/ListItemText';
-import Input from '@material-ui/core/Input';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Checkbox from '@mui/material/Checkbox';
+import ListItemText from '@mui/material/ListItemText';
+import Input from '@mui/material/Input';
 
 import { translateDropdown } from '@utils/helpers/i18n';
 
@@ -17,15 +17,11 @@ export type OptionsProps = {
 
 type DropdownProps = {
   value: string;
-  onChange: (
-    _value: React.ChangeEvent<{
-      name?: string | undefined;
-      value: unknown;
-    }>,
-  ) => void;
+  onChange: (_value: SelectChangeEvent) => void;
   options: OptionsProps[];
   label?: React.ReactNode;
   classNameWrapper?: string;
+  showFieldset?: boolean;
 };
 
 export const Dropdown = ({
@@ -34,12 +30,13 @@ export const Dropdown = ({
   options,
   label,
   classNameWrapper,
+  showFieldset = true,
 }: DropdownProps): JSX.Element => {
   return (
-    <Styles.Wrapper className={classNameWrapper}>
+    <Styles.Wrapper className={`${classNameWrapper} ${showFieldset ? '' : 'hidden-fieldset'}`}>
       {label ? <Styles.Label>{label}</Styles.Label> : null}
       <Select
-        value={value}
+        value={value as string}
         onChange={onChange}
         MenuProps={{
           style: {
@@ -60,6 +57,7 @@ export const Dropdown = ({
 Dropdown.defaultProps = {
   label: undefined,
   classNameWrapper: '',
+  showFieldset: true,
 };
 
 const ITEM_HEIGHT = 48;
@@ -87,8 +85,13 @@ export const TagDropdown: React.FC<ITagDropdown> = ({
   options,
 }) => {
   const [values, setValues] = React.useState<string[]>(defaultValues);
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setValues(event.target.value as string[]);
+
+  const handleChange = (event: SelectChangeEvent<typeof values>) => {
+    setValues(
+      typeof event.target.value === 'string'
+        ? event.target.value.split(',')
+        : (event.target.value as string[]),
+    );
   };
 
   const handleClose = () => {
@@ -126,4 +129,10 @@ export const TagDropdown: React.FC<ITagDropdown> = ({
       </Select>
     </Styles.Wrapper>
   );
+};
+
+TagDropdown.defaultProps = {
+  defaultValues: [],
+  placeholder: '',
+  onChange: () => {},
 };

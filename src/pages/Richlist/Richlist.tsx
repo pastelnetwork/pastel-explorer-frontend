@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo, MouseEvent } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import parse from 'html-react-parser';
 
 import Table, { RowsProps } from '@components/Table/Table';
@@ -70,8 +70,8 @@ const Richlist: React.FC = () => {
       const newList = [...data];
       const sortBy = sort.sortBy as keyof IRichlist;
       newList.sort((a: IRichlist, b: IRichlist) => {
-        let keyA = (a[sortBy] as unknown) as string | number;
-        let keyB = (b[sortBy] as unknown) as string | number;
+        let keyA = a[sortBy] as unknown as string | number;
+        let keyB = b[sortBy] as unknown as string | number;
         if (typeof keyA === 'string' && typeof keyB === 'string') {
           keyA = keyA.toUpperCase();
           keyB = keyB.toUpperCase();

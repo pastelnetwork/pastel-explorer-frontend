@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { NavLink, withRouter, RouteComponentProps, match } from 'react-router-dom';
-import { makeStyles } from '@material-ui/styles';
-import { useCallback } from 'react';
-import { Collapse, List, Hidden, Box } from '@material-ui/core';
+import { NavLink, useLocation } from 'react-router-dom';
+import { makeStyles } from '@mui/styles';
+import { Collapse, List, Box, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import parse from 'html-react-parser';
-import IconButton from '@material-ui/core/IconButton';
+import IconButton from '@mui/material/IconButton';
 
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import * as ROUTES from '@utils/constants/routes';
@@ -34,18 +33,21 @@ interface SidebarLinkPropsType {
   name: string | React.ReactNode;
   to: string;
   badge?: string | number;
-  icon?: JSX.Element;
 }
 
 const SidebarLink: React.FC<SidebarLinkPropsType> = ({ name, to, badge }) => {
   const isActive = window.location.pathname.includes(to);
 
   return (
-    <Styles.NavLinkStyle exact to={to} className={isActive ? 'active' : ''}>
+    <Styles.NavLinkStyle to={to} className={isActive ? 'active' : ''}>
       <Styles.LinkText>{parse(name?.toString() || '')}</Styles.LinkText>
       {badge ? <Styles.LinkBadge label={badge} /> : ''}
     </Styles.NavLinkStyle>
   );
+};
+
+SidebarLink.defaultProps = {
+  badge: undefined,
 };
 
 interface SidebarCategoryPropsType {
@@ -60,7 +62,7 @@ interface SidebarCategoryPropsType {
   to?: string;
   exact?: boolean;
   component?: typeof NavLink;
-  isActive?: (_match: match, _location: Location) => boolean;
+  isActive?: boolean;
   category?: RouteType;
 }
 
@@ -70,6 +72,7 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
   isCollapsable,
   badge,
   category,
+  isActive,
   ...rest
 }) => {
   const { t } = useTranslation();
@@ -96,15 +99,18 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
   }
 
   return (
-    <Styles.Category className={category?.children ? 'has-sub' : ''} {...rest}>
+    <Styles.Category
+      className={`${category?.children ? 'has-sub' : ''} ${isActive ? 'active' : ''}`}
+      {...rest}
+    >
       <Styles.CategoryText
         className={`menu-text ${active} ${category?.children ? 'sub-menu' : ''} ${
           !isOpen ? 'opened' : ''
         }`}
       >
-        <Hidden mdUp implementation="js">
+        <Typography component="div" sx={{ display: { xs: 'inline-block', md: 'none' } }}>
           {category?.icon}
-        </Hidden>
+        </Typography>
         {parse(t(`${name}.message`, { defaultValue: '<span class="skeleton-text"></span>' }))}
         {isCollapsable ? categoryIcon : null}
       </Styles.CategoryText>
@@ -118,7 +124,6 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
                 defaultValue: '<span class="skeleton-text"></span>',
               })}
               to={route.path}
-              icon={route.icon}
               badge={route.badge}
             />
           ))}
@@ -128,21 +133,31 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
   );
 };
 
+SidebarCategory.defaultProps = {
+  classes: undefined,
+  isOpen: undefined,
+  badge: undefined,
+  activeClassName: undefined,
+  onClick: undefined,
+  to: undefined,
+  exact: undefined,
+  component: undefined,
+  isActive: undefined,
+  category: undefined,
+};
+
 interface SidebarPropsType {
-  staticContext: string | undefined;
-  location: {
-    pathname: string;
-  };
   routes: Array<RouteType>;
   variant?: 'permanent' | 'persistent' | 'temporary';
   open?: boolean;
   onClose?: () => void;
 }
 
-const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, ...rest }) => {
+const Sidebar: React.FC<SidebarPropsType> = ({ ...rest }) => {
   interface InitOptionsProps {
     [key: number]: boolean;
   }
+  const location = useLocation();
   const { width } = useWindowDimensions();
   const { t } = useTranslation();
   const classes = useStyles();
@@ -184,27 +199,25 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
     setOpenRoutes(currentRoute => ({ ...currentRoute, [index]: !currentRoute[index] }));
   };
 
-  const handleIsActiveLink = useCallback(
-    (path: string) => (matchLink: match, locationLink: Location) => {
-      if (matchLink) {
+  const handleIsActiveLink = React.useCallback(
+    (path: string) => {
+      if (path === location.pathname) {
         return true;
       }
-
       if (path.startsWith('/blocks')) {
-        return !!['/block'].some(el => locationLink.pathname.startsWith(el));
+        return ['/block'].some(el => location.pathname.startsWith(el));
       }
       if (path.startsWith('/movement')) {
-        return !!['/tx'].some(el => locationLink.pathname.startsWith(el));
+        return ['/tx'].some(el => location.pathname.startsWith(el));
       }
       if (path.startsWith('/supernodes')) {
-        return !!['/address'].some(
-          el =>
-            locationLink.pathname.startsWith(el) && !locationLink.search?.includes('p=richlist'),
+        return ['/address'].some(
+          el => location.pathname.startsWith(el) && !location.search?.includes('p=richlist'),
         );
       }
       if (path.startsWith('/richlist')) {
-        return !!['/address'].some(
-          el => locationLink.pathname.startsWith(el) && locationLink.search?.includes('p=richlist'),
+        return ['/address'].some(
+          el => location.pathname.startsWith(el) && location.search?.includes('p=richlist'),
         );
       }
       if (
@@ -216,17 +229,16 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
         path.startsWith('/tickets') ||
         path.startsWith('/collection')
       ) {
-        if (locationLink.pathname === '/cascade-and-sense-statistics') {
+        if (location.pathname === '/cascade-and-sense-statistics') {
           return false;
         }
-        return !!['/tickets', '/cascade', '/sense', '/nft', '/pastelid', '/collection'].some(el =>
-          locationLink.pathname.startsWith(el),
+        return ['/tickets', '/cascade', '/sense', '/nft', '/pastelid', '/collection'].some(el =>
+          location.pathname.startsWith(el),
         );
       }
-
       return false;
     },
-    [],
+    [location],
   );
 
   const generateCategoryIcon = (category: RouteType): JSX.Element | null => {
@@ -273,21 +285,19 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
       open={open}
       onClose={onClose}
     >
-      <Hidden mdUp>
-        <Styles.SlideLogoMobileWrapper>
-          <Styles.Brand component={NavLink} to={ROUTES.EXPLORER} button>
-            <Box ml={1}>
-              <Styles.BrandLogo
-                src={isDarkMode ? PastelLogoWhite : PastelLogo}
-                alt={t('components.footer.pastelLogo.message', { defaultValue: '' }) || ''}
-              />
-            </Box>
-          </Styles.Brand>
-          <IconButton type="button" className={classes.close} onClick={onClose}>
-            ×
-          </IconButton>
-        </Styles.SlideLogoMobileWrapper>
-      </Hidden>
+      <Styles.SlideLogoMobileWrapper>
+        <Styles.Brand component={NavLink} to={ROUTES.EXPLORER} button>
+          <Box ml={1}>
+            <Styles.BrandLogo
+              src={isDarkMode ? PastelLogoWhite : PastelLogo}
+              alt={t('components.footer.pastelLogo.message', { defaultValue: '' }) || ''}
+            />
+          </Box>
+        </Styles.Brand>
+        <IconButton type="button" className={classes.close} onClick={onClose}>
+          ×
+        </IconButton>
+      </Styles.SlideLogoMobileWrapper>
       <List disablePadding>
         <Styles.Items>
           {routes.map((category: RouteType, index: number) => (
@@ -317,4 +327,10 @@ const Sidebar: React.FC<RouteComponentProps & SidebarPropsType> = ({ location, .
   );
 };
 
-export default withRouter(Sidebar);
+Sidebar.defaultProps = {
+  variant: undefined,
+  open: undefined,
+  onClose: undefined,
+};
+
+export default Sidebar;

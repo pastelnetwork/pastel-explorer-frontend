@@ -2,6 +2,7 @@ import { shallow } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 
+import { MyMockType } from '@utils/types/MockType';
 import i18next from '../../../utils/helpers/i18n';
 import ResponseErrorAlert from '../ResponseErrorAlert';
 
@@ -30,7 +31,7 @@ jest.mock('react-i18next', () => ({
 }));
 i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
-});
+}) as MyMockType;
 
 describe('components/ResponseErrorAlert', () => {
   const wrapper = shallow(

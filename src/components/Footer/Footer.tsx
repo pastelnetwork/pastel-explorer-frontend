@@ -1,4 +1,4 @@
-import { Box, Hidden } from '@material-ui/core';
+import { Box } from '@mui/material';
 import getYear from 'date-fns/getYear';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -24,25 +24,23 @@ const Footer: React.FC = () => {
   return (
     <Styles.Container>
       <div>
-        <Hidden smUp implementation="js">
+        <Box sx={{ display: { xs: 'flex', sm: 'none', justifyContent: 'center' } }}>
           <SidebarStyles.Brand
             component={NavLink}
             to={ROUTES.EXPLORER}
             button
             className="footer center"
           >
-            <Box>
-              <SidebarStyles.BrandLogo
-                src={isDarkMode ? PastelLogoWhite : PastelLogo}
-                alt={
-                  t('components.footer.pastelLogo.message', {
-                    defaultValue: '',
-                  }) || ''
-                }
-              />
-            </Box>
+            <SidebarStyles.BrandLogo
+              src={isDarkMode ? PastelLogoWhite : PastelLogo}
+              alt={
+                t('components.footer.pastelLogo.message', {
+                  defaultValue: '',
+                }) || ''
+              }
+            />
           </SidebarStyles.Brand>
-        </Hidden>
+        </Box>
         <Styles.FooterMenuWrapper>
           {footerMenu.map(menu => (
             <Styles.FooterMenuBlock key={menu.id}>
@@ -71,38 +69,7 @@ const Footer: React.FC = () => {
             </Styles.FooterMenuBlock>
           ))}
         </Styles.FooterMenuWrapper>
-        <Hidden xsDown implementation="css">
-          <Styles.GridStyle item>
-            <Styles.Typography>
-              {parse(
-                t('components.footer.copyright.message', {
-                  year: getYear(currentDate),
-                  defaultValue: '<span class="skeleton-text"></span>',
-                }),
-              )}
-            </Styles.Typography>
-          </Styles.GridStyle>
-        </Hidden>
-      </div>
-      <div>
-        <Hidden xsDown implementation="css">
-          <SidebarStyles.Brand component={NavLink} to={ROUTES.EXPLORER} button className="footer">
-            <Box>
-              <SidebarStyles.BrandLogo
-                src={isDarkMode ? PastelLogoWhite : PastelLogo}
-                alt={
-                  t('components.footer.pastelLogo.message', {
-                    defaultValue: '',
-                  }) || ''
-                }
-              />
-            </Box>
-          </SidebarStyles.Brand>
-        </Hidden>
-        <Social />
-      </div>
-      <Hidden smUp implementation="js">
-        <Styles.GridStyle item>
+        <Styles.GridStyle item sx={{ display: { xs: 'none', sm: 'block' } }}>
           <Styles.Typography>
             {parse(
               t('components.footer.copyright.message', {
@@ -112,7 +79,32 @@ const Footer: React.FC = () => {
             )}
           </Styles.Typography>
         </Styles.GridStyle>
-      </Hidden>
+      </div>
+      <div>
+        <Box sx={{ display: { xs: 'none', sm: 'flex', justifyContent: 'flex-end' } }}>
+          <SidebarStyles.Brand component={NavLink} to={ROUTES.EXPLORER} button className="footer">
+            <SidebarStyles.BrandLogo
+              src={isDarkMode ? PastelLogoWhite : PastelLogo}
+              alt={
+                t('components.footer.pastelLogo.message', {
+                  defaultValue: '',
+                }) || ''
+              }
+            />
+          </SidebarStyles.Brand>
+        </Box>
+        <Social />
+      </div>
+      <Styles.GridStyle item sx={{ display: { xs: 'block', sm: 'none' } }}>
+        <Styles.Typography>
+          {parse(
+            t('components.footer.copyright.message', {
+              year: getYear(currentDate),
+              defaultValue: '<span class="skeleton-text"></span>',
+            }),
+          )}
+        </Styles.Typography>
+      </Styles.GridStyle>
     </Styles.Container>
   );
 };

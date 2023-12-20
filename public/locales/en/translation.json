@@ -1131,6 +1131,436 @@
         "message": "Copied",
         "description": "Used for the Share component"
       }
+    },
+    "explorerAPI": {
+      "viewFullDocs": {
+        "message": "API Documentation",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "title": {
+        "message": "API",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "homepage": {
+        "message": "Home",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "statistics": {
+        "message": "Statistics",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "explorerMapSupernodeStatistics": {
+        "message": "Explorer Map & Supernode Statistics",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "latestBlocks": {
+        "message": "Latest Blocks",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "latestTransactions": {
+        "message": "Latest Transactions",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "blocks": {
+        "message": "Blocks",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "blocksStatistics": {
+        "message": "Blocks Statistics",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "blockList": {
+        "message": "Block List",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "mempoolModal": {
+        "message": "Mempool modal",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "blockDetails": {
+        "message": "Block Details",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "transactionsList": {
+        "message": "Transactions List",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "transactionDetails": {
+        "message": "Transaction Details",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getUsdPrice": {
+        "message": "Get usd price",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "tickets": {
+        "message": "Tickets",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "senseTickets": {
+        "message": "Sense tickets",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "cascadeTickets": {
+        "message": "Cascade tickets",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "pastelIDAndUsernameTickets": {
+        "message": "PastelID and Username Tickets",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "pastelNFTTickets": {
+        "message": "Pastel NFT Tickets",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "offerTicketsAndTransferTickets": {
+        "message": "Offer Tickets and Transfer Tickets",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "senseAndNFTCollectionTickets": {
+        "message": "Sense and NFT Collection Tickets",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "supernodes": {
+        "message": "Supernodes",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "supernodeList": {
+        "message": "Supernode List",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "richlist": {
+        "message": "Richlist",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "top100": {
+        "message": "Top 100",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getCoinSupply": {
+        "message": "Get coin supply",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "currentStatistics": {
+        "message": "Current Statistics",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "blockSizes": {
+        "message": "Block sizes",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "hashrate": {
+        "message": "Hashrate",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "volumeOfTransactions": {
+        "message": "Volume of transactions",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "incomingTransactions": {
+        "message": "Incoming transactions",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "cascadeAndSenseStatistics": {
+        "message": "Cascade and Sense Statistics",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "averageRarenessScoreOnSense": {
+        "message": "Average rareness score on Sense",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "senseRequests": {
+        "message": "Sense Requests",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "totalFingerprintsOnSense": {
+        "message": "Total fingerprints on Sense",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "averageSizeOfNFTStoredOnCascade": {
+        "message": "Average size of NFT stored on Cascade",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "cascadeRequests": {
+        "message": "Cascade Requests",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "totalDataStoredOnCascade": {
+        "message": "Total data stored on Cascade",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "addressDetails": {
+        "message": "Address Details",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "overview": {
+        "message": "Overview",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "receivedByMonth": {
+        "message": "Received Or Sent by Month",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "transactions": {
+        "message": "Transactions",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "downloadCSV": {
+        "message": "Download CSV",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "actionRegistrationTicketSense": {
+        "message": "Action Registration Ticket (Sense)",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "actionRegistrationTicketCascade": {
+        "message": "Action Registration Ticket (Cascade)",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "pastelIDDetails": {
+        "message": "PastelID Details",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getPastelIDDetail": {
+        "message": "Get PastelID detail",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "cascadeDetails": {
+        "message": "Cascade Details",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getCascadeDetail": {
+        "message": "Get cascade detail",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getTransfers": {
+        "message": "Get transfers",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getPubliclyAccessibleCascadeFileByRegistrationTicketTxid": {
+        "message": "Get Publicly Accessible Cascade File By Registration Ticket Txid",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "senseDetails": {
+        "message": "Sense Details",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getSenseDetail": {
+        "message": "Get sense detail",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "nftDetails": {
+        "message": "NFT Details",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getNFTDetails": {
+        "message": "Get NFT details",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getOffers": {
+        "message": "Get offers",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getItemActivityList": {
+        "message": "Get Item Activity list",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "collectionDetails": {
+        "message": "Collection Details",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getCollectionDetail": {
+        "message": "Get collection detail",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getCollectionItems": {
+        "message": "Get collection items",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "search": {
+        "message": "Search",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "blockchainSize": {
+        "message": "Blockchain Size",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getBlockchainSize": {
+        "message": "Get the data for the Blockchain Size and Average Transactions Per Block",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "pslBurnt": {
+        "message": "{{currency}} Burnt",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getTotalBurned": {
+        "message": "Get total burned of the Pastel Network",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "cumulativeOverallAverageBlockSize": {
+        "message": "Cumulative Overall Average Block Size",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getAverageBlockSize": {
+        "message": "Get average block size",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "networkDifficulty": {
+        "message": "Network Difficulty",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getHistoricalStatistics": {
+        "message": "Get historical statistics",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "price": {
+        "message": "{{currency}} Price ($USD and BTC)",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "hashrateChart": {
+        "message": "Hashrate(MSol/S)",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getTheDataForTheHashrate": {
+        "message": "Get the data for the Hashrate",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "mempoolSize": {
+        "message": "Mempool Size(kB)",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getMempoolInfoList": {
+        "message": "Get mempool info list",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "networkTotal": {
+        "message": "Network Total",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getNettotalsList": {
+        "message": "Get nettotals list",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "transactionCount": {
+        "message": "Transaction Count",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getDataForTheTransactionCount": {
+        "message": "Get the data for the Transaction Count",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "totalTransactionCount": {
+        "message": "Total Transaction Count",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getTotalTransactionCount": {
+        "message": "Get the data for the Total Transaction Count",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "averageTransactionFee": {
+        "message": "Average Transaction Fee (USD)",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getAverageTransactionFee": {
+        "message": "Get the data for the Average Transaction Fee",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "transactionsPerSecond": {
+        "message": "Transactions Per Second",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getTransactionPerSecond": {
+        "message": "Get transaction per second",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "transactionsInBlock": {
+        "message": "Transactions In Block",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getBlockList": {
+        "message": "Get block list",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "averageTransactionPerBlock": {
+        "message": "Average Transaction Per Block",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getAverageTransactionsPerBlock": {
+        "message": "Get the data for the Average Transactions Per Block",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "totalTransactionFees": {
+        "message": "Total Transaction Fees",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getTotalTransactionFees": {
+        "message": "Get the data for the Total Transaction Fees",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "totalTransactionsPerDay": {
+        "message": "Total Transactions Per Day",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getTotalTransactionsPerDay": {
+        "message": "Get the data for the Total Transactions Per Day",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "marketPriceAndVolume": {
+        "message": "Market Price and Volume ($USD)",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getMarketPriceAndVolume": {
+        "message": "Get the data for the Market Price and Volume",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "marketPriceAndCircCap": {
+        "message": "Market Price and Circ. Cap ($USD)",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getMarketPriceAndCircCap": {
+        "message": "Get the data for the Market Price and Circ. Cap",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "circulatingSupply": {
+        "message": "Circulating Supply ({{currency}})",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getCirculatingSupply": {
+        "message": "Get circulating supply",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "totalSupply": {
+        "message": "Total Supply ({{currency}})",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getTotalSupply": {
+        "message": "Get total supply",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "percentOfLSPStaked": {
+        "message": "% of {{currency}} Staked",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getPercentOfPSLStaked": {
+        "message": "Get percent of {{currency}} staked",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "accounts": {
+        "message": "Accounts",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getAccounts": {
+        "message": "Get accounts",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "feeSchedule": {
+        "message": "Fee Schedule",
+        "description": "Used for the ExplorerAPI component"
+      },
+      "getFeeSchedule": {
+        "message": "Get fee schedule",
+        "description": "Used for the ExplorerAPI component"
+      }
     }
   },
   "pages": {

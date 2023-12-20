@@ -1,6 +1,6 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import parse from 'html-react-parser';
 
 import RouterLink from '@components/RouterLink/RouterLink';
@@ -154,6 +154,10 @@ const Overview: React.FC<IOverviewProps> = ({
       </TableStyles.BlockWrapper>
     </BlockDetailsStyles.GridStyle>
   );
+};
+
+Overview.defaultProps = {
+  username: undefined,
 };
 
 export default Overview;

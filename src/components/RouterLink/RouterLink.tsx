@@ -1,5 +1,5 @@
-import { CSSProperties } from '@material-ui/styles';
-import Tooltip from '@material-ui/core/Tooltip';
+import { CSSProperties } from '@mui/styles';
+import Tooltip from '@mui/material/Tooltip';
 import parse from 'html-react-parser';
 
 import * as Styles from './RouterLink.styles';
@@ -12,6 +12,7 @@ interface RouterLinkProps {
   title?: string;
   className?: string;
   isUseTooltip?: boolean;
+  onClick?: () => void;
 }
 
 interface IExternalLinkProps {
@@ -66,6 +67,7 @@ const RouterLink: React.FC<RouterLinkProps> = ({
   title,
   className,
   isUseTooltip = false,
+  onClick = undefined,
 }) => {
   if (isUseTooltip && title) {
     return (
@@ -84,6 +86,7 @@ const RouterLink: React.FC<RouterLinkProps> = ({
       title={title}
       to={`${route}`}
       textsize={textSize}
+      onClick={onClick}
     >
       {value}
     </Styles.RouterLink>

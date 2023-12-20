@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { Tooltip } from '@material-ui/core';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
+import { Tooltip } from '@mui/material';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 
 import { translate } from '@utils/helpers/i18n';
 

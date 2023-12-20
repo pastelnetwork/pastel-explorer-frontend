@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';
@@ -13,14 +13,12 @@ import NFTs from './NFTs';
 
 import * as Styles from './CollectionDetails.styles';
 
-interface IParamTypes {
-  id: string;
-}
-
 const CollectionDetails = () => {
-  const { id } = useParams<IParamTypes>();
-  const { collection, isLoading } = useCollectionDetails(id);
-  const { items, isLoadingMore, totalItems, swrSetSize, swrSize } = useCollectionItems(id);
+  const { id } = useParams();
+  const { collection, isLoading } = useCollectionDetails(id as string);
+  const { items, isLoadingMore, totalItems, swrSetSize, swrSize } = useCollectionItems(
+    id as string,
+  );
 
   if (isLoading) {
     return (
@@ -45,7 +43,11 @@ const CollectionDetails = () => {
     </Styles.Wrapper>
   ) : (
     <Styles.Wrapper className="content-center-wrapper">
-      <Grid container justify="center" alignItems="center" direction="column" spacing={2}>
+      <Grid
+        container
+        sx={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}
+        spacing={2}
+      >
         <Grid item>
           <Typography component="h1" variant="h1" align="center" gutterBottom>
             {parse(translate('pages.collection.404'))}

@@ -1,7 +1,8 @@
 import { shallow } from 'enzyme';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import 'jest-styled-components';
 
+import { MyMockType } from '@utils/types/MockType';
 import i18next from '../../../utils/helpers/i18n';
 import Tickets from '../Tickets';
 import Sense from '../Sense';
@@ -34,7 +35,7 @@ jest.mock('react-i18next', () => ({
 }));
 i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
-});
+}) as MyMockType;
 
 describe('pages/Tickets', () => {
   const wrapper = shallow(<Tickets />);

@@ -4,10 +4,10 @@ import ReactECharts from 'echarts-for-react';
 import { saveAs } from 'file-saver';
 import * as htmlToImage from 'html-to-image';
 import { useSelector } from 'react-redux';
-import { Skeleton } from '@material-ui/lab';
+import Skeleton from '@mui/material/Skeleton';
 import parse from 'html-react-parser';
+import { Headers, Data } from 'react-csv/lib/core';
 
-import { Data } from 'react-csv/components/CommonPropTypes';
 import {
   makeDownloadFileName,
   generateMinMaxChartData,
@@ -228,12 +228,13 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
   };
 
   const getActiveGranularityButtonStyle = useMemo(
-    () => (granularity: string): string => {
-      if (selectedGranularityButton === granularity) {
-        return 'active';
-      }
-      return '';
-    },
+    () =>
+      (granularity: string): string => {
+        if (selectedGranularityButton === granularity) {
+          return 'active';
+        }
+        return '';
+      },
     [selectedGranularityButton],
   );
 
@@ -248,7 +249,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     const headers = csvHeaders[chartName];
     return headers.map(header => ({
       ...header,
-      label: translateDropdown(header.label),
+      label: translateDropdown(header.label as string),
     }));
   };
 
@@ -318,7 +319,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
         ) : null}
         {isLoading || !dataX?.length ? (
           <Styles.LoadingWrapper>
-            <Skeleton animation="wave" variant="rect" height={386} />
+            <Skeleton animation="wave" variant="rectangular" height={386} />
             <Styles.LoadingText>{parse(translate('common.loadingData'))}</Styles.LoadingText>
           </Styles.LoadingWrapper>
         ) : (
@@ -356,7 +357,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
           <Styles.CSVLinkButton
             data={csvData}
             filename={`${makeDownloadFileName(info.currencyName, chartName)}.csv`}
-            headers={getCsvHeaders()}
+            headers={getCsvHeaders() as Headers}
             separator=","
             ref={downloadRef}
           >

@@ -1,4 +1,4 @@
-import { Shadows } from '@material-ui/core/styles/shadows';
+import { Shadows } from '@mui/material/styles/shadows';
 
 function createShadow() {
   return `box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);`;

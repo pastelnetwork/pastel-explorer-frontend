@@ -1,7 +1,7 @@
-import { Grid } from '@material-ui/core';
-import { Alert, AlertTitle } from '@material-ui/lab';
-import Tooltip from '@material-ui/core/Tooltip';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import { Grid } from '@mui/material';
+import { Alert, AlertTitle } from '@mui/lab';
+import Tooltip from '@mui/material/Tooltip';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import parse from 'html-react-parser';
 
 import { HeaderType } from '@components/Table/Table';

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Grid } from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
+import { Grid } from '@mui/material';
+import Skeleton from '@mui/material/Skeleton';
 
 import { useUsdPrice } from '@hooks/useTransactionDetails';
 import useTickets from '@hooks/useTickets';
@@ -68,7 +68,7 @@ const Tickets: React.FC = () => {
   return (
     <Styles.TicketsContainer>
       <Grid container spacing={6}>
-        <Styles.GirdStyle item className="full">
+        <Styles.GirdStyle item className="full pb-12">
           <Styles.TicketSummaryContainer>
             {ticketsSummary.map(item => (
               <Styles.TicketSummaryBox key={item.id} to={item.link} className={item.id}>
@@ -86,14 +86,14 @@ const Tickets: React.FC = () => {
         </Styles.GirdStyle>
       </Grid>
       <Grid container spacing={6}>
-        <Styles.GirdStyle item xs={12} lg={6} className="left">
+        <Styles.GirdStyle item xs={12} lg={6} className="left pb-12">
           <Sense
             ticketsData={senseTicketData as TTicketResponse}
             innerWidth={innerWidth}
             usdPrice={usdPrice}
           />
         </Styles.GirdStyle>
-        <Styles.GirdStyle item xs={12} lg={6} className="right">
+        <Styles.GirdStyle item xs={12} lg={6} className="right pb-12">
           <Cascade
             ticketsData={cascadeTicketData as TTicketResponse}
             innerWidth={innerWidth}
@@ -102,13 +102,13 @@ const Tickets: React.FC = () => {
         </Styles.GirdStyle>
       </Grid>
       <Grid container spacing={6}>
-        <Styles.GirdStyle item xs={12} lg={6} className="left">
+        <Styles.GirdStyle item xs={12} lg={6} className="left pb-12">
           <PastelIDAndUsernameTickets
             isMobile={isMobile}
             ticketsData={pastelidUsenameTicketData as TTicketResponse}
           />
         </Styles.GirdStyle>
-        <Styles.GirdStyle item xs={12} lg={6} className="right">
+        <Styles.GirdStyle item xs={12} lg={6} className="right pb-12">
           <PastelNftTickets
             ticketsData={pastelNftTicketData as TTicketResponse}
             innerWidth={innerWidth}
@@ -117,13 +117,13 @@ const Tickets: React.FC = () => {
         </Styles.GirdStyle>
       </Grid>
       <Grid container spacing={6}>
-        <Styles.GirdStyle item xs={12} lg={6} className="left">
+        <Styles.GirdStyle item xs={12} lg={6} className="left pb-12">
           <OfferAndTransferTickets
             innerWidth={innerWidth}
             ticketsData={offerTransferTicketData as TTicketResponse}
           />
         </Styles.GirdStyle>
-        <Styles.GirdStyle item xs={12} lg={6} className="right">
+        <Styles.GirdStyle item xs={12} lg={6} className="right pb-12">
           <MiscOtherTicketTypes
             ticketsData={otherTicketData as TTicketResponse}
             innerWidth={innerWidth}

@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
-import { ThemeProps } from 'styled-components/macro';
-import { SpacingProps } from '@material-ui/system';
-import { Theme } from '@material-ui/core';
+import { SpacingProps } from '@mui/system';
+import { Theme } from '@mui/material';
 
 export type GlobalStyleProps = {
-  theme: ThemeProps<Theme> & { palette: any };
+  theme: Theme & { palette: any };
 };
 
 export interface MuiButtonSpacingType extends SpacingProps {

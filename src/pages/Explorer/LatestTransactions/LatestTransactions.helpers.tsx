@@ -1,4 +1,4 @@
-import { Tooltip, Grid } from '@material-ui/core';
+import { Tooltip, Grid } from '@mui/material';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import CopyButton from '@components/CopyButton/CopyButton';

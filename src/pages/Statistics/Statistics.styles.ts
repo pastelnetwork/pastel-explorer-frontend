@@ -1,6 +1,6 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
-import { Grid, darken } from '@material-ui/core';
+import { Grid, darken } from '@mui/material';
 
 import themeVariant from '@theme/variants';
 
@@ -39,11 +39,15 @@ export const BlockWrapper = styled.div`
   border-radius: 10px;
   overflow: hidden;
 
+  .p-16 {
+    padding: 16px;
+  }
+
   &.no-shadow {
     box-shadow: none;
   }
 
-  .cascade-sense-card {
+  .statistics-card {
     .echarts-for-react {
       height: 280px !important;
     }
@@ -94,7 +98,7 @@ export const ChartWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
 
-  .cascade-sense-card {
+  .statistics-card {
     width: calc(50% - 8px);
     margin-right: 16px;
     margin-bottom: 16px;
@@ -108,10 +112,14 @@ export const ChartWrapper = styled.div`
       margin-right: 0;
     }
 
-    ${props => props.theme.breakpoints.down('xs')} {
+    ${props => props.theme.breakpoints.down('sm')} {
       width: 100%;
       margin-right: 0;
       margin-left: 0;
+
+      &:nth-child(3) {
+        margin-right: 0;
+      }
     }
   }
 `;

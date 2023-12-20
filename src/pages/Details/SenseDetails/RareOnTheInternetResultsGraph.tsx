@@ -40,7 +40,7 @@ const RareOnTheInternetResultsGraph: React.FC<IRareOnTheInternetResultsGraph> = 
             const values2 = Object.values(internetRarenessGraphData[keys[i]]) as TCurrentNode[];
             for (let j = 0; j < keys2.length; j += 1) {
               const current_node: TCurrentNode = values2[j];
-              const current_node_size = 0.9 ** (current_node?.search_result_ranking + 1) * 15;
+              const current_node_size = 0.9 ** (current_node?.search_result_ranking || 0 + 1) * 15;
               current_node.node_size = current_node_size;
               internetRarenessGraphData.nodes[keys2[j]] = current_node;
             }

@@ -1,8 +1,8 @@
 import parse from 'html-react-parser';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
 
 import { Link } from '@components/Link/Link.styles';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';

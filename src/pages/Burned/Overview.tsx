@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Skeleton } from '@material-ui/lab';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
+import Skeleton from '@mui/material/Skeleton';
+import CircularProgress from '@mui/material/CircularProgress';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import parse from 'html-react-parser';
 
 import { LineChart } from '@components/Summary/LineChart';
@@ -168,9 +168,9 @@ const Summary = () => {
   };
 
   return (
-    <>
+    <div>
       <TableStyles.BlockWrapper className="address-wrapper">
-        <TableStyles.Card>
+        <TableStyles.StyledCard>
           <AddressDetailsStyles.Heading className="direction-item">
             <AddressDetailsStyles.HeadingTitle>
               {parse(translate('pages.burned.title', { currency: getCurrencyName() }))}
@@ -247,9 +247,9 @@ const Summary = () => {
               )}
             </AddressDetailsStyles.ChartWrapper>
           </AddressDetailsStyles.ChartWrapper>
-        </TableStyles.Card>
+        </TableStyles.StyledCard>
       </TableStyles.BlockWrapper>
-    </>
+    </div>
   );
 };
 

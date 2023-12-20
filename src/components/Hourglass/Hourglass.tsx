@@ -1,4 +1,4 @@
-import { Tooltip } from '@material-ui/core';
+import { Tooltip } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import { getThemeState } from '@redux/reducers/appThemeReducer';

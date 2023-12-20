@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Snackbar from '@material-ui/core/Snackbar';
-import Alert, { AlertProps } from '@material-ui/lab/Alert';
+import Snackbar from '@mui/material/Snackbar';
+import Alert, { AlertProps } from '@mui/material/Alert';
 
 import * as Styles from './Alert.styles';
 
@@ -45,3 +45,12 @@ const AlertComponent: React.FC<AlertComponentProps> = ({
 };
 
 export default AlertComponent;
+
+AlertComponent.defaultProps = {
+  severity: 'success',
+  autoHideDuration: 4000,
+  message: '',
+  title: '',
+  outsideClickClose: true,
+  onClose: () => {},
+};

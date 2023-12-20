@@ -1,17 +1,13 @@
 import { useEffect, useState } from 'react';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
-import DateFnsUtils from '@date-io/date-fns';
 import { H } from 'highlight.run';
-
-import { ThemeProvider } from 'styled-components/macro';
+import jssPreset from 'jss-preset-default';
+import { ThemeProvider } from 'styled-components';
 import { create } from 'jss';
-
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import {
-  StylesProvider,
-  ThemeProvider as MuiThemeProvider,
-  jssPreset,
-} from '@material-ui/core/styles';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { ThemeProvider as MuiThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import { StylesProvider } from '@mui/styles';
 
 import ErrorHandler from '@pages/ErrorHandler/ErrorHandler';
 import ResponseErrorAlert from '@components/ResponseErrorAlert/ResponseErrorAlert';
@@ -36,11 +32,6 @@ import * as Styles from './App.styles';
 
 import './global.styles.css';
 
-const jss = create({
-  ...jssPreset(),
-  insertionPoint: document.getElementById('jss-insertion-point') as HTMLElement,
-});
-
 H.init(process.env.REACT_APP_EXPLORER_HIGHLIGHT_PROJECT_ID, {
   tracingOrigins: true,
   networkRecording: {
@@ -52,6 +43,11 @@ H.init(process.env.REACT_APP_EXPLORER_HIGHLIGHT_PROJECT_ID, {
       'https://fonts.googleapis.com',
     ],
   },
+});
+
+const jss = create({
+  ...jssPreset(),
+  insertionPoint: document.getElementById('jss-insertion-point') as HTMLElement,
 });
 
 const App: React.FC = () => {
@@ -97,19 +93,21 @@ const App: React.FC = () => {
     <HelmetProvider>
       <Helmet titleTemplate="%s | Pastel Explorer" defaultTitle="Pastel Explorer" />
       <SocketContext.Provider value={socket}>
-        <StylesProvider jss={jss}>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <MuiThemeProvider theme={isDarkMode ? themeDark : themeLight}>
-              <ThemeProvider theme={isDarkMode ? themeDark : themeLight}>
-                <ErrorHandler>
-                  <Routes />
-                  <ResponseErrorAlert />
-                </ErrorHandler>
-                <InfoDrawer />
-              </ThemeProvider>
-            </MuiThemeProvider>
-          </MuiPickersUtilsProvider>
-        </StylesProvider>
+        <StyledEngineProvider injectFirst>
+          <StylesProvider jss={jss}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <MuiThemeProvider theme={isDarkMode ? themeDark : themeLight}>
+                <ThemeProvider theme={isDarkMode ? themeDark : themeLight}>
+                  <ErrorHandler>
+                    <Routes />
+                    <ResponseErrorAlert />
+                  </ErrorHandler>
+                  <InfoDrawer />
+                </ThemeProvider>
+              </MuiThemeProvider>
+            </LocalizationProvider>
+          </StylesProvider>
+        </StyledEngineProvider>
       </SocketContext.Provider>
     </HelmetProvider>
   );

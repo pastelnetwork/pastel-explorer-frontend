@@ -1,23 +1,23 @@
 // React
 import { memo, useEffect, useState } from 'react';
 // third party
-import { Tooltip } from '@material-ui/core';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Skeleton from '@material-ui/lab/Skeleton';
-import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
-import Grid from '@material-ui/core/Grid';
+import { Tooltip } from '@mui/material';
+import { withStyles, makeStyles } from '@mui/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import Skeleton from '@mui/material/Skeleton';
+import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
+import Grid from '@mui/material/Grid';
 import { useDispatch } from 'react-redux';
 import parse from 'html-react-parser';
-import IconButton from '@material-ui/core/IconButton';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import IconButton from '@mui/material/IconButton';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 // application
 import { TAppTheme } from '@theme/index';
 import RouterLink from '@components/RouterLink/RouterLink';
@@ -153,7 +153,7 @@ function LatestTransactions() {
                             <Hourglass />
                           </BlockStyles.HourglassWrapper>
                         ) : (
-                          <>
+                          <div>
                             {ticketsTypeList.total > 0 ? (
                               <RouterLink
                                 route={`${TRANSACTION_DETAILS}/${tx.id}`}
@@ -165,7 +165,7 @@ function LatestTransactions() {
                             ) : (
                               0
                             )}
-                          </>
+                          </div>
                         )}
                       </StyledTableCell>
                       <StyledTableCell align="right">{tx.fee || '--'}</StyledTableCell>
@@ -175,7 +175,7 @@ function LatestTransactions() {
               ) : (
                 <StyledTableRow>
                   <StyledTableCell component="th" scope="row" colSpan={6} style={{ padding: 0 }}>
-                    <Skeleton animation="wave" variant="rect" height={150} />
+                    <Skeleton animation="wave" variant="rectangular" height={150} />
                   </StyledTableCell>
                 </StyledTableRow>
               )}

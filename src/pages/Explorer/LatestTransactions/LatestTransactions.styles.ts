@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Typography as MuiTypography } from '@material-ui/core';
+import { Typography as MuiTypography } from '@mui/material';
 
 import { getCurrencyName } from '@utils/appInfo';
 

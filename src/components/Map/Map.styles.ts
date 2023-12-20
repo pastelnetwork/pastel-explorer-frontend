@@ -1,6 +1,6 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
-import { Card as MuiCard, CardContent as MuiCardContent } from '@material-ui/core';
+import { Card as MuiCard, CardContent as MuiCardContent } from '@mui/material';
 
 export const MapContainer = styled.div`
   height: 340px;
@@ -26,6 +26,6 @@ export const Card = styled(MuiCard)`
 export const CardContent = styled(MuiCardContent)`
   &:last-child {
     padding-top: 0;
-    padding-bottom: ${props => props.theme.spacing(4)}px;
+    padding-bottom: 16px;
   }
 `;

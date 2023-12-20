@@ -16,7 +16,10 @@ const initialState: IBlockState = {
   timestamp: null,
 };
 
-const reducer = (state: IBlockState = initialState, actions: BlocksActionsTypes) => {
+const reducer = (state: IBlockState, actions: BlocksActionsTypes) => {
+  if (typeof state === 'undefined') {
+    return initialState;
+  }
   switch (actions.type) {
     case types.SET_LOADING_BLOCK:
       return { ...state, isLoading: true };

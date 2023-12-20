@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@mui/styles';
 
 import useBlockStatistics from '@hooks/useBlockStatistics';
 import { TAppTheme } from '@theme/index';
@@ -13,9 +13,9 @@ import * as Styles from './Statistics.styles';
 
 const useStyles = makeStyles((theme: TAppTheme) => ({
   blockSpace: {
-    marginBottom: `${theme.spacing(4)}px`,
+    marginBottom: `16px`,
     [theme.breakpoints.down('sm')]: {
-      marginBottom: `${theme.spacing(2)}px`,
+      marginBottom: `8px`,
     },
   },
 }));

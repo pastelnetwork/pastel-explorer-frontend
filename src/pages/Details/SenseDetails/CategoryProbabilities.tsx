@@ -114,8 +114,8 @@ const CategoryProbabilities: React.FC<ICategoryProbabilities> = ({ data }) => {
             <div class="tooltip-label">${params[0].axisValue}</div>
             <div class="tooltip-value">
               ${params[0].marker} ${parse(translate('pages.senseDetails.nsfwScores'))}: ${
-          params[0].value
-        }
+                params[0].value
+              }
             </div>
           </div>
         `;

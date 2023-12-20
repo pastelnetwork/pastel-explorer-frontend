@@ -1,7 +1,8 @@
-import { useState, ChangeEvent, useEffect } from 'react';
-import { Skeleton } from '@material-ui/lab';
+import { useState, useEffect } from 'react';
+import Skeleton from '@mui/material/Skeleton';
 import { format, fromUnixTime } from 'date-fns';
 import parse from 'html-react-parser';
+import { SelectChangeEvent } from '@mui/material/Select';
 
 import { PeriodTypes, generatePeriodToDropdownOptions } from '@utils/helpers/statisticsLib';
 import { periods, cacheList } from '@utils/constants/statistics';
@@ -84,18 +85,14 @@ const BlockSizes: React.FC<IBlockSizes> = ({ blockElements }) => {
     }
   }, [period, blockSizesData.isLoading]);
 
-  const handleDropdownChange = (
-    event: ChangeEvent<{
-      value: unknown;
-    }>,
-  ) => {
+  const handleDropdownChange = (event: SelectChangeEvent) => {
     if (event.target.value) {
       setPeriod(event.target.value as PeriodTypes);
     }
   };
 
   return (
-    <SummaryStyles.Card className="cascade-sense-card">
+    <SummaryStyles.Card className="statistics-card">
       <SummaryStyles.CardContent>
         <SummaryStyles.ValueWrapper>
           <SummaryStyles.Typography variant="h6">
@@ -109,6 +106,7 @@ const BlockSizes: React.FC<IBlockSizes> = ({ blockElements }) => {
               onChange={handleDropdownChange}
               options={generatePeriodToDropdownOptions(periods[2])}
               classNameWrapper="cascade-sense-statistics"
+              showFieldset={false}
             />
           </Styles.Percentage>
         </SummaryStyles.PercentageWrapper>
@@ -123,7 +121,7 @@ const BlockSizes: React.FC<IBlockSizes> = ({ blockElements }) => {
         ) : null}
         {!chartData ? (
           <>
-            <Skeleton animation="wave" variant="rect" height={300} />
+            <Skeleton animation="wave" variant="rectangular" height={300} />
             <StatisticsStyles.LoadingText>
               {parse(translate('common.loadingData'))}
             </StatisticsStyles.LoadingText>

@@ -1,8 +1,9 @@
 import { shallow } from 'enzyme';
-import { Skeleton } from '@material-ui/lab';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import Skeleton from '@mui/material/Skeleton';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import 'jest-styled-components';
 
+import { MyMockType } from '@utils/types/MockType';
 import { Dropdown } from '../../Dropdown/Dropdown';
 import i18next from '../../../utils/helpers/i18n';
 import { CHART_THEME_BACKGROUND_DEFAULT_COLOR } from '../../../utils/constants/statistics';
@@ -31,7 +32,7 @@ jest.mock('react-i18next', () => ({
 }));
 i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
-});
+}) as MyMockType;
 
 describe('components/HistoricalStatisticsLayout', () => {
   const wrapper = shallow(
