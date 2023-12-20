@@ -696,6 +696,12 @@ export const FullImageWrapper = styled.div`
   height: 100%;
   max-height: 95vh;
   overflow: hidden;
+
+  img {
+    &.svg {
+      height: 95vh;
+    }
+  }
 `;
 
 export const Dialog = styled(MuiDialog)`
