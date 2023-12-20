@@ -58,7 +58,6 @@ const CascadeDetails = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const txid = getParameterByName('txid');
   const { cascadeData, isLoading } = useCascadeDetails(txid);
-  const [videoFile, setVideoFile] = useState('');
 
   const handleReloadPage = (e: BeforeUnloadEvent) => {
     if (status === 'downloading') {
@@ -102,25 +101,6 @@ const CascadeDetails = () => {
       currentOwnerPastelID: cascadeData.currentOwnerPastelID,
     };
   };
-
-  const downloadFile = async () => {
-    if (txid) {
-      const url = `${process.env.REACT_APP_EXPLORER_OPENNODE_API_URL}/get_publicly_accessible_cascade_file_by_registration_ticket_txid/${txid}`;
-      axiosInstance
-        .get(url, { responseType: 'blob' })
-        .then(res => {
-          const fileType = getCascadeInfo()?.file_type;
-          setVideoFile(URL.createObjectURL(new Blob([res.data], { type: fileType })));
-        })
-        .catch(() => {
-          setStatus('error');
-        });
-    }
-  };
-
-  useEffect(() => {
-    downloadFile();
-  }, []);
 
   if (isLoading) {
     return (
@@ -204,16 +184,6 @@ const CascadeDetails = () => {
           >
             <FileInfo data={getCascadeInfo()} />
           </BlockItemLayout>
-          <div>
-            {videoFile ? (
-              // eslint-disable-next-line jsx-a11y/media-has-caption
-              <video width="320" height="240" controls>
-                <source src={videoFile} type="video/mp4" />
-                <source src={videoFile} type="video/quicktime" />
-                Your browser does not support the video tag.
-              </video>
-            ) : null}
-          </div>
           <BlockItemLayout
             title={parse(translate('pages.cascade.transfers'))}
             childrenClassName="no-spacing"
