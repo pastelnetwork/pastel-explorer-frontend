@@ -227,6 +227,7 @@ const TransactionDetails = () => {
               senses={senses}
               showActivationTicket
               variant="transaction"
+              isShowCascade
             />
           </Styles.GridStyle>
         ) : null}

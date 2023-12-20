@@ -1838,6 +1838,14 @@
       "type": {
         "message": "Type",
         "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "videoNotSupport": {
+        "message": "Your browser does not support the video tag.",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "audioNotSupport": {
+        "message": "Your browser does not support the audio element.",
+        "description": "Used for the CascadeAndSenseStatistics page"
       }
     },
     "pastelIdDetails": {

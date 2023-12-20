@@ -239,3 +239,18 @@ export const GridStyle = styled(Grid)`
     }
   }
 `;
+
+export const VideoWrapper = styled.button`
+  height: 128px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  border: 0;
+  background: transparent;
+
+  video,
+  img {
+    height: 100%;
+    width: auto;
+  }
+`;

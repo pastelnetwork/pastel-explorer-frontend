@@ -43,7 +43,7 @@ export const readCacheValue = (key: string, isMicroseconds = false) => {
     }
     return initialValue;
   } catch (error) {
-    console.warn(`Error reading localStorage key “${key}”:`, error);
+    console.warn(`Error reading localStorage key “${key}”: ${(error as Error)?.message}`);
     return initialValue;
   }
 };
@@ -81,7 +81,7 @@ export const setCacheValue = (key: string, value: string) => {
     window.localStorage.setItem(CLUSTER_URL_LOCAL_STORAGE, clusterUrl);
     return true;
   } catch (error) {
-    console.warn(`Error setting localStorage key “${key}”:`, error);
+    console.warn(`Error setting localStorage key “${key}”: ${(error as Error)?.message}`);
     return false;
   }
 };
