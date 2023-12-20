@@ -700,6 +700,19 @@ export const FullImageWrapper = styled.div`
   img {
     &.svg {
       height: 95vh;
+
+      @media screen and (max-width: 1024px) {
+        height: auto;
+        width: 95vw;
+      }
+    }
+  }
+
+  video,
+  audio {
+    @media screen and (max-width: 1024px) {
+      height: auto;
+      width: 95vw;
     }
   }
 `;
@@ -711,6 +724,7 @@ export const Dialog = styled(MuiDialog)`
 
     img {
       max-height: 95vh;
+      max-width: 100%;
     }
   }
 `;

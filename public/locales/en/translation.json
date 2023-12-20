@@ -1846,6 +1846,14 @@
       "audioNotSupport": {
         "message": "Your browser does not support the audio element.",
         "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "file": {
+        "message": "File:",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "viewFull": {
+        "message": "View full",
+        "description": "Used for the CascadeAndSenseStatistics page"
       }
     },
     "pastelIdDetails": {
