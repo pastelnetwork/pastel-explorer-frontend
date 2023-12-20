@@ -168,7 +168,16 @@ const CascadeItem = ({
       <TicketStyles.TicketContent>
         {fileContent ? (
           <>
-            <Styles.VideoWrapper onClick={handleClickOpen}>{getFileContent()}</Styles.VideoWrapper>
+            <Styles.VideoWrapper className="video">
+              <Box className="main-content">{getFileContent()}</Box>
+              <Box className="view-full">
+                (
+                <Styles.ViewFullButton onClick={handleClickOpen}>
+                  {parse(translate('pages.blockDetails.viewFull'))}
+                </Styles.ViewFullButton>
+                )
+              </Box>
+            </Styles.VideoWrapper>
             <SenseStyles.Dialog onClose={handleClose} open={open}>
               <SenseStyles.FullImageWrapper>{getFileContent()}</SenseStyles.FullImageWrapper>
             </SenseStyles.Dialog>
@@ -248,7 +257,9 @@ const TicketsList: React.FC<ITicketsList> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <TicketStyles.TicketTitle>
-              {parse(translate('pages.blockDetails.cascadeFileType'))}
+              {isShowCascade
+                ? parse(translate('pages.blockDetails.file'))
+                : parse(translate('pages.blockDetails.cascadeFileType'))}
             </TicketStyles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
