@@ -151,8 +151,8 @@ const CascadeItem = ({
     ) {
       return (
         <audio controls muted autoPlay>
-          <source src="horse.ogg" type="audio/ogg" />
-          <source src="horse.mp3" type="audio/mpeg" />
+          <source src={fileContent} type="audio/ogg" />
+          <source src={fileContent} type="audio/mpeg" />
           {parse(translate('pages.blockDetails.audioNotSupport'))}
         </audio>
       );
