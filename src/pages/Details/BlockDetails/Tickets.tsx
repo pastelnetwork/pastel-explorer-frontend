@@ -169,7 +169,9 @@ const CascadeItem = ({
         {fileContent ? (
           <>
             <Styles.VideoWrapper className="video">
-              <Box className="main-content">{getFileContent()}</Box>
+              <Box className={`main-content ${AUDIO_FILE_TYPE.includes(file_type) ? 'audio' : ''}`}>
+                {getFileContent()}
+              </Box>
               <Box className="view-full">
                 (
                 <Styles.ViewFullButton onClick={handleClickOpen}>

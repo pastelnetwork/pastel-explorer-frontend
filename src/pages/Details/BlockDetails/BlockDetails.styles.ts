@@ -251,6 +251,12 @@ export const VideoWrapper = styled.div`
     background: transparent;
   }
 
+  .main-content {
+    &.audio {
+      height: 60px;
+    }
+  }
+
   &.video {
     flex-direction: column;
     align-items: flex-start;
@@ -267,6 +273,15 @@ export const VideoWrapper = styled.div`
     height: 100%;
     width: auto;
     max-width: 100%;
+  }
+
+  audio {
+    height: 60px;
+    width: 500px;
+
+    @media screen and (max-width: 1024px) {
+      width: 55vw;
+    }
   }
 `;
 
