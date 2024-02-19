@@ -59,7 +59,7 @@ const SupernodeStatistics: React.FC<SupernodeStatisticsProps> = ({ link = '' }) 
   }
 
   return (
-    <ExplorerMapStyles.Container>
+    <ExplorerMapStyles.Container className="supernode-statistics">
       <DoughnutChart
         title={parse(translate('pages.explorer.supernodeStatistics'))}
         innerTitle={parse(translate('pages.explorer.total'))}
