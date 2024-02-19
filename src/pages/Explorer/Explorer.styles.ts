@@ -18,6 +18,19 @@ export const ExplorerWrapper = styled.div`
   .copy-icon {
     margin-left: 0;
   }
+
+  .supernode-statistics {
+    &,
+    & > .MuiPaper-root {
+      overflow: unset;
+    }
+
+    & > .MuiPaper-root {
+      h4 {
+        border-radius: 6px 6px 0 0;
+      }
+    }
+  }
 `;
 
 export const Gird = styled.div`
