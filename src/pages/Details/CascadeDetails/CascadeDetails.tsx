@@ -73,16 +73,6 @@ const CascadeDetails = () => {
     };
   }, [status]);
 
-  if (isLoading) {
-    return (
-      <TransactionStyles.LoadingWrapper>
-        <TransactionStyles.Loader>
-          <CircularProgress size={40} />
-        </TransactionStyles.Loader>
-      </TransactionStyles.LoadingWrapper>
-    );
-  }
-
   const decodeApiTicket = (apiTicket: string) => {
     let data = null;
     try {
@@ -111,6 +101,16 @@ const CascadeDetails = () => {
       currentOwnerPastelID: cascadeData.currentOwnerPastelID,
     };
   };
+
+  if (isLoading) {
+    return (
+      <TransactionStyles.LoadingWrapper>
+        <TransactionStyles.Loader>
+          <CircularProgress size={40} />
+        </TransactionStyles.Loader>
+      </TransactionStyles.LoadingWrapper>
+    );
+  }
 
   const handleDownloadFile = () => {
     const fileType = getCascadeInfo()?.file_type;

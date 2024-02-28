@@ -20,7 +20,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "preserveSymlinks": false,
+    "preserveSymlinks": false
   },
   "typeRoots": [
     "src/types"

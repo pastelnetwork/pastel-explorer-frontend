@@ -239,3 +239,65 @@ export const GridStyle = styled(Grid)`
     }
   }
 `;
+
+export const VideoWrapper = styled.div`
+  &,
+  .main-content {
+    height: 128px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    border: 0;
+    background: transparent;
+  }
+
+  .main-content {
+    &.audio {
+      height: 60px;
+    }
+  }
+
+  &.video {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+  }
+
+  .view-full {
+    text-align: center;
+  }
+
+  video,
+  img,
+  audio {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+  }
+
+  audio {
+    height: 60px;
+    width: 500px;
+
+    @media screen and (max-width: 1024px) {
+      width: 55vw;
+    }
+  }
+`;
+
+export const ViewFullButton = styled.button`
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: ${props => props.theme.link.main};
+  cursor: pointer;
+
+  &:hover {
+    color: ${props => props.theme.link.hover};
+  }
+
+  &:active {
+    color: ${props => props.theme.link.pressed};
+  }
+`;
