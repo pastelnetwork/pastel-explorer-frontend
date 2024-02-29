@@ -75,6 +75,7 @@ interface IInfinityTableComponentProps {
     endDate: number | null;
   };
   showLess?: boolean;
+  customFilter?: React.ReactNode;
 }
 
 type ITableCellRendererProps = TableCellProps & { dataTitle?: string };
@@ -143,6 +144,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   showDateTimePicker = false,
   dateRange,
   showLess = false,
+  customFilter = null,
 }) => {
   const [loading, setLoading] = React.useState(false);
   const isDarkMode = useGetThemeMode();
@@ -207,6 +209,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
             dropdownLabel={dropdownLabel}
             showDateTimePicker={showDateTimePicker}
             defaultDateRange={dateRange}
+            customFilter={customFilter}
           />
         )}
       </div>
@@ -296,6 +299,7 @@ InfinityTableComponent.defaultProps = {
   showDateTimePicker: false,
   dateRange: undefined,
   showLess: false,
+  customFilter: null,
 };
 
 export default InfinityTableComponent;
