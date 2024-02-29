@@ -58,6 +58,7 @@ interface IProps {
     startDate: number;
     endDate: number | null;
   };
+  customFilter?: React.ReactNode;
 }
 
 const MenuProps = {
@@ -76,6 +77,7 @@ const Filters: FC<IProps> = ({
   dropdownLabel,
   showDateTimePicker = false,
   defaultDateRange,
+  customFilter = null,
 }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -189,7 +191,7 @@ const Filters: FC<IProps> = ({
   };
 
   return (
-    <Styles.Wrapper className={headerBackground ? 'background' : ''}>
+    <Styles.Wrapper className={`filter-wrapper ${headerBackground ? 'background' : ''}`}>
       <h4>{title}</h4>
       <Styles.FilterWrapper>
         {renderDropdownCheckbox()}
@@ -225,6 +227,7 @@ const Filters: FC<IProps> = ({
             </MenuItem>
           ) : null}
         </div>
+        {customFilter}
       </Styles.FilterWrapper>
     </Styles.Wrapper>
   );
@@ -236,6 +239,7 @@ Filters.defaultProps = {
   dropdownLabel: undefined,
   showDateTimePicker: undefined,
   defaultDateRange: undefined,
+  customFilter: null,
 };
 
 export default memo<IProps>(Filters);

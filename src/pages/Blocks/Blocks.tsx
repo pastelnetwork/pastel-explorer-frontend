@@ -14,9 +14,15 @@ import { translate, translateDropdown } from '@utils/helpers/i18n';
 import { getSubHours } from '@utils/helpers/date/date';
 import BlockStatistics from '@pages/Statistics/BlockStatistics/BlockStatistics';
 import useBlockStatistics from '@hooks/useBlockStatistics';
+import * as ChartStyles from '@pages/HistoricalStatistics/Chart/Chart.styles';
 
-import { columns } from './Blocks.columns';
-import { transformTableData, DATA_DEFAULT_SORT, DATA_FETCH_LIMIT } from './Blocks.helpers';
+import { columns, csvHeader } from './Blocks.columns';
+import {
+  transformTableData,
+  DATA_DEFAULT_SORT,
+  DATA_FETCH_LIMIT,
+  getCsvData,
+} from './Blocks.helpers';
 import * as Styles from './Blocks.styles';
 
 interface IBlocksDataRef {
@@ -119,6 +125,29 @@ const Blocks = () => {
     </Styles.TitleWrapper>
   );
 
+  const getCsvHeaders = () => {
+    return csvHeader.map(header => ({
+      ...header,
+      label: translateDropdown(header.label as string),
+    }));
+  };
+
+  const renderDownloadCsv = () => {
+    return (
+      <div className="csv-wrapper">
+        <ChartStyles.CSVLinkButton
+          data={getCsvData(swrData || [])}
+          filename="Block-List.csv"
+          headers={getCsvHeaders()}
+          separator=","
+          className={isLoading ? 'disable-download-csv' : ''}
+        >
+          {parse(translate('pages.historicalStatistics.downloadCSV'))}
+        </ChartStyles.CSVLinkButton>
+      </div>
+    );
+  };
+
   return (
     <Styles.TableContainer item>
       <Styles.BlockStatistics>
@@ -142,6 +171,7 @@ const Blocks = () => {
         customLoading={isLoading}
         showDateTimePicker
         dateRange={filter.customDateRange}
+        customFilter={renderDownloadCsv()}
       />
     </Styles.TableContainer>
   );

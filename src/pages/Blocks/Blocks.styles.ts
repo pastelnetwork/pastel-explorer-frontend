@@ -24,10 +24,23 @@ export const TableContainer = styled(Grid)`
     white-space: nowrap;
   }
 
+  .disable-download-csv {
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
   ${props => props.theme.breakpoints.down(1024)} {
     .ReactVirtualized__Grid,
     .ReactVirtualized__Table__headerRow {
       min-width: unset;
+    }
+
+    .filter-wrapper > div {
+      flex-wrap: wrap;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-end;
+      gap: 12px;
     }
   }
 
@@ -68,6 +81,16 @@ export const TableContainer = styled(Grid)`
           font-size: 16px;
           color: ${props => props.theme.table.label};
         }
+      }
+    }
+  }
+
+  ${props => props.theme.breakpoints.down(680)} {
+    .filter-wrapper {
+      flex-direction: column;
+
+      & > div {
+        align-items: center;
       }
     }
   }
