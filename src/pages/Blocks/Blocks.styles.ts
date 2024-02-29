@@ -24,6 +24,10 @@ export const TableContainer = styled(Grid)`
     white-space: nowrap;
   }
 
+  .csv-wrapper {
+    display: inline-flex;
+  }
+
   .disable-download-csv {
     cursor: not-allowed;
     pointer-events: none;

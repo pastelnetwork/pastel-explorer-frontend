@@ -1,4 +1,4 @@
-import { differenceInMinutes } from 'date-fns';
+import { differenceInSeconds } from 'date-fns';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import Hourglass from '@components/Hourglass/Hourglass';
@@ -30,24 +30,22 @@ export const DATA_OFFSET = 0;
 export const DATA_DEFAULT_SORT = 'DESC';
 
 const getDifferenceInMinutes = (startDate: number, endDate: number, variant = '') => {
-  const diff = differenceInMinutes(endDate, startDate);
+  const diff = parseFloat((differenceInSeconds(endDate, startDate) / 60).toFixed(1));
   if (variant === 'text') {
-    return `${
-      diff < 10 ? `0${diff}` : diff
-    } translate(diff <= 1 ? 'pages.blocks.minute' : 'pages.blocks.minutes')}`;
+    return `${diff} ${translate(diff === 1 ? 'pages.blocks.minute' : 'pages.blocks.minutes')}`;
   }
 
   return (
     <>
-      {diff < 10 ? `0${diff}` : diff}{' '}
-      {translate(diff <= 1 ? 'pages.blocks.minute' : 'pages.blocks.minutes')}
+      {diff} {translate(diff === 1 ? 'pages.blocks.minute' : 'pages.blocks.minutes')}
     </>
   );
 };
 
-export const transformTableData = (transactions: Array<IBlock>, isMobile: boolean) =>
-  transactions.map(
-    ({ id, timestamp, transactionCount, height, ticketsList, size, totalTickets }, index) => {
+export const transformTableData = (transactions: Array<IBlock>) =>
+  transactions
+    .slice(0, transactions.length - 1)
+    .map(({ id, timestamp, transactionCount, height, ticketsList, size, totalTickets }, index) => {
       const ticketsTypeList = getTicketsTypeList(ticketsList || '');
       return {
         id,
@@ -66,7 +64,7 @@ export const transformTableData = (transactions: Array<IBlock>, isMobile: boolea
           <RouterLink
             className="hash-link"
             route={`${ROUTES.BLOCK_DETAILS}/${id}`}
-            value={isMobile ? formatAddress(id) : id}
+            value={formatAddress(id, 20, -6)}
             title={id}
           />
         ),
@@ -121,8 +119,7 @@ export const transformTableData = (transactions: Array<IBlock>, isMobile: boolea
           <div className="timestamp">{formattedDate(timestamp, { dayName: false })}</div>
         ),
       };
-    },
-  );
+    });
 
 const getTotalTicket = (height: number, totalTickets: number, ticketsList: string) => {
   if (height < HIDE_TO_BLOCK) {
@@ -139,8 +136,9 @@ const getTotalTicket = (height: number, totalTickets: number, ticketsList: strin
 };
 
 export const getCsvData = (blocks: Array<IBlock>) => {
-  return blocks.map(
-    ({ id, timestamp, transactionCount, height, ticketsList, size, totalTickets }, index) => ({
+  return blocks
+    .slice(0, blocks.length - 1)
+    .map(({ id, timestamp, transactionCount, height, ticketsList, size, totalTickets }, index) => ({
       [BLOCK_ID_KEY]: height,
       [BLOCK_HASH]: id,
       [TRANSACTIONS_QTY_KEY]: transactionCount,
@@ -154,6 +152,5 @@ export const getCsvData = (blocks: Array<IBlock>) => {
           )
         : `0 ${translate('pages.blocks.minutes')}`,
       [TIMESTAMP_BLOCKS_KEY]: formattedDate(timestamp, { dayName: false }),
-    }),
-  );
+    }));
 };
