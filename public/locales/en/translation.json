@@ -1850,6 +1850,22 @@
       "type": {
         "message": "Type",
         "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "videoNotSupport": {
+        "message": "Your browser does not support the video tag.",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "audioNotSupport": {
+        "message": "Your browser does not support the audio element.",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "file": {
+        "message": "File:",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "viewFull": {
+        "message": "View full",
+        "description": "Used for the CascadeAndSenseStatistics page"
       }
     },
     "pastelIdDetails": {
@@ -3801,6 +3817,32 @@
         "message": "View NFT Raw Data",
         "description": "Used for the NFT Details page"
       }
+    },
+    "senseMap": {
+      "pageTitle": {
+        "message": "Sense Map",
+        "description": "Used for the Sense Map page"
+      },
+      "density": {
+        "message": "Density",
+        "description": "Used for the Sense Map page"
+      },
+      "linkStrength": {
+        "message": "Link Strength",
+        "description": "Used for the Sense Map page"
+      },
+      "clustering": {
+        "message": "Clustering",
+        "description": "Used for the Sense Map page"
+      },
+      "nodeImportance": {
+        "message": "Node Importance",
+        "description": "Used for the Sense Map page"
+      },
+      "scaleExponent": {
+        "message": "Scale Exponent",
+        "description": "Used for the Sense Map page"
+      }
     }
   },
   "routes": {
@@ -3998,6 +4040,10 @@
     },
     "feeSchedule": {
       "message": "Fee Schedule",
+      "description": "Used for the routes"
+    },
+    "senseMap": {
+      "message": "Sense Map",
       "description": "Used for the routes"
     },
     "pslBurnt": {
