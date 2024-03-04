@@ -48,6 +48,7 @@ export const updateBlocksNewest: (_block: IRawBlock) => AppThunk<Promise<void>> 
       tickets: block.tickets,
       ticketsList: block.ticketsList,
       senses: block.senses,
+      type: block.type,
     });
     let i = 1;
     prevBlocks?.forEach((value, key) => {

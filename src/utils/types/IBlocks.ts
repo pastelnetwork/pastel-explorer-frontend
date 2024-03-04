@@ -28,6 +28,7 @@ export interface IBlock {
   tickets: ITicket[];
   ticketsList: string;
   senses: TSenseRequests[];
+  type?: string;
 }
 
 export interface IRawBlock {
@@ -51,4 +52,5 @@ export interface IRawBlock {
   tickets: ITicket[];
   ticketsList: string;
   senses: TSenseRequests[];
+  type?: string;
 }
