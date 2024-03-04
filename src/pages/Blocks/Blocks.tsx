@@ -156,7 +156,7 @@ const Blocks = () => {
       <InfinityTable
         sortBy={apiParams.sortBy}
         sortDirection={apiParams.sortDirection}
-        rows={swrData ? transformTableData(swrData, isMobile) : []}
+        rows={swrData ? transformTableData(swrData) : []}
         filters={blocksPeriodFilters}
         dropdownFilters={blocksFilters}
         dropdownLabel={translateDropdown('pages.blocks.ticketType')}

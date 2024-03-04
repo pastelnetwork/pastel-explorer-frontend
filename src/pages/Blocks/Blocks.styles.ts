@@ -24,6 +24,10 @@ export const TableContainer = styled(Grid)`
     white-space: nowrap;
   }
 
+  .csv-wrapper {
+    display: inline-flex;
+  }
+
   .disable-download-csv {
     cursor: not-allowed;
     pointer-events: none;
@@ -116,6 +120,10 @@ export const BlockHeight = styled.div`
   svg {
     margin-right: 5px;
     fill: ${props => props.theme.sidebar.menu.background};
+
+    &.box-icon {
+      min-width: 16px !important;
+    }
   }
 `;
 
