@@ -4,8 +4,7 @@ import { H } from 'highlight.run';
 import jssPreset from 'jss-preset-default';
 import { ThemeProvider } from 'styled-components';
 import { create } from 'jss';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers';
+
 import { ThemeProvider as MuiThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import { StylesProvider } from '@mui/styles';
 
@@ -95,17 +94,15 @@ const App: React.FC = () => {
       <SocketContext.Provider value={socket}>
         <StyledEngineProvider injectFirst>
           <StylesProvider jss={jss}>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <MuiThemeProvider theme={isDarkMode ? themeDark : themeLight}>
-                <ThemeProvider theme={isDarkMode ? themeDark : themeLight}>
-                  <ErrorHandler>
-                    <Routes />
-                    <ResponseErrorAlert />
-                  </ErrorHandler>
-                  <InfoDrawer />
-                </ThemeProvider>
-              </MuiThemeProvider>
-            </LocalizationProvider>
+            <MuiThemeProvider theme={isDarkMode ? themeDark : themeLight}>
+              <ThemeProvider theme={isDarkMode ? themeDark : themeLight}>
+                <ErrorHandler>
+                  <Routes />
+                  <ResponseErrorAlert />
+                </ErrorHandler>
+                <InfoDrawer />
+              </ThemeProvider>
+            </MuiThemeProvider>
           </StylesProvider>
         </StyledEngineProvider>
       </SocketContext.Provider>
