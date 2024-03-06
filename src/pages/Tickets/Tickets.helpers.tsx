@@ -23,7 +23,13 @@ import { translate, translateDropdown } from '@utils/helpers/i18n';
 import { getFileIcon } from '@pages/Details/CascadeDetails/CascadeDetails.helpers';
 import noImagePlaceholder from '@assets/images/no-image-placeholder.svg';
 
-import { TXID_KEY, TIMESTAMP_KEY, PASTEL_ID_KEY, USERNAME_KEY } from './Tickets.columns';
+import {
+  TXID_KEY,
+  TIMESTAMP_KEY,
+  PASTEL_ID_KEY,
+  USERNAME_KEY,
+  ID_TYPE_KEY,
+} from './Tickets.columns';
 
 const getTicketTitle = (type: TTicketType) => {
   switch (type) {
@@ -544,7 +550,7 @@ export const transformOtherData = (data: TicketsList[], usdPrice: number) =>
   );
 
 export const transformPastelIdData = (data: TicketsList[]) =>
-  data.map(({ transactionHash, pastelID, timestamp, userName, reTxId }) => {
+  data.map(({ transactionHash, pastelID, timestamp, userName, reTxId, id_type }) => {
     return {
       id: transactionHash,
       [TXID_KEY]: (
@@ -580,6 +586,7 @@ export const transformPastelIdData = (data: TicketsList[]) =>
           )}
         </div>
       ),
+      [ID_TYPE_KEY]: <span className="text-capitalize">{id_type || '--'}</span>,
       [TIMESTAMP_KEY]: timestamp ? formatFullDate(timestamp, { dayName: false }) : '--',
     };
   });
