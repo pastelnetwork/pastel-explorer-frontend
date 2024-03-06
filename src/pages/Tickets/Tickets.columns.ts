@@ -54,7 +54,7 @@ export const pastelIDAndUsernameTicketsColumns = [
     dataTitle: 'pages.tickets.pastelID',
   },
   {
-    width: 140,
+    width: 70,
     flexGrow: 1,
     label: 'pages.tickets.userName',
     dataKey: USERNAME_KEY,
@@ -63,7 +63,16 @@ export const pastelIDAndUsernameTicketsColumns = [
     dataTitle: 'pages.tickets.userName',
   },
   {
-    width: 160,
+    width: 70,
+    flexGrow: 1,
+    label: 'pages.pastelIdDetails.type',
+    dataKey: ID_TYPE_KEY,
+    disableSort: true,
+    className: 'idType',
+    dataTitle: 'pages.pastelIdDetails.type',
+  },
+  {
+    width: 150,
     flexGrow: 1,
     label: 'pages.tickets.timestamp',
     dataKey: TIMESTAMP_KEY,

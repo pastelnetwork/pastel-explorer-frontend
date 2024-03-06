@@ -7,6 +7,10 @@ import themeVariant from '@theme/variants';
 export const TicketsContainer = styled.div`
   width: 100%;
 
+  .text-capitalize {
+    text-transform: capitalize;
+  }
+
   .copy-icon {
     margin-left: 0;
   }
