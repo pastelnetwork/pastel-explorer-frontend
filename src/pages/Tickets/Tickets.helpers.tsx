@@ -23,7 +23,13 @@ import { translate, translateDropdown } from '@utils/helpers/i18n';
 import { getFileIcon } from '@pages/Details/CascadeDetails/CascadeDetails.helpers';
 import noImagePlaceholder from '@assets/images/no-image-placeholder.svg';
 
-import { TXID_KEY, TIMESTAMP_KEY, PASTEL_ID_KEY, USERNAME_KEY } from './Tickets.columns';
+import {
+  TXID_KEY,
+  TIMESTAMP_KEY,
+  PASTEL_ID_KEY,
+  USERNAME_KEY,
+  ID_TYPE_KEY,
+} from './Tickets.columns';
 
 const getTicketTitle = (type: TTicketType) => {
   switch (type) {
@@ -595,6 +601,7 @@ export const transformPastelIdData = (data: TicketsList[]) =>
           )}
         </>
       ),
+      [ID_TYPE_KEY]: <span className="text-capitalize">{id_type || '--'}</span>,
       [TIMESTAMP_KEY]: timestamp ? formatFullDate(timestamp, { dayName: false }) : '--',
     };
   });
