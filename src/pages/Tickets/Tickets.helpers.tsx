@@ -563,7 +563,7 @@ export const transformOtherData = (data: TicketsList[], usdPrice: number) =>
   );
 
 export const transformPastelIdData = (data: TicketsList[]) =>
-  data.map(({ transactionHash, pastelID, timestamp, userName, reTxId }) => {
+  data.map(({ transactionHash, pastelID, timestamp, userName, reTxId, id_type }) => {
     return {
       id: transactionHash,
       [TXID_KEY]: (
