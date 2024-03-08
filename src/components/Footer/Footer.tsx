@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import getYear from 'date-fns/getYear';
+import { getYear } from 'date-fns';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';

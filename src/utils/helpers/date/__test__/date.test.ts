@@ -1,5 +1,4 @@
-import intervalToDuration from 'date-fns/intervalToDuration';
-import fromUnixTime from 'date-fns/fromUnixTime';
+import { intervalToDuration, fromUnixTime } from 'date-fns';
 
 import { getDate, formattedDate, formattedTimeElapsed, formatFullDate } from '../date';
 

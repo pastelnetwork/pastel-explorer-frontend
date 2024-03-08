@@ -1,8 +1,7 @@
 import { useState, useRef } from 'react';
 import DatePicker from 'react-datepicker';
 import DateRangeIcon from '@mui/icons-material/DateRange';
-import differenceInDays from 'date-fns/differenceInDays';
-import subDays from 'date-fns/subDays';
+import { differenceInDays, subDays } from 'date-fns';
 import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';
