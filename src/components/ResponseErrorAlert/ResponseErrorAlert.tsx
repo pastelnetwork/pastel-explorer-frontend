@@ -3,13 +3,14 @@ import parse from 'html-react-parser';
 
 import { setResponseError } from '@redux/actions/responseErrorsActions';
 import { AppStateType } from '@redux/reducers';
+import { AppDispatchType } from '@redux/store';
 
 import { translate } from '@utils/helpers/i18n';
 import AlertComponent from '@components/Alert/Alert';
 
 const ResponseErrorAlert = () => {
   const { error, message } = useSelector((state: AppStateType) => state.responseErrorsReducer);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatchType>();
 
   const handleClose = () => dispatch(setResponseError(false));
 

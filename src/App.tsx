@@ -4,6 +4,7 @@ import { H } from 'highlight.run';
 import jssPreset from 'jss-preset-default';
 import { ThemeProvider } from 'styled-components';
 import { create } from 'jss';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { ThemeProvider as MuiThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import { StylesProvider } from '@mui/styles';
@@ -11,10 +12,10 @@ import { StylesProvider } from '@mui/styles';
 import ErrorHandler from '@pages/ErrorHandler/ErrorHandler';
 import ResponseErrorAlert from '@components/ResponseErrorAlert/ResponseErrorAlert';
 import InfoDrawer from '@components/InfoDrawer/InfoDrawer';
-import { useSelector, useDispatch } from 'react-redux';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { setAppThemeAction } from '@redux/actions/appThemeAction';
 import { setApiHostingAction } from '@redux/actions/clusterAction';
+import { AppDispatchType } from '@redux/store';
 import { socket, SocketContext } from '@context/socket';
 import { DEFAULT_CURRENCY } from '@utils/appInfo';
 import {
@@ -50,7 +51,7 @@ const jss = create({
 });
 
 const App: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatchType>();
   const [succeed, setSucceed] = useState<boolean>(false);
   useEffect(() => {
     const isDarkModeInit = localStorage.getItem('darkMode') === 'true';

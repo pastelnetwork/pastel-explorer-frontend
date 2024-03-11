@@ -2,4 +2,5 @@ import { useSelector, TypedUseSelectorHook } from 'react-redux';
 
 import { RootState } from '@redux/store';
 
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const useAppSelector: TypedUseSelectorHook<RootState | any> = useSelector;

@@ -13,6 +13,7 @@ import parse from 'html-react-parser';
 import { translate, translateDropdown } from '@utils/helpers/i18n';
 import DateTimePicker from '@components/DateTimePicker/DateTimePicker';
 import { setFilterValueAction } from '@redux/actions/filterAction';
+import { AppDispatchType } from '@redux/store';
 import { TAppTheme } from '@theme/index';
 import { TFilter } from '@utils/types/IFilter';
 import { getFilterState } from '@redux/reducers/filterReducer';
@@ -79,7 +80,7 @@ const Filters: FC<IProps> = ({
   defaultDateRange,
   customFilter = null,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatchType>();
   const classes = useStyles();
   const { dateRange, dropdownType, customDateRange } = useSelector(getFilterState);
   const time: string = dateRange || 'all';
