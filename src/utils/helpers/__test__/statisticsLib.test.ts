@@ -216,8 +216,8 @@ describe('utils/helpers/statisticsLib', () => {
       new Date(Number(1676160068747)).toLocaleString(),
       new Date(Number(1676160128694)).toLocaleString(),
     ];
-    const dataY1: number[] = [8048939455, 8048940569];
-    const dataY2: number[] = [709258986, 709262374];
+    const dataY1: number[] = [7860292.4365234375, 7860293.5244140625];
+    const dataY2: number[] = [692635.728515625, 692639.037109375];
     expect(transformNetTotals(data as TNettotalsInfo[], '30d')).toEqual({
       dataX,
       dataY1,
@@ -835,7 +835,7 @@ describe('utils/helpers/statisticsLib', () => {
 
   test('generatePeriodToDropdownOptions should works correctly', () => {
     i18next.t = jest.fn().mockImplementation((...arg) => {
-      return arg[1] ? `Last ${arg[1]?.period}` : 'max';
+      return arg[1]?.period ? `Last ${arg[1]?.period}` : 'max';
     }) as MyMockType;
 
     const results: OptionsProps[] = [

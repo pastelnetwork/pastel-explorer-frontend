@@ -4,7 +4,8 @@ import ReactECharts from 'echarts-for-react';
 
 import 'jest-styled-components';
 
-// import i18next from '../../../../utils/helpers/i18n';
+import { MyMockType } from '@utils/types/MockType';
+import i18next from '@utils/helpers/i18n';
 import DoughnutChart from '../DoughnutChart';
 import * as Styles from '../DoughnutChart.styles';
 
@@ -28,12 +29,9 @@ jest.mock('react-i18next', () => ({
     },
   },
 }));
-jest.mock('i18next', () => ({
-  t: (str: string) => str,
-}));
-// i18next.t = jest.fn().mockImplementation((...arg) => {
-//   return arg[0];
-// });
+i18next.t = jest.fn().mockImplementation((...arg) => {
+  return arg[0];
+}) as MyMockType;
 
 describe('components/Charts/DoughnutChart', () => {
   const data = {

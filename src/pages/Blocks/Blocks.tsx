@@ -42,8 +42,8 @@ const Blocks = () => {
   const [apiParams, setParams] = useState<IBlocksDataRef>({
     sortBy: 'blockId',
     sortDirection: DATA_DEFAULT_SORT,
-    period: filter.dateRange || 'all',
-    types: filter.dropdownType || [],
+    period: filter?.dateRange || 'all',
+    types: filter?.dropdownType || [],
     customDateRange: {
       startDate: 0,
       endDate: null,
@@ -92,22 +92,22 @@ const Blocks = () => {
   };
 
   useEffect(() => {
-    if (filter.dateRange || filter.dropdownType) {
+    if (filter?.dateRange || filter?.dropdownType) {
       swrSetSize(1);
-      let customDateRange = filter.customDateRange || { startDate: 0, endDate: null };
-      if (!filter.customDateRange?.startDate && filter.dateRange !== 'all') {
-        customDateRange = { startDate: getSubHours(filter.dateRange), endDate: Date.now() };
+      let customDateRange = filter?.customDateRange || { startDate: 0, endDate: null };
+      if (!filter?.customDateRange?.startDate && filter?.dateRange !== 'all') {
+        customDateRange = { startDate: getSubHours(filter?.dateRange), endDate: Date.now() };
       } else {
         customDateRange = { startDate: 0, endDate: null };
       }
       setParams({
         ...apiParams,
-        period: filter.dateRange || apiParams.period || '',
-        types: filter.dropdownType || apiParams.types || '',
+        period: filter?.dateRange || apiParams.period || '',
+        types: filter?.dropdownType || apiParams.types || '',
         customDateRange,
       });
     }
-  }, [filter.dateRange, filter.dropdownType, filter.customDateRange]);
+  }, [filter?.dateRange, filter?.dropdownType, filter?.customDateRange]);
 
   useEffect(() => {
     setParams({ ...apiParams });
@@ -170,7 +170,7 @@ const Blocks = () => {
         rowHeight={isMobile ? 200 : 45}
         customLoading={isLoading}
         showDateTimePicker
-        dateRange={filter.customDateRange}
+        dateRange={filter?.customDateRange}
         customFilter={renderDownloadCsv()}
       />
     </Styles.TableContainer>

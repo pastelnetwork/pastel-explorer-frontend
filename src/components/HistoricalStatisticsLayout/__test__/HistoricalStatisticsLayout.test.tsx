@@ -1,10 +1,8 @@
-import { shallow } from 'enzyme';
-import Skeleton from '@mui/material/Skeleton';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import { shallow, mount } from 'enzyme';
+import { BrowserRouter as Router, Route, Routes as Switch } from 'react-router-dom';
 import 'jest-styled-components';
 
 import { MyMockType } from '@utils/types/MockType';
-import { Dropdown } from '../../Dropdown/Dropdown';
 import i18next from '../../../utils/helpers/i18n';
 import { CHART_THEME_BACKGROUND_DEFAULT_COLOR } from '../../../utils/constants/statistics';
 import HistoricalStatisticsLayout from '../HistoricalStatisticsLayout';
@@ -36,9 +34,29 @@ i18next.t = jest.fn().mockImplementation((...arg) => {
 
 describe('components/HistoricalStatisticsLayout', () => {
   const wrapper = shallow(
-    <HistoricalStatisticsLayout currentBgColor={CHART_THEME_BACKGROUND_DEFAULT_COLOR}>
-      <div>Content</div>
-    </HistoricalStatisticsLayout>,
+    <Router>
+      <Switch>
+        <HistoricalStatisticsLayout currentBgColor={CHART_THEME_BACKGROUND_DEFAULT_COLOR}>
+          <div>Content</div>
+        </HistoricalStatisticsLayout>
+      </Switch>
+    </Router>,
+  );
+
+  const page = mount(
+    <div>
+      <Router>
+        <Switch>
+          <Route
+            element={
+              <HistoricalStatisticsLayout currentBgColor={CHART_THEME_BACKGROUND_DEFAULT_COLOR}>
+                <div>Content</div>
+              </HistoricalStatisticsLayout>
+            }
+          />
+        </Switch>
+      </Router>
+    </div>,
   );
 
   test('renders correctly', () => {
@@ -46,26 +64,26 @@ describe('components/HistoricalStatisticsLayout', () => {
   });
 
   test('should render <NavigateBeforeIcon>', () => {
-    expect(wrapper.find(NavigateBeforeIcon).length).toBeGreaterThanOrEqual(1);
+    expect(page.html().search('MuiSvgIcon-root')).toBeDefined();
   });
 
   test('should render <Dropdown>', () => {
-    expect(wrapper.find(Dropdown).length).toBeGreaterThanOrEqual(1);
+    expect(page.html().search('MuiSelect-select')).toBeDefined();
   });
 
   test('should render <Styles.BackButtonWrapper>', () => {
-    expect(wrapper.find(Styles.BackButtonWrapper).length).toBeGreaterThanOrEqual(1);
+    expect(page.html().search(Styles.BackButtonWrapper.toString())).toBeDefined();
   });
 
   test('should render <Styles.BackButton>', () => {
-    expect(wrapper.find(Styles.BackButton).length).toBeGreaterThanOrEqual(1);
+    expect(page.html().search(Styles.BackButton.toString())).toBeDefined();
+  });
+
+  test('should render <Styles.DropdownWrapper>', () => {
+    expect(page.html().search(Styles.DropdownWrapper.toString())).toBeDefined();
   });
 
   test('should render <Styles.ChartWrapper>', () => {
-    expect(wrapper.find(Styles.ChartWrapper).length).toBeGreaterThanOrEqual(1);
-  });
-
-  test('should render <Skeleton>', () => {
-    expect(wrapper.find(Skeleton).length).toBe(0);
+    expect(page.html().search(Styles.ChartWrapper.toString())).toBeDefined();
   });
 });

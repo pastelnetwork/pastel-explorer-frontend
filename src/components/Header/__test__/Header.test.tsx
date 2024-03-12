@@ -1,5 +1,6 @@
 import { shallow } from 'enzyme';
 import { Grid } from '@mui/material';
+import Typography from '@mui/material/Typography';
 import 'jest-styled-components';
 
 import { MyMockType } from '@utils/types/MockType';
@@ -46,7 +47,7 @@ describe('components/Header', () => {
     expect(wrapper.find(Styles.Container).length).toBeGreaterThanOrEqual(1);
   });
 
-  test('should render <Styles.Typography>', () => {
-    expect(wrapper.find(Styles.Typography).length).toBeGreaterThanOrEqual(1);
+  test('should render <Typography>', () => {
+    expect(wrapper.find(Typography).length).toBeGreaterThanOrEqual(1);
   });
 });
