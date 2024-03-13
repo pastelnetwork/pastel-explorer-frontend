@@ -63,8 +63,8 @@ const PastelSlider = withStyles({
     backgroundColor: '#0E80F5',
     border: 0,
     borderRadius: 50,
-    marginTop: -4,
-    marginLeft: -12,
+    marginTop: 0,
+    marginLeft: 0,
     '&:focus, &:hover, &$active': {
       boxShadow: 'inherit',
     },
