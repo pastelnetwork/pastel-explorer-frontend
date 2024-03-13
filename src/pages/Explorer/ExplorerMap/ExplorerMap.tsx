@@ -6,6 +6,7 @@ import parse from 'html-react-parser';
 
 import Map from '@components/Map/Map';
 import { setInfoDrawer } from '@redux/actions/infoDrawerActions';
+import { AppDispatchType } from '@redux/store';
 import useNetwork from '@hooks/useNetwork';
 import themeVariant from '@theme/variants';
 import { translate, translateDropdown } from '@utils/helpers/i18n';
@@ -22,7 +23,7 @@ interface ExplorerMapProps {
 
 const ExplorerMap: React.FC<ExplorerMapProps> = ({ hidePeer = false }) => {
   const { geoLocationList, nodesLength, isLoading } = useNetwork(hidePeer);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatchType>();
   const mapOptions = generateMapOptions(geoLocationList);
 
   const mapMarkerClickOption = {

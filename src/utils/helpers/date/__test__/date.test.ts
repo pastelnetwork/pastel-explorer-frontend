@@ -1,5 +1,4 @@
-import intervalToDuration from 'date-fns/intervalToDuration';
-import fromUnixTime from 'date-fns/fromUnixTime';
+import { intervalToDuration, fromUnixTime } from 'date-fns';
 
 import { getDate, formattedDate, formattedTimeElapsed, formatFullDate } from '../date';
 
@@ -27,8 +26,8 @@ describe('utils/helpers/date', () => {
     const date = 1678681807888;
     const currentDate = new Date();
     const { days, hours, minutes, seconds } = intervalToDuration({
-      start: currentDate,
-      end: fromUnixTime(date),
+      start: fromUnixTime(date),
+      end: currentDate,
     });
     expect(formattedTimeElapsed(date, currentDate)).toEqual(
       `${days}d ${hours}h ${minutes}m ${seconds}s ago`,

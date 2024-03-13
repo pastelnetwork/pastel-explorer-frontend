@@ -1,14 +1,16 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tooltip } from '@mui/material';
+
 import { setAppThemeAction } from '@redux/actions/appThemeAction';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
+import { AppDispatchType } from '@redux/store';
 import { translate } from '@utils/helpers/i18n';
 
 import * as Styles from './SearchBar.styles';
 
 function SwitchMode() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatchType>();
   const isDarkMode = useSelector(getThemeState).darkMode;
 
   const handleChangeMode = useCallback(() => {

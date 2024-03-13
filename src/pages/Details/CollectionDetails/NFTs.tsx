@@ -3,7 +3,7 @@ import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import format from 'date-fns/format';
+import { format } from 'date-fns';
 import CircularProgress from '@mui/material/CircularProgress';
 import parse from 'html-react-parser';
 

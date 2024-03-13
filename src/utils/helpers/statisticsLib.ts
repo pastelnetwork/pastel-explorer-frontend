@@ -1,5 +1,4 @@
-import format from 'date-fns/format';
-import fromUnixTime from 'date-fns/fromUnixTime';
+import { format, fromUnixTime } from 'date-fns';
 import {
   TMultiLineChartData,
   TMiningInfo,

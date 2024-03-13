@@ -6,6 +6,7 @@ import { Drawer, Button } from '@mui/material';
 
 import { setInfoDrawer } from '@redux/actions/infoDrawerActions';
 import { AppStateType } from '@redux/reducers';
+import { AppDispatchType } from '@redux/store';
 
 import * as Styles from './InfoDrawer.styles';
 
@@ -21,7 +22,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const InfoDrawer: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatchType>();
   const handleClose = () => dispatch(setInfoDrawer(false, null, null));
   const classes = useStyles();
 

@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material';
-import format from 'date-fns/format';
+import { format } from 'date-fns';
 import parse from 'html-react-parser';
 
 import RouterLink from '@components/RouterLink/RouterLink';
@@ -105,7 +105,7 @@ export const transformChartData = (data: TChartStatisticsResponse[] | null) => {
     data.forEach(item => {
       if (item.time) {
         dataX.push(format(item.time, 'MM/dd/yyyy'));
-        dataY.push(item.value);
+        dataY.push(item.value <= 0 ? 0 : item.value);
       }
     });
 

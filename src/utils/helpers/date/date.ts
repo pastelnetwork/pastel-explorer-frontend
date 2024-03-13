@@ -1,8 +1,4 @@
-import fromUnixTime from 'date-fns/fromUnixTime';
-import format from 'date-fns/format';
-import getTime from 'date-fns/getTime';
-import subHours from 'date-fns/subHours';
-import intervalToDuration from 'date-fns/intervalToDuration';
+import { fromUnixTime, format, getTime, subHours, intervalToDuration } from 'date-fns';
 
 interface DateOptions {
   dayName?: boolean;
@@ -36,8 +32,8 @@ export const formattedDate = (timestamp: number, options: DateOptions = initialD
 };
 export const formattedTimeElapsed = (timestamp: number, now = currentDate) => {
   const { days, hours, minutes, seconds } = intervalToDuration({
-    start: now,
-    end: fromUnixTime(timestamp),
+    start: fromUnixTime(timestamp),
+    end: now,
   });
 
   return `${days}d ${hours}h ${minutes}m ${seconds}s ago`;

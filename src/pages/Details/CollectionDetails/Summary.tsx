@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import format from 'date-fns/format';
+import { format } from 'date-fns';
 import parse from 'html-react-parser';
 
 import Share from '@components/Share/Share';

@@ -28,7 +28,8 @@ export const getLatestBlocks: () => AppThunk<Promise<void>> =
 
 export const updateTransactionsNewest: (_rawTransactions: ISocketData) => AppThunk<Promise<void>> =
   data =>
-  async (dispatch, getState): Promise<void> => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async (dispatch, getState: any): Promise<void> => {
     const prevBlocks = (getState()[TRANSACTION_NAMESPACE] as ITransactionState).latestTransaction;
     const newBlocks = setTransactionsLive(prevBlocks, data);
     dispatch(setLatestTransactions(newBlocks));
