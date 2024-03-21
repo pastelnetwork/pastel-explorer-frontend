@@ -2,8 +2,7 @@ import { useState, useEffect, ReactNode } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import CircularProgress from '@mui/material/CircularProgress';
-import subMonths from 'date-fns/subMonths';
-import format from 'date-fns/format';
+import { subMonths, format } from 'date-fns';
 import parse from 'html-react-parser';
 
 import { LineChart } from '@components/Summary/LineChart';

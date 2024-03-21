@@ -64,7 +64,8 @@ export const Items = styled.div`
 
 export const Brand = styled(ListItem)<{
   button?: boolean;
-  component?: React.ReactNode;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  component?: any;
   to?: string;
 }>`
   width: auto;

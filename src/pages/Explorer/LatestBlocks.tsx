@@ -10,6 +10,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { ArrowForwardIos } from '@mui/icons-material';
 import parse from 'html-react-parser';
@@ -25,6 +26,7 @@ import Skeleton from '@mui/material/Skeleton';
 import * as ROUTES from '@utils/constants/routes';
 import { translate } from '@utils/helpers/i18n';
 import { useShowLess } from '@pages/Tickets/Tickets.helpers';
+import MinedIcon from '@pages/Details/BlockDetails/MinedIcon';
 
 import { Link } from '@components/Link/Link.styles';
 import RouterLink from '@components/RouterLink/RouterLink';
@@ -114,10 +116,13 @@ function LatestBlocks() {
                 Array.from(latestBlocks.values()).map(block => (
                   <StyledTableRow key={block.id} className="table__row">
                     <StyledTableCell component="th" scope="row">
-                      <RouterLink
-                        route={`${ROUTES.BLOCK_DETAILS}/${block.height}`}
-                        value={block.height || ''}
-                      />
+                      <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: '2px' }}>
+                        <RouterLink
+                          route={`${ROUTES.BLOCK_DETAILS}/${block.height}`}
+                          value={block.height || ''}
+                        />
+                        <MinedIcon type={block.type || ''} />
+                      </Box>
                     </StyledTableCell>
                     <StyledTableCell component="th" scope="row">
                       <Link to={`${ROUTES.BLOCK_DETAILS}/${block.id}`}>

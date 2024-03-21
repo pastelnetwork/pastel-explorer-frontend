@@ -37,6 +37,7 @@ import * as BlockStyles from '@pages/Blocks/Blocks.styles';
 import { blockHeaders, transactionHeaders, generateDetailsElement } from './BlockDetails.helpers';
 import * as Styles from './BlockDetails.styles';
 import TicketsList from './Tickets';
+import MinedIcon from './MinedIcon';
 
 const BlockDetails = () => {
   const navigate = useNavigate();
@@ -71,12 +72,25 @@ const BlockDetails = () => {
     }
   }, [isLoading, swrData]);
 
-  const generateBlockTable = ({ height, confirmations, size, timestamp }: IBlock): RowsProps[] => {
+  const generateBlockTable = ({
+    height,
+    confirmations,
+    size,
+    timestamp,
+    type,
+  }: IBlock): RowsProps[] => {
     return [
       {
         id: 1,
         data: [
-          { id: 1, value: height },
+          {
+            id: 1,
+            value: (
+              <>
+                {height} <MinedIcon type={type || ''} className="ml-2" />
+              </>
+            ),
+          },
           { id: 3, value: formatNumber(confirmations) },
           { id: 4, value: formatNumber(size / 1024, { decimalsLength: 2 }) },
           { id: 6, value: formattedDate(timestamp, { dayName: false }) },

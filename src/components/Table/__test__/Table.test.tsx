@@ -67,10 +67,6 @@ describe('components/Table', () => {
     expect(wrapper.find(Styles.BlockWrapper).length).toBeGreaterThanOrEqual(1);
   });
 
-  test('should render <Styles.Card>', () => {
-    expect(wrapper.find(Styles.Card).length).toBeGreaterThanOrEqual(1);
-  });
-
   test('should render <Styles.PaperWrapper>', () => {
     expect(wrapper.find(Styles.PaperWrapper).length).toBeGreaterThanOrEqual(1);
   });

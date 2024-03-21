@@ -4,6 +4,7 @@ export const TRANSACTIONS_QTY_KEY = 'transactionCount';
 export const TOTAL_TICKETS = 'totalTickets';
 export const BLOCK_SIZE = 'size';
 export const TIMESTAMP_BLOCKS_KEY = 'timestamp';
+export const TIMESTAMP_BETWEEN_BLOCKS_KEY = 'timeBetweenBlocks';
 
 export const columns = [
   {
@@ -16,7 +17,7 @@ export const columns = [
     dataTitle: 'pages.blocks.block',
   },
   {
-    width: 390,
+    width: 290,
     flexGrow: 1,
     label: 'pages.blocks.hash',
     dataKey: BLOCK_HASH,
@@ -52,6 +53,15 @@ export const columns = [
     dataTitle: 'pages.blocks.size',
   },
   {
+    width: 120,
+    flexGrow: 1,
+    label: 'pages.blocks.timeBetweenBlocks',
+    dataKey: TIMESTAMP_BETWEEN_BLOCKS_KEY,
+    disableSort: true,
+    className: 'col-time-between-blocks',
+    dataTitle: 'pages.blocks.timeBetweenBlocks',
+  },
+  {
     width: 100,
     flexGrow: 1,
     label: 'pages.blocks.timestamp',
@@ -60,4 +70,14 @@ export const columns = [
     className: 'col-timestamp',
     dataTitle: 'pages.blocks.timestamp',
   },
+];
+
+export const csvHeader = [
+  { label: 'pages.blocks.block', key: BLOCK_ID_KEY },
+  { label: 'pages.blocks.hash', key: BLOCK_HASH },
+  { label: 'pages.blocks.transactionQuantity', key: TRANSACTIONS_QTY_KEY },
+  { label: 'pages.blocks.ticketQuantity', key: TOTAL_TICKETS },
+  { label: 'pages.blocks.size', key: BLOCK_SIZE },
+  { label: 'pages.blocks.timeBetweenBlocks', key: TIMESTAMP_BETWEEN_BLOCKS_KEY },
+  { label: 'pages.blocks.timestamp', key: TIMESTAMP_BLOCKS_KEY },
 ];

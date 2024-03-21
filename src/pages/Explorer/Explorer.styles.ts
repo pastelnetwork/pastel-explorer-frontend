@@ -102,7 +102,9 @@ export const BlockWrapper = styled.div`
         padding: 9px 16px;
         background-color: ${props => props.theme.table.header} !important;
 
-        &.th-block,
+        &.th-block {
+          width: 120px;
+        }
         &.th-fee,
         &.th-txs {
           width: 60px;

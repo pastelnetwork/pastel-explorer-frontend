@@ -8,6 +8,7 @@ import i18next from '../../../../utils/helpers/i18n';
 import { themeLight } from '../../../../theme';
 import BlockStatistics from '../BlockStatistics';
 
+jest.mock('gsap');
 jest.mock('i18next-http-backend');
 jest.mock('react-i18next', () => ({
   useTranslation: () => {

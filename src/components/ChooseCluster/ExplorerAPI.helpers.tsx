@@ -733,6 +733,9 @@ const ApiList = {
 };
 
 const getNode = (str: string, isCapitalizeAll = false) => {
+  if (!str) {
+    return '';
+  }
   const arr = str.split('-');
   const results: string[] = [];
   arr.forEach((val, index) => {

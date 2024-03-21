@@ -1,4 +1,5 @@
 import { shallow } from 'enzyme';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import 'jest-styled-components';
 
@@ -44,7 +45,11 @@ describe('components/Sidebar', () => {
       component: MyComponent,
     },
   ];
-  const wrapper = shallow(<Sidebar routes={routes} />);
+  const wrapper = shallow(
+    <Router>
+      <Sidebar routes={routes} />
+    </Router>,
+  );
 
   test('renders correctly', () => {
     expect(wrapper).toMatchSnapshot();

@@ -3,7 +3,7 @@ import { Grid } from '@mui/material';
 import 'jest-styled-components';
 
 import { MyMockType } from '@utils/types/MockType';
-import i18next from '../../../utils/helpers/i18n';
+import i18next from '@utils/helpers/i18n';
 import Tickets from '../Tickets';
 import Sense from '../Sense';
 import Cascade from '../Cascade';

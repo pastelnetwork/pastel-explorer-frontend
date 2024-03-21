@@ -27,7 +27,8 @@ export const getLatestBlocks: () => AppThunk<Promise<void>> =
 
 export const updateBlocksNewest: (_block: IRawBlock) => AppThunk<Promise<void>> =
   block =>
-  async (dispatch, getState): Promise<void> => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async (dispatch, getState: any): Promise<void> => {
     const prevBlocks = (getState()[BLOCK_NAMESPACE] as IBlockState).latestBlocks;
     const newBlocks = new Map<string, IBlock>();
     newBlocks.set(block.hash, {
@@ -48,6 +49,7 @@ export const updateBlocksNewest: (_block: IRawBlock) => AppThunk<Promise<void>> 
       tickets: block.tickets,
       ticketsList: block.ticketsList,
       senses: block.senses,
+      type: block.type,
     });
     let i = 1;
     prevBlocks?.forEach((value, key) => {

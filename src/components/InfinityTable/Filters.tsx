@@ -13,6 +13,7 @@ import parse from 'html-react-parser';
 import { translate, translateDropdown } from '@utils/helpers/i18n';
 import DateTimePicker from '@components/DateTimePicker/DateTimePicker';
 import { setFilterValueAction } from '@redux/actions/filterAction';
+import { AppDispatchType } from '@redux/store';
 import { TAppTheme } from '@theme/index';
 import { TFilter } from '@utils/types/IFilter';
 import { getFilterState } from '@redux/reducers/filterReducer';
@@ -58,6 +59,7 @@ interface IProps {
     startDate: number;
     endDate: number | null;
   };
+  customFilter?: React.ReactNode;
 }
 
 const MenuProps = {
@@ -76,8 +78,9 @@ const Filters: FC<IProps> = ({
   dropdownLabel,
   showDateTimePicker = false,
   defaultDateRange,
+  customFilter = null,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatchType>();
   const classes = useStyles();
   const { dateRange, dropdownType, customDateRange } = useSelector(getFilterState);
   const time: string = dateRange || 'all';
@@ -189,7 +192,7 @@ const Filters: FC<IProps> = ({
   };
 
   return (
-    <Styles.Wrapper className={headerBackground ? 'background' : ''}>
+    <Styles.Wrapper className={`filter-wrapper ${headerBackground ? 'background' : ''}`}>
       <h4>{title}</h4>
       <Styles.FilterWrapper>
         {renderDropdownCheckbox()}
@@ -225,6 +228,7 @@ const Filters: FC<IProps> = ({
             </MenuItem>
           ) : null}
         </div>
+        {customFilter}
       </Styles.FilterWrapper>
     </Styles.Wrapper>
   );
@@ -236,6 +240,7 @@ Filters.defaultProps = {
   dropdownLabel: undefined,
   showDateTimePicker: undefined,
   defaultDateRange: undefined,
+  customFilter: null,
 };
 
 export default memo<IProps>(Filters);

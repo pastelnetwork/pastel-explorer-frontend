@@ -1618,6 +1618,18 @@
       "size": {
         "message": "Size (kB)",
         "description": "Used for the Blocks page"
+      },
+      "timeBetweenBlocks": {
+        "message": "Time in Minutes Between Blocks",
+        "description": "Used for the Blocks page"
+      },
+      "minute": {
+        "message": "minute",
+        "description": "Used for the Blocks page"
+      },
+      "minutes": {
+        "message": "minutes",
+        "description": "Used for the Blocks page"
       }
     },
     "cascadeAndSenseStatistics": {
@@ -1854,7 +1866,16 @@
       "viewFull": {
         "message": "View full",
         "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "minedByCPU": {
+        "message": "Mined by CPU",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "minedByPool": {
+        "message": "Mined by a pool",
+        "description": "Used for the CascadeAndSenseStatistics page"
       }
+
     },
     "pastelIdDetails": {
       "tickets": {

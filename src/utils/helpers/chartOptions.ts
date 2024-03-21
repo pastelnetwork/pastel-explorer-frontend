@@ -1,6 +1,6 @@
 import * as echarts from 'echarts';
 import { EChartsOption } from 'echarts-for-react';
-import format from 'date-fns/format';
+import { format } from 'date-fns';
 
 // aplication
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
@@ -3409,7 +3409,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         top: 9,
         right: 35,
         bottom: 20,
-        left: 35,
+        left: 45,
         show: false,
       },
       tooltip: {
@@ -3492,7 +3492,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         top: 9,
         right: 35,
         bottom: 20,
-        left: 35,
+        left: 45,
         show: false,
       },
       tooltip: {

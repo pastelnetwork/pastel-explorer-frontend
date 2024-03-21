@@ -373,7 +373,12 @@ const SearchBar: React.FC<AppBarProps> = ({ isDarkMode }) => {
                   {loading ? (
                     <CircularProgress color="inherit" size={20} />
                   ) : (
-                    <button type="button" className="close-button" onClick={handleCloseSearch}>
+                    <button
+                      type="button"
+                      className="close-button"
+                      aria-label="Cancel"
+                      onClick={handleCloseSearch}
+                    >
                       <CancelIcon className="cancel-icon" />
                     </button>
                   )}

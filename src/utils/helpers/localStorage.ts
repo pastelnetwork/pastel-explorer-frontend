@@ -1,5 +1,5 @@
 import LZString from 'lz-string';
-import differenceInHours from 'date-fns/differenceInHours';
+import { differenceInHours } from 'date-fns';
 
 import { DEFAULT_API_URL } from '@utils/constants/urls';
 

@@ -301,3 +301,16 @@ export const ViewFullButton = styled.button`
     color: ${props => props.theme.link.pressed};
   }
 `;
+
+export const MinedIconWrapper = styled.span`
+  display: inline-flex;
+
+  .mining-icon {
+    font-size: 18px;
+    fill: ${props => props.theme.palette.text.primary} !important;
+  }
+
+  &.ml-2 {
+    margin-left: 2px;
+  }
+`;
