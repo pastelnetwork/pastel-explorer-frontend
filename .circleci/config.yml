@@ -7,7 +7,7 @@ orbs:
 executors:
   node:
     docker:
-      - image: cimg/python:3.9.6-node
+      - image: cimg/python:3.11.8-node
     resource_class: large
     working_directory: /tmp/workspace
 
