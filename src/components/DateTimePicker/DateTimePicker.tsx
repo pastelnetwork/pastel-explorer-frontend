@@ -1,8 +1,7 @@
 import { useState, useRef } from 'react';
 import DatePicker from 'react-datepicker';
-import DateRangeIcon from '@material-ui/icons/DateRange';
-import differenceInDays from 'date-fns/differenceInDays';
-import subDays from 'date-fns/subDays';
+import DateRangeIcon from '@mui/icons-material/DateRange';
+import { differenceInDays, subDays } from 'date-fns';
 import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';
@@ -154,6 +153,14 @@ const DateTimePicker: React.FC<IDateTimePickerProps> = ({ onApply, defaultDateRa
       ) : null}
     </Styles.Wrapper>
   );
+};
+
+DateTimePicker.defaultProps = {
+  onApply: () => {},
+  defaultDateRange: {
+    startDate: Date.now(),
+    endDate: null,
+  },
 };
 
 export default DateTimePicker;

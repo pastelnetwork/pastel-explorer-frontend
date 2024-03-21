@@ -41,9 +41,9 @@ export default function useBlocks(
   }
   const { data, isLoading, size, setSize } = useSWRInfinite(
     index =>
-      `${URLS.BLOCK_URL}?offset=${
-        index * DATA_FETCH_LIMIT
-      }&limit=${limit}&sortBy=${newSortBy}&sortDirection=${sortDirection}${dateParam}${typesParam}`,
+      `${URLS.BLOCK_URL}?offset=${index * DATA_FETCH_LIMIT}&limit=${
+        limit + 1
+      }&sortBy=${newSortBy}&sortDirection=${sortDirection}${dateParam}${typesParam}`,
     axiosGet,
     SWR_OPTIONS,
   );

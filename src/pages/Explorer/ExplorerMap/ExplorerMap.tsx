@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
-import { Grid, Typography } from '@material-ui/core';
-import Skeleton from '@material-ui/lab/Skeleton';
+import { Grid, Typography } from '@mui/material';
+import Skeleton from '@mui/material/Skeleton';
 import parse from 'html-react-parser';
 
 import Map from '@components/Map/Map';
 import { setInfoDrawer } from '@redux/actions/infoDrawerActions';
+import { AppDispatchType } from '@redux/store';
 import useNetwork from '@hooks/useNetwork';
 import themeVariant from '@theme/variants';
 import { translate, translateDropdown } from '@utils/helpers/i18n';
@@ -22,7 +23,7 @@ interface ExplorerMapProps {
 
 const ExplorerMap: React.FC<ExplorerMapProps> = ({ hidePeer = false }) => {
   const { geoLocationList, nodesLength, isLoading } = useNetwork(hidePeer);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatchType>();
   const mapOptions = generateMapOptions(geoLocationList);
 
   const mapMarkerClickOption = {
@@ -42,7 +43,7 @@ const ExplorerMap: React.FC<ExplorerMapProps> = ({ hidePeer = false }) => {
         <ExplorerStyles.BlockTitle>
           {parse(translate('pages.explorer.explorerMap'))}
         </ExplorerStyles.BlockTitle>
-        <Skeleton animation="wave" variant="rect" height={355} />
+        <Skeleton animation="wave" variant="rectangular" height={355} />
       </ExplorerStyles.BlockWrapper>
     );
   }
@@ -72,6 +73,10 @@ const ExplorerMap: React.FC<ExplorerMapProps> = ({ hidePeer = false }) => {
       </Styles.LegendContainer>
     </Styles.Container>
   );
+};
+
+ExplorerMap.defaultProps = {
+  hidePeer: false,
 };
 
 export default ExplorerMap;

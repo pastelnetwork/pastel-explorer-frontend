@@ -1,5 +1,5 @@
-import { Grid } from '@material-ui/core';
-import format from 'date-fns/format';
+import { Grid } from '@mui/material';
+import { format } from 'date-fns';
 import parse from 'html-react-parser';
 
 import RouterLink from '@components/RouterLink/RouterLink';

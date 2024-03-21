@@ -1,6 +1,6 @@
-import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import thunk from 'redux-thunk';
+import { legacy_createStore as createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from '@redux-devtools/extension';
+import { thunk } from 'redux-thunk';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
@@ -13,7 +13,8 @@ const persistConfig = {
 
 const composeEnhancers = composeWithDevTools({});
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const persistedReducer = persistReducer(persistConfig, rootReducer as any);
 const store = createStore(persistedReducer, composeEnhancers(applyMiddleware(thunk)));
 
 export const persistor = persistStore(store);

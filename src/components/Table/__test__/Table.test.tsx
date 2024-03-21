@@ -1,11 +1,12 @@
 import { shallow } from 'enzyme';
-import MuiTable from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import MuiTable from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import CircularProgress from '@mui/material/CircularProgress';
 import 'jest-styled-components';
 
+import { MyMockType } from '@utils/types/MockType';
 import i18next from '../../../utils/helpers/i18n';
 import Table from '../Table';
 import * as Styles from '../Table.styles';
@@ -32,7 +33,7 @@ jest.mock('react-i18next', () => ({
 }));
 i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
-});
+}) as MyMockType;
 
 describe('components/Table', () => {
   const headers = [
@@ -64,10 +65,6 @@ describe('components/Table', () => {
 
   test('should render <Styles.BlockWrapper>', () => {
     expect(wrapper.find(Styles.BlockWrapper).length).toBeGreaterThanOrEqual(1);
-  });
-
-  test('should render <Styles.Card>', () => {
-    expect(wrapper.find(Styles.Card).length).toBeGreaterThanOrEqual(1);
   });
 
   test('should render <Styles.PaperWrapper>', () => {

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-import Tooltip from '@material-ui/core/Tooltip';
-import { Table, TableBody, TableHead, TableRow } from '@material-ui/core';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles, createStyles } from '@mui/styles';
+import Modal from '@mui/material/Modal';
+import Backdrop from '@mui/material/Backdrop';
+import Fade from '@mui/material/Fade';
+import Tooltip from '@mui/material/Tooltip';
+import { Table, TableBody, TableHead, TableRow } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 import TimeAgo from 'react-timeago';
 import parse from 'html-react-parser';
 

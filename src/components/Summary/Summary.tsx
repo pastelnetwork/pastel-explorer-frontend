@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import { Skeleton } from '@material-ui/lab';
-import { withStyles, makeStyles } from '@material-ui/styles';
+import Skeleton from '@mui/material/Skeleton';
+import { withStyles, makeStyles } from '@mui/styles';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import Tooltip from '@material-ui/core/Tooltip';
-import Box from '@material-ui/core/Box';
+import Tooltip from '@mui/material/Tooltip';
+import Box from '@mui/material/Box';
 import parse from 'html-react-parser';
 
 // application
@@ -27,6 +27,7 @@ import { ISocketData } from '@utils/types/ISocketData';
 import { getCurrencyName } from '@utils/appInfo';
 import useNetwork from '@hooks/useNetwork';
 import { translate } from '@utils/helpers/i18n';
+import { getMinMax } from '@utils/helpers/statisticsLib';
 
 import * as Styles from './Summary.styles';
 import { LineChart } from './LineChart';
@@ -196,6 +197,7 @@ const Summary: React.FC = () => {
     let dataY2;
     let offset = 0;
     let parseChartData;
+    let minMax;
 
     switch (key) {
       case 'circulatingSupply':
@@ -208,43 +210,48 @@ const Summary: React.FC = () => {
         parseChartData = transformChartData(key);
         dataX = parseChartData?.dataX;
         dataY = parseChartData?.dataY;
-        offset = 10;
+        offset = 0;
         break;
       case 'percentPSLStaked':
         parseChartData = transformChartData(key);
         dataX = parseChartData?.dataX;
         dataY = parseChartData?.dataY;
-        offset = 0.004;
+        minMax = getMinMax(parseChartData?.dataY || []);
+        offset = minMax[1] * 0.01;
         break;
       case 'nonZeroAddressesCount':
         parseChartData = transformChartData(key);
         dataX = parseChartData?.dataX;
         dataY = parseChartData?.dataY;
-        offset = 1;
+        offset = 0;
         break;
       case 'gigaHashPerSec':
         parseChartData = transformNetworkChartData(key);
         dataX = parseChartData?.dataX;
         dataY = parseChartData?.dataY;
-        offset = 0;
+        minMax = getMinMax(parseChartData?.dataY || []);
+        offset = minMax[1] * 0.02;
         break;
       case 'difficulty':
         parseChartData = transformChartData(key);
         dataX = parseChartData?.dataX;
         dataY = parseChartData?.dataY;
-        offset = 10000;
+        minMax = getMinMax(parseChartData?.dataY || []);
+        offset = minMax[1] * 0.02;
         break;
       case 'avgBlockSizeLast24Hour':
         parseChartData = transformChartData(key);
         dataX = parseChartData?.dataX;
         dataY = parseChartData?.dataY;
-        offset = 1;
+        minMax = getMinMax(parseChartData?.dataY || []);
+        offset = minMax[1] * 0.001;
         break;
       case 'avgTransactionPerBlockLast24Hour':
         parseChartData = transformChartData(key);
         dataX = parseChartData?.dataX;
         dataY = parseChartData?.dataY;
-        offset = 1;
+        minMax = getMinMax(parseChartData?.dataY || []);
+        offset = minMax[1] * 0.001;
         break;
       default:
         break;

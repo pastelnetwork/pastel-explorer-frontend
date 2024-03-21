@@ -1,10 +1,10 @@
-import { createElement } from 'react';
-import { mount, shallow } from 'enzyme';
-import { Provider } from 'react-redux';
-import * as redux from 'react-redux';
+import { shallow, render } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
+import { BrowserRouter as Router, Route, Routes as Switch } from 'react-router-dom';
 import 'jest-styled-components';
 
+import { MyMockType } from '@utils/types/MockType';
+import * as ChartStyles from '@pages/HistoricalStatistics/Chart/Chart.styles';
 import i18next from '../../../utils/helpers/i18n';
 import ReduxProvider from '../../../__mock__/ReduxProvider';
 import Blocks from '../Blocks';
@@ -31,7 +31,7 @@ jest.mock('react-i18next', () => ({
 }));
 i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
-});
+}) as MyMockType;
 
 const initialMockStore = {
   dateRange: null,
@@ -43,35 +43,55 @@ const initialMockStore = {
 };
 const mockStore = configureMockStore();
 const store = mockStore(initialMockStore);
-jest.spyOn(redux, 'useSelector').mockReturnValue(initialMockStore);
 
 describe('pages/Blocks', () => {
-  const wrapper = mount(
-    createElement(() => (
-      <ReduxProvider store={store}>
-        <Blocks />
-      </ReduxProvider>
-    )),
+  const wrapper = shallow(
+    <div>
+      <Router>
+        <Switch>
+          <Route
+            element={
+              <ReduxProvider store={store}>
+                <Blocks />
+              </ReduxProvider>
+            }
+          />
+        </Switch>
+      </Router>
+    </div>,
+  );
+  const page = render(
+    <div>
+      <Router>
+        <Switch>
+          <Route
+            element={
+              <ReduxProvider store={store}>
+                <Blocks />
+              </ReduxProvider>
+            }
+          />
+        </Switch>
+      </Router>
+    </div>,
   );
 
   test('renders correctly', () => {
-    const page = shallow(
-      <Provider store={store}>
-        <Blocks />
-      </Provider>,
-    );
-    expect(page).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
-
   test('should render table', () => {
-    expect(wrapper.html().search('ReactVirtualized__Table').valueOf()).not.toEqual(-1);
+    expect(page.cheerio.search('ReactVirtualized__Table')).toBeDefined();
   });
 
   test('should render dropdown', () => {
-    expect(wrapper.html().search('MuiSelect-select').valueOf()).not.toEqual(-1);
+    expect(page.cheerio.search('MuiSelect-select')).toBeDefined();
   });
 
-  test('should render title', () => {
-    expect(wrapper.html().search(Styles.Title).valueOf()).not.toEqual(-1);
+  test('should render Styles.TableContainer', () => {
+    expect(page.cheerio.search(Styles.TableContainer.toString())).toBeDefined();
+  });
+
+  test('should render ChartStyles.CSVLinkButton', () => {
+    expect(page.cheerio.search(ChartStyles.CSVLinkButton.toString())).toBeDefined();
   });
 });

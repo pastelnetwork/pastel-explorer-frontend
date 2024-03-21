@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import subDays from 'date-fns/subDays';
-import format from 'date-fns/format';
+import CircularProgress from '@mui/material/CircularProgress';
+import { subDays, format } from 'date-fns';
 import parse from 'html-react-parser';
 
 import { periods } from '@utils/constants/statistics';

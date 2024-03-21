@@ -1,7 +1,8 @@
 import { shallow } from 'enzyme';
-import { ThemeProvider } from 'styled-components/macro';
+import { ThemeProvider } from 'styled-components';
 import 'jest-styled-components';
 
+import { MyMockType } from '@utils/types/MockType';
 import { themeLight } from '../../../theme';
 import i18next from '../../../utils/helpers/i18n';
 import SearchBar from '../SearchBar';
@@ -28,13 +29,12 @@ jest.mock('react-i18next', () => ({
 }));
 i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
-});
+}) as MyMockType;
 
 describe('components/SearchBar', () => {
-  const onDrawerToggle = jest.fn();
   const wrapper = shallow(
     <ThemeProvider theme={themeLight}>
-      <SearchBar onDrawerToggle={onDrawerToggle} />
+      <SearchBar isDarkMode />
     </ThemeProvider>,
   );
 

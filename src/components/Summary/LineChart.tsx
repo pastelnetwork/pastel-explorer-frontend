@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import ReactECharts from 'echarts-for-react';
 import * as echarts from 'echarts';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { TThemeInitOption, TThemeColor } from '@utils/constants/types';
 import { getSummaryThemeUpdateOption } from '@utils/helpers/chartOptions';
@@ -44,7 +44,7 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
     chartColor,
   } = props;
   const { darkMode } = useSelector(getThemeState);
-  const history = useHistory();
+  const navigate = useNavigate();
   const [currentTheme, setCurrentTheme] = useState<TThemeColor | null>(null);
   const [minY, setMinY] = useState(0);
   const [maxY, setMaxY] = useState(0);
@@ -136,8 +136,8 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
   const options = getSummaryThemeUpdateOption(params);
 
   const onChartClick = () => {
-    if (!props.disableClick) {
-      history.push(getRouteForChart(chartName));
+    if (!props?.disableClick) {
+      navigate(getRouteForChart(chartName));
     }
   };
 

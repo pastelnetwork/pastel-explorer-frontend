@@ -5,7 +5,7 @@ import {
   Accordion as MuiAccordion,
   Grid,
   IconButton,
-} from '@material-ui/core';
+} from '@mui/material';
 
 export const Wrapper = styled('div')`
   .block-wrapper {
@@ -178,11 +178,13 @@ export const DetailsDescription = styled(Grid)`
 `;
 
 export const DetailsContainer = styled(Grid)`
-  margin: 5px 0;
+  &.MuiGrid-container {
+    margin: 5px 0;
 
-  ${props => props.theme.breakpoints.down('sm')} {
-    flex-wrap: nowrap;
-    padding-right: 10px;
+    ${props => props.theme.breakpoints.down('sm')} {
+      flex-wrap: nowrap;
+      padding-right: 10px;
+    }
   }
 `;
 
@@ -235,5 +237,80 @@ export const GridStyle = styled(Grid)`
         background-color: ${props => props.theme.table.hover} !important;
       }
     }
+  }
+`;
+
+export const VideoWrapper = styled.div`
+  &,
+  .main-content {
+    height: 128px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    border: 0;
+    background: transparent;
+  }
+
+  .main-content {
+    &.audio {
+      height: 60px;
+    }
+  }
+
+  &.video {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+  }
+
+  .view-full {
+    text-align: center;
+  }
+
+  video,
+  img,
+  audio {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+  }
+
+  audio {
+    height: 60px;
+    width: 500px;
+
+    @media screen and (max-width: 1024px) {
+      width: 55vw;
+    }
+  }
+`;
+
+export const ViewFullButton = styled.button`
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: ${props => props.theme.link.main};
+  cursor: pointer;
+
+  &:hover {
+    color: ${props => props.theme.link.hover};
+  }
+
+  &:active {
+    color: ${props => props.theme.link.pressed};
+  }
+`;
+
+export const MinedIconWrapper = styled.span`
+  display: inline-flex;
+
+  .mining-icon {
+    font-size: 18px;
+    fill: ${props => props.theme.palette.text.primary} !important;
+  }
+
+  &.ml-2 {
+    margin-left: 2px;
   }
 `;

@@ -1,7 +1,7 @@
 import { useEffect, useState, MouseEvent } from 'react';
 import { useParams } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from '@mui/material/Grid';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import Pagination from '@components/Pagination/Pagination';
 import { getSubHours } from '@utils/helpers/date/date';
@@ -13,15 +13,11 @@ import TicketsList from './TicketList';
 import { TICKET_STATUS_OPTIONS, TICKET_SORT_OPTIONS } from './TicketsType.helpers';
 import * as Styles from './TicketsType.styles';
 
-interface ParamTypes {
-  type: string;
-}
-
 const LIMIT = 6;
 
 const TicketsType: React.FC = () => {
-  const { type } = useParams<ParamTypes>();
-  const [selectedType, setTicketType] = useState<string>(type);
+  const { type } = useParams();
+  const [selectedType, setTicketType] = useState<string>(type as string);
   const [selectedSort, setTicketSort] = useState<string>(TICKET_SORT_OPTIONS[0].value);
   const [selectedStatus, setSelectedStatus] = useState<string>(TICKET_STATUS_OPTIONS[0].value);
   const [selectedTime, setSelectedTime] = useState<string>(blocksPeriodFilters[4].value);
@@ -55,7 +51,7 @@ const TicketsType: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      setTicketType(type);
+      setTicketType(type as string);
       setCurrentPage(0);
     })();
   }, [type]);

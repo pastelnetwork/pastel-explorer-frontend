@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Popover from '@material-ui/core/Popover';
+import Popover from '@mui/material/Popover';
 
 export const Wrapper = styled.div`
   display: inline-flex;

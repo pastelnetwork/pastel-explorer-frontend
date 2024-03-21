@@ -1,25 +1,21 @@
 import { useEffect, useState } from 'react';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
-import DateFnsUtils from '@date-io/date-fns';
 import { H } from 'highlight.run';
-
-import { ThemeProvider } from 'styled-components/macro';
+import jssPreset from 'jss-preset-default';
+import { ThemeProvider } from 'styled-components';
 import { create } from 'jss';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import {
-  StylesProvider,
-  ThemeProvider as MuiThemeProvider,
-  jssPreset,
-} from '@material-ui/core/styles';
+import { ThemeProvider as MuiThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import { StylesProvider } from '@mui/styles';
 
 import ErrorHandler from '@pages/ErrorHandler/ErrorHandler';
 import ResponseErrorAlert from '@components/ResponseErrorAlert/ResponseErrorAlert';
 import InfoDrawer from '@components/InfoDrawer/InfoDrawer';
-import { useSelector, useDispatch } from 'react-redux';
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { setAppThemeAction } from '@redux/actions/appThemeAction';
 import { setApiHostingAction } from '@redux/actions/clusterAction';
+import { AppDispatchType } from '@redux/store';
 import { socket, SocketContext } from '@context/socket';
 import { DEFAULT_CURRENCY } from '@utils/appInfo';
 import {
@@ -36,11 +32,6 @@ import * as Styles from './App.styles';
 
 import './global.styles.css';
 
-const jss = create({
-  ...jssPreset(),
-  insertionPoint: document.getElementById('jss-insertion-point') as HTMLElement,
-});
-
 H.init(process.env.REACT_APP_EXPLORER_HIGHLIGHT_PROJECT_ID, {
   tracingOrigins: true,
   networkRecording: {
@@ -54,8 +45,13 @@ H.init(process.env.REACT_APP_EXPLORER_HIGHLIGHT_PROJECT_ID, {
   },
 });
 
+const jss = create({
+  ...jssPreset(),
+  insertionPoint: document.getElementById('jss-insertion-point') as HTMLElement,
+});
+
 const App: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatchType>();
   const [succeed, setSucceed] = useState<boolean>(false);
   useEffect(() => {
     const isDarkModeInit = localStorage.getItem('darkMode') === 'true';
@@ -97,8 +93,8 @@ const App: React.FC = () => {
     <HelmetProvider>
       <Helmet titleTemplate="%s | Pastel Explorer" defaultTitle="Pastel Explorer" />
       <SocketContext.Provider value={socket}>
-        <StylesProvider jss={jss}>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <StyledEngineProvider injectFirst>
+          <StylesProvider jss={jss}>
             <MuiThemeProvider theme={isDarkMode ? themeDark : themeLight}>
               <ThemeProvider theme={isDarkMode ? themeDark : themeLight}>
                 <ErrorHandler>
@@ -108,8 +104,8 @@ const App: React.FC = () => {
                 <InfoDrawer />
               </ThemeProvider>
             </MuiThemeProvider>
-          </MuiPickersUtilsProvider>
-        </StylesProvider>
+          </StylesProvider>
+        </StyledEngineProvider>
       </SocketContext.Provider>
     </HelmetProvider>
   );

@@ -1,17 +1,16 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
-import { Card as MuiCard, TableCell, Paper } from '@material-ui/core';
-import MuiMenuItem from '@material-ui/core/MenuItem';
-import { spacing } from '@material-ui/system';
+import { Card as MuiCard, TableCell, Paper } from '@mui/material';
+import MuiMenuItem from '@mui/material/MenuItem';
 
-const StyledCard = styled(MuiCard)`
+export const StyledCard = styled(MuiCard)`
   background-color: ${props => props.theme.palette.background.paper} !important;
-  padding: 0 ${props => props.theme.spacing(9)}px;
+  padding: 0 36px;
   padding-bottom: 0 !important;
   box-shadow: none;
 
   @media (max-width: 960px) {
-    padding: 0 ${props => props.theme.spacing(2)}px;
+    padding: 0 8px;
     padding-bottom: 8px !important;
   }
 
@@ -28,7 +27,7 @@ const StyledCard = styled(MuiCard)`
   }
 `;
 
-export const Card = styled(StyledCard)(spacing);
+export const Card = styled(StyledCard);
 
 export const TableWrapper = styled.div`
   overflow-y: auto;
@@ -102,7 +101,9 @@ export const TableWrapper = styled.div`
 export const TableContainer = styled(Paper)`
   position: relative;
   background: ${props => props.theme.palette.background.default};
-  box-shadow: rgb(50 50 93 / 3%) 0px 2px 5px -1px, rgb(0 0 0 / 5%) 0px 1px 3px -1px !important;
+  box-shadow:
+    rgb(50 50 93 / 3%) 0px 2px 5px -1px,
+    rgb(0 0 0 / 5%) 0px 1px 3px -1px !important;
 `;
 
 export const Cell = styled(TableCell)`
@@ -230,7 +231,7 @@ export const FilterWrapper = styled.div`
     }
   }
 
-  ${props => props.theme.breakpoints.down('xs')} {
+  ${props => props.theme.breakpoints.down('sm')} {
     .filter-item {
       button {
         min-width: unset;

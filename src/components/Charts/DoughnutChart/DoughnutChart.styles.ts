@@ -1,7 +1,7 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { Card as MuiCard, CardContent as MuiCardContent, Grid } from '@material-ui/core';
+import { Card as MuiCard, CardContent as MuiCardContent, Grid } from '@mui/material';
 
 export const Card = styled(MuiCard)`
   background: transparent;
@@ -23,7 +23,7 @@ export const CardContent = styled(MuiCardContent)`
 
   &:last-child {
     padding-top: 0;
-    padding-bottom: ${props => props.theme.spacing(2)}px;
+    padding-bottom: 8px;
   }
 
   ${props => props.theme.breakpoints.down('sm')} {

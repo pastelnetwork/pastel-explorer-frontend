@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import parse from 'html-react-parser';
 
 import {
@@ -9,11 +9,11 @@ import {
   AccordionSummary,
   AccordionDetails,
   Typography,
-} from '@material-ui/core';
-import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
+} from '@mui/material';
+import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 import RouterLink, { ExternalLink } from '@components/RouterLink/RouterLink';
 import Header from '@components/Header/Header';
@@ -37,15 +37,12 @@ import * as BlockStyles from '@pages/Blocks/Blocks.styles';
 import { blockHeaders, transactionHeaders, generateDetailsElement } from './BlockDetails.helpers';
 import * as Styles from './BlockDetails.styles';
 import TicketsList from './Tickets';
-
-interface ParamTypes {
-  id: string;
-}
+import MinedIcon from './MinedIcon';
 
 const BlockDetails = () => {
-  const history = useHistory();
-  const { id } = useParams<ParamTypes>();
-  const { swrData, isLoading } = useBlockDetails(id);
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const { swrData, isLoading } = useBlockDetails(id as string);
   const [isMobile, setMobileView] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [block, setBlock] = useState<IBlock | null>();
@@ -75,12 +72,25 @@ const BlockDetails = () => {
     }
   }, [isLoading, swrData]);
 
-  const generateBlockTable = ({ height, confirmations, size, timestamp }: IBlock): RowsProps[] => {
+  const generateBlockTable = ({
+    height,
+    confirmations,
+    size,
+    timestamp,
+    type,
+  }: IBlock): RowsProps[] => {
     return [
       {
         id: 1,
         data: [
-          { id: 1, value: height },
+          {
+            id: 1,
+            value: (
+              <>
+                {height} <MinedIcon type={type || ''} className="ml-2" />
+              </>
+            ),
+          },
           { id: 3, value: formatNumber(confirmations) },
           { id: 4, value: formatNumber(size / 1024, { decimalsLength: 2 }) },
           { id: 6, value: formattedDate(timestamp, { dayName: false }) },
@@ -89,12 +99,48 @@ const BlockDetails = () => {
     ];
   };
 
+  const renderTicketsTypeList = (transaction: IBlockTransaction) => {
+    if (transaction.ticketsTotal === -1) {
+      return (
+        <BlockStyles.HourglassWrapper>
+          <Hourglass />
+        </BlockStyles.HourglassWrapper>
+      );
+    }
+    const ticketsTypeList = getTicketsTypeList(transaction.tickets || '');
+    if (ticketsTypeList.total > 0) {
+      return (
+        <div className="inline-block">
+          <ExternalLink
+            href={`#${transaction.id}`}
+            value={ticketsTypeList.total.toString()}
+            className="transaction-hash"
+            title={ticketsTypeList.text.join(', <br />')}
+            isUseTooltip
+          />
+        </div>
+      );
+    }
+
+    return <span>0</span>;
+  };
+
+  const renderTotalAmount = (transaction: IBlockTransaction) => {
+    if (transaction.totalAmount === 0) {
+      return (
+        <Tooltip title={translateDropdown('pages.blockDetails.shieldedTooltip')}>
+          <span>{parse(translate('common.unknown'))}</span>
+        </Tooltip>
+      );
+    }
+    return <span>{formatNumber(transaction.totalAmount, { decimalsLength: 2 })}</span>;
+  };
+
   const generateLatestTransactions = (data: Array<IBlockTransaction> | null): RowsProps[] => {
     if (!data) {
       return [];
     }
     const transactionList = data.map(transaction => {
-      const ticketsTypeList = getTicketsTypeList(transaction.tickets || '');
       return {
         id: transaction.id,
         data: [
@@ -115,45 +161,11 @@ const BlockDetails = () => {
           { id: 2, value: transaction.recipientCount },
           {
             id: 3,
-            value: (
-              <div className="inline-block">
-                {transaction.ticketsTotal === -1 ? (
-                  <BlockStyles.HourglassWrapper>
-                    <Hourglass />
-                  </BlockStyles.HourglassWrapper>
-                ) : (
-                  <>
-                    {ticketsTypeList.total > 0 ? (
-                      <div className="inline-block">
-                        <ExternalLink
-                          href={`#${transaction.id}`}
-                          value={ticketsTypeList.total.toString()}
-                          className="transaction-hash"
-                          title={ticketsTypeList.text.join(', <br />')}
-                          isUseTooltip
-                        />
-                      </div>
-                    ) : (
-                      <>0</>
-                    )}
-                  </>
-                )}
-              </div>
-            ),
+            value: <div className="inline-block">{renderTicketsTypeList(transaction)}</div>,
           },
           {
             id: 4,
-            value: (
-              <>
-                {transaction.totalAmount === 0 ? (
-                  <Tooltip title={translateDropdown('pages.blockDetails.shieldedTooltip')}>
-                    <span>{parse(translate('common.unknown'))}</span>
-                  </Tooltip>
-                ) : (
-                  formatNumber(transaction.totalAmount, { decimalsLength: 2 })
-                )}
-              </>
-            ),
+            value: renderTotalAmount(transaction),
           },
         ],
       };
@@ -163,7 +175,7 @@ const BlockDetails = () => {
   };
 
   const handleBlockChange = (currentBlock: string) =>
-    history.push(`${ROUTES.BLOCK_DETAILS}/${currentBlock}`);
+    navigate(`${ROUTES.BLOCK_DETAILS}/${currentBlock}`);
 
   const generateHeaderNavigationElement = (hash: string, type: 'previous' | 'next') => {
     if (hash) {
@@ -189,7 +201,7 @@ const BlockDetails = () => {
     const { previousBlockHash, nextBlockHash } = currentBlock;
 
     return (
-      <Grid container justify="space-evenly" alignItems="center">
+      <Grid container sx={{ justifyContent: 'space-evenly', alignItems: 'center' }}>
         {generateHeaderNavigationElement(previousBlockHash, 'previous')}
         <Styles.Typography>{`${getCurrencyName()} block: ${currentBlock.id}`}</Styles.Typography>
         {generateHeaderNavigationElement(nextBlockHash, 'next')}

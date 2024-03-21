@@ -1,9 +1,9 @@
-import Box from '@material-ui/core/Box';
-import DoneAllIcon from '@material-ui/icons/DoneAll';
-import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
-import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
-import TouchAppIcon from '@material-ui/icons/TouchApp';
+import Box from '@mui/material/Box';
+import DoneAllIcon from '@mui/icons-material/DoneAll';
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
+import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
+import TouchAppIcon from '@mui/icons-material/TouchApp';
 import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';

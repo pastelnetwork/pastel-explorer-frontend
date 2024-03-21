@@ -1,7 +1,9 @@
 import { shallow } from 'enzyme';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
+import Typography from '@mui/material/Typography';
 import 'jest-styled-components';
 
+import { MyMockType } from '@utils/types/MockType';
 import i18next from '../../../utils/helpers/i18n';
 import Header from '../Header';
 import * as Styles from '../Header.styles';
@@ -28,7 +30,7 @@ jest.mock('react-i18next', () => ({
 }));
 i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
-});
+}) as MyMockType;
 
 describe('components/Header', () => {
   const wrapper = shallow(<Header title="Donec a egestas mauris" />);
@@ -45,7 +47,7 @@ describe('components/Header', () => {
     expect(wrapper.find(Styles.Container).length).toBeGreaterThanOrEqual(1);
   });
 
-  test('should render <Styles.Typography>', () => {
-    expect(wrapper.find(Styles.Typography).length).toBeGreaterThanOrEqual(1);
+  test('should render <Typography>', () => {
+    expect(wrapper.find(Typography).length).toBeGreaterThanOrEqual(1);
   });
 });

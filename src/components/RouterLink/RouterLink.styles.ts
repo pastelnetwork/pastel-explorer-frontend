@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const RouterLink = styled(Link)<{ textsize: 'normal' | 'large' }>`
@@ -16,6 +16,10 @@ export const RouterLink = styled(Link)<{ textsize: 'normal' | 'large' }>`
 
   &:active {
     color: ${props => props.theme.link.pressed};
+  }
+
+  &.search-link:hover {
+    background-color: rgba(0, 0, 0, 0.04);
   }
 `;
 

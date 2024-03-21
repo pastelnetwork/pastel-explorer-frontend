@@ -3,10 +3,10 @@ import gsap from 'gsap';
 import Flip from 'gsap/Flip';
 
 // third party
-import { useHistory } from 'react-router-dom';
-import { Skeleton } from '@material-ui/lab';
-import { Grid, darken } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { useNavigate } from 'react-router-dom';
+import Skeleton from '@mui/material/Skeleton';
+import { Grid, darken } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import parse from 'html-react-parser';
 
 import { TAppTheme } from '@theme/index';
@@ -53,7 +53,7 @@ type TLayout = {
 };
 
 const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUnconfirmed }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const classes = useStyles();
   const [openMempoolModal, setMempoolModal] = React.useState(false);
   const el = React.useRef(null);
@@ -130,7 +130,7 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
       }, 0) || 0;
 
     return (
-      <Grid item>
+      <Grid item className="p-16">
         <BlockVisualization
           title={translateDropdown('pages.statistics.mempool')}
           height={
@@ -175,12 +175,11 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
             <Styles.GridBlocksStatisticsRoot
               wrap="nowrap"
               container
-              justify="space-between"
-              alignItems="center"
+              sx={{ alignItems: 'center', justifyContent: 'space-between' }}
               spacing={8}
             >
               {renderMempoolBlock()}
-              <Grid item>
+              <Grid item className="p-16">
                 <div
                   style={{
                     width: 3,
@@ -198,7 +197,7 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
                     ({ id, height, size, transactionCount, minutesAgo, ticketsCount, status }) => (
                       <div key={id} className={`block-box ${status}`}>
                         <BlockVisualization
-                          clickHandler={() => history.push(`${ROUTES.BLOCK_DETAILS}/${id}`)}
+                          clickHandler={() => navigate(`${ROUTES.BLOCK_DETAILS}/${id}`)}
                           height={height}
                           size={size}
                           transactionCount={transactionCount}
@@ -213,7 +212,7 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
           ) : (
             <Styles.ChartSection>
               <>
-                <Skeleton animation="wave" variant="rect" height={207} />
+                <Skeleton animation="wave" variant="rectangular" height={207} />
                 <Styles.LoadingText>{parse(translate('common.loadingData'))}</Styles.LoadingText>
               </>
             </Styles.ChartSection>

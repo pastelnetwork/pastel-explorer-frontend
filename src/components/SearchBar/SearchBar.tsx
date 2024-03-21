@@ -1,16 +1,15 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
-import { withTheme } from 'styled-components/macro';
 import _debounce from 'lodash.debounce';
 import { darken } from 'polished';
 import parse from 'html-react-parser';
 
-import { Theme, TextField, CircularProgress, makeStyles } from '@material-ui/core';
-import { Search as SearchIcon } from '@material-ui/icons';
-import MuiAutocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
-import Box from '@material-ui/core/Box';
-import Hidden from '@material-ui/core/Hidden';
-import CancelIcon from '@material-ui/icons/Cancel';
+import { TextField, CircularProgress } from '@mui/material';
+import { createStyles, makeStyles } from '@mui/styles';
+import { Search as SearchIcon } from '@mui/icons-material';
+import MuiAutocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
+import Box from '@mui/material/Box';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 import Social from '@components/Social/Social';
 import * as URLS from '@utils/constants/urls';
@@ -58,7 +57,6 @@ import {
 } from './SearchBar.helpers';
 
 interface AppBarProps {
-  theme: Theme;
   isDarkMode: boolean;
 }
 
@@ -67,29 +65,31 @@ export interface ISearchData {
   category: TOptionsCategories;
 }
 
-const useStyles = makeStyles((theme: TAppTheme) => ({
-  option: {
-    padding: 0,
-  },
-  labelInputRoot: {
-    background: theme.palette.background.default,
-    width: '80%',
-  },
-  inputRoot: {
-    border: '1px solid',
-    borderColor: darken(0.1, theme.palette.background.paper),
-    marginRight: 16,
-    [theme.breakpoints.down(960)]: {
-      marginRight: 0,
+const useStyles = makeStyles((theme: TAppTheme) =>
+  createStyles({
+    option: {
+      padding: 0,
     },
-  },
-  listboxOptions: {
-    margin: 0,
-    background: theme.palette.background.default,
-    border: 0,
-    borderRadius: 4,
-  },
-}));
+    labelInputRoot: {
+      background: theme.palette.background.default,
+      width: '80%',
+    },
+    inputRoot: {
+      border: '1px solid',
+      borderColor: darken(0.1, theme.palette.background.paper),
+      marginRight: 16,
+      [theme.breakpoints.down(960)]: {
+        marginRight: 0,
+      },
+    },
+    listboxOptions: {
+      margin: 0,
+      background: theme.palette.background.default,
+      border: 0,
+      borderRadius: 4,
+    },
+  }),
+);
 
 let isClicked = false;
 
@@ -189,18 +189,15 @@ const SearchBar: React.FC<AppBarProps> = ({ isDarkMode }) => {
     return setSearchData(groupedData.sort((a, b) => -b.category.localeCompare(a.category)));
   };
 
-  const handleInputChange = _debounce(
-    (_: React.ChangeEvent<Record<string, unknown>>, _value: string) => {
-      const value = _value.replace(/\s\s+/g, ' ').trim();
-      if (optionSelectedFromList.current || !value.length) return null;
-      !loading && setLoading(true);
-      searchData.length && setSearchData([]);
-      return fetchData({ params: { keyword: value } })
-        .then(response => response && sortSearchData(response))
-        .finally(() => setLoading(false));
-    },
-    500,
-  );
+  const handleInputChange = _debounce((_: React.SyntheticEvent<Element, Event>, _value: string) => {
+    const value = _value.replace(/\s\s+/g, ' ').trim();
+    if (optionSelectedFromList.current || !value.length) return null;
+    !loading && setLoading(true);
+    searchData.length && setSearchData([]);
+    return fetchData({ params: { keyword: value } })
+      .then(response => response && sortSearchData(response))
+      .finally(() => setLoading(false));
+  }, 500);
 
   // When user will select option from list
   // Prevent component from fetching new data and changing component states
@@ -269,65 +266,89 @@ const SearchBar: React.FC<AppBarProps> = ({ isDarkMode }) => {
         onFocus={handleFocus}
         onBlur={handleBlur}
         forcePopupIcon={false}
-        getOptionSelected={(option, value) =>
+        isOptionEqualToValue={(option, value) =>
           (option as TAutocompleteOptions).value === (value as TAutocompleteOptions).value
         }
         noOptionsText={renderNoResult()}
         loadingText={parse(translate('components.searchBar.loadingResults'))}
         size="small"
-        debug
-        renderOption={option => {
+        renderOption={(props, option) => {
           if ((option as TAutocompleteOptions).category === USERNAME) {
             return (
               <RouterLink
-                styles={{ padding: '6px 24px 6px 16px' }}
+                styles={{ padding: '6px 24px 6px 16px', display: 'block' }}
                 route={`${getRoute((option as TAutocompleteOptions).category)}/${
                   (option as TAutocompleteOptions).pastelID
                 }#${(option as TAutocompleteOptions).value}`}
                 value={(option as TAutocompleteOptions).value}
+                key={`${(option as TAutocompleteOptions).category}-${
+                  (option as TAutocompleteOptions).value
+                }`}
+                className="search-link"
+                onClick={handleCloseSearch}
               />
             );
           }
           if ((option as TAutocompleteOptions).category === SENSES_LABEL) {
             return (
               <RouterLink
-                styles={{ padding: '6px 24px 6px 16px' }}
+                styles={{ padding: '6px 24px 6px 16px', display: 'block' }}
                 route={`${getRoute((option as TAutocompleteOptions).category)}?hash=${
                   (option as TAutocompleteOptions).value
                 }`}
                 value={(option as TAutocompleteOptions).value}
+                key={`${(option as TAutocompleteOptions).category}-${
+                  (option as TAutocompleteOptions).value
+                }`}
+                className="search-link"
+                onClick={handleCloseSearch}
               />
             );
           }
           if ((option as TAutocompleteOptions).category === CASCADE) {
             return (
               <RouterLink
-                styles={{ padding: '6px 24px 6px 16px' }}
+                styles={{ padding: '6px 24px 6px 16px', display: 'block' }}
                 route={`${getRoute((option as TAutocompleteOptions).category)}?txid=${
                   (option as TAutocompleteOptions).transactionHash
                 }`}
                 value={(option as TAutocompleteOptions).value}
+                key={`${(option as TAutocompleteOptions).category}-${
+                  (option as TAutocompleteOptions).value
+                }`}
+                className="search-link"
+                onClick={handleCloseSearch}
               />
             );
           }
           if ((option as TAutocompleteOptions).category === COLLECTION) {
             return (
               <RouterLink
-                styles={{ padding: '6px 24px 6px 16px' }}
+                styles={{ padding: '6px 24px 6px 16px', display: 'block' }}
                 route={`${getRoute((option as TAutocompleteOptions).category)}/${
                   (option as TAutocompleteOptions).alias
                 }`}
                 value={(option as TAutocompleteOptions).value}
+                key={`${(option as TAutocompleteOptions).category}-${
+                  (option as TAutocompleteOptions).value
+                }`}
+                className="search-link"
+                onClick={handleCloseSearch}
               />
             );
           }
           return (
             <RouterLink
-              styles={{ padding: '6px 24px 6px 16px' }}
+              styles={{ padding: '6px 24px 6px 16px', display: 'block' }}
               route={`${getRoute((option as TAutocompleteOptions).category)}/${
                 (option as TAutocompleteOptions).value
               }`}
               value={(option as TAutocompleteOptions).value}
+              key={`${(option as TAutocompleteOptions).category}-${
+                (option as TAutocompleteOptions).value
+              }`}
+              className="search-link"
+              onClick={handleCloseSearch}
             />
           );
         }}
@@ -352,7 +373,12 @@ const SearchBar: React.FC<AppBarProps> = ({ isDarkMode }) => {
                   {loading ? (
                     <CircularProgress color="inherit" size={20} />
                   ) : (
-                    <button type="button" className="close-button" onClick={handleCloseSearch}>
+                    <button
+                      type="button"
+                      className="close-button"
+                      aria-label="Cancel"
+                      onClick={handleCloseSearch}
+                    >
                       <CancelIcon className="cancel-icon" />
                     </button>
                   )}
@@ -480,16 +506,19 @@ const SearchBar: React.FC<AppBarProps> = ({ isDarkMode }) => {
       elevation={0}
       className={`${isShowSearchInput ? 'search-show' : ''} ${forceShowSearchInput ? 'force' : ''}`}
     >
-      <Hidden mdUp>
-        <SidebarStyles.Brand component={NavLink} to={ROUTES.EXPLORER} button>
-          <Box ml={1}>
-            <SidebarStyles.BrandLogo
-              src={isDarkMode ? PastelLogoWhite : PastelLogo}
-              alt="Pastel Logo"
-            />
-          </Box>
-        </SidebarStyles.Brand>
-      </Hidden>
+      <SidebarStyles.Brand
+        component={NavLink}
+        to={ROUTES.EXPLORER}
+        button
+        sx={{ display: { xs: 'inline-flex', md: 'none' } }}
+      >
+        <Box ml={1}>
+          <SidebarStyles.BrandLogo
+            src={isDarkMode ? PastelLogoWhite : PastelLogo}
+            alt="Pastel Logo"
+          />
+        </Box>
+      </SidebarStyles.Brand>
       <Styles.ToolbarStyle className="disable-padding">
         <Styles.GridStyle
           className={`top ${isInputFocus ? 'autocomplete-focus' : ''}`}
@@ -518,4 +547,4 @@ const SearchBar: React.FC<AppBarProps> = ({ isDarkMode }) => {
   );
 };
 
-export default withTheme(SearchBar);
+export default SearchBar;

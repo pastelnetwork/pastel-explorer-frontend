@@ -1,5 +1,5 @@
 import { darken } from 'polished';
-import { green, grey, red, orange } from '@material-ui/core/colors';
+import { green, grey, red, orange } from '@mui/material/colors';
 
 const themeVariant = {
   custom: {

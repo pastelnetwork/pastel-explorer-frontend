@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { CircularProgress, Grid, Tooltip, Typography } from '@material-ui/core';
+import { CircularProgress, Grid, Tooltip, Typography } from '@mui/material';
 import parse from 'html-react-parser';
 
 import Header from '@components/Header/Header';
@@ -37,14 +37,10 @@ import {
 import TransactionRawData from './TransactionRawData';
 import BurnAddressIcon from './BurnAddressIcon';
 
-interface ParamTypes {
-  id: string;
-}
-
 const TransactionDetails = () => {
-  const { id } = useParams<ParamTypes>();
+  const { id } = useParams();
   const { usdPrice } = useUsdPrice();
-  const { data, isLoading } = useTransactionDetails(id);
+  const { data, isLoading } = useTransactionDetails(id as string);
   const [transaction, setTransaction] = useState<ITransactionDetails | null>(null);
   const [tickets, setTickets] = useState<ITicket[]>([]);
   const [senses, setSenses] = useState<TSenseRequests[]>([]);
@@ -86,7 +82,7 @@ const TransactionDetails = () => {
             {
               id: 1,
               value: (
-                <Grid container alignItems="center" wrap="nowrap">
+                <Grid container sx={{ alignItems: 'center', flexWrap: 'nowrap' }}>
                   <Styles.RowWrapper>
                     <CopyButton copyText={address} />
                     <RouterLink
@@ -231,6 +227,7 @@ const TransactionDetails = () => {
               senses={senses}
               showActivationTicket
               variant="transaction"
+              isShowCascade
             />
           </Styles.GridStyle>
         ) : null}
@@ -238,7 +235,11 @@ const TransactionDetails = () => {
     </Styles.Wrapper>
   ) : (
     <CascadeDetailsStyles.Wrapper className="content-center-wrapper">
-      <Grid container justify="center" alignItems="center" direction="column" spacing={2}>
+      <Grid
+        container
+        sx={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}
+        spacing={2}
+      >
         <Grid item>
           <Typography component="h1" variant="h1" align="center" gutterBottom>
             {parse(translate('pages.cascade.404'))}

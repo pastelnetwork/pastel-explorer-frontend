@@ -2,8 +2,9 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import Axios, { AxiosError } from 'axios';
 import { useDispatch } from 'react-redux';
-import { DEFAULT_API_URL } from '@utils/constants/urls';
 
+import { DEFAULT_API_URL } from '@utils/constants/urls';
+import { AppDispatchType } from '@redux/store';
 import { setResponseError } from '@redux/actions/responseErrorsActions';
 
 interface IUseFetchOptions {
@@ -51,7 +52,7 @@ export const useFetch = <FetchedData, Transform = FetchedData>(
   { method, url }: IUseFetchOptions,
   callback?: (_data: FetchedData) => Transform,
 ) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatchType>();
   const [isLoading, setLoading] = useState(false);
   const fetchData = async (
     options: IFetchDataOptions = {},
@@ -91,7 +92,7 @@ export function useDeferredData<FetchedData, Transform = FetchedData>(
     data: initialData || defaultData,
   }));
   const skipNextRef = useRef(initialData !== undefined);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatchType>();
 
   const memoizedSource = useCallback(async (): Promise<Transform> => {
     return axiosInstance[method](url, { params })

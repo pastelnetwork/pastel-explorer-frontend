@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 
 import { getCurrencyName } from '@utils/appInfo';
 
@@ -17,6 +17,19 @@ export const ExplorerWrapper = styled.div`
 
   .copy-icon {
     margin-left: 0;
+  }
+
+  .supernode-statistics {
+    &,
+    & > .MuiPaper-root {
+      overflow: unset;
+    }
+
+    & > .MuiPaper-root {
+      h4 {
+        border-radius: 6px 6px 0 0;
+      }
+    }
   }
 `;
 
@@ -89,7 +102,9 @@ export const BlockWrapper = styled.div`
         padding: 9px 16px;
         background-color: ${props => props.theme.table.header} !important;
 
-        &.th-block,
+        &.th-block {
+          width: 120px;
+        }
         &.th-fee,
         &.th-txs {
           width: 60px;
@@ -285,6 +300,12 @@ export const BlockTitle = styled.h4`
       p {
         display: flex;
         align-items: center;
+
+        ${props => props.theme.breakpoints.down(1101)} {
+          .MuiSvgIcon-root {
+            display: none;
+          }
+        }
       }
     }
   }
@@ -324,6 +345,12 @@ export const LinkWrapper = styled.div`
   .view-all {
     .MuiTypography-root {
       padding: 0;
+    }
+
+    ${props => props.theme.breakpoints.down(1101)} {
+      .MuiSvgIcon-root {
+        display: none;
+      }
     }
   }
 

@@ -1,6 +1,6 @@
 import * as echarts from 'echarts';
 import { EChartsOption } from 'echarts-for-react';
-import format from 'date-fns/format';
+import { format } from 'date-fns';
 
 // aplication
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
@@ -109,8 +109,8 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
                 granularity,
               )}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
-            decimalsLength: 5,
-          })}</div>
+                decimalsLength: 5,
+              })}</div>
             </div>
           `;
         },
@@ -203,9 +203,9 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
                 granularity,
               )}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(
-            params[0].value / 1000000,
-            { decimalsLength: 2 },
-          )} ${translateDropdown('chartOptions.mSolS')}</div>
+                params[0].value / 1000000,
+                { decimalsLength: 2 },
+              )} ${translateDropdown('chartOptions.mSolS')}</div>
             </div>
           `;
         },
@@ -424,8 +424,8 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
                 granularity,
               )}</div>
               <div class="item-value">${params[0].marker} ${formatNumber(params[0].value, {
-            decimalsLength: 2,
-          })} ${translateDropdown('chartOptions.kB')}</div>
+                decimalsLength: 2,
+              })} ${translateDropdown('chartOptions.kB')}</div>
             </div>
           `;
         },
@@ -537,11 +537,11 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
                 granularity,
               )}</div>
               <div class="tooltip-value">${params[0].marker} ${label}${formatNumber(
-            params[0].value,
-            {
-              decimalsLength: 5,
-            },
-          )} ${translateDropdown('chartOptions.mb')}</div>
+                params[0].value,
+                {
+                  decimalsLength: 5,
+                },
+              )} ${translateDropdown('chartOptions.mb')}</div>
             </div>
           `;
         },
@@ -634,8 +634,8 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
                 granularity,
               )}</div>
               <div class="item-value">${params[0].marker} ${formatNumber(params[0].value, {
-            decimalsLength: 4,
-          })}</div>
+                decimalsLength: 4,
+              })}</div>
             </div>
           `;
         },
@@ -1031,8 +1031,8 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
                 granularity,
               )}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
-            decimalsLength: 2,
-          })} ${translateDropdown('chartOptions.mb')}</div>
+                decimalsLength: 2,
+              })} ${translateDropdown('chartOptions.mb')}</div>
             </div>
           `;
         },
@@ -1479,11 +1479,11 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
               return `
                 <div class="tooltip-item-wrapper">
                   <div class="item-label">${translateDropdown('chartOptions.blockId')}: ${
-                params.value[0]
-              }</div>
+                    params.value[0]
+                  }</div>
                   <div class="tooltip-data-date">${translateDropdown('chartOptions.count')}: ${
-                params.value[1]
-              }</div>
+                    params.value[1]
+                  }</div>
                 </div>
               `;
             },
@@ -1809,11 +1809,11 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
                 period !== '24h' ? '1d' : 'none',
               )}</div>
               <div class="item-value">${params[0].marker} ${formatNumber(
-            dataY?.length ? dataY[params[0].dataIndex] * 100 : 0,
-            {
-              decimalsLength: 2,
-            },
-          )}</div>
+                dataY?.length ? dataY[params[0].dataIndex] * 100 : 0,
+                {
+                  decimalsLength: 2,
+                },
+              )}</div>
             </div>
           `;
         },
@@ -1890,8 +1890,8 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
                 granularity,
               )}</div>
               <div class="item-value">${params[0].marker} ${formatNumber(params[0].value, {
-            decimalsLength: 2,
-          })}</div>
+                decimalsLength: 2,
+              })}</div>
             </div>
           `;
         },
@@ -1995,8 +1995,8 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
                 granularity,
               )}</div>
               <div class="item-value">${params[0].marker} ${formatNumber(params[0].value, {
-            decimalsLength: 1,
-          })} ${getCurrencyName()}</div>
+                decimalsLength: 1,
+              })} ${getCurrencyName()}</div>
             </div>
           `;
         },
@@ -3409,7 +3409,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         top: 9,
         right: 35,
         bottom: 20,
-        left: 35,
+        left: 45,
         show: false,
       },
       tooltip: {
@@ -3492,7 +3492,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         top: 9,
         right: 35,
         bottom: 20,
-        left: 35,
+        left: 45,
         show: false,
       },
       tooltip: {
@@ -3583,8 +3583,8 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             <div class="tooltip-item-wrapper">
               <div class="item-label">${params[0].axisValue}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
-            decimalsLength: 2,
-          })} ${translateDropdown('chartOptions.kB')}</div>
+                decimalsLength: 2,
+              })} ${translateDropdown('chartOptions.kB')}</div>
             </div>
           `;
         },
@@ -3660,8 +3660,8 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             <div class="tooltip-item-wrapper">
               <div class="item-label">${params[0].axisValue}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
-            decimalsLength: 3,
-          })} ${translateDropdown('chartOptions.mSolS')}</div>
+                decimalsLength: 3,
+              })} ${translateDropdown('chartOptions.mSolS')}</div>
             </div>
           `;
         },
@@ -3747,8 +3747,8 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             <div class="tooltip-item-wrapper">
               <div class="item-label">${params[0].axisValue}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
-            decimalsLength: 2,
-          })} ${getCurrencyName()}</div>
+                decimalsLength: 2,
+              })} ${getCurrencyName()}</div>
             </div>
           `;
         },
@@ -3835,8 +3835,8 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
             <div class="tooltip-item-wrapper">
               <div class="item-label">${params[0].axisValue}</div>
               <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value, {
-            decimalsLength: 2,
-          })} ${getCurrencyName()}</div>
+                decimalsLength: 2,
+              })} ${getCurrencyName()}</div>
             </div>
           `;
         },

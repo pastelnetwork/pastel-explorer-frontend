@@ -4,6 +4,7 @@ import configureMockStore from 'redux-mock-store';
 
 import 'jest-styled-components';
 
+import { MyMockType } from '@utils/types/MockType';
 import i18next from '../../../../utils/helpers/i18n';
 import TransactionDetails from '../TransactionDetails';
 
@@ -35,7 +36,7 @@ jest.mock('react-i18next', () => ({
 }));
 i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
-});
+}) as MyMockType;
 const mockStore = configureMockStore();
 const store = mockStore({});
 

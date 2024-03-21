@@ -2,12 +2,13 @@ import { shallow } from 'enzyme';
 
 import 'jest-styled-components';
 
-import InfinityTable from '../../../components/InfinityTable/InfinityTable';
+import { MyMockType } from '@utils/types/MockType';
 import i18next from '../../../utils/helpers/i18n';
 import ExplorerMap from '../../Explorer/ExplorerMap/ExplorerMap';
 import SupernodeStatistics from '../../Explorer/SupernodeStatistics/SupernodeStatistics';
 import Supernodes from '../Supernodes';
 import * as Styles from '../Supernodes.styles';
+import * as TableStyles from '../../../components/Table/Table.styles';
 
 jest.mock('i18next-http-backend');
 jest.mock('react-i18next', () => ({
@@ -31,7 +32,7 @@ jest.mock('react-i18next', () => ({
 }));
 i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
-});
+}) as MyMockType;
 
 describe('pages/Supernodes', () => {
   const wrapper = shallow(<Supernodes />);
@@ -40,8 +41,24 @@ describe('pages/Supernodes', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  test('should render <InfinityTable>', () => {
-    expect(wrapper.find(InfinityTable).length).toBeGreaterThanOrEqual(1);
+  test('should render <TableStyles.BlockWrapper>', () => {
+    expect(wrapper.find(TableStyles.BlockWrapper).length).toBeGreaterThanOrEqual(1);
+  });
+
+  test('should render <TableStyles.BlockTitle>', () => {
+    expect(wrapper.find(TableStyles.BlockTitle).length).toBeGreaterThanOrEqual(1);
+  });
+
+  test('should render <TableStyles.PaperWrapper>', () => {
+    expect(wrapper.find(TableStyles.PaperWrapper).length).toBeGreaterThanOrEqual(1);
+  });
+
+  test('should render <TableStyles.TableWrapper>', () => {
+    expect(wrapper.find(TableStyles.TableWrapper).length).toBeGreaterThanOrEqual(1);
+  });
+
+  test('should render <TableStyles.TableCell>', () => {
+    expect(wrapper.find(TableStyles.TableCell).length).toBeGreaterThanOrEqual(1);
   });
 
   test('should render <ExplorerMap>', () => {

@@ -1,8 +1,9 @@
 import { shallow } from 'enzyme';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import 'jest-styled-components';
 
+import { MyMockType } from '@utils/types/MockType';
 import RouterLink from '../../RouterLink/RouterLink';
 import i18next from '../../../utils/helpers/i18n';
 import NFTRoyaltyTicket from '../NFTRoyaltyTicket';
@@ -31,7 +32,7 @@ jest.mock('react-i18next', () => ({
 }));
 i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
-});
+}) as MyMockType;
 
 describe('components/NFTRoyaltyTicket', () => {
   const ticket = {

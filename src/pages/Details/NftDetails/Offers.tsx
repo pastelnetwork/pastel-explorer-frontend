@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Table, TableBody, TableHead, TableRow } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { Table, TableBody, TableHead, TableRow } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
 import parse from 'html-react-parser';
 
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';

@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
-import CloseIcon from '@material-ui/icons/Close';
-import DoneIcon from '@material-ui/icons/Done';
+import { Buffer } from 'buffer';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
+import CloseIcon from '@mui/icons-material/Close';
+import DoneIcon from '@mui/icons-material/Done';
 import parse from 'html-react-parser';
 
 import RouterLink from '@components/RouterLink/RouterLink';
@@ -34,6 +36,19 @@ type TCascadeData = {
 interface IFileInfo {
   data: TCascadeData | null;
 }
+
+const getDataHash = (dataHash: string) => {
+  const dataHashBase64 = dataHash;
+  // Correct padding for base64, if necessary
+  const paddedDataHashBase64 = dataHashBase64.padEnd(
+    dataHashBase64.length + ((4 - (dataHashBase64.length % 4)) % 4),
+    '=',
+  );
+
+  // Decode base64 and convert to hex
+  const dataHashBytes = Buffer.from(paddedDataHashBase64, 'base64');
+  return dataHashBytes.toString('hex');
+};
 
 const FileInfo: React.FC<IFileInfo> = ({ data }) => {
   const [opened, setOpened] = useState(false);
@@ -68,7 +83,9 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
                     {parse(translate('pages.cascade.dataHash'))}:
                   </TicketStyles.TicketTitle>
                   <TicketStyles.TicketContent className="view-more">
-                    {data.data_hash}
+                    <Tooltip title={getDataHash(data.data_hash)}>
+                      <span>{formatAddress(getDataHash(data.data_hash), 30, -5)}</span>
+                    </Tooltip>
                   </TicketStyles.TicketContent>
                 </Box>
               </Grid>

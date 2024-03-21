@@ -1,5 +1,8 @@
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
+/* eslint-disable jsx-a11y/media-has-caption */
+import { useEffect, useState } from 'react';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 import { Link } from 'react-router-dom';
 import { decode } from 'js-base64';
 import parse from 'html-react-parser';
@@ -43,9 +46,11 @@ import {
 import { translate } from '@utils/helpers/i18n';
 import * as ascii85 from '@utils/helpers/ascii85';
 import { getFileIcon } from '@pages/Details/CascadeDetails/CascadeDetails.helpers';
+import { axiosInstance } from '@utils/helpers/useFetch/useFetch';
 
 import * as TableStyles from '@components/Table/Table.styles';
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
+import * as SenseStyles from '@pages/Details/SenseDetails/SenseDetails.styles';
 import noImagePlaceholder from '@assets/images/no-image-placeholder.svg';
 import * as Styles from './BlockDetails.styles';
 
@@ -54,13 +59,152 @@ interface ITicketsList {
   senses?: TSenseRequests[];
   showActivationTicket?: boolean;
   variant?: string;
+  isShowCascade?: boolean;
 }
+
+const FILE_TYPE = [
+  'video/mp4',
+  'video/quicktime',
+  'image/gif',
+  'image/png',
+  'image/jpeg',
+  'image/svg+xml',
+  'audio/mpeg',
+  'audio/ogg',
+];
+const FILE_EXTENSION = ['mp4', 'mov', 'gif', 'png', 'jpeg', 'jpg', 'svg', 'mp3', 'ogg'];
+const VIDEO_FILE_TYPE = ['video/mp4', 'video/quicktime'];
+const IMAGE_FILE_TYPE = ['image/gif', 'image/png', 'image/jpeg', 'image/svg+xml'];
+const AUDIO_FILE_TYPE = ['audio/mpeg', 'audio/ogg'];
+const VIDEO_FILE_EXTENSION = ['mp4', 'mov'];
+const IMAGE_FILE_EXTENSION = ['gif', 'png', 'jpeg', 'jpg', 'svg'];
+const AUDIO_FILE_EXTENSION = ['mp3', 'ogg'];
+
+const CascadeItem = ({
+  transactionHash,
+  file_type,
+  file_name,
+}: {
+  transactionHash: string;
+  file_type: string;
+  file_name: string;
+}) => {
+  const [fileContent, setFileContent] = useState('');
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const downloadFile = async () => {
+    if (transactionHash) {
+      const url = `${process.env.REACT_APP_EXPLORER_OPENNODE_API_URL}/get_publicly_accessible_cascade_file_by_registration_ticket_txid/${transactionHash}`;
+      axiosInstance
+        .get(url, { responseType: 'blob' })
+        .then(res => {
+          setFileContent(URL.createObjectURL(new Blob([res.data], { type: file_type })));
+        })
+        .catch(() => {
+          // noop
+        });
+    }
+  };
+
+  useEffect(() => {
+    downloadFile();
+  }, [transactionHash]);
+
+  const parseFileName = file_name.split('.');
+  const getFileContent = () => {
+    if (
+      VIDEO_FILE_TYPE.includes(file_type) ||
+      VIDEO_FILE_EXTENSION.includes(parseFileName[parseFileName.length - 1])
+    ) {
+      return (
+        <video controls muted autoPlay playsInline>
+          <source src={fileContent} type="video/mp4" />
+          <source src={fileContent} type="video/quicktime" />
+          {parse(translate('pages.blockDetails.videoNotSupport'))}
+        </video>
+      );
+    }
+
+    if (
+      IMAGE_FILE_TYPE.includes(file_type) ||
+      IMAGE_FILE_EXTENSION.includes(parseFileName[parseFileName.length - 1])
+    ) {
+      return (
+        <img
+          src={fileContent}
+          alt={file_name}
+          className={file_type === 'image/svg+xml' ? 'svg' : ''}
+        />
+      );
+    }
+    if (
+      AUDIO_FILE_TYPE.includes(file_type) ||
+      AUDIO_FILE_EXTENSION.includes(parseFileName[parseFileName.length - 1])
+    ) {
+      return (
+        <audio controls muted autoPlay>
+          <source src={fileContent} type="audio/ogg" />
+          <source src={fileContent} type="audio/mpeg" />
+          {parse(translate('pages.blockDetails.audioNotSupport'))}
+        </audio>
+      );
+    }
+
+    return null;
+  };
+  if (
+    FILE_TYPE.includes(file_type) ||
+    FILE_EXTENSION.includes(parseFileName[parseFileName.length - 1])
+  ) {
+    return (
+      <TicketStyles.TicketContent>
+        {fileContent ? (
+          <>
+            <Styles.VideoWrapper className="video">
+              <Box className={`main-content ${AUDIO_FILE_TYPE.includes(file_type) ? 'audio' : ''}`}>
+                {getFileContent()}
+              </Box>
+              <Box className="view-full">
+                (
+                <Styles.ViewFullButton onClick={handleClickOpen}>
+                  {parse(translate('pages.blockDetails.viewFull'))}
+                </Styles.ViewFullButton>
+                )
+              </Box>
+            </Styles.VideoWrapper>
+            <SenseStyles.Dialog onClose={handleClose} open={open}>
+              <SenseStyles.FullImageWrapper>{getFileContent()}</SenseStyles.FullImageWrapper>
+            </SenseStyles.Dialog>
+          </>
+        ) : (
+          <Styles.VideoWrapper>
+            <CircularProgress size={40} />
+          </Styles.VideoWrapper>
+        )}
+      </TicketStyles.TicketContent>
+    );
+  }
+  return (
+    <TicketStyles.TicketContent>
+      <Link to={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}>{getFileIcon(file_type)}</Link>
+    </TicketStyles.TicketContent>
+  );
+};
 
 const TicketsList: React.FC<ITicketsList> = ({
   data,
   senses,
   showActivationTicket = false,
   variant,
+  isShowCascade = false,
 }) => {
   if (!data?.length) {
     return null;
@@ -112,22 +256,30 @@ const TicketsList: React.FC<ITicketsList> = ({
       }
 
       return (
-        <>
-          <Grid container spacing={3}>
-            <Grid item xs={4} sm={3} className="max-w-355">
-              <TicketStyles.TicketTitle>
-                {parse(translate('pages.blockDetails.cascadeFileType'))}
-              </TicketStyles.TicketTitle>
-            </Grid>
-            <Grid item xs={8} sm={9}>
+        <Grid container spacing={3}>
+          <Grid item xs={4} sm={3} className="max-w-355">
+            <TicketStyles.TicketTitle>
+              {isShowCascade
+                ? parse(translate('pages.blockDetails.file'))
+                : parse(translate('pages.blockDetails.cascadeFileType'))}
+            </TicketStyles.TicketTitle>
+          </Grid>
+          <Grid item xs={8} sm={9}>
+            {isShowCascade ? (
+              <CascadeItem
+                transactionHash={transactionHash}
+                file_type={apiTicket.file_type}
+                file_name={apiTicket.file_name}
+              />
+            ) : (
               <TicketStyles.TicketContent>
                 <Link to={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}>
                   {getFileIcon(apiTicket.file_type)}
                 </Link>
               </TicketStyles.TicketContent>
-            </Grid>
+            )}
           </Grid>
-        </>
+        </Grid>
       );
     }
 

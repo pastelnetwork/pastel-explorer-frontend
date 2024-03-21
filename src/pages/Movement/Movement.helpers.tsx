@@ -1,6 +1,7 @@
-import { Tooltip, Grid } from '@material-ui/core';
+import { Tooltip, Grid } from '@mui/material';
 import parse from 'html-react-parser';
 
+import { HIDE_TO_BLOCK } from '@utils/appInfo';
 import RouterLink from '@components/RouterLink/RouterLink';
 import CopyButton from '@components/CopyButton/CopyButton';
 import Hourglass from '@components/Hourglass/Hourglass';
@@ -89,7 +90,7 @@ export const transformMovementData = (transactions: Array<ITransaction>) =>
         [BLOCK_KEY]: generateBlockKeyValue(blockHash, block.height),
         [RECIPIENT_COUNT_KEY]: recipientCount,
         [AMOUNT_MOVEMENT_KEY]: (
-          <>
+          <div>
             {isNonStandard ? (
               <Tooltip title={translateDropdown('pages.movement.shieldedTransactionInfo')}>
                 <span>{parse(translate('common.unknown'))}</span>
@@ -97,28 +98,34 @@ export const transformMovementData = (transactions: Array<ITransaction>) =>
             ) : (
               formatNumber(totalAmount, { decimalsLength: 2 })
             )}
-          </>
+          </div>
         ),
         [TICKETS_KEY]: (
           <div className="inline-block">
-            {ticketsTotal === -1 ? (
-              <BlockStyles.HourglassWrapper>
-                <Hourglass />
-              </BlockStyles.HourglassWrapper>
+            {Number(block.height) < HIDE_TO_BLOCK ? (
+              <>0</>
             ) : (
-              <>
-                {ticketsTypeList.total > 0 ? (
-                  <RouterLink
-                    route={`${ROUTES.TRANSACTION_DETAILS}/${id}`}
-                    value={ticketsTypeList.total}
-                    textSize="large"
-                    title={ticketsTypeList.text.join(', <br />')}
-                    isUseTooltip
-                  />
+              <div>
+                {ticketsTotal === -1 ? (
+                  <BlockStyles.HourglassWrapper>
+                    <Hourglass />
+                  </BlockStyles.HourglassWrapper>
                 ) : (
-                  0
+                  <div>
+                    {ticketsTypeList.total > 0 ? (
+                      <RouterLink
+                        route={`${ROUTES.TRANSACTION_DETAILS}/${id}`}
+                        value={ticketsTypeList.total}
+                        textSize="large"
+                        title={ticketsTypeList.text.join(', <br />')}
+                        isUseTooltip
+                      />
+                    ) : (
+                      0
+                    )}
+                  </div>
                 )}
-              </>
+              </div>
             )}
           </div>
         ),

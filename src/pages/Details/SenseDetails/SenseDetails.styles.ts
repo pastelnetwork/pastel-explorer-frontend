@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import Box from '@material-ui/core/Box';
-import MuiDialog from '@material-ui/core/Dialog';
+import Box from '@mui/material/Box';
+import MuiDialog from '@mui/material/Dialog';
 
 export const Wrapper = styled('div')`
   display: block;
@@ -696,6 +696,25 @@ export const FullImageWrapper = styled.div`
   height: 100%;
   max-height: 95vh;
   overflow: hidden;
+
+  img {
+    &.svg {
+      height: 95vh;
+
+      @media screen and (max-width: 1024px) {
+        height: auto;
+        width: 95vw;
+      }
+    }
+  }
+
+  video,
+  audio {
+    @media screen and (max-width: 1024px) {
+      height: auto;
+      width: 95vw;
+    }
+  }
 `;
 
 export const Dialog = styled(MuiDialog)`
@@ -705,6 +724,7 @@ export const Dialog = styled(MuiDialog)`
 
     img {
       max-height: 95vh;
+      max-width: 100%;
     }
   }
 `;

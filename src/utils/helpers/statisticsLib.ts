@@ -1,5 +1,4 @@
-import format from 'date-fns/format';
-import fromUnixTime from 'date-fns/fromUnixTime';
+import { format, fromUnixTime } from 'date-fns';
 import {
   TMultiLineChartData,
   TMiningInfo,
@@ -276,7 +275,10 @@ export function transformAverageBlockSize(
       dataX.push(format(blockSizes[i].maxTime * 1000, 'MM/dd/yyyy HH:mm'));
     }
   }
-  if (period === '24h' && checkValidateData(blockSizes[blockSizes.length - 1]?.time * 1000)) {
+  const timestamp = blockSizes[blockSizes.length - 1]?.time
+    ? blockSizes[blockSizes.length - 1].time * 1000
+    : 0;
+  if (period === '24h' && checkValidateData(timestamp)) {
     dataX.push(format(Date.now(), 'MM/dd/yyyy HH:mm'));
     dataY.push(0);
   }
@@ -431,7 +433,7 @@ export function setTransactionsLive(
       item?.vout?.forEach(({ value }) => {
         pslPrice += value;
       });
-      const fee = prev.get(item.txid)?.fee || item.fee || 0;
+      const fee = prev?.get(item.txid)?.fee || item.fee || 0;
       newTxs.set(item.txid, {
         // ...item,
         block: {
@@ -459,7 +461,7 @@ export function setTransactionsLive(
       item.vout.forEach(({ value }) => {
         pslPrice += value;
       });
-      const fee = prev.get(item.txid)?.fee || item.fee || 0;
+      const fee = prev?.get(item.txid)?.fee || item.fee || 0;
       newTxs.set(item.txid, {
         block: {
           height: '',
@@ -711,10 +713,10 @@ export const generateMinMaxChartData = (
 };
 
 export const getMinMax = (arr: number[]) =>
-  arr.reduce(([min, max], val) => [Math.min(min, val), Math.max(max, val)], [
-    Number.POSITIVE_INFINITY,
-    Number.NEGATIVE_INFINITY,
-  ]);
+  arr.reduce(
+    ([min, max], val) => [Math.min(min, val), Math.max(max, val)],
+    [Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY],
+  );
 
 export const toPlainString = (num: number) => {
   return `${+num}`.replace(/(-?)(\d*)\.?(\d*)e([+-]\d+)/, (a, b, c, d, e) => {
@@ -730,7 +732,7 @@ export function transformLineChartData(
   isMicroseconds = true,
   range = 1,
   decimalsLength = 2,
-  timestamp?: string,
+  timestamp = '',
 ): TLineChartData {
   const dataX: string[] = [];
   const dataY: number[] = [];

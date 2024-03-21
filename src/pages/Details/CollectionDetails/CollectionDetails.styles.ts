@@ -16,6 +16,13 @@ export const ContentWrapper = styled('div')`
     display: inline-block;
     margin-left: 40px;
   }
+
+  .MuiTabs-flexContainer {
+    .MuiButtonBase-root {
+      color: ${props => props.theme.palette.text.primary};
+      font-weight: 700;
+    }
+  }
 `;
 
 export const SummaryWrapper = styled('div')`

@@ -2,14 +2,14 @@ module.exports = {
   roots: [
     "<rootDir>/src"
   ],
-  globals: {
-    'ts-jest': {
-      babelConfig: '.babelrc',
-    },
-  },
   transform: {
-    "^.+\\.(ts|tsx)$": "ts-jest"
+    "^.+\\.(ts|tsx|js)$": ["ts-jest", {
+      babelConfig: '.babelrc'
+    }]
   },
+  transformIgnorePatterns: [
+    "/node_modules/(?!gsap)"
+  ],
   testMatch: [
     "**/__tests__/**/*.+(ts|tsx|js)",
     "**/?(*.)+(spec|test).+(ts|tsx|js)"

@@ -1,4 +1,4 @@
-import Tooltip from '@material-ui/core/Tooltip';
+import Tooltip from '@mui/material/Tooltip';
 
 import { translateDropdown } from '@utils/helpers/i18n';
 import databaseIcon from '@assets/images/database.png';

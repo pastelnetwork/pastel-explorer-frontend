@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import Box from '@material-ui/core/Box';
-import format from 'date-fns/format';
+import Box from '@mui/material/Box';
+import { format } from 'date-fns';
 import parse from 'html-react-parser';
 
 import { ExternalLink } from '@components/RouterLink/RouterLink';

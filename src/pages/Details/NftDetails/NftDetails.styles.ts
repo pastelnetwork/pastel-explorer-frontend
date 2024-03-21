@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import Box from '@material-ui/core/Box';
+import Box from '@mui/material/Box';
 
 export const Wrapper = styled.div`
   display: block;

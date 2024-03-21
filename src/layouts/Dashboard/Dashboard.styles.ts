@@ -1,12 +1,9 @@
-import styled, { createGlobalStyle } from 'styled-components/macro';
-import { spacing } from '@material-ui/system';
-import { Paper as MuiPaper } from '@material-ui/core';
-
-import { GlobalStyleProps } from '@utils/types/styles';
+import styled, { createGlobalStyle } from 'styled-components';
+import { Paper as MuiPaper } from '@mui/material';
 
 export const drawerWidth = 258;
 
-export const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
+export const GlobalStyle = createGlobalStyle`
   html,
   body,
   #root {
@@ -23,6 +20,16 @@ export const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
     height: 28px;
   }
 
+  .MuiGrid-root.MuiGrid-container {
+    width: calc(100% + 12px);
+    margin: -6px;
+  }
+
+  .MuiGrid-spacing-xs-3 > .MuiGrid-item,
+  .MuiGrid-spacing-xs-6 > .MuiGrid-item {
+    padding: 6px;
+  }
+
   .max-w-355 {
     max-width: 335px;
   }
@@ -37,13 +44,13 @@ export const Root = styled.div`
   min-height: 100vh;
 `;
 
-export const Paper = styled(MuiPaper)(spacing);
+export const Paper = styled(MuiPaper);
 
 export const MainWrapper = styled.main`
   min-height: auto;
 `;
 
-export const MainContent = styled(Paper)`
+export const MainContent = styled(MuiPaper)`
   padding: 0 12px 20px;
   flex: 1;
   background: ${props => props.theme.palette.background.paper};

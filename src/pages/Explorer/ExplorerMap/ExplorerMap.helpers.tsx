@@ -1,6 +1,6 @@
 import { MarkerProps } from '@components/Map/Map';
-import { Typography, Grid, AccordionSummary, AccordionDetails } from '@material-ui/core';
-import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
+import { Typography, Grid, AccordionSummary, AccordionDetails } from '@mui/material';
+import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';

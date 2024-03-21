@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';

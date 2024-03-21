@@ -1,6 +1,7 @@
-import { useEffect, useState, ChangeEvent } from 'react';
-import { Skeleton } from '@material-ui/lab';
+import { useEffect, useState } from 'react';
+import Skeleton from '@mui/material/Skeleton';
 import parse from 'html-react-parser';
+import { SelectChangeEvent } from '@mui/material/Select';
 
 import { PeriodTypes, generatePeriodToDropdownOptions } from '@utils/helpers/statisticsLib';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
@@ -54,11 +55,7 @@ const AverageSizeOfNFTStoredOnCascade: React.FC = () => {
     }
   }, [period, swrData.isLoading]);
 
-  const handleDropdownChange = (
-    event: ChangeEvent<{
-      value: unknown;
-    }>,
-  ) => {
+  const handleDropdownChange = (event: SelectChangeEvent) => {
     if (event.target.value) {
       setPeriod(event.target.value as PeriodTypes);
     }
@@ -91,6 +88,7 @@ const AverageSizeOfNFTStoredOnCascade: React.FC = () => {
               onChange={handleDropdownChange}
               options={generatePeriodToDropdownOptions(periods[7])}
               classNameWrapper="cascade-sense-statistics"
+              showFieldset={false}
             />
             <br />
             <Styles.PercentageValue
@@ -146,7 +144,7 @@ const AverageSizeOfNFTStoredOnCascade: React.FC = () => {
       <Styles.ChartContentWrapper>
         {isLoading ? (
           <StatisticsStyles.Loader>
-            <Skeleton animation="wave" variant="rect" height={170} width="100%" />
+            <Skeleton animation="wave" variant="rectangular" height={170} width="100%" />
             <StatisticsStyles.LoadingText>
               {parse(translate('common.loadingData'))}
             </StatisticsStyles.LoadingText>

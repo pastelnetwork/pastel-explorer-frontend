@@ -1,14 +1,14 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { rgba } from 'polished';
-import { NavLink, match } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-import { Chip, Drawer as MuiDrawer, ListItem, Typography, ListItemText } from '@material-ui/core';
-import { ExpandLess, ExpandMore } from '@material-ui/icons';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
+import { Chip, Drawer as MuiDrawer, ListItem, Typography, ListItemText } from '@mui/material';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 export const DrawerMobile = styled(MuiDrawer)`
-  ${props => props.theme.breakpoints.down('sm')} {
+  ${props => props.theme.breakpoints.down('md')} {
     .MuiDrawer-paper {
       width: 90vw;
       max-width: 325px;
@@ -39,14 +39,14 @@ export const DrawerMobile = styled(MuiDrawer)`
 
 export const Items = styled.div`
   display: flex;
-  margin: ${props => props.theme.spacing(2.5)}px 0;
+  margin: 10px 0;
   padding: 0 20px;
 
   .MuiListItem-root {
     padding: 10px 12px;
   }
 
-  ${props => props.theme.breakpoints.between('sm', 1400)} {
+  ${props => props.theme.breakpoints.between('md', 1400)} {
     padding: 0 10px;
 
     .MuiListItem-root {
@@ -54,7 +54,7 @@ export const Items = styled.div`
     }
   }
 
-  ${props => props.theme.breakpoints.down('sm')} {
+  ${props => props.theme.breakpoints.down('md')} {
     flex-direction: column;
     width: 100%;
     margin-top: 0;
@@ -64,7 +64,8 @@ export const Items = styled.div`
 
 export const Brand = styled(ListItem)<{
   button?: boolean;
-  component?: React.ReactNode;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  component?: any;
   to?: string;
 }>`
   width: auto;
@@ -98,11 +99,11 @@ export const Brand = styled(ListItem)<{
     margin-left: 0;
   }
 
-  ${props => props.theme.breakpoints.between('sm', 1400)} {
+  ${props => props.theme.breakpoints.between('md', 1400)} {
     margin-right: 0;
   }
 
-  ${props => props.theme.breakpoints.down('sm')} {
+  ${props => props.theme.breakpoints.down('md')} {
     width: 50%;
     text-align: center;
   }
@@ -119,7 +120,6 @@ type CategoryType = {
   to?: string;
   component?: typeof NavLink;
   exact?: boolean;
-  isActive?: (_match: match, _location: Location) => boolean;
 };
 
 export const Category = styled(ListItem)<CategoryType>`
@@ -346,7 +346,7 @@ export const CategoryText = styled(ListItemText)`
     }
   }
 
-  ${props => props.theme.breakpoints.down('sm')} {
+  ${props => props.theme.breakpoints.down('md')} {
     span {
       margin: 0;
 
@@ -360,7 +360,7 @@ export const CategoryText = styled(ListItemText)`
 export const CategoryIconLess = styled(ExpandLess)`
   color: ${props => rgba(props.theme.sidebar.color, 0.5)};
 
-  ${props => props.theme.breakpoints.down('sm')} {
+  ${props => props.theme.breakpoints.down('md')} {
     display: none;
   }
 `;
@@ -368,7 +368,7 @@ export const CategoryIconLess = styled(ExpandLess)`
 export const CategoryIconRemoveIcon = styled(RemoveIcon)`
   display: none;
 
-  ${props => props.theme.breakpoints.down('sm')} {
+  ${props => props.theme.breakpoints.down('md')} {
     display: inline-block;
 
     color: ${props => rgba(props.theme.sidebar.color, 0.5)};
@@ -384,7 +384,7 @@ export const CategoryIconRemoveIcon = styled(RemoveIcon)`
 export const CategoryIconMore = styled(ExpandMore)`
   color: ${props => rgba(props.theme.sidebar.color, 0.5)};
 
-  ${props => props.theme.breakpoints.down('sm')} {
+  ${props => props.theme.breakpoints.down('md')} {
     &.MuiSvgIcon-root {
       display: none;
     }
@@ -394,7 +394,7 @@ export const CategoryIconMore = styled(ExpandMore)`
 export const CategoryIconAddIcon = styled(AddIcon)`
   display: none;
 
-  ${props => props.theme.breakpoints.down('sm')} {
+  ${props => props.theme.breakpoints.down('md')} {
     display: inline-block;
     color: ${props => rgba(props.theme.sidebar.color, 0.5)};
 
@@ -413,10 +413,10 @@ export const Link = styled(ListItem)<{
   exact: boolean;
   to: string;
 }>`
-  padding-top: ${props => props.theme.spacing(3)}px;
-  padding-bottom: ${props => props.theme.spacing(3)}px;
+  padding-top: 12px;
+  padding-bottom: 12px;
 
-  ${props => props.theme.breakpoints.down('sm')} {
+  ${props => props.theme.breakpoints.down('md')} {
     padding-top: 10px;
     padding-bottom: 10px;
   }
@@ -445,10 +445,10 @@ export const Link = styled(ListItem)<{
 export const NavLinkStyle = styled(NavLink)`
   display: block;
   padding: 12px 16px;
-  padding-bottom: ${props => props.theme.spacing(3)}px;
+  padding-bottom: 12px;
   text-decoration: none;
 
-  ${props => props.theme.breakpoints.down('sm')} {
+  ${props => props.theme.breakpoints.down('md')} {
     padding-top: 10px;
     padding-bottom: 10px;
   }
@@ -490,8 +490,8 @@ export const LinkBadge = styled(Chip)`
   span.MuiChip-label:hover {
     cursor: pointer;
     color: ${props => props.theme.sidebar.badge.color};
-    padding-left: ${props => props.theme.spacing(2)}px;
-    padding-right: ${props => props.theme.spacing(2)}px;
+    padding-left: 8px;
+    padding-right: 8px;
   }
 `;
 
@@ -501,20 +501,23 @@ export const CategoryBadge = styled(LinkBadge)`
 
 export const SidebarSection = styled(Typography)`
   color: ${props => props.theme.sidebar.color};
-  padding: ${props => props.theme.spacing(4)}px ${props => props.theme.spacing(7)}px
-    ${props => props.theme.spacing(1)}px;
+  padding: 16px 28px 2px;
   opacity: 0.9;
   display: block;
 `;
 
 export const SlideLogoMobileWrapper = styled.div`
-  display: flex;
+  display: none;
   width: 100%;
   margin-top: 20px;
   margin-bottom: 20px;
   padding: 0 10px 0 20px;
   align-items: center;
   justify-content: space-between;
+
+  ${props => props.theme.breakpoints.down('md')} {
+    display: flex;
+  }
 
   .MuiButtonBase-root {
     text-align: left;

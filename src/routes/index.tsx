@@ -1,9 +1,9 @@
 import loadable from '@loadable/component';
-import SearchIcon from '@material-ui/icons/Search';
-import CallSplitIcon from '@material-ui/icons/CallSplit';
-import LocalAtmIcon from '@material-ui/icons/LocalAtm';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import ConfirmationNumberOutlinedIcon from '@material-ui/icons/ConfirmationNumberOutlined';
+import SearchIcon from '@mui/icons-material/Search';
+import CallSplitIcon from '@mui/icons-material/CallSplit';
+import LocalAtmIcon from '@mui/icons-material/LocalAtm';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumberOutlined';
 
 import * as ROUTES from '@utils/constants/routes';
 

@@ -1,30 +1,32 @@
 // React
 import { memo, useEffect, useState } from 'react';
 // third party
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles } from '@mui/styles';
 import { useDispatch } from 'react-redux';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import { ArrowForwardIos } from '@material-ui/icons';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import { ArrowForwardIos } from '@mui/icons-material';
 import parse from 'html-react-parser';
-import IconButton from '@material-ui/core/IconButton';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import IconButton from '@mui/material/IconButton';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 // application
 import { formattedDate } from '@utils/helpers/date/date';
 import { TAppTheme } from '@theme/index';
 import { BlockThunks } from '@redux/thunk';
 import { AppThunkDispatch } from '@redux/types';
 import { useBlockLatestBlocks } from '@redux/hooks/blocksHooks';
-import Skeleton from '@material-ui/lab/Skeleton';
+import Skeleton from '@mui/material/Skeleton';
 import * as ROUTES from '@utils/constants/routes';
 import { translate } from '@utils/helpers/i18n';
 import { useShowLess } from '@pages/Tickets/Tickets.helpers';
+import MinedIcon from '@pages/Details/BlockDetails/MinedIcon';
 
 import { Link } from '@components/Link/Link.styles';
 import RouterLink from '@components/RouterLink/RouterLink';
@@ -114,10 +116,13 @@ function LatestBlocks() {
                 Array.from(latestBlocks.values()).map(block => (
                   <StyledTableRow key={block.id} className="table__row">
                     <StyledTableCell component="th" scope="row">
-                      <RouterLink
-                        route={`${ROUTES.BLOCK_DETAILS}/${block.height}`}
-                        value={block.height || ''}
-                      />
+                      <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: '2px' }}>
+                        <RouterLink
+                          route={`${ROUTES.BLOCK_DETAILS}/${block.height}`}
+                          value={block.height || ''}
+                        />
+                        <MinedIcon type={block.type || ''} />
+                      </Box>
                     </StyledTableCell>
                     <StyledTableCell component="th" scope="row">
                       <Link to={`${ROUTES.BLOCK_DETAILS}/${block.id}`}>
@@ -138,7 +143,7 @@ function LatestBlocks() {
               ) : (
                 <StyledTableRow>
                   <StyledTableCell component="th" scope="row" colSpan={5} style={{ padding: 0 }}>
-                    <Skeleton animation="wave" variant="rect" height={150} />
+                    <Skeleton animation="wave" variant="rectangular" height={150} />
                   </StyledTableCell>
                 </StyledTableRow>
               )}

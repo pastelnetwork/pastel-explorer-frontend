@@ -1,10 +1,11 @@
 import { shallow } from 'enzyme';
-import { Typography, Grid } from '@material-ui/core';
+import { Typography, Grid } from '@mui/material';
 import ReactECharts from 'echarts-for-react';
 
 import 'jest-styled-components';
 
-import i18next from '../../../../utils/helpers/i18n';
+import { MyMockType } from '@utils/types/MockType';
+import i18next from '@utils/helpers/i18n';
 import DoughnutChart from '../DoughnutChart';
 import * as Styles from '../DoughnutChart.styles';
 
@@ -30,7 +31,7 @@ jest.mock('react-i18next', () => ({
 }));
 i18next.t = jest.fn().mockImplementation((...arg) => {
   return arg[0];
-});
+}) as MyMockType;
 
 describe('components/Charts/DoughnutChart', () => {
   const data = {

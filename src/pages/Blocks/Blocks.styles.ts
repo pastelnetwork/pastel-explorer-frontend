@@ -1,5 +1,5 @@
-import styled from 'styled-components/macro';
-import { Grid } from '@material-ui/core';
+import styled from 'styled-components';
+import { Grid } from '@mui/material';
 
 export const TableContainer = styled(Grid)`
   position: relative;
@@ -24,10 +24,27 @@ export const TableContainer = styled(Grid)`
     white-space: nowrap;
   }
 
+  .csv-wrapper {
+    display: inline-flex;
+  }
+
+  .disable-download-csv {
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
   ${props => props.theme.breakpoints.down(1024)} {
     .ReactVirtualized__Grid,
     .ReactVirtualized__Table__headerRow {
       min-width: unset;
+    }
+
+    .filter-wrapper > div {
+      flex-wrap: wrap;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-end;
+      gap: 12px;
     }
   }
 
@@ -72,6 +89,16 @@ export const TableContainer = styled(Grid)`
     }
   }
 
+  ${props => props.theme.breakpoints.down(680)} {
+    .filter-wrapper {
+      flex-direction: column;
+
+      & > div {
+        align-items: center;
+      }
+    }
+  }
+
   ${props => props.theme.breakpoints.down('xs')} {
     .ReactVirtualized__Table__rowColumn {
       &:before {
@@ -93,6 +120,10 @@ export const BlockHeight = styled.div`
   svg {
     margin-right: 5px;
     fill: ${props => props.theme.sidebar.menu.background};
+
+    &.box-icon {
+      min-width: 16px !important;
+    }
   }
 `;
 

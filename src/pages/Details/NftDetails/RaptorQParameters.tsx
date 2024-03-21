@@ -1,4 +1,4 @@
-import Box from '@material-ui/core/Box';
+import Box from '@mui/material/Box';
 import parse from 'html-react-parser';
 
 import { translate } from '@utils/helpers/i18n';
