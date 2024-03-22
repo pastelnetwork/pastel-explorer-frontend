@@ -59,6 +59,7 @@ export const GET_COLLECTION_RELATED = 'v1/collections/related';
 export const GET_HISTORICAL_FEE_SCHEDULE = 'v1/stats/fee-schedule';
 export const GET_CASCADE_TRANSFERS = 'v1/cascade/transfers';
 export const GET_SENSE_TRANSFERS = 'v1/sense/transfers';
+export const DO_MINING_CHANGE_ANALYSIS = 'do_mining_change_analysis';
 // External URLS
 export const TWITTER_URL = 'https://twitter.com/pastelnetwork';
 export const TELEGRAM_URL = 'https://t.me/PastelNetwork';

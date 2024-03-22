@@ -2284,6 +2284,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
     dataX,
     dataY,
     dataY1,
+    dataY3,
     chartName,
     minY,
     maxY,
@@ -4311,6 +4312,444 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
         },
         showSymbol: false,
       },
+      animation: false,
+    },
+    trailing50BlockAverageBlocks: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#cd6661'],
+      grid: {
+        top: 50,
+        right: 30,
+        bottom: 70,
+        left: 40,
+        show: false,
+      },
+      dataZoom: [
+        {
+          type: 'inside',
+          start: 0,
+          end: 100,
+        },
+        {
+          start: 0,
+          end: 100,
+        },
+      ],
+      tooltip: {
+        trigger: 'axis',
+        formatter(params: TChartParams[]) {
+          return `
+            <div class="tooltip-item-wrapper">
+              <div class="item-label">${translateDropdown('pages.miningChangeAnalysis.blockHeight')}: ${params[0].axisValue}</div>
+              <div class="tooltip-value">${params[0].seriesName}: ${formatNumber(params[0].value)} ${Number(params[0].value) === 1 ? translateDropdown('pages.miningChangeAnalysis.inMinute') : translateDropdown('pages.miningChangeAnalysis.inMinutes')}</div>
+            </div>
+          `;
+        },
+        axisPointer: {
+          type: 'cross',
+          label: {
+            formatter: (param: TAxisPointerProps) => {
+              if (param.axisDimension === 'x') {
+                return param.value;
+              }
+
+              return formatNumber(param.value, { decimalsLength: 2 });
+            },
+          },
+        },
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          showMaxLabel: true,
+          interval: generateXAxisInterval('1d', '24h', dataX, width),
+        },
+        data: dataX,
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        max: maxY,
+        interval: (maxY - minY) / 4,
+        splitLine: {
+          show: false,
+        },
+        axisLabel: {
+          formatter(value: string) {
+            return getYAxisLabel(Number(value), minY, maxY);
+          },
+        },
+        axisLine: {
+          show: true,
+        },
+      },
+      series: [
+        {
+          name: seriesName ? translateDropdown(seriesName) : undefined,
+          data: dataY,
+          type: 'line',
+          showSymbol: false,
+          emphasis: {
+            lineStyle: {
+              width: 2,
+            },
+          },
+          lineStyle: {
+            width: 2,
+          },
+          areaStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: '#cd6661',
+              },
+              {
+                offset: 1,
+                color: theme?.backgroundColor || '#fff',
+              },
+            ]),
+          },
+        },
+      ],
+      animation: false,
+    },
+    trailing10BlockAverageBlockTime: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: [blueColor],
+      grid: {
+        top: 50,
+        right: 30,
+        bottom: 70,
+        left: 40,
+        show: false,
+      },
+      dataZoom: [
+        {
+          type: 'inside',
+          start: 0,
+          end: 100,
+        },
+        {
+          start: 0,
+          end: 100,
+        },
+      ],
+      tooltip: {
+        trigger: 'axis',
+        formatter(params: TChartParams[]) {
+          return `
+            <div class="tooltip-item-wrapper">
+              <div class="item-label">${translateDropdown('pages.miningChangeAnalysis.blockHeight')}: ${params[0].axisValue}</div>
+              <div class="tooltip-value">${params[0].seriesName}: ${formatNumber(params[0].value)} ${Number(params[0].value) === 1 ? translateDropdown('pages.miningChangeAnalysis.inMinute') : translateDropdown('pages.miningChangeAnalysis.inMinutes')}</div>
+            </div>
+          `;
+        },
+        axisPointer: {
+          type: 'cross',
+          label: {
+            formatter: (param: TAxisPointerProps) => {
+              if (param.axisDimension === 'x') {
+                return param.value;
+              }
+
+              return formatNumber(param.value, { decimalsLength: 2 });
+            },
+          },
+        },
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          showMaxLabel: true,
+          interval: generateXAxisInterval('1d', '24h', dataX, width),
+        },
+        data: dataX,
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        max: maxY,
+        interval: (maxY - minY) / 4,
+        splitLine: {
+          show: false,
+        },
+        axisLabel: {
+          formatter(value: string) {
+            return getYAxisLabel(Number(value), minY, maxY);
+          },
+        },
+        axisLine: {
+          show: true,
+        },
+      },
+      series: [
+        {
+          name: seriesName ? translateDropdown(seriesName) : undefined,
+          data: dataY,
+          type: 'line',
+          showSymbol: false,
+          emphasis: {
+            lineStyle: {
+              width: 2,
+            },
+          },
+          lineStyle: {
+            width: 2,
+          },
+          areaStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: blueColor,
+              },
+              {
+                offset: 1,
+                color: theme?.backgroundColor || '#fff',
+              },
+            ]),
+          },
+        },
+      ],
+      animation: false,
+    },
+    timeBetweenBlocksInMinutes: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      grid: {
+        top: 50,
+        right: 30,
+        bottom: 70,
+        left: 40,
+        show: false,
+      },
+      dataZoom: [
+        {
+          type: 'inside',
+          start: 0,
+          end: 100,
+        },
+        {
+          start: 0,
+          end: 100,
+        },
+      ],
+      tooltip: {
+        trigger: 'axis',
+        showDelay: 0,
+        axisPointer: {
+          type: 'cross',
+          label: {
+            formatter: (param: TAxisPointerProps) => {
+              if (param.axisDimension === 'x') {
+                return param.value;
+              }
+
+              return formatNumber(param.value, { decimalsLength: 2 });
+            },
+          },
+        },
+      },
+      xAxis: [
+        {
+          type: 'category',
+          scale: true,
+          boundaryGap: false,
+          axisLabel: {
+            showMaxLabel: true,
+            interval: generateXAxisInterval('1d', '24h', dataX, width),
+          },
+        },
+      ],
+      yAxis: [
+        {
+          type: 'value',
+          min: minY,
+          max: maxY,
+          interval: (maxY - minY) / 4,
+          splitLine: {
+            show: false,
+          },
+          axisLine: {
+            show: true,
+          },
+          axisLabel: {
+            formatter(value: string) {
+              return formatNumber(value);
+            },
+            margin: 12,
+          },
+        },
+      ],
+      series: [
+        {
+          type: 'scatter',
+          symbolSize: 8,
+          itemStyle: {
+            color: '#FF5500',
+            borderColor: theme?.backgroundColor,
+          },
+          tooltip: {
+            trigger: 'item',
+            formatter(params: TTxInBlock) {
+              return `
+                <div class="tooltip-item-wrapper">
+                  <div class="item-label">${translateDropdown('pages.miningChangeAnalysis.blockHeight')}: ${
+                    params.value[0]
+                  }</div>
+                  <div class="tooltip-data-date">${translateDropdown('pages.miningChangeAnalysis.timeBetweenBlocks')}: ${
+                    params.value[1]
+                  } ${Number(params.value[1]) === 1 ? translateDropdown('pages.miningChangeAnalysis.inMinute') : translateDropdown('pages.miningChangeAnalysis.inMinutes')}</div>
+                </div>
+              `;
+            },
+          },
+          data: dataY3,
+          showSymbol: false,
+        },
+      ],
+      animation: false,
+    },
+    miningChangeAnalysisTrailing50Block: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#cd6661', blueColor],
+      grid: {
+        top: 50,
+        right: 30,
+        bottom: 70,
+        left: 40,
+        show: false,
+      },
+      dataZoom: [
+        {
+          type: 'inside',
+          start: 0,
+          end: 100,
+        },
+        {
+          start: 0,
+          end: 100,
+        },
+      ],
+      tooltip: {
+        trigger: 'axis',
+        formatter(params: TChartParams[]) {
+          let html = '';
+          for (let i = 0; i < params.length; i += 1) {
+            html += `<div>${params[i].marker} ${params[i].seriesName}: ${
+              params[i].value ? formatNumber(params[i].value, { decimalsLength: 2 }) : '0'
+            } ${Number(params[i].value) === 1 ? translateDropdown('pages.miningChangeAnalysis.inMinute') : translateDropdown('pages.miningChangeAnalysis.inMinutes')}</div>`;
+          }
+          return `
+            <div>
+              <div>${translateDropdown('pages.miningChangeAnalysis.blockHeight')}: ${params[0].axisValue}</div>
+              <div>${html}</div>
+            </div>
+          `;
+        },
+        axisPointer: {
+          type: 'cross',
+          label: {
+            formatter: (param: TAxisPointerProps) => {
+              if (param.axisDimension === 'x') {
+                return param.value;
+              }
+
+              return formatNumber(param.value, { decimalsLength: 2 });
+            },
+          },
+        },
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          showMaxLabel: true,
+          interval: generateXAxisInterval('1d', '24h', dataX, width),
+        },
+        data: dataX,
+      },
+      yAxis: {
+        type: 'value',
+        splitLine: {
+          show: false,
+        },
+        min: minY,
+        max: maxY,
+        interval: (maxY - minY) / 4,
+        axisLabel: {
+          formatter(value: string) {
+            return formatNumber(value, { decimalsLength: 1 });
+          },
+        },
+        axisLine: {
+          show: true,
+        },
+      },
+      series: [
+        {
+          name: translateDropdown('chartOptions.trailing50BlockAverageBlockTime'),
+          type: 'line',
+          data: dataY,
+          showSymbol: false,
+          emphasis: {
+            lineStyle: {
+              width: 2,
+            },
+            focus: 'series',
+          },
+          lineStyle: {
+            width: 2,
+          },
+          zlevel: 1,
+        },
+        {
+          name: translateDropdown('chartOptions.trailing50BlockStDeviationOfBlockTime'),
+          type: 'line',
+          data: dataY1,
+          showSymbol: false,
+          emphasis: {
+            lineStyle: {
+              width: 2,
+            },
+            focus: 'series',
+          },
+          lineStyle: {
+            width: 2,
+          },
+          zlevel: 2,
+        },
+      ],
       animation: false,
     },
   };

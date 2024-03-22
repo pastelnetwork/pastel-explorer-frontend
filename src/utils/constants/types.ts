@@ -19,6 +19,7 @@ export type TThemeInitOption = {
   dataY?: number[];
   dataY1?: number[];
   dataY2?: number[];
+  dataY3?: number[][];
   chartName: string;
   minY: number;
   maxY: number;
