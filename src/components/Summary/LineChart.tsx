@@ -20,6 +20,7 @@ type TLineChartProps = {
   dataY?: number[];
   dataY1?: number[];
   dataY2?: number[];
+  dataY3?: number[][];
   offset: number;
   disableClick?: boolean;
   className?: string;
@@ -39,6 +40,7 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
     offset,
     dataY1,
     dataY2,
+    dataY3,
     period,
     seriesName,
     chartColor,
@@ -85,10 +87,25 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
       ) {
         setMinY(min);
         setMaxY(max);
-      } else if (['networkStatistics', 'blockSizesStatistics'].includes(chartName)) {
+      } else if (
+        [
+          'networkStatistics',
+          'blockSizesStatistics',
+          'trailing50BlockAverageBlocks',
+          'trailing10BlockAverageBlockTime',
+        ].includes(chartName)
+      ) {
         const result = generateMinMaxChartData(min, max, offset, 5, '1h', 4);
         setMinY(result.min);
         setMaxY(result.max);
+      } else if (['miningChangeAnalysisTrailing50Block'].includes(chartName)) {
+        if (dataY1) {
+          const newMin = Math.min(...[...dataY, ...dataY1]);
+          const newMax = Math.max(...[...dataY, ...dataY1]);
+          const result = generateMinMaxChartData(newMin, newMax, offset, 4, '1h', 4);
+          setMinY(result.min);
+          setMaxY(result.max);
+        }
       } else if (
         [
           'totalSizeOfDataStored',
@@ -109,7 +126,22 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
         setMaxY(Math.floor(max) + offset);
       }
     }
-  }, [dataY]);
+    if (dataY3?.length) {
+      if (['timeBetweenBlocksInMinutes'].includes(chartName)) {
+        if (dataY3) {
+          const newDataY3 = dataY3.reduce((yAxis, item) => {
+            yAxis.push(item[1]);
+            return yAxis;
+          }, []);
+          const newMin = Math.min(...newDataY3);
+          const newMax = Math.max(...newDataY3);
+          const result = generateMinMaxChartData(newMin, newMax, offset, 5, '1h');
+          setMinY(result.min);
+          setMaxY(result.max);
+        }
+      }
+    }
+  }, [dataY, dataY3]);
 
   useEffect(() => {
     if (eChartRef) {
@@ -124,6 +156,7 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
     dataY,
     dataY1,
     dataY2,
+    dataY3,
     chartName,
     minY,
     maxY,
@@ -160,6 +193,7 @@ LineChart.defaultProps = {
   dataY: undefined,
   dataY1: undefined,
   dataY2: undefined,
+  dataY3: undefined,
   className: undefined,
   period: undefined,
   seriesName: undefined,

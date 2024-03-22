@@ -72,6 +72,9 @@ const CascadeDetails = loadable(() => import('@pages/Details/CascadeDetails/Casc
 const NftDetails = loadable(() => import('@pages/Details/NftDetails/NftDetails'));
 const FeeSchedule = loadable(() => import('@pages/HistoricalStatistics/FeeSchedule'));
 const PSLBurnt = loadable(() => import('@pages/HistoricalStatistics/PSLBurnt'));
+const MiningChangeAnalysis = loadable(
+  () => import('@pages/MiningChangeAnalysis/MiningChangeAnalysis'),
+);
 const SenseMap = loadable(() => import('@pages/SenseMap/SenseMap'));
 
 const explorerRoutes = {
@@ -164,8 +167,15 @@ const statisticsRoutes = {
       component: CascadeAndSenseStatistics,
       seoTitle: 'routes.cascadeAndSenseStatistics',
     },
+    {
+      path: ROUTES.MINING_CHANGE_ANALYSIS,
+      name: 'routes.miningChangeAnalysis',
+      component: MiningChangeAnalysis,
+      seoTitle: 'routes.miningChangeAnalysis',
+    },
   ],
 };
+
 // Statistics overtime routes
 const statisticsOvertimeRoutes = {
   id: 'routes.historicalStatistics',
@@ -498,6 +508,15 @@ const senseMapRoutes = {
   children: null,
 };
 
+const miningChangeAnalysisRoutes = {
+  id: 'routes.miningChangeAnalysis',
+  path: ROUTES.MINING_CHANGE_ANALYSIS,
+  icon: <LocalAtmIcon />,
+  component: MiningChangeAnalysis,
+  seoTitle: 'routes.miningChangeAnalysis',
+  children: null,
+};
+
 export const pageRoutes = [
   explorerRoutes,
   movementRoutes,
@@ -541,6 +560,7 @@ export const pageRoutes = [
   nftDetailsRoutes,
   feeScheduleStatisticsRoutes,
   pslBurntStatisticsRoutes,
+  miningChangeAnalysisRoutes,
   senseMapRoutes,
 ];
 

@@ -3852,6 +3852,66 @@
         "message": "Scale Exponent",
         "description": "Used for the Sense Map page"
       }
+    },
+    "miningChangeAnalysis": {
+      "timeBetweenBlocksInMinutes": {
+        "message": "Time between blocks in minutes",
+        "description": "Used for the Mining Analysis page"
+      },
+      "trailing10BlockAverageBlockTime": {
+        "message": "Trailing 10 blocks average blocks time",
+        "description": "Used for the Mining Analysis page"
+      },
+      "trailing50BlockAverageBlocksSinceSamePastelIdSigned": {
+        "message": "Trailing 50 blocks average blocks since same pastelid signed",
+        "description": "Used for the Mining Analysis page"
+      },
+      "trailing50Block": {
+        "message": "Trailing 50 Blocks",
+        "description": "Used for the Mining Analysis page"
+      },
+      "blockHeight": {
+        "message": "Block",
+        "description": "Used for the Mining Analysis page"
+      },
+      "timeBetweenBlocks": {
+        "message": "Time between blocks",
+        "description": "Used for the Mining Analysis page"
+      },
+      "inMinutes": {
+        "message": "minutes",
+        "description": "Used for the Mining Analysis page"
+      },
+      "inMinute": {
+        "message": "minute",
+        "description": "Used for the Mining Analysis page"
+      },
+      "downloadRawData": {
+        "message": "Download Raw Data",
+        "description": "Used for the Mining Analysis page"
+      },
+      "periods": {
+        "10Blocks": {
+          "message": "10 blocks",
+          "description": "Used for the Mining Analysis page"
+        },
+        "50Blocks": {
+          "message": "50 blocks",
+          "description": "Used for the Mining Analysis page"
+        },
+        "100Blocks": {
+          "message": "100 blocks",
+          "description": "Used for the Mining Analysis page"
+        },
+        "500Blocks": {
+          "message": "500 blocks",
+          "description": "Used for the Mining Analysis page"
+        },
+        "1000Blocks": {
+          "message": "1,000 blocks",
+          "description": "Used for the Mining Analysis page"
+        }
+      }
     }
   },
   "routes": {
@@ -4058,6 +4118,10 @@
     "pslBurnt": {
       "message": "{{currency}} Burnt",
       "description": "Used for the routes"
+    },
+    "miningChangeAnalysis": {
+      "message": "Mining Analysis",
+      "description": "Used for the routes"
     }
   },
   "chartOptions": {
@@ -4215,6 +4279,14 @@
     },
     "pslBurnt": {
       "message": "{{currency}} Burnt",
+      "description": "Used for the chartOptions"
+    },
+    "trailing50BlockAverageBlockTime": {
+      "message": "Trailing 50 blocks average blocks time",
+      "description": "Used for the chartOptions"
+    },
+    "trailing50BlockStDeviationOfBlockTime": {
+      "message": "Trailing 50 blocks st deviation of blocks time",
       "description": "Used for the chartOptions"
     }
   },
