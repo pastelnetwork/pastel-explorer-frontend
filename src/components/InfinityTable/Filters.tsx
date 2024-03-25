@@ -16,7 +16,7 @@ import { setFilterValueAction } from '@redux/actions/filterAction';
 import { AppDispatchType } from '@redux/store';
 import { TAppTheme } from '@theme/index';
 import { TFilter } from '@utils/types/IFilter';
-import { getFilterState } from '@redux/reducers/filterReducer';
+import { getFilterState, IFilterState } from '@redux/reducers/filterReducer';
 
 import * as Styles from './InfinityTable.styles';
 
@@ -60,6 +60,7 @@ interface IProps {
     endDate: number | null;
   };
   customFilter?: React.ReactNode;
+  onFilterChange?: (_params: IFilterState) => void;
 }
 
 const MenuProps = {
@@ -79,6 +80,7 @@ const Filters: FC<IProps> = ({
   showDateTimePicker = false,
   defaultDateRange,
   customFilter = null,
+  onFilterChange = undefined,
 }) => {
   const dispatch = useDispatch<AppDispatchType>();
   const classes = useStyles();
@@ -96,6 +98,13 @@ const Filters: FC<IProps> = ({
         customDateRange: { startDate: 0, endDate: null },
       }),
     );
+    if (onFilterChange) {
+      onFilterChange({
+        dateRange: value,
+        dropdownType,
+        customDateRange: { startDate: 0, endDate: null },
+      });
+    }
   }, []);
 
   const handleClose = () => {
@@ -125,6 +134,9 @@ const Filters: FC<IProps> = ({
   const handleFilter = () => {
     setOpen(false);
     dispatch(setFilterValueAction({ dateRange, dropdownType: ticketType, customDateRange }));
+    if (onFilterChange) {
+      onFilterChange({ dateRange, dropdownType: ticketType, customDateRange });
+    }
   };
 
   const handleDateRangeApply = (_startDate: number, _endDate: number | null) => {
@@ -135,6 +147,13 @@ const Filters: FC<IProps> = ({
         customDateRange: { startDate: _startDate, endDate: _endDate },
       }),
     );
+    if (onFilterChange) {
+      onFilterChange({
+        dateRange: 'custom',
+        dropdownType: ticketType,
+        customDateRange: { startDate: _startDate, endDate: _endDate },
+      });
+    }
   };
 
   const renderDropdownCheckbox = () => {
@@ -241,6 +260,7 @@ Filters.defaultProps = {
   showDateTimePicker: undefined,
   defaultDateRange: undefined,
   customFilter: null,
+  onFilterChange: undefined,
 };
 
 export default memo<IProps>(Filters);
