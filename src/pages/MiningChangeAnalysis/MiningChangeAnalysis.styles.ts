@@ -15,6 +15,10 @@ export const Wrapper = styled.div`
     }
   }
 
+  .no-data {
+    padding: 15px;
+  }
+
   .echarts-for-react {
     height: 320px !important;
   }
