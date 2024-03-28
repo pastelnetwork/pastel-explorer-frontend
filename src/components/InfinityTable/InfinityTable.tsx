@@ -15,6 +15,7 @@ import { CSSProperties } from '@mui/styles';
 import { CircularProgress, darken } from '@mui/material';
 import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 
+import { IFilterState } from '@redux/reducers/filterReducer';
 import { useGetThemeMode } from '@redux/reducers/appThemeReducer';
 import themeVariant from '@theme/variants';
 import { TFilter } from '@utils/types/IFilter';
@@ -76,6 +77,7 @@ interface IInfinityTableComponentProps {
   };
   showLess?: boolean;
   customFilter?: React.ReactNode;
+  onFilterChange?: (_params: IFilterState) => void;
 }
 
 type ITableCellRendererProps = TableCellProps & { dataTitle?: string };
@@ -145,6 +147,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
   dateRange,
   showLess = false,
   customFilter = null,
+  onFilterChange = undefined,
 }) => {
   const [loading, setLoading] = React.useState(false);
   const isDarkMode = useGetThemeMode();
@@ -157,9 +160,8 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
     ({ clientHeight, scrollHeight, scrollTop }: ScrollEventData) => {
       if (!onBottomReach || rows.length < loadMoreFrom) return null;
 
-      const bottomReached = clientHeight + scrollTop + 5 >= scrollHeight;
+      const bottomReached = clientHeight + scrollTop + 5 >= scrollHeight && scrollTop > 0;
       !loading && bottomReached && setLoading(true);
-
       return onBottomReach(bottomReached);
     },
     100,
@@ -210,6 +212,7 @@ const InfinityTableComponent: React.FC<IInfinityTableComponentProps> = ({
             showDateTimePicker={showDateTimePicker}
             defaultDateRange={dateRange}
             customFilter={customFilter}
+            onFilterChange={onFilterChange}
           />
         )}
       </div>
@@ -300,6 +303,7 @@ InfinityTableComponent.defaultProps = {
   dateRange: undefined,
   showLess: false,
   customFilter: null,
+  onFilterChange: undefined,
 };
 
 export default InfinityTableComponent;

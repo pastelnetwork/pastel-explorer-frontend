@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext, memo } from 'react';
-import { useSelector } from 'react-redux';
 import parse from 'html-react-parser';
 
 import InfinityTable, {
@@ -7,7 +6,7 @@ import InfinityTable, {
   ISortData,
 } from '@components/InfinityTable/InfinityTable';
 import { blocksPeriodFilters, blocksFilters } from '@utils/constants/filter';
-import { getFilterState, IFilterState } from '@redux/reducers/filterReducer';
+import { IFilterState } from '@redux/reducers/filterReducer';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import useBlocks from '@hooks/useBlocks';
 import { translate, translateDropdown } from '@utils/helpers/i18n';
@@ -17,6 +16,7 @@ import useBlockStatistics from '@hooks/useBlockStatistics';
 import * as ChartStyles from '@pages/HistoricalStatistics/Chart/Chart.styles';
 import { SocketContext } from '@context/socket';
 
+import { IBlock } from '@utils/types/IBlocks';
 import { columns, csvHeader } from './Blocks.columns';
 import {
   transformTableData,
@@ -41,6 +41,10 @@ interface IBlockTable {
   filter: IFilterState;
   apiParams: IBlocksDataRef;
   onChange: (_params: IBlocksDataRef) => void;
+  onFilterChange: (_params: IFilterState) => void;
+  swrData: IBlock[] | null;
+  total: number;
+  isLoading: boolean;
 }
 
 const BlockStatisticsSection = () => {
@@ -53,27 +57,15 @@ const BlockStatisticsSection = () => {
   );
 };
 
-const BlockTable = memo(function BlockTable({ apiParams, filter, onChange }: IBlockTable) {
-  const socket = useContext(SocketContext);
-  const { swrData, total, swrSize, swrSetSize, isLoading } = useBlocks(
-    DATA_FETCH_LIMIT,
-    apiParams.sortBy,
-    apiParams.sortDirection,
-    apiParams.period,
-    apiParams.types,
-    apiParams.customDateRange,
-  );
-
-  useEffect(() => {
-    socket.on('getUpdateBlock', () => {
-      swrSetSize(1);
-    });
-
-    return () => {
-      socket.off('getUpdateBlock');
-    };
-  }, []);
-
+const BlockTable = memo(function BlockTable({
+  apiParams,
+  filter,
+  onChange,
+  onFilterChange,
+  swrData,
+  total,
+  isLoading,
+}: IBlockTable) {
   const [isMobile, setMobileView] = useState(false);
 
   const handleShowSubMenu = () => {
@@ -128,13 +120,11 @@ const BlockTable = memo(function BlockTable({ apiParams, filter, onChange }: IBl
 
   const handleFetchMoreBlocks = (reachedTableBottom: boolean) => {
     if (!reachedTableBottom) return null;
-    swrSetSize(swrSize + 1);
     onChange({ ...apiParams });
     return true;
   };
 
   const handleSort = ({ sortBy, sortDirection }: ISortData) => {
-    swrSetSize(1);
     onChange({
       ...apiParams,
       sortBy,
@@ -162,25 +152,42 @@ const BlockTable = memo(function BlockTable({ apiParams, filter, onChange }: IBl
       showDateTimePicker
       dateRange={filter?.customDateRange}
       customFilter={renderDownloadCsv()}
+      onFilterChange={onFilterChange}
     />
   );
 });
 
 const Blocks = () => {
   const socket = useContext(SocketContext);
-  const filter = useSelector(getFilterState);
-  const [apiParams, setParams] = useState<IBlocksDataRef>({
-    sortBy: 'blockId',
-    sortDirection: DATA_DEFAULT_SORT,
-    period: filter?.dateRange || 'all',
-    types: filter?.dropdownType || [],
+  const [filters, setFilters] = useState<IFilterState>({
+    dateRange: 'all',
+    dropdownType: [],
     customDateRange: {
       startDate: 0,
       endDate: null,
     },
   });
 
-  useEffect(() => {
+  const [apiParams, setParams] = useState<IBlocksDataRef>({
+    sortBy: 'blockId',
+    sortDirection: DATA_DEFAULT_SORT,
+    period: 'all',
+    types: [],
+    customDateRange: {
+      startDate: 0,
+      endDate: null,
+    },
+  });
+  const { swrData, total, swrSize, swrSetSize, isLoading } = useBlocks(
+    DATA_FETCH_LIMIT,
+    apiParams.sortBy,
+    apiParams.sortDirection,
+    apiParams.period,
+    apiParams.types,
+    apiParams.customDateRange,
+  );
+
+  const handleFilterChange = (filter: IFilterState) => {
     if (
       filter?.dateRange !== apiParams.period ||
       filter?.dropdownType !== apiParams.types ||
@@ -200,11 +207,12 @@ const Blocks = () => {
         customDateRange,
       });
     }
-  }, [filter?.dateRange, filter?.dropdownType, filter?.customDateRange]);
+    setFilters(filter);
+  };
 
   useEffect(() => {
     socket.on('getUpdateBlock', () => {
-      setParams({ ...apiParams });
+      swrSetSize(1);
     });
 
     return () => {
@@ -212,10 +220,23 @@ const Blocks = () => {
     };
   }, []);
 
+  const OnChange = (_params: IBlocksDataRef) => {
+    swrSetSize(swrSize + 1);
+    setParams({ ..._params });
+  };
+
   return (
     <Styles.TableContainer item>
       <BlockStatisticsSection />
-      <BlockTable apiParams={apiParams} onChange={setParams} filter={filter} />
+      <BlockTable
+        apiParams={apiParams}
+        onChange={OnChange}
+        filter={filters}
+        onFilterChange={handleFilterChange}
+        swrData={swrData}
+        total={total}
+        isLoading={isLoading || false}
+      />
     </Styles.TableContainer>
   );
 };
