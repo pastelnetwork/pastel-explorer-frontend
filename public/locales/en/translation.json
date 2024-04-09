@@ -3370,8 +3370,16 @@
         "message": "Total Cost",
         "description": "Used for the Tickets page"
       },
-      "registeringSupernode": {
-        "message": "Registering Supernode",
+      "available": {
+        "message": "Yes",
+        "description": "Used for the Tickets page"
+      },
+      "unAvailable": {
+        "message": "No",
+        "description": "Used for the Tickets page"
+      },
+      "publiclyAccessible": {
+        "message": "Publicly Accessible",
         "description": "Used for the Tickets page"
       }
     },

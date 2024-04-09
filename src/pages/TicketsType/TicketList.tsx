@@ -64,6 +64,7 @@ import noImagePlaceholder from '@assets/images/no-image-placeholder.svg';
 import {
   TICKET_TYPE_OPTIONS,
   TICKET_STATUS_OPTIONS,
+  NFT_TICKET_STATUS_OPTIONS,
   TICKET_SORT_OPTIONS,
 } from './TicketsType.helpers';
 
@@ -106,7 +107,9 @@ interface ITicketsList {
   handleSelectTime: (_event: MouseEvent<HTMLButtonElement>) => void;
   selectedTime: string;
   onStatusChange: (_value: string) => void;
+  onNftStatusChange: (_value: string) => void;
   selectedStatus: string;
+  selectedNftStatus: string;
   onDateRangeApply?: (_startDate: number, _endDate: number | null) => void;
   defaultDateRange?: {
     startDate: number;
@@ -124,7 +127,9 @@ const TicketsList: React.FC<ITicketsList> = ({
   handleSelectTime,
   selectedTime,
   onStatusChange,
+  onNftStatusChange,
   selectedStatus,
+  selectedNftStatus,
   onDateRangeApply,
   defaultDateRange,
   ticketSort,
@@ -361,12 +366,23 @@ const TicketsList: React.FC<ITicketsList> = ({
     onStatusChange(event.target.value as string);
   };
 
+  const handleNftStatusChange = (event: SelectChangeEvent) => {
+    onNftStatusChange(event.target.value as string);
+  };
+
   const handleSortChange = (event: SelectChangeEvent) => {
     onTicketSortChange(event.target.value as string);
   };
 
   const getStatusOptions = () => {
     return TICKET_STATUS_OPTIONS.map(option => ({
+      ...option,
+      name: translateDropdown(option.name),
+    }));
+  };
+
+  const getNftStatusOptions = () => {
+    return NFT_TICKET_STATUS_OPTIONS.map(option => ({
       ...option,
       name: translateDropdown(option.name),
     }));
@@ -410,6 +426,15 @@ const TicketsList: React.FC<ITicketsList> = ({
                 label={translateDropdown('pages.ticketsType.ticketType')}
                 classNameWrapper="dropdown-ticket-type"
               />
+              {['pastel-nft'].includes(ticketType) ? (
+                <Dropdown
+                  value={selectedNftStatus}
+                  onChange={handleNftStatusChange}
+                  options={getNftStatusOptions()}
+                  label={translateDropdown('pages.ticketsType.publiclyAccessible')}
+                  classNameWrapper="dropdown-status"
+                />
+              ) : null}
               {['sense', 'cascade'].includes(ticketType) ? (
                 <>
                   <Dropdown
