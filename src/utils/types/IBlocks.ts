@@ -1,4 +1,5 @@
 import { ITicket, TSenseRequests } from './ITransactions';
+import { ITransactionAddress } from './IAddress';
 
 export interface IBlockTransaction {
   id: string;
@@ -29,6 +30,7 @@ export interface IBlock {
   ticketsList: string;
   senses: TSenseRequests[];
   type?: string;
+  addresses?: ITransactionAddress[];
 }
 
 export interface IRawBlock {

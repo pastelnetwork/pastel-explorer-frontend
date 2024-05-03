@@ -10,7 +10,11 @@ import { blocksPeriodFilters } from '@utils/constants/filter';
 import * as TransactionStyles from '@pages/Details/TransactionDetails/TransactionDetails.styles';
 
 import TicketsList from './TicketList';
-import { TICKET_STATUS_OPTIONS, TICKET_SORT_OPTIONS } from './TicketsType.helpers';
+import {
+  TICKET_STATUS_OPTIONS,
+  TICKET_SORT_OPTIONS,
+  NFT_TICKET_STATUS_OPTIONS,
+} from './TicketsType.helpers';
 import * as Styles from './TicketsType.styles';
 
 const LIMIT = 6;
@@ -20,6 +24,9 @@ const TicketsType: React.FC = () => {
   const [selectedType, setTicketType] = useState<string>(type as string);
   const [selectedSort, setTicketSort] = useState<string>(TICKET_SORT_OPTIONS[0].value);
   const [selectedStatus, setSelectedStatus] = useState<string>(TICKET_STATUS_OPTIONS[0].value);
+  const [selectedNftStatus, setSelectedNftStatus] = useState<string>(
+    NFT_TICKET_STATUS_OPTIONS[0].value,
+  );
   const [selectedTime, setSelectedTime] = useState<string>(blocksPeriodFilters[4].value);
   const [currentPage, setCurrentPage] = useState(0);
   const [customDateRange, setCustomDateRange] = useState<{
@@ -34,6 +41,7 @@ const TicketsType: React.FC = () => {
     LIMIT,
     selectedTime,
     selectedStatus,
+    selectedNftStatus,
     customDateRange,
     currentPage * LIMIT,
     selectedSort,
@@ -73,6 +81,11 @@ const TicketsType: React.FC = () => {
     setSelectedStatus(value);
   };
 
+  const handleNftStatusChange = (value: string) => {
+    setCurrentPage(0);
+    setSelectedNftStatus(value);
+  };
+
   const handleDateRangeApply = (_startDate: number, _endDate: number | null) => {
     setCurrentPage(0);
     setCustomDateRange({
@@ -104,7 +117,9 @@ const TicketsType: React.FC = () => {
             handleSelectTime={handleSelectTime}
             selectedTime={selectedTime}
             onStatusChange={handleStatusChange}
+            onNftStatusChange={handleNftStatusChange}
             selectedStatus={selectedStatus}
+            selectedNftStatus={selectedNftStatus}
             onDateRangeApply={handleDateRangeApply}
           />
         </Styles.GridStyle>

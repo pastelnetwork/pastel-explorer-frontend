@@ -86,3 +86,18 @@ export const TICKET_SORT_OPTIONS = [
     value: 'totalCost',
   },
 ];
+
+export const NFT_TICKET_STATUS_OPTIONS = [
+  {
+    name: 'pages.ticketsType.all',
+    value: 'all',
+  },
+  {
+    name: 'pages.ticketsType.available',
+    value: '1',
+  },
+  {
+    name: 'pages.ticketsType.unAvailable',
+    value: '0',
+  },
+];

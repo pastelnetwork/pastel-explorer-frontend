@@ -38,6 +38,7 @@ import { blockHeaders, transactionHeaders, generateDetailsElement } from './Bloc
 import * as Styles from './BlockDetails.styles';
 import TicketsList from './Tickets';
 import MinedIcon from './MinedIcon';
+import GraphChart from './GraphChart';
 
 const BlockDetails = () => {
   const navigate = useNavigate();
@@ -266,6 +267,7 @@ const BlockDetails = () => {
             blockWrapperClassName="mb-12"
           />
         </Styles.GridStyle>
+        <GraphChart block={block} />
         {block?.tickets?.length ? (
           <Styles.GridStyle item>
             <TicketsList data={block?.tickets} senses={block?.senses} showActivationTicket />

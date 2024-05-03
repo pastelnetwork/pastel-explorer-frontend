@@ -39,6 +39,10 @@ export const Wrapper = styled('div')`
     }
   }
 
+  .react-flow__panel.react-flow__attribution {
+    display: none;
+  }
+
   .custom-table {
     &.block {
       .table__row-header {
