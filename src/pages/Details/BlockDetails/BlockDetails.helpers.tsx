@@ -44,6 +44,12 @@ export const getGraphChartData = (block: IBlock) => {
   const edges: Edge[] = [];
   const position = { x: 0, y: 0 };
 
+  const isHorizontal = block.transactions?.length < 3;
+  const nodeWidth = isHorizontal ? 150 : 50;
+  const nodeHeight = isHorizontal ? 30 : 90;
+  const edgeNodeWidth = isHorizontal ? 72 : 18;
+  const edgeNodeHeight = isHorizontal ? 18 : 72;
+
   if (block.transactions?.length) {
     nodes.push({
       id: `block-${block.height}`,
@@ -61,8 +67,8 @@ export const getGraphChartData = (block: IBlock) => {
         justifyContent: 'center',
         fontSize: '10px',
       },
-      width: 150,
-      height: 30,
+      width: nodeWidth,
+      height: nodeHeight,
     });
 
     let counter = 1;
@@ -86,8 +92,8 @@ export const getGraphChartData = (block: IBlock) => {
           color: '#000',
           fontSize: '10px',
         },
-        width: 72,
-        height: 18,
+        width: edgeNodeWidth,
+        height: edgeNodeHeight,
       });
       edges.push({
         id: `edges-node-block-trans-${counter}`,
@@ -114,8 +120,8 @@ export const getGraphChartData = (block: IBlock) => {
           justifyContent: 'center',
           fontSize: '10px',
         },
-        width: 150,
-        height: 30,
+        width: nodeWidth,
+        height: nodeHeight,
       });
       edges.push({
         id: `edges-node-block-trans-trans-2-${counter}`,
@@ -146,8 +152,8 @@ export const getGraphChartData = (block: IBlock) => {
             color: '#000',
             fontSize: '10px',
           },
-          width: 72,
-          height: 18,
+          width: edgeNodeWidth,
+          height: edgeNodeHeight,
         });
         edges.push({
           id: `edges-node-trans-address-${counter}`,
@@ -175,8 +181,8 @@ export const getGraphChartData = (block: IBlock) => {
               justifyContent: 'center',
               fontSize: '10px',
             },
-            width: 200,
-            height: 30,
+            width: nodeWidth,
+            height: nodeHeight,
           });
           edges.push({
             id: `node-trans-address-end-${index}-${transaction.id}-${address.address}-${counter}`,
@@ -193,8 +199,7 @@ export const getGraphChartData = (block: IBlock) => {
     });
   }
 
-  const isHorizontal = true;
-  dagreGraph.setGraph({ rankdir: 'LR' });
+  dagreGraph.setGraph({ rankdir: isHorizontal ? 'LR' : 'TB' });
   nodes.forEach(node => {
     dagreGraph.setNode(node.id, { width: node.width, height: node.height });
   });
