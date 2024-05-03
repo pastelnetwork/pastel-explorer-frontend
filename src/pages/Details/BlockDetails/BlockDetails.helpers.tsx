@@ -65,7 +65,7 @@ export const getGraphChartData = (block: IBlock) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontSize: '10px',
+        fontSize: '8px',
       },
       width: nodeWidth,
       height: nodeHeight,
@@ -90,7 +90,7 @@ export const getGraphChartData = (block: IBlock) => {
           justifyContent: 'center',
           backgroundColor: '#E8CD95',
           color: '#000',
-          fontSize: '10px',
+          fontSize: '8px',
         },
         width: edgeNodeWidth,
         height: edgeNodeHeight,
@@ -109,7 +109,7 @@ export const getGraphChartData = (block: IBlock) => {
         },
         type: 'custom',
         style: {
-          fontSize: '10px',
+          fontSize: '8px',
         },
       });
       nodes.push({
@@ -126,7 +126,7 @@ export const getGraphChartData = (block: IBlock) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '10px',
+          fontSize: '8px',
         },
         width: nodeWidth,
         height: nodeHeight,
@@ -144,7 +144,7 @@ export const getGraphChartData = (block: IBlock) => {
         },
         type: 'custom',
         style: {
-          fontSize: '10px',
+          fontSize: '8px',
         },
       });
       counter += 1;
@@ -165,7 +165,7 @@ export const getGraphChartData = (block: IBlock) => {
             justifyContent: 'center',
             backgroundColor: '#E8CD95',
             color: '#000',
-            fontSize: '10px',
+            fontSize: '8px',
           },
           width: edgeNodeWidth,
           height: edgeNodeHeight,
@@ -183,7 +183,7 @@ export const getGraphChartData = (block: IBlock) => {
           },
           type: 'custom',
           style: {
-            fontSize: '10px',
+            fontSize: '8px',
           },
         });
         addresses.forEach((address, index) => {
@@ -201,7 +201,7 @@ export const getGraphChartData = (block: IBlock) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '10px',
+              fontSize: '8px',
             },
             width: nodeWidth,
             height: nodeHeight,
@@ -220,7 +220,7 @@ export const getGraphChartData = (block: IBlock) => {
             },
             type: 'custom',
             style: {
-              fontSize: '10px',
+              fontSize: '8px',
             },
           });
         });
