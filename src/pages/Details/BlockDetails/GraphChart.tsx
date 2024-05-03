@@ -3,6 +3,8 @@ import ReactFlow, {
   useNodesState,
   useEdgesState,
   Node,
+  useReactFlow,
+  ReactFlowProvider,
   // EdgeProps,
   // getBezierPath,
   // EdgeLabelRenderer,
@@ -73,12 +75,14 @@ import { getGraphChartData } from './BlockDetails.helpers';
 //   custom: CustomEdge,
 // };
 
-export default function GraphChart({ block }: { block: IBlock }) {
+function ReactFlowChart({ block }: { block: IBlock }) {
   const data = getGraphChartData(block);
   const [nodes] = useNodesState(data.nodes);
   const [edges] = useEdgesState(data.edges);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [selectedAddress, setSelectedAddress] = useState<ITransactionAddress | null>(null);
+  const [isDefaultZoom, setDefaultZoom] = useState(false);
+  const { zoomIn } = useReactFlow();
 
   const handleNodeMouseEnter = (event: MouseEvent, node: Node) => {
     const isAddress = node.id.indexOf('address-detail-') !== -1;
@@ -108,6 +112,17 @@ export default function GraphChart({ block }: { block: IBlock }) {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
+  const handleZoom = () => {
+    if (!isDefaultZoom && block.transactions.length > 2) {
+      setTimeout(() => {
+        for (let i = 0; i <= 2; i += 1) {
+          zoomIn();
+        }
+        setDefaultZoom(true);
+      }, 500);
+    }
+  };
+
   return (
     <Styles.GridStyle item>
       <TableStyles.BlockWrapper className="mb-0">
@@ -120,9 +135,10 @@ export default function GraphChart({ block }: { block: IBlock }) {
           <ReactFlow
             nodes={nodes}
             edges={edges}
-            fitView
             onNodeClick={handleNodeMouseEnter}
             // edgeTypes={edgeTypes}
+            fitView
+            onInit={handleZoom}
           />
           <Popover
             id={id}
@@ -162,5 +178,13 @@ export default function GraphChart({ block }: { block: IBlock }) {
         </SupernodesStyles.ContentWrapper>
       </TableStyles.BlockWrapper>
     </Styles.GridStyle>
+  );
+}
+
+export default function GraphChart({ block }: { block: IBlock }) {
+  return (
+    <ReactFlowProvider>
+      <ReactFlowChart block={block} />
+    </ReactFlowProvider>
   );
 }
