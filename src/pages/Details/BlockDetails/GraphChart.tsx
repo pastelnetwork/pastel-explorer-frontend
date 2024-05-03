@@ -53,7 +53,7 @@ const CustomEdge: FC<EdgeProps> = ({
     borderRadius: 0,
   });
 
-  let transform = `translate(-30%, -55%) translate(${labelX}px,${labelY}px)`;
+  let transform = `translate(-50%, -55%) translate(${labelX}px,${labelY}px)`;
   if (data?.type === 'address') {
     transform = `translateX(-30%) translate(${labelX + 10}px,${targetY - 5}px)`;
   }
@@ -84,7 +84,7 @@ const CustomEdge: FC<EdgeProps> = ({
             background: '#fff',
             padding: `0 5px`,
             borderRadius: 0,
-            fontSize: '8px',
+            fontSize: !data.isHorizontal ? '10px' : '8px',
             lineHeight: 1,
             fontWeight: 400,
             textAlign: 'left',
