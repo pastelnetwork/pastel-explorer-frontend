@@ -45,7 +45,7 @@ export const getGraphChartData = (block: IBlock) => {
   const position = { x: 0, y: 0 };
 
   const isHorizontal = block.transactions?.length < 3;
-  const nodeWidth = isHorizontal ? 150 : 50;
+  const nodeWidth = isHorizontal ? 110 : 50;
   const nodeHeight = isHorizontal ? 30 : 90;
   const edgeNodeWidth = isHorizontal ? 72 : 18;
   const edgeNodeHeight = isHorizontal ? 18 : 72;
@@ -99,9 +99,17 @@ export const getGraphChartData = (block: IBlock) => {
         id: `edges-node-block-trans-${counter}`,
         source: `block-${block.height}`,
         target: `node-block-trans-${counter}`,
-        label: `${formatNumber(transaction.totalAmount, { decimalsLength: 2 })} ${getCurrencyName()}`,
+        data: {
+          label: `${formatNumber(transaction.totalAmount, { decimalsLength: 2 })} ${getCurrencyName()}`,
+          isHorizontal,
+          type: 'block',
+        },
         markerEnd: {
           type: MarkerType.Arrow,
+        },
+        type: 'custom',
+        style: {
+          fontSize: '10px',
         },
       });
       nodes.push({
@@ -127,9 +135,16 @@ export const getGraphChartData = (block: IBlock) => {
         id: `edges-node-block-trans-trans-2-${counter}`,
         source: `node-block-trans-${counter}`,
         target: `trans-${transaction.id}`,
-        label: `${formatNumber(transaction.totalAmount, { decimalsLength: 2 })} ${getCurrencyName()}`,
+        data: {
+          label: `${formatNumber(transaction.totalAmount, { decimalsLength: 2 })} ${getCurrencyName()}`,
+          isHorizontal,
+        },
         markerEnd: {
           type: MarkerType.Arrow,
+        },
+        type: 'custom',
+        style: {
+          fontSize: '10px',
         },
       });
       counter += 1;
@@ -159,9 +174,16 @@ export const getGraphChartData = (block: IBlock) => {
           id: `edges-node-trans-address-${counter}`,
           source: `trans-${transaction.id}`,
           target: `node-trans-address-${counter}`,
-          label: `${formatNumber(transaction.totalAmount, { decimalsLength: 2 })} ${getCurrencyName()}`,
+          data: {
+            label: `${formatNumber(transaction.totalAmount, { decimalsLength: 2 })} ${getCurrencyName()}`,
+            isHorizontal,
+          },
           markerEnd: {
             type: MarkerType.Arrow,
+          },
+          type: 'custom',
+          style: {
+            fontSize: '10px',
           },
         });
         addresses.forEach((address, index) => {
@@ -188,9 +210,17 @@ export const getGraphChartData = (block: IBlock) => {
             id: `node-trans-address-end-${index}-${transaction.id}-${address.address}-${counter}`,
             source: `node-trans-address-${counter}`,
             target: `address-detail-${index}-${transaction.id}-${address.address}`,
-            label: `${formatNumber(address.amount, { decimalsLength: 2 })} ${getCurrencyName()}`,
+            data: {
+              label: `${formatNumber(address.amount, { decimalsLength: 2 })} ${getCurrencyName()}`,
+              type: 'address',
+              isHorizontal,
+            },
             markerEnd: {
               type: MarkerType.Arrow,
+            },
+            type: 'custom',
+            style: {
+              fontSize: '10px',
             },
           });
         });

@@ -1,15 +1,17 @@
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useState, FC } from 'react';
 import ReactFlow, {
   useNodesState,
   useEdgesState,
   Node,
   useReactFlow,
   ReactFlowProvider,
-  // EdgeProps,
+  EdgeProps,
   // getBezierPath,
-  // EdgeLabelRenderer,
-  // BaseEdge,
-  // EdgeTypes,
+  getSmoothStepPath,
+  EdgeLabelRenderer,
+  BaseEdge,
+  EdgeTypes,
+  MarkerType,
 } from 'reactflow';
 import { Typography, Popover, Box } from '@mui/material';
 import parse from 'html-react-parser';
@@ -29,51 +31,76 @@ import { translate } from '@utils/helpers/i18n';
 import * as Styles from './BlockDetails.styles';
 import { getGraphChartData } from './BlockDetails.helpers';
 
-// const CustomEdge: FC<EdgeProps> = ({
-//   id,
-//   sourceX,
-//   sourceY,
-//   targetX,
-//   targetY,
-//   sourcePosition,
-//   targetPosition,
-//   data,
-// }) => {
-//   const [edgePath, labelX, labelY] = getBezierPath({
-//     sourceX,
-//     sourceY,
-//     sourcePosition,
-//     targetX,
-//     targetY,
-//     targetPosition,
-//   });
+const CustomEdge: FC<EdgeProps> = ({
+  id,
+  sourceX,
+  sourceY,
+  targetX,
+  targetY,
+  sourcePosition,
+  targetPosition,
+  data,
+  markerEnd,
+  style,
+}) => {
+  const [edgePath, labelX, labelY] = getSmoothStepPath({
+    sourceX,
+    sourceY,
+    sourcePosition,
+    targetX,
+    targetY,
+    targetPosition,
+    borderRadius: 0,
+  });
 
-//   return (
-//     <>
-//       <BaseEdge id={id} path={edgePath} />
-//       <EdgeLabelRenderer>
-//         <div
-//           style={{
-//             position: 'absolute',
-//             transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-//             background: '#fff',
-//             padding: 5,
-//             borderRadius: 5,
-//             fontSize: 8,
-//             fontWeight: 400,
-//           }}
-//           className="nodrag nopan"
-//         >
-//           {data.label} adsdasd
-//         </div>
-//       </EdgeLabelRenderer>
-//     </>
-//   );
-// };
+  let transform = `translate(-30%, -55%) translate(${labelX}px,${labelY}px)`;
+  if (data?.type === 'address') {
+    transform = `translateX(-30%) translate(${labelX + 10}px,${targetY - 5}px)`;
+  }
+  if (!data.isHorizontal) {
+    transform = `translateX(-50%) translate(${targetX}px,${labelY + 10}px)`;
+    if (data?.type === 'address') {
+      transform = `translate(-50%, -50%) translate(${targetX}px,${labelY + 30}px)`;
+    }
+    if (data?.type === 'block') {
+      transform = `translateX(-50%) translate(${targetX}px,${labelY + 20}px)`;
+    }
+  }
+  return (
+    <>
+      <path
+        id={id}
+        style={style}
+        className="react-flow__edge-path"
+        d={edgePath}
+        markerEnd={markerEnd}
+      />
+      <BaseEdge id={id} path={edgePath} markerEnd={MarkerType.Arrow} />
+      <EdgeLabelRenderer>
+        <div
+          style={{
+            position: 'absolute',
+            transform,
+            background: '#fff',
+            padding: `0 5px`,
+            borderRadius: 0,
+            fontSize: '8px',
+            lineHeight: 1,
+            fontWeight: 400,
+            textAlign: 'left',
+          }}
+          className="nodrag nopan"
+        >
+          {data.label}
+        </div>
+      </EdgeLabelRenderer>
+    </>
+  );
+};
 
-// const edgeTypes: EdgeTypes = {
-//   custom: CustomEdge,
-// };
+const edgeTypes: EdgeTypes = {
+  custom: CustomEdge,
+};
 
 function ReactFlowChart({ block }: { block: IBlock }) {
   const data = getGraphChartData(block);
@@ -136,7 +163,7 @@ function ReactFlowChart({ block }: { block: IBlock }) {
             nodes={nodes}
             edges={edges}
             onNodeClick={handleNodeMouseEnter}
-            // edgeTypes={edgeTypes}
+            edgeTypes={edgeTypes}
             fitView
             onInit={handleZoom}
           />
