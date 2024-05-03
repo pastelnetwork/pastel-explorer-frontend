@@ -76,6 +76,7 @@ const MiningChangeAnalysis = loadable(
   () => import('@pages/MiningChangeAnalysis/MiningChangeAnalysis'),
 );
 const SenseMap = loadable(() => import('@pages/SenseMap/SenseMap'));
+const Page404 = loadable(() => import('@pages/404/404'));
 
 const explorerRoutes = {
   id: 'routes.explorer',
@@ -499,6 +500,15 @@ const nftDetailsRoutes = {
   children: null,
 };
 
+const page404Routes = {
+  id: 'routes.pages.content.message',
+  path: ROUTES.NOT_FOUND,
+  icon: <LocalAtmIcon />,
+  component: Page404,
+  seoTitle: 'routes.pages.content.message',
+  children: null,
+};
+
 const senseMapRoutes = {
   id: 'routes.senseMap',
   path: ROUTES.SENSE_MAP,
@@ -560,6 +570,7 @@ export const pageRoutes = [
   nftDetailsRoutes,
   feeScheduleStatisticsRoutes,
   pslBurntStatisticsRoutes,
+  page404Routes,
   miningChangeAnalysisRoutes,
   senseMapRoutes,
 ];

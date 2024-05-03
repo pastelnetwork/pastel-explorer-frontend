@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { CircularProgress, Grid } from '@mui/material';
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
@@ -10,7 +10,7 @@ import InfinityTable, {
   ISortData,
 } from '@components/InfinityTable/InfinityTable';
 import { translate, translateDropdown } from '@utils/helpers/i18n';
-
+import * as ROUTES from '@utils/constants/routes';
 import { getCurrencyName, isPastelBurnAddress } from '@utils/appInfo';
 import * as TableStyles from '@components/Table/Table.styles';
 import Fire from '@components/SvgIcon/Fire';
@@ -35,6 +35,7 @@ interface IAddressDataRef {
 }
 
 const AddressDetails = () => {
+  const navigate = useNavigate();
   const [status, setStatus] = useState('');
 
   const { id } = useParams();
@@ -75,6 +76,17 @@ const AddressDetails = () => {
       setMobileView(false);
     }
   };
+
+  useEffect(() => {
+    if (
+      !swrData.isLoading &&
+      !swrData?.data?.totalReceived &&
+      !swrData?.data?.totalSent &&
+      !swrData?.data?.balance?.length
+    ) {
+      navigate(ROUTES.NOT_FOUND);
+    }
+  }, [swrData]);
 
   useEffect(() => {
     handleShowSubMenu();

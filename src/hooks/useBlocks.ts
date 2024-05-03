@@ -57,7 +57,7 @@ export default function useBlocks(
 
   return {
     swrData: newData?.length ? newData : null,
-    total: data?.[0]?.total || 0,
+    total: data?.[0]?.total || newData?.[0]?.height || 0,
     isLoading: isLoadingMore,
     swrSize: size,
     swrSetSize: setSize,
