@@ -1874,8 +1874,23 @@
       "minedByPool": {
         "message": "Mined by a pool",
         "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "chartTransactions": {
+        "message": "Transactions",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "beforeTransactions": {
+        "message": "Before",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "afterTransactions": {
+        "message": "After",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "currentBalance": {
+        "message": "Current balance",
+        "description": "Used for the CascadeAndSenseStatistics page"
       }
-
     },
     "pastelIdDetails": {
       "tickets": {
