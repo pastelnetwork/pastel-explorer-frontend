@@ -1876,7 +1876,7 @@
         "description": "Used for the CascadeAndSenseStatistics page"
       },
       "chartTransactions": {
-        "message": "Transactions",
+        "message": "Flow",
         "description": "Used for the CascadeAndSenseStatistics page"
       },
       "beforeTransactions": {

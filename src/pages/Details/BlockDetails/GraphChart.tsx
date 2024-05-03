@@ -1,5 +1,14 @@
 import { MouseEvent, useState } from 'react';
-import ReactFlow, { useNodesState, useEdgesState, Node } from 'reactflow';
+import ReactFlow, {
+  useNodesState,
+  useEdgesState,
+  Node,
+  // EdgeProps,
+  // getBezierPath,
+  // EdgeLabelRenderer,
+  // BaseEdge,
+  // EdgeTypes,
+} from 'reactflow';
 import { Typography, Popover, Box } from '@mui/material';
 import parse from 'html-react-parser';
 
@@ -17,6 +26,52 @@ import { translate } from '@utils/helpers/i18n';
 
 import * as Styles from './BlockDetails.styles';
 import { getGraphChartData } from './BlockDetails.helpers';
+
+// const CustomEdge: FC<EdgeProps> = ({
+//   id,
+//   sourceX,
+//   sourceY,
+//   targetX,
+//   targetY,
+//   sourcePosition,
+//   targetPosition,
+//   data,
+// }) => {
+//   const [edgePath, labelX, labelY] = getBezierPath({
+//     sourceX,
+//     sourceY,
+//     sourcePosition,
+//     targetX,
+//     targetY,
+//     targetPosition,
+//   });
+
+//   return (
+//     <>
+//       <BaseEdge id={id} path={edgePath} />
+//       <EdgeLabelRenderer>
+//         <div
+//           style={{
+//             position: 'absolute',
+//             transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
+//             background: '#fff',
+//             padding: 5,
+//             borderRadius: 5,
+//             fontSize: 8,
+//             fontWeight: 400,
+//           }}
+//           className="nodrag nopan"
+//         >
+//           {data.label} adsdasd
+//         </div>
+//       </EdgeLabelRenderer>
+//     </>
+//   );
+// };
+
+// const edgeTypes: EdgeTypes = {
+//   custom: CustomEdge,
+// };
 
 export default function GraphChart({ block }: { block: IBlock }) {
   const data = getGraphChartData(block);
@@ -62,7 +117,13 @@ export default function GraphChart({ block }: { block: IBlock }) {
           </SupernodesStyles.TitleWrapper>
         </PastelIdStyles.BlockWrapper>
         <SupernodesStyles.ContentWrapper style={{ height: '500px' }}>
-          <ReactFlow nodes={nodes} edges={edges} fitView onNodeClick={handleNodeMouseEnter} />
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            fitView
+            onNodeClick={handleNodeMouseEnter}
+            // edgeTypes={edgeTypes}
+          />
           <Popover
             id={id}
             open={open}

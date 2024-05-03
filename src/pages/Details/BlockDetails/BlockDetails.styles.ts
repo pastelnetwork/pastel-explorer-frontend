@@ -40,9 +40,7 @@ export const Wrapper = styled('div')`
   }
 
   .react-flow__panel.react-flow__attribution {
-    a {
-      font-size: 4px;
-    }
+    display: none;
   }
 
   .custom-table {
