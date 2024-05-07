@@ -182,7 +182,11 @@ function ReactFlowChart({ block }: { block: IBlock }) {
             }}
           >
             {selectedAddress ? (
-              <Box sx={{ p: 2 }}>
+              <Box sx={{ p: 3 }}>
+                <Typography sx={{ mb: 2 }}>
+                  <strong>{parse(translate('pages.blockDetails.address'))}:</strong>{' '}
+                  {selectedAddress.address}
+                </Typography>
                 <Typography sx={{ mb: 2 }}>
                   <strong>{parse(translate('pages.blockDetails.beforeTransactions'))}:</strong>{' '}
                   {formatNumber(selectedAddress.preTotal, { decimalsLength: 2 })}{' '}

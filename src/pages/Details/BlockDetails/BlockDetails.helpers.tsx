@@ -8,6 +8,7 @@ import { formatAddress } from '@utils/helpers/format';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { IBlock } from '@utils/types/IBlocks';
 import { HeaderType } from '@components/Table/Table';
+import { translateDropdown } from '@utils/helpers/i18n';
 
 import * as Styles from './BlockDetails.styles';
 
@@ -45,21 +46,23 @@ export const getGraphChartData = (block: IBlock) => {
   const position = { x: 0, y: 0 };
 
   const isHorizontal = block.transactions?.length < 3;
-  const nodeWidth = isHorizontal ? 110 : 50;
+  const nodeWidth = isHorizontal ? 110 : 55;
   const nodeHeight = isHorizontal ? 30 : 90;
-  const edgeNodeWidth = isHorizontal ? 72 : 18;
-  const edgeNodeHeight = isHorizontal ? 18 : 72;
+  const edgeNodeWidth = isHorizontal ? 150 : 45;
+  const edgeNodeHeight = isHorizontal ? 18 : 150;
 
   if (block.transactions?.length) {
     nodes.push({
       id: `block-${block.height}`,
       sourcePosition: 'right' as Position,
-      data: { label: `${block.height}` },
+      data: {
+        label: `${translateDropdown('pages.blockDetails.blockHeight')}:\n${formatNumber(block.height)}`,
+      },
       position,
       connectable: false,
       style: {
         borderRadius: '4px',
-        width: '50px',
+        width: '55px',
         height: '30px',
         padding: '5px',
         display: 'flex',
@@ -78,11 +81,11 @@ export const getGraphChartData = (block: IBlock) => {
         id: `node-block-trans-${counter}`,
         sourcePosition: 'right' as Position,
         targetPosition: 'left' as Position,
-        data: { label: `${counter}` },
+        data: { label: `${translateDropdown('pages.blockDetails.output')} ${counter}` },
         position,
         style: {
           borderRadius: '4px',
-          width: '18px',
+          width: '45px',
           height: '18px',
           padding: '2px',
           display: 'flex',
@@ -116,11 +119,11 @@ export const getGraphChartData = (block: IBlock) => {
         id: `trans-${transaction.id}`,
         sourcePosition: 'right' as Position,
         targetPosition: 'left' as Position,
-        data: { label: `${formatAddress(transaction.id, 3, -3)}` },
+        data: { label: `${formatAddress(transaction.id, 6, -3)}` },
         position,
         style: {
           borderRadius: '4px',
-          width: '50px',
+          width: '60px',
           height: '30px',
           padding: '5px',
           display: 'flex',
@@ -153,11 +156,11 @@ export const getGraphChartData = (block: IBlock) => {
           id: `node-trans-address-${counter}`,
           sourcePosition: 'right' as Position,
           targetPosition: 'left' as Position,
-          data: { label: `${counter}` },
+          data: { label: `${translateDropdown('pages.blockDetails.output')} ${counter}` },
           position,
           style: {
             borderRadius: '4px',
-            width: '18px',
+            width: '45px',
             height: '18px',
             padding: '2px',
             display: 'flex',
@@ -191,11 +194,11 @@ export const getGraphChartData = (block: IBlock) => {
             id: `address-detail-${index}-${transaction.id}-${address.address}`,
             sourcePosition: 'right' as Position,
             targetPosition: 'left' as Position,
-            data: { label: `${formatAddress(address.address, 3, -3)}` },
+            data: { label: `${formatAddress(address.address, 8, -3)}` },
             position,
             style: {
               borderRadius: '4px',
-              width: '50px',
+              width: '70px',
               height: '30px',
               padding: '5px',
               display: 'flex',
