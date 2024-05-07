@@ -48,8 +48,8 @@ export const getGraphChartData = (block: IBlock) => {
   const isHorizontal = block.transactions?.length < 3;
   const nodeWidth = isHorizontal ? 110 : 55;
   const nodeHeight = isHorizontal ? 30 : 90;
-  const edgeNodeWidth = isHorizontal ? 150 : 45;
-  const edgeNodeHeight = isHorizontal ? 18 : 150;
+  const edgeNodeWidth = isHorizontal ? 180 : 45;
+  const edgeNodeHeight = isHorizontal ? 18 : 180;
 
   if (block.transactions?.length) {
     nodes.push({
@@ -62,7 +62,7 @@ export const getGraphChartData = (block: IBlock) => {
       connectable: false,
       style: {
         borderRadius: '4px',
-        width: '55px',
+        width: !isHorizontal ? '80px' : '60px',
         height: '30px',
         padding: '5px',
         display: 'flex',
@@ -85,7 +85,7 @@ export const getGraphChartData = (block: IBlock) => {
         position,
         style: {
           borderRadius: '4px',
-          width: '45px',
+          width: !isHorizontal ? '60px' : '45px',
           height: '18px',
           padding: '2px',
           display: 'flex',
@@ -123,7 +123,7 @@ export const getGraphChartData = (block: IBlock) => {
         position,
         style: {
           borderRadius: '4px',
-          width: '60px',
+          width: !isHorizontal ? '70px' : '60px',
           height: '30px',
           padding: '5px',
           display: 'flex',
@@ -160,7 +160,7 @@ export const getGraphChartData = (block: IBlock) => {
           position,
           style: {
             borderRadius: '4px',
-            width: '45px',
+            width: !isHorizontal ? '60px' : '45px',
             height: '18px',
             padding: '2px',
             display: 'flex',
