@@ -13,8 +13,9 @@ import ReactFlow, {
   EdgeTypes,
   MarkerType,
 } from 'reactflow';
-import { Typography, Popover, Box } from '@mui/material';
+import { Typography, Popper } from '@mui/material';
 import parse from 'html-react-parser';
+import { useSelector } from 'react-redux';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'reactflow/dist/style.css';
@@ -26,6 +27,7 @@ import * as TableStyles from '@components/Table/Table.styles';
 import * as PastelIdStyles from '@pages/Details/PastelIdDetails/PastelIdDetails.styles';
 import * as SupernodesStyles from '@pages/Supernodes/Supernodes.styles';
 import { ITransactionAddress } from '@utils/types/IAddress';
+import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { translate } from '@utils/helpers/i18n';
 
 import * as Styles from './BlockDetails.styles';
@@ -66,6 +68,8 @@ const CustomEdge: FC<EdgeProps> = ({
       transform = `translateX(-50%) translate(${targetX}px,${labelY + 20}px)`;
     }
   }
+  const isDarkMode = useSelector(getThemeState).darkMode;
+
   return (
     <>
       <path
@@ -81,7 +85,7 @@ const CustomEdge: FC<EdgeProps> = ({
           style={{
             position: 'absolute',
             transform,
-            background: '#fff',
+            background: isDarkMode ? '#2D3748' : '#fff',
             padding: `0 5px`,
             borderRadius: 0,
             fontSize: !data.isHorizontal ? '10px' : '8px',
@@ -162,27 +166,15 @@ function ReactFlowChart({ block }: { block: IBlock }) {
           <ReactFlow
             nodes={nodes}
             edges={edges}
-            onNodeClick={handleNodeMouseEnter}
+            onNodeMouseEnter={handleNodeMouseEnter}
+            onNodeMouseLeave={handleClose}
             edgeTypes={edgeTypes}
             fitView
             onInit={handleZoom}
           />
-          <Popover
-            id={id}
-            open={open}
-            anchorEl={anchorEl}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'center',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'center',
-            }}
-          >
+          <Popper id={id} open={open} anchorEl={anchorEl}>
             {selectedAddress ? (
-              <Box sx={{ p: 3 }}>
+              <Styles.FlowNodeTooltip sx={{ p: 3 }}>
                 <Typography sx={{ mb: 2 }}>
                   <strong>{parse(translate('pages.blockDetails.address'))}:</strong>{' '}
                   {selectedAddress.address}
@@ -203,9 +195,9 @@ function ReactFlowChart({ block }: { block: IBlock }) {
                   <strong>{parse(translate('pages.blockDetails.currentBalance'))}:</strong>{' '}
                   {formatNumber(selectedAddress.total, { decimalsLength: 2 })} {getCurrencyName()}
                 </Typography>
-              </Box>
+              </Styles.FlowNodeTooltip>
             ) : null}
-          </Popover>
+          </Popper>
         </SupernodesStyles.ContentWrapper>
       </TableStyles.BlockWrapper>
     </Styles.GridStyle>
