@@ -4,7 +4,6 @@ import { Node, Edge, Position, MarkerType } from 'reactflow';
 import dagre from 'dagre';
 
 import { getCurrencyName } from '@utils/appInfo';
-import { formatAddress } from '@utils/helpers/format';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { IBlock } from '@utils/types/IBlocks';
 import { HeaderType } from '@components/Table/Table';
@@ -47,9 +46,9 @@ export const getGraphChartData = (block: IBlock) => {
 
   const isHorizontal = block.transactions?.length < 3;
   const nodeWidth = isHorizontal ? 110 : 55;
-  const nodeHeight = isHorizontal ? 30 : 90;
-  const edgeNodeWidth = isHorizontal ? 180 : 45;
-  const edgeNodeHeight = isHorizontal ? 18 : 180;
+  const nodeHeight = isHorizontal ? 40 : 110;
+  const edgeNodeWidth = isHorizontal ? 180 : 55;
+  const edgeNodeHeight = isHorizontal ? 18 : 40;
 
   if (block.transactions?.length) {
     nodes.push({
@@ -63,14 +62,14 @@ export const getGraphChartData = (block: IBlock) => {
       style: {
         borderRadius: '4px',
         width: !isHorizontal ? '80px' : '60px',
-        height: '30px',
+        height: '40px',
         padding: '5px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         fontSize: !isHorizontal ? '10px' : '8px',
       },
-      width: nodeWidth,
+      width: isHorizontal ? nodeWidth : nodeWidth - 20,
       height: nodeHeight,
     });
 
@@ -95,8 +94,8 @@ export const getGraphChartData = (block: IBlock) => {
           color: '#000',
           fontSize: !isHorizontal ? '10px' : '8px',
         },
-        width: edgeNodeWidth,
-        height: edgeNodeHeight,
+        width: !isHorizontal ? edgeNodeWidth - 40 : edgeNodeWidth,
+        height: !isHorizontal ? edgeNodeHeight - 20 : edgeNodeHeight,
       });
       edges.push({
         id: `edges-node-block-trans-${counter}`,
@@ -119,20 +118,22 @@ export const getGraphChartData = (block: IBlock) => {
         id: `trans-${transaction.id}`,
         sourcePosition: 'right' as Position,
         targetPosition: 'left' as Position,
-        data: { label: `${formatAddress(transaction.id, 6, -3)}` },
+        data: { label: transaction.id, type: 'transaction' },
         position,
         style: {
           borderRadius: '4px',
-          width: !isHorizontal ? '70px' : '60px',
-          height: '30px',
+          width: !isHorizontal ? '130px' : '100px',
+          height: !isHorizontal ? '50px' : '40px',
           padding: '5px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           fontSize: !isHorizontal ? '10px' : '8px',
+          whiteSpace: 'wrap',
+          wordBreak: 'break-word',
         },
-        width: nodeWidth,
-        height: nodeHeight,
+        width: !isHorizontal ? nodeWidth + 30 : nodeWidth + 50,
+        height: !isHorizontal ? edgeNodeHeight + 10 : nodeHeight,
       });
       edges.push({
         id: `edges-node-block-trans-trans-2-${counter}`,
@@ -170,7 +171,7 @@ export const getGraphChartData = (block: IBlock) => {
             color: '#000',
             fontSize: !isHorizontal ? '10px' : '8px',
           },
-          width: edgeNodeWidth,
+          width: !isHorizontal ? edgeNodeWidth - 40 : edgeNodeWidth,
           height: edgeNodeHeight,
         });
         edges.push({
@@ -194,19 +195,24 @@ export const getGraphChartData = (block: IBlock) => {
             id: `address-detail-${index}-${transaction.id}-${address.address}`,
             sourcePosition: 'right' as Position,
             targetPosition: 'left' as Position,
-            data: { label: `${formatAddress(address.address, 8, -3)}` },
+            data: {
+              label: address.address,
+              type: 'address',
+            },
             position,
             style: {
               borderRadius: '4px',
-              width: '70px',
-              height: '30px',
+              width: !isHorizontal ? '130px' : '100px',
+              height: '40px',
               padding: '5px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               fontSize: !isHorizontal ? '10px' : '8px',
+              whiteSpace: 'wrap',
+              wordBreak: 'break-word',
             },
-            width: nodeWidth,
+            width: !isHorizontal ? nodeWidth + 30 : nodeWidth,
             height: nodeHeight,
           });
           edges.push({
