@@ -10,6 +10,7 @@ export default function useTicketsType(
   limit: number,
   period: string,
   status: string,
+  nftStatus: string,
   customDateRange: {
     startDate: number;
     endDate: number | null;
@@ -20,6 +21,10 @@ export default function useTicketsType(
   let qStatus = '';
   if (status) {
     qStatus = `&status=${status}`;
+  }
+  let qNftStatus = '';
+  if (status) {
+    qNftStatus = `&nftStatus=${nftStatus}`;
   }
 
   let dateParam = '';
@@ -36,7 +41,7 @@ export default function useTicketsType(
     total: number;
     senses: TSenseRequests[];
   }>(
-    `${URLS.GET_TICKETS}/${type}?offset=${offset}&limit=${limit}&sort=${sort}&type=${type}${dateParam}${qStatus}&include=all`,
+    `${URLS.GET_TICKETS}/${type}?offset=${offset}&limit=${limit}&sort=${sort}&type=${type}${dateParam}${qStatus}${qNftStatus}&include=all`,
     axiosGet,
     SWR_OPTIONS,
   );

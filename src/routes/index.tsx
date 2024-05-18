@@ -72,6 +72,7 @@ const CascadeDetails = loadable(() => import('@pages/Details/CascadeDetails/Casc
 const NftDetails = loadable(() => import('@pages/Details/NftDetails/NftDetails'));
 const FeeSchedule = loadable(() => import('@pages/HistoricalStatistics/FeeSchedule'));
 const PSLBurnt = loadable(() => import('@pages/HistoricalStatistics/PSLBurnt'));
+const Page404 = loadable(() => import('@pages/404/404'));
 
 const explorerRoutes = {
   id: 'routes.explorer',
@@ -488,6 +489,15 @@ const nftDetailsRoutes = {
   children: null,
 };
 
+const page404Routes = {
+  id: 'routes.pages.content.message',
+  path: ROUTES.NOT_FOUND,
+  icon: <LocalAtmIcon />,
+  component: Page404,
+  seoTitle: 'routes.pages.content.message',
+  children: null,
+};
+
 export const pageRoutes = [
   explorerRoutes,
   movementRoutes,
@@ -531,6 +541,7 @@ export const pageRoutes = [
   nftDetailsRoutes,
   feeScheduleStatisticsRoutes,
   pslBurntStatisticsRoutes,
+  page404Routes,
 ];
 
 export const sidebarRoutes = [

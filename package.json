@@ -44,6 +44,7 @@
     "axios": "1.6.7",
     "buffer": "6.0.3",
     "css-vendor": "2.0.8",
+    "dagre": "0.8.5",
     "date-fns": "3.3.1",
     "echarts": "5.5.0",
     "echarts-for-react": "3.0.2",
@@ -76,6 +77,7 @@
     "react-share": "5.1.0",
     "react-timeago": "7.2.0",
     "react-virtualized": "9.22.5",
+    "reactflow": "11.11.2",
     "redux": "5.0.1",
     "redux-persist": "6.0.0",
     "redux-thunk": "3.1.0",
@@ -86,6 +88,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "7.21.11",
     "@redux-devtools/extension": "3.3.0",
+    "@types/dagre": "0.7.52",
     "@types/enzyme": "3.10.18",
     "@types/file-saver": "2.0.7",
     "@types/jest": "29.5.12",

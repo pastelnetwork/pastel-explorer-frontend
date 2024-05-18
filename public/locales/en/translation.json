@@ -1874,8 +1874,23 @@
       "minedByPool": {
         "message": "Mined by a pool",
         "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "chartTransactions": {
+        "message": "Flow",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "beforeTransactions": {
+        "message": "Before",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "afterTransactions": {
+        "message": "After",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "currentBalance": {
+        "message": "Current balance",
+        "description": "Used for the CascadeAndSenseStatistics page"
       }
-
     },
     "pastelIdDetails": {
       "tickets": {
@@ -3370,8 +3385,16 @@
         "message": "Total Cost",
         "description": "Used for the Tickets page"
       },
-      "registeringSupernode": {
-        "message": "Registering Supernode",
+      "available": {
+        "message": "Yes",
+        "description": "Used for the Tickets page"
+      },
+      "unAvailable": {
+        "message": "No",
+        "description": "Used for the Tickets page"
+      },
+      "publiclyAccessible": {
+        "message": "Publicly Accessible",
         "description": "Used for the Tickets page"
       }
     },
