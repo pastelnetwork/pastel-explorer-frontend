@@ -13,8 +13,10 @@ import ReactFlow, {
   EdgeTypes,
   MarkerType,
 } from 'reactflow';
-import { Typography, Popover, Box } from '@mui/material';
+import { Typography, Popper } from '@mui/material';
 import parse from 'html-react-parser';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'reactflow/dist/style.css';
@@ -26,7 +28,9 @@ import * as TableStyles from '@components/Table/Table.styles';
 import * as PastelIdStyles from '@pages/Details/PastelIdDetails/PastelIdDetails.styles';
 import * as SupernodesStyles from '@pages/Supernodes/Supernodes.styles';
 import { ITransactionAddress } from '@utils/types/IAddress';
+import { getThemeState } from '@redux/reducers/appThemeReducer';
 import { translate } from '@utils/helpers/i18n';
+import * as ROUTES from '@utils/constants/routes';
 
 import * as Styles from './BlockDetails.styles';
 import { getGraphChartData } from './BlockDetails.helpers';
@@ -58,14 +62,16 @@ const CustomEdge: FC<EdgeProps> = ({
     transform = `translateX(-30%) translate(${labelX + 10}px,${targetY - 5}px)`;
   }
   if (!data.isHorizontal) {
-    transform = `translateX(-50%) translate(${targetX}px,${labelY + 10}px)`;
+    transform = `translateX(-50%) translate(${targetX}px,${labelY - 5}px)`;
     if (data?.type === 'address') {
-      transform = `translate(-50%, -50%) translate(${targetX}px,${labelY + 30}px)`;
+      transform = `translate(-50%, -50%) translate(${targetX}px,${labelY + 15}px)`;
     }
     if (data?.type === 'block') {
       transform = `translateX(-50%) translate(${targetX}px,${labelY + 20}px)`;
     }
   }
+  const isDarkMode = useSelector(getThemeState).darkMode;
+
   return (
     <>
       <path
@@ -81,7 +87,7 @@ const CustomEdge: FC<EdgeProps> = ({
           style={{
             position: 'absolute',
             transform,
-            background: '#fff',
+            background: isDarkMode ? '#2D3748' : '#fff',
             padding: `0 5px`,
             borderRadius: 0,
             fontSize: !data.isHorizontal ? '10px' : '8px',
@@ -103,13 +109,14 @@ const edgeTypes: EdgeTypes = {
 };
 
 function ReactFlowChart({ block }: { block: IBlock }) {
+  const navigate = useNavigate();
   const data = getGraphChartData(block);
   const [nodes] = useNodesState(data.nodes);
   const [edges] = useEdgesState(data.edges);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [selectedAddress, setSelectedAddress] = useState<ITransactionAddress | null>(null);
   const [isDefaultZoom, setDefaultZoom] = useState(false);
-  const { zoomIn } = useReactFlow();
+  const { setCenter, getZoom, getNode, getViewport } = useReactFlow();
 
   const handleNodeMouseEnter = (event: MouseEvent, node: Node) => {
     const isAddress = node.id.indexOf('address-detail-') !== -1;
@@ -142,11 +149,27 @@ function ReactFlowChart({ block }: { block: IBlock }) {
   const handleZoom = () => {
     if (!isDefaultZoom && block.transactions.length > 2) {
       setTimeout(() => {
-        for (let i = 0; i <= 2; i += 1) {
-          zoomIn();
-        }
+        const zoom = getZoom();
+        const viewport = getViewport();
+        const node = getNode(`block-${block.height}`);
+        setCenter(node?.position?.x || 0, viewport.y + 90, {
+          zoom: zoom + 0.5,
+        });
         setDefaultZoom(true);
       }, 500);
+    }
+  };
+
+  const handleNodeClick = (event: MouseEvent, node: Node) => {
+    switch (node?.data?.type) {
+      case 'transaction':
+        navigate(`${ROUTES.TRANSACTION_DETAILS}/${node.data.label}`);
+        break;
+      case 'address':
+        navigate(`${ROUTES.ADDRESS_DETAILS}/${node.data.label}`);
+        break;
+      default:
+        break;
     }
   };
 
@@ -162,27 +185,20 @@ function ReactFlowChart({ block }: { block: IBlock }) {
           <ReactFlow
             nodes={nodes}
             edges={edges}
-            onNodeClick={handleNodeMouseEnter}
+            onNodeMouseEnter={handleNodeMouseEnter}
+            onNodeMouseLeave={handleClose}
+            onNodeClick={handleNodeClick}
             edgeTypes={edgeTypes}
             fitView
             onInit={handleZoom}
           />
-          <Popover
-            id={id}
-            open={open}
-            anchorEl={anchorEl}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'center',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'center',
-            }}
-          >
+          <Popper id={id} open={open} anchorEl={anchorEl}>
             {selectedAddress ? (
-              <Box sx={{ p: 2 }}>
+              <Styles.FlowNodeTooltip sx={{ p: 3 }}>
+                <Typography sx={{ mb: 2 }}>
+                  <strong>{parse(translate('pages.blockDetails.address'))}:</strong>{' '}
+                  {selectedAddress.address}
+                </Typography>
                 <Typography sx={{ mb: 2 }}>
                   <strong>{parse(translate('pages.blockDetails.beforeTransactions'))}:</strong>{' '}
                   {formatNumber(selectedAddress.preTotal, { decimalsLength: 2 })}{' '}
@@ -199,9 +215,9 @@ function ReactFlowChart({ block }: { block: IBlock }) {
                   <strong>{parse(translate('pages.blockDetails.currentBalance'))}:</strong>{' '}
                   {formatNumber(selectedAddress.total, { decimalsLength: 2 })} {getCurrencyName()}
                 </Typography>
-              </Box>
+              </Styles.FlowNodeTooltip>
             ) : null}
-          </Popover>
+          </Popper>
         </SupernodesStyles.ContentWrapper>
       </TableStyles.BlockWrapper>
     </Styles.GridStyle>

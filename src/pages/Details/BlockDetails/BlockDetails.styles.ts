@@ -4,6 +4,7 @@ import {
   Typography as MuiTypography,
   Accordion as MuiAccordion,
   Grid,
+  Box,
   IconButton,
 } from '@mui/material';
 
@@ -317,4 +318,9 @@ export const MinedIconWrapper = styled.span`
   &.ml-2 {
     margin-left: 2px;
   }
+`;
+
+export const FlowNodeTooltip = styled(Box)`
+  background: ${props => props.theme.palette.background.paper};
+  border-radius: 8px;
 `;

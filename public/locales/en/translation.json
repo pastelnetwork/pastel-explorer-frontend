@@ -1890,6 +1890,18 @@
       "currentBalance": {
         "message": "Current balance",
         "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "address": {
+        "message": "Address",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "output": {
+        "message": "Output",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "blockHeight": {
+        "message": "Block Height",
+        "description": "Used for the CascadeAndSenseStatistics page"
       }
     },
     "pastelIdDetails": {
