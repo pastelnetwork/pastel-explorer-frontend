@@ -47,7 +47,6 @@ export const generateDrawerContent = ({ name, latLng, data }: MarkerProps) => {
                   )}
                   {generateDrawerInfoBlock(translate('pages.explorer.country'), country)}
                   {generateDrawerInfoBlock(translate('pages.explorer.city'), city)}
-                  {generateDrawerInfoBlock(translate('pages.explorer.pastelID'), id)}
                   {generateDrawerInfoBlock(translate('pages.explorer.ip'), ip)}
                 </Grid>
               </AccordionDetails>
