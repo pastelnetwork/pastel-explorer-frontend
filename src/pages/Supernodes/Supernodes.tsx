@@ -18,7 +18,7 @@ import CopyButton from '@components/CopyButton/CopyButton';
 import SupernodeStatistics from '@pages/Explorer/SupernodeStatistics/SupernodeStatistics';
 import { INetworkSupernodes } from '@utils/types/INetwork';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import { formattedTimeElapsed, formatFullDate } from '@utils/helpers/date/date';
+import { formattedDate } from '@utils/helpers/date/date';
 import { formatAddress } from '@utils/helpers/format';
 import { Dropdown, OptionsProps } from '@components/Dropdown/Dropdown';
 import useSupernodes from '@hooks/useSupernodes';
@@ -299,7 +299,7 @@ const Supernodes: React.FC = () => {
                               data-title={`${translateDropdown('pages.supernodes.lastPaid')}:`}
                               className="cell-content nowrap"
                             >
-                              {formattedTimeElapsed(masternode.lastPaidTime)}
+                              {formattedDate(masternode.lastPaidTime, { dayName: false })}
                             </TableStyles.RowCell>
                             <TableStyles.RowCell
                               data-title={`${translateDropdown('pages.supernodes.seeMore')}:`}
@@ -375,24 +375,6 @@ const Supernodes: React.FC = () => {
                                   </div>
                                   <div>
                                     <Box className="title">
-                                      {parse(translate('pages.supernodes.rankAsOfBlockHeight'))}
-                                    </Box>
-                                    <Box className="bold">
-                                      {masternode.rankAsOfBlockHeight < 0 ? (
-                                        parse(translate('common.na'))
-                                      ) : (
-                                        <RouterLink
-                                          route={`${ROUTES.BLOCK_DETAILS}/${masternode.rankAsOfBlockHeight}`}
-                                          value={masternode.rankAsOfBlockHeight}
-                                          textSize="large"
-                                          title={masternode.rankAsOfBlockHeight.toString()}
-                                          className="address-link"
-                                        />
-                                      )}
-                                    </Box>
-                                  </div>
-                                  <div>
-                                    <Box className="title">
                                       {parse(translate('pages.supernodes.activeSeconds'))}
                                     </Box>
                                     <Box className="bold">{masternode.activeSeconds}</Box>
@@ -408,7 +390,35 @@ const Supernodes: React.FC = () => {
                                       {parse(translate('pages.supernodes.dateTimeLastSeen'))}
                                     </Box>
                                     <Box className="bold">
-                                      {formatFullDate(masternode.dateTimeLastSeen * 1000)}
+                                      {formattedDate(masternode.dateTimeLastSeen, {
+                                        dayName: false,
+                                      })}
+                                    </Box>
+                                  </div>
+                                  <div>
+                                    <Box className="title">
+                                      {parse(translate('pages.supernodes.pubkey'))}
+                                    </Box>
+                                    <Box className="bold">
+                                      {masternode.pubkey
+                                        ? formatAddress(masternode.pubkey, 15, -5)
+                                        : parse(translate('common.na'))}
+                                    </Box>
+                                  </div>
+                                  <div>
+                                    <Box className="title">
+                                      {parse(translate('pages.supernodes.extAddress'))}
+                                    </Box>
+                                    <Box className="bold">
+                                      {masternode.extAddress || parse(translate('common.na'))}
+                                    </Box>
+                                  </div>
+                                  <div>
+                                    <Box className="title">
+                                      {parse(translate('pages.supernodes.extP2P'))}
+                                    </Box>
+                                    <Box className="bold">
+                                      {masternode.extP2P || parse(translate('common.na'))}
                                     </Box>
                                   </div>
                                 </div>
