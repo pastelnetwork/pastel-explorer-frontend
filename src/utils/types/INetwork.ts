@@ -23,11 +23,13 @@ export interface INetworkSupernodes {
   port: string;
   status: string;
   snPastelIdPubkey: string;
-  rankAsOfBlockHeight: number;
   protocolVersion: number;
   masternodeRank: number;
   dateTimeLastSeen: number;
   activeSeconds: number;
+  pubkey: string;
+  extAddress: string;
+  extP2P: string;
 }
 
 export interface INetwork {
