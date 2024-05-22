@@ -94,7 +94,10 @@ export const calculateDifference = (
   const firstValue = parseFloat(first.toString());
   const secondValue = parseFloat(second.toString());
 
-  const difference = ((firstValue - secondValue) / ((firstValue + secondValue) / 2)) * 100;
+  let difference = ((firstValue - secondValue) / ((firstValue + secondValue) / 2)) * 100;
+  if (firstValue < secondValue) {
+    difference = ((firstValue - secondValue) / secondValue) * 100;
+  }
 
   if (Number.isNaN(difference)) return '0.00';
 
