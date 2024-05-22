@@ -27,7 +27,7 @@ import { ISocketData } from '@utils/types/ISocketData';
 import { getCurrencyName } from '@utils/appInfo';
 import useNetwork from '@hooks/useNetwork';
 import { translate } from '@utils/helpers/i18n';
-import { getMinMax } from '@utils/helpers/statisticsLib';
+import { getMinMax, checkValidateData } from '@utils/helpers/statisticsLib';
 
 import * as Styles from './Summary.styles';
 import { LineChart } from './LineChart';
@@ -172,6 +172,28 @@ const Summary: React.FC = () => {
     };
   };
 
+  const transformSupplyChartData = (key: string) => {
+    const dataX = [];
+    const dataY = [];
+    if (summaryChartData) {
+      const items = summaryChartData[key as keyof ISummaryChartStats] as TSummaryChartProps[];
+      if (items.length) {
+        for (let i = 0; i < items.length; i += 1) {
+          dataX.push(new Date(items[i].time).toLocaleString());
+          dataY.push(Number(items[i].value) < 0 ? 0 : Number(items[i].value));
+        }
+        if (checkValidateData(items[items.length - 1]?.time)) {
+          dataX.push(new Date().toLocaleString());
+          dataY.push(dataY[dataY.length - 1]);
+        }
+      }
+    }
+    return {
+      dataX,
+      dataY,
+    };
+  };
+
   const transformNetworkChartData = (key: string) => {
     const dataX = [];
     const dataY = [];
@@ -201,13 +223,13 @@ const Summary: React.FC = () => {
 
     switch (key) {
       case 'circulatingSupply':
-        parseChartData = transformChartData(key);
+        parseChartData = transformSupplyChartData(key);
         dataX = parseChartData?.dataX;
         dataY = parseChartData?.dataY;
         offset = 0;
         break;
       case 'coinSupply':
-        parseChartData = transformChartData(key);
+        parseChartData = transformSupplyChartData(key);
         dataX = parseChartData?.dataX;
         dataY = parseChartData?.dataY;
         offset = 0;

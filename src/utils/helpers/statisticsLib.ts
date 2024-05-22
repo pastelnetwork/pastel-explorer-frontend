@@ -83,7 +83,7 @@ export const makeDownloadFileName = (currencyName: string | number, title: strin
   return `${currencyName}_${imageTitle}_${dateTime}`;
 };
 
-const checkValidateData = (timestamp: number) => {
+export const checkValidateData = (timestamp: number) => {
   if (!timestamp) {
     return null;
   }
@@ -545,7 +545,8 @@ export function transformTotalSupplyDataChart(
   const dataX: string[] = [];
   const dataY: number[] = [];
   for (let i = 0; i < trans.length; i += 1) {
-    dataY.push(Number(trans[i].coinSupply) - trans[i].totalBurnedPSL);
+    const value = Number(trans[i].coinSupply) - trans[i].totalBurnedPSL;
+    dataY.push(value < 0 ? 0 : value);
     dataX.push(new Date(trans[i].timestamp).toLocaleString());
   }
   if (period === '24h' && checkValidateData(trans[trans.length - 1]?.timestamp)) {
