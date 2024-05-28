@@ -1,5 +1,5 @@
 import { translateDropdown } from '@utils/helpers/i18n';
-import { formattedTimeElapsed, formatFullDate } from '@utils/helpers/date/date';
+import { formattedDate } from '@utils/helpers/date/date';
 import { INetworkSupernodes } from '@utils/types/INetwork';
 
 import * as Styles from './Supernodes.styles';
@@ -60,13 +60,12 @@ export const getCsvHeaders = () => {
     { key: 'lastPaidBlock', label: translateDropdown('pages.supernodes.lastPaidBlock') },
     { key: 'dateTimeLastSeen', label: translateDropdown('pages.supernodes.dateTimeLastSeen') },
     { key: 'activeSeconds', label: translateDropdown('pages.supernodes.activeSeconds') },
-    {
-      key: 'rankAsOfBlockHeight',
-      label: translateDropdown('pages.supernodes.rankAsOfBlockHeight'),
-    },
     { key: 'protocolVersion', label: translateDropdown('pages.supernodes.protocolVersion') },
     { key: 'country', label: translateDropdown('pages.supernodes.country') },
     { key: 'snPastelIdPubkey', label: translateDropdown('pages.supernodes.snPastelIdPubkey') },
+    { key: 'pubkey', label: translateDropdown('pages.supernodes.pubkey') },
+    { key: 'extAddress', label: translateDropdown('pages.supernodes.extAddress') },
+    { key: 'extP2P', label: translateDropdown('pages.supernodes.extP2P') },
   ];
 };
 
@@ -79,14 +78,19 @@ export const getCsvData = (supernodes: INetworkSupernodes[]) => {
     supernodeIP: `${item.ip}:${item.port}`,
     address: item.address,
     status: item.status,
-    lastPaid: formattedTimeElapsed(item.lastPaidTime),
+    lastPaid: formattedDate(item.lastPaidTime, {
+      dayName: false,
+    }),
     lastPaidBlock: item.lastPaidBlock,
-    dateTimeLastSeen: formatFullDate(item.dateTimeLastSeen * 1000),
+    dateTimeLastSeen: formattedDate(item.dateTimeLastSeen, {
+      dayName: false,
+    }),
     activeSeconds: item.activeSeconds,
-    rankAsOfBlockHeight:
-      item.rankAsOfBlockHeight < 0 ? translateDropdown('common.na') : item.rankAsOfBlockHeight,
     protocolVersion: item.protocolVersion,
     country: item.country,
     snPastelIdPubkey: item.snPastelIdPubkey,
+    pubkey: item.pubkey,
+    extAddress: item.extAddress,
+    extP2P: item.extP2P,
   }));
 };

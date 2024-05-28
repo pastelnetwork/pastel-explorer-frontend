@@ -34,6 +34,24 @@ export const Container = styled.div`
   @media (min-width: 1281px) {
     min-height: 414px;
   }
+
+  &.supernode-statistics {
+    &,
+    & > .MuiPaper-root,
+    & > .MuiPaper-root.MuiPaper-elevation {
+      overflow: unset;
+    }
+
+    & > .MuiPaper-root {
+      h4 {
+        border-radius: 6px 6px 0 0;
+      }
+    }
+
+    h4:not(.MuiTypography-h4) {
+      border-radius: 6px 6px 0 0;
+    }
+  }
 `;
 
 export const Wrapper = styled.div`

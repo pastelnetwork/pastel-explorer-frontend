@@ -1890,6 +1890,18 @@
       "currentBalance": {
         "message": "Current balance",
         "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "address": {
+        "message": "Address",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "output": {
+        "message": "Output",
+        "description": "Used for the CascadeAndSenseStatistics page"
+      },
+      "blockHeight": {
+        "message": "Block Height",
+        "description": "Used for the CascadeAndSenseStatistics page"
       }
     },
     "pastelIdDetails": {
@@ -3033,6 +3045,18 @@
       },
       "seeLess": {
         "message": "See less",
+        "description": "Used for the Supernodes page"
+      },
+      "pubkey": {
+        "message": "Pubkey",
+        "description": "Used for the Supernodes page"
+      },
+      "extAddress": {
+        "message": "Ext Address",
+        "description": "Used for the Supernodes page"
+      },
+      "extP2P": {
+        "message": "Ext P2P",
         "description": "Used for the Supernodes page"
       }
     },

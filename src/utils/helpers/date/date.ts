@@ -36,7 +36,7 @@ export const formattedTimeElapsed = (timestamp: number, now = currentDate) => {
     end: now,
   });
 
-  return `${days}d ${hours}h ${minutes}m ${seconds}s ago`;
+  return `${days || 0}d ${hours || 0}h ${minutes || 0}m ${seconds || 0}s ago`;
 };
 export const formatFullDate = (timestamp: number, options: DateOptions = initialDateOptions) => {
   const dateFormat = generateDateFormat(options);
