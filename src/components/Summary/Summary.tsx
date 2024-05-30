@@ -90,25 +90,31 @@ const Summary: React.FC = () => {
         const key = summaryElement.key as keyof ISummaryStats;
         const currentVal = currentStats?.[key] || 0;
         const lastDayStatsVal = lastDayStats?.[key] || 0;
+        let value = formatNumber(
+          summaryElement.key === 'percentPSLStaked'
+            ? parseFloat(currentVal.toString()) * 100
+            : currentVal,
+          {
+            decimalsLength: summaryElement.decimals,
+            divideToAmount: summaryElement.divideToAmount,
+          },
+        );
+        let previousValue = formatNumber(
+          summaryElement.key === 'percentPSLStaked'
+            ? parseFloat(lastDayStatsVal.toString()) * 100
+            : lastDayStatsVal,
+          {
+            decimalsLength: summaryElement.decimals,
+          },
+        );
+        if (summaryElement.key === 'gigaHashPerSec') {
+          value = currentVal.toString();
+          previousValue = lastDayStatsVal.toString();
+        }
         return {
           ...summaryElement,
-          value: formatNumber(
-            summaryElement.key === 'percentPSLStaked'
-              ? parseFloat(currentVal.toString()) * 100
-              : currentVal,
-            {
-              decimalsLength: summaryElement.decimals,
-              divideToAmount: summaryElement.divideToAmount,
-            },
-          ),
-          previousValue: formatNumber(
-            summaryElement.key === 'percentPSLStaked'
-              ? parseFloat(lastDayStatsVal.toString()) * 100
-              : lastDayStatsVal,
-            {
-              decimalsLength: summaryElement.decimals,
-            },
-          ),
+          value,
+          previousValue,
           difference: calculateDifference(
             Number(currentStats?.[key]) || 0,
             Number(lastDayStats?.[key]) || 0,
