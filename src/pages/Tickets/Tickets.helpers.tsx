@@ -980,12 +980,16 @@ export const transformInferenceAPICreditPackData = (data: TicketsList[]) =>
             <Grid item xs={12} sm={6} md={3}>
               <Box className="title">{parse(translate('pages.tickets.pastelID'))}</Box>
               <Box className="bold">
-                <RouterLink
-                  route={`${ROUTES.TRANSACTION_DETAILS}/${pastelID}`}
-                  value={formatAddress(pastelID, 5, -5)}
-                  title={pastelID}
-                  className="address-link"
-                />
+                {pastelID ? (
+                  <RouterLink
+                    route={`${ROUTES.TRANSACTION_DETAILS}/${pastelID}`}
+                    value={formatAddress(pastelID, 5, -5)}
+                    title={pastelID}
+                    className="address-link"
+                  />
+                ) : (
+                  parse(translate('common.na'))
+                )}
               </Box>
             </Grid>
             <Grid item xs={12} sm={6} md={2}>
