@@ -12,6 +12,7 @@ import NFTCollectionActivationTicket from './NFTCollectionActivationTicket';
 import NFTRoyaltyTicket from './NFTRoyaltyTicket';
 import ActionActivationTicket from './ActionActivationTicket';
 import ActionRegistrationTicket from './ActionRegistrationTicket';
+import InferenceAPICreditPackTicket from './InferenceAPICreditPackTicket';
 import OfferTicket from './OfferTicket';
 import AcceptTicket from './AcceptTicket';
 import TransferTicket from './TransferTicket';
@@ -44,6 +45,8 @@ const getTicketTitle = (type: TTicketType, itemType = '') => {
       return parse(translate('components.ticket.ticketsTitle.accept'));
     case 'transfer':
       return parse(translate('components.ticket.ticketsTitle.transfer'));
+    case 'contract':
+      return parse(translate('pages.tickets.inferenceTicketType'));
     default:
       return '';
   }
@@ -62,5 +65,6 @@ export {
   OfferTicket,
   AcceptTicket,
   TransferTicket,
+  InferenceAPICreditPackTicket,
   getTicketTitle,
 };

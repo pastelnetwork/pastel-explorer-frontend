@@ -27,6 +27,7 @@ import {
   TTicketType,
   TSenseRequests,
   ICascadeApiTicket,
+  IInferenceAPICreditPackTicket,
 } from '@utils/types/ITransactions';
 import {
   PastelIDRegistrationTicket,
@@ -38,6 +39,7 @@ import {
   NFTRoyaltyTicket,
   ActionActivationTicket,
   ActionRegistrationTicket,
+  InferenceAPICreditPackTicket,
   OfferTicket,
   AcceptTicket,
   TransferTicket,
@@ -363,6 +365,7 @@ const TicketsList: React.FC<ITicketsList> = ({
       | IActionActivationTicket
       | IOfferTicket
       | IAcceptTicket
+      | IInferenceAPICreditPackTicket
       | ITransferTicket,
     transactionHash: string,
   ) => {
@@ -403,6 +406,8 @@ const TicketsList: React.FC<ITicketsList> = ({
         return <AcceptTicket ticket={ticket as IAcceptTicket} variant={variant} />;
       case 'transfer':
         return <TransferTicket ticket={ticket as ITransferTicket} variant={variant} />;
+      case 'contract':
+        return <InferenceAPICreditPackTicket ticket={ticket as IInferenceAPICreditPackTicket} />;
       default:
         return <PastelIDRegistrationTicket ticket={ticket as IPastelIDRegistrationTicket} />;
     }

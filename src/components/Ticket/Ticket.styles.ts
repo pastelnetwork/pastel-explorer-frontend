@@ -200,3 +200,9 @@ export const OfferWrapper = styled(Box)`
     }
   }
 `;
+
+export const AgreeingSupernodesSignaturesItem = styled.div`
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: solid 1px ${props => props.theme.table.hover};
+`;

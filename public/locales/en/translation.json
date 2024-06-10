@@ -385,6 +385,10 @@
         "transfer": {
           "message": "Transfer Ticket",
           "description": "Used for the ticket title component"
+        },
+        "inferenceAPICreditPack": {
+          "message": "Inference API Credit Pack Ticket",
+          "description": "Used for the ticket title component"
         }
       },
       "acceptTicket": {
@@ -1097,6 +1101,184 @@
         "timestamp": {
           "message": "Timestamp:",
           "description": "Used for the userNameChangeTicket component"
+        }
+      },
+      "inferenceAPICreditPackTicket": {
+        "key": {
+          "message": "Key:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "version": {
+          "message": "Pastel OpenAPI Ticket Version Number:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "subType": {
+          "message": "Sub type:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "height": {
+          "message": "Block height:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "pastelID": {
+          "message": "Pastel ID:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "secondaryKey": {
+          "message": "Secondary key:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "timestamp": {
+          "message": "Timestamp:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "creditPurchaseRequestConfirmationMessageVersion": {
+          "message": "Credit purchase request confirmation message version:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "creditPurchaseRequestConfirmationPastelBlockHeight": {
+          "message": "Credit purchase request confirmation pastel block height:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "creditPurchaseRequestConfirmation": {
+          "message": "Credit purchase request confirmation:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "id": {
+          "message": "ID:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "requestingEndUserPastelid": {
+          "message": "Requesting end user pastelid:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "requestingEndUserPastelidSignature": {
+          "message": "Requesting end user pastelid signature:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "creditPackPurchaseRequestConfirmation": {
+          "message": "Credit pack purchase request confirmation:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "creditPackPurchaseRequest": {
+          "message": "Credit pack purchase request:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "creditPackPurchaseRequestResponse": {
+          "message": "Credit pack purchase request response:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "txidOfCreditPurchaseBurnTransaction": {
+          "message": "txID of credit purchase burn transaction:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "creditPackPurchaseRequestDict": {
+          "message": "Credit pack purchase request:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "creditPurchaseRequestMessageVersion": {
+          "message": "Credit purchase request message version:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "creditUsageTrackingPslAddress": {
+          "message": "Credit usage tracking PSL address:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "listOfAuthorizedPastelidsAllowedToUseCreditPack": {
+          "message": "List of authorized pastelids allowed to use credit pack:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "requestPastelBlockHeight": {
+          "message": "Request pastel block height:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "requestTimestampUtcIsoString": {
+          "message": "Request timestamp:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "requestedInitialCreditsInCreditPack": {
+          "message": "Requested initial credits in credit pack:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "ticketInputDataFullyParsed": {
+          "message": "Ticket input data:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "ticketUncompressedSizeInBytes": {
+          "message": "Ticket uncompressed size in bytes:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "creditPackPurchaseRequestConfirmationDict": {
+          "message": "Credit pack purchase request confirmation:",
+          "description": "Used for the PastelIDRegistrationTicket component"
+        },
+        "creditPackPurchaseRequestResponseDict": {
+          "message": "Credit pack purchase request response:",
+          "description": "Used for the PastelIDRegistrationTicket component",
+          "creditPurchaseRequestResponseMessageVersionString": {
+            "message": "Credit purchase request response message version:",
+            "description": "Used for the PastelIDRegistrationTicket component"
+          },
+          "creditUsageTrackingPslAddress": {
+            "message": "Credit usage tracking PSL address:",
+            "description": "Used for the PastelIDRegistrationTicket component"
+          },
+          "id": {
+            "message": "ID:",
+            "description": "Used for the PastelIDRegistrationTicket component"
+          },
+          "listOfPotentiallyAgreeingSupernodes": {
+            "message": "List of potentially agreeing supernodes:",
+            "description": "Used for the PastelIDRegistrationTicket component"
+          },
+          "listOfSupernodePastelidsAgreeingToCreditPackPurchaseTerms": {
+            "message": "List of supernode pastelids agreeing to credit pack purchase terms:",
+            "description": "Used for the PastelIDRegistrationTicket component"
+          },
+          "proposedTotalCostOfCreditPackInPsl": {
+            "message": "Proposed total cost of credit pack in psl:",
+            "description": "Used for the PastelIDRegistrationTicket component"
+          },
+          "pslCostPerCredit": {
+            "message": "PSL cost per credit:",
+            "description": "Used for the PastelIDRegistrationTicket component"
+          },
+          "requestResponsePastelBlockHeight": {
+            "message": "Request response pastel block height:",
+            "description": "Used for the PastelIDRegistrationTicket component"
+          },
+          "requestResponseTimestamp": {
+            "message": "Request response timestamp:",
+            "description": "Used for the PastelIDRegistrationTicket component"
+          },
+          "respondingSupernodePastelid": {
+            "message": "Responding supernode pastelid:",
+            "description": "Used for the PastelIDRegistrationTicket component"
+          },
+          "respondingSupernodeSignatureOnCreditPackPurchaseRequestResponseHash": {
+            "message": "Responding supernode signature on credit pack purchase request response:",
+            "description": "Used for the PastelIDRegistrationTicket component"
+          },
+          "hasOfCreditPackPurchaseRequestFields": {
+            "message": "Hash of credit pack purchase request:",
+            "description": "Used for the PastelIDRegistrationTicket component"
+          },
+          "hashOfCreditPackPurchaseRequestResponseFields": {
+            "message": "Hash of credit pack purchase request response:",
+            "description": "Used for the PastelIDRegistrationTicket component"
+          },
+          "creditPackPurchaseRequestFieldsJsonB64Signature": {
+            "message": "Credit pack purchase request fields json b64 signature:",
+            "description": "Used for the PastelIDRegistrationTicket component"
+          },
+          "priceAgreementRequestResponseHashSignature": {
+            "message": "Price agreement request response hash signature:",
+            "description": "Used for the PastelIDRegistrationTicket component"
+          },
+          "agreeingSupernodesSignaturesDict": {
+            "message": "Agreeing supernodes signatures:",
+            "description": "Used for the PastelIDRegistrationTicket component"
+          }
         }
       }
     },
@@ -3266,6 +3448,38 @@
       "fileSize": {
         "message": "File size",
         "description": "Used for the Tickets page"
+      },
+      "inferenceAPICreditPackTickets": {
+        "message": "Inference API Credit Pack Tickets",
+        "description": "Used for the Tickets page"
+      },
+      "initialCredits": {
+        "message": "Initial Credits",
+        "description": "Used for the Tickets page"
+      },
+      "ticketUncompressedSizeInBytes": {
+        "message": "Ticket uncompressed size in bytes",
+        "description": "Used for the Tickets page"
+      },
+      "inferenceStatus": {
+        "message": "Status",
+        "description": "Used for the Tickets page"
+      },
+      "inferenceStatusResponsed": {
+        "message": "Responsed",
+        "description": "Used for the Tickets page"
+      },
+      "inferenceStatusRequested": {
+        "message": "Requested",
+        "description": "Used for the Tickets page"
+      },
+      "inferenceStatusConfirmation": {
+        "message": "Confirmation",
+        "description": "Used for the Tickets page"
+      },
+      "inferenceTicketType": {
+        "message": "INFERENCE API",
+        "description": "Used for the Tickets page"
       }
     },
     "ticketsType": {
@@ -3420,6 +3634,10 @@
       "publiclyAccessible": {
         "message": "Publicly Accessible",
         "description": "Used for the Tickets page"
+      },
+      "inferenceAPICreditPack": {
+        "message": "Inference API Credit Pack Ticket",
+        "description": "Used for the ticket title component"
       }
     },
     "burned": {
@@ -3899,6 +4117,92 @@
         "message": "Scale Exponent",
         "description": "Used for the Sense Map page"
       }
+    },
+    "networkChallengesAndSelfHealing": {
+      "pageTitle": {
+        "message": "Network Challenges And Self Healing",
+        "description": "Used for the Network Challenges And Self Healing page"
+      },
+      "type": {
+        "message": "Type",
+        "description": "Used for the Network Challenges And Self Healing page"
+      },
+      "storageChallenges": {
+        "message": "Storage Challenges",
+        "description": "Used for the Network Challenges And Self Healing page"
+      },
+      "healthCheckChallenges": {
+        "message": "Health Check Challenges",
+        "description": "Used for the Network Challenges And Self Healing page"
+      },
+      "selfHealingTriggers": {
+        "message": "Self Healing Triggers",
+        "description": "Used for the Network Challenges And Self Healing page"
+      },
+      "pastelID": {
+        "message": "PastelID",
+        "description": "Used for the Network Challenges And Self Healing page"
+      },
+      "messageType": {
+        "message": "Message Type",
+        "description": "Used for the Network Challenges And Self Healing page"
+      },
+      "enterPastelID": {
+        "message": "Enter PastelID",
+        "description": "Used for the Network Challenges And Self Healing page"
+      },
+      "challengeId": {
+        "message": "Challenge ID",
+        "description": "Used for the Network Challenges And Self Healing page"
+      },
+      "senderId": {
+        "message": "Sender ID",
+        "description": "Used for the Network Challenges And Self Healing page"
+      },
+      "challengerId": {
+        "message": "Challenger ID",
+        "description": "Used for the Network Challenges And Self Healing page"
+      },
+      "block": {
+        "message": "Block",
+        "description": "Used for the Network Challenges And Self Healing page"
+      },
+      "merkelroot": {
+        "message": "Merkelroot",
+        "description": "Used for the Network Challenges And Self Healing page"
+      },
+      "timestamp": {
+        "message": "Timestamp",
+        "description": "Used for the Network Challenges And Self Healing page"
+      },
+      "fileHash": {
+        "message": "File hash",
+        "description": "Used for the Network Challenges And Self Healing page"
+      },
+      "startIndex": {
+        "message": "Start Index",
+        "description": "Used for the Network Challenges And Self Healing page"
+      },
+      "endIndex": {
+        "message": "End Index",
+        "description": "Used for the Network Challenges And Self Healing page"
+      },
+      "observers": {
+        "message": "Observers",
+        "description": "Used for the Network Challenges And Self Healing page"
+      },
+      "recipientId": {
+        "message": "Recipient ID",
+        "description": "Used for the Network Challenges And Self Healing page"
+      },
+      "eventId": {
+        "message": "Event ID",
+        "description": "Used for the Network Challenges And Self Healing page"
+      },
+      "report": {
+        "message": "Report",
+        "description": "Used for the Network Challenges And Self Healing page"
+      }
     }
   },
   "routes": {
@@ -4104,6 +4408,10 @@
     },
     "pslBurnt": {
       "message": "{{currency}} Burnt",
+      "description": "Used for the routes"
+    },
+    "networkChallengesAndSelfHealing": {
+      "message": "Network Challenges and Self Healing",
       "description": "Used for the routes"
     }
   },

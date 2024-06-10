@@ -59,6 +59,9 @@ export const GET_COLLECTION_RELATED = 'v1/collections/related';
 export const GET_HISTORICAL_FEE_SCHEDULE = 'v1/stats/fee-schedule';
 export const GET_CASCADE_TRANSFERS = 'v1/cascade/transfers';
 export const GET_SENSE_TRANSFERS = 'v1/sense/transfers';
+export const GET_STATISTICS_STORAGE_CHALLENGES = 'storage_challenges/detailed_logs';
+export const GET_STATISTICS_HEALTH_CHECK_CHALLENGES = 'healthcheck_challenge/detailed_logs';
+export const GET_STATISTICS_SELF_HEALING_CHALLENGES = 'self_healing/detailed_logs';
 // External URLS
 export const TWITTER_URL = 'https://twitter.com/pastelnetwork';
 export const TELEGRAM_URL = 'https://t.me/PastelNetwork';
