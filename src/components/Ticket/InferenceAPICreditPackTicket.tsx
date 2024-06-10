@@ -469,20 +469,26 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 </Grid>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent sx={{ wordBreak: 'break-word' }}>
-                    <RouterLink
-                      route={`${ROUTES.PASTEL_ID_DETAILS}/${ticket.contract_ticket.ticket_input_data_dict.credit_pack_purchase_request_confirmation_dict.requesting_end_user_pastelid}`}
-                      value={
-                        ticket.contract_ticket.ticket_input_data_dict
-                          .credit_pack_purchase_request_confirmation_dict
-                          .requesting_end_user_pastelid
-                      }
-                      title={
-                        ticket.contract_ticket.ticket_input_data_dict
-                          .credit_pack_purchase_request_confirmation_dict
-                          .requesting_end_user_pastelid
-                      }
-                      className="address-link"
-                    />
+                    {ticket.contract_ticket.ticket_input_data_dict
+                      .credit_pack_purchase_request_confirmation_dict
+                      .requesting_end_user_pastelid ? (
+                      <RouterLink
+                        route={`${ROUTES.PASTEL_ID_DETAILS}/${ticket.contract_ticket.ticket_input_data_dict.credit_pack_purchase_request_confirmation_dict.requesting_end_user_pastelid}`}
+                        value={
+                          ticket.contract_ticket.ticket_input_data_dict
+                            .credit_pack_purchase_request_confirmation_dict
+                            .requesting_end_user_pastelid
+                        }
+                        title={
+                          ticket.contract_ticket.ticket_input_data_dict
+                            .credit_pack_purchase_request_confirmation_dict
+                            .requesting_end_user_pastelid
+                        }
+                        className="address-link"
+                      />
+                    ) : (
+                      parse(translate('common.na'))
+                    )}
                   </Styles.TicketContent>
                 </Grid>
               </Grid>
@@ -1004,18 +1010,23 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-            <RouterLink
-              route={`${ROUTES.TRANSACTION_DETAILS}/${parseContractTicket?.ticket_input_data_dict?.credit_pack_purchase_request_dict?.requesting_end_user_pastelid}`}
-              value={
-                parseContractTicket?.ticket_input_data_dict?.credit_pack_purchase_request_dict
-                  ?.requesting_end_user_pastelid || ''
-              }
-              title={
-                parseContractTicket?.ticket_input_data_dict?.credit_pack_purchase_request_dict
-                  ?.requesting_end_user_pastelid
-              }
-              className="address-link"
-            />
+            {parseContractTicket?.ticket_input_data_dict?.credit_pack_purchase_request_dict
+              ?.requesting_end_user_pastelid ? (
+              <RouterLink
+                route={`${ROUTES.TRANSACTION_DETAILS}/${parseContractTicket?.ticket_input_data_dict?.credit_pack_purchase_request_dict?.requesting_end_user_pastelid}`}
+                value={
+                  parseContractTicket?.ticket_input_data_dict?.credit_pack_purchase_request_dict
+                    ?.requesting_end_user_pastelid || ''
+                }
+                title={
+                  parseContractTicket?.ticket_input_data_dict?.credit_pack_purchase_request_dict
+                    ?.requesting_end_user_pastelid
+                }
+                className="address-link"
+              />
+            ) : (
+              parse(translate('common.na'))
+            )}
           </Styles.TicketContent>
         </Grid>
       </Grid>
