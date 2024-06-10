@@ -7,6 +7,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
 import parse from 'html-react-parser';
+import { decode } from 'js-base64';
 
 import CopyButton from '@components/CopyButton/CopyButton';
 import RouterLink from '@components/RouterLink/RouterLink';
@@ -885,6 +886,146 @@ export const transformPastelNftTicketsData = (data: TicketsList[], usdPrice: num
     },
   );
 
+export const transformInferenceAPICreditPackData = (data: TicketsList[]) =>
+  data.map(({ transactionHash, timestamp, image, reTxId, ticketType, contract_ticket }) => {
+    const getInfo = () => {
+      if (ticketType === 'sense') {
+        return {
+          link: `${ROUTES.SENSE_DETAILS}?txid=${reTxId}`,
+          label: parse(translate('pages.tickets.senseOutput')),
+        };
+      }
+
+      if (ticketType === 'cascade') {
+        return {
+          link: `${ROUTES.CASCADE_DETAILS}?txid=${reTxId}`,
+          label: parse(translate('pages.tickets.cascadeOutput')),
+        };
+      }
+
+      return {
+        link: `${ROUTES.NFT_DETAILS}?txid=${reTxId}`,
+        label: parse(translate('pages.tickets.pastelNFT')),
+      };
+    };
+
+    const getImage = () => {
+      return (
+        <Link to={getInfo().link}>
+          <img
+            src={image ? `data:image/jpeg;base64,${image}` : noImagePlaceholder}
+            alt={reTxId}
+            className="sense-img"
+          />
+        </Link>
+      );
+    };
+
+    const parseContractTicket = contract_ticket ? JSON.parse(decode(contract_ticket)) : null;
+
+    const getInferenceStatus = () => {
+      if (parseContractTicket?.ticket_input_data_dict?.credit_pack_purchase_request_response_dict) {
+        return parse(translate('pages.tickets.inferenceStatusResponsed'));
+      }
+      if (parseContractTicket?.ticket_input_data_dict?.credit_pack_purchase_request_dict) {
+        return parse(translate('pages.tickets.inferenceStatusConfirmation'));
+      }
+      return parse(translate('pages.tickets.inferenceStatusRequested'));
+    };
+
+    return {
+      id: transactionHash,
+      [TXID_KEY]: (
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6} md={3}>
+            <Box className="title">{parse(translate('pages.tickets.txID'))}</Box>
+            <Box className="bold">
+              <Grid container alignItems="center" wrap="nowrap">
+                <CopyButton copyText={transactionHash} />
+                <RouterLink
+                  route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
+                  value={formatAddress(transactionHash, 5, -5)}
+                  title={transactionHash}
+                  className="address-link"
+                />
+              </Grid>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6} md={2}>
+            <Box className="title">{parse(translate('pages.tickets.type'))}</Box>
+            <Box className="bold">{parse(translate('pages.tickets.inferenceTicketType'))}</Box>
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <Box className="title">{parse(translate('pages.tickets.initialCredits'))}</Box>
+            <Box className="bold">
+              {parseContractTicket?.ticket_input_data_dict?.credit_pack_purchase_request_dict
+                ?.requested_initial_credits_in_credit_pack
+                ? formatNumber(
+                    parseContractTicket?.ticket_input_data_dict?.credit_pack_purchase_request_dict
+                      ?.requested_initial_credits_in_credit_pack,
+                  )
+                : parse(translate('common.na'))}
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <Box className="title">{parse(translate('pages.tickets.inferenceStatus'))}</Box>
+            <Box className="bold">{getInferenceStatus()}</Box>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3} className="ticket-output image-mobile xs">
+            {getImage()}
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <Box className="title">{parse(translate('pages.tickets.pastelID'))}</Box>
+            <Box className="bold">
+              {parseContractTicket.ticket_input_data_dict
+                .credit_pack_purchase_request_confirmation_dict.requesting_end_user_pastelid ? (
+                <RouterLink
+                  route={`${ROUTES.TRANSACTION_DETAILS}/${parseContractTicket.ticket_input_data_dict.credit_pack_purchase_request_confirmation_dict.requesting_end_user_pastelid}`}
+                  value={formatAddress(
+                    parseContractTicket.ticket_input_data_dict
+                      .credit_pack_purchase_request_confirmation_dict.requesting_end_user_pastelid,
+                    5,
+                    -5,
+                  )}
+                  title={
+                    parseContractTicket.ticket_input_data_dict
+                      .credit_pack_purchase_request_confirmation_dict.requesting_end_user_pastelid
+                  }
+                  className="address-link"
+                />
+              ) : (
+                parse(translate('common.na'))
+              )}
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6} md={2}>
+            <Box className="title">{parse(translate('pages.tickets.version'))}</Box>
+            <Box className="bold">
+              {parseContractTicket?.ticket_input_data_dict?.credit_pack_purchase_request_dict
+                ?.credit_purchase_request_message_version_string || parse(translate('common.na'))}
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <Box className="title">{parse(translate('pages.tickets.timestamp'))}</Box>
+            <Box className="bold">
+              {timestamp ? formatFullDate(timestamp, { dayName: false }) : '--'}
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <Box className="title">
+              {parse(translate('pages.tickets.ticketUncompressedSizeInBytes'))}
+            </Box>
+            <Box className="bold">
+              {parseContractTicket?.ticket_uncompressed_size_in_bytes
+                ? formatNumber(parseContractTicket?.ticket_uncompressed_size_in_bytes)
+                : parse(translate('common.na'))}
+            </Box>
+          </Grid>
+        </Grid>
+      ),
+    };
+  });
+
 export const ticketsSummary = [
   {
     id: 'senseTickets',
@@ -915,6 +1056,11 @@ export const ticketsSummary = [
     id: 'miscOtherTicketTypes',
     name: parse(translate('pages.tickets.senseAndNFTCollectionTickets')),
     link: `${ROUTES.TICKETS_TYPE}/other`,
+  },
+  {
+    id: 'inferenceAPICreditPackTypes',
+    name: parse(translate('pages.tickets.inferenceAPICreditPackTickets')),
+    link: `${ROUTES.TICKETS_TYPE}/inference-api`,
   },
 ];
 

@@ -51,6 +51,10 @@ export const TICKET_TYPE_OPTIONS = [
     name: 'pages.ticketsType.transfer',
     value: 'transfer',
   },
+  {
+    name: 'pages.ticketsType.inferenceApi',
+    value: 'inference-api',
+  },
 ];
 
 export const TICKET_STATUS_OPTIONS = [

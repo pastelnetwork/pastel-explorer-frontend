@@ -101,9 +101,15 @@ export const calculateDifference = (
 
   if (Number.isNaN(difference)) return '0.00';
 
-  return ['gigaHashPerSec', 'difficulty'].includes(key) && difference < 0
-    ? '0.00'
-    : difference.toFixed(2);
+  if (['gigaHashPerSec', 'difficulty'].includes(key) && difference < -100) {
+    let targetValue = firstValue;
+    if (firstValue < secondValue) {
+      targetValue = secondValue;
+    }
+    difference = ((firstValue - secondValue) / targetValue) * 100;
+  }
+
+  return difference.toFixed(2);
 };
 
 export const getRouteForChart = (key: string) => {

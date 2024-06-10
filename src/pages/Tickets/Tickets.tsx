@@ -11,6 +11,7 @@ import PastelIDAndUsernameTickets from './PastelIDAndUsernameTickets';
 import PastelNftTickets from './PastelNftTickets';
 import OfferAndTransferTickets from './OfferAndTransferTickets';
 import MiscOtherTicketTypes from './MiscOtherTicketTypes';
+import InferenceAPICreditPackTickets from './InferenceAPICreditPackTickets';
 import {
   ticketsSummary,
   DATA_LIMIT,
@@ -23,6 +24,7 @@ import * as Styles from './Tickets.styles';
 const Tickets: React.FC = () => {
   const { usdPrice } = useUsdPrice();
   const otherTicketData = useTickets('other', DATA_LIMIT);
+  const contractTicketData = useTickets('contract', DATA_LIMIT);
   const cascadeTicketData = useTickets('cascade', DATA_LIMIT);
   const offerTransferTicketData = useTickets('offer-transfer', DATA_LIMIT);
   const pastelidUsenameTicketData = useTickets('pastelid-usename', DATA_LIMIT);
@@ -55,6 +57,7 @@ const Tickets: React.FC = () => {
     pastelNFTTickets: pastelNftTicketData.total,
     offerTicketsAndTransferTickets: offerTransferTicketData.total,
     miscOtherTicketTypes: otherTicketData.total,
+    inferenceAPICreditPackTypes: contractTicketData.total,
   };
   const ticketLoading = {
     senseTickets: senseTicketData.isLoading,
@@ -63,6 +66,7 @@ const Tickets: React.FC = () => {
     pastelNFTTickets: pastelNftTicketData.isLoading,
     offerTicketsAndTransferTickets: offerTransferTicketData.isLoading,
     miscOtherTicketTypes: otherTicketData.isLoading,
+    inferenceAPICreditPackTypes: contractTicketData.isLoading,
   };
 
   return (
@@ -128,6 +132,14 @@ const Tickets: React.FC = () => {
             ticketsData={otherTicketData as TTicketResponse}
             innerWidth={innerWidth}
             usdPrice={usdPrice}
+          />
+        </Styles.GirdStyle>
+      </Grid>
+      <Grid container spacing={6}>
+        <Styles.GirdStyle item xs={12}>
+          <InferenceAPICreditPackTickets
+            innerWidth={innerWidth}
+            ticketsData={contractTicketData as TTicketResponse}
           />
         </Styles.GirdStyle>
       </Grid>

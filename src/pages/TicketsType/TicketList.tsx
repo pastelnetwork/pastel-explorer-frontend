@@ -29,6 +29,7 @@ import {
   TTicketType,
   TSenseRequests,
   ICascadeApiTicket,
+  IInferenceAPICreditPackTicket,
 } from '@utils/types/ITransactions';
 import {
   PastelIDRegistrationTicket,
@@ -40,6 +41,7 @@ import {
   NFTRoyaltyTicket,
   ActionActivationTicket,
   ActionRegistrationTicket,
+  InferenceAPICreditPackTicket,
   OfferTicket,
   AcceptTicket,
   TransferTicket,
@@ -261,6 +263,7 @@ const TicketsList: React.FC<ITicketsList> = ({
       | IActionActivationTicket
       | IOfferTicket
       | IAcceptTicket
+      | IInferenceAPICreditPackTicket
       | ITransferTicket,
     transactionHash: string,
   ) => {
@@ -301,6 +304,10 @@ const TicketsList: React.FC<ITicketsList> = ({
         return <AcceptTicket ticket={ticket as IAcceptTicket} />;
       case 'transfer':
         return <TransferTicket ticket={ticket as ITransferTicket} />;
+      case 'contract':
+        return (
+          <InferenceAPICreditPackTicket ticket={ticket as IInferenceAPICreditPackTicket} showFull />
+        );
       default:
         return <PastelIDRegistrationTicket ticket={ticket as IPastelIDRegistrationTicket} />;
     }
@@ -324,6 +331,9 @@ const TicketsList: React.FC<ITicketsList> = ({
     }
     if (ticketType === 'other') {
       return parse(translate('pages.ticketsType.senseAndNFTCollectionTickets'));
+    }
+    if (ticketType === 'contract') {
+      return parse(translate('pages.ticketsType.inferenceAPICreditPack'));
     }
     const ticket = TICKET_TYPE_OPTIONS.find(t => t.value === ticketType);
     return (
@@ -353,6 +363,11 @@ const TicketsList: React.FC<ITicketsList> = ({
       result.push({
         name: translateDropdown('pages.ticketsType.offerTicketsAndTransferTickets'),
         value: 'offer-transfer',
+      });
+    } else if (ticketType === 'contract') {
+      result.push({
+        name: translateDropdown('pages.ticketsType.inferenceAPICreditPack'),
+        value: 'inference-api',
       });
     }
 
@@ -394,7 +409,6 @@ const TicketsList: React.FC<ITicketsList> = ({
       name: translateDropdown(option.name),
     }));
   };
-
   return (
     <BlockDetailsStyles.GridStyle item>
       <TableStyles.BlockWrapper className="mb-12 min-h-60vh">

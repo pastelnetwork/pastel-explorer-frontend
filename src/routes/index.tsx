@@ -73,6 +73,9 @@ const NftDetails = loadable(() => import('@pages/Details/NftDetails/NftDetails')
 const FeeSchedule = loadable(() => import('@pages/HistoricalStatistics/FeeSchedule'));
 const PSLBurnt = loadable(() => import('@pages/HistoricalStatistics/PSLBurnt'));
 const Page404 = loadable(() => import('@pages/404/404'));
+const NetworkChallengesAndSelfHealing = loadable(
+  () => import('@pages/NetworkChallengesAndSelfHealing/NetworkChallengesAndSelfHealing'),
+);
 
 const explorerRoutes = {
   id: 'routes.explorer',
@@ -164,8 +167,25 @@ const statisticsRoutes = {
       component: CascadeAndSenseStatistics,
       seoTitle: 'routes.cascadeAndSenseStatistics',
     },
+    // {
+    //   path: ROUTES.NETWORK_CHALLENGE_AND_SELF_HEALING,
+    //   name: 'routes.networkChallengesAndSelfHealing',
+    //   component: NetworkChallengesAndSelfHealing,
+    //   seoTitle: 'routes.networkChallengesAndSelfHealing',
+    // },
   ],
 };
+
+const networkChallengesAndSelfHealingRoutes = {
+  id: 'routes.networkChallengesAndSelfHealing',
+  path: ROUTES.NETWORK_CHALLENGE_AND_SELF_HEALING,
+  component: NetworkChallengesAndSelfHealing,
+  icon: <BarChartIcon />,
+  seoTitle: 'routes.networkChallengesAndSelfHealing',
+  children: null,
+  exact: false,
+};
+
 // Statistics overtime routes
 const statisticsOvertimeRoutes = {
   id: 'routes.historicalStatistics',
@@ -542,6 +562,7 @@ export const pageRoutes = [
   feeScheduleStatisticsRoutes,
   pslBurntStatisticsRoutes,
   page404Routes,
+  networkChallengesAndSelfHealingRoutes,
 ];
 
 export const sidebarRoutes = [
