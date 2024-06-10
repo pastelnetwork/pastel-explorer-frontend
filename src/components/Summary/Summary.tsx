@@ -467,6 +467,8 @@ const Summary: React.FC = () => {
                       : parse(translate('components.summary.last24h'))}
                     <br />
                     <span className={Number(difference) === 0 ? 'no-change' : ''}>
+                      {`${Number(difference) > 0 ? '+' : ''}`}
+                      {difference}%&nbsp;
                       {renderDifference(difference)}
                     </span>
                   </Styles.Percentage>
