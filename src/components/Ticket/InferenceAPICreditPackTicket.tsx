@@ -25,7 +25,7 @@ interface IInferenceAPICreditPackTicketProps {
 }
 
 const AgreeingSupernodesSignatures = ({ data }: { data: IAgreeingSupernodesSignatures }) => {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   if (!data) {
     return null;
@@ -119,13 +119,17 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
   ticket,
   showFull = false,
 }) => {
-  const [isExpandedConfirmation, setIsExpandedConfirmation] = useState(true);
-  const [isExpandedRequest, setIsExpandedRequest] = useState(true);
-  const [isExpandedResponse, setIsExpandedResponse] = useState(true);
+  const [isExpandedConfirmation, setIsExpandedConfirmation] = useState(false);
+  const [isExpandedRequest, setIsExpandedRequest] = useState(false);
+  const [isExpandedResponse, setIsExpandedResponse] = useState(false);
 
   if (!ticket?.contract_ticket) {
     return null;
   }
+  const parseContractTicket =
+    typeof ticket.contract_ticket === 'string'
+      ? JSON.parse(decode(`${ticket.contract_ticket}`))
+      : ticket.contract_ticket;
 
   if (showFull) {
     return (
@@ -192,7 +196,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
           </Grid>
         ) : null}
 
-        {ticket.contract_ticket.ticket_input_data_dict?.credit_pack_purchase_request_dict ? (
+        {parseContractTicket.ticket_input_data_dict?.credit_pack_purchase_request_dict ? (
           <Styles.Accordion
             expanded={isExpandedRequest}
             onChange={(event, isPanelExpanded) => setIsExpandedRequest(isPanelExpanded)}
@@ -234,8 +238,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
                     {
-                      ticket.contract_ticket.ticket_input_data_dict
-                        .credit_pack_purchase_request_dict
+                      parseContractTicket.ticket_input_data_dict.credit_pack_purchase_request_dict
                         .credit_purchase_request_message_version_string
                     }
                   </Styles.TicketContent>
@@ -254,8 +257,8 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
                     {
-                      ticket.contract_ticket.ticket_input_data_dict
-                        .credit_pack_purchase_request_dict.credit_usage_tracking_psl_address
+                      parseContractTicket.ticket_input_data_dict.credit_pack_purchase_request_dict
+                        .credit_usage_tracking_psl_address
                     }
                   </Styles.TicketContent>
                 </Grid>
@@ -272,7 +275,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 </Grid>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
-                    {ticket.contract_ticket.ticket_input_data_dict.credit_pack_purchase_request_dict.list_of_authorized_pastelids_allowed_to_use_credit_pack?.join(
+                    {parseContractTicket.ticket_input_data_dict.credit_pack_purchase_request_dict.list_of_authorized_pastelids_allowed_to_use_credit_pack?.join(
                       ', ',
                     )}
                   </Styles.TicketContent>
@@ -291,12 +294,12 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
                     <RouterLink
-                      route={`${ROUTES.BLOCK_DETAILS}/${ticket.contract_ticket.ticket_input_data_dict.credit_pack_purchase_request_dict.request_pastel_block_height}`}
+                      route={`${ROUTES.BLOCK_DETAILS}/${parseContractTicket.ticket_input_data_dict.credit_pack_purchase_request_dict.request_pastel_block_height}`}
                       value={
-                        ticket.contract_ticket.ticket_input_data_dict
-                          .credit_pack_purchase_request_dict.request_pastel_block_height
+                        parseContractTicket.ticket_input_data_dict.credit_pack_purchase_request_dict
+                          .request_pastel_block_height
                       }
-                      title={ticket.contract_ticket.ticket_input_data_dict.credit_pack_purchase_request_dict.request_pastel_block_height?.toString()}
+                      title={parseContractTicket.ticket_input_data_dict.credit_pack_purchase_request_dict.request_pastel_block_height?.toString()}
                       className="address-link"
                     />
                   </Styles.TicketContent>
@@ -316,7 +319,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                   <Styles.TicketContent>
                     {formattedDate(
                       new Date(
-                        ticket.contract_ticket.ticket_input_data_dict.credit_pack_purchase_request_dict.request_timestamp_utc_iso_string,
+                        parseContractTicket.ticket_input_data_dict.credit_pack_purchase_request_dict.request_timestamp_utc_iso_string,
                       ).getTime() / 1000,
                       { dayName: false },
                     )}
@@ -336,8 +339,8 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
                     {formatNumber(
-                      ticket.contract_ticket.ticket_input_data_dict
-                        .credit_pack_purchase_request_dict.requested_initial_credits_in_credit_pack,
+                      parseContractTicket.ticket_input_data_dict.credit_pack_purchase_request_dict
+                        .requested_initial_credits_in_credit_pack,
                     )}
                   </Styles.TicketContent>
                 </Grid>
@@ -346,7 +349,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
           </Styles.Accordion>
         ) : null}
 
-        {ticket.contract_ticket.ticket_input_data_dict
+        {parseContractTicket.ticket_input_data_dict
           ?.credit_pack_purchase_request_confirmation_dict ? (
           <Styles.Accordion
             expanded={isExpandedConfirmation}
@@ -389,7 +392,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
                     {
-                      ticket.contract_ticket.ticket_input_data_dict
+                      parseContractTicket.ticket_input_data_dict
                         .credit_pack_purchase_request_confirmation_dict
                         .credit_purchase_request_confirmation_message_version_string
                     }
@@ -409,13 +412,13 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
                     <RouterLink
-                      route={`${ROUTES.BLOCK_DETAILS}/${ticket.contract_ticket.ticket_input_data_dict.credit_pack_purchase_request_confirmation_dict.credit_purchase_request_confirmation_pastel_block_height}`}
+                      route={`${ROUTES.BLOCK_DETAILS}/${parseContractTicket.ticket_input_data_dict.credit_pack_purchase_request_confirmation_dict.credit_purchase_request_confirmation_pastel_block_height}`}
                       value={
-                        ticket.contract_ticket.ticket_input_data_dict
+                        parseContractTicket.ticket_input_data_dict
                           .credit_pack_purchase_request_confirmation_dict
                           .credit_purchase_request_confirmation_pastel_block_height
                       }
-                      title={ticket.contract_ticket.ticket_input_data_dict.credit_pack_purchase_request_confirmation_dict.credit_purchase_request_confirmation_pastel_block_height?.toString()}
+                      title={parseContractTicket.ticket_input_data_dict.credit_pack_purchase_request_confirmation_dict.credit_purchase_request_confirmation_pastel_block_height?.toString()}
                       className="address-link"
                     />
                   </Styles.TicketContent>
@@ -435,7 +438,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                   <Styles.TicketContent>
                     {formattedDate(
                       new Date(
-                        ticket.contract_ticket.ticket_input_data_dict.credit_pack_purchase_request_confirmation_dict.credit_purchase_request_confirmation_utc_iso_string,
+                        parseContractTicket.ticket_input_data_dict.credit_pack_purchase_request_confirmation_dict.credit_purchase_request_confirmation_utc_iso_string,
                       ).getTime() / 1000,
                       { dayName: false },
                     )}
@@ -451,7 +454,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
                     {
-                      ticket.contract_ticket.ticket_input_data_dict
+                      parseContractTicket.ticket_input_data_dict
                         .credit_pack_purchase_request_confirmation_dict.id
                     }
                   </Styles.TicketContent>
@@ -469,18 +472,18 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 </Grid>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent sx={{ wordBreak: 'break-word' }}>
-                    {ticket.contract_ticket.ticket_input_data_dict
+                    {parseContractTicket.ticket_input_data_dict
                       .credit_pack_purchase_request_confirmation_dict
                       .requesting_end_user_pastelid ? (
                       <RouterLink
-                        route={`${ROUTES.PASTEL_ID_DETAILS}/${ticket.contract_ticket.ticket_input_data_dict.credit_pack_purchase_request_confirmation_dict.requesting_end_user_pastelid}`}
+                        route={`${ROUTES.PASTEL_ID_DETAILS}/${parseContractTicket.ticket_input_data_dict.credit_pack_purchase_request_confirmation_dict.requesting_end_user_pastelid}`}
                         value={
-                          ticket.contract_ticket.ticket_input_data_dict
+                          parseContractTicket.ticket_input_data_dict
                             .credit_pack_purchase_request_confirmation_dict
                             .requesting_end_user_pastelid
                         }
                         title={
-                          ticket.contract_ticket.ticket_input_data_dict
+                          parseContractTicket.ticket_input_data_dict
                             .credit_pack_purchase_request_confirmation_dict
                             .requesting_end_user_pastelid
                         }
@@ -505,7 +508,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent sx={{ wordBreak: 'break-word' }}>
                     {
-                      ticket.contract_ticket.ticket_input_data_dict
+                      parseContractTicket.ticket_input_data_dict
                         .credit_pack_purchase_request_confirmation_dict
                         .requesting_end_user_pastelid_signature_on_sha3_256_hash_of_credit_pack_purchase_request_confirmation_fields
                     }
@@ -525,7 +528,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
                     {
-                      ticket.contract_ticket.ticket_input_data_dict
+                      parseContractTicket.ticket_input_data_dict
                         .credit_pack_purchase_request_confirmation_dict
                         .requesting_end_user_pastelid_signature_on_sha3_256_hash_of_credit_pack_purchase_request_confirmation_fields
                     }
@@ -545,7 +548,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
                     {
-                      ticket.contract_ticket.ticket_input_data_dict
+                      parseContractTicket.ticket_input_data_dict
                         .credit_pack_purchase_request_confirmation_dict
                         .sha3_256_hash_of_credit_pack_purchase_request_fields
                     }
@@ -565,7 +568,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
                     {
-                      ticket.contract_ticket.ticket_input_data_dict
+                      parseContractTicket.ticket_input_data_dict
                         .credit_pack_purchase_request_confirmation_dict
                         .sha3_256_hash_of_credit_pack_purchase_request_response_fields
                     }
@@ -585,7 +588,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
                     {
-                      ticket.contract_ticket.ticket_input_data_dict
+                      parseContractTicket.ticket_input_data_dict
                         .credit_pack_purchase_request_confirmation_dict
                         .txid_of_credit_purchase_burn_transaction
                     }
@@ -596,8 +599,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
           </Styles.Accordion>
         ) : null}
 
-        {ticket.contract_ticket.ticket_input_data_dict
-          ?.credit_pack_purchase_request_response_dict ? (
+        {parseContractTicket.ticket_input_data_dict?.credit_pack_purchase_request_response_dict ? (
           <Styles.Accordion
             expanded={isExpandedResponse}
             onChange={(event, isPanelExpanded) => setIsExpandedResponse(isPanelExpanded)}
@@ -628,7 +630,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
             <AccordionDetails>
               <AgreeingSupernodesSignatures
                 data={
-                  ticket.contract_ticket.ticket_input_data_dict
+                  parseContractTicket.ticket_input_data_dict
                     .credit_pack_purchase_request_response_dict.agreeing_supernodes_signatures_dict
                 }
               />
@@ -646,7 +648,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
                     {
-                      ticket.contract_ticket.ticket_input_data_dict
+                      parseContractTicket.ticket_input_data_dict
                         .credit_pack_purchase_request_response_dict
                         .credit_purchase_request_response_message_version_string
                     }
@@ -666,7 +668,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
                     {
-                      ticket.contract_ticket.ticket_input_data_dict
+                      parseContractTicket.ticket_input_data_dict
                         .credit_pack_purchase_request_response_dict
                         .credit_usage_tracking_psl_address
                     }
@@ -686,7 +688,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
                     {
-                      ticket.contract_ticket.ticket_input_data_dict
+                      parseContractTicket.ticket_input_data_dict
                         .credit_pack_purchase_request_response_dict.id
                     }
                   </Styles.TicketContent>
@@ -704,7 +706,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 </Grid>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
-                    {ticket.contract_ticket.ticket_input_data_dict.credit_pack_purchase_request_response_dict.list_of_potentially_agreeing_supernodes?.join(
+                    {parseContractTicket.ticket_input_data_dict.credit_pack_purchase_request_response_dict.list_of_potentially_agreeing_supernodes?.join(
                       ', ',
                     )}
                   </Styles.TicketContent>
@@ -722,7 +724,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 </Grid>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
-                    {ticket.contract_ticket.ticket_input_data_dict.credit_pack_purchase_request_response_dict.list_of_supernode_pastelids_agreeing_to_credit_pack_purchase_terms?.join(
+                    {parseContractTicket.ticket_input_data_dict.credit_pack_purchase_request_response_dict.list_of_supernode_pastelids_agreeing_to_credit_pack_purchase_terms?.join(
                       ', ',
                     )}
                   </Styles.TicketContent>
@@ -741,7 +743,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
                     {formatNumber(
-                      ticket.contract_ticket.ticket_input_data_dict
+                      parseContractTicket.ticket_input_data_dict
                         .credit_pack_purchase_request_response_dict
                         .proposed_total_cost_of_credit_pack_in_psl,
                     )}
@@ -761,7 +763,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
                     {formatNumber(
-                      ticket.contract_ticket.ticket_input_data_dict
+                      parseContractTicket.ticket_input_data_dict
                         .credit_pack_purchase_request_response_dict.psl_cost_per_credit,
                     )}
                   </Styles.TicketContent>
@@ -780,13 +782,13 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
                     <RouterLink
-                      route={`${ROUTES.BLOCK_DETAILS}/${ticket.contract_ticket.ticket_input_data_dict.credit_pack_purchase_request_response_dict.request_response_pastel_block_height}`}
+                      route={`${ROUTES.BLOCK_DETAILS}/${parseContractTicket.ticket_input_data_dict.credit_pack_purchase_request_response_dict.request_response_pastel_block_height}`}
                       value={
-                        ticket.contract_ticket.ticket_input_data_dict
+                        parseContractTicket.ticket_input_data_dict
                           .credit_pack_purchase_request_response_dict
                           .request_response_pastel_block_height
                       }
-                      title={ticket.contract_ticket.ticket_input_data_dict.credit_pack_purchase_request_response_dict.request_response_pastel_block_height?.toString()}
+                      title={parseContractTicket.ticket_input_data_dict.credit_pack_purchase_request_response_dict.request_response_pastel_block_height?.toString()}
                       className="address-link"
                     />
                   </Styles.TicketContent>
@@ -806,7 +808,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                   <Styles.TicketContent>
                     {formattedDate(
                       new Date(
-                        ticket.contract_ticket.ticket_input_data_dict.credit_pack_purchase_request_response_dict.request_response_timestamp_utc_iso_string,
+                        parseContractTicket.ticket_input_data_dict.credit_pack_purchase_request_response_dict.request_response_timestamp_utc_iso_string,
                       ).getTime() / 1000,
                       { dayName: false },
                     )}
@@ -826,13 +828,13 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
                     <RouterLink
-                      route={`${ROUTES.PASTEL_ID_DETAILS}/${ticket.contract_ticket.ticket_input_data_dict.credit_pack_purchase_request_response_dict.responding_supernode_pastelid}`}
+                      route={`${ROUTES.PASTEL_ID_DETAILS}/${parseContractTicket.ticket_input_data_dict.credit_pack_purchase_request_response_dict.responding_supernode_pastelid}`}
                       value={
-                        ticket.contract_ticket.ticket_input_data_dict
+                        parseContractTicket.ticket_input_data_dict
                           .credit_pack_purchase_request_response_dict.responding_supernode_pastelid
                       }
                       title={
-                        ticket.contract_ticket.ticket_input_data_dict
+                        parseContractTicket.ticket_input_data_dict
                           .credit_pack_purchase_request_response_dict.responding_supernode_pastelid
                       }
                       className="address-link"
@@ -853,7 +855,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent sx={{ wordBreak: 'break-word' }}>
                     {
-                      ticket.contract_ticket.ticket_input_data_dict
+                      parseContractTicket.ticket_input_data_dict
                         .credit_pack_purchase_request_response_dict
                         .responding_supernode_signature_on_credit_pack_purchase_request_response_hash
                     }
@@ -873,7 +875,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
                     {
-                      ticket.contract_ticket.ticket_input_data_dict
+                      parseContractTicket.ticket_input_data_dict
                         .credit_pack_purchase_request_response_dict
                         .sha3_256_hash_of_credit_pack_purchase_request_fields
                     }
@@ -893,7 +895,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
                 <Grid item xs={8} sm={9}>
                   <Styles.TicketContent>
                     {
-                      ticket.contract_ticket.ticket_input_data_dict
+                      parseContractTicket.ticket_input_data_dict
                         .credit_pack_purchase_request_response_dict
                         .sha3_256_hash_of_credit_pack_purchase_request_response_fields
                     }
@@ -916,7 +918,7 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
           </Grid>
           <Grid item xs={8} sm={9}>
             <Styles.TicketContent>
-              {ticket.contract_ticket.ticket_input_data_fully_parsed_sha3_256_hash}
+              {parseContractTicket.ticket_input_data_fully_parsed_sha3_256_hash}
             </Styles.TicketContent>
           </Grid>
         </Grid>
@@ -932,17 +934,13 @@ const InferenceAPICreditPackTicket: React.FC<IInferenceAPICreditPackTicketProps>
           </Grid>
           <Grid item xs={8} sm={9}>
             <Styles.TicketContent>
-              {formatNumber(ticket.contract_ticket.ticket_uncompressed_size_in_bytes)}
+              {formatNumber(parseContractTicket.ticket_uncompressed_size_in_bytes)}
             </Styles.TicketContent>
           </Grid>
         </Grid>
       </Box>
     );
   }
-  const parseContractTicket =
-    typeof ticket.contract_ticket === 'string'
-      ? JSON.parse(decode(`${ticket.contract_ticket}`))
-      : ticket.contract_ticket;
 
   return (
     <Box>

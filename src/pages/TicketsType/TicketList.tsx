@@ -367,7 +367,7 @@ const TicketsList: React.FC<ITicketsList> = ({
     } else if (ticketType === 'contract') {
       result.push({
         name: translateDropdown('pages.ticketsType.inferenceAPICreditPack'),
-        value: 'contract',
+        value: 'inference-api',
       });
     }
 

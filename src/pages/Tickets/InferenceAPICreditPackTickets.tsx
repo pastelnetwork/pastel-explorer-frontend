@@ -39,7 +39,7 @@ const InferenceAPICreditPackTickets: React.FC<IInferenceAPICreditPackTicketsProp
         total={total}
         toggleContent={() => setShowLess(!showLess)}
         showMore={showLess}
-        viewAllLink={`${ROUTES.TICKETS_TYPE}/contract`}
+        viewAllLink={`${ROUTES.TICKETS_TYPE}/inference-api`}
       />
     );
   };

@@ -3638,6 +3638,10 @@
       "inferenceAPICreditPack": {
         "message": "Inference API Credit Pack Ticket",
         "description": "Used for the ticket title component"
+      },
+      "inferenceApi": {
+        "message": "INFERENCE API",
+        "description": "Used for the TicketsType page"
       }
     },
     "burned": {

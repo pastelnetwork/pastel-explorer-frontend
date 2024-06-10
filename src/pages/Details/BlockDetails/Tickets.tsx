@@ -407,7 +407,9 @@ const TicketsList: React.FC<ITicketsList> = ({
       case 'transfer':
         return <TransferTicket ticket={ticket as ITransferTicket} variant={variant} />;
       case 'contract':
-        return <InferenceAPICreditPackTicket ticket={ticket as IInferenceAPICreditPackTicket} />;
+        return (
+          <InferenceAPICreditPackTicket ticket={ticket as IInferenceAPICreditPackTicket} showFull />
+        );
       default:
         return <PastelIDRegistrationTicket ticket={ticket as IPastelIDRegistrationTicket} />;
     }
