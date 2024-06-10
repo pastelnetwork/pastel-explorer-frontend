@@ -1060,7 +1060,7 @@ export const ticketsSummary = [
   {
     id: 'inferenceAPICreditPackTypes',
     name: parse(translate('pages.tickets.inferenceAPICreditPackTickets')),
-    link: `${ROUTES.TICKETS_TYPE}/contract`,
+    link: `${ROUTES.TICKETS_TYPE}/inference-api`,
   },
 ];
 
