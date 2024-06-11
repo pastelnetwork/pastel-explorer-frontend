@@ -57,10 +57,7 @@ export default function MempoolTable() {
     if (!swrData?.length && !isLoading) {
       return 150;
     }
-    const height = getRowHeight() * (swrData?.length || 0);
-    if (swrData?.length === 1) {
-      return height * 2;
-    }
+    const height = getRowHeight() * (swrData?.length || 0) + getRowHeight();
     return height > 550 ? 550 : height;
   };
 
