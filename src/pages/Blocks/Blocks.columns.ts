@@ -81,3 +81,87 @@ export const csvHeader = [
   { label: 'pages.blocks.timeBetweenBlocks', key: TIMESTAMP_BETWEEN_BLOCKS_KEY },
   { label: 'pages.blocks.timestamp', key: TIMESTAMP_BLOCKS_KEY },
 ];
+
+export const MEMPOOL_BLOCK_KEY = 'block';
+export const MEMPOOL_TXID_KEY = 'txID';
+export const MEMPOOL_RECIPIENT_KEY = 'recipients';
+export const MEMPOOL_AMOUNT_KEY = 'amount';
+export const MEMPOOL_SIZE_KEY = 'size';
+export const MEMPOOL_FEE_KEY = 'fee';
+export const MEMPOOL_TICKET_QUANTITY_KEY = 'ticketQuantity';
+export const MEMPOOL_TIMESTAMP_KEY = 'timestamp';
+
+export const mempoolColumns = [
+  {
+    width: 120,
+    flexGrow: 1,
+    label: 'pages.movement.txID',
+    dataKey: MEMPOOL_TXID_KEY,
+    disableSort: true,
+    className: 'col-txID',
+    dataTitle: 'pages.movement.txID',
+  },
+  {
+    width: 5,
+    flexGrow: 1,
+    label: 'pages.movement.block',
+    dataKey: MEMPOOL_BLOCK_KEY,
+    disableSort: true,
+    className: 'col-block',
+    dataTitle: 'pages.movement.block',
+  },
+  {
+    width: 20,
+    flexGrow: 1,
+    label: 'pages.movement.recipients',
+    dataKey: MEMPOOL_RECIPIENT_KEY,
+    disableSort: true,
+    className: 'col-recipients',
+    dataTitle: 'pages.movement.recipients',
+  },
+  {
+    width: 20,
+    flexGrow: 1,
+    label: 'pages.movement.amount',
+    dataKey: MEMPOOL_AMOUNT_KEY,
+    disableSort: true,
+    className: 'col-amount',
+    dataTitle: 'pages.movement.amount',
+  },
+  {
+    width: 20,
+    flexGrow: 1,
+    label: 'pages.movement.size',
+    dataKey: MEMPOOL_SIZE_KEY,
+    disableSort: true,
+    className: 'col-size',
+    dataTitle: 'pages.movement.size',
+  },
+  {
+    width: 20,
+    flexGrow: 1,
+    label: 'pages.movement.fee',
+    dataKey: MEMPOOL_FEE_KEY,
+    disableSort: true,
+    className: 'col-fee',
+    dataTitle: 'pages.movement.fee',
+  },
+  {
+    width: 20,
+    flexGrow: 1,
+    label: 'pages.movement.ticketQuantity',
+    dataKey: MEMPOOL_TICKET_QUANTITY_KEY,
+    disableSort: true,
+    className: 'col-ticketQuantity',
+    dataTitle: 'pages.movement.ticketQuantity',
+  },
+  {
+    width: 20,
+    flexGrow: 1,
+    label: 'pages.movement.timestamp',
+    dataKey: MEMPOOL_TIMESTAMP_KEY,
+    disableSort: true,
+    className: 'col-timestamp',
+    dataTitle: 'pages.movement.timestamp',
+  },
+];

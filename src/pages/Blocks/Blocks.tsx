@@ -24,6 +24,7 @@ import {
   DATA_FETCH_LIMIT,
   getCsvData,
 } from './Blocks.helpers';
+import MempoolTable from './MempoolTable';
 import * as Styles from './Blocks.styles';
 
 interface IBlocksDataRef {
@@ -52,7 +53,11 @@ const BlockStatisticsSection = () => {
 
   return (
     <Styles.BlockStatistics>
-      <BlockStatistics blockElements={blockElements} blocksUnconfirmed={blocksUnconfirmed} />
+      <BlockStatistics
+        blockElements={blockElements}
+        blocksUnconfirmed={blocksUnconfirmed}
+        showModal={false}
+      />
     </Styles.BlockStatistics>
   );
 };
@@ -228,6 +233,7 @@ const Blocks = () => {
   return (
     <Styles.TableContainer item>
       <BlockStatisticsSection />
+      <MempoolTable />
       <BlockTable
         apiParams={apiParams}
         onChange={OnChange}

@@ -1,8 +1,12 @@
 import { differenceInSeconds } from 'date-fns';
+import Tooltip from '@mui/material/Tooltip';
+import parse from 'html-react-parser';
+import TimeAgo from 'react-timeago';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import Hourglass from '@components/Hourglass/Hourglass';
 import MinedIcon from '@pages/Details/BlockDetails/MinedIcon';
+import { IMempool } from '@utils/types/ITransactions';
 
 import { HIDE_TO_BLOCK } from '@utils/appInfo';
 import * as ROUTES from '@utils/constants/routes';
@@ -23,6 +27,14 @@ import {
   TIMESTAMP_BLOCKS_KEY,
   BLOCK_SIZE,
   TIMESTAMP_BETWEEN_BLOCKS_KEY,
+  MEMPOOL_TXID_KEY,
+  MEMPOOL_RECIPIENT_KEY,
+  MEMPOOL_AMOUNT_KEY,
+  MEMPOOL_SIZE_KEY,
+  MEMPOOL_FEE_KEY,
+  MEMPOOL_TICKET_QUANTITY_KEY,
+  MEMPOOL_TIMESTAMP_KEY,
+  MEMPOOL_BLOCK_KEY,
 } from './Blocks.columns';
 import * as Styles from './Blocks.styles';
 
@@ -161,3 +173,69 @@ export const getCsvData = (blocks: Array<IBlock>) => {
       [TIMESTAMP_BLOCKS_KEY]: formattedDate(timestamp, { dayName: false }),
     }));
 };
+
+export const transformMempoolTableData = (transactions: Array<IMempool>) =>
+  transactions.map(
+    ({ id, recipientCount, isNonStandard, totalAmount, size, fee, tickets, timestamp }) => {
+      const ticketsTypeList = getTicketsTypeList(tickets || '');
+      return {
+        id,
+        [MEMPOOL_TXID_KEY]: (
+          <Styles.BlockHeight className="block-height">
+            <BoxIcon className="box-icon" />{' '}
+            <RouterLink
+              className="hash-link"
+              route={`${ROUTES.TRANSACTION_DETAILS}/${id}`}
+              value={formatAddress(id)}
+              title={id.toString()}
+            />
+          </Styles.BlockHeight>
+        ),
+        [MEMPOOL_BLOCK_KEY]: (
+          <Styles.HourglassWrapper>
+            <Hourglass />
+          </Styles.HourglassWrapper>
+        ),
+        [MEMPOOL_RECIPIENT_KEY]: <>{formatNumber(recipientCount)}</>,
+        [MEMPOOL_AMOUNT_KEY]: (
+          <div>
+            {isNonStandard ? (
+              <Tooltip title={parse(translate('pages.movement.shieldedTransactionInfo'))}>
+                <span>{parse(translate('common.unknown'))}</span>
+              </Tooltip>
+            ) : (
+              formatNumber(totalAmount, { decimalsLength: 2 })
+            )}
+          </div>
+        ),
+        [MEMPOOL_SIZE_KEY]: (
+          <div className="inline-block">
+            {formatNumber(size / 1024, { decimalsLength: 2 })} {translate('pages.movement.kb')}
+          </div>
+        ),
+        [MEMPOOL_FEE_KEY]: (
+          <div className="inline-block">{formatNumber(fee, { decimalsLength: 2 })}</div>
+        ),
+        [MEMPOOL_TICKET_QUANTITY_KEY]: (
+          <div className="inline-block">
+            {ticketsTypeList.total > 0 ? (
+              <RouterLink
+                route={`${ROUTES.TRANSACTION_DETAILS}/${id}`}
+                value={ticketsTypeList.total}
+                textSize="large"
+                title={ticketsTypeList.text.join(', <br />')}
+                isUseTooltip
+              />
+            ) : (
+              0
+            )}
+          </div>
+        ),
+        [MEMPOOL_TIMESTAMP_KEY]: (
+          <div className="inline-block">
+            <TimeAgo date={timestamp * 1000} live={false} />
+          </div>
+        ),
+      };
+    },
+  );

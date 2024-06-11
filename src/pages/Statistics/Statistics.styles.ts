@@ -165,6 +165,7 @@ export const ModalContent = styled.div`
   padding: 0;
   background: #fff;
   border-radius: 10px;
+  z-index: 20;
 
   &:focus {
     outline: none;
