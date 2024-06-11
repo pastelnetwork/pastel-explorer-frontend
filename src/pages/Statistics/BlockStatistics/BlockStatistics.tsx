@@ -45,6 +45,7 @@ const useStyles = makeStyles((_theme: TAppTheme) => ({
 interface IStatisticsBlocks {
   blockElements: ITransformBlocksData[];
   blocksUnconfirmed: BlockUnconfirmed[] | null;
+  showModal?: boolean;
 }
 
 type TLayout = {
@@ -52,7 +53,11 @@ type TLayout = {
   items: ITransformBlocksData[];
 };
 
-const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUnconfirmed }) => {
+const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({
+  blockElements,
+  blocksUnconfirmed,
+  showModal = true,
+}) => {
   const navigate = useNavigate();
   const classes = useStyles();
   const [openMempoolModal, setMempoolModal] = React.useState(false);
@@ -155,7 +160,7 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
           minutesAgo={translateDropdown('pages.statistics.blocksUnconfirmedTime', {
             time: blocksUnconfirmed ? blocksUnconfirmed.length * 10 : 0,
           })}
-          clickHandler={() => (txsCount ? setMempoolModal(!openMempoolModal) : null)}
+          clickHandler={() => (txsCount && showModal ? setMempoolModal(!openMempoolModal) : null)}
         />
       </Grid>
     );
@@ -224,6 +229,10 @@ const StatisticsBlocks: React.FC<IStatisticsBlocks> = ({ blockElements, blocksUn
       ) : null}
     </>
   );
+};
+
+StatisticsBlocks.defaultProps = {
+  showModal: true,
 };
 
 export default StatisticsBlocks;

@@ -63,3 +63,19 @@ export default function useBlocks(
     swrSetSize: setSize,
   };
 }
+
+export function useMempool(limit: number) {
+  const { data, isLoading, size, setSize } = useSWRInfinite(
+    index => `${URLS.GET_MEMPOOL_URL}?offset=${index * DATA_FETCH_LIMIT}&limit=${limit}`,
+    axiosGet,
+    SWR_OPTIONS,
+  );
+
+  return {
+    swrData: data?.[0]?.data || null,
+    total: data?.[0]?.total || 0,
+    isLoading,
+    swrSize: size,
+    swrSetSize: setSize,
+  };
+}

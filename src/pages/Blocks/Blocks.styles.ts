@@ -157,3 +157,12 @@ export const BlockStatistics = styled.div`
 export const HourglassWrapper = styled.div`
   margin-left: -8px;
 `;
+
+export const MempoolTableWrapper = styled.div`
+  width: 100%;
+  margin-bottom: 20px;
+
+  .mempool-list-table {
+    padding: 0;
+  }
+`;

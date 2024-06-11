@@ -923,16 +923,6 @@ export const transformInferenceAPICreditPackData = (data: TicketsList[]) =>
 
     const parseContractTicket = contract_ticket ? JSON.parse(decode(contract_ticket)) : null;
 
-    const getInferenceStatus = () => {
-      if (parseContractTicket?.ticket_input_data_dict?.credit_pack_purchase_request_response_dict) {
-        return parse(translate('pages.tickets.inferenceStatusResponsed'));
-      }
-      if (parseContractTicket?.ticket_input_data_dict?.credit_pack_purchase_request_dict) {
-        return parse(translate('pages.tickets.inferenceStatusConfirmation'));
-      }
-      return parse(translate('pages.tickets.inferenceStatusRequested'));
-    };
-
     return {
       id: transactionHash,
       [TXID_KEY]: (
@@ -968,8 +958,17 @@ export const transformInferenceAPICreditPackData = (data: TicketsList[]) =>
             </Box>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Box className="title">{parse(translate('pages.tickets.inferenceStatus'))}</Box>
-            <Box className="bold">{getInferenceStatus()}</Box>
+            <Box className="title">{parse(translate('pages.tickets.costPerCredit'))}</Box>
+            <Box className="bold">
+              {parseContractTicket?.ticket_input_data_dict
+                ?.credit_pack_purchase_request_response_dict?.psl_cost_per_credit
+                ? formatNumber(
+                    parseContractTicket.ticket_input_data_dict
+                      .credit_pack_purchase_request_response_dict.psl_cost_per_credit,
+                  )
+                : 0}{' '}
+              {getCurrencyName()}
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6} md={3} className="ticket-output image-mobile xs">
             {getImage()}
