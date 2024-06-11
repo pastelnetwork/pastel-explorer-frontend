@@ -175,7 +175,7 @@ export const getCsvData = (blocks: Array<IBlock>) => {
 };
 
 export const transformMempoolTableData = (transactions: Array<IMempool>) =>
-  transactions.map(
+  transactions?.map(
     ({ id, recipientCount, isNonStandard, totalAmount, size, fee, tickets, timestamp }) => {
       const ticketsTypeList = getTicketsTypeList(tickets || '');
       return {
