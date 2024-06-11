@@ -3480,6 +3480,10 @@
       "inferenceTicketType": {
         "message": "INFERENCE API",
         "description": "Used for the Tickets page"
+      },
+      "costPerCredit": {
+        "message": "Cost per credit",
+        "description": "Used for the Tickets page"
       }
     },
     "ticketsType": {
