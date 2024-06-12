@@ -44,3 +44,4 @@ export const PASTEL_BURN_ADDRESS = '/burned';
 export const COLLECTION_DETAILS_PAGE = '/collection';
 export const CASCADE_DETAILS = '/cascade';
 export const NFT_DETAILS = '/nft';
+export const NETWORK_CHALLENGE_AND_SELF_HEALING = '/network-challenges-and-self-healing';

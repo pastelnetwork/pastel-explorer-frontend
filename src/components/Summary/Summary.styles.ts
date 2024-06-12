@@ -140,6 +140,10 @@ export const Percentage = styled(MuiTypography)<{
     border-radius: 3px;
     font-weight: 500;
     font-size: 16px;
+
+    &.no-change {
+      background: rgb(251 244 64 / 20%);
+    }
   }
 `;
 

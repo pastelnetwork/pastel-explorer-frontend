@@ -157,6 +157,72 @@ export interface IPastelIDRegistrationTicket {
   transactionTime: number;
 }
 
+export interface IAgreeingSupernodesSignatures {
+  [key: string]: {
+    credit_pack_purchase_request_fields_json_b64_signature: string;
+    price_agreement_request_response_hash_signature: string;
+  };
+}
+
+export interface IInferenceAPICreditPackTicket {
+  contract_ticket: {
+    ticket_identifier_string: string;
+    ticket_input_data_fully_parsed_sha3_256_hash: string;
+    ticket_uncompressed_size_in_bytes: number;
+    ticket_input_data_dict: {
+      credit_pack_purchase_request_confirmation_dict: {
+        credit_pack_purchase_request_fields_json_b64: string;
+        credit_purchase_request_confirmation_message_version_string: string;
+        credit_purchase_request_confirmation_pastel_block_height: number;
+        credit_purchase_request_confirmation_utc_iso_string: number;
+        id: number;
+        requesting_end_user_pastelid: string;
+        requesting_end_user_pastelid_signature_on_sha3_256_hash_of_credit_pack_purchase_request_confirmation_fields: string;
+        sha3_256_hash_of_credit_pack_purchase_request_confirmation_fields: string;
+        sha3_256_hash_of_credit_pack_purchase_request_fields: string;
+        sha3_256_hash_of_credit_pack_purchase_request_response_fields: string;
+        txid_of_credit_purchase_burn_transaction: string;
+      };
+      credit_pack_purchase_request_dict: {
+        credit_purchase_request_message_version_string: string;
+        credit_usage_tracking_psl_address: string;
+        list_of_authorized_pastelids_allowed_to_use_credit_pack: string[];
+        request_pastel_block_height: number;
+        request_timestamp_utc_iso_string: string;
+        requested_initial_credits_in_credit_pack: number;
+        requesting_end_user_pastelid: string;
+      };
+      credit_pack_purchase_request_response_dict: {
+        agreeing_supernodes_signatures_dict: IAgreeingSupernodesSignatures;
+        credit_pack_purchase_request_fields_json_b64: string;
+        credit_purchase_request_response_message_version_string: string;
+        credit_usage_tracking_psl_address: string;
+        id: string;
+        list_of_potentially_agreeing_supernodes: string[];
+        list_of_supernode_pastelids_agreeing_to_credit_pack_purchase_terms: string[];
+        proposed_total_cost_of_credit_pack_in_psl: number;
+        psl_cost_per_credit: number;
+        request_response_pastel_block_height: number;
+        request_response_timestamp_utc_iso_string: string;
+        responding_supernode_pastelid: string;
+        responding_supernode_signature_on_credit_pack_purchase_request_response_hash: string;
+        sha3_256_hash_of_credit_pack_purchase_request_fields: string;
+        sha3_256_hash_of_credit_pack_purchase_request_response_fields: string;
+      };
+      ticket_input_data_fully_parsed_sha3_256_hash: string;
+      ticket_uncompressed_size_in_bytes: number;
+    };
+  };
+  height: number;
+  key: string;
+  secondary_key: string;
+  sub_type: string;
+  timestamp: string;
+  type: string;
+  version: string;
+  transactionTime: number;
+}
+
 export interface IUserNameChangeTicket {
   type: string;
   version: number;
@@ -418,6 +484,7 @@ export type TTicketType =
   | 'action-act'
   | 'offer'
   | 'accept'
+  | 'contract'
   | 'transfer';
 
 export type TAlternativeNsfwScores = {
@@ -626,6 +693,7 @@ export type TicketsList = {
   userName?: string;
   nftId?: string;
   fileSize?: number;
+  contract_ticket?: string;
 };
 
 export type TCascade = {

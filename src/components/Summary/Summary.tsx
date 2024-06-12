@@ -362,6 +362,75 @@ const Summary: React.FC = () => {
     return value;
   };
 
+  const renderDifference = (_difference: string | number) => {
+    if (Number(_difference) > 0) {
+      return (
+        <svg
+          width="10"
+          height="10"
+          viewBox="0 0 10 10"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M4.23381 2.93331L1.08356 6.08356L4.37114e-07 5L5 4.37114e-07L10 5L8.91644 6.08356L5.76619 2.93331L5.76619 10L4.23381 10L4.23381 2.93331Z"
+            fill="#00D097"
+          />
+        </svg>
+      );
+    }
+    if (Number(_difference) < 0) {
+      return (
+        <svg
+          width="10"
+          height="10"
+          viewBox="0 0 10 10"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M5.76619 7.06669L8.91644 3.91644L10 5L5 10L-2.18557e-07 5L1.08356 3.91644L4.23381 7.06669L4.23381 -2.52048e-07L5.76619 -1.85066e-07L5.76619 7.06669Z"
+            fill="#FF754C"
+          />
+        </svg>
+      );
+    }
+
+    return (
+      <svg
+        width="10"
+        height="13"
+        viewBox="0 0 10 13"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g clipPath="url(#clip0_1504_661)">
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M5 11L8.91644 6.91644L10 8L5 13L0 8L1.08356 6.91644L4.23381 10.0667L5 11Z"
+            fill="#BAA806"
+          />
+        </g>
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M5 2L1.08356 6.08356L0 5L5 0L10 5L8.91644 6.08356L5.76619 2.93331L5 2Z"
+          fill="#BAA806"
+        />
+        <defs>
+          <clipPath id="clip0_1504_661">
+            <rect width="10" height="10" fill="white" transform="translate(0 3)" />
+          </clipPath>
+        </defs>
+      </svg>
+    );
+  };
+
   return (
     <div className={classes.wrapper}>
       <Styles.Wrapper>
@@ -397,40 +466,10 @@ const Summary: React.FC = () => {
                       ? parse(translate('components.summary.last30d'))
                       : parse(translate('components.summary.last24h'))}
                     <br />
-                    <span>
+                    <span className={Number(difference) === 0 ? 'no-change' : ''}>
                       {`${Number(difference) > 0 ? '+' : ''}`}
                       {difference}%&nbsp;
-                      {Number(difference) > 0 ? (
-                        <svg
-                          width="10"
-                          height="10"
-                          viewBox="0 0 10 10"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            clipRule="evenodd"
-                            d="M4.23381 2.93331L1.08356 6.08356L4.37114e-07 5L5 4.37114e-07L10 5L8.91644 6.08356L5.76619 2.93331L5.76619 10L4.23381 10L4.23381 2.93331Z"
-                            fill="#00D097"
-                          />
-                        </svg>
-                      ) : (
-                        <svg
-                          width="10"
-                          height="10"
-                          viewBox="0 0 10 10"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            clipRule="evenodd"
-                            d="M5.76619 7.06669L8.91644 3.91644L10 5L5 10L-2.18557e-07 5L1.08356 3.91644L4.23381 7.06669L4.23381 -2.52048e-07L5.76619 -1.85066e-07L5.76619 7.06669Z"
-                            fill="#FF754C"
-                          />
-                        </svg>
-                      )}
+                      {renderDifference(difference)}
                     </span>
                   </Styles.Percentage>
                 )}
