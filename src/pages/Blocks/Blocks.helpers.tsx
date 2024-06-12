@@ -213,9 +213,7 @@ export const transformMempoolTableData = (transactions: Array<IMempool>) =>
             {formatNumber(size / 1024, { decimalsLength: 2 })} {translate('pages.movement.kb')}
           </div>
         ),
-        [MEMPOOL_FEE_KEY]: (
-          <div className="inline-block">{formatNumber(fee, { decimalsLength: 2 })}</div>
-        ),
+        [MEMPOOL_FEE_KEY]: <div className="inline-block">{fee}</div>,
         [MEMPOOL_TICKET_QUANTITY_KEY]: (
           <div className="inline-block">
             {ticketsTypeList.total > 0 ? (
