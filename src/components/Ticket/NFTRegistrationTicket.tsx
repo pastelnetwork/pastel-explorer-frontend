@@ -8,6 +8,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 import parse from 'html-react-parser';
 
+import { getSenseImage } from '@utils/helpers/url';
 import RouterLink from '@components/RouterLink/RouterLink';
 import { INftRegistrationTicket, INftTicket } from '@utils/types/ITransactions';
 import * as ROUTES from '@utils/constants/routes';
@@ -255,9 +256,7 @@ const NFTRegistrationTicket: React.FC<INFTRegistrationTicketProps> = ({
               {ticket.nftId ? (
                 <Link to={`${ROUTES.NFT_DETAILS}?txid=${transactionHash}`}>
                   <img
-                    src={
-                      ticket?.image ? `data:image/jpeg;base64,${ticket.image}` : noImagePlaceholder
-                    }
+                    src={ticket?.image ? getSenseImage(ticket.image) : noImagePlaceholder}
                     alt={transactionHash}
                     className={`sense-img ${!ticket?.image ? 'placeholder' : ''}`}
                   />

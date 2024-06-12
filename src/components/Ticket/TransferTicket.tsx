@@ -2,6 +2,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import parse from 'html-react-parser';
 
+import { getSenseImage } from '@utils/helpers/url';
 import RouterLink, { ExternalLink } from '@components/RouterLink/RouterLink';
 import { ITransferTicket } from '@utils/types/ITransactions';
 import * as ROUTES from '@utils/constants/routes';
@@ -25,9 +26,7 @@ const TransferTicket: React.FC<ITransferTicketProps> = ({ ticket, variant }) => 
       let image = noImagePlaceholder;
       if (ticket.image) {
         image =
-          ticket.otherData.offerType === 'nft-offer'
-            ? ticket.image
-            : `data:image/jpeg;base64,${ticket.image}`;
+          ticket.otherData.offerType === 'nft-offer' ? ticket.image : getSenseImage(ticket.image);
       }
       return (
         <img

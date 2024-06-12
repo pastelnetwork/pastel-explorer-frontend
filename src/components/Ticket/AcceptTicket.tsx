@@ -2,6 +2,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import parse from 'html-react-parser';
 
+import { getSenseImage } from '@utils/helpers/url';
 import RouterLink, { ExternalLink } from '@components/RouterLink/RouterLink';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
 import { IAcceptTicket } from '@utils/types/ITransactions';
@@ -29,9 +30,7 @@ const AcceptTicket: React.FC<IAcceptTicketProps> = ({ ticket, variant }) => {
       let image = noImagePlaceholder;
       if (ticket.image) {
         image =
-          ticket.otherData.offerType === 'nft-offer'
-            ? ticket.image
-            : `data:image/jpeg;base64,${ticket.image}`;
+          ticket.otherData.offerType === 'nft-offer' ? ticket.image : getSenseImage(ticket.image);
       }
       return (
         <img

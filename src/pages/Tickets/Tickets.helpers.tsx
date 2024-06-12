@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import parse from 'html-react-parser';
 import { decode } from 'js-base64';
 
+import { getSenseImage } from '@utils/helpers/url';
 import CopyButton from '@components/CopyButton/CopyButton';
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
@@ -343,11 +344,7 @@ export const transformSenseData = (sense: TicketsList[], usdPrice: number) =>
                   {dupeDetectionSystemVersion && imageFileCdnUrl ? (
                     <Link to={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${imageHash}`}>
                       <img
-                        src={
-                          imageFileCdnUrl
-                            ? `data:image/jpeg;base64,${imageFileCdnUrl}`
-                            : noImagePlaceholder
-                        }
+                        src={imageFileCdnUrl ? getSenseImage(imageFileCdnUrl) : noImagePlaceholder}
                         alt={imageHash}
                         className="sense-img"
                       />
@@ -380,11 +377,7 @@ export const transformSenseData = (sense: TicketsList[], usdPrice: number) =>
                   {dupeDetectionSystemVersion && imageFileCdnUrl ? (
                     <Link to={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${imageHash}`}>
                       <img
-                        src={
-                          imageFileCdnUrl
-                            ? `data:image/jpeg;base64,${imageFileCdnUrl}`
-                            : noImagePlaceholder
-                        }
+                        src={imageFileCdnUrl ? getSenseImage(imageFileCdnUrl) : noImagePlaceholder}
                         alt={imageHash}
                         className="sense-img"
                       />
@@ -411,11 +404,7 @@ export const transformSenseData = (sense: TicketsList[], usdPrice: number) =>
                   {dupeDetectionSystemVersion && imageFileCdnUrl ? (
                     <Link to={`${ROUTES.SENSE_DETAILS}?txid=${transactionHash}&hash=${imageHash}`}>
                       <img
-                        src={
-                          imageFileCdnUrl
-                            ? `data:image/jpeg;base64,${imageFileCdnUrl}`
-                            : noImagePlaceholder
-                        }
+                        src={imageFileCdnUrl ? getSenseImage(imageFileCdnUrl) : noImagePlaceholder}
                         alt={imageHash}
                         className="sense-img"
                       />
@@ -627,6 +616,17 @@ export const transformOfferAndTransferData = (data: TicketsList[]) =>
       };
 
       const getImage = () => {
+        if (ticketType === 'sense') {
+          return (
+            <Link to={getInfo().link}>
+              <img
+                src={image ? getSenseImage(image) : noImagePlaceholder}
+                alt={reTxId}
+                className="sense-img"
+              />
+            </Link>
+          );
+        }
         return (
           <Link to={getInfo().link}>
             <img
@@ -910,6 +910,17 @@ export const transformInferenceAPICreditPackData = (data: TicketsList[]) =>
     };
 
     const getImage = () => {
+      if (ticketType === 'sense') {
+        return (
+          <Link to={getInfo().link}>
+            <img
+              src={image ? getSenseImage(image) : noImagePlaceholder}
+              alt={reTxId}
+              className="sense-img"
+            />
+          </Link>
+        );
+      }
       return (
         <Link to={getInfo().link}>
           <img
