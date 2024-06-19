@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Box from '@mui/material/Box';
 
 import { translateDropdown } from '@utils/helpers/i18n';
+import { getSenseImage } from '@utils/helpers/url';
 
 import imagePlaceholder from '@assets/images/no-image-placeholder.svg';
 import * as Styles from './SenseDetails.styles';
@@ -31,7 +32,7 @@ const SubmittedImage: React.FC<ISubmittedImageProps> = ({ imageUrl, imageHash })
             onClick={handleClickOpen}
             title={translateDropdown('pages.senseDetails.viewFull')}
           >
-            <img src={`data:image/jpeg;base64,${imageUrl}`} alt={imageHash} />
+            <img src={getSenseImage(imageUrl)} alt={imageHash} />
           </button>
         ) : (
           <Box className="image-placeholder-wrapper">
@@ -41,7 +42,7 @@ const SubmittedImage: React.FC<ISubmittedImageProps> = ({ imageUrl, imageHash })
       </Box>
       <Styles.Dialog onClose={handleClose} open={open}>
         <Styles.FullImageWrapper>
-          <img src={`data:image/jpeg;base64,${imageUrl}`} alt={imageHash} />
+          <img src={getSenseImage(imageUrl)} alt={imageHash} />
         </Styles.FullImageWrapper>
       </Styles.Dialog>
     </>

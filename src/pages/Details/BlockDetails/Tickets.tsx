@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { decode } from 'js-base64';
 import parse from 'html-react-parser';
 
+import { getSenseImage } from '@utils/helpers/url';
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
 import {
@@ -302,7 +303,7 @@ const TicketsList: React.FC<ITicketsList> = ({
                   <img
                     src={
                       sense.imageFileCdnUrl
-                        ? `data:image/jpeg;base64,${sense.imageFileCdnUrl}`
+                        ? getSenseImage(sense.imageFileCdnUrl)
                         : noImagePlaceholder
                     }
                     alt={sense.imageFileHash}
