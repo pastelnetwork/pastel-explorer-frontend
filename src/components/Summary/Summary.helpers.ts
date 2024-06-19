@@ -109,7 +109,14 @@ export const calculateDifference = (
     difference = ((firstValue - secondValue) / targetValue) * 100;
   }
 
-  return difference.toFixed(2);
+  let value = difference.toFixed(2);
+  if (Number(difference) > 0 && Number(difference) < 0.01) {
+    value = '0.01';
+  } else if (Number(difference) < 0 && Number(difference) > -0.01) {
+    value = '-0.01';
+  }
+
+  return value;
 };
 
 export const getRouteForChart = (key: string) => {
