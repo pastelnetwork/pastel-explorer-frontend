@@ -251,3 +251,32 @@ export const Img = styled.img`
     width: 80px;
   }
 `;
+
+export const FileItem = styled.div`
+  display: flex;
+  gap: 4px;
+  align-items: center;
+
+  .MuiSvgIcon-root {
+    width: 20px;
+    height: 20px;
+
+    &.completed {
+      color: #00D097;
+    }
+
+    &.fail {
+      color: #FF754C;
+    }
+
+    &.downloading {
+      color: #BAA806;
+    }
+  }
+
+  .file-name {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+`;

@@ -8,12 +8,18 @@ import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
 import parse from 'html-react-parser';
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ErrorIcon from '@mui/icons-material/Error';
+import DownloadingIcon from '@mui/icons-material/Downloading';
+import IconButton from '@mui/material/IconButton';
 
 import RouterLink from '@components/RouterLink/RouterLink';
 import * as ROUTES from '@utils/constants/routes';
 import { translate } from '@utils/helpers/i18n';
 import { formatAddress, formatBytes } from '@utils/helpers/format';
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
+import * as NftDetailsStyles from '@pages/Details/NftDetails/NftDetails.styles';
 
 import RqIds from './RqIds';
 import { getFileIcon } from './CascadeDetails.helpers';
@@ -145,6 +151,66 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
               </Grid>
             </Grid>
           </Box>
+        </Box>
+      </Box>
+      <Box className="raptor-q-parameters">
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6}>
+            <Typography className="title">
+              Files
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6} sx={{ textAlign: 'right' }}>
+            <NftDetailsStyles.DownloadButton
+              type="button"
+            >
+              Download All
+            </NftDetailsStyles.DownloadButton>
+          </Grid>
+        </Grid>
+        <Box className="mt-10">
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} md={3}>
+              <Styles.FileItem>
+                <TicketStyles.TicketContent className='file-name'>cybernetic_utopia.jpg_5675.jpg</TicketStyles.TicketContent>
+                <Tooltip title="Completed">
+                  <IconButton>
+                    <CheckCircleIcon className='completed' />
+                  </IconButton>
+                </Tooltip>
+              </Styles.FileItem>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Styles.FileItem>
+                <TicketStyles.TicketContent className='file-name'>cybernetic_utopia.jpg_5675.jpg</TicketStyles.TicketContent>
+                <Tooltip title="In Progress">
+                  <IconButton>
+                    <DownloadingIcon className='downloading' />
+                  </IconButton>
+                </Tooltip>
+              </Styles.FileItem>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Styles.FileItem>
+                <TicketStyles.TicketContent className='file-name'>cybernetic_utopia.jpg_5675.jpg</TicketStyles.TicketContent>
+                <Tooltip title="Fail">
+                  <IconButton>
+                    <ErrorIcon className='fail' />
+                  </IconButton>
+                </Tooltip>
+              </Styles.FileItem>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Styles.FileItem>
+                <TicketStyles.TicketContent className='file-name'>cybernetic_utopia.jpg_5675.jpg</TicketStyles.TicketContent>
+                <Tooltip title="Download">
+                  <IconButton>
+                    <CloudDownloadIcon />
+                  </IconButton>
+                </Tooltip>
+              </Styles.FileItem>
+            </Grid>
+          </Grid>
         </Box>
       </Box>
       <Box className="raptor-q-parameters">
