@@ -45,9 +45,17 @@ export const transformTableData = (transactions: Array<IBlock>) =>
   transactions
     .slice(0, transactions.length - 1)
     .map(
-      (
-        { id, timestamp, transactionCount, height, ticketsList, size, totalTickets, type, timeInMinutesBetweenBlocks },
-      ) => {
+      ({
+        id,
+        timestamp,
+        transactionCount,
+        height,
+        ticketsList,
+        size,
+        totalTickets,
+        type,
+        timeInMinutesBetweenBlocks,
+      }) => {
         const ticketsTypeList = getTicketsTypeList(ticketsList || '');
         return {
           id,
@@ -108,7 +116,12 @@ export const transformTableData = (transactions: Array<IBlock>) =>
             <div className="inline-block">
               {timeInMinutesBetweenBlocks ? (
                 <>
-                  {timeInMinutesBetweenBlocks.toFixed(1)} {translate(timeInMinutesBetweenBlocks === 1 ? 'pages.blocks.minute' : 'pages.blocks.minutes')}
+                  {timeInMinutesBetweenBlocks.toFixed(1)}{' '}
+                  {translate(
+                    timeInMinutesBetweenBlocks === 1
+                      ? 'pages.blocks.minute'
+                      : 'pages.blocks.minutes',
+                  )}
                 </>
               ) : (
                 <>0 {translate('pages.blocks.minutes')}</>
@@ -139,17 +152,28 @@ const getTotalTicket = (height: number, totalTickets: number, ticketsList: strin
 export const getCsvData = (blocks: Array<IBlock>) => {
   return blocks
     .slice(0, blocks.length - 1)
-    .map(({ id, timestamp, transactionCount, height, ticketsList, size, totalTickets, timeInMinutesBetweenBlocks }) => ({
-      [BLOCK_ID_KEY]: height,
-      [BLOCK_HASH]: id,
-      [TRANSACTIONS_QTY_KEY]: transactionCount,
-      [TOTAL_TICKETS]: getTotalTicket(height, totalTickets, ticketsList),
-      [BLOCK_SIZE]: formatNumber(size / 1024, { decimalsLength: 2 }),
-      [TIMESTAMP_BETWEEN_BLOCKS_KEY]: timeInMinutesBetweenBlocks
-        ? `${timeInMinutesBetweenBlocks.toFixed(1)} ${translate(timeInMinutesBetweenBlocks === 1 ? 'pages.blocks.minute' : 'pages.blocks.minutes')}`
-        : `0 ${translate('pages.blocks.minutes')}`,
-      [TIMESTAMP_BLOCKS_KEY]: formattedDate(timestamp, { dayName: false }),
-    }));
+    .map(
+      ({
+        id,
+        timestamp,
+        transactionCount,
+        height,
+        ticketsList,
+        size,
+        totalTickets,
+        timeInMinutesBetweenBlocks,
+      }) => ({
+        [BLOCK_ID_KEY]: height,
+        [BLOCK_HASH]: id,
+        [TRANSACTIONS_QTY_KEY]: transactionCount,
+        [TOTAL_TICKETS]: getTotalTicket(height, totalTickets, ticketsList),
+        [BLOCK_SIZE]: formatNumber(size / 1024, { decimalsLength: 2 }),
+        [TIMESTAMP_BETWEEN_BLOCKS_KEY]: timeInMinutesBetweenBlocks
+          ? `${timeInMinutesBetweenBlocks.toFixed(1)} ${translate(timeInMinutesBetweenBlocks === 1 ? 'pages.blocks.minute' : 'pages.blocks.minutes')}`
+          : `0 ${translate('pages.blocks.minutes')}`,
+        [TIMESTAMP_BLOCKS_KEY]: formattedDate(timestamp, { dayName: false }),
+      }),
+    );
 };
 
 export const transformMempoolTableData = (transactions: Array<IMempool>) =>
