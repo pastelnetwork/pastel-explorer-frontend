@@ -1,4 +1,3 @@
-import { differenceInSeconds } from 'date-fns';
 import Tooltip from '@mui/material/Tooltip';
 import parse from 'html-react-parser';
 import TimeAgo from 'react-timeago';
@@ -42,26 +41,12 @@ export const DATA_FETCH_LIMIT = 40;
 export const DATA_OFFSET = 0;
 export const DATA_DEFAULT_SORT = 'DESC';
 
-const getDifferenceInMinutes = (startDate: number, endDate: number, variant = '') => {
-  const diff = parseFloat((differenceInSeconds(endDate, startDate) / 60).toFixed(1));
-  if (variant === 'text') {
-    return `${diff} ${translate(diff === 1 ? 'pages.blocks.minute' : 'pages.blocks.minutes')}`;
-  }
-
-  return (
-    <>
-      {diff} {translate(diff === 1 ? 'pages.blocks.minute' : 'pages.blocks.minutes')}
-    </>
-  );
-};
-
 export const transformTableData = (transactions: Array<IBlock>) =>
   transactions
     .slice(0, transactions.length - 1)
     .map(
       (
-        { id, timestamp, transactionCount, height, ticketsList, size, totalTickets, type },
-        index,
+        { id, timestamp, transactionCount, height, ticketsList, size, totalTickets, type, timeInMinutesBetweenBlocks },
       ) => {
         const ticketsTypeList = getTicketsTypeList(ticketsList || '');
         return {
@@ -121,12 +106,9 @@ export const transformTableData = (transactions: Array<IBlock>) =>
           ),
           [TIMESTAMP_BETWEEN_BLOCKS_KEY]: (
             <div className="inline-block">
-              {transactions[index + 1]?.timestamp ? (
+              {timeInMinutesBetweenBlocks ? (
                 <>
-                  {getDifferenceInMinutes(
-                    Number(transactions[index + 1].timestamp) * 1000,
-                    Number(timestamp) * 1000,
-                  )}
+                  {timeInMinutesBetweenBlocks.toFixed(1)} {translate(timeInMinutesBetweenBlocks === 1 ? 'pages.blocks.minute' : 'pages.blocks.minutes')}
                 </>
               ) : (
                 <>0 {translate('pages.blocks.minutes')}</>
@@ -157,18 +139,14 @@ const getTotalTicket = (height: number, totalTickets: number, ticketsList: strin
 export const getCsvData = (blocks: Array<IBlock>) => {
   return blocks
     .slice(0, blocks.length - 1)
-    .map(({ id, timestamp, transactionCount, height, ticketsList, size, totalTickets }, index) => ({
+    .map(({ id, timestamp, transactionCount, height, ticketsList, size, totalTickets, timeInMinutesBetweenBlocks }) => ({
       [BLOCK_ID_KEY]: height,
       [BLOCK_HASH]: id,
       [TRANSACTIONS_QTY_KEY]: transactionCount,
       [TOTAL_TICKETS]: getTotalTicket(height, totalTickets, ticketsList),
       [BLOCK_SIZE]: formatNumber(size / 1024, { decimalsLength: 2 }),
-      [TIMESTAMP_BETWEEN_BLOCKS_KEY]: blocks[index + 1]?.timestamp
-        ? getDifferenceInMinutes(
-            Number(blocks[index + 1].timestamp) * 1000,
-            Number(timestamp) * 1000,
-            'text',
-          )
+      [TIMESTAMP_BETWEEN_BLOCKS_KEY]: timeInMinutesBetweenBlocks
+        ? `${timeInMinutesBetweenBlocks.toFixed(1)} ${translate(timeInMinutesBetweenBlocks === 1 ? 'pages.blocks.minute' : 'pages.blocks.minutes')}`
         : `0 ${translate('pages.blocks.minutes')}`,
       [TIMESTAMP_BLOCKS_KEY]: formattedDate(timestamp, { dayName: false }),
     }));

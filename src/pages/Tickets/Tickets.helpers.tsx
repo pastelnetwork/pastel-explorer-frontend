@@ -990,7 +990,7 @@ export const transformInferenceAPICreditPackData = (data: TicketsList[]) =>
               {parseContractTicket.ticket_input_data_dict
                 .credit_pack_purchase_request_confirmation_dict.requesting_end_user_pastelid ? (
                 <RouterLink
-                  route={`${ROUTES.TRANSACTION_DETAILS}/${parseContractTicket.ticket_input_data_dict.credit_pack_purchase_request_confirmation_dict.requesting_end_user_pastelid}`}
+                  route={`${ROUTES.PASTEL_ID_DETAILS}/${parseContractTicket.ticket_input_data_dict.credit_pack_purchase_request_confirmation_dict.requesting_end_user_pastelid}`}
                   value={formatAddress(
                     parseContractTicket.ticket_input_data_dict
                       .credit_pack_purchase_request_confirmation_dict.requesting_end_user_pastelid,
