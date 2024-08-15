@@ -51,3 +51,49 @@ export const getFileIcon = (file_type: string) => {
       return <Img src={unknown} alt="unknown" />;
   }
 };
+
+export const getCascadeVolumeIcon = (file_name: string) => {
+  if (!file_name) {
+    return <Img src={unknown} alt="unknown" />;
+  }
+  const parseFileName = file_name.split('.')
+  const fileExtension = parseFileName[parseFileName.length - 1]
+  switch (fileExtension) {
+    case 'jpg':
+      return <Img src={jpg} alt="jpg" />;
+    case 'doc':
+    case 'docx':
+      return <Img src={doc} alt="doc" />;
+    case 'gif':
+      return <Img src={gif} alt="gif" />;
+    case 'mp3':
+      return <Img src={mp3} alt="mp3" />;
+    case 'pdf':
+      return <Img src={pdf} alt="pdf" />;
+    case 'svg':
+      return <Img src={svg} alt="svg" />;
+    case 'txt':
+      return <Img src={txt} alt="txt" />;
+    case 'xls':
+    case 'xlsx':
+      return <Img src={xls} alt="xls" />;
+    case 'png':
+      return <Img src={png} alt="png" />;
+    case 'mp4':
+      return <Img src={mp4} alt="mp4" />;
+    case 'mxf':
+      return <Img src={mxf} alt="mxf" />;
+    case 'avi':
+      return <Img src={avi} alt="avi" />;
+    case 'mov':
+      return <Img src={mov} alt="mov" />;
+    case 'zip':
+    case 'tar':
+    case 'tar':
+    case 'gz':
+    case '7z':
+      return <Img src={zip} alt="zip" />;
+    default:
+      return <Img src={unknown} alt="unknown" />;
+  }
+};

@@ -470,6 +470,7 @@ export interface ITicket {
   transactionHash: string;
   imageFileHash?: string;
   id: string;
+  sub_type?: string;
 }
 
 export type TTicketType =
@@ -694,6 +695,17 @@ export type TicketsList = {
   nftId?: string;
   fileSize?: number;
   contract_ticket?: string;
+  tx_info?: {
+    compressed_size: number;
+    compression_ratio: string;
+    is_compressed: boolean;
+    multisig_outputs_count: number;
+    multisig_tx_total_fee: number;
+    uncompressed_size: number;
+  };
+  secondary_key?: string;
+  sub_type?: string;
+  key?: string;
 };
 
 export type TCascade = {
@@ -708,6 +720,9 @@ export type TCascade = {
     storage_fee: number;
     type: string;
     version: number;
+    sub_type?: string;
+    secondary_key?: string;
+    contract_ticket?: string;
   };
   tx_info: {
     compressed_size: number;
@@ -850,3 +865,64 @@ export type TTransfer = {
   copy_serial_nr: number;
   transactionTime: number;
 };
+
+
+interface IRegistrationAttempt {
+  id: number;
+  file_id: string;
+  reg_started_at: string;
+  processor_sns: string;
+  finished_at: string;
+  is_successful: boolean;
+  error_message: string;
+}
+
+interface IActivationAttempt {
+  id: number;
+  file_id: string;
+  activation_attempt_at: string;
+  is_successful: boolean;
+  error_message: string;
+}
+
+export interface IMultiVolumeFIle {
+  file_id: string;
+  upload_timestamp: string;
+  file_index: string;
+  base_file_id: string;
+  task_id: string;
+  reg_txid: string;
+  activation_txid: string;
+  req_burn_txn_amount: number;
+  burn_txn_id: string;
+  req_amount: number;
+  is_concluded: boolean;
+  cascade_metadata_ticket_id: string;
+  uuid_key: string;
+  hash_of_original_big_file: string;
+  name_of_original_big_file_with_ext: string;
+  size_of_original_big_file: number;
+  start_block: number;
+  done_block: number;
+  registration_attempts: IRegistrationAttempt[],
+  activation_attempts: IActivationAttempt;
+}
+
+export interface IMultiVolumeTicket {
+  contract_ticket: {
+    name_of_original_file: string;
+    sha3_256_hash_of_original_file: string;
+    size_of_original_file_mb: number;
+  };
+  height: number;
+  key: string;
+  secondary_key: string;
+  sub_type: string;
+  timestamp: string;
+  type: string;
+  version: string;
+  transactionTime: number;
+  tx_info: string;
+  fileName: string;
+  files?: IMultiVolumeFIle[];
+}

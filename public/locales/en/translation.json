@@ -27,6 +27,10 @@
     "usd": {
       "message": "USD",
       "description": "Used for the common"
+    },
+    "mb": {
+      "message": "MB",
+      "description": "Used for the common"
     }
   },
   "components": {
@@ -388,6 +392,10 @@
         },
         "inferenceAPICreditPack": {
           "message": "Inference API Credit Pack Ticket",
+          "description": "Used for the ticket title component"
+        },
+        "cascadeMultiVolume": {
+          "message": "Cascade Multi Volume",
           "description": "Used for the ticket title component"
         }
       },
@@ -1279,6 +1287,72 @@
             "message": "Agreeing supernodes signatures:",
             "description": "Used for the PastelIDRegistrationTicket component"
           }
+        }
+      },
+      "multiVolume": {
+        "fileName": {
+          "message": "Filename:",
+          "description": "Used for the CascadeMultiVolumeTicket component"
+        },
+        "totalFile": {
+          "message": "Total file:",
+          "description": "Used for the CascadeMultiVolumeTicket component"
+        },
+        "secondaryKey": {
+          "message": "secondary_key:",
+          "description": "Used for the CascadeMultiVolumeTicket component"
+        },
+        "totalFee": {
+          "message": "Total fee:",
+          "description": "Used for the CascadeMultiVolumeTicket component"
+        },
+        "fileID": {
+          "message": "File ID:",
+          "description": "Used for the CascadeMultiVolumeTicket component"
+        },
+        "uploadTimestamp": {
+          "message": "Upload timestamp:",
+          "description": "Used for the CascadeMultiVolumeTicket component"
+        },
+        "taskID": {
+          "message": "Task ID:",
+          "description": "Used for the CascadeMultiVolumeTicket component"
+        },
+        "regTxID": {
+          "message": "Reg txID:",
+          "description": "Used for the CascadeMultiVolumeTicket component"
+        },
+        "activationTxID": {
+          "message": "Activation txID:",
+          "description": "Used for the CascadeMultiVolumeTicket component"
+        },
+        "reqBurnTxnAmount": {
+          "message": "Req burn txn amount:",
+          "description": "Used for the CascadeMultiVolumeTicket component"
+        },
+        "burnTxnId": {
+          "message": "Burn txn id:",
+          "description": "Used for the CascadeMultiVolumeTicket component"
+        },
+        "reqAmount": {
+          "message": "Req amount:",
+          "description": "Used for the CascadeMultiVolumeTicket component"
+        },
+        "isConcluded": {
+          "message": "Is concluded:",
+          "description": "Used for the CascadeMultiVolumeTicket component"
+        },
+        "cascadeMetadataTicketId": {
+          "message": "Cascade metadata ticket id:",
+          "description": "Used for the CascadeMultiVolumeTicket component"
+        },
+        "startBlock": {
+          "message": "Start block:",
+          "description": "Used for the CascadeMultiVolumeTicket component"
+        },
+        "doneBlock": {
+          "message": "Done block:",
+          "description": "Used for the CascadeMultiVolumeTicket component"
         }
       }
     },
@@ -3484,6 +3558,46 @@
       "costPerCredit": {
         "message": "Cost per credit",
         "description": "Used for the Tickets page"
+      },
+      "completed": {
+        "message": "Completed",
+        "description": "Used for the Tickets page"
+      },
+      "inProgress": {
+        "message": "In Progress",
+        "description": "Used for the Tickets page"
+      },
+      "fail": {
+        "message": "Fail",
+        "description": "Used for the Tickets page"
+      },
+      "key": {
+        "message": "Key",
+        "description": "Used for the Tickets page"
+      },
+      "secondaryKey": {
+        "message": "Secondary key",
+        "description": "Used for the Tickets page"
+      },
+      "fileHash": {
+        "message": "File hash",
+        "description": "Used for the Tickets page"
+      },
+      "totalFee": {
+        "message": "Multisig tx total fee",
+        "description": "Used for the Tickets page"
+      },
+      "multisigOutputsCount": {
+        "message": "File count",
+        "description": "Used for the Tickets page"
+      },
+      "files": {
+        "message": "Files",
+        "description": "Used for the Tickets page"
+      },
+      "volumes": {
+        "message": "Volumes",
+        "description": "Used for the Tickets page"
       }
     },
     "ticketsType": {
@@ -3785,6 +3899,26 @@
       },
       "transfers": {
         "message": "Transfers",
+        "description": "Used for the Cascade Details page"
+      },
+      "totalVolumes": {
+        "message": "Total Volumes",
+        "description": "Used for the Cascade Details page"
+      },
+      "downloadedVolumes": {
+        "message": "Downloaded Volumes",
+        "description": "Used for the Cascade Details page"
+      },
+      "volumesDownloadInProgress": {
+        "message": "Volumes download in progress",
+        "description": "Used for the Cascade Details page"
+      },
+      "volumesPendingDownload": {
+        "message": "Volumes pending download",
+        "description": "Used for the Cascade Details page"
+      },
+      "volumesDownloadFailed": {
+        "message": "Volumes download failed",
         "description": "Used for the Cascade Details page"
       }
     },

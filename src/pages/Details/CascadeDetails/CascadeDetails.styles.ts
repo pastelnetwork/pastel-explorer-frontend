@@ -257,6 +257,14 @@ export const FileItem = styled.div`
   gap: 4px;
   align-items: center;
 
+  &.file-item {
+    padding: 12px 16px;
+
+    &:nth-of-type(even) {
+      background-color: ${props => props.theme.table.odd};
+    }
+  }
+
   .MuiSvgIcon-root {
     width: 20px;
     height: 20px;
@@ -272,6 +280,11 @@ export const FileItem = styled.div`
     &.downloading {
       color: #BAA806;
     }
+  }
+
+  .action-ticket-status.icon svg {
+    width: 14px;
+    height: 14px;
   }
 
   .file-name {
