@@ -1,6 +1,7 @@
 export type TTicketsTypeProps = {
   type: string;
   total: number;
+  sub_type?: string;
 };
 
 export const TICKET_TYPE_OPTIONS = [
@@ -55,6 +56,10 @@ export const TICKET_TYPE_OPTIONS = [
   {
     name: 'pages.pastelIdDetails.transfer',
     value: 'transfer',
+  },
+  {
+    name: 'components.ticket.ticketsTitle.cascadeMultiVolume',
+    value: 'cascade_multi_volume',
   },
 ];
 

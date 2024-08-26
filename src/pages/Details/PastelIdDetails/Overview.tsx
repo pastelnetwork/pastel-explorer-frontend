@@ -37,8 +37,13 @@ const Overview: React.FC<IOverviewProps> = ({
   const renderTicketsType = () => {
     const tickets = ticketsTypeList.filter(i => i.total > 0);
     return tickets.map(item => {
-      const ticket = TICKET_TYPE_OPTIONS.find(i => i.value === item.type);
-      const total = getTicketTypeTotal(item.type, ticketsTypeList);
+      let ticket = TICKET_TYPE_OPTIONS.find(i => i.value === item.type);
+      let total = getTicketTypeTotal(item.type, ticketsTypeList);
+      if (item.sub_type === 'cascade_multi_volume') {
+        ticket = TICKET_TYPE_OPTIONS.find(i => i.value === item.sub_type);
+        const newTicketsTypeList = ticketsTypeList.find((t) => t.sub_type === 'cascade_multi_volume');
+        total = newTicketsTypeList?.total || 0;
+      }
       return (
         <Box key={item.type}>
           {parse(translate(ticket?.name || ''))} ({total}{' '}

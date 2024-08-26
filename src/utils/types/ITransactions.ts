@@ -486,6 +486,7 @@ export type TTicketType =
   | 'offer'
   | 'accept'
   | 'contract'
+  | 'cascade_multi_volume'
   | 'transfer';
 
 export type TAlternativeNsfwScores = {
