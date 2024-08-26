@@ -153,4 +153,4 @@ export const isValidAddress = (address: string) => {
     return true;
   }
   return false;
-}
+};

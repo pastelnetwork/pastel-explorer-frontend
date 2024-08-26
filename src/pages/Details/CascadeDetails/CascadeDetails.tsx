@@ -97,7 +97,10 @@ const CascadeDetails = () => {
             dataDownloadedMegabytes: res.data.data_downloaded_megabytes,
             details: res.data.details,
           });
-          if ((res.data.task_status === 'Completed' || res.data.task_status === 'Failed') && timeout) {
+          if (
+            (res.data.task_status === 'Completed' || res.data.task_status === 'Failed') &&
+            timeout
+          ) {
             clearInterval(timeout);
           }
         }
@@ -108,7 +111,7 @@ const CascadeDetails = () => {
           clearInterval(timeout);
         }
       });
-  }
+  };
 
   useEffect(() => {
     window.addEventListener('beforeunload', handleReloadPage);
@@ -121,9 +124,9 @@ const CascadeDetails = () => {
     if (fileId) {
       timeout = setInterval(() => {
         checkDownloadStatus(fileId);
-      }, 5000) // ~ 1s
+      }, 5000); // ~ 1s
     }
-  }, [fileId])
+  }, [fileId]);
 
   const decodeApiTicket = (apiTicket: string) => {
     let data = null;
@@ -195,7 +198,7 @@ const CascadeDetails = () => {
           // link.click();
           // setStatus('done');
           if (res?.data?.file_id) {
-            setFileId(res.data.file_id)
+            setFileId(res.data.file_id);
           }
         })
         .catch(() => {
@@ -288,7 +291,7 @@ const CascadeDetails = () => {
             <BlockItemLayout
               title={getMultiVolumeSummaryTitle()}
               className="file-info"
-              titleClassName='file-info-title-block'
+              titleClassName="file-info-title-block"
             >
               <FileInfo data={getCascadeMultiVolumeInfo()} />
             </BlockItemLayout>
@@ -305,16 +308,20 @@ const CascadeDetails = () => {
                 {parse(translate('pages.cascade.totalVolumes'))}: {downloadStatus.totalVolumes}
               </div>
               <div>
-              {parse(translate('pages.cascade.downloadedVolumes'))}: {downloadStatus.downloadedVolumes}
+                {parse(translate('pages.cascade.downloadedVolumes'))}:{' '}
+                {downloadStatus.downloadedVolumes}
               </div>
               <div>
-              {parse(translate('pages.cascade.volumesDownloadInProgress'))}: {downloadStatus.volumesDownloadInProgress}
+                {parse(translate('pages.cascade.volumesDownloadInProgress'))}:{' '}
+                {downloadStatus.volumesDownloadInProgress}
               </div>
               <div>
-              {parse(translate('pages.cascade.volumesPendingDownload'))}: {downloadStatus.volumesPendingDownload}
+                {parse(translate('pages.cascade.volumesPendingDownload'))}:{' '}
+                {downloadStatus.volumesPendingDownload}
               </div>
               <div>
-              {parse(translate('pages.cascade.volumesDownloadFailed'))}: {downloadStatus.volumesDownloadFailed}
+                {parse(translate('pages.cascade.volumesDownloadFailed'))}:{' '}
+                {downloadStatus.volumesDownloadFailed}
               </div>
             </Styles.SnackbarContent>
           </Alert>
@@ -335,7 +342,7 @@ const CascadeDetails = () => {
           </Styles.AlterDownload>
         </Snackbar>
       </Styles.Wrapper>
-    )
+    );
   }
 
   return cascadeData ? (

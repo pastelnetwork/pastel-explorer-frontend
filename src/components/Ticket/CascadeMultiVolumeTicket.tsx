@@ -12,10 +12,7 @@ import { getCurrencyName } from '@utils/appInfo';
 import RouterLink from '@components/RouterLink/RouterLink';
 import { formattedDate, formatFullDate } from '@utils/helpers/date/date';
 import { formatNumber } from '@utils/helpers/formatNumbers/formatNumbers';
-import {
-  IMultiVolumeTicket,
-  IMultiVolumeFIle,
-} from '@utils/types/ITransactions';
+import { IMultiVolumeTicket, IMultiVolumeFIle } from '@utils/types/ITransactions';
 import * as ROUTES from '@utils/constants/routes';
 import { translate } from '@utils/helpers/i18n';
 import { formatBytes, formatAddress } from '@utils/helpers/format';
@@ -32,7 +29,7 @@ interface ICascadeMultiVolumeTicketProps {
   showFull?: boolean;
 }
 
-const Files = ({ files }: { files: IMultiVolumeFIle[]}) => {
+const Files = ({ files }: { files: IMultiVolumeFIle[] }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const { usdPrice } = useUsdPrice();
 
@@ -44,9 +41,7 @@ const Files = ({ files }: { files: IMultiVolumeFIle[]}) => {
       <AccordionSummary>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
-            <Styles.TicketTitle>
-              {parse(translate('pages.tickets.files'))}:
-            </Styles.TicketTitle>
+            <Styles.TicketTitle>{parse(translate('pages.tickets.files'))}:</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
             <Styles.TicketContent className="expand-more">
@@ -62,19 +57,17 @@ const Files = ({ files }: { files: IMultiVolumeFIle[]}) => {
       </AccordionSummary>
       <AccordionDetails>
         <Box>
-          {files?.map((item) => {
+          {files?.map(item => {
             const reqBurnTxnAmount = getStorageFee(item.req_burn_txn_amount, usdPrice);
             const reqAmount = getStorageFee(item.req_amount, usdPrice);
             return (
-              <CascadeDetailsStyles.FileItem key={item.file_id} className='file-item'>
+              <CascadeDetailsStyles.FileItem key={item.file_id} className="file-item">
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6} md={4}>
                     <TicketStyles.TicketTitle>
                       {parse(translate('components.ticket.multiVolume.fileID'))}
                     </TicketStyles.TicketTitle>
-                    <TicketStyles.TicketContent>
-                      {item.file_id}
-                    </TicketStyles.TicketContent>
+                    <TicketStyles.TicketContent>{item.file_id}</TicketStyles.TicketContent>
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
                     <TicketStyles.TicketTitle>
@@ -88,9 +81,7 @@ const Files = ({ files }: { files: IMultiVolumeFIle[]}) => {
                     <TicketStyles.TicketTitle>
                       {parse(translate('components.ticket.multiVolume.taskID'))}
                     </TicketStyles.TicketTitle>
-                    <TicketStyles.TicketContent>
-                      {item.task_id}
-                    </TicketStyles.TicketContent>
+                    <TicketStyles.TicketContent>{item.task_id}</TicketStyles.TicketContent>
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
                     <TicketStyles.TicketTitle>
@@ -123,7 +114,8 @@ const Files = ({ files }: { files: IMultiVolumeFIle[]}) => {
                       {parse(translate('components.ticket.multiVolume.reqBurnTxnAmount'))}
                     </TicketStyles.TicketTitle>
                     <TicketStyles.TicketContent>
-                      {formatNumber(item.req_burn_txn_amount)} {getCurrencyName()} {reqBurnTxnAmount}
+                      {formatNumber(item.req_burn_txn_amount)} {getCurrencyName()}{' '}
+                      {reqBurnTxnAmount}
                     </TicketStyles.TicketContent>
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
@@ -202,13 +194,13 @@ const Files = ({ files }: { files: IMultiVolumeFIle[]}) => {
                   </Grid>
                 </Grid>
               </CascadeDetailsStyles.FileItem>
-            )
+            );
           })}
         </Box>
       </AccordionDetails>
     </Styles.Accordion>
-  )
-}
+  );
+};
 
 const CascadeMultiVolumeTicket: React.FC<ICascadeMultiVolumeTicketProps> = ({
   ticket,
@@ -264,12 +256,12 @@ const CascadeMultiVolumeTicket: React.FC<ICascadeMultiVolumeTicketProps> = ({
         </Grid>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
-            <Styles.TicketTitle>
-              {parse(translate('pages.cascade.dataHash'))}
-            </Styles.TicketTitle>
+            <Styles.TicketTitle>{parse(translate('pages.cascade.dataHash'))}</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
-            <Styles.TicketContent>{ticket.contract_ticket.sha3_256_hash_of_original_file}</Styles.TicketContent>
+            <Styles.TicketContent>
+              {ticket.contract_ticket.sha3_256_hash_of_original_file}
+            </Styles.TicketContent>
           </Grid>
         </Grid>
         <Grid container spacing={3}>
@@ -285,50 +277,37 @@ const CascadeMultiVolumeTicket: React.FC<ICascadeMultiVolumeTicketProps> = ({
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {parse(
-                translate(
-                  'components.ticket.multiVolume.totalFee',
-                ),
-              )}
+              {parse(translate('components.ticket.multiVolume.totalFee'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
             <Styles.TicketContent>
-              {txInfo.multisig_tx_total_fee ? formatNumber(txInfo.multisig_tx_total_fee) : parse(translate('common.na'))} {getCurrencyName()} {storageFee}
+              {txInfo.multisig_tx_total_fee
+                ? formatNumber(txInfo.multisig_tx_total_fee)
+                : parse(translate('common.na'))}{' '}
+              {getCurrencyName()} {storageFee}
             </Styles.TicketContent>
           </Grid>
         </Grid>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
             <Styles.TicketTitle>
-              {parse(
-                translate(
-                  'components.ticket.multiVolume.totalFile',
-                ),
-              )}
+              {parse(translate('components.ticket.multiVolume.totalFile'))}
             </Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
-            <Styles.TicketContent>
-              {txInfo.multisig_outputs_count}
-            </Styles.TicketContent>
+            <Styles.TicketContent>{txInfo.multisig_outputs_count}</Styles.TicketContent>
           </Grid>
         </Grid>
         <Grid container spacing={3}>
           <Grid item xs={4} sm={3} className="max-w-355">
-            <Styles.TicketTitle>
-              {parse(
-                translate(
-                  'pages.cascade.fileSize',
-                ),
-              )}
-            </Styles.TicketTitle>
+            <Styles.TicketTitle>{parse(translate('pages.cascade.fileSize'))}</Styles.TicketTitle>
           </Grid>
           <Grid item xs={8} sm={9}>
             <Styles.TicketContent>
-            {ticket.contract_ticket.size_of_original_file_mb ?
-                      formatBytes(ticket.contract_ticket.size_of_original_file_mb * 1000000) : parse(translate('common.na'))
-                      }
+              {ticket.contract_ticket.size_of_original_file_mb
+                ? formatBytes(ticket.contract_ticket.size_of_original_file_mb * 1000000)
+                : parse(translate('common.na'))}
             </Styles.TicketContent>
           </Grid>
         </Grid>
@@ -392,12 +371,12 @@ const CascadeMultiVolumeTicket: React.FC<ICascadeMultiVolumeTicketProps> = ({
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>
-            {parse(translate('pages.cascade.dataHash'))}
-          </Styles.TicketTitle>
+          <Styles.TicketTitle>{parse(translate('pages.cascade.dataHash'))}</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>{ticket.contract_ticket.sha3_256_hash_of_original_file}</Styles.TicketContent>
+          <Styles.TicketContent>
+            {ticket.contract_ticket.sha3_256_hash_of_original_file}
+          </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -413,50 +392,37 @@ const CascadeMultiVolumeTicket: React.FC<ICascadeMultiVolumeTicketProps> = ({
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {parse(
-              translate(
-                'components.ticket.multiVolume.totalFee',
-              ),
-            )}
+            {parse(translate('components.ticket.multiVolume.totalFee'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-            {txInfo.multisig_tx_total_fee ? formatNumber(txInfo.multisig_tx_total_fee) : parse(translate('common.na'))} {getCurrencyName()} {storageFee}
+            {txInfo.multisig_tx_total_fee
+              ? formatNumber(txInfo.multisig_tx_total_fee)
+              : parse(translate('common.na'))}{' '}
+            {getCurrencyName()} {storageFee}
           </Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
           <Styles.TicketTitle>
-            {parse(
-              translate(
-                'components.ticket.multiVolume.totalFile',
-              ),
-            )}
+            {parse(translate('components.ticket.multiVolume.totalFile'))}
           </Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
-          <Styles.TicketContent>
-            {txInfo.multisig_outputs_count}
-          </Styles.TicketContent>
+          <Styles.TicketContent>{txInfo.multisig_outputs_count}</Styles.TicketContent>
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={4} sm={3} className="max-w-355">
-          <Styles.TicketTitle>
-            {parse(
-              translate(
-                'pages.cascade.fileSize',
-              ),
-            )}
-          </Styles.TicketTitle>
+          <Styles.TicketTitle>{parse(translate('pages.cascade.fileSize'))}</Styles.TicketTitle>
         </Grid>
         <Grid item xs={8} sm={9}>
           <Styles.TicketContent>
-          {ticket.contract_ticket.size_of_original_file_mb ?
-                    formatBytes(ticket.contract_ticket.size_of_original_file_mb * 1000000) : parse(translate('common.na'))
-                    }
+            {ticket.contract_ticket.size_of_original_file_mb
+              ? formatBytes(ticket.contract_ticket.size_of_original_file_mb * 1000000)
+              : parse(translate('common.na'))}
           </Styles.TicketContent>
         </Grid>
       </Grid>

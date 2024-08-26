@@ -19,6 +19,6 @@ const LinearProgressComponent: React.FC<LinearProgressProps> = ({ value, descrip
 
 LinearProgressComponent.defaultProps = {
   description: '',
-}
+};
 
 export default LinearProgressComponent;

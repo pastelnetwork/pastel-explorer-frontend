@@ -142,9 +142,9 @@ const AddressDetails = () => {
 
   const generateTitle = () => {
     return (
-      <Styles.TitleWrapper className={!addresses?.length ? 'large-padding' : '' }>
+      <Styles.TitleWrapper className={!addresses?.length ? 'large-padding' : ''}>
         <h4>{parse(translate('pages.addressDetails.latestTransactions'))}</h4>
-        {addresses?.length ?
+        {addresses?.length ? (
           <NftDetailsStyles.DownloadButton
             type="button"
             onClick={handleDownloadFile}
@@ -153,8 +153,8 @@ const AddressDetails = () => {
             {status === 'downloading'
               ? parse(translate('pages.addressDetails.downloading'))
               : parse(translate('pages.addressDetails.downloadCSV'))}
-          </NftDetailsStyles.DownloadButton> : null
-        }
+          </NftDetailsStyles.DownloadButton>
+        ) : null}
       </Styles.TitleWrapper>
     );
   };

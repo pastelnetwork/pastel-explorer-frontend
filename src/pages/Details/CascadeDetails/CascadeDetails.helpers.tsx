@@ -56,8 +56,8 @@ export const getCascadeVolumeIcon = (file_name: string) => {
   if (!file_name) {
     return <Img src={unknown} alt="unknown" />;
   }
-  const parseFileName = file_name.split('.')
-  const fileExtension = parseFileName[parseFileName.length - 1]
+  const parseFileName = file_name.split('.');
+  const fileExtension = parseFileName[parseFileName.length - 1];
   switch (fileExtension) {
     case 'jpg':
       return <Img src={jpg} alt="jpg" />;

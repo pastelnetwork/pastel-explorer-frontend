@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { Grid } from '@mui/material';
-import { Typography as MuiTypography } from '@mui/material';
+import { Grid, Typography as MuiTypography } from '@mui/material';
 
 import themeVariant from '@theme/variants';
 
@@ -560,7 +559,7 @@ export const FireIcon = styled.div`
   }
 `;
 
-export const NoData = styled(MuiTypography) `
+export const NoData = styled(MuiTypography)`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -568,4 +567,4 @@ export const NoData = styled(MuiTypography) `
   width: 100%;
   font-size: 24px;
   font-weight: 600;
-`
+`;

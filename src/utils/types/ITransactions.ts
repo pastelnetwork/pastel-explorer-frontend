@@ -867,7 +867,6 @@ export type TTransfer = {
   transactionTime: number;
 };
 
-
 interface IRegistrationAttempt {
   id: number;
   file_id: string;
@@ -905,7 +904,7 @@ export interface IMultiVolumeFIle {
   size_of_original_big_file: number;
   start_block: number;
   done_block: number;
-  registration_attempts: IRegistrationAttempt[],
+  registration_attempts: IRegistrationAttempt[];
   activation_attempts: IActivationAttempt;
 }
 

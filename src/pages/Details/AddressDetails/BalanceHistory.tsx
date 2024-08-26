@@ -160,7 +160,7 @@ const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
           outgoingSum={swrData?.data?.totalSent}
           incomingSum={swrData?.data?.totalReceived}
         />
-        {chartData?.dataX?.length ?
+        {chartData?.dataX?.length ? (
           <ChartStyles.PeriodSelect className="period">
             <span>{parse(translate('pages.historicalStatistics.period'))}: </span>
             <div className="balance-history-period">
@@ -177,8 +177,8 @@ const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
                 </ChartStyles.PeriodButton>
               ))}
             </div>
-          </ChartStyles.PeriodSelect> : null
-        }
+          </ChartStyles.PeriodSelect>
+        ) : null}
       </Styles.BalanceHistorySummaryWrapper>
       <Styles.ChartWrapper>
         {isLoading || swrData.isLoading ? (
@@ -188,7 +188,7 @@ const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
           </Styles.Loader>
         ) : (
           <>
-            {chartData?.dataX?.length ?
+            {chartData?.dataX?.length ? (
               <LineChart
                 chartName="balanceHistory"
                 dataX={chartData?.dataX}
@@ -198,11 +198,17 @@ const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
                 className="line-chart"
                 period={selectedPeriod}
                 seriesName={`pages.addressDetails.balanceHistory.${
-                  isBurnAddress && selectedChartType === 'received' ? 'totalBurned' : selectedChartType
+                  isBurnAddress && selectedChartType === 'received'
+                    ? 'totalBurned'
+                    : selectedChartType
                 }`}
                 chartColor={getChartColor()}
-              /> : <Styles.NoData sx={{ minHeight: '266px' }}>{parse(translate('common.noData'))}</Styles.NoData>
-            }
+              />
+            ) : (
+              <Styles.NoData sx={{ minHeight: '266px' }}>
+                {parse(translate('common.noData'))}
+              </Styles.NoData>
+            )}
           </>
         )}
       </Styles.ChartWrapper>

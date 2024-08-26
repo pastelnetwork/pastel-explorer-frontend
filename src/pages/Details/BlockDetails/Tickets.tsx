@@ -413,7 +413,7 @@ const TicketsList: React.FC<ITicketsList> = ({
         return <TransferTicket ticket={ticket as ITransferTicket} variant={variant} />;
       case 'contract':
         if (sub_type === 'cascade_multi_volume_metadata') {
-          return <CascadeMultiVolumeTicket ticket={ticket as IMultiVolumeTicket} showFull />
+          return <CascadeMultiVolumeTicket ticket={ticket as IMultiVolumeTicket} showFull />;
         }
         return (
           <InferenceAPICreditPackTicket ticket={ticket as IInferenceAPICreditPackTicket} showFull />
@@ -433,7 +433,7 @@ const TicketsList: React.FC<ITicketsList> = ({
                 data[0].type as TTicketType,
                 (data[0].data.ticket as INftCollectionRegistrationTicket)?.collection_ticket
                   ?.item_type,
-                  data[0].sub_type
+                data[0].sub_type,
               )}
         </TableStyles.BlockTitle>
         <Box className="custom-table tickets-table">
@@ -475,7 +475,7 @@ const TicketsList: React.FC<ITicketsList> = ({
                           ticket.type as TTicketType,
                           (ticket.data.ticket as INftCollectionRegistrationTicket)
                             ?.collection_ticket?.item_type,
-                          ticket.sub_type
+                          ticket.sub_type,
                         )}
                       </TicketStyles.TicketContent>
                     </Grid>
@@ -483,7 +483,12 @@ const TicketsList: React.FC<ITicketsList> = ({
                 </>
               ) : null}
 
-              {renderContent(ticket.type, ticket.data.ticket, ticket.transactionHash, ticket.sub_type)}
+              {renderContent(
+                ticket.type,
+                ticket.data.ticket,
+                ticket.transactionHash,
+                ticket.sub_type,
+              )}
             </Styles.GridStyle>
           ))}
         </Box>

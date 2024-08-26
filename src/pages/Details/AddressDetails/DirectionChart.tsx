@@ -137,21 +137,21 @@ const DirectionItem: React.FC<IDirectionItemProps> = ({
       <Box>
         <Styles.Heading className="direction-item">
           <Styles.HeadingTitle>{title}</Styles.HeadingTitle>
-          {chartData?.dataX?.length ?
+          {chartData?.dataX?.length ? (
             <ChartStyles.PeriodSelect className="direction-period">
               <span>{parse(translate('pages.historicalStatistics.period'))}: </span>
-                {periods[10].map(_period => (
-                  <ChartStyles.PeriodButton
-                    className={`${getActivePeriodButtonStyle(_period)} ${isLoading ? 'disable' : ''}`}
-                    onClick={() => handlePeriodChange(_period)}
-                    type="button"
-                    key={`${chartName}-filter-${_period}`}
-                  >
-                    {_period}
-                  </ChartStyles.PeriodButton>
-                ))}
-            </ChartStyles.PeriodSelect>: null
-          }
+              {periods[10].map(_period => (
+                <ChartStyles.PeriodButton
+                  className={`${getActivePeriodButtonStyle(_period)} ${isLoading ? 'disable' : ''}`}
+                  onClick={() => handlePeriodChange(_period)}
+                  type="button"
+                  key={`${chartName}-filter-${_period}`}
+                >
+                  {_period}
+                </ChartStyles.PeriodButton>
+              ))}
+            </ChartStyles.PeriodSelect>
+          ) : null}
         </Styles.Heading>
       </Box>
       <Box className="chart-box">
@@ -161,7 +161,7 @@ const DirectionItem: React.FC<IDirectionItemProps> = ({
             <Styles.LoadingText>{parse(translate('common.loadingData'))}</Styles.LoadingText>
           </Styles.Loader>
         ) : null}
-        {!isLoading && chartData?.dataX?.length ?
+        {!isLoading && chartData?.dataX?.length ? (
           <LineChart
             chartName={chartName}
             dataX={chartData?.dataX}
@@ -171,13 +171,13 @@ const DirectionItem: React.FC<IDirectionItemProps> = ({
             className="line-chart"
             seriesName={seriesName}
             chartColor={chartColor}
-          /> : null
-        }
-        {!isLoading && !chartData?.dataX?.length ?
+          />
+        ) : null}
+        {!isLoading && !chartData?.dataX?.length ? (
           <Styles.NoData sx={{ minHeight: '260px' }}>
             {parse(translate('common.noData'))}
-          </Styles.NoData> : null
-        }
+          </Styles.NoData>
+        ) : null}
       </Box>
     </Styles.ChartItem>
   );

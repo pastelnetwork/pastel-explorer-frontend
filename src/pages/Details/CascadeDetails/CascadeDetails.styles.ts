@@ -270,15 +270,15 @@ export const FileItem = styled.div`
     height: 20px;
 
     &.completed {
-      color: #00D097;
+      color: #00d097;
     }
 
     &.fail {
-      color: #FF754C;
+      color: #ff754c;
     }
 
     &.downloading {
-      color: #BAA806;
+      color: #baa806;
     }
   }
 

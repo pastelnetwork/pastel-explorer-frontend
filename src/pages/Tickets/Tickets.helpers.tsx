@@ -22,7 +22,10 @@ import { TAppTheme } from '@theme/index';
 import breakpoints from '@theme/breakpoints';
 import * as TicketsStyles from '@components/Ticket/Ticket.styles';
 import { translate, translateDropdown } from '@utils/helpers/i18n';
-import { getFileIcon, getCascadeVolumeIcon } from '@pages/Details/CascadeDetails/CascadeDetails.helpers';
+import {
+  getFileIcon,
+  getCascadeVolumeIcon,
+} from '@pages/Details/CascadeDetails/CascadeDetails.helpers';
 import noImagePlaceholder from '@assets/images/no-image-placeholder.svg';
 
 import {
@@ -132,44 +135,45 @@ export const transformCascadeData = (cascade: TicketsList[], usdPrice: number) =
               <Grid item xs={12} sm={6} md={3}>
                 <Box className="title">{parse(translate('pages.tickets.fileHash'))}</Box>
                 <Box className="bold">
-                  {contractTicket?.sha3_256_hash_of_original_file ?
-                    <Tooltip
-                      arrow
-                      title={contractTicket?.sha3_256_hash_of_original_file}
-                    >
+                  {contractTicket?.sha3_256_hash_of_original_file ? (
+                    <Tooltip arrow title={contractTicket?.sha3_256_hash_of_original_file}>
                       <span>
                         {formatAddress(contractTicket?.sha3_256_hash_of_original_file, 5, -5)}
                       </span>
-                    </Tooltip>:
-                    <>
-                      {parse(translate('common.na'))}
-                    </>
-                  }
+                    </Tooltip>
+                  ) : (
+                    <>{parse(translate('common.na'))}</>
+                  )}
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
                 <Box className="title">{parse(translate('pages.tickets.fileName'))}</Box>
                 <Box className="bold read-more">
-                  {contractTicket?.name_of_original_file ?
+                  {contractTicket?.name_of_original_file ? (
                     <Tooltip title={contractTicket?.name_of_original_file}>
                       <span>{contractTicket?.name_of_original_file}</span>
-                    </Tooltip> : parse(translate('common.na'))
-                  }
+                    </Tooltip>
+                  ) : (
+                    parse(translate('common.na'))
+                  )}
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
                 <Box className="title">{parse(translate('pages.tickets.cascadeOutput'))}</Box>
                 <Box className="bold">
                   <span className="nowrap">
-                      {parse(translate('pages.tickets.fileSize'))}: {contractTicket?.size_of_original_file_mb ? formatBytes(contractTicket.size_of_original_file_mb * 1000000) : 0}
-                    </span>
-                    {' - '}
-                    <RouterLink
-                      route={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}
-                      value={parse(translate('pages.tickets.senseDetail'))}
-                      title={transactionHash}
-                      className="address-link"
-                    />
+                    {parse(translate('pages.tickets.fileSize'))}:{' '}
+                    {contractTicket?.size_of_original_file_mb
+                      ? formatBytes(contractTicket.size_of_original_file_mb * 1000000)
+                      : 0}
+                  </span>
+                  {' - '}
+                  <RouterLink
+                    route={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}
+                    value={parse(translate('pages.tickets.senseDetail'))}
+                    title={transactionHash}
+                    className="address-link"
+                  />
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6} md={4} className="ticket-output image-mobile xs">
@@ -180,9 +184,13 @@ export const transformCascadeData = (cascade: TicketsList[], usdPrice: number) =
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6} md={2}>
-                <Box className="title">{parse(translate('pages.tickets.multisigOutputsCount'))}</Box>
+                <Box className="title">
+                  {parse(translate('pages.tickets.multisigOutputsCount'))}
+                </Box>
                 <Box>
-                  {tx_info?.multisig_outputs_count ? formatNumber(tx_info.multisig_outputs_count) : parse(translate('common.na'))}
+                  {tx_info?.multisig_outputs_count
+                    ? formatNumber(tx_info.multisig_outputs_count)
+                    : parse(translate('common.na'))}
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6} md={4} className="ticket-output image-mobile sm">
@@ -195,11 +203,14 @@ export const transformCascadeData = (cascade: TicketsList[], usdPrice: number) =
               <Grid item xs={12} sm={6} md={3}>
                 <Box className="title">{parse(translate('pages.tickets.fee'))}</Box>
                 <Box className="bold">
-                  {tx_info ?
+                  {tx_info ? (
                     <>
-                      {formatNumber(tx_info.multisig_tx_total_fee)} {getCurrencyName()} {getStorageFee(tx_info.multisig_tx_total_fee, usdPrice)}
-                    </> : parse(translate('common.na'))
-                  }
+                      {formatNumber(tx_info.multisig_tx_total_fee)} {getCurrencyName()}{' '}
+                      {getStorageFee(tx_info.multisig_tx_total_fee, usdPrice)}
+                    </>
+                  ) : (
+                    parse(translate('common.na'))
+                  )}
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
@@ -209,11 +220,11 @@ export const transformCascadeData = (cascade: TicketsList[], usdPrice: number) =
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6} md={4} className="ticket-output image-desktop">
-                  <Box className="cascade-image">
-                    <Link to={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}>
-                      {getCascadeVolumeIcon(contractTicket?.name_of_original_file || '')}
-                    </Link>
-                  </Box>
+                <Box className="cascade-image">
+                  <Link to={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}>
+                    {getCascadeVolumeIcon(contractTicket?.name_of_original_file || '')}
+                  </Link>
+                </Box>
               </Grid>
             </Grid>
           ),
