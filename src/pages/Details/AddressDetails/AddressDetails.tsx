@@ -23,6 +23,7 @@ import {
   DATA_FETCH_LIMIT,
   DATA_DEFAULT_SORT,
   generateLatestTransactions,
+  isValidAddress,
 } from './AddressDetails.helpers';
 import { ADDRESS_TRANSACTION_TIMESTAMP_KEY, columns } from './AddressDetails.columns';
 import BalanceHistory from './BalanceHistory';
@@ -82,7 +83,8 @@ const AddressDetails = () => {
       !swrData.isLoading &&
       !swrData?.data?.totalReceived &&
       !swrData?.data?.totalSent &&
-      !swrData?.data?.balance?.length
+      !swrData?.data?.balance?.length &&
+      !isValidAddress(id || '')
     ) {
       navigate(ROUTES.NOT_FOUND);
     }
@@ -140,17 +142,19 @@ const AddressDetails = () => {
 
   const generateTitle = () => {
     return (
-      <Styles.TitleWrapper>
+      <Styles.TitleWrapper className={!addresses?.length ? 'large-padding' : '' }>
         <h4>{parse(translate('pages.addressDetails.latestTransactions'))}</h4>
-        <NftDetailsStyles.DownloadButton
-          type="button"
-          onClick={handleDownloadFile}
-          disabled={status === 'downloading'}
-        >
-          {status === 'downloading'
-            ? parse(translate('pages.addressDetails.downloading'))
-            : parse(translate('pages.addressDetails.downloadCSV'))}
-        </NftDetailsStyles.DownloadButton>
+        {addresses?.length ?
+          <NftDetailsStyles.DownloadButton
+            type="button"
+            onClick={handleDownloadFile}
+            disabled={status === 'downloading'}
+          >
+            {status === 'downloading'
+              ? parse(translate('pages.addressDetails.downloading'))
+              : parse(translate('pages.addressDetails.downloadCSV'))}
+          </NftDetailsStyles.DownloadButton> : null
+        }
       </Styles.TitleWrapper>
     );
   };
@@ -173,7 +177,7 @@ const AddressDetails = () => {
         <Styles.TableWrapper item>
           <Grid container spacing={5}>
             <Grid item xs={12} lg={8}>
-              {addresses ? (
+              {addresses?.length ? (
                 <InfinityTable
                   title={generateTitle()}
                   sortBy={apiParams.sortBy}
@@ -189,7 +193,7 @@ const AddressDetails = () => {
                   customLoading={isLoading}
                 />
               ) : null}
-              {isLoading && !addresses?.length ? (
+              {isLoading ? (
                 <Box className="relative mt-15">
                   {generateTitle()}
                   <Box className="transaction-table-mask">
@@ -199,6 +203,16 @@ const AddressDetails = () => {
                         {parse(translate('common.loadingData'))}
                       </Styles.LoadingText>
                     </Styles.Loader>
+                  </Box>
+                </Box>
+              ) : null}
+              {!isLoading && !addresses?.length ? (
+                <Box className="relative mt-15">
+                  {generateTitle()}
+                  <Box className="transaction-table-mask" sx={{ minHeight: '590px !important' }}>
+                    <Styles.NoData sx={{ minHeight: '590px' }}>
+                      {parse(translate('common.noData'))}
+                    </Styles.NoData>
                   </Box>
                 </Box>
               ) : null}

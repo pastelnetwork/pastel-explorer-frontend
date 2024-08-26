@@ -140,3 +140,17 @@ export const transformDirectionChartData = (data: TChartStatisticsResponse[] | n
     dataY,
   };
 };
+
+export const isValidAddress = (address: string) => {
+  const defaultCurrencyName = process.env.REACT_APP_EXPLORER_DEFAULT_CURRENCY_NAME;
+  if (defaultCurrencyName === 'PSL' && address?.length === 35 && address.startsWith('Pt')) {
+    return true;
+  }
+  if (defaultCurrencyName === 'LSP' && address?.length === 35 && address.startsWith('tP')) {
+    return true;
+  }
+  if (defaultCurrencyName === 'DEV' && address?.length === 36 && address.startsWith('44o')) {
+    return true;
+  }
+  return false;
+}
