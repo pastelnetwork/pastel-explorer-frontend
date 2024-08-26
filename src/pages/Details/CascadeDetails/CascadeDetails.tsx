@@ -296,7 +296,7 @@ const CascadeDetails = () => {
         </Grid>
         <Snackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          open={downloadStatus?.taskStatus}
+          open={downloadStatus?.taskStatus !== ''}
           onClose={() => setOpenSnackbar(false)}
         >
           <Alert elevation={6} variant="filled" severity="info">
