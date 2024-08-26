@@ -89,7 +89,7 @@ export const getCascadeVolumeIcon = (file_name: string) => {
       return <Img src={mov} alt="mov" />;
     case 'zip':
     case 'tar':
-    case 'tar':
+    case 'rar':
     case 'gz':
     case '7z':
       return <Img src={zip} alt="zip" />;

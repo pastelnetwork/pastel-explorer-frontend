@@ -24,3 +24,13 @@ export const useStorageFee = (pslPrice: number) => {
     storageFee,
   };
 };
+
+
+export const getStorageFee = (pslPrice: number, usdPrice: number) => {
+  if (pslPrice && usdPrice) {
+    return ` (${formatNumber(pslPrice * usdPrice, { decimalsLength: 2 })} ${translateDropdown(
+      'common.usd',
+    )})`
+  }
+  return ` (0 ${translateDropdown('common.usd')})`
+}

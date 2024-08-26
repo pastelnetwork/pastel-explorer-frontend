@@ -22,8 +22,9 @@ import { formatBytes, formatAddress } from '@utils/helpers/format';
 import { fakeFilesData } from '@pages/Details/CascadeDetails/mockup';
 import * as CascadeDetailsStyles from '@pages/Details/CascadeDetails/CascadeDetails.styles';
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
+import { useUsdPrice } from '@hooks/useTransactionDetails';
 
-import { useStorageFee } from './Ticket.helpers';
+import { getStorageFee } from './Ticket.helpers';
 import * as Styles from './Ticket.styles';
 
 interface ICascadeMultiVolumeTicketProps {
@@ -33,6 +34,7 @@ interface ICascadeMultiVolumeTicketProps {
 
 const Files = ({ files }: { files: IMultiVolumeFIle[]}) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { usdPrice } = useUsdPrice();
 
   return (
     <Styles.Accordion
@@ -61,8 +63,8 @@ const Files = ({ files }: { files: IMultiVolumeFIle[]}) => {
       <AccordionDetails>
         <Box>
           {files?.map((item) => {
-            const reqBurnTxnAmount = useStorageFee(item.req_burn_txn_amount);
-            const reqAmount = useStorageFee(item.req_amount);
+            const reqBurnTxnAmount = getStorageFee(item.req_burn_txn_amount, usdPrice);
+            const reqAmount = getStorageFee(item.req_amount, usdPrice);
             return (
               <CascadeDetailsStyles.FileItem key={item.file_id} className='file-item'>
                 <Grid container spacing={2}>
@@ -121,7 +123,7 @@ const Files = ({ files }: { files: IMultiVolumeFIle[]}) => {
                       {parse(translate('components.ticket.multiVolume.reqBurnTxnAmount'))}
                     </TicketStyles.TicketTitle>
                     <TicketStyles.TicketContent>
-                      {formatNumber(item.req_burn_txn_amount)} {getCurrencyName()} {reqBurnTxnAmount.storageFee}
+                      {formatNumber(item.req_burn_txn_amount)} {getCurrencyName()} {reqBurnTxnAmount}
                     </TicketStyles.TicketContent>
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
@@ -142,7 +144,7 @@ const Files = ({ files }: { files: IMultiVolumeFIle[]}) => {
                       {parse(translate('components.ticket.multiVolume.reqAmount'))}
                     </TicketStyles.TicketTitle>
                     <TicketStyles.TicketContent>
-                      {formatNumber(item.req_amount)} {getCurrencyName()} {reqAmount.storageFee}
+                      {formatNumber(item.req_amount)} {getCurrencyName()} {reqAmount}
                     </TicketStyles.TicketContent>
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
@@ -212,11 +214,13 @@ const CascadeMultiVolumeTicket: React.FC<ICascadeMultiVolumeTicketProps> = ({
   ticket,
   showFull = false,
 }) => {
+  const { usdPrice } = useUsdPrice();
+
   if (!ticket?.tx_info) {
     return null;
   }
   const txInfo = JSON.parse(ticket.tx_info);
-  const { storageFee } = useStorageFee(txInfo.multisig_tx_total_fee);
+  const storageFee = getStorageFee(txInfo.multisig_tx_total_fee, usdPrice);
 
   if (showFull) {
     return (

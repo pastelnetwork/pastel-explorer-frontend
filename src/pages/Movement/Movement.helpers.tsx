@@ -34,7 +34,7 @@ export const getTicketsTypeList = (tickets: string) => {
     const counts: TCounts = {};
     for (let i = 0; i < newTickets.length; i += 1) {
       if (newTickets[i].sub_type === 'cascade_multi_volume_metadata') {
-        counts['cascade_multi_volume'] = counts[newTickets[i].type] ? counts[newTickets[i].type] + 1 : 1;
+        counts.cascade_multi_volume = counts[newTickets[i].type] ? counts[newTickets[i].type] + 1 : 1;
       } else {
         counts[newTickets[i].type] = counts[newTickets[i].type] ? counts[newTickets[i].type] + 1 : 1;
       }

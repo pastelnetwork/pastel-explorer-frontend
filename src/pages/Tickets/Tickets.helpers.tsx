@@ -161,7 +161,7 @@ export const transformCascadeData = (cascade: TicketsList[], usdPrice: number) =
                 <Box className="title">{parse(translate('pages.tickets.cascadeOutput'))}</Box>
                 <Box className="bold">
                   <span className="nowrap">
-                      {parse(translate('pages.tickets.fileSize'))}: {formatBytes(contractTicket?.size_of_original_file_mb * 1000000 || 0)}
+                      {parse(translate('pages.tickets.fileSize'))}: {contractTicket?.size_of_original_file_mb ? formatBytes(contractTicket.size_of_original_file_mb * 1000000) : 0}
                     </span>
                     {' - '}
                     <RouterLink
