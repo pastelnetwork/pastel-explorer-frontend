@@ -507,7 +507,12 @@ export function transformStatisticsChart(
     dataY.push(value);
     dataX.push(new Date(trans[i].time).toLocaleString());
   }
-  if (period === '24h' && !timestamp && checkValidateData(trans[trans.length - 1]?.time)) {
+  if (
+    period === '24h' &&
+    !timestamp &&
+    trans.length &&
+    checkValidateData(trans[trans.length - 1]?.time)
+  ) {
     dataX.push(new Date().toLocaleString());
     dataY.push(dataY[dataY.length - 1]);
   }
@@ -652,6 +657,45 @@ export const generateXAxisInterval = (
       return Math.floor(dataX.length / 15);
     default:
       return Math.floor(dataX.length / 14);
+  }
+};
+
+export const generateXAxisIntervalSmallChart = (
+  granularity: TGranularity,
+  period?: PeriodTypes,
+  dataX?: string[],
+  width?: number,
+): number | string => {
+  if (!dataX || !dataX?.length || !period || !width) {
+    return 'auto';
+  }
+
+  if (width > 960 && width < 1200) {
+    return Math.floor(dataX.length / 5);
+  }
+
+  if (width <= 960) {
+    return Math.floor(dataX.length / 3);
+  }
+
+  switch (period) {
+    case '24h':
+      return Math.floor(dataX.length / 5);
+    case '7d':
+    case '14d':
+      if (dataX.length <= 8) {
+        return 'auto';
+      }
+      return Math.floor(dataX.length / 5);
+    case '30d':
+    case '90d':
+    case '180d':
+      if (dataX.length !== 31) {
+        return Math.floor(dataX.length / 5);
+      }
+      return 1;
+    default:
+      return Math.floor(dataX.length / 5);
   }
 };
 
@@ -909,10 +953,8 @@ export function transformFeeSchedule(
   const dataY: number[] = [];
   for (let i = 0; i < trans.length; i += 1) {
     const fee = Number(trans[i].value);
-    if (fee) {
-      dataY.push(fee);
-      dataX.push(new Date(trans[i].time).toLocaleString());
-    }
+    dataY.push(fee);
+    dataX.push(new Date(trans[i].time).toLocaleString());
   }
   if (
     period === '24h' &&

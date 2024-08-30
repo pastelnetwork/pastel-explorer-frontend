@@ -199,3 +199,9 @@ export type TFeeSchedule = {
   time: number;
   value: number;
 };
+
+export type TCoinSupplyAndInflationStats = {
+  time: number;
+  circulatingSupply: number;
+  coinSupply: number;
+};

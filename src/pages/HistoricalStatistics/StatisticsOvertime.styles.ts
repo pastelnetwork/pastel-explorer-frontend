@@ -40,3 +40,24 @@ export const BlockTitle = styled.h4`
 export const ChartImage = styled.div`
   padding: 12px;
 `;
+
+export const SmallChartWrapper = styled.div`
+  position: relative;
+  border-radius: 10px;
+  border: 1px solid #d8d8d8;
+  box-shadow: 0px 5px 6px rgb(16 16 16 / 6%);
+
+  .line-chart-header {
+    margin: 0 0 16px;
+    padding: 13px 16px;
+  }
+
+  .line-chart-main-content {
+    margin-bottom: 10px;
+    padding: 0 16px;
+  }
+
+  .line-chart-footer {
+    padding: 0 16px 16px;
+  }
+`;

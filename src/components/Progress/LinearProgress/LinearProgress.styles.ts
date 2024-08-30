@@ -1,8 +1,5 @@
 import styled from 'styled-components';
-import {
-  LinearProgress as MuiLinearProgress,
-  Typography as MuiTypography,
-} from '@mui/material';
+import { LinearProgress as MuiLinearProgress, Typography as MuiTypography } from '@mui/material';
 
 export const LinearProgress = styled(MuiLinearProgress)`
   height: 14px;

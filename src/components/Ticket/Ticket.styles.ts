@@ -115,6 +115,11 @@ export const Accordion = styled(MuiAccordion)`
       width: 100%;
     }
   }
+
+  .action-ticket-status.icon svg {
+    width: 14px;
+    height: 14px;
+  }
 `;
 
 export const ButtonLink = styled.button`

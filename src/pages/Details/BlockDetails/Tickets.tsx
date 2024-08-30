@@ -29,6 +29,7 @@ import {
   TSenseRequests,
   ICascadeApiTicket,
   IInferenceAPICreditPackTicket,
+  IMultiVolumeTicket,
 } from '@utils/types/ITransactions';
 import {
   PastelIDRegistrationTicket,
@@ -41,6 +42,7 @@ import {
   ActionActivationTicket,
   ActionRegistrationTicket,
   InferenceAPICreditPackTicket,
+  CascadeMultiVolumeTicket,
   OfferTicket,
   AcceptTicket,
   TransferTicket,
@@ -367,8 +369,10 @@ const TicketsList: React.FC<ITicketsList> = ({
       | IOfferTicket
       | IAcceptTicket
       | IInferenceAPICreditPackTicket
+      | IMultiVolumeTicket
       | ITransferTicket,
     transactionHash: string,
+    sub_type?: string,
   ) => {
     switch (type) {
       case 'username-change':
@@ -408,6 +412,9 @@ const TicketsList: React.FC<ITicketsList> = ({
       case 'transfer':
         return <TransferTicket ticket={ticket as ITransferTicket} variant={variant} />;
       case 'contract':
+        if (sub_type === 'cascade_multi_volume_metadata') {
+          return <CascadeMultiVolumeTicket ticket={ticket as IMultiVolumeTicket} showFull />;
+        }
         return (
           <InferenceAPICreditPackTicket ticket={ticket as IInferenceAPICreditPackTicket} showFull />
         );
@@ -426,6 +433,7 @@ const TicketsList: React.FC<ITicketsList> = ({
                 data[0].type as TTicketType,
                 (data[0].data.ticket as INftCollectionRegistrationTicket)?.collection_ticket
                   ?.item_type,
+                data[0].sub_type,
               )}
         </TableStyles.BlockTitle>
         <Box className="custom-table tickets-table">
@@ -467,6 +475,7 @@ const TicketsList: React.FC<ITicketsList> = ({
                           ticket.type as TTicketType,
                           (ticket.data.ticket as INftCollectionRegistrationTicket)
                             ?.collection_ticket?.item_type,
+                          ticket.sub_type,
                         )}
                       </TicketStyles.TicketContent>
                     </Grid>
@@ -474,7 +483,12 @@ const TicketsList: React.FC<ITicketsList> = ({
                 </>
               ) : null}
 
-              {renderContent(ticket.type, ticket.data.ticket, ticket.transactionHash)}
+              {renderContent(
+                ticket.type,
+                ticket.data.ticket,
+                ticket.transactionHash,
+                ticket.sub_type,
+              )}
             </Styles.GridStyle>
           ))}
         </Box>

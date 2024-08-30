@@ -62,6 +62,8 @@ export const GET_SENSE_TRANSFERS = 'v1/sense/transfers';
 export const GET_STATISTICS_STORAGE_CHALLENGES = 'storage_challenges/detailed_logs';
 export const GET_STATISTICS_HEALTH_CHECK_CHALLENGES = 'healthcheck_challenge/detailed_logs';
 export const GET_STATISTICS_SELF_HEALING_CHALLENGES = 'self_healing/detailed_logs';
+export const GET_STATISTICS_COIN_SUPPLY_AND_CIRCULATING_SUPPLY =
+  'v1/stats/coin-supply-and-circulating-supply';
 // External URLS
 export const TWITTER_URL = 'https://twitter.com/pastelnetwork';
 export const TELEGRAM_URL = 'https://t.me/PastelNetwork';

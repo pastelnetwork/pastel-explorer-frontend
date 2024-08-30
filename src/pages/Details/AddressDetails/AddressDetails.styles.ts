@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Grid } from '@mui/material';
+import { Grid, Typography as MuiTypography } from '@mui/material';
 
 import themeVariant from '@theme/variants';
 
@@ -247,6 +247,10 @@ export const TitleWrapper = styled('div')`
   background: ${props => props.theme.card.titleColor};
   border-radius: 10px 10px 0 0;
   overflow: hidden;
+
+  &.large-padding {
+    padding: 14px 16px;
+  }
 
   h4 {
     margin: 0;
@@ -553,4 +557,14 @@ export const FireIcon = styled.div`
   svg {
     width: 18px;
   }
+`;
+
+export const NoData = styled(MuiTypography)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  font-size: 24px;
+  font-weight: 600;
 `;

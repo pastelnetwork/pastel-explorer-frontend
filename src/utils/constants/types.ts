@@ -70,6 +70,8 @@ export type TLineChartProps = {
   showLegend?: boolean;
   symbol?: string;
   symbol1?: string;
+  hideChangeColor?: boolean;
+  hideDownloadButton?: boolean;
 };
 
 type LabelKeyObject = {

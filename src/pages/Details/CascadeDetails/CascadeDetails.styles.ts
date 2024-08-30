@@ -251,3 +251,45 @@ export const Img = styled.img`
     width: 80px;
   }
 `;
+
+export const FileItem = styled.div`
+  display: flex;
+  gap: 4px;
+  align-items: center;
+
+  &.file-item {
+    padding: 12px 16px;
+
+    &:nth-of-type(even) {
+      background-color: ${props => props.theme.table.odd};
+    }
+  }
+
+  .MuiSvgIcon-root {
+    width: 20px;
+    height: 20px;
+
+    &.completed {
+      color: #00d097;
+    }
+
+    &.fail {
+      color: #ff754c;
+    }
+
+    &.downloading {
+      color: #baa806;
+    }
+  }
+
+  .action-ticket-status.icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .file-name {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+`;
