@@ -149,6 +149,40 @@ const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
         return '#5470c6';
     }
   };
+
+  const renderContent = () => {
+    if (isLoading || swrData.isLoading) {
+      return (
+        <Styles.Loader>
+          <CircularProgress size={40} />
+          <Styles.LoadingText>{parse(translate('common.loadingData'))}</Styles.LoadingText>
+        </Styles.Loader>
+      );
+    }
+
+    if (chartData?.dataX?.length) {
+      return (
+        <LineChart
+          chartName="balanceHistory"
+          dataX={chartData?.dataX}
+          dataY={chartData?.dataY}
+          offset={0}
+          disableClick
+          className="line-chart"
+          period={selectedPeriod}
+          seriesName={`pages.addressDetails.balanceHistory.${
+            isBurnAddress && selectedChartType === 'received' ? 'totalBurned' : selectedChartType
+          }`}
+          chartColor={getChartColor()}
+        />
+      );
+    }
+
+    return (
+      <Styles.NoData sx={{ minHeight: '266px' }}>{parse(translate('common.noData'))}</Styles.NoData>
+    );
+  };
+
   return (
     <Styles.BalanceHistoryWrapper>
       <Styles.BalanceHistorySummaryWrapper>
@@ -180,38 +214,7 @@ const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
           </ChartStyles.PeriodSelect>
         ) : null}
       </Styles.BalanceHistorySummaryWrapper>
-      <Styles.ChartWrapper>
-        {isLoading || swrData.isLoading ? (
-          <Styles.Loader>
-            <CircularProgress size={40} />
-            <Styles.LoadingText>{parse(translate('common.loadingData'))}</Styles.LoadingText>
-          </Styles.Loader>
-        ) : (
-          <>
-            {chartData?.dataX?.length ? (
-              <LineChart
-                chartName="balanceHistory"
-                dataX={chartData?.dataX}
-                dataY={chartData?.dataY}
-                offset={0}
-                disableClick
-                className="line-chart"
-                period={selectedPeriod}
-                seriesName={`pages.addressDetails.balanceHistory.${
-                  isBurnAddress && selectedChartType === 'received'
-                    ? 'totalBurned'
-                    : selectedChartType
-                }`}
-                chartColor={getChartColor()}
-              />
-            ) : (
-              <Styles.NoData sx={{ minHeight: '266px' }}>
-                {parse(translate('common.noData'))}
-              </Styles.NoData>
-            )}
-          </>
-        )}
-      </Styles.ChartWrapper>
+      <Styles.ChartWrapper>{renderContent()}</Styles.ChartWrapper>
     </Styles.BalanceHistoryWrapper>
   );
 };

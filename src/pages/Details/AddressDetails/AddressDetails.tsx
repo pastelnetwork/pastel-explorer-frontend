@@ -23,7 +23,6 @@ import {
   DATA_FETCH_LIMIT,
   DATA_DEFAULT_SORT,
   generateLatestTransactions,
-  isValidAddress,
 } from './AddressDetails.helpers';
 import { ADDRESS_TRANSACTION_TIMESTAMP_KEY, columns } from './AddressDetails.columns';
 import BalanceHistory from './BalanceHistory';
@@ -83,8 +82,7 @@ const AddressDetails = () => {
       !swrData.isLoading &&
       !swrData?.data?.totalReceived &&
       !swrData?.data?.totalSent &&
-      !swrData?.data?.balance?.length &&
-      !isValidAddress(id || '')
+      !swrData?.data?.balance?.length
     ) {
       navigate(ROUTES.NOT_FOUND);
     }

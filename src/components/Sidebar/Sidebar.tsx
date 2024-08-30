@@ -92,6 +92,7 @@ const SidebarCategory: React.FC<SidebarCategoryPropsType> = ({
     (window.location.pathname === ROUTES.STATISTICS ||
       window.location.pathname === ROUTES.STATISTICS_OVERTIME ||
       window.location.pathname === ROUTES.CASCADE_AND_SENSE_STATISTICS ||
+      window.location.pathname === ROUTES.COIN_SUPPLY_AND_INFLATION_STATS ||
       window.location.pathname.includes(ROUTES.STATISTICS_OVERTIME)) &&
     category?.path === ROUTES.STATISTICS_PARENT
   ) {
@@ -176,6 +177,7 @@ const Sidebar: React.FC<SidebarPropsType> = ({ ...rest }) => {
         (pathName === ROUTES.STATISTICS ||
           pathName === ROUTES.STATISTICS_OVERTIME ||
           pathName === ROUTES.CASCADE_AND_SENSE_STATISTICS ||
+          pathName === ROUTES.COIN_SUPPLY_AND_INFLATION_STATS ||
           pathName.includes(ROUTES.STATISTICS_OVERTIME)) &&
         route.path === ROUTES.STATISTICS_PARENT &&
         width < 960

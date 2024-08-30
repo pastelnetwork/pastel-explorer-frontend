@@ -207,7 +207,9 @@ export const csvHeaders: TCsvHeaderType = {
   totalTransactionFees: commonCsvFields,
   totalTransactionsPerDay: commonCsvFields,
   circulatingSupply: commonCsvFields,
+  circulatingSupplySmallChart: commonCsvFields,
   totalSupply: commonCsvFields,
+  totalSupplySmallChart: commonCsvFields,
   percentOfPSLStaked: commonCsvFields,
   pslBurnt: commonCsvFields,
   networktotals: [
@@ -248,6 +250,7 @@ export const periods: PeriodTypes[][] = [
   ['7d', '14d'],
   ['1y', '2y', 'max'],
   ['7d', '14d', '30d', '90d', '180d', '1y', 'max'],
+  ['24h', '30d', '180d', '1y', 'max'],
 ];
 
 export const CHART_THEME_BACKGROUND_DEFAULT_COLOR = '#2D3748';

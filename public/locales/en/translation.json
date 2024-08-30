@@ -4345,6 +4345,40 @@
         "message": "Report",
         "description": "Used for the Network Challenges And Self Healing page"
       }
+    },
+    "coinSupplyAndInflationStats": {
+      "pageTitle": {
+        "message": "Coin Supply And Inflation Stats",
+        "description": "Used for the Coin Supply And Inflation Stats page"
+      },
+      "month": {
+        "message": "{{month}} Month Ago ({{date}})",
+        "description": "Used for the Coin Supply And Inflation Stats page"
+      },
+      "months": {
+        "message": "{{months}} Months Ago ({{date}})",
+        "description": "Used for the Coin Supply And Inflation Stats page"
+      },
+      "year": {
+        "message": "{{year}} Year Ago ({{date}})",
+        "description": "Used for the Coin Supply And Inflation Stats page"
+      },
+      "today": {
+        "message": "Today ({{date}})",
+        "description": "Used for the Coin Supply And Inflation Stats page"
+      },
+      "coinSupply": {
+        "message": "Coin Supply",
+        "description": "Used for the Coin Supply And Inflation Stats page"
+      },
+      "circulatingSupply": {
+        "message": "Circulating Supply",
+        "description": "Used for the Coin Supply And Inflation Stats page"
+      },
+      "start": {
+        "message": "From start ({{date}})",
+        "description": "Used for the Coin Supply And Inflation Stats page"
+      }
     }
   },
   "routes": {
@@ -4554,6 +4588,10 @@
     },
     "networkChallengesAndSelfHealing": {
       "message": "Network Challenges and Self Healing",
+      "description": "Used for the routes"
+    },
+    "coinSupplyAndInflationStats": {
+      "message": "Coin Supply and Inflation Stats",
       "description": "Used for the routes"
     }
   },

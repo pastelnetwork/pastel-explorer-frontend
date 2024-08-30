@@ -15,6 +15,7 @@ import {
   TGranularity,
   getYAxisLabel,
   convertYAxisLabel,
+  generateXAxisIntervalSmallChart,
 } from '@utils/helpers/statisticsLib';
 import { TChartParams } from '@utils/types/IStatistics';
 import { translateDropdown } from '@utils/helpers/i18n';
@@ -1675,6 +1676,97 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       animation: false,
     },
+    totalSupplySmallChart: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: ['#cd6661'],
+      grid: {
+        top: 8,
+        right: 40,
+        bottom: 70,
+        left: 60,
+        show: false,
+      },
+      dataZoom: [
+        {
+          type: 'inside',
+          start: 0,
+          end: 100,
+        },
+        {
+          start: 0,
+          end: 100,
+        },
+      ],
+      tooltip: {
+        trigger: 'axis',
+        formatter(params: TChartParams[]) {
+          return `
+            <div class="tooltip-item-wrapper">
+              <div class="item-label">${generateTooltipLabel(
+                new Date(params[0].axisValue),
+                granularity,
+              )}</div>
+              <div class="item-value">${params[0].marker} ${formatNumber(params[0].value)}</div>
+            </div>
+          `;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        boundaryGap: false,
+        axisLabel: {
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
+            return generateXAxisLabel(new Date(value), period, isShowMinutesFor24h);
+          },
+          showMaxLabel: true,
+          interval: generateXAxisIntervalSmallChart('1d', period, dataX, width),
+        },
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        max: maxY,
+        interval: (maxY - minY) / 5,
+        splitLine: {
+          show: false,
+        },
+        axisLabel: {
+          formatter(value: string) {
+            return getYAxisLabel(Number(value), minY, maxY);
+          },
+        },
+        axisLine: {
+          show: true,
+        },
+      },
+      series: {
+        type: 'line',
+        name: translateDropdown('chartOptions.totalSupply', { currency: getCurrencyName() }),
+        data: dataY,
+        showSymbol: false,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#cd6661',
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor ?? '#F4F4F4',
+            },
+          ]),
+        },
+      },
+      animation: false,
+    },
     circulatingSupply: {
       backgroundColor: theme?.backgroundColor,
       textStyle: {
@@ -1731,6 +1823,106 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           },
           showMaxLabel: true,
           interval: generateXAxisInterval('1d', period, dataX, width),
+        },
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        max: maxY,
+        interval: (maxY - minY) / 5,
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          formatter(value: string) {
+            return getYAxisLabel(Number(value), minY, maxY);
+          },
+        },
+      },
+      series: {
+        type: 'line',
+        name: translateDropdown('chartOptions.circulatingSupply', { currency: getCurrencyName() }),
+        data: dataY,
+        showSymbol: false,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: blueColor,
+            },
+            {
+              offset: 1,
+              color: theme?.backgroundColor || '#fff',
+            },
+          ]),
+        },
+        emphasis: {
+          lineStyle: {
+            width: 2,
+          },
+        },
+      },
+      animation: false,
+    },
+    circulatingSupplySmallChart: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: [blueColor],
+      grid: {
+        top: 8,
+        right: 40,
+        bottom: 70,
+        left: 60,
+        show: false,
+      },
+      dataZoom: [
+        {
+          type: 'inside',
+          start: 0,
+          end: 100,
+        },
+        {
+          start: 0,
+          end: 100,
+        },
+      ],
+      tooltip: {
+        trigger: 'axis',
+        formatter(params: TChartParams[]) {
+          return `<div>
+            <div>${generateTooltipLabel(new Date(params[0].axisValue), granularity)}</div>
+            <div>${params[0].marker} ${formatNumber(params[0].value)}</div>
+          </div>`;
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: dataX,
+        boundaryGap: false,
+        axisLabel: {
+          formatter(value: string, index: number) {
+            let isShowMinutesFor24h = false;
+            if (period === '24h' && dataX && (index === 0 || dataX.length - 1 === index)) {
+              isShowMinutesFor24h = true;
+            }
+            if (period && periods[9].indexOf(period) !== -1) {
+              const date = format(new Date(value), 'MM/dd/yyyy');
+              if (firstDay !== date) {
+                firstDay = date;
+                return generateXAxisLabel(new Date(value), period, isShowMinutesFor24h);
+              }
+
+              return null;
+            }
+            return value ? generateXAxisLabel(new Date(value), period, isShowMinutesFor24h) : null;
+          },
+          showMaxLabel: true,
+          interval: generateXAxisIntervalSmallChart('1d', period, dataX, width),
         },
       },
       yAxis: {
