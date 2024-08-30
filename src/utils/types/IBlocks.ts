@@ -31,6 +31,7 @@ export interface IBlock {
   senses: TSenseRequests[];
   type?: string;
   addresses?: ITransactionAddress[];
+  timeInMinutesBetweenBlocks?: number;
 }
 
 export interface IRawBlock {

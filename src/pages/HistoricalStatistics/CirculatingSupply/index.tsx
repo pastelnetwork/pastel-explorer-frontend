@@ -18,20 +18,20 @@ import * as Styles from '../StatisticsOvertime.styles';
 function CirculatingSupply() {
   const [chartData, setChartData] = useState<TLineChartData | null>(null);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
-  const [period, setPeriod] = useState<PeriodTypes>(periods[1][0]);
+  const [period, setPeriod] = useState<PeriodTypes>(periods[6][0]);
   const [isLoading, setLoading] = useState(false);
   const swrData = useCirculatingSupply(period);
 
   useEffect(() => {
-    let currentCache = readCacheValue(cacheList.circulatingSupply) || {};
-    if (currentCache[period]) {
+    let currentCache = readCacheValue(cacheList?.circulatingSupply) || {};
+    if (currentCache[period]?.parseData) {
       setChartData(currentCache[period].parseData as TLineChartData);
       setLoading(false);
     } else {
       setLoading(true);
     }
-    if (!swrData.isLoading && swrData.data) {
-      const parseData = transformStatisticsChart(swrData.data, period, '');
+    if (!swrData?.isLoading && swrData?.data) {
+      const parseData = transformStatisticsChart(swrData?.data, period, '');
       setChartData(parseData);
       currentCache = {
         ...currentCache,
@@ -40,7 +40,7 @@ function CirculatingSupply() {
         },
       };
       setCacheValue(
-        cacheList.circulatingSupply,
+        cacheList?.circulatingSupply,
         JSON.stringify({
           currentCache,
           lastDate: Date.now(),
@@ -48,7 +48,7 @@ function CirculatingSupply() {
       );
       setLoading(false);
     }
-  }, [period, swrData.isLoading, swrData.data]);
+  }, [period, swrData?.isLoading, swrData?.data]);
 
   const handlePeriodFilterChange = (value: PeriodTypes) => {
     setPeriod(value);

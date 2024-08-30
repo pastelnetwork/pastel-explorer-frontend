@@ -17,7 +17,7 @@ import * as Styles from '../StatisticsOvertime.styles';
 function TotalSupply() {
   const [chartData, setChartData] = useState<TLineChartData | null>(null);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
-  const [period, setPeriod] = useState<PeriodTypes>(periods[1][0]);
+  const [period, setPeriod] = useState<PeriodTypes>(periods[6][0]);
   const [isLoading, setLoading] = useState(false);
   const swrData = useTotalSupply(period);
 
