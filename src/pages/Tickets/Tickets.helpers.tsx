@@ -22,7 +22,10 @@ import { TAppTheme } from '@theme/index';
 import breakpoints from '@theme/breakpoints';
 import * as TicketsStyles from '@components/Ticket/Ticket.styles';
 import { translate, translateDropdown } from '@utils/helpers/i18n';
-import { getFileIcon } from '@pages/Details/CascadeDetails/CascadeDetails.helpers';
+import {
+  getFileIcon,
+  getCascadeVolumeIcon,
+} from '@pages/Details/CascadeDetails/CascadeDetails.helpers';
 import noImagePlaceholder from '@assets/images/no-image-placeholder.svg';
 
 import {
@@ -85,7 +88,7 @@ export const StyledTableRow = withStyles((theme: TAppTheme) => ({
   },
 }))(TableRow);
 
-const getStorageFee = (pslPrice: number, usdPrice: number) => {
+export const getStorageFee = (pslPrice: number, usdPrice: number) => {
   if (pslPrice && usdPrice) {
     return ` (${formatNumber(pslPrice * usdPrice, { decimalsLength: 2 })} ${translateDropdown(
       'common.usd',
@@ -105,7 +108,129 @@ export const transformCascadeData = (cascade: TicketsList[], usdPrice: number) =
       fileType,
       fileName,
       fileSize,
+      tx_info,
+      sub_type,
+      contract_ticket,
     }) => {
+      if (sub_type === 'cascade_multi_volume_metadata') {
+        const contractTicket = contract_ticket ? JSON.parse(contract_ticket) : null;
+        return {
+          id: transactionHash,
+          [TXID_KEY]: (
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={6} md={2}>
+                <Box className="title">{parse(translate('pages.tickets.txID'))}</Box>
+                <Box className="bold">
+                  <Grid container alignItems="center" wrap="nowrap">
+                    <CopyButton copyText={transactionHash} />
+                    <RouterLink
+                      route={`${ROUTES.TRANSACTION_DETAILS}/${transactionHash}`}
+                      value={formatAddress(transactionHash, 5, -5)}
+                      title={transactionHash}
+                      className="address-link"
+                    />
+                  </Grid>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{parse(translate('pages.tickets.fileHash'))}</Box>
+                <Box className="bold">
+                  {contractTicket?.sha3_256_hash_of_original_file ? (
+                    <Tooltip arrow title={contractTicket?.sha3_256_hash_of_original_file}>
+                      <span>
+                        {formatAddress(contractTicket?.sha3_256_hash_of_original_file, 5, -5)}
+                      </span>
+                    </Tooltip>
+                  ) : (
+                    <>{parse(translate('common.na'))}</>
+                  )}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{parse(translate('pages.tickets.fileName'))}</Box>
+                <Box className="bold read-more">
+                  {contractTicket?.name_of_original_file ? (
+                    <Tooltip title={contractTicket?.name_of_original_file}>
+                      <span>{contractTicket?.name_of_original_file}</span>
+                    </Tooltip>
+                  ) : (
+                    parse(translate('common.na'))
+                  )}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <Box className="title">{parse(translate('pages.tickets.cascadeOutput'))}</Box>
+                <Box className="bold">
+                  <span className="nowrap">
+                    {parse(translate('pages.tickets.fileSize'))}:{' '}
+                    {contractTicket?.size_of_original_file_mb
+                      ? formatBytes(contractTicket.size_of_original_file_mb * 1000000)
+                      : 0}
+                  </span>
+                  {' - '}
+                  <RouterLink
+                    route={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}
+                    value={parse(translate('pages.tickets.senseDetail'))}
+                    title={transactionHash}
+                    className="address-link"
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} className="ticket-output image-mobile xs">
+                <Box className="cascade-image">
+                  <Link to={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}>
+                    {getCascadeVolumeIcon(contractTicket?.name_of_original_file || '')}
+                  </Link>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={2}>
+                <Box className="title">
+                  {parse(translate('pages.tickets.multisigOutputsCount'))}
+                </Box>
+                <Box>
+                  {tx_info?.multisig_outputs_count
+                    ? formatNumber(tx_info.multisig_outputs_count)
+                    : parse(translate('common.na'))}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} className="ticket-output image-mobile sm">
+                <Box className="cascade-image">
+                  <Link to={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}>
+                    {getCascadeVolumeIcon(contractTicket?.name_of_original_file || '')}
+                  </Link>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{parse(translate('pages.tickets.fee'))}</Box>
+                <Box className="bold">
+                  {tx_info ? (
+                    <>
+                      {formatNumber(tx_info.multisig_tx_total_fee)} {getCurrencyName()}{' '}
+                      {getStorageFee(tx_info.multisig_tx_total_fee, usdPrice)}
+                    </>
+                  ) : (
+                    parse(translate('common.na'))
+                  )}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Box className="title">{parse(translate('pages.tickets.timestamp'))}</Box>
+                <Box className="bold">
+                  {timestamp ? formatFullDate(timestamp, { dayName: false }) : '--'}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} className="ticket-output image-desktop">
+                <Box className="cascade-image">
+                  <Link to={`${ROUTES.CASCADE_DETAILS}?txid=${transactionHash}`}>
+                    {getCascadeVolumeIcon(contractTicket?.name_of_original_file || '')}
+                  </Link>
+                </Box>
+              </Grid>
+            </Grid>
+          ),
+        };
+      }
+
       return {
         id: transactionHash,
         [TXID_KEY]: (

@@ -48,6 +48,8 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
     subTitle,
     customHtml,
     isLoading = false,
+    hideChangeColor = false,
+    hideDownloadButton = false,
   } = props;
   const { height, width } = useWindowDimensions();
   const { darkMode } = useSelector(getThemeState);
@@ -102,7 +104,9 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
         chartName === 'averageTransactionsPerBlock' ||
         chartName === 'accounts' ||
         chartName === 'circulatingSupply' ||
+        chartName === 'circulatingSupplySmallChart' ||
         chartName === 'totalSupply' ||
+        chartName === 'totalSupplySmallChart' ||
         chartName === 'difficulty'
       ) {
         const result = generateMinMaxChartData(min, max, 0, 5, selectedPeriodButton);
@@ -311,7 +315,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
           ) : null}
         </Styles.ChartFilterWrapper>
       </Styles.LineChartHeader>
-      <Styles.LineChartWrap className={isLoading ? 'no-spacing' : ''}>
+      <Styles.LineChartWrap className={`line-chart-main-content ${isLoading ? 'no-spacing' : ''}`}>
         {subTitle ? (
           <Styles.ChartSubTitle style={{ color: currentTheme?.color }}>
             {subTitle}
@@ -334,37 +338,43 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
           />
         )}
       </Styles.LineChartWrap>
-      <Styles.LineChartFooter className="line-chart-footer">
-        <div className={styles.lineChartThemeSelect}>
-          {themes.map((theme, index) => (
-            <Styles.ThemeButton
-              className={`${styles.themeSelectButton} ${getActiveThemeButtonStyle(index)}`}
-              onClick={() => handleThemeButtonClick(theme, index)}
-              style={{
-                backgroundColor: `${theme.backgroundColor}`,
-              }}
-              type="button"
-              key={`button-filter-${theme.name}`}
-            >
-              {' '}
-            </Styles.ThemeButton>
-          ))}
-        </div>
-        <div className={styles.lineChartDownloadButtonBar}>
-          <Styles.DonwloadButton type="button" onClick={downloadPNG}>
-            {parse(translate('pages.historicalStatistics.downloadPNG'))}
-          </Styles.DonwloadButton>
-          <Styles.CSVLinkButton
-            data={csvData}
-            filename={`${makeDownloadFileName(info.currencyName, chartName)}.csv`}
-            headers={getCsvHeaders() as Headers}
-            separator=","
-            ref={downloadRef}
-          >
-            {parse(translate('pages.historicalStatistics.downloadCSV'))}
-          </Styles.CSVLinkButton>
-        </div>
-      </Styles.LineChartFooter>
+      {!hideChangeColor || !hideDownloadButton ? (
+        <Styles.LineChartFooter className="line-chart-footer">
+          {!hideChangeColor ? (
+            <div className={styles.lineChartThemeSelect}>
+              {themes.map((theme, index) => (
+                <Styles.ThemeButton
+                  className={`${styles.themeSelectButton} ${getActiveThemeButtonStyle(index)}`}
+                  onClick={() => handleThemeButtonClick(theme, index)}
+                  style={{
+                    backgroundColor: `${theme.backgroundColor}`,
+                  }}
+                  type="button"
+                  key={`button-filter-${theme.name}`}
+                >
+                  {' '}
+                </Styles.ThemeButton>
+              ))}
+            </div>
+          ) : null}
+          {!hideDownloadButton ? (
+            <div className={styles.lineChartDownloadButtonBar}>
+              <Styles.DonwloadButton type="button" onClick={downloadPNG}>
+                {parse(translate('pages.historicalStatistics.downloadPNG'))}
+              </Styles.DonwloadButton>
+              <Styles.CSVLinkButton
+                data={csvData}
+                filename={`${makeDownloadFileName(info.currencyName, chartName)}.csv`}
+                headers={getCsvHeaders() as Headers}
+                separator=","
+                ref={downloadRef}
+              >
+                {parse(translate('pages.historicalStatistics.downloadCSV'))}
+              </Styles.CSVLinkButton>
+            </div>
+          ) : null}
+        </Styles.LineChartFooter>
+      ) : null}
     </Styles.ChartContainer>
   );
 };

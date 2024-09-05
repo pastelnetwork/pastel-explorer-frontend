@@ -149,6 +149,40 @@ const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
         return '#5470c6';
     }
   };
+
+  const renderContent = () => {
+    if (isLoading || swrData.isLoading) {
+      return (
+        <Styles.Loader>
+          <CircularProgress size={40} />
+          <Styles.LoadingText>{parse(translate('common.loadingData'))}</Styles.LoadingText>
+        </Styles.Loader>
+      );
+    }
+
+    if (chartData?.dataX?.length) {
+      return (
+        <LineChart
+          chartName="balanceHistory"
+          dataX={chartData?.dataX}
+          dataY={chartData?.dataY}
+          offset={0}
+          disableClick
+          className="line-chart"
+          period={selectedPeriod}
+          seriesName={`pages.addressDetails.balanceHistory.${
+            isBurnAddress && selectedChartType === 'received' ? 'totalBurned' : selectedChartType
+          }`}
+          chartColor={getChartColor()}
+        />
+      );
+    }
+
+    return (
+      <Styles.NoData sx={{ minHeight: '266px' }}>{parse(translate('common.noData'))}</Styles.NoData>
+    );
+  };
+
   return (
     <Styles.BalanceHistoryWrapper>
       <Styles.BalanceHistorySummaryWrapper>
@@ -160,46 +194,27 @@ const BalanceHistory: React.FC<IBalanceHistoryProps> = ({ id }) => {
           outgoingSum={swrData?.data?.totalSent}
           incomingSum={swrData?.data?.totalReceived}
         />
-        <ChartStyles.PeriodSelect className="period">
-          <span>{parse(translate('pages.historicalStatistics.period'))}: </span>
-          <div className="balance-history-period">
-            {periods[1].map(_period => (
-              <ChartStyles.PeriodButton
-                className={`${getActivePeriodButtonStyle(_period)} ${
-                  isLoading || swrData.isLoading ? 'disable' : ''
-                }`}
-                onClick={() => handlePeriodFilterChange(_period)}
-                type="button"
-                key={`button-filter-${_period}`}
-              >
-                {_period}
-              </ChartStyles.PeriodButton>
-            ))}
-          </div>
-        </ChartStyles.PeriodSelect>
+        {chartData?.dataX?.length ? (
+          <ChartStyles.PeriodSelect className="period">
+            <span>{parse(translate('pages.historicalStatistics.period'))}: </span>
+            <div className="balance-history-period">
+              {periods[1].map(_period => (
+                <ChartStyles.PeriodButton
+                  className={`${getActivePeriodButtonStyle(_period)} ${
+                    isLoading || swrData.isLoading ? 'disable' : ''
+                  }`}
+                  onClick={() => handlePeriodFilterChange(_period)}
+                  type="button"
+                  key={`button-filter-${_period}`}
+                >
+                  {_period}
+                </ChartStyles.PeriodButton>
+              ))}
+            </div>
+          </ChartStyles.PeriodSelect>
+        ) : null}
       </Styles.BalanceHistorySummaryWrapper>
-      <Styles.ChartWrapper>
-        {isLoading || swrData.isLoading ? (
-          <Styles.Loader>
-            <CircularProgress size={40} />
-            <Styles.LoadingText>{parse(translate('common.loadingData'))}</Styles.LoadingText>
-          </Styles.Loader>
-        ) : (
-          <LineChart
-            chartName="balanceHistory"
-            dataX={chartData?.dataX}
-            dataY={chartData?.dataY}
-            offset={0}
-            disableClick
-            className="line-chart"
-            period={selectedPeriod}
-            seriesName={`pages.addressDetails.balanceHistory.${
-              isBurnAddress && selectedChartType === 'received' ? 'totalBurned' : selectedChartType
-            }`}
-            chartColor={getChartColor()}
-          />
-        )}
-      </Styles.ChartWrapper>
+      <Styles.ChartWrapper>{renderContent()}</Styles.ChartWrapper>
     </Styles.BalanceHistoryWrapper>
   );
 };

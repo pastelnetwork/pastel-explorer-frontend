@@ -128,6 +128,17 @@ export const Category = styled(ListItem)<CategoryType>`
   font-weight: ${props => props.theme.typography.fontWeightRegular};
   transition: all 0.3s ease-in-out;
 
+  &.has-sub {
+    ${props => props.theme.breakpoints.down(960)} {
+      flex-direction: column;
+      width: 100%;
+
+      .sub-menu {
+        width: 100%;
+      }
+    }
+  }
+
   ${props => props.theme.breakpoints.down('md')} {
     margin: 0;
   }
@@ -274,6 +285,15 @@ export const Category = styled(ListItem)<CategoryType>`
       &.has-sub {
         padding: 0;
         border-radius: 0;
+
+        ${props => props.theme.breakpoints.down(960)} {
+          flex-direction: column;
+          width: 100%;
+
+          .sub-menu {
+            width: 100%;
+          }
+        }
       }
 
       .menu-text {

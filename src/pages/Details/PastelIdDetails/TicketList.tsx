@@ -26,6 +26,8 @@ import {
   TTicketType,
   TSenseRequests,
   ICascadeApiTicket,
+  IInferenceAPICreditPackTicket,
+  IMultiVolumeTicket,
 } from '@utils/types/ITransactions';
 import {
   PastelIDRegistrationTicket,
@@ -37,6 +39,8 @@ import {
   NFTRoyaltyTicket,
   ActionActivationTicket,
   ActionRegistrationTicket,
+  InferenceAPICreditPackTicket,
+  CascadeMultiVolumeTicket,
   OfferTicket,
   AcceptTicket,
   TransferTicket,
@@ -224,8 +228,11 @@ const TicketsList: React.FC<ITicketsList> = ({
       | IActionActivationTicket
       | IOfferTicket
       | IAcceptTicket
+      | IInferenceAPICreditPackTicket
+      | IMultiVolumeTicket
       | ITransferTicket,
     transactionHash: string,
+    sub_type?: string,
   ) => {
     switch (type) {
       case 'username-change':
@@ -264,6 +271,13 @@ const TicketsList: React.FC<ITicketsList> = ({
         return <AcceptTicket ticket={ticket as IAcceptTicket} />;
       case 'transfer':
         return <TransferTicket ticket={ticket as ITransferTicket} />;
+      case 'contract':
+        if (sub_type === 'cascade_multi_volume_metadata') {
+          return <CascadeMultiVolumeTicket ticket={ticket as IMultiVolumeTicket} showFull />;
+        }
+        return (
+          <InferenceAPICreditPackTicket ticket={ticket as IInferenceAPICreditPackTicket} showFull />
+        );
       default:
         return <PastelIDRegistrationTicket ticket={ticket as IPastelIDRegistrationTicket} />;
     }
@@ -357,11 +371,17 @@ const TicketsList: React.FC<ITicketsList> = ({
                       ticket.type as TTicketType,
                       (ticket.data.ticket as INftCollectionRegistrationTicket)?.collection_ticket
                         ?.item_type,
+                      ticket.sub_type,
                     )}
                   </TicketStyles.TicketContent>
                 </Grid>
               </Grid>
-              {renderContent(ticket.type, ticket.data.ticket, ticket.transactionHash)}
+              {renderContent(
+                ticket.type,
+                ticket.data.ticket,
+                ticket.transactionHash,
+                ticket.sub_type,
+              )}
             </BlockDetailsStyles.GridStyle>
           ))}
           {!data.length && !isLoading ? (

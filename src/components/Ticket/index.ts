@@ -13,11 +13,12 @@ import NFTRoyaltyTicket from './NFTRoyaltyTicket';
 import ActionActivationTicket from './ActionActivationTicket';
 import ActionRegistrationTicket from './ActionRegistrationTicket';
 import InferenceAPICreditPackTicket from './InferenceAPICreditPackTicket';
+import CascadeMultiVolumeTicket from './CascadeMultiVolumeTicket';
 import OfferTicket from './OfferTicket';
 import AcceptTicket from './AcceptTicket';
 import TransferTicket from './TransferTicket';
 
-const getTicketTitle = (type: TTicketType, itemType = '') => {
+const getTicketTitle = (type: TTicketType, itemType = '', sub_type = '') => {
   switch (type) {
     case 'pastelid':
       return parse(translate('components.ticket.ticketsTitle.pastelid'));
@@ -46,7 +47,11 @@ const getTicketTitle = (type: TTicketType, itemType = '') => {
     case 'transfer':
       return parse(translate('components.ticket.ticketsTitle.transfer'));
     case 'contract':
-      return parse(translate('pages.tickets.inferenceTicketType'));
+      return sub_type === 'cascade_multi_volume_metadata'
+        ? parse(translate('components.ticket.ticketsTitle.cascadeMultiVolume'))
+        : parse(translate('pages.tickets.inferenceTicketType'));
+    case 'cascade_multi_volume':
+      return parse(translate('components.ticket.ticketsTitle.cascadeMultiVolume'));
     default:
       return '';
   }
@@ -66,5 +71,6 @@ export {
   AcceptTicket,
   TransferTicket,
   InferenceAPICreditPackTicket,
+  CascadeMultiVolumeTicket,
   getTicketTitle,
 };

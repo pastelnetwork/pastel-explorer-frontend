@@ -76,6 +76,9 @@ const Page404 = loadable(() => import('@pages/404/404'));
 const NetworkChallengesAndSelfHealing = loadable(
   () => import('@pages/NetworkChallengesAndSelfHealing/NetworkChallengesAndSelfHealing'),
 );
+const CoinSupplyAndInflationStats = loadable(
+  () => import('@pages/CoinSupplyAndInflationStats/CoinSupplyAndInflationStats'),
+);
 
 const explorerRoutes = {
   id: 'routes.explorer',
@@ -167,6 +170,12 @@ const statisticsRoutes = {
       component: CascadeAndSenseStatistics,
       seoTitle: 'routes.cascadeAndSenseStatistics',
     },
+    {
+      path: ROUTES.COIN_SUPPLY_AND_INFLATION_STATS,
+      name: 'routes.coinSupplyAndInflationStats',
+      component: CoinSupplyAndInflationStats,
+      seoTitle: 'routes.coinSupplyAndInflationStats',
+    },
     // {
     //   path: ROUTES.NETWORK_CHALLENGE_AND_SELF_HEALING,
     //   name: 'routes.networkChallengesAndSelfHealing',
@@ -203,6 +212,16 @@ const cascadeAndSenseStatisticsRoutes = {
   component: CascadeAndSenseStatistics,
   icon: <BarChartIcon />,
   seoTitle: 'routes.cascadeAndSenseStatistics',
+  children: null,
+  exact: false,
+};
+
+const coinSupplyAndInflationStatsRoutes = {
+  id: 'routes.coinSupplyAndInflationStats',
+  path: ROUTES.COIN_SUPPLY_AND_INFLATION_STATS,
+  component: CoinSupplyAndInflationStats,
+  icon: <BarChartIcon />,
+  seoTitle: 'routes.coinSupplyAndInflationStats',
   children: null,
   exact: false,
 };
@@ -552,6 +571,7 @@ export const pageRoutes = [
   percentOfPSLStakedStatisticsRoutes,
   accountsStatisticsRoutes,
   cascadeAndSenseStatisticsRoutes,
+  coinSupplyAndInflationStatsRoutes,
   senseDetailsRoutes,
   pastelIdDetailsRoutes,
   ticketsTypeRoutes,
