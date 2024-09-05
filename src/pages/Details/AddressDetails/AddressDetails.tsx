@@ -80,9 +80,10 @@ const AddressDetails = () => {
   useEffect(() => {
     if (
       !swrData.isLoading &&
-      !swrData?.data?.totalReceived &&
-      !swrData?.data?.totalSent &&
-      !swrData?.data?.balance?.length
+      !swrData?.data?.balance?.length &&
+      !swrData?.data?.received?.length &&
+      !swrData?.data?.sent?.length &&
+      swrData.isFetchData
     ) {
       navigate(ROUTES.NOT_FOUND);
     }

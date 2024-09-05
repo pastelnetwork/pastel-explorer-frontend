@@ -4376,7 +4376,7 @@
         "description": "Used for the Coin Supply And Inflation Stats page"
       },
       "start": {
-        "message": "From start ({{date}})",
+        "message": "From start",
         "description": "Used for the Coin Supply And Inflation Stats page"
       }
     }

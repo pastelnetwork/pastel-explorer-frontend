@@ -65,11 +65,7 @@ const CoinSupplyAndInflationStats: React.FC = () => {
       <Styles.BoxWrapper>
         <Styles.TicketSummaryBox>
           <div className="box-title">
-            {parse(
-              translate('pages.coinSupplyAndInflationStats.start', {
-                date: coinSupplyAndInflationStatsData.start.date,
-              }),
-            )}
+            {parse(translate('pages.coinSupplyAndInflationStats.start'))}
           </div>
           <div className="coin-supply-item">
             <span className="ticket-summary-title">
