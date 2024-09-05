@@ -1,7 +1,7 @@
 export const fakeFilesData = [
   {
       "file_id": "google-cloud-cli-475.0.0-linux-x86_64.tar.gz.7z.001",
-      "upload_timestamp": "2024-07-16 15:50:40.395810811 +0000 UTC",
+      "upload_timestamp": "2024-07-16 15:50:41.395810811 +0000 UTC",
       "file_index": "0",
       "base_file_id": "NwWDvdIg",
       "task_id": "HskCThhY",
