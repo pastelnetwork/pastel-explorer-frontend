@@ -23,7 +23,47 @@ import * as TicketStyles from '@components/Ticket/Ticket.styles';
 import RqIds from './RqIds';
 import { getFileIcon, getCascadeVolumeIcon } from './CascadeDetails.helpers';
 import * as Styles from './CascadeDetails.styles';
-import { fakeFilesData } from './mockup';
+
+type TRegistrationAttempts = {
+  id: number;
+  file_id: string;
+  reg_started_at: string;
+  processor_sns: string;
+  finished_at: string;
+  is_successful: boolean;
+  error_message: string;
+}
+
+type TActivationAttempts = {
+  id: number;
+  file_id: string;
+  activation_attempt_at: string;
+  is_successful: boolean;
+  error_message: string;
+}
+
+type TFile = {
+  file_id: string;
+  upload_timestamp: string;
+  file_index: string;
+  base_file_id: string;
+  task_id: string;
+  reg_txid: string;
+  activation_txid: string;
+  req_burn_txn_amount: number;
+  burn_txn_id: string;
+  req_amount: number;
+  is_concluded: boolean;
+  cascade_metadata_ticket_id: string;
+  uuid_key: string;
+  hash_of_original_big_file: string;
+  name_of_original_big_file_with_ext: string;
+  size_of_original_big_file: number;
+  start_block: number;
+  done_block: number;
+  registration_attempts: TRegistrationAttempts[];
+  activation_attempts: TActivationAttempts[];
+}
 
 type TCascadeData = {
   data_hash: string;
@@ -55,6 +95,7 @@ type TCascadeData = {
     sub_type?: string;
     secondary_key?: string;
     contract_ticket?: string;
+    files?: TFile[],
   };
   tx_info?: {
     compressed_size: number;
@@ -205,7 +246,7 @@ const FileInfo: React.FC<IFileInfo> = ({ data }) => {
             </Grid>
           </Grid>
           <Box className="mt-10">
-            {fakeFilesData?.map(item => (
+            {data?.ticket?.files?.map(item => (
               <Styles.FileItem key={item.file_id} className="file-item">
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6} md={4}>
