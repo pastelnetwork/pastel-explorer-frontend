@@ -16,7 +16,6 @@ import { IMultiVolumeTicket, IMultiVolumeFIle } from '@utils/types/ITransactions
 import * as ROUTES from '@utils/constants/routes';
 import { translate } from '@utils/helpers/i18n';
 import { formatBytes, formatAddress } from '@utils/helpers/format';
-import { fakeFilesData } from '@pages/Details/CascadeDetails/mockup';
 import * as CascadeDetailsStyles from '@pages/Details/CascadeDetails/CascadeDetails.styles';
 import * as TicketStyles from '@components/Ticket/Ticket.styles';
 import { useUsdPrice } from '@hooks/useTransactionDetails';
@@ -325,7 +324,7 @@ const CascadeMultiVolumeTicket: React.FC<ICascadeMultiVolumeTicketProps> = ({
             </Grid>
           </Grid>
         ) : null}
-        <Files files={(ticket.files || fakeFilesData) as IMultiVolumeFIle[]} />
+        <Files files={ticket.files as IMultiVolumeFIle[]} />
       </Box>
     );
   }

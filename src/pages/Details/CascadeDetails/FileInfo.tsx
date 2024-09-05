@@ -32,7 +32,7 @@ type TRegistrationAttempts = {
   finished_at: string;
   is_successful: boolean;
   error_message: string;
-}
+};
 
 type TActivationAttempts = {
   id: number;
@@ -40,7 +40,7 @@ type TActivationAttempts = {
   activation_attempt_at: string;
   is_successful: boolean;
   error_message: string;
-}
+};
 
 type TFile = {
   file_id: string;
@@ -63,7 +63,7 @@ type TFile = {
   done_block: number;
   registration_attempts: TRegistrationAttempts[];
   activation_attempts: TActivationAttempts[];
-}
+};
 
 type TCascadeData = {
   data_hash: string;
@@ -95,7 +95,7 @@ type TCascadeData = {
     sub_type?: string;
     secondary_key?: string;
     contract_ticket?: string;
-    files?: TFile[],
+    files?: TFile[];
   };
   tx_info?: {
     compressed_size: number;
