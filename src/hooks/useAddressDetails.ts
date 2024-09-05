@@ -36,6 +36,7 @@ export function useBalanceHistory(id: string) {
       totalSent: data ? data[0].totalSent : 0,
       type: data ? data[0].type : '',
     },
+    isFetchData: !!data,
     isLoading,
   };
 }
