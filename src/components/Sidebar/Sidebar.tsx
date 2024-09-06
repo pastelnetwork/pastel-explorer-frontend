@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import parse from 'html-react-parser';
 import IconButton from '@mui/material/IconButton';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 import { getThemeState } from '@redux/reducers/appThemeReducer';
 import * as ROUTES from '@utils/constants/routes';
@@ -197,7 +198,6 @@ const Sidebar: React.FC<SidebarPropsType> = ({ ...rest }) => {
       item =>
         openRoutes[index] || setOpenRoutes(currentRoute => ({ ...currentRoute, [item]: false })),
     );
-
     setOpenRoutes(currentRoute => ({ ...currentRoute, [index]: !currentRoute[index] }));
   };
 
@@ -243,7 +243,11 @@ const Sidebar: React.FC<SidebarPropsType> = ({ ...rest }) => {
     [location],
   );
 
-  const generateCategoryIcon = (category: RouteType): JSX.Element | null => {
+  const handleClickAway = () => {
+    setOpenRoutes(initOpenRoutes());
+  };
+
+  const generateCategoryIcon = (category: RouteType, index: number): JSX.Element | null => {
     const { id, path, badge, exact = true } = category;
     if (id) {
       return (
@@ -258,6 +262,7 @@ const Sidebar: React.FC<SidebarPropsType> = ({ ...rest }) => {
           category={category}
           button
           badge={badge}
+          onClick={() => toggle(index)}
         />
       );
     }
@@ -300,31 +305,33 @@ const Sidebar: React.FC<SidebarPropsType> = ({ ...rest }) => {
           ×
         </IconButton>
       </Styles.SlideLogoMobileWrapper>
-      <List disablePadding>
-        <Styles.Items>
-          {routes.map((category: RouteType, index: number) => (
-            <React.Fragment key={category.id}>
-              {category.header ? (
-                <Styles.SidebarSection>{category.header}</Styles.SidebarSection>
-              ) : null}
-              {category.children && category.icon ? (
-                <React.Fragment key={category.id}>
-                  <SidebarCategory
-                    isOpen={!openRoutes[index]}
-                    isCollapsable
-                    name={category.id}
-                    button
-                    onClick={() => toggle(index)}
-                    category={category}
-                  />
-                </React.Fragment>
-              ) : (
-                generateCategoryIcon(category)
-              )}
-            </React.Fragment>
-          ))}
-        </Styles.Items>
-      </List>
+      <ClickAwayListener onClickAway={handleClickAway}>
+        <List disablePadding>
+          <Styles.Items>
+            {routes.map((category: RouteType, index: number) => (
+              <React.Fragment key={category.id}>
+                {category.header ? (
+                  <Styles.SidebarSection>{category.header}</Styles.SidebarSection>
+                ) : null}
+                {category.children && category.icon ? (
+                  <React.Fragment key={category.id}>
+                    <SidebarCategory
+                      isOpen={!openRoutes[index]}
+                      isCollapsable
+                      name={category.id}
+                      button
+                      onClick={() => toggle(index)}
+                      category={category}
+                    />
+                  </React.Fragment>
+                ) : (
+                  generateCategoryIcon(category, index)
+                )}
+              </React.Fragment>
+            ))}
+          </Styles.Items>
+        </List>
+      </ClickAwayListener>
     </Styles.DrawerMobile>
   );
 };
