@@ -34,6 +34,7 @@ export interface ISummaryChartStats {
   coinSupply: TSummaryChartProps[];
   usdPrice: TSummaryChartPriceProps[];
   nonZeroAddressesCount: TSummaryChartProps[];
+  zeroAddressesCount: TSummaryChartProps[];
   avgTransactionsPerSecond: TSummaryChartProps[];
   avgBlockSizeLast24Hour: TSummaryChartProps[];
   avgTransactionPerBlockLast24Hour: TSummaryChartProps[];

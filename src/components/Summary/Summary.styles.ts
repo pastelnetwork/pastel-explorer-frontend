@@ -131,7 +131,7 @@ export const Percentage = styled(MuiTypography)<{
   font-size: 0.8rem;
   color: ${props => props.theme.sidebar.menu.default};
 
-  span {
+  span.change {
     display: inline-block;
     margin-top: 4px;
     color: ${props => props.theme.palette.text.secondary};
@@ -158,4 +158,10 @@ export const LineChartTitle = styled.div`
   font-weight: 500;
   color: ${props => props.theme.sidebar.menu.default};
   text-align: center;
+`;
+
+export const PeriodLabel = styled.div`
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
 `;

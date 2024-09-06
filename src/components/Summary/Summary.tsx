@@ -26,8 +26,9 @@ import { BlockThunks, TransactionThunks } from '@redux/thunk';
 import { ISocketData } from '@utils/types/ISocketData';
 import { getCurrencyName } from '@utils/appInfo';
 import useNetwork from '@hooks/useNetwork';
-import { translate } from '@utils/helpers/i18n';
+import { translate, translateDropdown } from '@utils/helpers/i18n';
 import { getMinMax, checkValidateData } from '@utils/helpers/statisticsLib';
+import IOSSwitch from '@components/IOSSwitch/IOSSwitch';
 
 import * as Styles from './Summary.styles';
 import { LineChart } from './LineChart';
@@ -125,6 +126,7 @@ const Summary: React.FC = () => {
       return items;
     });
   }, []);
+  const [isIncludeEmptyAddress, setIncludeEmptyAddress] = React.useState(false);
 
   const updateSummaryList = React.useCallback(() => {
     fetchData().then(response => {
@@ -218,6 +220,28 @@ const Summary: React.FC = () => {
     };
   };
 
+  const transformAccountChartData = (key: string) => {
+    const dataX = [];
+    const dataY1 = [];
+    const dataY2 = [];
+    if (summaryChartData) {
+      const items = summaryChartData[key as keyof ISummaryChartStats] as TSummaryChartProps[];
+      const { zeroAddressesCount } = summaryChartData;
+      if (items.length) {
+        for (let i = 0; i < items.length; i += 1) {
+          dataX.push(new Date(items[i].time).toLocaleString());
+          dataY1.push(Number(items[i].value));
+          dataY2.push(Number(zeroAddressesCount[i].value));
+        }
+      }
+    }
+    return {
+      dataX,
+      dataY1,
+      dataY2,
+    };
+  };
+
   const generateChartData = (key: string): TChartDataProps => {
     let dataX;
     let dataY;
@@ -248,9 +272,16 @@ const Summary: React.FC = () => {
         offset = minMax[1] * 0.01;
         break;
       case 'nonZeroAddressesCount':
-        parseChartData = transformChartData(key);
-        dataX = parseChartData?.dataX;
-        dataY = parseChartData?.dataY;
+        if (isIncludeEmptyAddress) {
+          parseChartData = transformAccountChartData(key);
+          dataX = parseChartData?.dataX;
+          dataY1 = parseChartData?.dataY1;
+          dataY2 = parseChartData?.dataY2;
+        } else {
+          parseChartData = transformChartData(key);
+          dataX = parseChartData?.dataX;
+          dataY = parseChartData?.dataY;
+        }
         offset = 0;
         break;
       case 'gigaHashPerSec':
@@ -431,6 +462,28 @@ const Summary: React.FC = () => {
     );
   };
 
+  const handleIncludeEmptyAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIncludeEmptyAddress(event.target.checked);
+  };
+
+  const renderPeriodLabel = (sumKey: string) => {
+    if (sumKey === 'nonZeroAddressesCount') {
+      return (
+        <Styles.PeriodLabel>
+          {parse(translate('components.summary.last24h'))}
+          <Tooltip title={translateDropdown('chartOptions.includeEmptyAccount')}>
+            <IOSSwitch checked={isIncludeEmptyAddress} onChange={handleIncludeEmptyAddressChange} />
+          </Tooltip>
+        </Styles.PeriodLabel>
+      );
+    }
+    if (sumKey === 'percentPSLStaked') {
+      return parse(translate('components.summary.last30d'));
+    }
+
+    return parse(translate('components.summary.last24h'));
+  };
+
   return (
     <div className={classes.wrapper}>
       <Styles.Wrapper>
@@ -462,11 +515,9 @@ const Summary: React.FC = () => {
                         : themeVariant.custom.red.error
                     }`}
                   >
-                    {sumKey === 'percentPSLStaked'
-                      ? parse(translate('components.summary.last30d'))
-                      : parse(translate('components.summary.last24h'))}
+                    {renderPeriodLabel(sumKey)}
                     <br />
-                    <span className={Number(difference) === 0 ? 'no-change' : ''}>
+                    <span className={`change ${Number(difference) === 0 ? 'no-change' : ''}`}>
                       {`${Number(difference) > 0 ? '+' : ''}`}
                       {difference}%&nbsp;
                       {renderDifference(difference)}
@@ -477,12 +528,22 @@ const Summary: React.FC = () => {
             </Styles.CardContent>
             {generateChartData(sumKey)?.dataX?.length ? (
               <div>
-                <LineChart
-                  chartName={sumKey}
-                  dataX={generateChartData(sumKey)?.dataX}
-                  dataY={generateChartData(sumKey)?.dataY}
-                  offset={generateChartData(sumKey)?.offset}
-                />
+                {sumKey === 'nonZeroAddressesCount' && isIncludeEmptyAddress ? (
+                  <LineChart
+                    chartName="addressesCount"
+                    dataX={generateChartData(sumKey)?.dataX}
+                    dataY1={generateChartData(sumKey)?.dataY1}
+                    dataY2={generateChartData(sumKey)?.dataY2}
+                    offset={generateChartData(sumKey)?.offset}
+                  />
+                ) : (
+                  <LineChart
+                    chartName={sumKey}
+                    dataX={generateChartData(sumKey)?.dataX}
+                    dataY={generateChartData(sumKey)?.dataY}
+                    offset={generateChartData(sumKey)?.offset}
+                  />
+                )}
               </div>
             ) : null}
           </Styles.Card>

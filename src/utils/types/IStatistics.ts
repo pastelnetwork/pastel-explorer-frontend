@@ -7,6 +7,7 @@ export interface IStatistic {
   difficulty: number;
   gigaHashPerSec: string;
   nonZeroAddressesCount: number;
+  zeroAddressesCount: number;
   avgTransactionsPerSecond: number;
   coinSupply: number;
   btcPrice: number;

@@ -35,8 +35,11 @@ const IOSSwitch = styled((props: SwitchProps) => (
       color: '#0d6efd',
       border: '6px solid #fff',
     },
+    '& .MuiSwitch-track': {
+      backgroundColor: '#E9F2FB',
+    },
     '& .MuiSwitch-thumb': {
-      backgroundColor: '#BFBFBF',
+      backgroundColor: '#34a1ff',
     },
     '&.Mui-disabled + .MuiSwitch-track': {
       'pointer-events': 'none',

@@ -1500,7 +1500,6 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       textStyle: {
         color: theme?.color,
       },
-      color: [blueColor],
       grid: {
         top: 8,
         right: 40,
@@ -1522,13 +1521,19 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       tooltip: {
         trigger: 'axis',
         formatter(params: TChartParams[]) {
+          let html = '';
+          params.forEach(item => {
+            html += `
+              <div class="tooltip-item">
+                <div class="item-label">${item.marker} ${item.seriesName}:</div>
+                <div class="item-value">${formatNumber(item.value)}</div>
+              </div>
+            `;
+          });
           return `
-            <div class="tooltip-item-wrapper">
-              <div class="item-label">${generateTooltipLabel(
-                new Date(params[0].axisValue),
-                granularity,
-              )}</div>
-              <div class="tooltip-value">${params[0].marker} ${formatNumber(params[0].value)}</div>
+            <div class="tooltip-container">
+              <div class="tooltip-data-date">${params[0].name}</div>
+              <div>${html}</div>
             </div>
           `;
         },
@@ -1550,12 +1555,9 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
       },
       yAxis: {
         type: 'value',
-        min: minY,
-        max: maxY,
-        interval: (maxY - minY) / 5,
         axisLabel: {
           formatter(value: string) {
-            return getYAxisLabel(Number(value), minY, maxY);
+            return convertYAxisLabel(Number(value), maxY, 2);
           },
         },
         splitLine: {
@@ -1565,24 +1567,36 @@ export function getThemeInitOption(args: TThemeInitOption): EChartsOption {
           show: true,
         },
       },
-      series: {
-        type: 'line',
-        name: translateDropdown('chartOptions.accounts'),
-        data: dataY,
-        showSymbol: false,
-        areaStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: blueColor,
-            },
-            {
-              offset: 1,
-              color: theme?.backgroundColor || '#fff',
-            },
-          ]),
+      series: [
+        {
+          name: translateDropdown('chartOptions.accounts'),
+          type: 'line',
+          lineStyle: {
+            width: 2,
+            color: blueColor,
+          },
+          showSymbol: false,
+          emphasis: {
+            focus: 'series',
+          },
+          data: dataY1,
+          zlevel: 2,
         },
-      },
+        {
+          name: translateDropdown('chartOptions.emptyAccount'),
+          type: 'line',
+          lineStyle: {
+            width: 2,
+            color: '#cd6661',
+          },
+          showSymbol: false,
+          emphasis: {
+            focus: 'series',
+          },
+          data: dataY2,
+          zlevel: 1,
+        },
+      ],
       animation: false,
     },
     totalSupply: {
@@ -2476,6 +2490,7 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
     dataX,
     dataY,
     dataY1,
+    dataY2,
     chartName,
     minY,
     maxY,
@@ -2752,8 +2767,88 @@ export function getSummaryThemeUpdateOption(args: TThemeInitOption): EChartsOpti
               color: theme?.backgroundColor || '#fff',
             },
           ]),
+          opacity: 1,
         },
       },
+      stateAnimation: {
+        duration: 300,
+        easing: 'cubicOut',
+      },
+    },
+    addressesCount: {
+      backgroundColor: theme?.backgroundColor,
+      textStyle: {
+        color: theme?.color,
+      },
+      color: [blueColor, '#cd6661'],
+      grid: {
+        top: 8,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        show: false,
+      },
+      tooltip: {
+        trigger: 'axis',
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: dataX,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      yAxis: {
+        type: 'value',
+        min: minY,
+        max: maxY,
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        show: false,
+      },
+      series: [
+        {
+          name: translateDropdown('chartOptions.accounts'),
+          type: 'line',
+          data: dataY1,
+          showSymbol: false,
+          lineStyle: {
+            width: 2,
+            shadowColor: darkMode ? 'rgba(160, 174, 192, 0.5)' : 'rgba(0, 0, 0, 0.5)',
+            shadowBlur: 10,
+            shadowOffsetY: 12,
+            color: blueColor,
+          },
+          areaStyle: {
+            opacity: 0,
+          },
+        },
+        {
+          name: translateDropdown('chartOptions.emptyAccount'),
+          type: 'line',
+          data: dataY2,
+          showSymbol: false,
+          lineStyle: {
+            width: 2,
+            shadowColor: darkMode ? 'rgba(160, 174, 192, 0.5)' : 'rgba(0, 0, 0, 0.5)',
+            shadowBlur: 10,
+            shadowOffsetY: 12,
+            color: '#cd6661',
+          },
+          areaStyle: {
+            opacity: 0,
+          },
+        },
+      ],
       stateAnimation: {
         duration: 300,
         easing: 'cubicOut',

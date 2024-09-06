@@ -4751,6 +4751,14 @@
     "pslBurnt": {
       "message": "{{currency}} Burnt",
       "description": "Used for the chartOptions"
+    },
+    "emptyAccount": {
+      "message": "Empty Accounts",
+      "description": "Used for the chartOptions"
+    },
+    "includeEmptyAccount": {
+      "message": "Include Empty Accounts",
+      "description": "Used for the chartOptions"
     }
   },
   "constants": {

@@ -139,7 +139,7 @@ export const EChartsLineChart = (props: TLineChartProps): JSX.Element => {
         setCsvData(data);
       }
     } else if (dataY1?.length && dataY2?.length) {
-      if (chartName === 'networktotals') {
+      if (['networktotals', 'accounts'].includes(chartName)) {
         if (dataY1?.length && dataY2?.length) {
           const networkTotalArr = getMinMax([...dataY1, ...dataY2]);
           const networkTotalMin = networkTotalArr[0];

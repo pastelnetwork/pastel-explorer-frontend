@@ -526,20 +526,24 @@ export function transformAccountDataChart(
   trans: IStatistic[],
   period: PeriodTypes,
   timestamp: string,
-): TLineChartData {
+): TMultiLineChartData {
   const dataX: string[] = [];
-  const dataY: number[] = [];
+  const dataY1: number[] = [];
+  const dataY2: number[] = [];
   for (let i = 0; i < trans.length; i += 1) {
-    dataY.push(Number(trans[i].nonZeroAddressesCount));
+    dataY1.push(Number(trans[i].nonZeroAddressesCount));
+    dataY2.push(Number(trans[i].zeroAddressesCount));
     dataX.push(new Date(trans[i].timestamp).toLocaleString());
   }
   if (period === '24h' && !timestamp && checkValidateData(trans[trans.length - 1]?.timestamp)) {
     dataX.push(new Date().toLocaleString());
-    dataY.push(dataY[dataY.length - 1]);
+    dataY1.push(dataY1[dataY1.length - 1]);
+    dataY2.push(dataY2[dataY2.length - 1]);
   }
   return {
     dataX,
-    dataY,
+    dataY1,
+    dataY2,
   };
 }
 

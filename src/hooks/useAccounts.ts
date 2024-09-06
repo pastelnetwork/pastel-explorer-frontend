@@ -7,7 +7,7 @@ import { IStatistic } from '@utils/types/IStatistics';
 export default function useAccounts(period: string) {
   const { data, isLoading } = useSWRInfinite<{ data: Array<IStatistic> }>(
     () =>
-      `${URLS.GET_STATISTICS_ACCOUNTS}?period=${period}&sortDirection=ASC&fields=nonZeroAddressesCount,timestamp`,
+      `${URLS.GET_STATISTICS_ACCOUNTS}?period=${period}&sortDirection=ASC&fields=nonZeroAddressesCount,timestamp,zeroAddressesCount`,
     axiosGet,
   );
   return {

@@ -108,6 +108,11 @@ export const LineChart = (props: TLineChartProps): JSX.Element | null => {
         setMinY(Math.round(min) - offset);
         setMaxY(Math.floor(max) + offset);
       }
+    } else if (dataY1?.length && dataY2?.length) {
+      const min = Math.min(...[...dataY1, ...dataY2]);
+      const max = Math.max(...[...dataY1, ...dataY2]);
+      setMinY(Math.floor(min));
+      setMaxY(Math.ceil(max));
     }
   }, [dataY]);
 

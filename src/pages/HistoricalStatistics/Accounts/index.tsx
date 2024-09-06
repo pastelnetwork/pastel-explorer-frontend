@@ -5,7 +5,7 @@ import { PeriodTypes, transformAccountDataChart } from '@utils/helpers/statistic
 import { periods, info, cacheList } from '@utils/constants/statistics';
 import { useBackgroundChart } from '@utils/hooks';
 import { readCacheValue, setCacheValue } from '@utils/helpers/localStorage';
-import { TLineChartData } from '@utils/types/IStatistics';
+import { TMultiLineChartData } from '@utils/types/IStatistics';
 import HistoricalStatisticsLayout from '@components/HistoricalStatisticsLayout/HistoricalStatisticsLayout';
 import useAccounts from '@hooks/useAccounts';
 import { translate } from '@utils/helpers/i18n';
@@ -13,7 +13,7 @@ import { translate } from '@utils/helpers/i18n';
 import { EChartsLineChart } from '../Chart/EChartsLineChart';
 
 function Accounts() {
-  const [chartData, setChartData] = useState<TLineChartData | null>(null);
+  const [chartData, setChartData] = useState<TMultiLineChartData | null>(null);
   const [currentBgColor, handleBgColorChange] = useBackgroundChart();
   const [period, setPeriod] = useState<PeriodTypes>(periods[1][0]);
   const [isLoading, setLoading] = useState(false);
@@ -22,7 +22,7 @@ function Accounts() {
   useEffect(() => {
     let currentCache = readCacheValue(cacheList.accounts) || {};
     if (currentCache[period]) {
-      setChartData(currentCache[period].parseData as TLineChartData);
+      setChartData(currentCache[period].parseData as TMultiLineChartData);
       setLoading(false);
     } else {
       setLoading(true);
@@ -59,7 +59,8 @@ function Accounts() {
       <EChartsLineChart
         chartName="accounts"
         dataX={chartData?.dataX}
-        dataY={chartData?.dataY}
+        dataY1={chartData?.dataY1}
+        dataY2={chartData?.dataY2}
         title={parse(translate('pages.historicalStatistics.accounts'))}
         info={info}
         period={period}
