@@ -213,12 +213,12 @@ const Sidebar: React.FC<SidebarPropsType> = ({ ...rest }) => {
         return ['/tx'].some(el => location.pathname.startsWith(el));
       }
       if (path.startsWith('/supernodes')) {
-        return ['/address'].some(
+        return ['/supernodes'].some(
           el => location.pathname.startsWith(el) && !location.search?.includes('p=richlist'),
         );
       }
       if (path.startsWith('/richlist')) {
-        return ['/address'].some(
+        return ['/richlist'].some(
           el => location.pathname.startsWith(el) && location.search?.includes('p=richlist'),
         );
       }
