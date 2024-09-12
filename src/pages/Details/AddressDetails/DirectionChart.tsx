@@ -36,7 +36,7 @@ interface IDirectionItemProps {
   chartColor?: string;
 }
 
-const DirectionItem: React.FC<IDirectionItemProps> = ({
+export const DirectionItem: React.FC<IDirectionItemProps> = ({
   id,
   direction,
   chartName,

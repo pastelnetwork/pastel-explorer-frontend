@@ -2012,6 +2012,10 @@
           "message": "Total Burned",
           "description": "Used for the CascadeAndSenseStatistics page"
         }
+      },
+      "overview": {
+        "message": "Overview",
+        "description": "Used for the CascadeAndSenseStatistics page"
       }
     },
     "blockDetails": {

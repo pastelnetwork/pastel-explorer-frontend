@@ -945,7 +945,7 @@ export const balanceHistoryXAxisInterval = (dataX?: string[], width?: number) =>
     return Math.floor(dataX.length / 3);
   }
 
-  return Math.floor(dataX.length / 8);
+  return Math.floor(dataX.length / 5);
 };
 
 export function transformFeeSchedule(

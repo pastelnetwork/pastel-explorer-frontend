@@ -12,7 +12,6 @@ import InfinityTable, {
 import { translate, translateDropdown } from '@utils/helpers/i18n';
 import * as ROUTES from '@utils/constants/routes';
 import { getCurrencyName, isPastelBurnAddress } from '@utils/appInfo';
-import * as TableStyles from '@components/Table/Table.styles';
 import Fire from '@components/SvgIcon/Fire';
 import { useLatestTransactions, useBalanceHistory } from '@hooks/useAddressDetails';
 import BurnAddressIcon from '@pages/Details/TransactionDetails/BurnAddressIcon';
@@ -26,7 +25,7 @@ import {
 } from './AddressDetails.helpers';
 import { ADDRESS_TRANSACTION_TIMESTAMP_KEY, columns } from './AddressDetails.columns';
 import BalanceHistory from './BalanceHistory';
-import DirectionChart from './DirectionChart';
+import { DirectionItem } from './DirectionChart';
 import * as Styles from './AddressDetails.styles';
 
 interface IAddressDataRef {
@@ -122,23 +121,6 @@ const AddressDetails = () => {
       });
   };
 
-  const generateAddTitle = () => {
-    return (
-      <Styles.AddressTitleBlock>
-        {parse(translate('pages.addressDetails.address', { currency: getCurrencyName() }))}:{' '}
-        <span>{id}</span>
-        <BurnAddressIcon type={swrData?.data?.type || ''} />
-        {isBurnAddress ? (
-          <Tooltip title={translateDropdown('pages.addressDetails.pastelBurnAddress')}>
-            <Styles.FireIcon>
-              <Fire />
-            </Styles.FireIcon>
-          </Tooltip>
-        ) : null}
-      </Styles.AddressTitleBlock>
-    );
-  };
-
   const generateTitle = () => {
     return (
       <Styles.TitleWrapper className={!addresses?.length ? 'large-padding' : ''}>
@@ -161,65 +143,89 @@ const AddressDetails = () => {
   return (
     <Styles.Wrapper>
       <Grid container direction="column">
-        <Grid item>
-          <TableStyles.BlockWrapper className="address-wrapper">
-            <TableStyles.StyledCard>
-              <Styles.Heading>
-                <Styles.HeadingTitle>{generateAddTitle()}</Styles.HeadingTitle>
-              </Styles.Heading>
-              <Styles.ChartWrapper>
-                <BalanceHistory id={id as string} />
-              </Styles.ChartWrapper>
-            </TableStyles.StyledCard>
-          </TableStyles.BlockWrapper>
-        </Grid>
+        <Styles.PageTitle>
+          <Styles.AddressTitleBlock>
+            {parse(translate('pages.addressDetails.address', { currency: getCurrencyName() }))}:{' '}
+            <span>{id}</span>
+            <BurnAddressIcon type={swrData?.data?.type || ''} />
+            {isBurnAddress ? (
+              <Tooltip title={translateDropdown('pages.addressDetails.pastelBurnAddress')}>
+                <Styles.FireIcon>
+                  <Fire />
+                </Styles.FireIcon>
+              </Tooltip>
+            ) : null}
+          </Styles.AddressTitleBlock>
+        </Styles.PageTitle>
+        <Styles.ChartContainer>
+          <Box className="chart-item">
+            <BalanceHistory id={id as string} />
+          </Box>
+          <Box className="chart-item">
+            <DirectionItem
+              id={id as string}
+              direction="Incoming"
+              chartName="directionIncoming"
+              title={parse(
+                translate(
+                  `pages.addressDetails.balanceHistory.${
+                    isBurnAddress ? 'burnedByMonth' : 'receivedByMonth'
+                  }`,
+                ),
+              )}
+              seriesName={`pages.addressDetails.balanceHistory.${
+                isBurnAddress ? 'burnedByMonth' : 'receivedByMonth'
+              }`}
+              chartColor={isBurnAddress ? '#E94830' : undefined}
+            />
+          </Box>
+          <Box className="chart-item">
+            <DirectionItem
+              id={id as string}
+              direction="Outgoing"
+              chartName="directionOutgoing"
+              title={parse(translate('pages.addressDetails.balanceHistory.sentByMonth'))}
+            />
+          </Box>
+        </Styles.ChartContainer>
         <Styles.TableWrapper item>
-          <Grid container spacing={5}>
-            <Grid item xs={12} lg={8}>
-              {addresses?.length ? (
-                <InfinityTable
-                  title={generateTitle()}
-                  sortBy={apiParams.sortBy}
-                  sortDirection={apiParams.sortDirection}
-                  rows={generateLatestTransactions(addresses, id as string)}
-                  columns={columns}
-                  onBottomReach={handleFetchMoreTransactions}
-                  onHeaderClick={handleSort}
-                  className="latest-transaction-table"
-                  headerBackground
-                  rowHeight={isMobile ? 135 : 45}
-                  tableHeight={isMobile ? 600 : 610}
-                  customLoading={isLoading}
-                />
-              ) : null}
-              {isLoading ? (
-                <Box className="relative mt-15">
-                  {generateTitle()}
-                  <Box className="transaction-table-mask">
-                    <Styles.Loader>
-                      <CircularProgress size={40} />
-                      <Styles.LoadingText>
-                        {parse(translate('common.loadingData'))}
-                      </Styles.LoadingText>
-                    </Styles.Loader>
-                  </Box>
-                </Box>
-              ) : null}
-              {!isLoading && !addresses?.length ? (
-                <Box className="relative mt-15">
-                  {generateTitle()}
-                  <Box className="transaction-table-mask" sx={{ minHeight: '590px !important' }}>
-                    <Styles.NoData sx={{ minHeight: '590px' }}>
-                      {parse(translate('common.noData'))}
-                    </Styles.NoData>
-                  </Box>
-                </Box>
-              ) : null}
-            </Grid>
-            <Grid item xs={12} lg={4}>
-              <DirectionChart id={id as string} />
-            </Grid>
-          </Grid>
+          {addresses?.length ? (
+            <InfinityTable
+              title={generateTitle()}
+              sortBy={apiParams.sortBy}
+              sortDirection={apiParams.sortDirection}
+              rows={generateLatestTransactions(addresses, id as string)}
+              columns={columns}
+              onBottomReach={handleFetchMoreTransactions}
+              onHeaderClick={handleSort}
+              className="latest-transaction-table"
+              headerBackground
+              rowHeight={isMobile ? 135 : 45}
+              tableHeight={isMobile ? 600 : 610}
+              customLoading={isLoading}
+            />
+          ) : null}
+          {isLoading ? (
+            <Box className="relative">
+              {generateTitle()}
+              <Box className="transaction-table-mask">
+                <Styles.Loader>
+                  <CircularProgress size={40} />
+                  <Styles.LoadingText>{parse(translate('common.loadingData'))}</Styles.LoadingText>
+                </Styles.Loader>
+              </Box>
+            </Box>
+          ) : null}
+          {!isLoading && !addresses?.length ? (
+            <Box className="relative">
+              {generateTitle()}
+              <Box className="transaction-table-mask" sx={{ minHeight: '590px !important' }}>
+                <Styles.NoData sx={{ minHeight: '590px' }}>
+                  {parse(translate('common.noData'))}
+                </Styles.NoData>
+              </Box>
+            </Box>
+          ) : null}
         </Styles.TableWrapper>
       </Grid>
     </Styles.Wrapper>

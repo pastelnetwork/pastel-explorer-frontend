@@ -129,6 +129,15 @@ export const Wrapper = styled.div`
     & > .MuiPaper-root {
       margin-bottom: 0 !important;
     }
+
+    ${props => props.theme.breakpoints.down(600)} {
+      .period {
+        span,
+        button {
+          margin-bottom: 0;
+        }
+      }
+    }
   }
 
   .table-title {
@@ -315,8 +324,7 @@ export const HeadingTitle = styled.h4`
 export const ChartWrapper = styled.div`
   position: relative;
   width: 100%;
-  height: 100%;
-  min-height: 266px;
+  height: 260px;
   padding: 10px 8px;
   background: ${props => props.theme.sidebar.menu.background};
 
@@ -327,7 +335,7 @@ export const ChartWrapper = styled.div`
   }
 
   .echarts-for-react {
-    height: 246px !important;
+    height: 185px !important;
   }
 
   .line-chart {
@@ -352,6 +360,15 @@ export const ChartWrapper = styled.div`
     }
   }
 
+  ${props => props.theme.breakpoints.down('600')} {
+    height: auto;
+    min-height: 260px;
+
+    &.chart-content {
+      min-height: unset;
+    }
+  }
+
   @media (max-width: 390px) {
     .period {
       flex-direction: column;
@@ -361,24 +378,20 @@ export const ChartWrapper = styled.div`
 `;
 
 export const SummaryWrapper = styled.div`
-  display: flex;
-  width: 30%;
-  margin-left: 8px;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
 
-  @media (max-width: 960px) {
-    width: 100%;
-  }
-
-  @media (max-width: 600px) {
-    flex-direction: column;
-    align-items: flex-start;
+  ${props => props.theme.breakpoints.down('600')} {
+    grid-template-columns: 1fr;
+    gap: 0;
   }
 `;
 
 export const SummaryItem = styled.div`
   display: flex;
   align-items: center;
-  margin-right: 30px;
   cursor: pointer;
 
   @media (max-width: 600px) {
@@ -408,15 +421,11 @@ export const SummaryLabel = styled.span`
 
 export const SummaryValue = styled.p`
   margin: 0;
-  font-size: 22px;
+  font-size: 16px;
   line-height: 1.1;
   font-weight: 700;
   overflow: hidden;
   color: ${props => props.theme.card.color};
-
-  @media (max-width: 960px) {
-    font-size: 16px;
-  }
 `;
 
 export const BalanceHistorySummaryWrapper = styled.div`
@@ -442,11 +451,11 @@ export const BalanceHistorySummaryWrapper = styled.div`
 `;
 
 export const SummaryIcon = styled.div`
-  width: 38px;
-  height: 38px;
+  width: 32px;
+  height: 32px;
   margin-top: 1px;
   margin-right: 7px;
-  padding: 10px;
+  padding: 6px;
   background: ${props => props.theme.sidebar.menu.background};
   border-radius: 50%;
   border: 1px solid rgb(16 16 16 / 6%);
@@ -475,12 +484,6 @@ export const SummaryIcon = styled.div`
     &.burn {
       border-color: #e94830;
     }
-  }
-
-  @media (max-width: 960px) {
-    width: 32px;
-    height: 32px;
-    padding: 6px;
   }
 `;
 
@@ -566,5 +569,26 @@ export const NoData = styled(MuiTypography)`
   height: 100%;
   width: 100%;
   font-size: 24px;
+  font-weight: 600;
+`;
+
+export const ChartContainer = styled.div`
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  .chart-item {
+    width: 100%;
+  }
+
+  ${props => props.theme.breakpoints.down('1220')} {
+    grid-template-columns: 1fr;
+  }
+`;
+
+export const PageTitle = styled.h2`
+  margin: 0 0 16px;
+  font-size: 1.2rem;
+  line-height: 1.25;
   font-weight: 600;
 `;
